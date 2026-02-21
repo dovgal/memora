@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
-import { Loader2, Sparkles, AlertCircle } from 'lucide-react';
+import { Loader2, Sparkles, AlertCircle, Trash2, Plus, Save } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function GenerateFlashcardsPage() {
@@ -14,6 +14,11 @@ export default function GenerateFlashcardsPage() {
     const [error, setError] = useState<string | null>(null);
     const [generatedCards, setGeneratedCards] = useState<{ term: string, definition: string }[]>([]);
     const [base64Image, setBase64Image] = useState<string | null>(null);
+
+    // Set Metadata
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [isSaving, setIsSaving] = useState(false);
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -46,6 +51,60 @@ export default function GenerateFlashcardsPage() {
             img.src = event.target?.result as string;
         };
         reader.readAsDataURL(file);
+    };
+
+    const handleCardChange = (index: number, field: 'term' | 'definition', value: string) => {
+        const newCards = [...generatedCards];
+        newCards[index][field] = value;
+        setGeneratedCards(newCards);
+    };
+
+    const handleRemoveCard = (index: number) => {
+        const newCards = generatedCards.filter((_, i) => i !== index);
+        setGeneratedCards(newCards);
+    };
+
+    const handleAddCard = () => {
+        setGeneratedCards([...generatedCards, { term: '', definition: '' }]);
+    };
+
+    const handleSaveSet = async () => {
+        // @ts-expect-error id_token is injected by our custom authOptions
+        if (!title.trim() || generatedCards.length === 0 || !session?.id_token) return;
+
+        setIsSaving(true);
+        setError(null);
+
+        try {
+            const response = await fetch('http://localhost:8000/api/sets', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // @ts-expect-error id_token is injected by our custom authOptions
+                    'Authorization': `Bearer ${session.id_token}`,
+                },
+                body: JSON.stringify({
+                    title,
+                    description: description.trim() ? description.trim() : null,
+                    isPublic: true,
+                    flashcards: generatedCards.filter(c => c.term.trim() && c.definition.trim()) // filter empty ones
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to save set');
+            }
+
+            const data = await response.json();
+            // Redirect to the newly created set using the returned UUID
+            router.push(`/set/${data.id}`);
+
+        } catch (e: any) {
+            console.error("Save error:", e);
+            setError(e.message || "An unexpected error occurred while saving.");
+            setIsSaving(false);
+        }
     };
 
     const handleGenerate = async () => {
@@ -200,16 +259,56 @@ export default function GenerateFlashcardsPage() {
 
             {/* Results Area Placeholder */}
             {(isGenerating || generatedCards.length > 0) && (
-                <div className="space-y-4">
-                    <h3 className="text-lg font-medium text-white mb-4">
-                        {isGenerating ? 'Extracting Knowledge...' : 'Generation Complete'}
-                    </h3>
+                <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                        <h3 className="text-lg font-medium text-white">
+                            {isGenerating ? 'Extracting Knowledge...' : 'Review & Revise Generated Cards'}
+                        </h3>
+                        {!isGenerating && generatedCards.length > 0 && (
+                            <button onClick={handleAddCard} className="flex items-center gap-1.5 text-sm text-indigo-400 hover:text-indigo-300 px-3 py-1.5 rounded-lg hover:bg-indigo-500/10 transition-colors">
+                                <Plus className="w-4 h-4" /> Add Card
+                            </button>
+                        )}
+                    </div>
+
 
                     <div className="flex flex-col gap-4">
                         {generatedCards.map((card, idx) => (
-                            <div key={idx} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                <h4 className="font-semibold text-indigo-300 mb-2">{card.term}</h4>
-                                <p className="text-zinc-300 whitespace-pre-wrap">{card.definition}</p>
+                            <div key={idx} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 animate-in fade-in slide-in-from-bottom-4 duration-500 relative group">
+                                {isGenerating ? (
+                                    <>
+                                        <h4 className="font-semibold text-indigo-300 mb-2">{card.term}</h4>
+                                        <p className="text-zinc-300 whitespace-pre-wrap">{card.definition}</p>
+                                    </>
+                                ) : (
+                                    <div className="flex gap-4">
+                                        <div className="flex-1 space-y-3">
+                                            <div>
+                                                <label className="text-xs font-medium text-zinc-500 uppercase tracking-wider mb-1 block">Term</label>
+                                                <input
+                                                    value={card.term}
+                                                    onChange={(e) => handleCardChange(idx, 'term', e.target.value)}
+                                                    className="w-full bg-black/50 text-white border border-zinc-700/50 rounded-lg px-3 py-2 focus:ring-1 focus:ring-indigo-500 focus:border-transparent outline-none"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="text-xs font-medium text-zinc-500 uppercase tracking-wider mb-1 block">Definition</label>
+                                                <textarea
+                                                    value={card.definition}
+                                                    onChange={(e) => handleCardChange(idx, 'definition', e.target.value)}
+                                                    className="w-full bg-black/50 text-zinc-300 border border-zinc-700/50 rounded-lg px-3 py-2 min-h-[60px] focus:ring-1 focus:ring-indigo-500 focus:border-transparent outline-none resize-y"
+                                                />
+                                            </div>
+                                        </div>
+                                        <button
+                                            onClick={() => handleRemoveCard(idx)}
+                                            className="text-zinc-600 hover:text-red-400 p-2 rounded-lg hover:bg-red-500/10 transition-colors self-start opacity-0 group-hover:opacity-100 focus:opacity-100"
+                                            title="Remove card"
+                                        >
+                                            <Trash2 className="w-5 h-5" />
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         ))}
 
@@ -219,10 +318,43 @@ export default function GenerateFlashcardsPage() {
                     </div>
 
                     {!isGenerating && generatedCards.length > 0 && (
-                        <div className="mt-8 pt-6 border-t border-zinc-800 flex justify-end">
-                            <button className="bg-indigo-500 hover:bg-indigo-600 text-white px-8 py-3 rounded-lg font-medium shadow-xl shadow-indigo-500/20 transition-all hover:scale-[1.02]">
-                                Save as New Set
-                            </button>
+                        <div className="mt-8 pt-6 border-t border-zinc-800 space-y-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="text-sm font-medium text-zinc-400 mb-1 block">Set Title <span className="text-red-400">*</span></label>
+                                    <input
+                                        type="text"
+                                        value={title}
+                                        onChange={(e) => setTitle(e.target.value)}
+                                        placeholder="E.g., History Midterm Review"
+                                        className="w-full bg-black border border-zinc-800 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="text-sm font-medium text-zinc-400 mb-1 block">Description (Optional)</label>
+                                    <input
+                                        type="text"
+                                        value={description}
+                                        onChange={(e) => setDescription(e.target.value)}
+                                        placeholder="Chapters 4-6 terminology"
+                                        className="w-full bg-black border border-zinc-800 rounded-lg px-4 py-3 text-zinc-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="flex justify-end pt-4">
+                                <button
+                                    onClick={handleSaveSet}
+                                    disabled={isSaving || !title.trim() || generatedCards.length === 0}
+                                    className="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-600 disabled:opacity-50 text-white px-8 py-3 rounded-lg font-medium shadow-xl shadow-indigo-500/20 transition-all hover:scale-[1.02]"
+                                >
+                                    {isSaving ? (
+                                        <><Loader2 className="w-4 h-4 animate-spin" /> Saving...</>
+                                    ) : (
+                                        <><Save className="w-4 h-4" /> Save as New Set</>
+                                    )}
+                                </button>
+                            </div>
                         </div>
                     )}
                 </div>
