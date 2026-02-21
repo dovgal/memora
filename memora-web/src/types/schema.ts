@@ -33,3 +33,19 @@ export interface CreateSetRequest {
 	isPublic: boolean;
 	flashcards: CreateFlashcardRequest[];
 }
+
+export interface FlashcardProgressRequest {
+    flashcardId: string;
+    isKnown: boolean;
+}
+
+export interface StudySessionRequest {
+    setId: string;
+    progressUpdates: FlashcardProgressRequest[];
+}
+
+export interface SetProgressResponse {
+    totalCards: number;
+    knownCards: number;
+    masteryPercentage: number;
+}

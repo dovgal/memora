@@ -1,3 +1,4 @@
 pub mod protected;
-pub mod users;
 pub mod sets;
+pub mod study;
+pub mod users;

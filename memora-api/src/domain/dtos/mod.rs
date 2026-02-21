@@ -70,3 +70,28 @@ pub struct CreateSetRequest {
     pub is_public: bool,
     pub flashcards: Vec<CreateFlashcardRequest>,
 }
+
+#[typeshare]
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct FlashcardProgressRequest {
+    pub flashcard_id: String,
+    pub is_known: bool,
+}
+
+#[typeshare]
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct StudySessionRequest {
+    pub set_id: String,
+    pub progress_updates: Vec<FlashcardProgressRequest>,
+}
+
+#[typeshare]
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct SetProgressResponse {
+    pub total_cards: i64,
+    pub known_cards: i64,
+    pub mastery_percentage: i32,
+}

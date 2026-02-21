@@ -31,6 +31,8 @@ async fn main() {
         .route("/api/users/role", axum::routing::patch(handlers::users::update_role))
         .route("/api/sets/:id", get(handlers::sets::get_public_set))
         .route("/api/sets", post(handlers::sets::create_set))
+        .route("/api/study/progress", post(handlers::study::record_study_progress))
+        .route("/api/sets/:id/progress", get(handlers::study::get_set_progress))
         .with_state(pool);
 
     // Run our app
