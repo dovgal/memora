@@ -22,3 +22,14 @@ export interface StudySet {
 	flashcards: Flashcard[];
 }
 
+export interface CreateFlashcardRequest {
+	term: string;
+	definition: string;
+}
+
+export interface CreateSetRequest {
+	title: string;
+	description?: string;
+	isPublic: boolean;
+	flashcards: CreateFlashcardRequest[];
+}

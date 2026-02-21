@@ -7,7 +7,10 @@ use axum::{
 use sqlx::PgPool;
 use uuid::Uuid;
 
-use crate::domain::dtos::{FlashcardResponse, SetResponse};
+use crate::domain::dtos::{
+    CreateSetRequest, FlashcardResponse, SetResponse,
+};
+use crate::middleware::auth::AuthenticatedUser;
 
 pub async fn get_public_set(
     State(pool): State<PgPool>,
@@ -59,4 +62,71 @@ pub async fn get_public_set(
     };
 
     Ok((StatusCode::OK, Json(response)))
+}
+
+pub async fn create_set(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Json(payload): Json<CreateSetRequest>,
+) -> Result<impl IntoResponse, (StatusCode, String)> {
+    
+    if payload.flashcards.len() < 2 {
+        return Err((StatusCode::BAD_REQUEST, "A set must contain at least 2 flashcards.".to_string()));
+    }
+
+    let creator_id = Uuid::parse_str(&user.sub)
+        .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid user token".to_string()))?;
+
+    // Begin the transaction
+    let mut tx = pool.begin().await.map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    
+    // 1. Insert the parent Set
+    let set_record = sqlx::query!(
+        "INSERT INTO sets (creator_id, title, description, is_public) VALUES ($1, $2, $3, $4) RETURNING id",
+        creator_id,
+        payload.title,
+        payload.description,
+        payload.is_public
+    )
+    .fetch_one(&mut *tx)
+    .await
+    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+
+    let new_set_id = set_record.id;
+
+    // 2. Insert the Flashcards iteratively
+    let mut response_flashcards = Vec::new();
+    
+    for (index, card) in payload.flashcards.into_iter().enumerate() {
+        let order_index = index as i32;
+        let fc_record = sqlx::query!(
+            "INSERT INTO flashcards (set_id, term, definition, order_index) VALUES ($1, $2, $3, $4) RETURNING id",
+            new_set_id,
+            card.term,
+            card.definition,
+            order_index
+        )
+        .fetch_one(&mut *tx)
+        .await
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, format!("Failed adding flashcard: {}", e)))?;
+
+        response_flashcards.push(FlashcardResponse {
+            id: fc_record.id.to_string(),
+            term: card.term,
+            definition: card.definition,
+            order_index
+        });
+    }
+
+    // Commit transaction
+    tx.commit().await.map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+
+    let response = SetResponse {
+        id: new_set_id.to_string(),
+        title: payload.title,
+        description: payload.description,
+        flashcards: response_flashcards,
+    };
+
+    Ok((StatusCode::CREATED, Json(response)))
 }

@@ -47,8 +47,8 @@ development_status:
   1-4-role-selection-and-dashboard-routing: done
   1-5-public-library-access: ready-for-dev
   epic-1-retrospective: optional
-  epic-2: backlog
-  2-1-manual-flashcard-set-creation: backlog
+  epic-2: in-progress
+  2-1-manual-flashcard-set-creation: ready-for-dev
   2-2-flashcards-study-mode-and-progress-tracking: backlog
   2-3-learn-and-test-evaluation-modes: backlog
   2-4-pwa-offline-caching-strategy: backlog
