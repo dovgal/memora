@@ -49,8 +49,8 @@ development_status:
   epic-1-retrospective: optional
   epic-2: in-progress
   2-1-manual-flashcard-set-creation: done
-  2-2-flashcards-study-mode-and-progress-tracking: ready-for-dev
-  2-3-learn-and-test-evaluation-modes: backlog
+  2-2-flashcards-study-mode-and-progress-tracking: done
+  2-3-learn-and-test-evaluation-modes: ready-for-dev
   2-4-pwa-offline-caching-strategy: backlog
   2-5-offline-progress-synchronization: backlog
   epic-2-retrospective: optional

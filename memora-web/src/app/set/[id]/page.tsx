@@ -118,12 +118,23 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
                                     <BookOpen size={20} /> Flashcards
                                 </span>
                             </Link>
-
-                            <button disabled className="w-full bg-zinc-800 text-zinc-500 font-bold py-4 px-6 rounded-xl flex items-center justify-between cursor-not-allowed group">
+                            <Link
+                                href={`/set/${id}/learn`}
+                                className="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-4 px-6 rounded-xl flex items-center justify-between transition-all shadow-[0_0_20px_rgba(147,51,234,0.2)] hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] hover:-translate-y-1"
+                            >
                                 <span className="flex items-center gap-3">
-                                    <GraduationCap size={20} /> Learn (Coming Soon)
+                                    <GraduationCap size={20} /> Learn
                                 </span>
-                            </button>
+                            </Link>
+
+                            <Link
+                                href={`/set/${id}/test`}
+                                className="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-4 px-6 rounded-xl flex items-center justify-between transition-all shadow-[0_0_20px_rgba(234,88,12,0.2)] hover:shadow-[0_0_30px_rgba(234,88,12,0.4)] hover:-translate-y-1"
+                            >
+                                <span className="flex items-center gap-3">
+                                    <Copy size={20} /> Test
+                                </span>
+                            </Link>
                         </div>
                     </div>
 
