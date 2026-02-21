@@ -1,0 +1,74 @@
+# generated: 2026-02-20
+# project: my-bmad-project
+# project_key: NOKEY
+# tracking_system: file-system
+# story_location: {project-root}/_bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog → in-progress: Automatically when first story is created (via create-story)
+#   - in-progress → done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - SM typically creates next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+
+generated: 2026-02-20
+project: my-bmad-project
+project_key: NOKEY
+tracking_system: file-system
+story_location: {project-root}/_bmad-output/implementation-artifacts
+
+development_status:
+  epic-1: in-progress
+  1-1-project-initialization-and-type-synchronization: done
+  1-2-core-database-schema-and-auth-backend: done
+  1-3-sso-registration-and-coppa-screening: ready-for-dev
+  1-4-role-selection-and-dashboard-routing: backlog
+  1-5-public-library-access: backlog
+  epic-1-retrospective: optional
+  epic-2: backlog
+  2-1-manual-flashcard-set-creation: backlog
+  2-2-flashcards-study-mode-and-progress-tracking: backlog
+  2-3-learn-and-test-evaluation-modes: backlog
+  2-4-pwa-offline-caching-strategy: backlog
+  2-5-offline-progress-synchronization: backlog
+  epic-2-retrospective: optional
+  epic-3: backlog
+  3-1-ai-gateway-and-sse-streaming-infrastructure: backlog
+  3-2-text-based-flashcard-generation: backlog
+  3-3-photo-ocr-content-extraction: backlog
+  3-4-preview-and-revise-generation-editor: backlog
+  epic-3-retrospective: optional
+  epic-4: backlog
+  4-1-q-chat-guardrails-and-context-injection-backend: backlog
+  4-2-q-chat-interface-and-conversation-history: backlog
+  4-3-contextual-error-explanation: backlog
+  epic-4-retrospective: optional
+  epic-5: backlog
+  5-1-live-mode-websocket-server-and-redis-broker: backlog
+  5-2-teacher-dashboard-and-game-initialization: backlog
+  5-3-student-join-flow-and-team-sorting: backlog
+  5-4-synchronous-gameplay-execution: backlog
+  5-5-post-game-analytics: backlog
+  epic-5-retrospective: optional

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memora Design Directions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#0F1115',
+                        surface: '#1E232B',
+                        primary: '#6366F1',
+                        primaryHover: '#8B5CF6',
+                        success: '#10B981',
+                        error: '#F43F5E',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', -apple-system, sans-serif; }
+        .magic-gradient {
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen text-gray-900 overflow-x-hidden">
+    
+    <header class="bg-white shadow-sm p-6 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold bg-clip-text text-transparent magic-gradient">Memora</h1>
+                <p class="text-gray-500 text-sm mt-1">UX Design Directions Showcase</p>
+            </div>
+            <div class="flex gap-4">
+                <button class="px-4 py-2 border rounded-md hover:bg-gray-50 transition">Student App View</button>
+                <button class="px-4 py-2 border rounded-md hover:bg-gray-50 transition">Teacher Dashboard View</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto py-12 px-6">
+        
+        <!-- Direction 1: The Magic Mobile Upload -->
+        <section class="mb-20">
+            <h2 class="text-2xl font-semibold mb-6">Direction 1: The Magic Native PWA (Student)</h2>
+            <p class="text-gray-600 mb-8 max-w-3xl">This direction focuses on the 'Zero-Friction Creation' principle. It uses absolute minimalism, pushing all focus to the primary action (Upload/Snap). It relies strictly on dark-mode for high contrast during study sessions.</p>
+            
+            <div class="bg-background text-white p-8 rounded-3xl shadow-2xl max-w-sm mx-auto border border-gray-800 relative overflow-hidden">
+                <!-- Mobile Status Bar Mock -->
+                <div class="flex justify-between items-center text-xs text-gray-400 mb-8">
+                    <span>9:41</span>
+                    <div class="flex gap-1">
+                        <!-- signal/battery icons -->
+                        <div class="w-4 h-3 bg-gray-400 rounded-sm"></div>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="mb-12">
+                    <h3 class="text-2xl font-bold mb-2">Study Sets</h3>
+                    <p class="text-gray-400 text-sm">You have 3 sets to review today.</p>
+                </div>
+
+                <!-- Set Cards -->
+                <div class="space-y-4 mb-24">
+                    <div class="bg-surface p-5 rounded-2xl flex justify-between items-center hover:ring-2 hover:ring-primary/50 transition cursor-pointer">
+                        <div>
+                            <h4 class="font-semibold">Biology 101: Cell Structure</h4>
+                            <p class="text-xs text-gray-400 mt-1">42 Cards • Last used 2h ago</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-success">
+                            84%
+                        </div>
+                    </div>
+                     <div class="bg-surface p-5 rounded-2xl flex justify-between items-center hover:ring-2 hover:ring-primary/50 transition cursor-pointer">
+                        <div>
+                            <h4 class="font-semibold">AP US History: Chapter 4</h4>
+                            <p class="text-xs text-gray-400 mt-1">128 Cards • Needs Review</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-error border border-error/20">
+                            12%
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Giant Floating Action Button (FAB) -->
+                <div class="absolute bottom-8 left-0 right-0 flex justify-center">
+                    <button class="magic-gradient text-white flex items-center gap-3 px-8 py-4 rounded-full shadow-lg shadow-primary/30 transform hover:scale-105 transition-transform font-bold text-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        Snap Notes
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-16 border-gray-200">
+
+        <!-- Direction 2: The Teacher Command Center -->
+        <section class="mb-20">
+            <h2 class="text-2xl font-semibold mb-6">Direction 2: The Orchestrator Dashboard (Teacher)</h2>
+            <p class="text-gray-600 mb-8 max-w-3xl">This direction focuses on 'Confident Orchestration'. High information density, clear tabular layouts, and unmistakable primary actions for launching a Live game. Presented in a light theme for prolonged administrative use, relying on standard UI components.</p>
+            
+            <div class="bg-white border rounded-xl shadow-xl overflow-hidden max-w-5xl mx-auto flex h-[600px]">
+                <!-- Sidebar -->
+                <div class="w-64 bg-gray-50 border-r p-6 flex flex-col h-full">
+                    <div class="text-xl font-bold magic-gradient bg-clip-text text-transparent mb-10">Memora Edu</div>
+                    <nav class="space-y-2 flex-grow">
+                        <a href="#" class="block px-3 py-2 bg-indigo-50 text-indigo-700 rounded-md font-medium">Classes</a>
+                        <a href="#" class="block px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md font-medium">My Sets</a>
+                        <a href="#" class="block px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md font-medium">Analytics</a>
+                    </nav>
+                    <div class="mt-auto flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-gray-300"></div>
+                        <span class="text-sm font-medium">Anna S.</span>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="flex-1 p-10 bg-white overflow-y-auto">
+                    <div class="flex justify-between items-center mb-8">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900">Period 3: Biology</h2>
+                            <p class="text-sm text-gray-500 mt-1">28 Students Enrolled</p>
+                        </div>
+                        <button class="bg-[#6366F1] hover:bg-[#4F46E5] text-white px-5 py-2.5 rounded-md font-medium shadow-sm transition flex items-center gap-2">
+                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Host Live Game
+                        </button>
+                    </div>
+
+                    <!-- Data Table -->
+                    <div class="border rounded-lg overflow-hidden">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-gray-50 border-b">
+                                <tr>
+                                    <th class="px-6 py-4 font-semibold text-gray-600">Student Name</th>
+                                    <th class="px-6 py-4 font-semibold text-gray-600">Avg. Score</th>
+                                    <th class="px-6 py-4 font-semibold text-gray-600">Struggling Concept</th>
+                                    <th class="px-6 py-4 font-semibold text-gray-600 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 font-medium text-gray-900">Maxim P.</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-full bg-gray-200 rounded-full h-2 max-w-[100px]">
+                                                <div class="bg-green-500 h-2 rounded-full" style="width: 85%"></div>
+                                            </div>
+                                            <span class="text-green-700 font-medium">85%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-600">Mitochondria Function</td>
+                                    <td class="px-6 py-4 text-right">
+                                        <button class="text-indigo-600 hover:text-indigo-800 font-medium">View Report</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 font-medium text-gray-900">Elena J.</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-full bg-gray-200 rounded-full h-2 max-w-[100px]">
+                                                <div class="bg-red-500 h-2 rounded-full" style="width: 42%"></div>
+                                            </div>
+                                            <span class="text-red-700 font-medium">42%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-600">Cellular Respiration</td>
+                                    <td class="px-6 py-4 text-right">
+                                        <button class="text-indigo-600 hover:text-indigo-800 font-medium">Message</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

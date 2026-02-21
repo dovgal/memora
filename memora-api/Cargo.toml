@@ -1,0 +1,16 @@
+[package]
+name = "memora-api"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+axum = "0.8.8"
+serde = { version = "1.0.228", features = ["derive"] }
+sqlx = { version = "0.8.6", features = ["runtime-tokio-rustls", "postgres", "uuid", "chrono"] }
+tokio = { version = "1.49.0", features = ["full"] }
+typeshare = "1.0.5"
+dotenvy = "0.15.7"
+jsonwebtoken = "9.3.0"
+uuid = { version = "1.10.0", features = ["serde", "v4"] }
+chrono = { version = "0.4.38", features = ["serde"] }
+serde_json = "1.0.138"
