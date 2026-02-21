@@ -17,13 +17,28 @@ const handler = NextAuth({
         async signIn({ user, account, profile, email, credentials }) {
             return true;
         },
-        async jwt({ token, user, account, isNewUser }) {
+        async jwt({ token, user, account, isNewUser, trigger, session }) {
             // Initial sign in
             if (account && user) {
                 token.id = user.id;
-                // If it's a brand new OAuth sign in OR if they haven't finished onboarding
+                // Default every new user to student if we don't have it, but they still need to select it
+                token.role = "student";
                 if (isNewUser) {
                     token.needsOnboarding = true;
+                    token.needsRoleSelection = true;
+                }
+            }
+
+            // Client-side session updates
+            if (trigger === "update" && session) {
+                if (session.needsOnboarding !== undefined) {
+                    token.needsOnboarding = session.needsOnboarding;
+                }
+                if (session.needsRoleSelection !== undefined) {
+                    token.needsRoleSelection = session.needsRoleSelection;
+                }
+                if (session.role !== undefined) {
+                    token.role = session.role;
                 }
             }
             return token
@@ -33,7 +48,11 @@ const handler = NextAuth({
                 // @ts-ignore
                 session.user.id = token.id;
                 // @ts-ignore
+                session.user.role = token.role;
+                // @ts-ignore
                 session.user.needsOnboarding = token.needsOnboarding;
+                // @ts-ignore
+                session.user.needsRoleSelection = token.needsRoleSelection;
             }
             return session
         }

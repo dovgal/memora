@@ -4,19 +4,45 @@ import { NextResponse } from "next/server"
 export default withAuth(
     function middleware(req) {
         const token = req.nextauth.token;
-        const isAuthRoute = req.nextUrl.pathname.startsWith('/login');
-        const isOnboardingRoute = req.nextUrl.pathname.startsWith('/onboarding');
+        const pathname = req.nextUrl.pathname;
+        const isAuthRoute = pathname.startsWith('/login');
+        const isOnboardingRoute = pathname.startsWith('/onboarding');
+        const isRoleSelectionRoute = pathname.startsWith('/role-selection');
 
         // If user is logged in
         if (token) {
-            // Enforce onboarding for new users
+            // Priority 1: Enforce onboarding for new users
             if (token.needsOnboarding && !isOnboardingRoute) {
                 return NextResponse.redirect(new URL('/onboarding', req.url));
             }
 
-            // If they finished onboarding, keep them away from login/onboarding
-            if (!token.needsOnboarding && (isAuthRoute || isOnboardingRoute)) {
+            // Priority 2: Enforce role selection after onboarding
+            if (!token.needsOnboarding && token.needsRoleSelection && !isRoleSelectionRoute) {
+                return NextResponse.redirect(new URL('/role-selection', req.url));
+            }
+
+            // If they finished both, keep them away from login/onboarding/role-selection
+            const isSetupRoute = isAuthRoute || isOnboardingRoute || isRoleSelectionRoute;
+            if (!token.needsOnboarding && !token.needsRoleSelection && isSetupRoute) {
                 return NextResponse.redirect(new URL('/dashboard', req.url));
+            }
+
+            // Role-Based Access Control
+            if (!token.needsRoleSelection && token.role) {
+                // If they go to naked /dashboard, route them to their specific area
+                if (pathname === '/dashboard') {
+                    return NextResponse.redirect(new URL(`/dashboard/${token.role}`, req.url));
+                }
+
+                // Block students from teacher routes
+                if (token.role === 'student' && pathname.startsWith('/dashboard/teacher')) {
+                    return NextResponse.redirect(new URL('/dashboard/student', req.url));
+                }
+
+                // Block teachers from student routes
+                if (token.role === 'teacher' && pathname.startsWith('/dashboard/student')) {
+                    return NextResponse.redirect(new URL('/dashboard/teacher', req.url));
+                }
             }
         }
 
@@ -25,8 +51,8 @@ export default withAuth(
     {
         callbacks: {
             authorized: ({ req, token }) => {
-                // By default, only protect /dashboard routes, let people access /login and public routes freely
-                if (req.nextUrl.pathname.startsWith('/dashboard') || req.nextUrl.pathname.startsWith('/onboarding')) {
+                const pathname = req.nextUrl.pathname;
+                if (pathname.startsWith('/dashboard') || pathname.startsWith('/onboarding') || pathname.startsWith('/role-selection')) {
                     return !!token;
                 }
                 return true;
@@ -36,5 +62,5 @@ export default withAuth(
 )
 
 export const config = {
-    matcher: ['/dashboard/:path*', '/onboarding', '/login'],
+    matcher: ['/dashboard/:path*', '/onboarding', '/role-selection', '/login'],
 }

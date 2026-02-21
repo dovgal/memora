@@ -52,7 +52,46 @@ pub async fn finish_onboarding(
     let response = UserResponse {
         id: user_id.to_string(),
         email: format!("mock-{}@example.com", user_id),
-        role: "student".to_string(),
+        role: "student".to_string(), // In a real app, you might fetch the actual role from DB
+    };
+
+    Ok((StatusCode::OK, Json(response)))
+}
+
+pub async fn update_role(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Json(payload): Json<crate::domain::dtos::RoleSelectionRequest>,
+) -> Result<impl IntoResponse, (StatusCode, String)> {
+    
+    // Valiate role input
+    let new_role = payload.role.to_lowercase();
+    if new_role != "student" && new_role != "teacher" {
+        return Err((StatusCode::BAD_REQUEST, "Invalid role. Must be 'student' or 'teacher'.".to_string()));
+    }
+
+    let user_id = uuid::Uuid::parse_str(&user.sub)
+        .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid user ID logic".to_string()))?;
+
+    // Update the role in the users table
+    let rows_affected = sqlx::query!(
+        "UPDATE users SET role = $1, updated_at = NOW() WHERE id = $2",
+        new_role,
+        user_id
+    )
+    .execute(&pool)
+    .await
+    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?
+    .rows_affected();
+    
+    if rows_affected == 0 {
+         return Err((StatusCode::NOT_FOUND, "User not found".to_string()));
+    }
+
+    let response = UserResponse {
+        id: user_id.to_string(),
+        email: "hidden".to_string(), // Exclude email update semantics here
+        role: new_role,
     };
 
     Ok((StatusCode::OK, Json(response)))

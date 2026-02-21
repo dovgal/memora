@@ -57,6 +57,7 @@ pub enum AuthError {
     MissingToken,
     InvalidToken,
     ConfigurationError,
+    Forbidden,
 }
 
 impl IntoResponse for AuthError {
@@ -65,6 +66,7 @@ impl IntoResponse for AuthError {
             AuthError::MissingToken => (StatusCode::UNAUTHORIZED, "Missing authorization token"),
             AuthError::InvalidToken => (StatusCode::UNAUTHORIZED, "Invalid authorization token"),
             AuthError::ConfigurationError => (StatusCode::INTERNAL_SERVER_ERROR, "Server configuration error"),
+            AuthError::Forbidden => (StatusCode::FORBIDDEN, "Insufficient permissions"),
         };
         
         // Output camelCase JSON errors as per requirements
@@ -73,6 +75,42 @@ impl IntoResponse for AuthError {
         }));
 
         (status, body).into_response()
+    }
+}
+
+pub struct RequireTeacher(pub Claims);
+
+impl<S> FromRequestParts<S> for RequireTeacher
+where
+    S: Send + Sync,
+{
+    type Rejection = AuthError;
+
+    async fn from_request_parts(parts: &mut Parts, state: &S) -> Result<Self, Self::Rejection> {
+        let AuthenticatedUser(claims) = AuthenticatedUser::from_request_parts(parts, state).await?;
+        
+        match claims.role.as_deref() {
+            Some("teacher") => Ok(RequireTeacher(claims)),
+            _ => Err(AuthError::Forbidden),
+        }
+    }
+}
+
+pub struct RequireStudent(pub Claims);
+
+impl<S> FromRequestParts<S> for RequireStudent
+where
+    S: Send + Sync,
+{
+    type Rejection = AuthError;
+
+    async fn from_request_parts(parts: &mut Parts, state: &S) -> Result<Self, Self::Rejection> {
+        let AuthenticatedUser(claims) = AuthenticatedUser::from_request_parts(parts, state).await?;
+        
+        match claims.role.as_deref() {
+            Some("student") => Ok(RequireStudent(claims)),
+            _ => Err(AuthError::Forbidden),
+        }
     }
 }
 

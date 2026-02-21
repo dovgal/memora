@@ -28,6 +28,7 @@ async fn main() {
         .route("/", get(|| async { "Memora API is running" }))
         .route("/api/protected/me", get(handlers::protected::me_handler))
         .route("/api/users/onboarding", post(handlers::users::finish_onboarding))
+        .route("/api/users/role", axum::routing::patch(handlers::users::update_role))
         .with_state(pool);
 
     // Run our app

@@ -25,3 +25,10 @@ pub struct UserResponse {
     pub email: String,
     pub role: String,
 }
+
+#[typeshare]
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct RoleSelectionRequest {
+    pub role: String,
+}

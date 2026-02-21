@@ -43,8 +43,8 @@ development_status:
   epic-1: in-progress
   1-1-project-initialization-and-type-synchronization: done
   1-2-core-database-schema-and-auth-backend: done
-  1-3-sso-registration-and-coppa-screening: ready-for-dev
-  1-4-role-selection-and-dashboard-routing: backlog
+  1-3-sso-registration-and-coppa-screening: done
+  1-4-role-selection-and-dashboard-routing: ready-for-dev
   1-5-public-library-access: backlog
   epic-1-retrospective: optional
   epic-2: backlog
