@@ -1,13 +1,14 @@
 "use client"
 
-import { useState, useEffect, useMemo } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { StudySet, FlashcardProgressRequest } from "@/types/schema"
 import { generateLearnQueue, createMultipleChoiceQuestion, MultipleChoiceQuestion } from "@/lib/studyUtils"
 import { X, CheckCircle, XCircle, RotateCcw, Loader2 } from "lucide-react"
 
-export default function LearnModePage({ params }: { params: { id: string } }) {
+export default function LearnModePage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = React.use(params);
     const router = useRouter()
     const { data: session } = useSession()
     const [set, setSet] = useState<StudySet | null>(null)
@@ -29,8 +30,8 @@ export default function LearnModePage({ params }: { params: { id: string } }) {
             try {
                 // Fetch base set
                 const resSet = await Promise.all([
-                    fetch(`/api/sets/${params.id}`),
-                    session ? fetch(`/api/sets/${params.id}/progress`) : Promise.resolve(null)
+                    fetch(`/api/sets/${id}`),
+                    session ? fetch(`/api/sets/${id}/progress`) : Promise.resolve(null)
                 ])
 
                 if (resSet[0].ok) {
@@ -60,7 +61,7 @@ export default function LearnModePage({ params }: { params: { id: string } }) {
         }
 
         fetchSetAndProgress()
-    }, [params.id, session, router])
+    }, [id, session, router])
 
     const handleAnswer = (index: number) => {
         if (showResult || !set) return
@@ -112,7 +113,7 @@ export default function LearnModePage({ params }: { params: { id: string } }) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    setId: params.id,
+                    setId: id,
                     progressUpdates: finalProgress
                 })
             })
@@ -124,7 +125,7 @@ export default function LearnModePage({ params }: { params: { id: string } }) {
     }
 
     const closeSession = () => {
-        router.push(`/set/${params.id}`)
+        router.push(`/set/${id}`)
     }
 
     if (isLoading) {

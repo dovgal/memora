@@ -1,12 +1,13 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { StudySet } from "@/types/schema"
 import { generateTest, TestQuestion } from "@/lib/studyUtils"
 import { X, CheckCircle, XCircle, RotateCcw, Loader2 } from "lucide-react"
 
-export default function TestModePage({ params }: { params: { id: string } }) {
+export default function TestModePage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = React.use(params);
     const router = useRouter()
     const [set, setSet] = useState<StudySet | null>(null)
 
@@ -22,7 +23,7 @@ export default function TestModePage({ params }: { params: { id: string } }) {
     useEffect(() => {
         const fetchSet = async () => {
             try {
-                const resSet = await fetch(`/api/sets/${params.id}`)
+                const resSet = await fetch(`/api/sets/${id}`)
 
                 if (resSet.ok) {
                     const setData: StudySet = await resSet.json()
@@ -42,7 +43,7 @@ export default function TestModePage({ params }: { params: { id: string } }) {
         }
 
         fetchSet()
-    }, [params.id, router])
+    }, [id, router])
 
     const handleSelectAnswer = (questionId: string, answer: string) => {
         if (isSubmitted) return
@@ -82,7 +83,7 @@ export default function TestModePage({ params }: { params: { id: string } }) {
     }
 
     const closeTest = () => {
-        router.push(`/set/${params.id}`)
+        router.push(`/set/${id}`)
     }
 
     if (isLoading) {

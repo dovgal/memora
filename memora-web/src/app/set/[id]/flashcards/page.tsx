@@ -1,12 +1,13 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { StudySet, FlashcardProgressRequest, Flashcard } from "@/types/schema"
 import { X, RotateCcw, CheckCircle, HelpCircle, Loader2 } from "lucide-react"
 
-export default function FlashcardsStudyPage({ params }: { params: { id: string } }) {
+export default function FlashcardsStudyPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = React.use(params);
     const router = useRouter()
     const { data: session } = useSession()
     const [set, setSet] = useState<StudySet | null>(null)
@@ -23,7 +24,7 @@ export default function FlashcardsStudyPage({ params }: { params: { id: string }
         // Fetch the set data. Assuming we can reuse the generic GET /api/sets/:id endpoint.
         const fetchSet = async () => {
             try {
-                const res = await fetch(`/api/sets/${params.id}`)
+                const res = await fetch(`/api/sets/${id}`)
                 if (res.ok) {
                     const data = await res.json()
                     setSet(data)
@@ -38,7 +39,7 @@ export default function FlashcardsStudyPage({ params }: { params: { id: string }
         }
 
         fetchSet()
-    }, [params.id, router])
+    }, [id, router])
 
     const handleFlip = () => {
         setIsFlipped(!isFlipped)
@@ -85,7 +86,7 @@ export default function FlashcardsStudyPage({ params }: { params: { id: string }
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    setId: params.id,
+                    setId: id,
                     progressUpdates: finalProgress
                 })
             })
@@ -104,7 +105,7 @@ export default function FlashcardsStudyPage({ params }: { params: { id: string }
     }
 
     const closeSession = () => {
-        router.push(`/set/${params.id}`)
+        router.push(`/set/${id}`)
     }
 
     if (isLoading) {
