@@ -13,10 +13,44 @@ export default function GenerateFlashcardsPage() {
     const [isGenerating, setIsGenerating] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [generatedCards, setGeneratedCards] = useState<{ term: string, definition: string }[]>([]);
+    const [base64Image, setBase64Image] = useState<string | null>(null);
+
+    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const MAX_WIDTH = 1200;
+                let width = img.width;
+                let height = img.height;
+
+                if (width > MAX_WIDTH) {
+                    height = Math.round((height * MAX_WIDTH) / width);
+                    width = MAX_WIDTH;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+
+                const ctx = canvas.getContext('2d');
+                ctx?.drawImage(img, 0, 0, width, height);
+
+                // Compress to JPEG for OpenAI vision API
+                const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                setBase64Image(dataUrl);
+            };
+            img.src = event.target?.result as string;
+        };
+        reader.readAsDataURL(file);
+    };
 
     const handleGenerate = async () => {
         // @ts-expect-error id_token is injected by our custom authOptions
-        if (!prompt.trim() || !session?.id_token) return;
+        if ((!prompt.trim() && !base64Image) || !session?.id_token) return;
 
         setIsGenerating(true);
         setError(null);
@@ -32,7 +66,10 @@ export default function GenerateFlashcardsPage() {
                     // @ts-expect-error id_token is injected by our custom authOptions
                     'Authorization': `Bearer ${session.id_token}`,
                 },
-                body: JSON.stringify({ prompt }),
+                body: JSON.stringify({
+                    prompt: prompt.trim() ? prompt : "Extract flashcards from this image",
+                    image_url: base64Image
+                }),
                 onmessage(ev) {
                     if (ev.event === 'done' || ev.data === '[DONE]') {
                         setIsGenerating(false);
@@ -97,12 +134,34 @@ export default function GenerateFlashcardsPage() {
 
             <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 md:p-6 mb-8 shadow-xl relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" />
-                <textarea
-                    value={prompt}
-                    onChange={(e) => setPrompt(e.target.value)}
-                    placeholder="E.g., In 1603, Tokugawa Ieyasu became shogun of Japan..."
-                    className="w-full h-48 bg-black/50 text-white border border-zinc-700/50 rounded-xl p-4 focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-y mb-4 font-mono text-sm leading-relaxed"
-                />
+
+                <div className="flex flex-col md:flex-row gap-4 mb-4">
+                    <textarea
+                        value={prompt}
+                        onChange={(e) => setPrompt(e.target.value)}
+                        placeholder="Paste lecture text here, or optionally specify OCR instructions..."
+                        className="flex-1 min-h-[192px] bg-black/50 text-white border border-zinc-700/50 rounded-xl p-4 focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-y font-mono text-sm leading-relaxed"
+                    />
+
+                    <div className="w-full md:w-64 shrink-0 flex flex-col gap-2">
+                        <label className="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-zinc-700/50 rounded-xl hover:border-indigo-500/50 hover:bg-zinc-800/50 transition-colors cursor-pointer relative overflow-hidden group">
+                            {base64Image ? (
+                                <img src={base64Image} alt="Preview" className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity" />
+                            ) : (
+                                <div className="text-center p-4">
+                                    <svg className="w-8 h-8 text-zinc-500 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L28 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    <p className="text-xs text-zinc-400">Take Photo or Upload Notes</p>
+                                </div>
+                            )}
+                            <input type="file" accept="image/*" capture="environment" onChange={handleImageUpload} className="hidden" />
+                        </label>
+                        {base64Image && (
+                            <button onClick={() => setBase64Image(null)} className="text-xs text-red-400 hover:text-red-300 py-1">Remove Image</button>
+                        )}
+                    </div>
+                </div>
 
                 {error && (
                     <div className="mb-4 p-4 rounded-xl bg-red-500/10 border border-red-500/20 flex items-start gap-3 text-red-400">
@@ -121,7 +180,7 @@ export default function GenerateFlashcardsPage() {
                     </button>
                     <button
                         onClick={handleGenerate}
-                        disabled={isGenerating || !prompt.trim()}
+                        disabled={isGenerating || (!prompt.trim() && !base64Image)}
                         className="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-2 rounded-lg font-medium transition-colors"
                     >
                         {isGenerating ? (

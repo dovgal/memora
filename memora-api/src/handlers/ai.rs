@@ -16,7 +16,7 @@ use crate::middleware::{auth::AuthenticatedUser, rate_limiter::AppRateLimiter};
 #[derive(Deserialize)]
 pub struct AiGenerateRequest {
     pub prompt: String,
-    // Add other fields as needed, e.g., image_url for multimodal
+    pub image_url: Option<String>,
 }
 
 #[derive(Serialize)]
@@ -24,18 +24,31 @@ pub struct AiGatewayError {
     pub error: String,
 }
 
-// Structs mapping to OpenAPI's expected req/res for typical completions
 #[derive(Serialize)]
 struct OpenAiRequest {
     model: String,
     messages: Vec<OpenAiMessage>,
     stream: bool,
+    max_tokens: u32,
 }
 
 #[derive(Serialize)]
 struct OpenAiMessage {
     role: String,
-    content: String,
+    content: Vec<OpenAiMessageContent>,
+}
+
+#[derive(Serialize)]
+#[serde(tag = "type", rename_all = "snake_case")]
+enum OpenAiMessageContent {
+    Text { text: String },
+    ImageUrl { image_url: OpenAiImageUrl },
+}
+
+#[derive(Serialize)]
+struct OpenAiImageUrl {
+    url: String,
+    detail: String,
 }
 
 #[derive(Deserialize, Debug)]
@@ -46,6 +59,7 @@ struct OpenAiStreamChunk {
 #[derive(Deserialize, Debug)]
 struct OpenAiChoice {
     delta: OpenAiDelta,
+    #[allow(dead_code)]
     finish_reason: Option<String>,
 }
 
@@ -66,7 +80,6 @@ pub async fn generate_flashcards_stream(
         Err(_) => return Err((StatusCode::UNAUTHORIZED, Json(AiGatewayError { error: "Invalid User UUID".to_string() })))
     };
 
-    // Grab or initialize the user's rate limiter bucket (5 tokens per minute)
     let user_limiter = rate_limiter.entry(user_uuid).or_insert_with(|| {
         Arc::new(RateLimiter::direct(Quota::per_minute(NonZeroU32::new(5).unwrap())))
     });
@@ -85,20 +98,38 @@ pub async fn generate_flashcards_stream(
     };
 
     // 3. Construct Request to OpenAI
+    let mut messages = vec![
+        OpenAiMessage {
+            role: "system".to_string(),
+            content: vec![OpenAiMessageContent::Text { 
+                text: "You are Memora's core flashcard generation engine. Output ONLY raw JSON. You must extract key knowledge from the provided text or image into a JSON array of objects, where each object has a 'term' string and a 'definition' string. Do not include markdown blocks like ```json.".to_string() 
+            }],
+        }
+    ];
+
+    let mut user_content = vec![OpenAiMessageContent::Text { text: payload.prompt }];
+    
+    // Inject the base64 image payload if present
+    if let Some(img_url) = payload.image_url {
+        user_content.push(OpenAiMessageContent::ImageUrl {
+            image_url: OpenAiImageUrl {
+                url: img_url,
+                detail: "high".to_string(),
+            }
+        });
+    }
+
+    messages.push(OpenAiMessage {
+        role: "user".to_string(),
+        content: user_content,
+    });
+
     let client = Client::new();
     let openai_body = OpenAiRequest {
-        model: "gpt-4o-mini".to_string(), // Or gpt-4o for multimodal
-        messages: vec![
-            OpenAiMessage {
-                role: "system".to_string(),
-                content: "You are Memora's core flashcard generation engine. Output ONLY raw JSON. You must extract key knowledge from the provided text into a JSON array of objects, where each object has a 'term' string and a 'definition' string. Do not include markdown blocks like ```json.".to_string(),
-            },
-            OpenAiMessage {
-                role: "user".to_string(),
-                content: payload.prompt,
-            }
-        ],
+        model: "gpt-4o".to_string(), // Upgrade to gpt-4o for multimodal
+        messages,
         stream: true,
+        max_tokens: 1500, // Important for vision requests
     };
 
     let response = match client.post("https://api.openai.com/v1/chat/completions")
