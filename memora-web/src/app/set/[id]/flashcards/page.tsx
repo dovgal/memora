@@ -91,7 +91,11 @@ export default function FlashcardsStudyPage({ params }: { params: Promise<{ id: 
                 })
             })
         } catch (err) {
-            console.error("Error submitting progress", err)
+            if (!navigator.onLine) {
+                console.log("Offline mode: Progress saved locally and will sync when online.")
+            } else {
+                console.error("Error submitting progress", err)
+            }
         } finally {
             setIsSubmitting(false)
         }

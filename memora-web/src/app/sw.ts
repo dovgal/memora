@@ -1,7 +1,7 @@
 /// <reference lib="webworker" />
 import { defaultCache } from "@serwist/next/worker";
 import type { PrecacheEntry, SerwistGlobalConfig } from "serwist";
-import { Serwist, NetworkFirst, ExpirationPlugin, CacheableResponsePlugin } from "serwist";
+import { Serwist, NetworkFirst, NetworkOnly, ExpirationPlugin, CacheableResponsePlugin, BackgroundSyncPlugin } from "serwist";
 
 declare global {
     interface WorkerGlobalScope extends SerwistGlobalConfig {
@@ -11,12 +11,24 @@ declare global {
 
 declare const self: ServiceWorkerGlobalScope;
 
+const bgSyncPlugin = new BackgroundSyncPlugin('study-progress-queue', {
+    maxRetentionTime: 24 * 60 // Retry for max of 24 Hours (specified in minutes)
+});
+
 const serwist = new Serwist({
     precacheEntries: self.__SW_MANIFEST,
     skipWaiting: true,
     clientsClaim: true,
     navigationPreload: true,
     runtimeCaching: [
+        {
+            matcher({ url, request }) {
+                return url.pathname.startsWith('/api/study/progress') && request.method === 'POST';
+            },
+            handler: new NetworkOnly({
+                plugins: [bgSyncPlugin]
+            }),
+        },
         {
             matcher({ url }) {
                 return url.pathname.startsWith('/api/sets');

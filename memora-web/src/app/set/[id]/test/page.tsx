@@ -54,23 +54,56 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
         }))
     }
 
-    const submitTest = () => {
+    const submitTest = async () => {
         let currentScore = 0
+        const progressUpdates: { flashcardId: string; isKnown: boolean }[] = []
 
         testQuestions.forEach((q) => {
             const userAnswer = userAnswers[q.flashcard.id]
+            let isCorrect = false
 
             if (q.type === "MULTIPLE_CHOICE" && q.mcqData) {
                 const correctAnswerInfo = q.mcqData.options[q.mcqData.correctIndex]
-                if (userAnswer === correctAnswerInfo) currentScore++
+                if (userAnswer === correctAnswerInfo) {
+                    currentScore++
+                    isCorrect = true
+                }
             } else if (q.type === "TRUE_FALSE" && q.tfData) {
                 const correctBooleanString = String(q.tfData.isTrue)
-                if (userAnswer === correctBooleanString) currentScore++
+                if (userAnswer === correctBooleanString) {
+                    currentScore++
+                    isCorrect = true
+                }
             }
+
+            progressUpdates.push({
+                flashcardId: q.flashcard.id,
+                isKnown: isCorrect
+            })
         })
 
         setScore(currentScore)
         setIsSubmitted(true)
+
+        // Dispatch progress to backend for SR
+        try {
+            await fetch('/api/study/progress', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    setId: id,
+                    progressUpdates
+                })
+            })
+        } catch (err) {
+            if (!navigator.onLine) {
+                console.log("Offline mode: Test progress saved locally and will sync when online.")
+            } else {
+                console.error("Error submitting test progress", err)
+            }
+        }
     }
 
     const restartTest = () => {
