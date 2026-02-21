@@ -29,6 +29,7 @@ async fn main() {
         .route("/api/protected/me", get(handlers::protected::me_handler))
         .route("/api/users/onboarding", post(handlers::users::finish_onboarding))
         .route("/api/users/role", axum::routing::patch(handlers::users::update_role))
+        .route("/api/sets/:id", get(handlers::sets::get_public_set))
         .with_state(pool);
 
     // Run our app

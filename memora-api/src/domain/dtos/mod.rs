@@ -29,6 +29,26 @@ pub struct UserResponse {
 #[typeshare]
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct FlashcardResponse {
+    pub id: String,
+    pub term: String,
+    pub definition: String,
+    pub order_index: i32,
+}
+
+#[typeshare]
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct SetResponse {
+    pub id: String,
+    pub title: String,
+    pub description: Option<String>,
+    pub flashcards: Vec<FlashcardResponse>,
+}
+
+#[typeshare]
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct RoleSelectionRequest {
     pub role: String,
 }

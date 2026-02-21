@@ -8,3 +8,17 @@ export interface UserProfile {
 	createdAt: string;
 }
 
+export interface Flashcard {
+	id: string;
+	term: string;
+	definition: string;
+	orderIndex: number;
+}
+
+export interface StudySet {
+	id: string;
+	title: string;
+	description: string | null;
+	flashcards: Flashcard[];
+}
+
