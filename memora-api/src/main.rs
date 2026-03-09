@@ -72,6 +72,7 @@ async fn main() {
         .route("/", get(|| async { "Memora API is running" }))
         .route("/api/auth/register", post(handlers::auth::register))
         .route("/api/auth/login", post(handlers::auth::login))
+        .route("/api/auth/oauth/google", post(handlers::auth::oauth_google))
         .route("/api/protected/me", get(handlers::protected::me_handler))
         .route("/api/users/onboarding", post(handlers::users::finish_onboarding))
         .route("/api/users/role", patch(handlers::users::update_role))

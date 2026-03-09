@@ -160,6 +160,16 @@ pub struct AuthRequest {
 #[typeshare]
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct GoogleAuthRequest {
+    pub email: String,
+    pub first_name: String,
+    pub last_name: Option<String>,
+    pub avatar_url: Option<String>,
+}
+
+#[typeshare]
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct CreateFolderRequest {
     pub name: String,
     pub description: Option<String>,

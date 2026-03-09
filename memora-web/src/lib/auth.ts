@@ -1,9 +1,14 @@
 import { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
+import GoogleProvider from "next-auth/providers/google"
 import * as jsonwebtoken from "jsonwebtoken"
 
 export const authOptions: NextAuthOptions = {
     providers: [
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID as string,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+        }),
         CredentialsProvider({
             name: "Credentials",
             credentials: {
@@ -58,17 +63,41 @@ export const authOptions: NextAuthOptions = {
         },
         async jwt({ token, user, account, isNewUser, trigger, session }) {
             console.log("JWT Callback invoked. User attached:", !!user);
-            // When user first signs in, user object is passed
-            if (user) {
-                token.id = user.id;
-                // @ts-expect-error casting role from user response
-                token.role = user.role || "student";
 
-                // For a fully built app, we might check if they have a profile, 
-                // but we can assume credentials login means they just registered.
-                // We'll set needsOnboarding to false temporarily, or we could redirect them
-                // We'll check if it's their first login
-                // Actually, register endpoint doesn't set onboarding, wait it just creates the user.
+            if (account && user) {
+                if (account.provider === 'google') {
+                    try {
+                        const googleUser = {
+                            email: user.email,
+                            firstName: user.name?.split(' ')[0] || "",
+                            lastName: user.name?.split(' ').slice(1).join(' ') || "",
+                            avatarUrl: user.image,
+                        };
+                        const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+                        const res = await fetch(`${backendUrl}/api/auth/oauth/google`, {
+                            method: 'POST',
+                            body: JSON.stringify(googleUser),
+                            headers: {
+                                "Content-Type": "application/json",
+                                "x-backend-secret": process.env.NEXTAUTH_SECRET as string
+                            },
+                        });
+
+                        if (res.ok) {
+                            const backendUser = await res.json();
+                            token.id = backendUser.id;
+                            token.role = backendUser.role;
+                        } else {
+                            console.error("Failed to sync Google user with backend:", await res.text());
+                        }
+                    } catch (e) {
+                        console.error("Google OAuth backend sync error:", e);
+                    }
+                } else if (account.provider === 'credentials') {
+                    token.id = user.id;
+                    // @ts-expect-error casting role from user response
+                    token.role = user.role || "student";
+                }
             }
 
             if (trigger === "update" && session) {
