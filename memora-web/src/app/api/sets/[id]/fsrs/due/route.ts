@@ -2,10 +2,8 @@ import { NextResponse, NextRequest } from "next/server"
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/lib/auth"
 
-export async function GET(
-    req: NextRequest,
-    context: { params: { id: string } }
-) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     const session: any = await getServerSession(authOptions)
 
     if (!session || !session.id_token) {
@@ -15,7 +13,7 @@ export async function GET(
     try {
         const rustApiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000"
 
-        const response = await fetch(`${rustApiUrl}/api/sets/${context.params.id}/fsrs/due`, {
+        const response = await fetch(`${rustApiUrl}/api/sets/${id}/fsrs/due`, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${session.id_token}`

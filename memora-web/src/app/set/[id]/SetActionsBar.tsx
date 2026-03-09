@@ -272,7 +272,7 @@ function ExportModal({ flashcards, fieldsSchema, onClose }: { flashcards: Flashc
             const orderedFields = [...fieldsSchema].sort((a, b) => {
                 if (a.side !== b.side) return a.side === 'front' ? -1 : 1;
                 return a.order - b.order;
-            }).filter(f => f.type === 'text' || f.type === 'tts');
+            }).filter(f => f.type === 'text');
 
             if (orderedFields.length === 0) {
                 return `${c.term}${tDelim}${c.definition}`;

@@ -75,19 +75,7 @@ export default function DynamicFieldRenderer({ field, index, register, errors, u
                         }}
                     />
                 );
-            case 'tts':
-                return (
-                    <TTSInput
-                        value={getValues(formPath)}
-                        onChange={(val) => {
-                            if (update) {
-                                const currentCard = getValues(`flashcards.${index}`);
-                                update(index, { ...currentCard, fieldsData: { ...(currentCard.fieldsData || {}), [field.id]: val } });
-                            }
-                        }}
-                        lang={field.settings?.language || "en"}
-                    />
-                );
+
             case 'math':
                 return (
                     <div className="mt-2">
