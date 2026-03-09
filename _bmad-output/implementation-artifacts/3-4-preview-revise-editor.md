@@ -1,6 +1,6 @@
 # Story 3.4: "Preview & Revise" Generation Editor
 
-Status: in-progress
+Status: done
 
 ## Story
 

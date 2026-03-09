@@ -171,3 +171,20 @@ mod tests {
         }
     }
 }
+
+pub struct OptionalAuthenticatedUser(pub Option<Claims>);
+
+impl<S> FromRequestParts<S> for OptionalAuthenticatedUser
+where
+    S: Send + Sync,
+{
+    type Rejection = std::convert::Infallible;
+
+    async fn from_request_parts(parts: &mut Parts, state: &S) -> Result<Self, Self::Rejection> {
+        let auth_result = AuthenticatedUser::from_request_parts(parts, state).await;
+        match auth_result {
+            Ok(AuthenticatedUser(claims)) => Ok(OptionalAuthenticatedUser(Some(claims))),
+            Err(_) => Ok(OptionalAuthenticatedUser(None)),
+        }
+    }
+}

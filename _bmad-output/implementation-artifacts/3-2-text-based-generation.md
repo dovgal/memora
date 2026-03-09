@@ -1,6 +1,6 @@
 # Story 3.2: Text-Based Flashcard Generation
 
-Status: in-progress
+Status: done
 
 ## Story
 

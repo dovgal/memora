@@ -40,35 +40,35 @@ tracking_system: file-system
 story_location: {project-root}/_bmad-output/implementation-artifacts
 
 development_status:
-  epic-1: in-progress
+  epic-1: done
   1-1-project-initialization-and-type-synchronization: done
   1-2-core-database-schema-and-auth-backend: done
   1-3-sso-registration-and-coppa-screening: done
   1-4-role-selection-and-dashboard-routing: done
-  1-5-public-library-access: ready-for-dev
+  1-5-public-library-access: done
   epic-1-retrospective: optional
-  epic-2: in-progress
+  epic-2: done
   2-1-manual-flashcard-set-creation: done
   2-2-flashcards-study-mode-and-progress-tracking: done
   2-3-learn-and-test-evaluation-modes: done
-  2-4-pwa-offline-caching-strategy: ready-for-dev
-  2-5-offline-progress-synchronization: backlog
+  2-4-pwa-offline-caching-strategy: done
+  2-5-offline-progress-synchronization: done
   epic-2-retrospective: optional
-  epic-3: backlog
-  3-1-ai-gateway-and-sse-streaming-infrastructure: backlog
-  3-2-text-based-flashcard-generation: backlog
-  3-3-photo-ocr-content-extraction: backlog
-  3-4-preview-and-revise-generation-editor: backlog
+  epic-3: done
+  3-1-ai-gateway-and-sse-streaming-infrastructure: done
+  3-2-text-based-flashcard-generation: done
+  3-3-photo-ocr-content-extraction: done
+  3-4-preview-and-revise-generation-editor: done
   epic-3-retrospective: optional
-  epic-4: backlog
-  4-1-q-chat-guardrails-and-context-injection-backend: backlog
-  4-2-q-chat-interface-and-conversation-history: backlog
-  4-3-contextual-error-explanation: backlog
+  epic-4: done
+  4-1-q-chat-guardrails-and-context-injection-backend: done
+  4-2-q-chat-interface-and-conversation-history: done
+  4-3-contextual-error-explanation: done
   epic-4-retrospective: optional
-  epic-5: backlog
-  5-1-live-mode-websocket-server-and-redis-broker: backlog
-  5-2-teacher-dashboard-and-game-initialization: backlog
-  5-3-student-join-flow-and-team-sorting: backlog
-  5-4-synchronous-gameplay-execution: backlog
-  5-5-post-game-analytics: backlog
+  epic-5: done
+  5-1-live-mode-websocket-server-and-redis-broker: done
+  5-2-teacher-dashboard-and-game-initialization: done
+  5-3-student-join-flow-and-team-sorting: done
+  5-4-synchronous-gameplay-execution: done
+  5-5-post-game-analytics: done
   epic-5-retrospective: optional

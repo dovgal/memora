@@ -1,10 +1,11 @@
 import { NextResponse, NextRequest } from "next/server"
-import { getToken } from "next-auth/jwt"
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "@/lib/auth"
 
 export async function POST(req: NextRequest) {
-    const token = await getToken({ req })
+    const session: any = await getServerSession(authOptions)
 
-    if (!token) {
+    if (!session || !session.id_token) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
@@ -16,7 +17,7 @@ export async function POST(req: NextRequest) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token.id_token}`
+                "Authorization": `Bearer ${session.id_token}`
             },
             body: JSON.stringify(body),
         })

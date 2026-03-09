@@ -1,6 +1,6 @@
 # Story 3.3: Photo OCR Content Extraction
 
-Status: in-progress
+Status: done
 
 ## Story
 

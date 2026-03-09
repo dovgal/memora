@@ -1,25 +1,79 @@
 import Link from 'next/link';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, UploadCloud, Layers } from 'lucide-react';
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
+import { SetSummaryResponse } from "@/types/schema";
 
-export default function StudentDashboard() {
+async function getUserSets(token: string): Promise<SetSummaryResponse[]> {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+    try {
+        const res = await fetch(`${apiUrl}/api/sets`, {
+            headers: { "Authorization": `Bearer ${token}` },
+            cache: 'no-store'
+        });
+        if (!res.ok) return [];
+        return await res.json();
+    } catch {
+        return [];
+    }
+}
+
+export default async function StudentDashboard() {
+    const session: any = await getServerSession(authOptions as any);
+    let sets: SetSummaryResponse[] = [];
+
+    if (session?.id_token) {
+        sets = await getUserSets(session.id_token);
+    }
+
     return (
-        <div className="min-h-screen bg-black text-white p-8">
+        <div className="p-8 max-w-7xl mx-auto">
             <h1 className="text-3xl font-bold mb-8">Student Dashboard</h1>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <Link
-                    href="/dashboard/generate"
-                    className="block p-6 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-indigo-500/50 hover:bg-zinc-800/50 transition-all group"
-                >
-                    <div className="h-12 w-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <Sparkles className="w-6 h-6" />
+            <section className="mb-12">
+                <h2 className="text-xl font-semibold mb-4 text-zinc-300">Quick Actions</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <Link href="/dashboard/generate" className="block p-6 rounded-2xl bg-[#1f1f3d] border border-[#2a2a4d] hover:border-indigo-500/50 hover:bg-[#2a2a4d]/50 transition-all group">
+                        <div className="h-12 w-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <Sparkles className="w-6 h-6" />
+                        </div>
+                        <h3 className="text-lg font-semibold mb-2 text-white">Generate with AI</h3>
+                        <p className="text-zinc-400 text-sm">Instantly turn your study materials and class notes into flashcards.</p>
+                    </Link>
+
+                    <Link href="/create" className="block p-6 rounded-2xl bg-[#1f1f3d] border border-[#2a2a4d] hover:border-indigo-500/50 hover:bg-[#2a2a4d]/50 transition-all group">
+                        <div className="h-12 w-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <UploadCloud className="w-6 h-6" />
+                        </div>
+                        <h3 className="text-lg font-semibold mb-2 text-white">Import Flashcards</h3>
+                        <p className="text-zinc-400 text-sm">Copy and paste your terms and definitions from Excel, Word, or Docs.</p>
+                    </Link>
+                </div>
+            </section>
+
+            <section>
+                <h2 className="text-xl font-semibold mb-4 text-zinc-300">Your Recent Sets</h2>
+                {sets.length === 0 ? (
+                    <div className="bg-[#1f1f3d]/50 border border-[#2a2a4d] rounded-2xl p-8 text-center">
+                        <p className="text-zinc-400 mb-4">You haven't created any study sets yet.</p>
+                        <Link href="/create" className="inline-block bg-indigo-500 hover:bg-indigo-400 text-white px-6 py-2 rounded-lg font-medium transition-colors">
+                            Create a Set
+                        </Link>
                     </div>
-                    <h2 className="text-xl font-semibold mb-2">Generate with AI</h2>
-                    <p className="text-zinc-400 text-sm">
-                        Instantly turn your study materials and class notes into flashcards.
-                    </p>
-                </Link>
-            </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {sets.map(set => (
+                            <Link href={`/set/${set.id}`} key={set.id} className="block p-6 rounded-2xl bg-[#1f1f3d] border border-[#2a2a4d] hover:border-indigo-500/50 transition-all group group/card">
+                                <h3 className="text-lg font-bold text-white mb-2 group-hover/card:text-indigo-300 transition-colors line-clamp-1">{set.title}</h3>
+                                {set.description && <p className="text-zinc-400 text-sm mb-4 line-clamp-2">{set.description}</p>}
+                                <div className="flex items-center gap-2 text-xs font-semibold text-zinc-500 uppercase tracking-widest mt-auto">
+                                    <Layers className="w-4 h-4" /> {set.flashcardCount} Terms
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                )}
+            </section>
         </div>
     )
 }

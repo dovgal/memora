@@ -108,11 +108,20 @@ export default function GenerateFlashcardsPage() {
     };
 
     const handleGenerate = async () => {
+        setError(null);
+        if (!prompt.trim() && !base64Image) {
+            setError("Please provide some text or an image.");
+            return;
+        }
+
         // @ts-expect-error id_token is injected by our custom authOptions
-        if ((!prompt.trim() && !base64Image) || !session?.id_token) return;
+        if (!session?.id_token) {
+            console.error("Session token is missing:", session);
+            setError("Session token missing. Please log out and log back in, or check the terminal logs.");
+            return;
+        }
 
         setIsGenerating(true);
-        setError(null);
         setGeneratedCards([]); // Clear previous results
 
         try {
@@ -239,7 +248,7 @@ export default function GenerateFlashcardsPage() {
                     </button>
                     <button
                         onClick={handleGenerate}
-                        disabled={isGenerating || (!prompt.trim() && !base64Image)}
+                        disabled={isGenerating}
                         className="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-2 rounded-lg font-medium transition-colors"
                     >
                         {isGenerating ? (

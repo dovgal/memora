@@ -1,16 +1,17 @@
 import { NextResponse, NextRequest } from "next/server"
-import { getToken } from "next-auth/jwt"
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "@/lib/auth"
 
 export async function GET(
     req: NextRequest,
     context: { params: Promise<{ id: string }> }
 ) {
-    const token = await getToken({ req })
+    const session: any = await getServerSession(authOptions)
 
     // params needs to be awaited in Next.js 15
     const params = await context.params;
 
-    if (!token) {
+    if (!session || !session.id_token) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
@@ -21,7 +22,7 @@ export async function GET(
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token.id_token}`
+                "Authorization": `Bearer ${session.id_token}`
             }
         })
 

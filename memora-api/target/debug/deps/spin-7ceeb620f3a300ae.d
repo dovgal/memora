@@ -1,0 +1,12 @@
+/Users/dovgal/Project/my-bmad-project/memora-api/target/debug/deps/spin-7ceeb620f3a300ae.d: /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/lib.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/barrier.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/lazy.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/mutex.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/mutex/spin.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/once.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/relax.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/rwlock.rs
+
+/Users/dovgal/Project/my-bmad-project/memora-api/target/debug/deps/libspin-7ceeb620f3a300ae.rmeta: /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/lib.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/barrier.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/lazy.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/mutex.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/mutex/spin.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/once.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/relax.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/rwlock.rs
+
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/lib.rs:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/barrier.rs:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/lazy.rs:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/mutex.rs:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/mutex/spin.rs:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/once.rs:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/relax.rs:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/spin-0.10.0/src/rwlock.rs:
