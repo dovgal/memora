@@ -1,0 +1,28 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT term, definition FROM flashcards WHERE set_id = $1 ORDER BY order_index ASC",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "term",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 1,
+        "name": "definition",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false
+    ]
+  },
+  "hash": "0e771ac573bb9c5f200d195e27495ba20985b60a747d556abc52f6f434c7aae4"
+}

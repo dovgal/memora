@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO flashcard_progress (user_id, flashcard_id, is_known, reviewed_at, updated_at)\n            VALUES ($1, $2, $3, NOW(), NOW())\n            ON CONFLICT (user_id, flashcard_id)\n            DO UPDATE SET \n                is_known = EXCLUDED.is_known,\n                reviewed_at = NOW(),\n                updated_at = NOW()\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Bool"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "fbcddc8e8e7ef0023be37b5fc517f3d7b12a789881cfc1627bb0868ad987e143"
+}

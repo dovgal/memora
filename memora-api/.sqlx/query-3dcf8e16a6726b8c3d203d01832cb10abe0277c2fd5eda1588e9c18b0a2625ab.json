@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "DELETE FROM flashcards WHERE set_id = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "3dcf8e16a6726b8c3d203d01832cb10abe0277c2fd5eda1588e9c18b0a2625ab"
+}

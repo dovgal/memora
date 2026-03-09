@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        INSERT INTO user_profiles (user_id, first_name, date_of_birth) \n        VALUES ($1, $2, $3)\n        ON CONFLICT (user_id) DO UPDATE \n        SET date_of_birth = EXCLUDED.date_of_birth\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Varchar",
+        "Date"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "2f948299982e0df8fa1bd9093353b18337cc4e87ed736aaf64f11ec4de1a3720"
+}
