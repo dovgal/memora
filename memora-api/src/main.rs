@@ -102,11 +102,14 @@ async fn main() {
         .layer(DefaultBodyLimit::max(20 * 1024 * 1024))
         .with_state(app_state);
 
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:8000")
+    let port = std::env::var("PORT").unwrap_or_else(|_| "8000".to_string());
+    let addr = format!("0.0.0.0:{}", port);
+
+    let listener = tokio::net::TcpListener::bind(&addr)
         .await
         .unwrap();
 
-    println!("Server running on http://localhost:8000");
+    println!("Server running on http://{}", addr);
     axum::serve(listener, app).await.unwrap();
 }
 
