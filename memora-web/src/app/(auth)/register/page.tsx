@@ -33,7 +33,8 @@ export default function RegisterPage() {
 
         try {
             // Register via Rust backend API
-            const res = await fetch("http://localhost:8000/api/auth/register", {
+            const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+            const res = await fetch(`${backendUrl}/api/auth/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password })
