@@ -128,10 +128,19 @@ pub struct StudySessionRequest {
 #[typeshare]
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct CardProgress {
+    pub flashcard_id: String,
+    pub state: u8, // 0=New, 1=Learning, 2=Review, 3=Relearning
+}
+
+#[typeshare]
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct SetProgressResponse {
     pub total_cards: i32,
     pub known_cards: i32,
     pub mastery_percentage: i32,
+    pub cards: Vec<CardProgress>,
 }
 
 #[typeshare]

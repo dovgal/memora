@@ -143,10 +143,29 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
                 {/* Terms List and Mastery */}
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12">
                     <div className="lg:col-span-3">
-                        <h2 className="text-xl font-bold mb-6 text-white">Термины в этом модуле ({set.flashcards.length})</h2>
-                        <div className="flex flex-col gap-4">
-                            {set.flashcards.map((card: any, index: number) => {
-                                const schema = set.fieldsSchema || [];
+                        {/* Process cards into 3 FSRS groups based on progress object */}
+                        {(() => {
+                            // Extract states map for O(1) lookup
+                            const progressMap = new Map<string, number>();
+                            if (progress && progress.cards) {
+                                progress.cards.forEach(c => progressMap.set(c.flashcardId, c.state));
+                            }
+
+                            const mastered: any[] = []; // State 2
+                            const learning: any[] = []; // State 1 or 3
+                            const notStudied: any[] = []; // State 0 or missing
+
+                            set.flashcards.forEach(card => {
+                                const state = progressMap.get(card.id) ?? 0;
+                                if (state === 2) mastered.push(card);
+                                else if (state === 1 || state === 3) learning.push(card);
+                                else notStudied.push(card);
+                            });
+
+                            const schema = set.fieldsSchema || [];
+
+                            // Reusable Card Renderer
+                            const renderCard = (card: any) => {
                                 const getPreviewText = (side: 'front' | 'back') => {
                                     if (!schema.length) return <p className="font-semibold text-lg break-words">{side === 'front' ? card.term : card.definition}</p>;
                                     const textFields = schema.filter(f => f.side === side && f.type === 'text').sort((a, b) => a.order - b.order);
@@ -168,7 +187,7 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
                                                                 {field.name}
                                                             </span>
                                                         )}
-                                                        <span className={`flex-1 break-words leading-relaxed ${side === 'front' ? 'font-semibold text-white text-lg' : 'font-medium text-zinc-300'}`}>
+                                                        <span className={`flex-1 break-words leading-relaxed ${side === 'front' ? 'font-semibold text-white text-base md:text-lg' : 'font-medium text-zinc-300 text-sm md:text-base'}`}>
                                                             {val}
                                                         </span>
                                                     </div>
@@ -181,18 +200,66 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
                                 return (
                                     <div
                                         key={card.id}
-                                        className="bg-zinc-900 border border-zinc-800 hover:border-zinc-700 p-6 rounded-2xl flex flex-col md:flex-row gap-4 md:gap-8 transition-colors group cursor-default shadow-md"
+                                        className="bg-[#171c2e] border border-transparent shadow-[0_2px_8px_rgba(0,0,0,0.2)] md:hover:shadow-[0_4px_12px_rgba(0,0,0,0.3)] p-4 md:p-6 rounded-xl flex flex-col md:flex-row gap-4 md:gap-8 transition-all group cursor-default"
                                     >
-                                        <div className="md:w-1/3 border-b md:border-b-0 md:border-r border-zinc-800 pb-4 md:pb-0 md:pr-8 flex items-center">
+                                        <div className="md:w-1/3 border-b md:border-b-0 md:border-r border-[#262c40] pb-4 md:pb-0 md:pr-8 flex items-center">
                                             {getPreviewText('front')}
                                         </div>
-                                        <div className="md:w-2/3 flex items-center pl-0 md:pl-4">
-                                            {getPreviewText('back')}
+                                        <div className="md:w-2/3 flex items-center pl-0 md:pl-4 justify-between">
+                                            <div className="flex-1">
+                                                {getPreviewText('back')}
+                                            </div>
+                                            {/* Quizlet-style interactive icons hidden until hover on desktop */}
+                                            <div className="hidden md:flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <button className="text-zinc-400 hover:text-amber-400 transition-colors" title="Добавить в избранное">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                                </button>
+                                                <button className="text-zinc-400 hover:text-indigo-400 transition-colors" title="Редактировать">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 );
-                            })}
-                        </div>
+                            };
+
+                            const renderGroup = (title: string, cards: any[], colorClass: string, subtitle?: string) => {
+                                if (cards.length === 0) return null;
+                                return (
+                                    <div className="mb-12">
+                                        <div className="flex items-center justify-between mb-4">
+                                            <div>
+                                                <h3 className={`text-lg font-bold ${colorClass}`}>{title} ({cards.length})</h3>
+                                                {subtitle && <p className="text-sm text-zinc-400 mt-1">{subtitle}</p>}
+                                            </div>
+                                            <button className="text-xs font-semibold text-zinc-300 bg-[#1f1f3d] hover:bg-[#2a2a4d] border border-[#2a2a4d] px-4 py-2 rounded-full flex items-center gap-2 transition-colors">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                                Выбрать {cards.length}
+                                            </button>
+                                        </div>
+                                        <div className="flex flex-col gap-3">
+                                            {cards.map(renderCard)}
+                                        </div>
+                                    </div>
+                                );
+                            };
+
+                            return (
+                                <>
+                                    <div className="flex items-center justify-between mb-8">
+                                        <h2 className="text-xl font-bold text-white">Термины в модуле ({set.flashcards.length})</h2>
+                                        <button className="text-sm font-semibold text-zinc-300 hover:text-white transition-colors flex items-center gap-1 cursor-pointer">
+                                            Ваша статистика <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                        </button>
+                                    </div>
+
+                                    {/* Groups */}
+                                    {renderGroup("Изучено", learning, "text-orange-400", "Вы начали изучать эти термины. Продолжайте!")}
+                                    {renderGroup("Усвоено", mastered, "text-emerald-400", "Вы хорошо усвоили эти термины!")}
+                                    {renderGroup("Не изучено", notStudied, "text-zinc-400", "Вы еще не проходили эти термины!")}
+                                </>
+                            );
+                        })()}
                     </div>
 
                     <div className="lg:col-span-1 flex flex-col gap-4">

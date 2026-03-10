@@ -80,26 +80,32 @@ pub async fn get_set_progress(
     let set_id = Uuid::parse_str(&set_id_str)
         .map_err(|_| (StatusCode::BAD_REQUEST, "Invalid set ID".to_string()))?;
 
-    // Retrieve aggregate statistics from the DB
-    // Count all flashcards in the set, and how many are known by this specific user
-    let row = sqlx::query!(
+    // We do a single query to get all flashcards in the set and their FSRS state for this user.
+    // We also count legacy `flashcard_progress` just to keep the known_cards logic stable if needed,
+    // though FSRS state should now dictate "known" status conceptually.
+    // For now, let's keep known_cards backwards-compatible for the progress bar, 
+    // or we can calculate it dynamically: State 2 (Review) = Mastered/Known.
+    let rows = sqlx::query!(
         r#"
         SELECT 
-            COUNT(f.id) as total_cards,
-            COALESCE(SUM(CASE WHEN fp.is_known = true THEN 1 ELSE 0 END), 0) as known_cards
+            f.id as flashcard_id,
+            COALESCE(fsrs.state, 0) as fsrs_state
         FROM flashcards f
-        LEFT JOIN flashcard_progress fp ON f.id = fp.flashcard_id AND fp.user_id = $1
+        LEFT JOIN fsrs_records fsrs ON f.id = fsrs.flashcard_id AND fsrs.user_id = $1
         WHERE f.set_id = $2
         "#,
         user_id,
         set_id
     )
-    .fetch_one(&pool)
+    .fetch_all(&pool)
     .await
     .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
-    let total = row.total_cards.unwrap_or(0);
-    let known = row.known_cards.unwrap_or(0);
+    use crate::domain::dtos::CardProgress;
+
+    let total = rows.len() as i32;
+    // We'll define "known" or "mastered" strictly as FSRS State == 2 (Review)
+    let known = rows.iter().filter(|r| r.fsrs_state == 2).count() as i32;
     
     let mastery_percentage = if total > 0 {
         ((known as f64 / total as f64) * 100.0).round() as i32
@@ -107,10 +113,16 @@ pub async fn get_set_progress(
         0
     };
 
+    let cards = rows.into_iter().map(|r| CardProgress {
+        flashcard_id: r.flashcard_id.to_string(),
+        state: r.fsrs_state as u8,
+    }).collect();
+
     let response = SetProgressResponse {
-        total_cards: total as i32,
-        known_cards: known as i32,
+        total_cards: total,
+        known_cards: known,
         mastery_percentage,
+        cards,
     };
 
     Ok((StatusCode::OK, Json(response)))

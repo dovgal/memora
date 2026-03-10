@@ -109,10 +109,16 @@ export interface RoleSelectionRequest {
 	role: string;
 }
 
+export interface CardProgress {
+	flashcardId: string;
+	state: number;
+}
+
 export interface SetProgressResponse {
 	totalCards: number;
 	knownCards: number;
 	masteryPercentage: number;
+	cards: CardProgress[];
 }
 
 export interface SetResponse {
