@@ -101,35 +101,35 @@ export default async function DashboardLayout({
             {/* Main Content Area */}
             <main className="flex-1 flex flex-col h-screen overflow-hidden relative min-w-0">
                 {/* Header */}
-                <header className="h-16 border-b border-[#1f1f3d] bg-[#0a0a1a] flex items-center justify-between px-6 shrink-0 z-10 sticky top-0">
+                <header className="h-16 border-b border-[#262c40] bg-[#0a0f1d] flex items-center justify-between px-6 shrink-0 z-10 sticky top-0">
                     <div className="flex-1 max-w-2xl px-4 md:px-0">
                         <div className="relative group">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 group-focus-within:text-indigo-400 transition-colors" />
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8e95ae] group-focus-within:text-indigo-400 transition-colors" />
                             <input
                                 type="text"
                                 placeholder="Search study sets, folders, users..."
-                                className="w-full bg-[#1a1a36] border border-transparent focus:border-indigo-500/50 rounded-full py-2 pl-10 pr-4 text-sm text-white placeholder:text-zinc-500 outline-none transition-all focus:bg-[#0f0f2d] focus:shadow-[0_0_15px_rgba(99,102,241,0.1)]"
+                                className="w-full bg-[#171c2e] border border-transparent focus:border-indigo-500/50 rounded-full py-2 pl-10 pr-4 text-sm text-white placeholder:text-[#8e95ae] outline-none transition-all focus:bg-[#0a0f1d] focus:shadow-[0_0_15px_rgba(99,102,241,0.1)]"
                             />
                         </div>
                     </div>
 
                     <div className="flex items-center gap-4 pl-4">
-                        <Link href="/create" className="hidden sm:flex items-center justify-center w-8 h-8 rounded-full bg-indigo-500 hover:bg-indigo-400 text-white transition-colors shadow-lg shadow-indigo-500/20">
-                            <Plus className="w-5 h-5" />
-                        </Link>
-
-                        <button className="hidden sm:block px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-amber-950 font-semibold rounded-full text-sm transition-colors shadow-lg shadow-amber-500/20">
+                        {/* 
+                         * User requested to hide Create/Generate buttons from the main layout 
+                         * for a cleaner look. Keep Upgrade for styling.
+                         */}
+                        <button className="hidden sm:block px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-amber-950 font-semibold rounded-full text-sm transition-colors shadow-[0_0_20px_rgba(245,158,11,0.2)]">
                             Upgrade
                         </button>
 
                         <div className="relative group">
-                            <button className="w-9 h-9 rounded-full bg-blue-500 text-white flex items-center justify-center font-medium border-2 border-transparent hover:border-zinc-700 transition-all cursor-pointer">
+                            <button className="w-9 h-9 rounded-full bg-indigo-600 text-white flex items-center justify-center font-medium border-2 border-transparent hover:border-zinc-500 transition-all cursor-pointer shadow-indigo-500/50 shadow-lg">
                                 {initial}
                             </button>
-                            <div className="absolute right-0 top-full mt-2 w-48 bg-[#1f1f3d] border border-[#2a2a4d] rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all origin-top-right transform -translate-y-2 group-hover:translate-y-0 p-2 z-50">
-                                <div className="px-3 py-2 border-b border-[#2a2a4d] mb-2">
+                            <div className="absolute right-0 top-full mt-2 w-48 bg-[#171c2e] border border-[#262c40] rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all origin-top-right transform -translate-y-2 group-hover:translate-y-0 p-2 z-50">
+                                <div className="px-3 py-2 border-b border-[#262c40] mb-2">
                                     <p className="text-sm font-medium text-white">{session?.user?.email || "User"}</p>
-                                    <p className="text-xs text-zinc-400 capitalize">{role}</p>
+                                    <p className="text-xs text-[#8e95ae] capitalize">{role}</p>
                                 </div>
                                 <LogoutButton />
                             </div>
@@ -138,7 +138,7 @@ export default async function DashboardLayout({
                 </header>
 
                 {/* Page Content */}
-                <div className="flex-1 overflow-y-auto w-full">
+                <div className="flex-1 overflow-y-auto w-full bg-[#0a0f1d]">
                     {children}
                 </div>
             </main>
