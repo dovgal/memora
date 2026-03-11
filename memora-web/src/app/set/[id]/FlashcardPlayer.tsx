@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
 import { FlashcardResponse, FieldSchema } from "@/types/schema"
-import { ChevronLeft, ChevronRight, Settings, Play, Maximize, Edit2, Volume2, VolumeX, Star } from "lucide-react"
+import { ChevronLeft, ChevronRight, Settings, Play, Pause, Maximize, Edit2, Volume2, VolumeX, Star, Shuffle } from "lucide-react"
 import FlashcardRender from "@/components/FlashcardRender"
 
 const DEFAULT_SCHEMA: FieldSchema[] = [
@@ -24,19 +24,56 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
 
     // Settings state
     const [trackProgress, setTrackProgress] = useState(false);
-    const [fsrsEnabled, setFsrsEnabled] = useState(false);
     const [studyStarredOnly, setStudyStarredOnly] = useState(false);
     const [frontSide, setFrontSide] = useState<'term' | 'definition'>('term');
-    const [ttsEnabled, setTtsEnabled] = useState(false);
+    const [ttsEnabled, setTtsEnabled] = useState(true);
     const [showBothSides, setShowBothSides] = useState(false);
 
-    // activeCards could be restricted when FSRS is enabled
+    const [isAutoPlaying, setIsAutoPlaying] = useState(false);
+    const [isShuffled, setIsShuffled] = useState(false);
+    const [starredIds, setStarredIds] = useState<Set<string>>(new Set());
+    const [editingCard, setEditingCard] = useState<FlashcardResponse | null>(null);
+
+    // activeCards could be restricted when tracking progress
     const [activeCards, setActiveCards] = useState<FlashcardResponse[]>(flashcards);
     const [isLoadingFsrs, setIsLoadingFsrs] = useState(false);
 
     useEffect(() => {
-        if (!fsrsEnabled) {
-            setActiveCards(flashcards);
+        // Load initial starred state
+        if (setId && typeof window !== 'undefined') {
+            const saved = localStorage.getItem(`starred_${setId}`);
+            if (saved) {
+                try { setStarredIds(new Set(JSON.parse(saved))); } catch (e) { }
+            }
+        }
+    }, [setId]);
+
+    const toggleStar = (e: React.MouseEvent, id: string) => {
+        e.stopPropagation();
+        setStarredIds(prev => {
+            const next = new Set(prev);
+            if (next.has(id)) next.delete(id);
+            else next.add(id);
+            if (setId) localStorage.setItem(`starred_${setId}`, JSON.stringify(Array.from(next)));
+            return next;
+        });
+    };
+
+    useEffect(() => {
+        const applyFilters = (baseCards: FlashcardResponse[]) => {
+            let res = baseCards;
+            if (studyStarredOnly) {
+                res = res.filter(c => starredIds.has(c.id));
+            }
+            if (isShuffled) {
+                // simple shuffle
+                res = [...res].sort(() => Math.random() - 0.5);
+            }
+            return res;
+        };
+
+        if (!trackProgress) {
+            setActiveCards(applyFilters(flashcards));
             setCurrentIndex(0);
             setIsFlipped(false);
             return;
@@ -50,7 +87,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
             .then(res => res.json())
             .then(data => {
                 if (isMounted) {
-                    setActiveCards(data && Array.isArray(data) ? data : []);
+                    setActiveCards(applyFilters(data && Array.isArray(data) ? data : []));
                     setCurrentIndex(0);
                     setIsFlipped(false);
                 }
@@ -61,7 +98,8 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
             });
 
         return () => { isMounted = false; };
-    }, [fsrsEnabled, flashcards, setId]);
+        // deliberately excluding starredIds from deps to avoid re-shuffling on every star click
+    }, [trackProgress, flashcards, setId, studyStarredOnly, isShuffled]);
 
     const handleRateFSRS = async (rating: number) => {
         const currentCard = activeCards[currentIndex];
@@ -164,28 +202,63 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [handleFlip, handleNext, handlePrev]);
 
-    if (fsrsEnabled && isLoadingFsrs) {
+    useEffect(() => {
+        if (!isAutoPlaying) return;
+        const currentIsFlipped = isFlipped;
+
+        const timer = setTimeout(() => {
+            if (!currentIsFlipped && !showBothSides) {
+                setIsFlipped(true);
+            } else {
+                handleNext();
+                if (currentIndex >= activeCards.length - 1) {
+                    setIsAutoPlaying(false);
+                }
+            }
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, [isAutoPlaying, isFlipped, currentIndex, handleNext, activeCards.length, showBothSides]);
+
+    const toggleFullscreen = () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(err => console.error(err));
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+    };
+
+    if (trackProgress && isLoadingFsrs) {
         return <div className="p-8 text-center text-zinc-500 animate-pulse">Загрузка карточек для повторения...</div>;
     }
 
     if (!activeCards || activeCards.length === 0) {
         return (
-            <div className="w-full flex items-center justify-center aspect-[16/9] md:aspect-[2/1] max-w-4xl bg-zinc-900 border border-zinc-800 rounded-2xl shadow-xl flex-col mb-6">
+            <div className="w-full flex-col flex items-center justify-center aspect-[16/9] md:aspect-[2/1] max-w-4xl bg-zinc-900 border border-zinc-800 rounded-2xl shadow-xl mb-6">
                 <div className="text-zinc-400 font-medium">
-                    {fsrsEnabled ? "Отлично! На сегодня карточек для повторения больше нет! 🎉" : "No flashcards available."}
+                    {trackProgress ? "Отлично! На сегодня карточек для повторения больше нет! 🎉" : "Нет карточек для отображения."}
                 </div>
+                {trackProgress && (
+                    <button
+                        onClick={() => { setTrackProgress(false); }}
+                        className="mt-6 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-xl transition-colors font-semibold"
+                    >
+                        Вернуться к обычному просмотру
+                    </button>
+                )}
             </div>
         );
     }
 
-    // When FSRS is enabled, we exhaust the activeCards list one by one
-    // So if currentIndex >= activeCards.length, we are done
-    if (fsrsEnabled && currentIndex >= activeCards.length) {
+    // When tracking progress, we exhaust the activeCards list one by one
+    if (trackProgress && currentIndex >= activeCards.length) {
         return (
-            <div className="w-full flex items-center justify-center aspect-[16/9] md:aspect-[2/1] max-w-4xl bg-zinc-900 border border-zinc-800 rounded-2xl shadow-xl flex-col mb-6">
+            <div className="w-full flex-col flex items-center justify-center aspect-[16/9] md:aspect-[2/1] max-w-4xl bg-zinc-900 border border-zinc-800 rounded-2xl shadow-xl mb-6">
                 <div className="text-zinc-300 text-lg font-bold mb-2">На сегодня карточек для повторения больше нет! 🎉</div>
                 <button
-                    onClick={() => { setFsrsEnabled(false); }}
+                    onClick={() => { setTrackProgress(false); }}
                     className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-xl transition-colors font-semibold"
                 >
                     Вернуться к обычному просмотру
@@ -204,8 +277,8 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
 
                 {/* Overlay Settings Modal */}
                 {showSettings && (
-                    <div className="absolute inset-0 z-50 bg-[#0a0a1a]/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200">
-                        <div className="w-full max-w-2xl bg-[#0a0a1a] rounded-3xl overflow-y-auto shadow-2xl relative max-h-full border border-white/5">
+                    <div className="absolute inset-0 z-50 bg-[#0a0a1a]/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200" onClick={() => setShowSettings(false)}>
+                        <div className="w-full max-w-2xl bg-[#0a0a1a] rounded-3xl overflow-y-auto shadow-2xl relative max-h-full border border-white/5" onClick={e => e.stopPropagation()}>
                             <button
                                 onClick={() => setShowSettings(false)}
                                 className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-[#1b1b2f] hover:bg-[#2a2a4d] text-zinc-300 hover:text-white transition-colors"
@@ -219,21 +292,10 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                                     {/* Row 1 */}
                                     <div className="flex items-start justify-between py-6 border-b border-white/10">
                                         <div className="pr-8">
-                                            <p className="font-bold text-base text-white">Интервальное повторение (FSRS)</p>
+                                            <p className="font-bold text-base text-white">Отслеживайте прогресс</p>
                                             <p className="text-[13px] text-zinc-400 mt-2 leading-relaxed max-w-lg">
                                                 Интеллектуальный алгоритм. Показывает только карточки, которые вы можете скоро забыть.
                                             </p>
-                                        </div>
-                                        <div className="pt-1">
-                                            <Toggle isOn={fsrsEnabled} onToggle={() => setFsrsEnabled(!fsrsEnabled)} />
-                                        </div>
-                                    </div>
-
-                                    {/* Row 2 */}
-                                    <div className="flex items-center justify-between py-6 border-b border-white/10">
-                                        <div className="pr-8">
-                                            <p className="font-bold text-base text-white">Отслеживайте прогресс</p>
-                                            <p className="text-[13px] text-zinc-400 mt-2 leading-relaxed max-w-lg">Обычный режим. Отключите его для быстрого повторения.</p>
                                         </div>
                                         <div className="pt-1">
                                             <Toggle isOn={trackProgress} onToggle={() => setTrackProgress(!trackProgress)} />
@@ -310,13 +372,13 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                         <HelpCircleIcon className="w-5 h-5 cursor-pointer hover:text-white transition-colors" /> Показать подсказку
                     </div>
                     <div className="flex items-center gap-4 text-zinc-400">
-                        <Edit2 className="w-5 h-5 cursor-pointer hover:text-white transition-colors" />
+                        <Edit2 onClick={(e) => { e.stopPropagation(); setEditingCard(currentCard); }} className="w-5 h-5 cursor-pointer hover:text-white transition-colors" />
                         {ttsEnabled ? (
                             <Volume2 onClick={(e) => { e.stopPropagation(); setTtsEnabled(false); }} className="w-5 h-5 cursor-pointer text-[#a8b1ff] hover:text-white transition-colors" />
                         ) : (
                             <VolumeX onClick={(e) => { e.stopPropagation(); setTtsEnabled(true); }} className="w-5 h-5 cursor-pointer text-zinc-500 hover:text-white transition-colors" />
                         )}
-                        <Star className="w-5 h-5 cursor-pointer hover:text-yellow-400 transition-colors" />
+                        <Star onClick={(e) => toggleStar(e, currentCard?.id)} className={`w-5 h-5 cursor-pointer transition-colors ${starredIds.has(currentCard?.id) ? 'text-yellow-400 fill-yellow-400' : 'hover:text-yellow-400'}`} />
                     </div>
                 </div>
 
@@ -326,62 +388,71 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                     className="flex-1 flex items-center justify-center p-12 cursor-pointer perspective-[1000px] w-full h-full"
                 >
                     <div
-                        className={`w-full h-full flex items-center justify-center transition-transform duration-500 ease-out-expo ${isFlipped ? 'rotate-x-180' : ''}`}
+                        className={`w-full h-full flex items-center justify-center transition-transform duration-500 ease-out-expo ${(isFlipped && !showBothSides) ? 'rotate-x-180' : ''}`}
                         style={{ transformStyle: 'preserve-3d' }}
                     >
-                        {/* Front Side */}
-                        <div
-                            className="absolute inset-0 flex flex-col items-center justify-center text-center backface-hidden"
-                            style={{ backfaceVisibility: 'hidden' }}
-                        >
-                            <FlashcardRender card={currentCard} fieldsSchema={fieldsSchema} side={actualFrontSide} />
-                        </div>
+                        {showBothSides ? (
+                            <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 gap-8 overflow-y-auto w-full h-full">
+                                <div className="font-semibold text-white text-[22px] border-b border-white/10 pb-6 w-full flex-1 flex flex-col justify-end">
+                                    <FlashcardRender card={currentCard} fieldsSchema={fieldsSchema} side={actualFrontSide} />
+                                </div>
+                                <div className="font-medium text-indigo-100 text-lg w-full flex-1 flex flex-col justify-start">
+                                    <FlashcardRender card={currentCard} fieldsSchema={fieldsSchema} side={actualBackSide} />
+                                </div>
+                            </div>
+                        ) : (
+                            <>
+                                {/* Front Side */}
+                                <div
+                                    className="absolute inset-0 flex flex-col items-center justify-center text-center backface-hidden"
+                                    style={{ backfaceVisibility: 'hidden' }}
+                                >
+                                    <FlashcardRender card={currentCard} fieldsSchema={fieldsSchema} side={actualFrontSide} />
+                                </div>
 
-                        {/* Back Side */}
-                        <div
-                            className="absolute inset-0 flex flex-col items-center justify-center text-center backface-hidden rotate-x-180 text-indigo-100"
-                            style={{ backfaceVisibility: 'hidden', transform: 'rotateX(180deg)' }}
-                        >
-                            <FlashcardRender card={currentCard} fieldsSchema={fieldsSchema} side={actualBackSide} />
-                        </div>
+                                {/* Back Side */}
+                                <div
+                                    className="absolute inset-0 flex flex-col items-center justify-center text-center backface-hidden rotate-x-180 text-indigo-100"
+                                    style={{ backfaceVisibility: 'hidden', transform: 'rotateX(180deg)' }}
+                                >
+                                    <FlashcardRender card={currentCard} fieldsSchema={fieldsSchema} side={actualBackSide} />
+                                </div>
+                            </>
+                        )}
                     </div>
                 </div>
 
                 {/* Bottom hint banner */}
-                <div className="absolute bottom-0 left-0 right-0 h-10 flex items-center justify-center bg-indigo-600 font-medium text-sm text-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                <div className={`absolute bottom-0 left-0 right-0 h-10 flex items-center justify-center bg-indigo-600 font-medium text-sm text-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none ${showBothSides ? 'hidden' : ''}`}>
                     Нажмите пробел, чтобы перевернуть карточку
                 </div>
             </div>
 
             {/* Controls Below Card */}
-            {fsrsEnabled && isFlipped ? (
-                // FSRS Response Buttons
+            {trackProgress && isFlipped && !showBothSides ? (
+                // FSRS Response Buttons (Quizlet Style)
                 <div className="flex items-center justify-center w-full max-w-4xl px-4 gap-4 md:gap-8 mt-2">
-                    <button onClick={() => handleRateFSRS(1)} className="flex-1 max-w-[150px] py-3 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500/20 border border-red-500/20 transition-colors font-bold text-sm">
-                        Снова (1)
+                    <button onClick={() => handleRateFSRS(1)} className="flex-1 max-w-[200px] py-4 rounded-xl bg-[#1f1f3d] hover:bg-[#2a2a4d] border border-[#2a2a4d] transition-colors font-bold text-sm text-white flex items-center justify-center gap-3">
+                        <span className="w-6 h-6 rounded border border-white/20 flex items-center justify-center text-[10px]">←</span>
+                        Еще изучаю
                     </button>
-                    <button onClick={() => handleRateFSRS(2)} className="flex-1 max-w-[150px] py-3 rounded-xl bg-orange-500/10 text-orange-500 hover:bg-orange-500/20 border border-orange-500/20 transition-colors font-bold text-sm">
-                        Трудно (2)
-                    </button>
-                    <button onClick={() => handleRateFSRS(3)} className="flex-1 max-w-[150px] py-3 rounded-xl bg-green-500/10 text-green-500 hover:bg-green-500/20 border border-green-500/20 transition-colors font-bold text-sm">
-                        Хорошо (3)
-                    </button>
-                    <button onClick={() => handleRateFSRS(4)} className="flex-1 max-w-[150px] py-3 rounded-xl bg-blue-500/10 text-blue-500 hover:bg-blue-500/20 border border-blue-500/20 transition-colors font-bold text-sm">
-                        Легко (4)
+                    <button onClick={() => handleRateFSRS(3)} className="flex-1 max-w-[200px] py-4 rounded-xl bg-[#1f1f3d] hover:bg-[#2a2a4d] border border-[#2a2a4d] transition-colors font-bold text-sm text-white flex items-center justify-center gap-3">
+                        Знаю
+                        <span className="w-6 h-6 rounded border border-white/20 flex items-center justify-center text-[10px]">→</span>
                     </button>
                 </div>
             ) : (
                 <div className="flex items-center justify-between w-full max-w-4xl px-4">
-                    <div className="flex items-center gap-3">
-                        <span className="text-sm font-medium text-zinc-400">Алгоритм FSRS</span>
-                        <Toggle isOn={fsrsEnabled} onToggle={() => setFsrsEnabled(!fsrsEnabled)} />
+                    <div className="flex items-center gap-3 cursor-pointer group" onClick={() => setTrackProgress(!trackProgress)}>
+                        <span className="text-sm font-medium text-zinc-400 group-hover:text-white transition-colors">Отслеживать прогресс</span>
+                        <Toggle isOn={trackProgress} onToggle={() => setTrackProgress(!trackProgress)} />
                     </div>
 
                     <div className="flex items-center gap-6">
                         <button
                             onClick={handlePrev}
-                            disabled={fsrsEnabled || currentIndex === 0}
-                            className={`w-12 h-12 flex items-center justify-center rounded-full border border-zinc-700 hover:bg-zinc-800 disabled:opacity-30 disabled:hover:bg-transparent transition-colors text-zinc-300 ${fsrsEnabled ? 'hidden' : ''}`}
+                            disabled={trackProgress || currentIndex === 0}
+                            className={`w-12 h-12 flex items-center justify-center rounded-full border border-zinc-700 hover:bg-zinc-800 disabled:opacity-30 disabled:hover:bg-transparent transition-colors text-zinc-300 ${trackProgress ? 'invisible' : ''}`}
                         >
                             <ChevronLeft className="w-6 h-6" />
                         </button>
@@ -392,23 +463,67 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
 
                         <button
                             onClick={handleNext}
-                            disabled={fsrsEnabled || currentIndex === activeCards.length - 1}
-                            className={`w-12 h-12 flex items-center justify-center rounded-full border border-zinc-700 hover:bg-zinc-800 disabled:opacity-30 disabled:hover:bg-transparent transition-colors text-zinc-300 ${fsrsEnabled ? 'hidden' : ''}`}
+                            disabled={trackProgress || currentIndex === activeCards.length - 1}
+                            className={`w-12 h-12 flex items-center justify-center rounded-full border border-zinc-700 hover:bg-zinc-800 disabled:opacity-30 disabled:hover:bg-transparent transition-colors text-zinc-300 ${trackProgress ? 'invisible' : ''}`}
                         >
                             <ChevronRight className="w-6 h-6" />
                         </button>
                     </div>
 
                     <div className="flex items-center gap-3 text-zinc-400">
-                        <button className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-zinc-800 transition-colors">
-                            <Play className="w-5 h-5 fill-current" />
+                        <button onClick={() => setIsAutoPlaying(!isAutoPlaying)} className={`w-10 h-10 flex items-center justify-center rounded-full hover:bg-zinc-800 transition-colors ${isAutoPlaying ? 'text-indigo-400' : ''}`} title="Автовоспроизведение">
+                            {isAutoPlaying ? <Pause className="w-5 h-5 fill-current" /> : <Play className="w-5 h-5 fill-current" />}
                         </button>
-                        <button onClick={() => setShowSettings(true)} className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-zinc-800 transition-colors">
+                        <button onClick={() => setIsShuffled(!isShuffled)} className={`w-10 h-10 flex items-center justify-center rounded-full hover:bg-zinc-800 transition-colors ${isShuffled ? 'text-indigo-400' : ''}`} title="Перемешать">
+                            <Shuffle className="w-5 h-5" />
+                        </button>
+                        <button onClick={() => setShowSettings(true)} className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-zinc-800 transition-colors" title="Параметры">
                             <Settings className="w-5 h-5" />
                         </button>
-                        <button className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-zinc-800 transition-colors">
+                        <button onClick={toggleFullscreen} className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-zinc-800 transition-colors" title="На весь экран">
                             <Maximize className="w-5 h-5" />
                         </button>
+                    </div>
+                </div>
+            )}
+
+            {/* Edit Modal Overlay */}
+            {editingCard && (
+                <div className="fixed inset-0 z-[100] bg-[#0a0a1a]/80 backdrop-blur-sm flex items-center justify-center p-4">
+                    <div className="w-full max-w-lg bg-[#171c2e] rounded-2xl shadow-2xl border border-[#2a2a4d] overflow-hidden flex flex-col">
+                        <div className="p-6 border-b border-[#2a2a4d] flex justify-between items-center bg-[#111526]">
+                            <h3 className="text-xl font-bold text-white">Редактировать карточку</h3>
+                            <button onClick={() => setEditingCard(null)} className="text-zinc-400 hover:text-white transition-colors">
+                                <XIcon className="w-6 h-6" />
+                            </button>
+                        </div>
+                        <div className="p-6 flex flex-col gap-6 bg-[#171c2e]">
+                            <div>
+                                <label className="text-xs font-bold text-indigo-400 mb-2 block uppercase tracking-wider">Термин</label>
+                                <input
+                                    className="w-full bg-[#1b1b2f] border-b-2 border-white/20 focus:border-[#a8b1ff] text-white p-3 outline-none transition-colors rounded-t-md"
+                                    defaultValue={editingCard.term}
+                                    onChange={(e) => { editingCard.term = e.target.value; }}
+                                />
+                            </div>
+                            <div>
+                                <label className="text-xs font-bold text-indigo-400 mb-2 block uppercase tracking-wider">Определение</label>
+                                <textarea
+                                    className="w-full bg-[#1b1b2f] border-b-2 border-white/20 focus:border-[#a8b1ff] text-white p-3 outline-none transition-colors resize-none min-h-[100px] rounded-t-md"
+                                    defaultValue={editingCard.definition}
+                                    onChange={(e) => { editingCard.definition = e.target.value; }}
+                                />
+                            </div>
+                        </div>
+                        <div className="p-5 border-t border-[#2a2a4d] flex justify-end gap-4 bg-[#111526]">
+                            <button onClick={() => setEditingCard(null)} className="px-6 py-2.5 rounded-full text-zinc-300 font-semibold hover:bg-white/5 transition-colors">Отмена</button>
+                            <button onClick={() => {
+                                setActiveCards(prev => [...prev]);
+                                setEditingCard(null);
+                            }} className="px-8 py-2.5 rounded-full bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition-colors">
+                                Готово
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
