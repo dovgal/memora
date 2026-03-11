@@ -18,9 +18,11 @@ interface FlashcardPlayerProps {
 }
 
 export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCHEMA, setId }: FlashcardPlayerProps) {
+    const containerRef = React.useRef<HTMLDivElement>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isFlipped, setIsFlipped] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
+    const [showShortcuts, setShowShortcuts] = useState(false);
 
     // Settings state
     const [trackProgress, setTrackProgress] = useState(false);
@@ -101,7 +103,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
         // deliberately excluding starredIds from deps to avoid re-shuffling on every star click
     }, [trackProgress, flashcards, setId, studyStarredOnly, isShuffled]);
 
-    const handleRateFSRS = async (rating: number) => {
+    const handleRateFSRS = useCallback(async (rating: number) => {
         const currentCard = activeCards[currentIndex];
         if (!currentCard) return;
 
@@ -121,7 +123,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
         } catch (err) {
             console.error("Error rating card:", err);
         }
-    };
+    }, [activeCards, currentIndex]);
 
     const handleNext = useCallback(() => {
         setIsFlipped(false);
@@ -168,7 +170,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                     audioIndex++;
                     playNext();
                 };
-                audio.play().catch(console.error);
+                audio.play().catch(e => console.warn("Autoplay prevented:", e.message));
             }
         };
 
@@ -192,15 +194,44 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                 e.preventDefault();
                 handleFlip();
             } else if (e.code === 'ArrowRight') {
-                handleNext();
+                if (trackProgress && isFlipped && !showBothSides) {
+                    handleRateFSRS(3); // Знаю
+                } else {
+                    handleNext();
+                }
             } else if (e.code === 'ArrowLeft') {
-                handlePrev();
+                if (trackProgress && isFlipped && !showBothSides) {
+                    handleRateFSRS(1); // Еще изучаю
+                } else {
+                    handlePrev();
+                }
+            } else if (e.code === 'KeyH') {
+                setIsShuffled(prev => !prev);
+            } else if (e.code === 'KeyA') {
+                setTtsEnabled(prev => !prev);
+            } else if (e.code === 'KeyE') {
+                if (activeCards[currentIndex]) setEditingCard(activeCards[currentIndex]);
+            } else if (e.code === 'KeyS') {
+                const cardId = activeCards[currentIndex]?.id;
+                if (cardId) {
+                    setStarredIds(prev => {
+                        const next = new Set(prev);
+                        if (next.has(cardId)) next.delete(cardId);
+                        else next.add(cardId);
+                        if (setId) localStorage.setItem(`starred_${setId}`, JSON.stringify(Array.from(next)));
+                        return next;
+                    });
+                }
+            } else if (e.code === 'KeyT') {
+                setFrontSide('term');
+            } else if (e.code === 'KeyD') {
+                setFrontSide('definition');
             }
         };
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [handleFlip, handleNext, handlePrev]);
+    }, [handleFlip, handleNext, handlePrev, activeCards, currentIndex, trackProgress, isFlipped, showBothSides, setId, handleRateFSRS]);
 
     useEffect(() => {
         if (!isAutoPlaying) return;
@@ -222,7 +253,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
 
     const toggleFullscreen = () => {
         if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen().catch(err => console.error(err));
+            if (containerRef.current) containerRef.current.requestFullscreen().catch(err => console.error(err));
         } else {
             if (document.exitFullscreen) {
                 document.exitFullscreen();
@@ -270,7 +301,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
     const currentCard = activeCards[currentIndex];
 
     return (
-        <div className="w-full flex flex-col items-center">
+        <div ref={containerRef} className="w-full flex flex-col items-center bg-[#0a0a1a] md:bg-transparent min-h-screen md:min-h-auto justify-center md:justify-start">
 
             {/* The Flashcard Container */}
             <div className="relative w-full aspect-[16/9] md:aspect-[2/1] max-w-4xl bg-zinc-900 border border-zinc-800 rounded-2xl shadow-xl flex flex-col overflow-hidden mb-6 select-none group">
@@ -331,11 +362,26 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                                     </div>
 
                                     {/* Row 5 */}
-                                    <div className="flex items-center justify-between py-6 border-b border-white/10">
-                                        <p className="font-bold text-base text-white">Сочетания клавиш</p>
-                                        <button className="flex items-center gap-2 text-sm font-semibold text-white hover:text-indigo-400 transition-colors">
-                                            Просмотреть <ChevronDownIcon className="w-4 h-4" />
-                                        </button>
+                                    <div className="flex flex-col py-6 border-b border-white/10">
+                                        <div className="flex items-center justify-between cursor-pointer group" onClick={() => setShowShortcuts(!showShortcuts)}>
+                                            <p className="font-bold text-base text-white group-hover:text-indigo-400 transition-colors">Сочетания клавиш</p>
+                                            <button className="flex items-center gap-2 text-sm font-semibold text-white group-hover:text-indigo-400 transition-colors">
+                                                {showShortcuts ? 'Скрыть' : 'Просмотреть'} <ChevronDownIcon className={`w-4 h-4 transition-transform ${showShortcuts ? 'rotate-180' : ''}`} />
+                                            </button>
+                                        </div>
+                                        {showShortcuts && (
+                                            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8 text-[15px] text-zinc-300">
+                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-white">Знаю</span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">→</kbd></div>
+                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-white">Перемешать</span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">H</kbd></div>
+                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-white">Еще изучаю</span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">←</kbd></div>
+                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-white">Аудио</span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">A</kbd></div>
+                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-white">Перевернуть</span><kbd className="px-3 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center h-8">Пробел</kbd></div>
+                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-white">Отвечать термином</span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">T</kbd></div>
+                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-white shadow-sm flex items-center gap-2 text-base">Пометить <Star className="w-5 h-5 fill-white text-white" /></span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">S</kbd></div>
+                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-white flex flex-col justify-start items-start gap-1"><span>Отвечать</span> <span>определением</span></span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">D</kbd></div>
+                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-white">Редактировать</span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">E</kbd></div>
+                                            </div>
+                                        )}
                                     </div>
 
                                     {/* Row 6 */}
@@ -347,7 +393,11 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                                     {/* Row 7 */}
                                     <div className="py-6 border-b border-white/10">
                                         <button
-                                            onClick={() => { setCurrentIndex(0); setShowSettings(false); }}
+                                            onClick={() => {
+                                                setCurrentIndex(0);
+                                                setIsFlipped(false);
+                                                setShowSettings(false);
+                                            }}
                                             className="font-bold text-[15px] text-[#ff725b] hover:opacity-80 transition-opacity"
                                         >
                                             Пройти карточки заново
@@ -497,23 +547,38 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                                 <XIcon className="w-6 h-6" />
                             </button>
                         </div>
-                        <div className="p-6 flex flex-col gap-6 bg-[#171c2e]">
-                            <div>
-                                <label className="text-xs font-bold text-indigo-400 mb-2 block uppercase tracking-wider">Термин</label>
-                                <input
-                                    className="w-full bg-[#1b1b2f] border-b-2 border-white/20 focus:border-[#a8b1ff] text-white p-3 outline-none transition-colors rounded-t-md"
-                                    defaultValue={editingCard.term}
-                                    onChange={(e) => { editingCard.term = e.target.value; }}
-                                />
-                            </div>
-                            <div>
-                                <label className="text-xs font-bold text-indigo-400 mb-2 block uppercase tracking-wider">Определение</label>
-                                <textarea
-                                    className="w-full bg-[#1b1b2f] border-b-2 border-white/20 focus:border-[#a8b1ff] text-white p-3 outline-none transition-colors resize-none min-h-[100px] rounded-t-md"
-                                    defaultValue={editingCard.definition}
-                                    onChange={(e) => { editingCard.definition = e.target.value; }}
-                                />
-                            </div>
+                        <div className="p-6 flex flex-col gap-6 bg-[#171c2e] overflow-y-auto max-h-[60vh]">
+                            {fieldsSchema.sort((a, b) => a.order - b.order).map(field => (
+                                <div key={field.id}>
+                                    <label className="text-xs font-bold text-indigo-400 mb-2 block uppercase tracking-wider">{field.name}</label>
+                                    {field.id === 'term' || field.id === 'definition' ? (
+                                        field.id === 'term' ? (
+                                            <input
+                                                className="w-full bg-[#1b1b2f] border-b-2 border-white/20 focus:border-[#a8b1ff] text-white p-3 outline-none transition-colors rounded-t-md"
+                                                defaultValue={editingCard?.term}
+                                                onChange={(e) => { if (editingCard) editingCard.term = e.target.value; }}
+                                            />
+                                        ) : (
+                                            <textarea
+                                                className="w-full bg-[#1b1b2f] border-b-2 border-white/20 focus:border-[#a8b1ff] text-white p-3 outline-none transition-colors resize-none min-h-[100px] rounded-t-md"
+                                                defaultValue={editingCard?.definition}
+                                                onChange={(e) => { if (editingCard) editingCard.definition = e.target.value; }}
+                                            />
+                                        )
+                                    ) : (
+                                        <textarea
+                                            className="w-full bg-[#1b1b2f] border-b-2 border-white/20 focus:border-[#a8b1ff] text-white p-3 outline-none transition-colors resize-none min-h-[70px] rounded-t-md"
+                                            defaultValue={editingCard?.fieldsData?.[field.id] || ''}
+                                            onChange={(e) => {
+                                                if (editingCard) {
+                                                    if (!editingCard.fieldsData) editingCard.fieldsData = {};
+                                                    editingCard.fieldsData[field.id] = e.target.value;
+                                                }
+                                            }}
+                                        />
+                                    )}
+                                </div>
+                            ))}
                         </div>
                         <div className="p-5 border-t border-[#2a2a4d] flex justify-end gap-4 bg-[#111526]">
                             <button onClick={() => setEditingCard(null)} className="px-6 py-2.5 rounded-full text-zinc-300 font-semibold hover:bg-white/5 transition-colors">Отмена</button>
