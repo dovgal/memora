@@ -114,10 +114,11 @@ export default async function DashboardLayout({
                     </div>
 
                     <div className="flex items-center gap-4 pl-4">
-                        {/* 
-                         * User requested to hide Create/Generate buttons from the main layout 
-                         * for a cleaner look. Keep Upgrade for styling.
-                         */}
+                        {/* Restoring the global Create button */}
+                        <Link href="/create" className="hidden sm:flex items-center justify-center w-8 h-8 rounded-full bg-indigo-500 hover:bg-indigo-400 text-white transition-colors shadow-lg shadow-indigo-500/20">
+                            <Plus className="w-5 h-5" />
+                        </Link>
+
                         <button className="hidden sm:block px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-amber-950 font-semibold rounded-full text-sm transition-colors shadow-[0_0_20px_rgba(245,158,11,0.2)]">
                             Upgrade
                         </button>
