@@ -245,7 +245,7 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
                             };
 
                             return (
-                                <>
+                                <div className="w-full">
                                     <div className="flex items-center justify-between mb-8">
                                         <h2 className="text-xl font-bold text-white">Термины в модуле ({set.flashcards.length})</h2>
                                         <button className="text-sm font-semibold text-zinc-300 hover:text-white transition-colors flex items-center gap-1 cursor-pointer">
@@ -257,7 +257,7 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
                                     {renderGroup("Изучено", learning, "text-orange-400", "Вы начали изучать эти термины. Продолжайте!")}
                                     {renderGroup("Усвоено", mastered, "text-emerald-400", "Вы хорошо усвоили эти термины!")}
                                     {renderGroup("Не изучено", notStudied, "text-zinc-400", "Вы еще не проходили эти термины!")}
-                                </>
+                                </div>
                             );
                         })()}
                     </div>
