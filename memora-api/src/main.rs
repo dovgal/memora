@@ -87,6 +87,7 @@ async fn main() {
         .route("/api/study/fsrs/review", post(handlers::study::fsrs_review))
         .route("/api/sets/{id}/progress", get(handlers::study::get_set_progress))
         .route("/api/sets/{id}/fsrs/due", get(handlers::study::get_fsrs_due))
+        .route("/api/sets/{id}/fsrs/reset", delete(handlers::study::reset_fsrs_progress))
         .route("/api/ai/generate", post(handlers::ai::generate_flashcards_stream))
         .route("/api/images/generate", post(handlers::ai::generate_image))
         .route("/api/ai/qchat/{set_id}", post(handlers::ai::qchat_stream))

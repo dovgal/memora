@@ -105,7 +105,7 @@ pub async fn get_set_progress(
 
     let total = rows.len() as i32;
     // We'll define "known" or "mastered" strictly as FSRS State == 2 (Review)
-    let known = rows.iter().filter(|r| r.fsrs_state == 2).count() as i32;
+    let known = rows.iter().filter(|r| r.fsrs_state == Some(2)).count() as i32;
     
     let mastery_percentage = if total > 0 {
         ((known as f64 / total as f64) * 100.0).round() as i32
@@ -115,7 +115,7 @@ pub async fn get_set_progress(
 
     let cards = rows.into_iter().map(|r| CardProgress {
         flashcard_id: r.flashcard_id.to_string(),
-        state: r.fsrs_state as u8,
+        state: r.fsrs_state.unwrap_or(0) as u8,
     }).collect();
 
     let response = SetProgressResponse {
@@ -292,3 +292,46 @@ pub async fn get_fsrs_due(
     Ok((StatusCode::OK, Json(cards)))
 }
 
+pub async fn reset_fsrs_progress(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Path(set_id_str): Path<String>,
+) -> Result<impl IntoResponse, (StatusCode, String)> {
+    let user_id = Uuid::parse_str(&user.sub)
+        .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid user token".to_string()))?;
+        
+    let set_id = Uuid::parse_str(&set_id_str)
+        .map_err(|_| (StatusCode::BAD_REQUEST, "Invalid set ID".to_string()))?;
+
+    // Delete FSRS records related to this set and user
+    sqlx::query!(
+        "DELETE FROM fsrs_records WHERE user_id = $1 AND flashcard_id IN (SELECT id FROM flashcards WHERE set_id = $2)",
+        user_id,
+        set_id
+    )
+    .execute(&pool)
+    .await
+    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+
+    // Also delete review logs 
+    sqlx::query!(
+        "DELETE FROM review_logs WHERE user_id = $1 AND flashcard_id IN (SELECT id FROM flashcards WHERE set_id = $2)",
+        user_id,
+        set_id
+    )
+    .execute(&pool)
+    .await
+    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+
+    // Also reset any legacy progress
+    sqlx::query!(
+        "DELETE FROM flashcard_progress WHERE user_id = $1 AND flashcard_id IN (SELECT id FROM flashcards WHERE set_id = $2)",
+        user_id,
+        set_id
+    )
+    .execute(&pool)
+    .await
+    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+
+    Ok((StatusCode::OK, Json(serde_json::json!({"status": "progress reset"}))))
+}

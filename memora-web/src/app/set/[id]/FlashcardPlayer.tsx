@@ -35,10 +35,42 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
     const [isShuffled, setIsShuffled] = useState(false);
     const [starredIds, setStarredIds] = useState<Set<string>>(new Set());
     const [editingCard, setEditingCard] = useState<FlashcardResponse | null>(null);
+    const [hasInteracted, setHasInteracted] = useState(false);
 
     // activeCards could be restricted when tracking progress
     const [activeCards, setActiveCards] = useState<FlashcardResponse[]>(flashcards);
     const [isLoadingFsrs, setIsLoadingFsrs] = useState(false);
+
+    useEffect(() => {
+        const onInteract = () => setHasInteracted(true);
+        window.addEventListener('click', onInteract, { once: true });
+        window.addEventListener('keydown', onInteract, { once: true });
+        return () => {
+            window.removeEventListener('click', onInteract);
+            window.removeEventListener('keydown', onInteract);
+        };
+    }, []);
+
+    const handleResetFsrs = async () => {
+        if (!setId) return;
+        setIsLoadingFsrs(true);
+        try {
+            await fetch(`/api/sets/${setId}/fsrs/reset`, { method: "DELETE" });
+            const res = await fetch(`/api/sets/${setId}/fsrs/due`);
+            const data = await res.json();
+            let newCards = data && Array.isArray(data) ? data : [];
+            if (studyStarredOnly) newCards = newCards.filter((c: any) => starredIds.has(c.id));
+            if (isShuffled) newCards = [...newCards].sort(() => Math.random() - 0.5);
+            setActiveCards(newCards);
+            setCurrentIndex(0);
+            setIsFlipped(false);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setIsLoadingFsrs(false);
+            setShowSettings(false);
+        }
+    };
 
     useEffect(() => {
         // Load initial starred state
@@ -179,10 +211,10 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
 
     // Auto-play TTS on card flip/change
     useEffect(() => {
-        if (ttsEnabled) {
+        if (ttsEnabled && hasInteracted) {
             playCurrentSideAudio();
         }
-    }, [currentIndex, isFlipped, ttsEnabled, playCurrentSideAudio]);
+    }, [currentIndex, isFlipped, ttsEnabled, hasInteracted, playCurrentSideAudio]);
 
     // Keyboard navigation
     useEffect(() => {
@@ -272,12 +304,20 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                     {trackProgress ? "Отлично! На сегодня карточек для повторения больше нет! 🎉" : "Нет карточек для отображения."}
                 </div>
                 {trackProgress && (
-                    <button
-                        onClick={() => { setTrackProgress(false); }}
-                        className="mt-6 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-xl transition-colors font-semibold"
-                    >
-                        Вернуться к обычному просмотру
-                    </button>
+                    <div className="flex flex-col sm:flex-row gap-4 mt-6">
+                        <button
+                            onClick={handleResetFsrs}
+                            className="bg-[#1f1f3d] hover:bg-[#2a2a4d] border border-white/10 text-white px-6 py-2.5 rounded-xl transition-colors font-semibold"
+                        >
+                            Сбросить прогресс
+                        </button>
+                        <button
+                            onClick={() => { setTrackProgress(false); }}
+                            className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl transition-colors font-semibold"
+                        >
+                            Вернуться к обычному просмотру
+                        </button>
+                    </div>
                 )}
             </div>
         );
@@ -288,12 +328,20 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
         return (
             <div className="w-full flex-col flex items-center justify-center aspect-[16/9] md:aspect-[2/1] max-w-4xl bg-zinc-900 border border-zinc-800 rounded-2xl shadow-xl mb-6">
                 <div className="text-zinc-300 text-lg font-bold mb-2">На сегодня карточек для повторения больше нет! 🎉</div>
-                <button
-                    onClick={() => { setTrackProgress(false); }}
-                    className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-xl transition-colors font-semibold"
-                >
-                    Вернуться к обычному просмотру
-                </button>
+                <div className="flex flex-col sm:flex-row gap-4 mt-6">
+                    <button
+                        onClick={handleResetFsrs}
+                        className="bg-[#1f1f3d] hover:bg-[#2a2a4d] border border-white/10 text-white px-6 py-2.5 rounded-xl transition-colors font-semibold shadow-md inline-flex justify-center"
+                    >
+                        Начать заново (Сбросить прогресс)
+                    </button>
+                    <button
+                        onClick={() => { setTrackProgress(false); }}
+                        className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl transition-colors font-semibold"
+                    >
+                        Вернуться к обычному просмотру
+                    </button>
+                </div>
             </div>
         );
     }
@@ -394,9 +442,13 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                                     <div className="py-6 border-b border-white/10">
                                         <button
                                             onClick={() => {
-                                                setCurrentIndex(0);
-                                                setIsFlipped(false);
-                                                setShowSettings(false);
+                                                if (trackProgress) {
+                                                    handleResetFsrs();
+                                                } else {
+                                                    setCurrentIndex(0);
+                                                    setIsFlipped(false);
+                                                    setShowSettings(false);
+                                                }
                                             }}
                                             className="font-bold text-[15px] text-[#ff725b] hover:opacity-80 transition-opacity"
                                         >
