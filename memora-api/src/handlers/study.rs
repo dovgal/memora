@@ -311,7 +311,7 @@ pub async fn reset_fsrs_progress(
     )
     .execute(&pool)
     .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // Also delete review logs 
     sqlx::query!(
@@ -321,7 +321,7 @@ pub async fn reset_fsrs_progress(
     )
     .execute(&pool)
     .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // Also reset any legacy progress
     sqlx::query!(
@@ -331,7 +331,7 @@ pub async fn reset_fsrs_progress(
     )
     .execute(&pool)
     .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     Ok((StatusCode::OK, Json(serde_json::json!({"status": "progress reset"}))))
 }
