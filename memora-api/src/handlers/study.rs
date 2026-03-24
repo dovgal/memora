@@ -20,7 +20,7 @@ pub async fn record_study_progress(
         .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid user token".to_string()))?;
 
     // Transaction for atomic batch updates
-    let mut tx = pool.begin().await.map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    let mut tx = pool.begin().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     for update in payload.progress_updates {
         let flashcard_uuid = Uuid::parse_str(&update.flashcard_id)
@@ -34,7 +34,7 @@ pub async fn record_study_progress(
         )
         .fetch_optional(&mut *tx)
         .await
-        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+        .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
         if card_exists.is_none() {
             // Rollback if there's an unauthorized or invalid card ID
@@ -58,11 +58,11 @@ pub async fn record_study_progress(
         )
         .execute(&mut *tx)
         .await
-        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+        .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
     }
 
     // Commit the batch of updates
-    tx.commit().await.map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    tx.commit().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // Technically returning 200 OK or 204 No Content is standard here. We'll return 200 OK with a success message.
     Ok((StatusCode::OK, Json(serde_json::json!({"status": "success"}))))
@@ -99,7 +99,7 @@ pub async fn get_set_progress(
     )
     .fetch_all(&pool)
     .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     use crate::domain::dtos::CardProgress;
 
@@ -145,7 +145,7 @@ pub async fn fsrs_review(
         "SELECT state, due, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, last_review FROM fsrs_records WHERE user_id = $1 AND flashcard_id = $2",
         user_id, flashcard_uuid
     ).fetch_optional(&pool).await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let now = chrono::Utc::now();
     let fsrs = fsrs::FSRS::new(None).map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
@@ -166,7 +166,7 @@ pub async fn fsrs_review(
     };
 
     let next_states = fsrs.next_states(current_memory, 0.9, elapsed_days)
-        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+        .map_err(|e: fsrs::FSRSError| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
     
     let item_state = match payload.rating {
         1 => next_states.again,
@@ -188,7 +188,7 @@ pub async fn fsrs_review(
 
     let inc_lapse = if new_state == 3 && current_state == 2 { 1 } else { 0 };
 
-    let mut tx = pool.begin().await.map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    let mut tx = pool.begin().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     sqlx::query!(
         r#"
@@ -220,7 +220,7 @@ pub async fn fsrs_review(
         scheduled_days,
         inc_lapse as i32,
         now
-    ).execute(&mut *tx).await.map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    ).execute(&mut *tx).await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // Log the review
     sqlx::query!(
@@ -235,9 +235,9 @@ pub async fn fsrs_review(
         now,
         elapsed_days as i32,
         scheduled_days
-    ).execute(&mut *tx).await.map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    ).execute(&mut *tx).await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
-    tx.commit().await.map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    tx.commit().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let response = ReviewLogResponse {
         state: new_state,

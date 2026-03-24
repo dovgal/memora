@@ -31,7 +31,7 @@ pub async fn finish_onboarding(
     )
     .execute(&pool)
     .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // Upsert the profile with the DOB
     sqlx::query!(
@@ -47,7 +47,7 @@ pub async fn finish_onboarding(
     )
     .execute(&pool)
     .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let response = UserResponse {
         id: user_id.to_string(),
@@ -81,7 +81,7 @@ pub async fn update_role(
     )
     .execute(&pool)
     .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?
+    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?
     .rows_affected();
     
     if rows_affected == 0 {

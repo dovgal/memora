@@ -258,7 +258,7 @@ pub async fn qchat_stream(
     )
     .fetch_all(&pool)
     .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Database Error: {}", e) })))?;
+    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Database Error: {}", e) })))?;
 
     if flashcards.is_empty() {
         return Err((StatusCode::NOT_FOUND, Json(AiGatewayError { error: "Study Set not found or empty".to_string() })));

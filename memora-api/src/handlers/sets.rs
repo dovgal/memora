@@ -28,7 +28,7 @@ pub async fn get_public_set(
     )
     .fetch_optional(&pool)
     .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let set_record = match set_record {
         Some(record) => record,
@@ -50,7 +50,7 @@ pub async fn get_public_set(
     )
     .fetch_all(&pool)
     .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // 3. Map into DTOs
     let flashcards: Vec<FlashcardResponse> = flashcards_records
@@ -91,7 +91,7 @@ pub async fn create_set(
         .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid user token".to_string()))?;
 
     // Begin the transaction
-    let mut tx = pool.begin().await.map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    let mut tx = pool.begin().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
     
     // 1. Insert the parent Set
     let set_record = sqlx::query!(
@@ -104,7 +104,7 @@ pub async fn create_set(
     )
     .fetch_one(&mut *tx)
     .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let new_set_id = set_record.id;
 
@@ -126,7 +126,7 @@ pub async fn create_set(
         )
         .fetch_one(&mut *tx)
         .await
-        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, format!("Failed adding flashcard: {}", e)))?;
+        .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, format!("Failed adding flashcard: {}", e)))?;
 
         response_flashcards.push(FlashcardResponse {
             id: fc_record.id.to_string(),
@@ -139,7 +139,7 @@ pub async fn create_set(
     }
 
     // Commit transaction
-    tx.commit().await.map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    tx.commit().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let response = SetResponse {
         id: new_set_id.to_string(),
@@ -172,7 +172,7 @@ pub async fn get_user_sets(
     )
     .fetch_all(&pool)
     .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let response: Vec<SetSummaryResponse> = sets
         .into_iter()
@@ -208,24 +208,24 @@ pub async fn delete_set(
     )
     .fetch_optional(&pool)
     .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     if result.is_none() {
         return Err((StatusCode::NOT_FOUND, "Set not found or unauthorized".to_string()));
     }
 
-    let mut tx = pool.begin().await.map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    let mut tx = pool.begin().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // Delete related records manually to avoid any ON DELETE CASCADE issues with later migrations
     sqlx::query!("DELETE FROM folder_sets WHERE set_id = $1", set_id)
         .execute(&mut *tx)
         .await
-        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+        .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     sqlx::query!("DELETE FROM group_sets WHERE set_id = $1", set_id)
         .execute(&mut *tx)
         .await
-        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+        .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // Delete the set itself (which should cascade to flashcards and flashcard_progress if migrations are right)
     let result = sqlx::query!(
@@ -235,9 +235,9 @@ pub async fn delete_set(
     )
     .execute(&mut *tx)
     .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
-    tx.commit().await.map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    tx.commit().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     if result.rows_affected() == 0 {
         return Err((StatusCode::NOT_FOUND, "Set not found or unauthorized".to_string()));
@@ -270,13 +270,13 @@ pub async fn update_set(
     )
     .fetch_optional(&pool)
     .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     if existing_set.is_none() {
         return Err((StatusCode::NOT_FOUND, "Set not found or unauthorized".to_string()));
     }
 
-    let mut tx = pool.begin().await.map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    let mut tx = pool.begin().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // 1. Update the parent Set
     sqlx::query!(
@@ -289,7 +289,7 @@ pub async fn update_set(
     )
     .execute(&mut *tx)
     .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // 2. We'll simply delete all existing flashcards and insert the new ones
     // Or we could try to diff and update. Since order matters and cards can be deleted/added,
@@ -298,7 +298,7 @@ pub async fn update_set(
     sqlx::query!("DELETE FROM flashcards WHERE set_id = $1", set_id)
         .execute(&mut *tx)
         .await
-        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+        .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // 3. Insert the Flashcards iteratively
     let mut response_flashcards = Vec::new();
@@ -337,7 +337,7 @@ pub async fn update_set(
         )
         .execute(&mut *tx)
         .await
-        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, format!("Failed adding flashcard: {}", e)))?;
+        .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, format!("Failed adding flashcard: {}", e)))?;
 
         response_flashcards.push(FlashcardResponse {
             id: new_id.to_string(),
@@ -350,7 +350,7 @@ pub async fn update_set(
     }
 
     // Commit transaction
-    tx.commit().await.map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    tx.commit().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let response = SetResponse {
         id: set_id.to_string(),

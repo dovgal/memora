@@ -67,7 +67,7 @@ pub async fn login(
     )
     .fetch_optional(&pool)
     .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {}", e)))?;
+    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {}", e)))?;
 
     if let Some(user) = user_record {
         if let Some(hash) = user.password_hash {
@@ -114,7 +114,7 @@ pub async fn oauth_google(
     )
     .fetch_optional(&pool)
     .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {}", e)))?;
+    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {}", e)))?;
 
     if let Some(user) = existing_user {
         let response = UserResponse {
@@ -126,7 +126,7 @@ pub async fn oauth_google(
     }
 
     // 3. User does not exist, create a new one without a password
-    let mut tx = pool.begin().await.map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    let mut tx = pool.begin().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let user_id = Uuid::new_v4();
     let insert_user_result = sqlx::query!(
@@ -159,7 +159,7 @@ pub async fn oauth_google(
         return Err((StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to create profile: {}", e)));
     }
 
-    tx.commit().await.map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    tx.commit().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let response = UserResponse {
         id: user_id.to_string(),
