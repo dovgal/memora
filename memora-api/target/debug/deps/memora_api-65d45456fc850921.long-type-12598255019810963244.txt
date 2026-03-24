@@ -1,0 +1,2 @@
+(reqwest::StatusCode, axum::Json<ApiError>)
+(reqwest::StatusCode, std::string::String)

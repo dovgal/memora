@@ -57,6 +57,7 @@ pub enum AuthError {
     MissingToken,
     InvalidToken,
     ConfigurationError,
+    #[allow(dead_code)]
     Forbidden,
 }
 
@@ -78,6 +79,7 @@ impl IntoResponse for AuthError {
     }
 }
 
+#[allow(dead_code)]
 pub struct RequireTeacher(pub Claims);
 
 impl<S> FromRequestParts<S> for RequireTeacher
@@ -96,6 +98,7 @@ where
     }
 }
 
+#[allow(dead_code)]
 pub struct RequireStudent(pub Claims);
 
 impl<S> FromRequestParts<S> for RequireStudent

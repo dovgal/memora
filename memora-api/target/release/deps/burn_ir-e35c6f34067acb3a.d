@@ -1,0 +1,11 @@
+/Users/dovgal/Project/my-bmad-project/memora-api/target/release/deps/burn_ir-e35c6f34067acb3a.d: /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/burn-ir-0.17.1/src/lib.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/burn-ir-0.17.1/src/backend.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/burn-ir-0.17.1/src/handle.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/burn-ir-0.17.1/src/operation.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/burn-ir-0.17.1/src/tensor.rs
+
+/Users/dovgal/Project/my-bmad-project/memora-api/target/release/deps/libburn_ir-e35c6f34067acb3a.rlib: /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/burn-ir-0.17.1/src/lib.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/burn-ir-0.17.1/src/backend.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/burn-ir-0.17.1/src/handle.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/burn-ir-0.17.1/src/operation.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/burn-ir-0.17.1/src/tensor.rs
+
+/Users/dovgal/Project/my-bmad-project/memora-api/target/release/deps/libburn_ir-e35c6f34067acb3a.rmeta: /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/burn-ir-0.17.1/src/lib.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/burn-ir-0.17.1/src/backend.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/burn-ir-0.17.1/src/handle.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/burn-ir-0.17.1/src/operation.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/burn-ir-0.17.1/src/tensor.rs
+
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/burn-ir-0.17.1/src/lib.rs:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/burn-ir-0.17.1/src/backend.rs:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/burn-ir-0.17.1/src/handle.rs:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/burn-ir-0.17.1/src/operation.rs:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/burn-ir-0.17.1/src/tensor.rs:

@@ -1,0 +1,1 @@
+impl Stream<Item = Result<axum::body::Bytes, reqwest::Error>>

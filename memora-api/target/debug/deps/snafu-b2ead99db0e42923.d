@@ -1,0 +1,12 @@
+/Users/dovgal/Project/my-bmad-project/memora-api/target/debug/deps/snafu-b2ead99db0e42923.d: /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/lib.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/backtrace_impl_std.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/once_bool.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/error_chain.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/report.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/boxed_impls.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/Snafu.md /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/report.md
+
+/Users/dovgal/Project/my-bmad-project/memora-api/target/debug/deps/libsnafu-b2ead99db0e42923.rmeta: /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/lib.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/backtrace_impl_std.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/once_bool.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/error_chain.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/report.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/boxed_impls.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/Snafu.md /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/report.md
+
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/lib.rs:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/backtrace_impl_std.rs:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/once_bool.rs:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/error_chain.rs:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/report.rs:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/boxed_impls.rs:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/Snafu.md:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/snafu-0.8.9/src/report.md:

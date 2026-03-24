@@ -12,7 +12,7 @@ use governor::{Quota, RateLimiter};
 use std::num::NonZeroU32;
 
 use crate::middleware::{auth::AuthenticatedUser, rate_limiter::AppRateLimiter};
-use crate::domain::dtos::{QChatRequest, ChatMessage};
+use crate::domain::dtos::QChatRequest;
 use sqlx::PgPool;
 
 #[derive(Deserialize)]

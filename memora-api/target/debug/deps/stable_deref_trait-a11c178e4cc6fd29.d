@@ -1,0 +1,7 @@
+/Users/dovgal/Project/my-bmad-project/memora-api/target/debug/deps/stable_deref_trait-a11c178e4cc6fd29.d: /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/stable_deref_trait-1.2.1/src/lib.rs
+
+/Users/dovgal/Project/my-bmad-project/memora-api/target/debug/deps/libstable_deref_trait-a11c178e4cc6fd29.rlib: /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/stable_deref_trait-1.2.1/src/lib.rs
+
+/Users/dovgal/Project/my-bmad-project/memora-api/target/debug/deps/libstable_deref_trait-a11c178e4cc6fd29.rmeta: /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/stable_deref_trait-1.2.1/src/lib.rs
+
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/stable_deref_trait-1.2.1/src/lib.rs:

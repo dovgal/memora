@@ -1,0 +1,10 @@
+/Users/dovgal/Project/my-bmad-project/memora-api/target/release/deps/rstest-0fd1e98605999c3a.d: /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rstest-0.25.0/src/lib.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rstest-0.25.0/src/magic_conversion.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rstest-0.25.0/src/timeout.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rstest-0.25.0/src/context.rs
+
+/Users/dovgal/Project/my-bmad-project/memora-api/target/release/deps/librstest-0fd1e98605999c3a.rlib: /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rstest-0.25.0/src/lib.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rstest-0.25.0/src/magic_conversion.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rstest-0.25.0/src/timeout.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rstest-0.25.0/src/context.rs
+
+/Users/dovgal/Project/my-bmad-project/memora-api/target/release/deps/librstest-0fd1e98605999c3a.rmeta: /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rstest-0.25.0/src/lib.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rstest-0.25.0/src/magic_conversion.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rstest-0.25.0/src/timeout.rs /Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rstest-0.25.0/src/context.rs
+
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rstest-0.25.0/src/lib.rs:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rstest-0.25.0/src/magic_conversion.rs:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rstest-0.25.0/src/timeout.rs:
+/Users/dovgal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rstest-0.25.0/src/context.rs:
