@@ -62,6 +62,7 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
         handleSubmit,
         watch,
         setValue,
+        getValues,
         formState: { errors },
     } = useForm<UpdateSetFormValues>({
         resolver: zodResolver(updateSetSchema),
@@ -384,7 +385,7 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
                                                 register={register}
                                                 errors={errors}
                                                 update={update}
-                                                getValues={control._formValues}
+                                                getValues={getValues}
                                             />
                                         ))}
                                     </div>
@@ -400,7 +401,7 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
                                                 register={register}
                                                 errors={errors}
                                                 update={update}
-                                                getValues={control._formValues}
+                                                getValues={getValues}
                                             />
                                         ))}
                                     </div>

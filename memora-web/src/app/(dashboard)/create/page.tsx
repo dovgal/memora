@@ -71,6 +71,7 @@ export default function CreateSetPage() {
         handleSubmit,
         watch,
         setValue,
+        getValues,
         formState: { errors },
     } = useForm<CreateSetFormValues>({
         resolver: zodResolver(createSetSchema),
@@ -414,7 +415,7 @@ export default function CreateSetPage() {
                                                 register={register}
                                                 errors={errors}
                                                 update={update}
-                                                getValues={control._formValues}
+                                                getValues={getValues}
                                             />
                                         ))}
                                     </div>
@@ -430,7 +431,7 @@ export default function CreateSetPage() {
                                                 register={register}
                                                 errors={errors}
                                                 update={update}
-                                                getValues={control._formValues}
+                                                getValues={getValues}
                                             />
                                         ))}
                                     </div>

@@ -12,7 +12,7 @@ interface Props {
     register: UseFormRegister<any>;
     errors: FieldErrors<any>;
     update?: (index: number, obj: any) => void;
-    getValues: any;
+    getValues: (path?: any) => any;
 }
 
 export default function DynamicFieldRenderer({ field, index, register, errors, update, getValues }: Props) {
