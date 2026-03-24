@@ -14,14 +14,15 @@ use crate::{
     },
     middleware::auth::AuthenticatedUser,
 };
+use super::errors::ApiError;
 
 pub async fn create_folder(
     State(pool): State<PgPool>,
     AuthenticatedUser(user): AuthenticatedUser,
     Json(payload): Json<CreateFolderRequest>,
-) -> Result<impl IntoResponse, (StatusCode, String)> {
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
     let user_id = Uuid::parse_str(&user.sub)
-        .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid user token".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::UNAUTHORIZED, "Invalid user token"))?;
 
     let folder = sqlx::query!(
         r#"
@@ -35,7 +36,7 @@ pub async fn create_folder(
     )
     .fetch_one(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let response = FolderResponse {
         id: folder.id.to_string(),
@@ -51,9 +52,9 @@ pub async fn create_folder(
 pub async fn get_user_folders(
     State(pool): State<PgPool>,
     AuthenticatedUser(user): AuthenticatedUser,
-) -> Result<impl IntoResponse, (StatusCode, String)> {
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
     let user_id = Uuid::parse_str(&user.sub)
-        .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid user token".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::UNAUTHORIZED, "Invalid user token"))?;
 
     let folders = sqlx::query!(
         r#"
@@ -68,7 +69,7 @@ pub async fn get_user_folders(
     )
     .fetch_all(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let response: Vec<FolderSummaryResponse> = folders
         .into_iter()
@@ -88,12 +89,12 @@ pub async fn get_folder(
     State(pool): State<PgPool>,
     AuthenticatedUser(user): AuthenticatedUser,
     Path(folder_id): Path<String>,
-) -> Result<impl IntoResponse, (StatusCode, String)> {
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
     let _user_id = Uuid::parse_str(&user.sub)
-        .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid user token".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::UNAUTHORIZED, "Invalid user token"))?;
 
     let parsed_folder_id = Uuid::parse_str(&folder_id)
-        .map_err(|_| (StatusCode::BAD_REQUEST, "Invalid folder ID".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::BAD_REQUEST, "Invalid folder ID"))?;
 
     // First fetch folder details
     let folder = sqlx::query!(
@@ -106,17 +107,17 @@ pub async fn get_folder(
     )
     .fetch_optional(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let folder = match folder {
         Some(f) => f,
-        None => return Err((StatusCode::NOT_FOUND, "Folder not found".to_string())),
+        None => return Err(ApiError::response(StatusCode::NOT_FOUND, "Folder not found")),
     };
 
     // Note: Here we might want to check if folder.user_id == _user_id for privacy,
     // assuming folders are private for now.
     if folder.user_id.to_string() != _user_id.to_string() {
-        return Err((StatusCode::FORBIDDEN, "Access denied".to_string()));
+        return Err(ApiError::response(StatusCode::FORBIDDEN, "Access denied"));
     }
 
     // Now fetch sets in this folder
@@ -134,7 +135,7 @@ pub async fn get_folder(
     )
     .fetch_all(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let sets_response: Vec<SetSummaryResponse> = sets
         .into_iter()
@@ -164,15 +165,15 @@ pub async fn add_set_to_folder(
     AuthenticatedUser(user): AuthenticatedUser,
     Path(folder_id): Path<String>,
     Json(payload): Json<AddSetToFolderRequest>,
-) -> Result<impl IntoResponse, (StatusCode, String)> {
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
     let user_id = Uuid::parse_str(&user.sub)
-        .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid user token".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::UNAUTHORIZED, "Invalid user token"))?;
 
     let parsed_folder_id = Uuid::parse_str(&folder_id)
-        .map_err(|_| (StatusCode::BAD_REQUEST, "Invalid folder ID".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::BAD_REQUEST, "Invalid folder ID"))?;
 
     let parsed_set_id = Uuid::parse_str(&payload.set_id)
-        .map_err(|_| (StatusCode::BAD_REQUEST, "Invalid set ID".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::BAD_REQUEST, "Invalid set ID"))?;
 
     // Verify folder belongs to user
     let folder = sqlx::query!(
@@ -183,14 +184,14 @@ pub async fn add_set_to_folder(
     )
     .fetch_optional(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     if let Some(f) = folder {
         if f.user_id != user_id {
-            return Err((StatusCode::FORBIDDEN, "Access denied".to_string()));
+            return Err(ApiError::response(StatusCode::FORBIDDEN, "Access denied"));
         }
     } else {
-        return Err((StatusCode::NOT_FOUND, "Folder not found".to_string()));
+        return Err(ApiError::response(StatusCode::NOT_FOUND, "Folder not found"));
     }
 
     // Insert mapping
@@ -206,7 +207,7 @@ pub async fn add_set_to_folder(
     )
     .execute(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     Ok(StatusCode::OK)
 }
@@ -215,15 +216,15 @@ pub async fn remove_set_from_folder(
     State(pool): State<PgPool>,
     AuthenticatedUser(user): AuthenticatedUser,
     Path((folder_id, set_id)): Path<(String, String)>,
-) -> Result<impl IntoResponse, (StatusCode, String)> {
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
     let user_id = Uuid::parse_str(&user.sub)
-        .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid user token".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::UNAUTHORIZED, "Invalid user token"))?;
 
     let parsed_folder_id = Uuid::parse_str(&folder_id)
-        .map_err(|_| (StatusCode::BAD_REQUEST, "Invalid folder ID".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::BAD_REQUEST, "Invalid folder ID"))?;
 
     let parsed_set_id = Uuid::parse_str(&set_id)
-        .map_err(|_| (StatusCode::BAD_REQUEST, "Invalid set ID".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::BAD_REQUEST, "Invalid set ID"))?;
 
     // Verify folder belongs to user
     let folder = sqlx::query!(
@@ -234,14 +235,14 @@ pub async fn remove_set_from_folder(
     )
     .fetch_optional(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     if let Some(f) = folder {
         if f.user_id != user_id {
-            return Err((StatusCode::FORBIDDEN, "Access denied".to_string()));
+            return Err(ApiError::response(StatusCode::FORBIDDEN, "Access denied"));
         }
     } else {
-        return Err((StatusCode::NOT_FOUND, "Folder not found".to_string()));
+        return Err(ApiError::response(StatusCode::NOT_FOUND, "Folder not found"));
     }
 
     // Delete mapping
@@ -255,7 +256,7 @@ pub async fn remove_set_from_folder(
     )
     .execute(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     Ok(StatusCode::OK)
 }

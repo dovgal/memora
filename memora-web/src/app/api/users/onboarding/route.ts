@@ -29,19 +29,23 @@ export async function POST(req: NextRequest) {
             body: JSON.stringify(body)
         })
 
+        let data;
+        try {
+            data = await backendRes.json();
+        } catch (e) {
+            try { data = { error: await backendRes.text() || "Onboarding failed" }; } catch (_) { data = { error: "Onboarding failed" }; }
+        }
+
         if (!backendRes.ok) {
-            const errorText = await backendRes.text()
             return NextResponse.json(
-                { error: `Backend failed: ${errorText}` },
+                { error: data.error || "Onboarding failed" },
                 { status: backendRes.status }
             )
         }
 
-        const data = await backendRes.json()
-
         return NextResponse.json(data, { status: 200 })
 
     } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 })
+        return NextResponse.json({ error: error.message || "Internal Server Error" }, { status: 500 })
     }
 }

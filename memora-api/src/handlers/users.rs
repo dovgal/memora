@@ -9,15 +9,16 @@ use chrono::NaiveDate;
 
 use crate::domain::dtos::{OnboardingRequest, UserResponse};
 use crate::middleware::auth::AuthenticatedUser;
+use super::errors::ApiError;
 
 pub async fn finish_onboarding(
     State(pool): State<PgPool>,
     AuthenticatedUser(user): AuthenticatedUser,
     Json(payload): Json<OnboardingRequest>,
-) -> Result<impl IntoResponse, (StatusCode, String)> {
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
 
     let dob = NaiveDate::parse_from_str(&payload.date_of_birth, "%Y-%m-%d")
-        .map_err(|_| (StatusCode::BAD_REQUEST, "Invalid date format".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::BAD_REQUEST, "Invalid date format"))?;
 
     // In a real OAuth flow we'd sync the user email first.
     // For this mock demo, we just ensure the user exists, then write the profile.
@@ -31,7 +32,7 @@ pub async fn finish_onboarding(
     )
     .execute(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // Upsert the profile with the DOB
     sqlx::query!(
@@ -47,7 +48,7 @@ pub async fn finish_onboarding(
     )
     .execute(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let response = UserResponse {
         id: user_id.to_string(),
@@ -62,16 +63,16 @@ pub async fn update_role(
     State(pool): State<PgPool>,
     AuthenticatedUser(user): AuthenticatedUser,
     Json(payload): Json<crate::domain::dtos::RoleSelectionRequest>,
-) -> Result<impl IntoResponse, (StatusCode, String)> {
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
     
     // Valiate role input
     let new_role = payload.role.to_lowercase();
     if new_role != "student" && new_role != "teacher" {
-        return Err((StatusCode::BAD_REQUEST, "Invalid role. Must be 'student' or 'teacher'.".to_string()));
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "Invalid role. Must be 'student' or 'teacher'."));
     }
 
     let user_id = uuid::Uuid::parse_str(&user.sub)
-        .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid user ID logic".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::UNAUTHORIZED, "Invalid user ID logic"))?;
 
     // Update the role in the users table
     let rows_affected = sqlx::query!(
@@ -81,11 +82,11 @@ pub async fn update_role(
     )
     .execute(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?
     .rows_affected();
     
     if rows_affected == 0 {
-         return Err((StatusCode::NOT_FOUND, "User not found".to_string()));
+         return Err(ApiError::response(StatusCode::NOT_FOUND, "User not found"));
     }
 
     let response = UserResponse {

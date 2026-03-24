@@ -25,7 +25,9 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
             try {
                 const data = await response.json();
                 errorText = data.error || errorText;
-            } catch (e) { }
+            } catch (e) {
+                try { errorText = await response.text() || errorText; } catch (_) {}
+            }
             return NextResponse.json({ error: errorText }, { status: response.status })
         }
 
@@ -52,7 +54,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
             return NextResponse.json({ error: "DEBUG: fieldsSchema is missing or empty array!" }, { status: 400 });
         }
 
-        console.log("DEBUG: Next.js API received payload for UpdateSet:", JSON.stringify(body, null, 2))
+        console.log("DEBUG: Next.js API updating set:", id)
         const rustApiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000"
 
         const response = await fetch(`${rustApiUrl}/api/sets/${id}`, {
@@ -70,7 +72,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
                 const data = await response.json();
                 errorText = data.error || errorText;
             } catch (e) {
-                // Ignore parsing errors
+                try { errorText = await response.text() || errorText; } catch (_) {}
             }
             return NextResponse.json(
                 { error: errorText },
@@ -112,7 +114,9 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
             try {
                 const data = await response.json();
                 errorText = data.error || errorText;
-            } catch (e) { }
+            } catch (e) {
+                try { errorText = await response.text() || errorText; } catch (_) {}
+            }
             return NextResponse.json({ error: errorText }, { status: response.status })
         }
 

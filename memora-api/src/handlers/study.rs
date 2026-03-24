@@ -9,22 +9,23 @@ use uuid::Uuid;
 
 use crate::domain::dtos::{SetProgressResponse, StudySessionRequest};
 use crate::middleware::auth::AuthenticatedUser;
+use super::errors::ApiError;
 
 pub async fn record_study_progress(
     State(pool): State<PgPool>,
     AuthenticatedUser(user): AuthenticatedUser,
     Json(payload): Json<StudySessionRequest>,
-) -> Result<impl IntoResponse, (StatusCode, String)> {
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
     
     let user_id = Uuid::parse_str(&user.sub)
-        .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid user token".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::UNAUTHORIZED, "Invalid user token"))?;
 
     // Transaction for atomic batch updates
-    let mut tx = pool.begin().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    let mut tx = pool.begin().await.map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     for update in payload.progress_updates {
         let flashcard_uuid = Uuid::parse_str(&update.flashcard_id)
-            .map_err(|_| (StatusCode::BAD_REQUEST, format!("Invalid flashcard UUID: {}", update.flashcard_id)))?;
+            .map_err(|_| ApiError::response(StatusCode::BAD_REQUEST, format!("Invalid flashcard UUID: {}", update.flashcard_id)))?;
 
         // 1. Validate the flashcard actually belongs to the provided set to prevent tampering
         let card_exists = sqlx::query!(
@@ -34,11 +35,11 @@ pub async fn record_study_progress(
         )
         .fetch_optional(&mut *tx)
         .await
-        .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+        .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
         if card_exists.is_none() {
             // Rollback if there's an unauthorized or invalid card ID
-            return Err((StatusCode::BAD_REQUEST, "Flashcard does not belong to the specified set".to_string()));
+            return Err(ApiError::response(StatusCode::BAD_REQUEST, "Flashcard does not belong to the specified set"));
         }
 
         // 2. Upsert the progress leveraging ON CONFLICT
@@ -58,11 +59,11 @@ pub async fn record_study_progress(
         )
         .execute(&mut *tx)
         .await
-        .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+        .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
     }
 
     // Commit the batch of updates
-    tx.commit().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    tx.commit().await.map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // Technically returning 200 OK or 204 No Content is standard here. We'll return 200 OK with a success message.
     Ok((StatusCode::OK, Json(serde_json::json!({"status": "success"}))))
@@ -72,19 +73,15 @@ pub async fn get_set_progress(
     State(pool): State<PgPool>,
     AuthenticatedUser(user): AuthenticatedUser,
     Path(set_id_str): Path<String>,
-) -> Result<impl IntoResponse, (StatusCode, String)> {
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
     
     let user_id = Uuid::parse_str(&user.sub)
-        .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid user token".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::UNAUTHORIZED, "Invalid user token"))?;
         
     let set_id = Uuid::parse_str(&set_id_str)
-        .map_err(|_| (StatusCode::BAD_REQUEST, "Invalid set ID".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::BAD_REQUEST, "Invalid set ID"))?;
 
     // We do a single query to get all flashcards in the set and their FSRS state for this user.
-    // We also count legacy `flashcard_progress` just to keep the known_cards logic stable if needed,
-    // though FSRS state should now dictate "known" status conceptually.
-    // For now, let's keep known_cards backwards-compatible for the progress bar, 
-    // or we can calculate it dynamically: State 2 (Review) = Mastered/Known.
     let rows = sqlx::query!(
         r#"
         SELECT 
@@ -99,7 +96,7 @@ pub async fn get_set_progress(
     )
     .fetch_all(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     use crate::domain::dtos::CardProgress;
 
@@ -134,21 +131,21 @@ pub async fn fsrs_review(
     State(pool): State<PgPool>,
     AuthenticatedUser(user): AuthenticatedUser,
     Json(payload): Json<FSRSRatingRequest>,
-) -> Result<impl IntoResponse, (StatusCode, String)> {
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
     let user_id = Uuid::parse_str(&user.sub)
-        .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid token".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::UNAUTHORIZED, "Invalid token"))?;
     let flashcard_uuid = Uuid::parse_str(&payload.flashcard_id)
-        .map_err(|_| (StatusCode::BAD_REQUEST, "Invalid flashcard ID".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::BAD_REQUEST, "Invalid flashcard ID"))?;
 
     // Load existing fsrs record
     let record = sqlx::query!(
         "SELECT state, due, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, last_review FROM fsrs_records WHERE user_id = $1 AND flashcard_id = $2",
         user_id, flashcard_uuid
     ).fetch_optional(&pool).await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let now = chrono::Utc::now();
-    let fsrs = fsrs::FSRS::new(None).map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    let fsrs = fsrs::FSRS::new(None).map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
     
     let mut current_memory = None;
     let mut elapsed_days = 0;
@@ -166,14 +163,14 @@ pub async fn fsrs_review(
     };
 
     let next_states = fsrs.next_states(current_memory, 0.9, elapsed_days)
-        .map_err(|e: fsrs::FSRSError| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+        .map_err(|e: fsrs::FSRSError| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
     
     let item_state = match payload.rating {
         1 => next_states.again,
         2 => next_states.hard,
         3 => next_states.good,
         4 => next_states.easy,
-        _ => return Err((StatusCode::BAD_REQUEST, "Invalid rating".to_string()))
+        _ => return Err(ApiError::response(StatusCode::BAD_REQUEST, "Invalid rating"))
     };
 
     let scheduled_days = item_state.interval.round() as i32;
@@ -188,7 +185,7 @@ pub async fn fsrs_review(
 
     let inc_lapse = if new_state == 3 && current_state == 2 { 1 } else { 0 };
 
-    let mut tx = pool.begin().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    let mut tx = pool.begin().await.map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     sqlx::query!(
         r#"
@@ -220,7 +217,7 @@ pub async fn fsrs_review(
         scheduled_days,
         inc_lapse as i32,
         now
-    ).execute(&mut *tx).await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    ).execute(&mut *tx).await.map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // Log the review
     sqlx::query!(
@@ -235,9 +232,9 @@ pub async fn fsrs_review(
         now,
         elapsed_days as i32,
         scheduled_days
-    ).execute(&mut *tx).await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    ).execute(&mut *tx).await.map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
-    tx.commit().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    tx.commit().await.map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let response = ReviewLogResponse {
         state: new_state,
@@ -253,12 +250,12 @@ pub async fn get_fsrs_due(
     State(pool): State<PgPool>,
     AuthenticatedUser(user): AuthenticatedUser,
     Path(set_id_str): Path<String>,
-) -> Result<impl IntoResponse, (StatusCode, String)> {
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
     let user_id = Uuid::parse_str(&user.sub)
-        .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid user token".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::UNAUTHORIZED, "Invalid user token"))?;
         
     let set_id = Uuid::parse_str(&set_id_str)
-        .map_err(|_| (StatusCode::BAD_REQUEST, "Invalid set ID".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::BAD_REQUEST, "Invalid set ID"))?;
 
     // Fetch cards that either have no FSRS record (due IS NULL - meaning New) 
     // or their due date is <= NOW() (due < NOW())
@@ -276,7 +273,7 @@ pub async fn get_fsrs_due(
     )
     .fetch_all(&pool)
     .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let cards: Vec<FlashcardResponse> = rows.into_iter().map(|row| {
         FlashcardResponse {
@@ -296,12 +293,12 @@ pub async fn reset_fsrs_progress(
     State(pool): State<PgPool>,
     AuthenticatedUser(user): AuthenticatedUser,
     Path(set_id_str): Path<String>,
-) -> Result<impl IntoResponse, (StatusCode, String)> {
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
     let user_id = Uuid::parse_str(&user.sub)
-        .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid user token".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::UNAUTHORIZED, "Invalid user token"))?;
         
     let set_id = Uuid::parse_str(&set_id_str)
-        .map_err(|_| (StatusCode::BAD_REQUEST, "Invalid set ID".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::BAD_REQUEST, "Invalid set ID"))?;
 
     // Delete FSRS records related to this set and user
     sqlx::query!(
@@ -311,7 +308,7 @@ pub async fn reset_fsrs_progress(
     )
     .execute(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // Also delete review logs 
     sqlx::query!(
@@ -321,7 +318,7 @@ pub async fn reset_fsrs_progress(
     )
     .execute(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // Also reset any legacy progress
     sqlx::query!(
@@ -331,7 +328,7 @@ pub async fn reset_fsrs_progress(
     )
     .execute(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     Ok((StatusCode::OK, Json(serde_json::json!({"status": "progress reset"}))))
 }

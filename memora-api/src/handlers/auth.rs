@@ -9,21 +9,22 @@ use sqlx::PgPool;
 use uuid::Uuid;
 
 use crate::domain::dtos::{AuthRequest, UserResponse};
+use super::errors::ApiError;
 
 pub async fn register(
     State(pool): State<PgPool>,
     Json(payload): Json<AuthRequest>,
-) -> Result<impl IntoResponse, (StatusCode, String)> {
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
     let email = payload.email.to_lowercase();
     let password = payload.password;
 
     if email.is_empty() || password.len() < 6 {
-        return Err((StatusCode::BAD_REQUEST, "Email required and password must be at least 6 characters".to_string()));
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "Email required and password must be at least 6 characters"));
     }
 
     // Hash the password
     let hashed_password = hash(password, DEFAULT_COST)
-        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to hash password: {}", e)))?;
+        .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to hash password: {}", e)))?;
 
     // Insert user
     let user_id = Uuid::new_v4();
@@ -46,10 +47,10 @@ pub async fn register(
             Ok((StatusCode::CREATED, Json(response)))
         },
         Err(sqlx::Error::Database(e)) if e.is_unique_violation() => {
-            Err((StatusCode::CONFLICT, "User with this email already exists".to_string()))
+            Err(ApiError::response(StatusCode::CONFLICT, "User with this email already exists"))
         },
         Err(e) => {
-            Err((StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to create user: {}", e)))
+            Err(ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to create user: {}", e)))
         }
     }
 }
@@ -57,7 +58,7 @@ pub async fn register(
 pub async fn login(
     State(pool): State<PgPool>,
     Json(payload): Json<AuthRequest>,
-) -> Result<impl IntoResponse, (StatusCode, String)> {
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
     let email = payload.email.to_lowercase();
 
     // Fetch user
@@ -67,12 +68,12 @@ pub async fn login(
     )
     .fetch_optional(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {}", e)))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {}", e)))?;
 
     if let Some(user) = user_record {
         if let Some(hash) = user.password_hash {
             let is_valid = verify(&payload.password, &hash)
-                .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to verify password: {}", e)))?;
+                .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to verify password: {}", e)))?;
 
             if is_valid {
                 let response = UserResponse {
@@ -86,23 +87,23 @@ pub async fn login(
     }
 
     // Generic error for either not found or invalid password
-    Err((StatusCode::UNAUTHORIZED, "Invalid email or password".to_string()))
+    Err(ApiError::response(StatusCode::UNAUTHORIZED, "Invalid email or password"))
 }
 
 pub async fn oauth_google(
     State(pool): State<PgPool>,
     headers: axum::http::HeaderMap,
     Json(payload): Json<crate::domain::dtos::GoogleAuthRequest>,
-) -> Result<impl IntoResponse, (StatusCode, String)> {
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
     // 1. Validate Secret Header
     let expected_secret = std::env::var("NEXTAUTH_SECRET").unwrap_or_default();
     if expected_secret.is_empty() {
-        return Err((StatusCode::INTERNAL_SERVER_ERROR, "Server misconfiguration: missing NEXTAUTH_SECRET".to_string()));
+        return Err(ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, "Server misconfiguration: missing NEXTAUTH_SECRET"));
     }
 
     let auth_header = headers.get("x-backend-secret").and_then(|v| v.to_str().ok());
     if auth_header != Some(&expected_secret) {
-        return Err((StatusCode::UNAUTHORIZED, "Invalid backend secret".to_string()));
+        return Err(ApiError::response(StatusCode::UNAUTHORIZED, "Invalid backend secret"));
     }
 
     let email = payload.email.to_lowercase();
@@ -114,7 +115,7 @@ pub async fn oauth_google(
     )
     .fetch_optional(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {}", e)))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {}", e)))?;
 
     if let Some(user) = existing_user {
         let response = UserResponse {
@@ -126,7 +127,7 @@ pub async fn oauth_google(
     }
 
     // 3. User does not exist, create a new one without a password
-    let mut tx = pool.begin().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    let mut tx = pool.begin().await.map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let user_id = Uuid::new_v4();
     let insert_user_result = sqlx::query!(
@@ -141,7 +142,7 @@ pub async fn oauth_google(
 
     if let Err(e) = insert_user_result {
         let _ = tx.rollback().await;
-        return Err((StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to create user: {}", e)));
+        return Err(ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to create user: {}", e)));
     }
 
     let insert_profile_result = sqlx::query!(
@@ -156,10 +157,10 @@ pub async fn oauth_google(
 
     if let Err(e) = insert_profile_result {
         let _ = tx.rollback().await;
-        return Err((StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to create profile: {}", e)));
+        return Err(ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to create profile: {}", e)));
     }
 
-    tx.commit().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    tx.commit().await.map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let response = UserResponse {
         id: user_id.to_string(),

@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: "DEBUG: fieldsSchema is missing or empty array!" }, { status: 400 });
         }
 
-        console.log("DEBUG: Next.js API received payload for CreateSet:", JSON.stringify(body, null, 2))
+        console.log("DEBUG: Next.js API creating set...")
         const rustApiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000"
 
         // Clean up debug output and use session.id_token
@@ -29,7 +29,12 @@ export async function POST(req: NextRequest) {
             body: JSON.stringify(body),
         })
 
-        const data = await response.json()
+        let data;
+        try {
+            data = await response.json();
+        } catch (e) {
+            data = { error: await response.text() || "Failed to create set" };
+        }
 
         if (!response.ok) {
             return NextResponse.json(
@@ -66,8 +71,15 @@ export async function GET(req: NextRequest) {
         })
 
         if (!response.ok) {
+            let errorText = "Failed to fetch sets";
+            try {
+                const data = await response.json();
+                errorText = data.error || errorText;
+            } catch (e) {
+                try { errorText = await response.text() || errorText; } catch (_) {}
+            }
             return NextResponse.json(
-                { error: "Failed to fetch sets" },
+                { error: errorText },
                 { status: response.status }
             )
         }

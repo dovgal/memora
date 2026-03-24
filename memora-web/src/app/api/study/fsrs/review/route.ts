@@ -22,7 +22,12 @@ export async function POST(req: NextRequest) {
             body: JSON.stringify(body),
         })
 
-        const data = await response.json()
+        let data;
+        try {
+            data = await response.json();
+        } catch (e) {
+            try { data = { error: await response.text() || "Failed to process FSRS review" }; } catch (_) { data = { error: "Failed to process FSRS review" }; }
+        }
 
         if (!response.ok) {
             return NextResponse.json(

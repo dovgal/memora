@@ -11,15 +11,16 @@ use crate::domain::dtos::{
     CreateSetRequest, FlashcardResponse, SetResponse, SetSummaryResponse, UpdateSetRequest
 };
 use crate::middleware::auth::AuthenticatedUser;
+use super::errors::ApiError;
 
 pub async fn get_public_set(
     State(pool): State<PgPool>,
     optional_user: crate::middleware::auth::OptionalAuthenticatedUser,
     Path(id): Path<String>,
-) -> Result<impl IntoResponse, (StatusCode, String)> {
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
     
     let set_id = Uuid::parse_str(&id)
-        .map_err(|_| (StatusCode::BAD_REQUEST, "Invalid set ID format".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::BAD_REQUEST, "Invalid set ID format"))?;
 
     // 1. Fetch the set, allowing either public or private sets to be fetched initially
     let set_record = sqlx::query!(
@@ -28,11 +29,11 @@ pub async fn get_public_set(
     )
     .fetch_optional(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let set_record = match set_record {
         Some(record) => record,
-        None => return Err((StatusCode::NOT_FOUND, "Set not found".to_string())),
+        None => return Err(ApiError::response(StatusCode::NOT_FOUND, "Set not found")),
     };
 
     // 1.5 Check if the user is authorized to view this set
@@ -40,7 +41,7 @@ pub async fn get_public_set(
     let is_owner = requesting_user_id.is_some() && Some(set_record.creator_id) == requesting_user_id;
 
     if !set_record.is_public && !is_owner {
-        return Err((StatusCode::NOT_FOUND, "Set not found or is private".to_string()));
+        return Err(ApiError::response(StatusCode::NOT_FOUND, "Set not found or is private"));
     }
 
     // 2. Fetch the flashcards for this set, ordered appropriately
@@ -50,7 +51,7 @@ pub async fn get_public_set(
     )
     .fetch_all(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // 3. Map into DTOs
     let flashcards: Vec<FlashcardResponse> = flashcards_records
@@ -80,18 +81,17 @@ pub async fn create_set(
     State(pool): State<PgPool>,
     AuthenticatedUser(user): AuthenticatedUser,
     Json(payload): Json<CreateSetRequest>,
-) -> Result<impl IntoResponse, (StatusCode, String)> {
-    println!("DEBUG: Received CreateSetRequest. title: {}, fields_schema: {:?}", payload.title, payload.fields_schema);
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
     
     if payload.flashcards.len() < 2 {
-        return Err((StatusCode::BAD_REQUEST, "A set must contain at least 2 flashcards.".to_string()));
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "A set must contain at least 2 flashcards."));
     }
 
     let creator_id = Uuid::parse_str(&user.sub)
-        .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid user token".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::UNAUTHORIZED, "Invalid user token"))?;
 
     // Begin the transaction
-    let mut tx = pool.begin().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    let mut tx = pool.begin().await.map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
     
     // 1. Insert the parent Set
     let set_record = sqlx::query!(
@@ -104,7 +104,7 @@ pub async fn create_set(
     )
     .fetch_one(&mut *tx)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let new_set_id = set_record.id;
 
@@ -126,7 +126,7 @@ pub async fn create_set(
         )
         .fetch_one(&mut *tx)
         .await
-        .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, format!("Failed adding flashcard: {}", e)))?;
+        .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed adding flashcard: {}", e)))?;
 
         response_flashcards.push(FlashcardResponse {
             id: fc_record.id.to_string(),
@@ -139,7 +139,7 @@ pub async fn create_set(
     }
 
     // Commit transaction
-    tx.commit().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    tx.commit().await.map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let response = SetResponse {
         id: new_set_id.to_string(),
@@ -155,11 +155,12 @@ pub async fn create_set(
 pub async fn get_user_sets(
     State(pool): State<PgPool>,
     AuthenticatedUser(user): AuthenticatedUser,
-) -> Result<impl IntoResponse, (StatusCode, String)> {
-    let user_id = Uuid::parse_str(&user.sub)
-        .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid user token".to_string()))?;
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
+    let creator_id = Uuid::parse_str(&user.sub)
+        .map_err(|_| ApiError::response(StatusCode::UNAUTHORIZED, "Invalid user token"))?;
 
-    let sets = sqlx::query!(
+    // Updated Query to count cards
+    let sets_records = sqlx::query!(
         r#"
         SELECT s.id, s.title, s.description, s.created_at, s.fields_schema, COUNT(f.id) as flashcard_count
         FROM sets s
@@ -168,13 +169,13 @@ pub async fn get_user_sets(
         GROUP BY s.id
         ORDER BY s.created_at DESC
         "#,
-        user_id
+        creator_id
     )
     .fetch_all(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
-    let response: Vec<SetSummaryResponse> = sets
+    let response: Vec<SetSummaryResponse> = sets_records
         .into_iter()
         .map(|record| SetSummaryResponse {
             id: record.id.to_string(),
@@ -193,57 +194,27 @@ pub async fn delete_set(
     State(pool): State<PgPool>,
     AuthenticatedUser(user): AuthenticatedUser,
     Path(id): Path<String>,
-) -> Result<impl IntoResponse, (StatusCode, String)> {
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
     let set_id = Uuid::parse_str(&id)
-        .map_err(|_| (StatusCode::BAD_REQUEST, "Invalid set ID format".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::BAD_REQUEST, "Invalid set ID format"))?;
 
-    let user_id = Uuid::parse_str(&user.sub)
-        .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid user token".to_string()))?;
+    let creator_id = Uuid::parse_str(&user.sub)
+        .map_err(|_| ApiError::response(StatusCode::UNAUTHORIZED, "Invalid user token"))?;
 
-    // Check ownership first
-    let result = sqlx::query!(
-        "SELECT id FROM sets WHERE id = $1 AND creator_id = $2",
-        set_id,
-        user_id
-    )
-    .fetch_optional(&pool)
-    .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
-
-    if result.is_none() {
-        return Err((StatusCode::NOT_FOUND, "Set not found or unauthorized".to_string()));
-    }
-
-    let mut tx = pool.begin().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
-
-    // Delete related records manually to avoid any ON DELETE CASCADE issues with later migrations
-    sqlx::query!("DELETE FROM folder_sets WHERE set_id = $1", set_id)
-        .execute(&mut *tx)
-        .await
-        .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
-
-    sqlx::query!("DELETE FROM group_sets WHERE set_id = $1", set_id)
-        .execute(&mut *tx)
-        .await
-        .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
-
-    // Delete the set itself (which should cascade to flashcards and flashcard_progress if migrations are right)
     let result = sqlx::query!(
         "DELETE FROM sets WHERE id = $1 AND creator_id = $2",
         set_id,
-        user_id
+        creator_id
     )
-    .execute(&mut *tx)
+    .execute(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
-
-    tx.commit().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     if result.rows_affected() == 0 {
-        return Err((StatusCode::NOT_FOUND, "Set not found or unauthorized".to_string()));
+        return Err(ApiError::response(StatusCode::NOT_FOUND, "Set not found or unauthorized"));
     }
 
-    Ok(StatusCode::NO_CONTENT)
+    Ok(StatusCode::OK)
 }
 
 pub async fn update_set(
@@ -251,15 +222,15 @@ pub async fn update_set(
     AuthenticatedUser(user): AuthenticatedUser,
     Path(id): Path<String>,
     Json(payload): Json<UpdateSetRequest>,
-) -> Result<impl IntoResponse, (StatusCode, String)> {
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
     let set_id = Uuid::parse_str(&id)
-        .map_err(|_| (StatusCode::BAD_REQUEST, "Invalid set ID format".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::BAD_REQUEST, "Invalid set ID format"))?;
 
     let creator_id = Uuid::parse_str(&user.sub)
-        .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid user token".to_string()))?;
+        .map_err(|_| ApiError::response(StatusCode::UNAUTHORIZED, "Invalid user token"))?;
 
     if payload.flashcards.len() < 2 {
-        return Err((StatusCode::BAD_REQUEST, "A set must contain at least 2 flashcards.".to_string()));
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "A set must contain at least 2 flashcards."));
     }
 
     // Verify ownership
@@ -270,13 +241,13 @@ pub async fn update_set(
     )
     .fetch_optional(&pool)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     if existing_set.is_none() {
-        return Err((StatusCode::NOT_FOUND, "Set not found or unauthorized".to_string()));
+        return Err(ApiError::response(StatusCode::NOT_FOUND, "Set not found or unauthorized"));
     }
 
-    let mut tx = pool.begin().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    let mut tx = pool.begin().await.map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // 1. Update the parent Set
     sqlx::query!(
@@ -289,16 +260,13 @@ pub async fn update_set(
     )
     .execute(&mut *tx)
     .await
-    .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // 2. We'll simply delete all existing flashcards and insert the new ones
-    // Or we could try to diff and update. Since order matters and cards can be deleted/added,
-    // the easiest robust way is deleting and creating new. Let's delete all and insert new.
-    
     sqlx::query!("DELETE FROM flashcards WHERE set_id = $1", set_id)
         .execute(&mut *tx)
         .await
-        .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+        .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // 3. Insert the Flashcards iteratively
     let mut response_flashcards = Vec::new();
@@ -307,11 +275,6 @@ pub async fn update_set(
         let order_index = index as i32;
         let image_url_clone = card.image_url.clone();
         let fields_data_clone = card.fields_data.clone();
-        
-        // Use provided id if exists? Or generate new ones?
-        // Since we delete and recreate, they will get new UUIDs. Actually, keeping IDs might be useful for progress tracking.
-        // Wait, progress tracking relies on flashcard ID.
-        // We MUST preserve IDs if they exist.
         
         let fc_id = if let Some(id_str) = &card.id {
             if let Ok(parsed_id) = Uuid::parse_str(id_str) {
@@ -337,7 +300,7 @@ pub async fn update_set(
         )
         .execute(&mut *tx)
         .await
-        .map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, format!("Failed adding flashcard: {}", e)))?;
+        .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed adding flashcard: {}", e)))?;
 
         response_flashcards.push(FlashcardResponse {
             id: new_id.to_string(),
@@ -350,7 +313,7 @@ pub async fn update_set(
     }
 
     // Commit transaction
-    tx.commit().await.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    tx.commit().await.map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let response = SetResponse {
         id: set_id.to_string(),
