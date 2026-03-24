@@ -82,6 +82,7 @@ impl IntoResponse for AuthError {
 #[allow(dead_code)]
 pub struct RequireTeacher(pub Claims);
 
+#[allow(dead_code)]
 impl<S> FromRequestParts<S> for RequireTeacher
 where
     S: Send + Sync,
@@ -101,6 +102,7 @@ where
 #[allow(dead_code)]
 pub struct RequireStudent(pub Claims);
 
+#[allow(dead_code)]
 impl<S> FromRequestParts<S> for RequireStudent
 where
     S: Send + Sync,
