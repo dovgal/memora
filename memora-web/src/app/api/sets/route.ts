@@ -29,11 +29,12 @@ export async function POST(req: NextRequest) {
             body: JSON.stringify(body),
         })
 
+        const responseText = await response.text();
         let data;
         try {
-            data = await response.json();
+            data = JSON.parse(responseText);
         } catch (e) {
-            data = { error: await response.text() || "Failed to create set" };
+            data = { error: responseText || "Failed to create set" };
         }
 
         if (!response.ok) {

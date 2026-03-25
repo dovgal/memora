@@ -128,12 +128,11 @@ export default function CreateSetPage() {
                 body: JSON.stringify(payload),
             })
 
-            if (!res.ok) {
-                const errorData = await res.json()
-                throw new Error(errorData.error || "Failed to create set")
-            }
-
             const responseData = await res.json()
+
+            if (!res.ok) {
+                throw new Error(responseData.error || "Failed to create set")
+            }
 
             // If a folderId was provided in the query string, add the new set to that folder
             if (folderId && session && (session as any).id_token) {
