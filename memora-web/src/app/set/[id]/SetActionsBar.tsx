@@ -27,6 +27,13 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
     const [isShareOpen, setIsShareOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
+    useEffect(() => {
+        console.log("DEBUG: SetActionsBar isOwner calculation:", {
+            isOwner,
+            setId,
+        });
+    }, [isOwner, setId]);
+
     const handleDelete = async () => {
         if (!confirm("Вы уверены, что хотите удалить этот модуль? Это действие нельзя отменить.")) return;
 
@@ -138,11 +145,31 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
 
             <button
                 onClick={() => setIsShareOpen(true)}
-                className="flex items-center justify-center w-10 h-10 bg-transparent border border-zinc-700 hover:border-zinc-500 rounded-lg transition-colors"
-                title="Экспортировать"
+                className="flex items-center justify-center w-10 h-10 bg-transparent border border-zinc-700 hover:border-zinc-500 rounded-lg transition-colors text-zinc-400 hover:text-white"
+                title="Поделиться"
             >
                 <Share size={18} />
             </button>
+
+            {isOwner && (
+                <>
+                    <button
+                        onClick={() => router.push(`/set/${setId}/edit`)}
+                        className="flex items-center justify-center w-10 h-10 bg-zinc-800/50 border border-indigo-500/30 hover:border-indigo-500 rounded-lg transition-colors text-indigo-400"
+                        title="Редактировать"
+                    >
+                        <Edit2 size={18} />
+                    </button>
+                    <button
+                        onClick={handleDelete}
+                        disabled={isDeleting}
+                        className="flex items-center justify-center w-10 h-10 bg-zinc-800/50 border border-red-500/30 hover:border-red-500 rounded-lg transition-colors text-red-400 disabled:opacity-50"
+                        title="Удалить"
+                    >
+                        {isDeleting ? <Loader2 size={18} className="animate-spin" /> : <Trash2 size={18} />}
+                    </button>
+                </>
+            )}
 
             <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
