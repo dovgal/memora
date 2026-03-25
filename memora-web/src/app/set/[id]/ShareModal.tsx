@@ -42,10 +42,14 @@ export default function ShareModal({ setId, setTitle, onClose }: ShareModalProps
                 <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl" />
 
                 <button
-                    onClick={onClose}
-                    className="absolute top-6 right-6 w-8 h-8 flex items-center justify-center rounded-full bg-zinc-800/50 hover:bg-zinc-700 text-zinc-400 hover:text-white transition-colors z-10"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onClose();
+                    }}
+                    className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-white transition-all z-[120] border border-white/5 active:scale-90"
+                    aria-label="Close"
                 >
-                    <X className="w-5 h-5" />
+                    <X className="w-6 h-6" />
                 </button>
 
                 <div className="relative z-10">

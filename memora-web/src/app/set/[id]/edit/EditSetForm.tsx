@@ -599,8 +599,15 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
             {isTemplateEditorOpen && (
                 <SetTemplateEditor
                     fields={watch('fieldsSchema')}
-                    onChange={(newFields) => {
+                    onChange={async (newFields) => {
                         setValue('fieldsSchema', newFields, { shouldValidate: true, shouldDirty: true });
+                        // If TTS settings changed, we should re-process cards
+                        const hasTTS = newFields.some(f => f.type === 'text' && f.settings?.ttsEnabled);
+                        if (hasTTS) {
+                            const currentCards = getValues('flashcards');
+                            const processed = await processFlashcardsWithTTS(currentCards, newFields);
+                            replace(processed);
+                        }
                     }}
                     onClose={() => setIsTemplateEditorOpen(false)}
                 />

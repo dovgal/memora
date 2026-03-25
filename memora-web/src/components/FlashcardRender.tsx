@@ -76,9 +76,9 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
                     case 'text':
                         const audioData = card.fieldsData?.[`${field.id}_audio`];
                         return (
-                            <div key={field.id} className="flex flex-col md:flex-row md:items-center gap-1 md:gap-4 w-full justify-center md:justify-start items-center">
-                                <div className="shrink-0 md:w-1/3 flex flex-col md:flex-row items-center justify-end gap-2">
-                                    <span className="text-[10px] md:text-xs text-indigo-400 font-bold uppercase tracking-widest opacity-90 text-center md:text-right">
+                            <div key={field.id} className="flex flex-col items-center gap-2 w-full max-w-4xl mx-auto">
+                                <div className="flex items-center gap-3">
+                                    <span className="text-[10px] md:text-sm text-indigo-400 font-bold uppercase tracking-[0.2em] opacity-80">
                                         {field.name}
                                     </span>
                                     {audioData && (
@@ -88,14 +88,14 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
                                                 const audio = new Audio(audioData);
                                                 audio.play();
                                             }}
-                                            className="text-indigo-500 hover:text-indigo-400 p-1.5 bg-indigo-500/10 hover:bg-indigo-500/20 rounded-full transition-colors"
+                                            className="text-indigo-500 hover:text-indigo-400 p-2 bg-indigo-500/10 hover:bg-indigo-500/20 rounded-full transition-all hover:scale-110 active:scale-90"
                                             title="Озвучить"
                                         >
-                                            <Volume2 size={14} />
+                                            <Volume2 size={16} />
                                         </button>
                                     )}
                                 </div>
-                                <p className={`text-4xl md:text-7xl md:w-2/3 text-center md:text-left font-bold tracking-tight break-words leading-tight`}>
+                                <p className={`text-4xl md:text-6xl lg:text-7xl text-center font-black tracking-tight break-words leading-[1.1] text-white`}>
                                     {value}
                                 </p>
                             </div>

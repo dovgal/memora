@@ -101,10 +101,17 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                                     <div className="font-bold text-white mb-1 uppercase text-sm tracking-wider">{field.name}</div>
                                     <div className="flex items-center gap-2 text-xs text-zinc-400">
                                         <span className="bg-zinc-800 px-2 py-0.5 rounded">{FIELD_TYPES.find(t => t.type === field.type)?.label || field.type}</span>
-                                        {field.type === 'text' && field.settings.language !== 'default' && (
-                                            <span className="bg-indigo-900/50 text-indigo-300 px-2 py-0.5 rounded">
-                                                {LANGUAGES.find(l => l.code === field.settings.language)?.label || field.settings.language}
-                                            </span>
+                                        {field.type === 'text' && (
+                                            <select
+                                                value={field.settings.language || 'default'}
+                                                onClick={(e) => e.stopPropagation()}
+                                                onChange={(e) => handleUpdateField(field.id, { settings: { ...field.settings, language: e.target.value } })}
+                                                className="bg-indigo-900/40 text-indigo-300 px-2 py-0.5 rounded border-none text-[10px] outline-none cursor-pointer hover:bg-indigo-900/60 transition-colors"
+                                            >
+                                                {LANGUAGES.map(lang => (
+                                                    <option key={lang.code} value={lang.code} className="bg-[#1a1a3a]">{lang.label}</option>
+                                                ))}
+                                            </select>
                                         )}
                                         {field.type === 'text' && field.settings.ttsEnabled && (
                                             <span className="bg-emerald-900/50 text-emerald-300 px-2 py-0.5 rounded flex items-center gap-1">
@@ -176,14 +183,14 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
 
                             <div className="space-y-6">
                                 <div>
-                                    <label className="block text-sm font-semibold text-zinc-400 mb-2 uppercase tracking-wider">Название (Отображается на карточке)</label>
+                                    <label className="block text-sm font-semibold text-zinc-400 mb-2 uppercase tracking-wider">Название поля (Напр: ТЕРМИН, ФРАЗА, FR)</label>
                                     <input
                                         type="text"
                                         value={editingField.name}
-                                        onChange={(e) => handleUpdateField(editingField.id, { name: e.target.value })}
-                                        className="w-full bg-[#1a1a3a] border border-indigo-500/30 rounded-xl p-4 text-white focus:outline-none focus:border-indigo-500 transition-colors uppercase font-bold"
+                                        onChange={(e) => handleUpdateField(editingField.id, { name: e.target.value.toUpperCase() })}
+                                        className="w-full bg-[#1a1a3a] border border-indigo-500/30 rounded-xl p-4 text-white focus:outline-none focus:border-indigo-500 transition-colors font-bold"
+                                        placeholder="Введите название..."
                                     />
-                                    <p className="text-xs text-zinc-500 mt-2">Пишите коротко, например: СЛОВО, ПЕРЕВОД, ПРОИЗНОШЕНИЕ</p>
                                 </div>
 
                                 <div>

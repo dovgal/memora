@@ -106,7 +106,7 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
                             token={session?.id_token}
                             flashcards={set.flashcards}
                             fieldsSchema={set.fieldsSchema || []}
-                            isOwner={session?.user?.id === set.creatorId}
+                            isOwner={session?.user?.id === set.creatorId || (session?.user as any)?.id === set.creatorId}
                             title={set.title}
                             description={set.description || ""}
                         />
