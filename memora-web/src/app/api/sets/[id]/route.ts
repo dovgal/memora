@@ -20,18 +20,18 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
             },
         })
 
-        if (!response.ok) {
-            let errorText = "Failed to fetch set";
-            try {
-                const data = await response.json();
-                errorText = data.error || errorText;
-            } catch (e) {
-                try { errorText = await response.text() || errorText; } catch (_) {}
-            }
-            return NextResponse.json({ error: errorText }, { status: response.status })
+        const responseText = await response.text();
+        let data;
+        try {
+            data = JSON.parse(responseText);
+        } catch (e) {
+            data = { error: responseText || "Failed to fetch set" };
         }
 
-        const data = await response.json()
+        if (!response.ok) {
+            return NextResponse.json({ error: data.error || "Failed to fetch set" }, { status: response.status })
+        }
+
         return NextResponse.json(data, { status: 200 })
     } catch (error) {
         console.error("Error fetching set from backend:", error)
@@ -66,21 +66,21 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
             body: JSON.stringify(body),
         })
 
+        const responseText = await response.text();
+        let data;
+        try {
+            data = JSON.parse(responseText);
+        } catch (e) {
+            data = { error: responseText || "Failed to update set" };
+        }
+
         if (!response.ok) {
-            let errorText = "Failed to update set";
-            try {
-                const data = await response.json();
-                errorText = data.error || errorText;
-            } catch (e) {
-                try { errorText = await response.text() || errorText; } catch (_) {}
-            }
             return NextResponse.json(
-                { error: errorText },
+                { error: data.error || "Failed to update set" },
                 { status: response.status }
             )
         }
 
-        const data = await response.json()
         return NextResponse.json(data, { status: 200 })
     } catch (error) {
         console.error("Error pushing set update to backend:", error)
@@ -110,12 +110,13 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
         })
 
         if (!response.ok) {
+            const responseText = await response.text();
             let errorText = "Failed to delete set";
             try {
-                const data = await response.json();
+                const data = JSON.parse(responseText);
                 errorText = data.error || errorText;
             } catch (e) {
-                try { errorText = await response.text() || errorText; } catch (_) {}
+                errorText = responseText || errorText;
             }
             return NextResponse.json({ error: errorText }, { status: response.status })
         }

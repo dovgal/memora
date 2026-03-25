@@ -19,7 +19,6 @@ export async function POST(req: NextRequest) {
         console.log("DEBUG: Next.js API creating set...")
         const rustApiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000"
 
-        // Clean up debug output and use session.id_token
         const response = await fetch(`${rustApiUrl}/api/sets`, {
             method: "POST",
             headers: {
@@ -71,21 +70,21 @@ export async function GET(req: NextRequest) {
             },
         })
 
+        const responseText = await response.text();
+        let data;
+        try {
+            data = JSON.parse(responseText);
+        } catch (e) {
+            data = { error: responseText || "Failed to fetch sets" };
+        }
+
         if (!response.ok) {
-            let errorText = "Failed to fetch sets";
-            try {
-                const data = await response.json();
-                errorText = data.error || errorText;
-            } catch (e) {
-                try { errorText = await response.text() || errorText; } catch (_) {}
-            }
             return NextResponse.json(
-                { error: errorText },
+                { error: data.error || "Failed to fetch sets" },
                 { status: response.status }
             )
         }
 
-        const data = await response.json()
         return NextResponse.json(data, { status: 200 })
     } catch (error) {
         console.error("Error fetching sets:", error)
