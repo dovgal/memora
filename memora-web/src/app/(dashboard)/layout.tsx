@@ -10,6 +10,7 @@ import {
     Folder
 } from "lucide-react";
 import LogoutButton from "@/components/LogoutButton";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { FolderSummaryResponse } from "@/types/schema";
@@ -46,9 +47,9 @@ export default async function DashboardLayout({
     }
 
     return (
-        <div className="flex h-screen bg-[#0a0a1a] text-zinc-300 font-sans overflow-hidden">
+        <div className="flex h-screen bg-background text-foreground font-sans overflow-hidden">
             {/* Sidebar */}
-            <aside className="w-64 bg-[#0f0f2d] border-r border-[#1f1f3d] flex flex-col pt-6 hidden md:flex">
+            <aside className="w-64 bg-card border-r border-border flex flex-col pt-6 hidden md:flex">
                 <div className="px-6 mb-8 flex items-center gap-3">
                     <div className="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center font-bold text-white">
                         M
@@ -101,19 +102,21 @@ export default async function DashboardLayout({
             {/* Main Content Area */}
             <main className="flex-1 flex flex-col h-screen overflow-hidden relative min-w-0">
                 {/* Header */}
-                <header className="h-16 border-b border-[#262c40] bg-[#0a0f1d] flex items-center justify-between px-6 shrink-0 z-10 sticky top-0">
+                <header className="h-16 border-b border-border bg-background flex items-center justify-between px-6 shrink-0 z-10 sticky top-0">
                     <div className="flex-1 max-w-2xl px-4 md:px-0">
                         <div className="relative group">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8e95ae] group-focus-within:text-indigo-400 transition-colors" />
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
                             <input
                                 type="text"
                                 placeholder="Search study sets, folders, users..."
-                                className="w-full bg-[#171c2e] border border-transparent focus:border-indigo-500/50 rounded-full py-2 pl-10 pr-4 text-sm text-white placeholder:text-[#8e95ae] outline-none transition-all focus:bg-[#0a0f1d] focus:shadow-[0_0_15px_rgba(99,102,241,0.1)]"
+                                className="w-full bg-secondary border border-transparent focus:border-primary/50 rounded-full py-2 pl-10 pr-4 text-sm text-foreground placeholder:text-muted-foreground outline-none transition-all focus:bg-background focus:shadow-[0_0_15px_rgba(99,102,241,0.1)]"
                             />
                         </div>
                     </div>
 
                     <div className="flex items-center gap-4 pl-4">
+                        <ThemeToggle />
+                        
                         {/* Restoring the global Create button */}
                         <Link href="/create" className="hidden sm:flex items-center justify-center w-8 h-8 rounded-full bg-indigo-500 hover:bg-indigo-400 text-white transition-colors shadow-lg shadow-indigo-500/20">
                             <Plus className="w-5 h-5" />
@@ -139,7 +142,7 @@ export default async function DashboardLayout({
                 </header>
 
                 {/* Page Content */}
-                <div className="flex-1 overflow-y-auto w-full bg-[#0a0f1d]">
+                <div className="flex-1 overflow-y-auto w-full bg-background">
                     {children}
                 </div>
             </main>

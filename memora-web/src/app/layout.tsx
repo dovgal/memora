@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import AppProvider from "@/components/AppProvider";
+import { AppProvider } from "@/components/AppProvider";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import OfflineBanner from "@/components/OfflineBanner";
 
 const geistSans = Geist({
@@ -15,22 +16,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Memora",
-  description: "Master any subject with Spaced Repetition Flashcards",
-  applicationName: "Memora PWA",
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: "default",
-    title: "Memora PWA",
-  },
-  formatDetection: {
-    telephone: false,
-  },
+  title: "Memora - Smart Flashcards",
+  description: "Master anything with smart spaced repetition",
   manifest: "/manifest.json",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#09090b",
+  themeColor: "#6366f1",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
@@ -39,13 +35,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AppProvider>
-          {children}
-          <OfflineBanner />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <OfflineBanner />
+            {children}
+          </ThemeProvider>
         </AppProvider>
       </body>
     </html>

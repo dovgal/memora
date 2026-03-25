@@ -95,7 +95,7 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
                                         </button>
                                     )}
                                 </div>
-                                <p className={`text-3xl md:text-5xl md:w-2/3 text-center md:text-left font-medium tracking-wide break-words`}>
+                                <p className={`text-4xl md:text-7xl md:w-2/3 text-center md:text-left font-bold tracking-tight break-words leading-tight`}>
                                     {value}
                                 </p>
                             </div>

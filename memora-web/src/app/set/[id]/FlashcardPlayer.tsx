@@ -352,7 +352,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
         <div ref={containerRef} className="w-full flex flex-col items-center bg-[#0a0a1a] md:bg-transparent min-h-screen md:min-h-auto justify-center md:justify-start">
 
             {/* The Flashcard Container */}
-            <div className="relative w-full aspect-[16/9] md:aspect-[2/1] max-w-4xl bg-zinc-900 border border-zinc-800 rounded-2xl shadow-xl flex flex-col overflow-hidden mb-6 select-none group">
+            <div className="relative w-full aspect-[16/9] md:aspect-[2/1] max-w-6xl bg-zinc-900 border border-zinc-800 rounded-2xl shadow-xl flex flex-col overflow-hidden mb-6 select-none group">
 
                 {/* Overlay Settings Modal */}
                 {showSettings && (
@@ -544,7 +544,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                     </button>
                 </div>
             ) : (
-                <div className="flex items-center justify-between w-full max-w-4xl px-4">
+                <div className="flex items-center justify-between w-full max-w-6xl px-4">
                     <div className="flex items-center gap-3 cursor-pointer group" onClick={() => setTrackProgress(!trackProgress)}>
                         <span className="text-sm font-medium text-zinc-400 group-hover:text-white transition-colors">Отслеживать прогресс</span>
                         <Toggle isOn={trackProgress} onToggle={() => setTrackProgress(!trackProgress)} />
