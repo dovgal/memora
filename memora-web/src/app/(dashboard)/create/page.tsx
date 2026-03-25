@@ -286,6 +286,14 @@ export default function CreateSetPage() {
                         </button>
                         <button
                             type="button"
+                            onClick={() => router.push('/creator')}
+                            className="flex items-center gap-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 font-bold py-3 px-6 rounded-xl transition-all border border-indigo-500/40 hover:border-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.2)] group"
+                        >
+                            <Sparkles size={20} className="group-hover:rotate-12 transition-transform" />
+                            <span className="hidden sm:inline">AI Генератор</span>
+                        </button>
+                        <button
+                            type="button"
                             onClick={() => setIsImportOpen(true)}
                             className="flex items-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-white font-semibold py-3 px-6 rounded-xl transition-all border border-zinc-700 hover:border-zinc-500 shadow-sm"
                         >

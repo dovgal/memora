@@ -125,6 +125,7 @@ export interface SetResponse {
 	id: string;
 	title: string;
 	description?: string;
+	creatorId: string;
 	fieldsSchema: FieldSchema[];
 	flashcards: FlashcardResponse[];
 }
@@ -160,5 +161,45 @@ export interface UserResponse {
 	id: string;
 	email: string;
 	role: string;
+}
+
+export interface AIGenerateRequest {
+    setId: string;
+    exerciseCount: number;
+}
+
+export interface AIExercise {
+    id: string;
+    cardId: string;
+    type: string;
+    question: string;
+    targetField: string;
+    context?: string;
+}
+
+export interface AIGradeRequest {
+    setId: string;
+    cardId: string;
+    questionType: string;
+    userAnswer: string;
+    questionText: string;
+}
+
+export interface AIGradeResponse {
+    isCorrect: boolean;
+    score: number;
+    explanation: string;
+    correctAnswer: string;
+}
+
+export interface AIAnalyzeRequest {
+    content: string;
+    userObjective: string;
+}
+
+export interface AIAnalyzeResponse {
+    proposedTitle: string;
+    proposedDescription: string;
+    cards: CreateFlashcardRequest[];
 }
 

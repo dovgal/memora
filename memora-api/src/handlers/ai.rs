@@ -12,7 +12,7 @@ use governor::{Quota, RateLimiter};
 use std::num::NonZeroU32;
 
 use crate::middleware::{auth::AuthenticatedUser, rate_limiter::AppRateLimiter};
-use crate::domain::dtos::QChatRequest;
+use crate::domain::dtos::{QChatRequest, CreateFlashcardRequest};
 use sqlx::PgPool;
 
 const OLLAMA_MODEL: &str = "qwen3.5";
@@ -335,4 +335,181 @@ pub async fn generate_image(
 ) -> Result<Json<AiImageGenerateResponse>, (StatusCode, Json<AiGatewayError>)> {
     // Ollama Cloud currently does not support image generation models (DALL-E style)
     Err((StatusCode::NOT_IMPLEMENTED, Json(AiGatewayError { error: "Image generation is currently not supported with the Ollama backend.".to_string() })))
+}
+
+pub async fn generate_exercises(
+    State(pool): State<PgPool>,
+    State(_rate_limiter): State<AppRateLimiter>,
+    AuthenticatedUser(_user): AuthenticatedUser,
+    Json(payload): Json<AIGenerateRequest>,
+) -> Result<Json<Vec<AIExercise>>, (StatusCode, Json<AiGatewayError>)> {
+    let set_id = uuid::Uuid::parse_str(&payload.set_id)
+        .map_err(|_| (StatusCode::BAD_REQUEST, Json(AiGatewayError { error: "Invalid Set ID".to_string() })))?;
+
+    let flashcards = sqlx::query!(
+        "SELECT id, term, definition, fields_data FROM flashcards WHERE set_id = $1",
+        set_id
+    )
+    .fetch_all(&pool)
+    .await
+    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: e.to_string() })))?;
+
+    let set_info = sqlx::query!(
+        "SELECT title, fields_schema FROM sets WHERE id = $1",
+        set_id
+    )
+    .fetch_one(&pool)
+    .await
+    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: e.to_string() })))?;
+
+    let api_key = env::var("OLLAMA_API_KEY")
+        .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: "API Key not set".to_string() })))?;
+
+    let cards_json = serde_json::to_string(&flashcards)
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: e.to_string() })))?;
+
+    let system_prompt = format!(
+        "You are an expert educational content generator. Create {} diverse exercises for this study set: '{}'.
+        The fields schema is: {}.
+        Available cards: {}.
+        Output ONLY a raw JSON array of AIExercise objects.
+        AIExercise structure: {{ id: string, cardId: string, type: string, question: string, targetField: string, context: Option<string> }}.
+        Types: 'grammar' (change tense/person), 'negation', 'translation', 'listening' (write what you hear), 'context' (fill in blank).
+        Shuffle fields: if a card has multiple fields, query different ones randomly.
+        Do not use markdown blocks.",
+        payload.exercise_count, set_info.title, set_info.fields_schema, cards_json
+    );
+
+    let client = Client::new();
+    let response = client.post(OLLAMA_BASE_URL)
+        .header("Authorization", format!("Bearer {}", api_key))
+        .json(&OllamaRequest {
+            model: OLLAMA_MODEL.to_string(),
+            messages: vec![OllamaMessage {
+                role: "system".to_string(),
+                content: system_prompt,
+                images: None,
+            }],
+            stream: false,
+            options: Some(OllamaOptions { num_predict: 2000 }),
+        })
+        .send()
+        .await
+        .map_err(|e| (StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: e.to_string() })))?;
+
+    let body = response.text().await.unwrap_or_default();
+    // Try to parse the message content from Ollama's non-streaming response
+    #[derive(Deserialize)]
+    struct OllamaResponse {
+        message: OllamaDelta,
+    }
+    
+    let parsed: OllamaResponse = serde_json::from_str(&body)
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Ollama JSON Error: {} - Body: {}", e, body) })))?;
+
+    let content = parsed.message.content.unwrap_or_default();
+    let exercises: Vec<AIExercise> = serde_json::from_str(&content)
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("AI Pattern Error: {} - Content: {}", e, content) })))?;
+
+    Ok(Json(exercises))
+}
+
+pub async fn grade_answer(
+    State(_pool): State<PgPool>,
+    State(_rate_limiter): State<AppRateLimiter>,
+    AuthenticatedUser(_user): AuthenticatedUser,
+    Json(payload): Json<AIGradeRequest>,
+) -> Result<Json<AIGradeResponse>, (StatusCode, Json<AiGatewayError>)> {
+    let api_key = env::var("OLLAMA_API_KEY")
+        .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: "API Key not set".to_string() })))?;
+
+    let system_prompt = "You are an AI Judge. Evaluate the user's answer semantically. 
+        Output ONLY raw JSON object: { is_correct: bool, score: float (0.0-1.0), explanation: string, correct_answer: string }.
+        Be fair: ignore minor typos or casing, but ensure meaning is preserved.
+        Explanation should be in Russian.";
+
+    let user_prompt = format!(
+        "Question: {}\nType: {}\nUser Answer: {}\nGrade this answer.",
+        payload.question_text, payload.question_type, payload.user_answer
+    );
+
+    let client = Client::new();
+    let response = client.post(OLLAMA_BASE_URL)
+        .header("Authorization", format!("Bearer {}", api_key))
+        .json(&OllamaRequest {
+            model: OLLAMA_MODEL.to_string(),
+            messages: vec![
+                OllamaMessage { role: "system".to_string(), content: system_prompt.to_string(), images: None },
+                OllamaMessage { role: "user".to_string(), content: user_prompt, images: None }
+            ],
+            stream: false,
+            options: Some(OllamaOptions { num_predict: 500 }),
+        })
+        .send()
+        .await
+        .map_err(|e| (StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: e.to_string() })))?;
+
+    let body = response.text().await.unwrap_or_default();
+    
+    #[derive(Deserialize)]
+    struct OllamaResponse {
+        message: OllamaDelta,
+    }
+    
+    let parsed: OllamaResponse = serde_json::from_str(&body)
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Ollama JSON Error: {} - Body: {}", e, body) })))?;
+
+    let content = parsed.message.content.unwrap_or_default();
+    let grade: AIGradeResponse = serde_json::from_str(&content)
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Grade Parse Error: {} - Content: {}", e, content) })))?;
+
+    Ok(Json(grade))
+}
+
+pub async fn analyze_content(
+    State(_rate_limiter): State<AppRateLimiter>,
+    AuthenticatedUser(_user): AuthenticatedUser,
+    Json(payload): Json<AIAnalyzeRequest>,
+) -> Result<Json<AIAnalyzeResponse>, (StatusCode, Json<AiGatewayError>)> {
+    let api_key = env::var("OLLAMA_API_KEY")
+        .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: "API Key not set".to_string() })))?;
+
+    let system_prompt = "You are an AI Content Analyst for Memora. 
+        Analyze the provided text (books, subtitles, podcasts) and extract structured flashcards.
+        User Objective: {}.
+        Output ONLY raw JSON object: { proposedTitle: string, proposedDescription: string, cards: Vec<{ term: string, definition: string, fieldsData: Value }> }.
+        Extract at least 10-15 high-quality cards.
+        Do not use markdown blocks.";
+
+    let client = Client::new();
+    let response = client.post(OLLAMA_BASE_URL)
+        .header("Authorization", format!("Bearer {}", api_key))
+        .json(&OllamaRequest {
+            model: OLLAMA_MODEL.to_string(),
+            messages: vec![
+                OllamaMessage { role: "system".to_string(), content: system_prompt.replace("{}", &payload.user_objective), images: None },
+                OllamaMessage { role: "user".to_string(), content: payload.content, images: None }
+            ],
+            stream: false,
+            options: Some(OllamaOptions { num_predict: 3000 }),
+        })
+        .send()
+        .await
+        .map_err(|e| (StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: e.to_string() })))?;
+
+    let body = response.text().await.unwrap_or_default();
+    
+    #[derive(Deserialize)]
+    struct OllamaResponse {
+        message: OllamaDelta,
+    }
+    
+    let parsed: OllamaResponse = serde_json::from_str(&body)
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Ollama JSON Error: {} - Body: {}", e, body) })))?;
+
+    let content = parsed.message.content.unwrap_or_default();
+    let analysis: AIAnalyzeResponse = serde_json::from_str(&content)
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Analysis Parse Error: {} - Content: {}", e, content) })))?;
+
+    Ok(Json(analysis))
 }

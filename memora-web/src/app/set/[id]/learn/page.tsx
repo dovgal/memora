@@ -4,9 +4,9 @@ import React, { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
-import { SetResponse, FlashcardProgressRequest, FieldSchema } from "@/types/schema"
+import { SetResponse, FlashcardProgressRequest, FieldSchema, AIExercise, AIGradeResponse } from "@/types/schema"
 import { generateLearnQueue, createMultipleChoiceQuestion, TestQuestion, getCardText } from "@/lib/studyUtils"
-import { X, CheckCircle, XCircle, RotateCcw, Loader2, ChevronRight, GraduationCap, Settings, Edit2, Volume2, Shuffle, Star, ChevronDown, ChevronUp } from "lucide-react"
+import { X, CheckCircle, XCircle, RotateCcw, Loader2, ChevronRight, GraduationCap, Settings, Edit2, Volume2, Shuffle, Star, ChevronDown, ChevronUp, Mic, Play } from "lucide-react"
 import { QChatProvider, WhyWrongButton } from "@/components/QChat"
 
 export default function LearnModePage({ params }: { params: Promise<{ id: string }> }) {
@@ -29,6 +29,13 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
     const [showResult, setShowResult] = useState(false)
     const [isWrongAnswer, setIsWrongAnswer] = useState(false)
     const [showSettings, setShowSettings] = useState(false)
+    
+    // AI-Pro State
+    const [isAiPro, setIsAiPro] = useState(true)
+    const [aiExercises, setAiExercises] = useState<AIExercise[]>([])
+    const [aiFeedback, setAiFeedback] = useState<AIGradeResponse | null>(null)
+    const [isGrading, setIsGrading] = useState(false)
+    const [isRecording, setIsRecording] = useState(false)
 
     // Settings State
     const [soundEffects, setSoundEffects] = useState(true)
@@ -136,6 +143,25 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                 if (resSet[0].ok) {
                     const setData: SetResponse = await resSet[0].json()
                     setSet(setData)
+                    
+                    if (isAiPro) {
+                        try {
+                            const resAi = await fetch('/api/ai/learn/generate', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ setId: id, exerciseCount: 15 })
+                            });
+                            if (resAi.ok) {
+                                const exercises: AIExercise[] = await resAi.json();
+                                setAiExercises(exercises);
+                                // Queue is handled differently for AI
+                            }
+                        } catch (e) {
+                            console.error("AI Generation failed, falling back", e);
+                            setIsAiPro(false);
+                        }
+                    }
+
                     const rawQueue = generateLearnQueue(setData.flashcards, new Set())
                     const initialQueue = regenerateQueue(rawQueue, { mcq: true, written: true, flashcards: false }, { term: true, definition: true }, setData.flashcards, setData.fieldsSchema)
                     setQueue(initialQueue)
@@ -152,14 +178,56 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
         fetchSetAndProgress()
     }, [id, session, router])
 
-    const handleAnswer = (answer: number | string) => {
+    const handleAnswer = async (answer: number | string) => {
         if (showResult || !set) return
 
         setShowResult(true)
+        setAiFeedback(null)
 
         const currentQuestion = queue[currentIndex]
-        let isCorrect = false
+        const currentAiEx = isAiPro ? aiExercises[currentIndex] : null;
 
+        if (isAiPro && currentAiEx) {
+            setIsGrading(true);
+            try {
+                const res = await fetch('/api/ai/learn/grade', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        setId: id,
+                        cardId: currentAiEx.cardId,
+                        questionType: currentAiEx.type,
+                        userAnswer: answer as string,
+                        questionText: currentAiEx.question
+                    })
+                });
+                if (res.ok) {
+                    const feedback: AIGradeResponse = await res.json();
+                    setAiFeedback(feedback);
+                    const isCorrect = feedback.isCorrect;
+                    setIsWrongAnswer(!isCorrect);
+                    
+                    // Record Progress
+                    const newProgress = [...progress];
+                    const existingIndex = newProgress.findIndex(p => p.flashcardId === currentAiEx.cardId);
+                    if (existingIndex >= 0) newProgress[existingIndex].isKnown = isCorrect;
+                    else newProgress.push({ flashcardId: currentAiEx.cardId, isKnown: isCorrect });
+                    setProgress(newProgress);
+                    progressRef.current = newProgress;
+
+                    if (isCorrect) {
+                        setTimeout(() => advanceOrFinish(newProgress), 2000);
+                    }
+                }
+            } catch (e) {
+                console.error("Grading failed", e);
+            } finally {
+                setIsGrading(false);
+            }
+            return;
+        }
+
+        let isCorrect = false
         if (currentQuestion.type === 'MULTIPLE_CHOICE' && currentQuestion.mcqData) {
             setSelectedAnswer(answer as number)
             isCorrect = (answer as number) === currentQuestion.mcqData.correctIndex
@@ -182,11 +250,36 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
         setProgress(newProgress)
         progressRef.current = newProgress
 
-        // Auto-advance ONLY on correct answers (1.2s delay to see the green flash)
-        // Wrong answers wait for manual "Next" click so user can read the explanation or ask Q-Chat
         if (isCorrect) {
             setTimeout(() => advanceOrFinish(newProgress), 1200)
         }
+    }
+
+    const recordPronunciation = () => {
+        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+            alert("Ваш браузер не поддерживает распознавание речи.");
+            return;
+        }
+        
+        setIsRecording(true);
+        // @ts-ignore
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        
+        recognition.lang = 'en-US'; // Should be dynamic based on card language
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+        
+        recognition.onresult = (event: any) => {
+            const transcript = event.results[0][0].transcript;
+            setWrittenInput(transcript);
+            handleAnswer(transcript);
+        };
+        
+        recognition.onend = () => setIsRecording(false);
+        recognition.onerror = () => setIsRecording(false);
+        
+        recognition.start();
     }
 
     const advanceOrFinish = (latestProgress: FlashcardProgressRequest[]) => {
@@ -641,8 +734,28 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                     </div>
                                 )}
                                 <p className={`text-2xl md:text-3xl font-medium leading-relaxed text-white text-center ${currentQuestion.flashcard.imageUrl ? '' : 'mt-4'}`}>
-                                    {currentQuestion.type === 'MULTIPLE_CHOICE' ? currentQuestion.mcqData?.prompt : currentQuestion.writtenData?.prompt}
+                                    {isAiPro && aiExercises[currentIndex] 
+                                        ? aiExercises[currentIndex].question 
+                                        : (currentQuestion.type === 'MULTIPLE_CHOICE' ? currentQuestion.mcqData?.prompt : currentQuestion.writtenData?.prompt)
+                                    }
                                 </p>
+                                {isAiPro && aiExercises[currentIndex]?.context && (
+                                    <p className="mt-4 text-sm text-zinc-400 italic text-center">
+                                        Context: {aiExercises[currentIndex].context}
+                                    </p>
+                                )}
+                                {isAiPro && aiExercises[currentIndex]?.type === 'speech' && (
+                                    <div className="mt-8 flex justify-center">
+                                        <button 
+                                            onClick={recordPronunciation}
+                                            disabled={showResult || isRecording}
+                                            className={`p-6 rounded-full transition-all flex items-center gap-3 ${isRecording ? 'bg-red-500 animate-pulse' : 'bg-indigo-600 hover:bg-indigo-500'} shadow-lg`}
+                                        >
+                                            <Mic size={24} />
+                                            <span className="font-bold">{isRecording ? "Listening..." : "Нажмите и говорите"}</span>
+                                        </button>
+                                    </div>
+                                )}
                             </div>
 
                             {/* Answer Grid / Inputs */}
@@ -731,6 +844,23 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
 
                                                     <div className="text-sm text-zinc-400 font-bold uppercase mb-1">Ваш ответ:</div>
                                                     <div className="text-lg text-red-300 opacity-80 whitespace-pre-wrap">{writtenInput}</div>
+                                                </div>
+                                            )}
+                                            
+                                            {isAiPro && aiFeedback && (
+                                                <div className="mt-6 border-t border-white/10 pt-4 animate-in slide-in-from-top-2">
+                                                    <div className="text-sm font-bold text-indigo-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                                                        <GraduationCap size={16} /> AI Разбор
+                                                    </div>
+                                                    <p className="text-zinc-300 leading-relaxed text-sm italic">
+                                                        {aiFeedback.explanation}
+                                                    </p>
+                                                    {aiFeedback.score < 1.0 && (
+                                                        <div className="mt-3 bg-zinc-950/40 p-3 rounded-lg border border-white/5">
+                                                            <span className="text-xs font-bold text-zinc-500 uppercase block mb-1">Как было бы лучше:</span>
+                                                            <span className="text-white font-medium">{aiFeedback.correctAnswer}</span>
+                                                        </div>
+                                                    )}
                                                 </div>
                                             )}
                                         </div>

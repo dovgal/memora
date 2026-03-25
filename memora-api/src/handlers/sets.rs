@@ -70,6 +70,7 @@ pub async fn get_public_set(
         id: set_record.id.to_string(),
         title: set_record.title,
         description: set_record.description,
+        creator_id: set_record.creator_id.to_string(),
         fields_schema: set_record.fields_schema,
         flashcards,
     };
@@ -145,6 +146,7 @@ pub async fn create_set(
         id: new_set_id.to_string(),
         title: payload.title,
         description: payload.description,
+        creator_id: creator_id.to_string(),
         fields_schema: payload.fields_schema,
         flashcards: response_flashcards,
     };
@@ -319,6 +321,7 @@ pub async fn update_set(
         id: set_id.to_string(),
         title: payload.title,
         description: payload.description,
+        creator_id: creator_id.to_string(),
         fields_schema: payload.fields_schema,
         flashcards: response_flashcards,
     };

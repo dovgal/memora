@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react"
 import { FolderPlus, Users, Share, MoreHorizontal, Edit2, Copy, Printer, GitMerge, Download, Code, Trash2, X, Check, Loader2 } from "lucide-react"
 import { FlashcardResponse, FieldSchema } from "@/types/schema"
 import { useRouter } from "next/navigation"
+import ShareModal from "./ShareModal"
 
 interface SetActionsBarProps {
     setId: string;
@@ -23,6 +24,7 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
     const [isMergeOpen, setIsMergeOpen] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const [isCopying, setIsCopying] = useState(false);
+    const [isShareOpen, setIsShareOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
     const handleDelete = async () => {
@@ -123,8 +125,19 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
                 </button>
             )}
 
+            {!isOwner && token && (
+                <button 
+                    onClick={handleCopySet}
+                    disabled={isCopying}
+                    className="flex items-center gap-2 px-6 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-bold transition-all shadow-lg shadow-indigo-500/20 disabled:opacity-50"
+                >
+                    {isCopying ? <Loader2 size={16} className="animate-spin" /> : <FolderPlus size={16} />} 
+                    Сохранить в библиотеку
+                </button>
+            )}
+
             <button
-                onClick={() => setIsExportOpen(true)}
+                onClick={() => setIsShareOpen(true)}
                 className="flex items-center justify-center w-10 h-10 bg-transparent border border-zinc-700 hover:border-zinc-500 rounded-lg transition-colors"
                 title="Экспортировать"
             >
@@ -236,6 +249,15 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
                     currentSetFlashcards={flashcards}
                     token={token}
                     onClose={() => setIsMergeOpen(false)}
+                />
+            )}
+
+            {/* Share Modal */}
+            {isShareOpen && (
+                <ShareModal
+                    setId={setId}
+                    setTitle={title}
+                    onClose={() => setIsShareOpen(false)}
                 />
             )}
         </div>

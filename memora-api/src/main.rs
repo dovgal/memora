@@ -89,6 +89,9 @@ async fn main() {
         .route("/api/sets/{id}/fsrs/due", get(handlers::study::get_fsrs_due))
         .route("/api/sets/{id}/fsrs/reset", delete(handlers::study::reset_fsrs_progress))
         .route("/api/ai/generate", post(handlers::ai::generate_flashcards_stream))
+        .route("/api/ai/learn/generate", post(handlers::ai::generate_exercises))
+        .route("/api/ai/learn/grade", post(handlers::ai::grade_answer))
+        .route("/api/ai/creator/analyze", post(handlers::ai::analyze_content))
         .route("/api/images/generate", post(handlers::ai::generate_image))
         .route("/api/ai/qchat/{set_id}", post(handlers::ai::qchat_stream))
         // Folders routes

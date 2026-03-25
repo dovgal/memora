@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { AppProvider } from "@/components/AppProvider";
+import AppProvider from "@/components/AppProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import OfflineBanner from "@/components/OfflineBanner";
 

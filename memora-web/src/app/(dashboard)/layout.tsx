@@ -7,10 +7,12 @@ import {
     Plus,
     Search,
     BookOpen,
-    Folder
+    Folder,
+    Sparkles
 } from "lucide-react";
 import LogoutButton from "@/components/LogoutButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import AppProvider from "@/components/AppProvider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { FolderSummaryResponse } from "@/types/schema";
@@ -75,6 +77,10 @@ export default async function DashboardLayout({
                             <Bell className="w-5 h-5" />
                             <span className="absolute top-2 left-6 w-2 h-2 bg-pink-500 rounded-full"></span>
                             Notifications
+                        </Link>
+                        <Link href="/creator" className="flex items-center gap-3 px-3 py-2.5 bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 rounded-xl transition-all font-bold border border-indigo-500/20 group">
+                            <Sparkles className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+                            AI Creator
                         </Link>
                     </nav>
 

@@ -46,6 +46,7 @@ pub struct SetResponse {
     pub id: String,
     pub title: String,
     pub description: Option<String>,
+    pub creator_id: String,
     pub fields_schema: Value,
     pub flashcards: Vec<FlashcardResponse>,
 }
@@ -233,4 +234,62 @@ pub struct UpdateSetRequest {
     pub is_public: bool,
     pub fields_schema: Value,
     pub flashcards: Vec<UpdateFlashcardRequest>,
+}
+
+#[typeshare]
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct AIGenerateRequest {
+    pub set_id: String,
+    pub exercise_count: i32,
+}
+
+#[typeshare]
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct AIExercise {
+    pub id: String,
+    pub card_id: String,
+    pub r#type: String, // grammar, tense, negation, listening, etc.
+    pub question: String,
+    pub target_field: String,
+    pub context: Option<String>,
+}
+
+#[typeshare]
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct AIGradeRequest {
+    pub set_id: String,
+    pub card_id: String,
+    pub question_type: String,
+    pub user_answer: String,
+    pub question_text: String,
+}
+
+#[typeshare]
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct AIGradeResponse {
+    pub is_correct: bool,
+    pub score: f32, // 0.0 to 1.0
+    pub explanation: String,
+    pub correct_answer: String,
+}
+
+#[typeshare]
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct AIAnalyzeRequest {
+    pub content: String,
+    pub user_objective: String, // translation, terms, summary, etc.
+}
+
+#[typeshare]
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct AIAnalyzeResponse {
+    pub proposed_title: String,
+    pub proposed_description: String,
+    pub cards: Vec<CreateFlashcardRequest>,
 }
