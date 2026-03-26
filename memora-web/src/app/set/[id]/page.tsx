@@ -106,7 +106,13 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
                             token={session?.id_token}
                             flashcards={set.flashcards}
                             fieldsSchema={set.fieldsSchema || []}
-                            isOwner={session?.user?.id === set.creatorId || (session?.user as any)?.id === set.creatorId}
+                            isOwner={
+                                session?.user?.id === set.creatorId || 
+                                session?.user?.id === (set as any).creator_id ||
+                                (session?.user as any)?.id === set.creatorId ||
+                                (session?.user as any)?.id === (set as any).creator_id ||
+                                session?.user?.email === (set as any).creator_email // Added email as ultimate fallback
+                            }
                             title={set.title}
                             description={set.description || ""}
                         />

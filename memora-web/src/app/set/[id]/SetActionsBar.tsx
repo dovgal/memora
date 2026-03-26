@@ -182,15 +182,27 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
             {isMenuOpen && (
                 <div className="absolute right-0 top-12 w-56 bg-[#1a1a36] border border-[#2a2a4d] rounded-xl shadow-2xl py-2 z-50 animate-in fade-in zoom-in-95 duration-100 origin-top-right">
                     {isOwner && (
-                        <button
-                            onClick={() => {
-                                setIsMenuOpen(false);
-                                router.push(`/set/${setId}/edit`);
-                            }}
-                            className="w-full text-left px-4 py-2.5 text-sm hover:bg-zinc-800 flex items-center gap-3"
-                        >
-                            <Edit2 size={16} /> Редактировать
-                        </button>
+                        <>
+                            <button
+                                onClick={() => {
+                                    setIsMenuOpen(false);
+                                    router.push(`/set/${setId}/edit`);
+                                }}
+                                className="w-full text-left px-4 py-2.5 text-sm hover:bg-zinc-800 flex items-center gap-3 text-indigo-400 font-semibold"
+                            >
+                                <Edit2 size={16} /> Редактировать
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setIsMenuOpen(false);
+                                    handleDelete();
+                                }}
+                                className="w-full text-left px-4 py-2.5 text-sm hover:bg-red-900/40 text-red-500 flex items-center gap-3 font-semibold"
+                            >
+                                <Trash2 size={16} /> Удалить модуль
+                            </button>
+                            <div className="h-px bg-[#2a2a4d] my-1"></div>
+                        </>
                     )}
                     <button
                         onClick={handleCopySet}
