@@ -83,6 +83,13 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
     return (
         <div className="min-h-screen bg-[#0a0a1a] text-white p-6 md:p-12 relative overflow-hidden pb-32 font-sans">
             <div className="max-w-5xl mx-auto relative z-10">
+                {/* DEV DEBUG BANNER */}
+                <div className="bg-red-600/20 border border-red-500 p-4 rounded-xl mb-6 text-xs font-mono break-all text-red-200">
+                    <strong>DEBUG INFO:</strong><br />
+                    <span>User ID (type: {typeof session?.user?.id}): {session?.user?.id || 'undefined'}</span><br />
+                    <span>Set Creator ID (type: {typeof set.creatorId}): {set.creatorId || 'undefined'}</span><br />
+                    <span>User Email: {session?.user?.email || 'undefined'}</span>
+                </div>
                 <Link href={dashboardLink} className="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors mb-6 font-medium text-sm">
                     <ChevronLeft size={16} /> Назад к панели управления
                 </Link>
