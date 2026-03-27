@@ -12,7 +12,10 @@ use governor::{Quota, RateLimiter};
 use std::num::NonZeroU32;
 
 use crate::middleware::{auth::AuthenticatedUser, rate_limiter::AppRateLimiter};
-use crate::domain::dtos::{QChatRequest, CreateFlashcardRequest};
+use crate::domain::dtos::{
+    QChatRequest, CreateFlashcardRequest,
+    AIGenerateRequest, AIExercise, AIGradeRequest, AIGradeResponse, AIAnalyzeRequest, AIAnalyzeResponse
+};
 use sqlx::PgPool;
 
 const OLLAMA_MODEL: &str = "qwen3.5";
@@ -365,7 +368,22 @@ pub async fn generate_exercises(
     let api_key = env::var("OLLAMA_API_KEY")
         .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: "API Key not set".to_string() })))?;
 
-    let cards_json = serde_json::to_string(&flashcards)
+    #[derive(Serialize)]
+    struct TrimmedCard {
+        id: String,
+        term: String,
+        definition: String,
+        fields_data: serde_json::Value,
+    }
+
+    let serializable_cards: Vec<TrimmedCard> = flashcards.into_iter().map(|c| TrimmedCard {
+        id: c.id.to_string(),
+        term: c.term,
+        definition: c.definition,
+        fields_data: c.fields_data,
+    }).collect();
+
+    let cards_json = serde_json::to_string(&serializable_cards)
         .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: e.to_string() })))?;
 
     let system_prompt = format!(
