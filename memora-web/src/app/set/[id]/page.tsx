@@ -87,8 +87,14 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
                 <div className="bg-red-600/20 border border-red-500 p-4 rounded-xl mb-6 text-xs font-mono break-all text-red-200">
                     <strong>DEBUG INFO:</strong><br />
                     <span>User ID (type: {typeof session?.user?.id}): {session?.user?.id || 'undefined'}</span><br />
-                    <span>Set Creator ID (type: {typeof set.creatorId}): {set.creatorId || 'undefined'}</span><br />
-                    <span>User Email: {session?.user?.email || 'undefined'}</span>
+                    <span>Set Creator ID: {set.creatorId || (set as any).creator_id || 'undefined'}</span><br />
+                    <span>User Email: {session?.user?.email || 'undefined'}</span><br />
+                    <details className="mt-2">
+                        <summary className="cursor-pointer underline">View Full Set Object</summary>
+                        <pre className="mt-1 bg-black/50 p-2 rounded max-h-40 overflow-auto whitespace-pre-wrap">
+                            {JSON.stringify(set, null, 2)}
+                        </pre>
+                    </details>
                 </div>
                 <Link href={dashboardLink} className="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors mb-6 font-medium text-sm">
                     <ChevronLeft size={16} /> Назад к панели управления
