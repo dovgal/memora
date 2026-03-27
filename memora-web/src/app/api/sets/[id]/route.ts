@@ -18,6 +18,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
             headers: {
                 "Authorization": `Bearer ${session.id_token}`
             },
+            cache: 'no-store'
         })
 
         const responseText = await response.text();

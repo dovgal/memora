@@ -22,7 +22,7 @@ async function getSet(id: string, token?: string): Promise<SetResponse | null> {
 
         const res = await fetch(`${apiUrl}/api/sets/${id}`, {
             headers,
-            next: { revalidate: 60 }
+            cache: 'no-store'
         })
 
         if (!res.ok) {
