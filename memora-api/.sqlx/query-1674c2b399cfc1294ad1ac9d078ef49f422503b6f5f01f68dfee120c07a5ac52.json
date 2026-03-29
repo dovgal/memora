@@ -1,0 +1,29 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT \n            f.id as flashcard_id,\n            COALESCE(fsrs.state, 0) as fsrs_state\n        FROM flashcards f\n        LEFT JOIN fsrs_records fsrs ON f.id = fsrs.flashcard_id AND fsrs.user_id = $1\n        WHERE f.set_id = $2\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "flashcard_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "fsrs_state",
+        "type_info": "Int4"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      null
+    ]
+  },
+  "hash": "1674c2b399cfc1294ad1ac9d078ef49f422503b6f5f01f68dfee120c07a5ac52"
+}

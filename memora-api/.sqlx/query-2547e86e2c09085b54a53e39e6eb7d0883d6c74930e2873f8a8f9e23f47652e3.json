@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "DELETE FROM flashcard_progress WHERE user_id = $1 AND flashcard_id IN (SELECT id FROM flashcards WHERE set_id = $2)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "2547e86e2c09085b54a53e39e6eb7d0883d6c74930e2873f8a8f9e23f47652e3"
+}

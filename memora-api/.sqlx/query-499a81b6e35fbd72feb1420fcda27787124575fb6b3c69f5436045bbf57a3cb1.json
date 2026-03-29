@@ -1,0 +1,40 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT id, term, definition, fields_data FROM flashcards WHERE set_id = $1",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "term",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "definition",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "fields_data",
+        "type_info": "Jsonb"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "499a81b6e35fbd72feb1420fcda27787124575fb6b3c69f5436045bbf57a3cb1"
+}
