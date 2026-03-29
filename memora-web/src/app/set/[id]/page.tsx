@@ -26,10 +26,13 @@ async function getSet(id: string, token?: string): Promise<SetResponse | null> {
         })
 
         if (!res.ok) {
+            console.error(`getSet failed: ${res.status} ${res.statusText}`, await res.text());
             return null
         }
 
-        return await res.json()
+        const rawText = await res.text();
+        console.log(`\n\n=== RAW API RESPONSE FOR GETSET ${id} ===\n${rawText}\n======================================\n\n`);
+        return JSON.parse(rawText);
     } catch (error) {
         console.error("Error fetching set:", error)
         return null
@@ -48,13 +51,10 @@ async function getProgress(id: string, token: string): Promise<SetProgressRespon
         })
 
         if (!res.ok) {
-            console.error(`getSet failed: ${res.status} ${res.statusText}`, await res.text());
             return null
         }
         
-        const rawText = await res.text();
-        console.log(`\n\n=== RAW API RESPONSE FOR SET ${id} ===\n${rawText}\n======================================\n\n`);
-        return JSON.parse(rawText);
+        return await res.json();
     } catch (error) {
         console.error("Error fetching progress:", error)
         return null
