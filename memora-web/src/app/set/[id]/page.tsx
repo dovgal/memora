@@ -26,23 +26,10 @@ async function getSet(id: string, token?: string): Promise<SetResponse | null> {
         })
 
         if (!res.ok) {
-            console.error(`getSet failed: ${res.status} ${res.statusText}`, await res.text());
             return null
         }
 
-        const rawText = await res.text();
-        try {
-            const parsed = JSON.parse(rawText);
-            console.log(`\n\n=== PARSED SET ${id} ===`);
-            console.log(`Keys:`, Object.keys(parsed).join(", "));
-            console.log(`Creator ID (camel):`, parsed.creatorId);
-            console.log(`Creator ID (snake):`, parsed.creator_id);
-            console.log(`==========================\n\n`);
-            return parsed;
-        } catch(e) {
-            console.error("JSON Parse failed on rawText:", rawText.slice(0, 100) + "...");
-            throw e;
-        }
+        return await res.json()
     } catch (error) {
         console.error("Error fetching set:", error)
         return null
@@ -96,19 +83,7 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
     return (
         <div className="min-h-screen bg-[#0a0a1a] text-white p-6 md:p-12 relative overflow-hidden pb-32 font-sans">
             <div className="max-w-5xl mx-auto relative z-10">
-                {/* DEV DEBUG BANNER */}
-                <div className="bg-red-600/20 border border-red-500 p-4 rounded-xl mb-6 text-xs font-mono break-all text-red-200">
-                    <strong>DEBUG INFO:</strong><br />
-                    <span>User ID (type: {typeof session?.user?.id}): {session?.user?.id || 'undefined'}</span><br />
-                    <span>Set Creator ID: {set.creatorId || (set as any).creator_id || 'undefined'}</span><br />
-                    <span>User Email: {session?.user?.email || 'undefined'}</span><br />
-                    <details className="mt-2">
-                        <summary className="cursor-pointer underline">View Full Set Object</summary>
-                        <pre className="mt-1 bg-black/50 p-2 rounded max-h-40 overflow-auto whitespace-pre-wrap">
-                            {JSON.stringify(set, null, 2)}
-                        </pre>
-                    </details>
-                </div>
+
                 <Link href={dashboardLink} className="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors mb-6 font-medium text-sm">
                     <ChevronLeft size={16} /> Назад к панели управления
                 </Link>
