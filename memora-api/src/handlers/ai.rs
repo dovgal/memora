@@ -19,7 +19,10 @@ use crate::domain::dtos::{
 use sqlx::PgPool;
 
 const OLLAMA_MODEL: &str = "qwen3.5";
-const OLLAMA_BASE_URL: &str = "https://ollama.com/api/chat";
+
+fn get_ollama_url() -> String {
+    env::var("OLLAMA_BASE_URL").unwrap_or_else(|_| "http://localhost:11434/api/chat".to_string())
+}
 
 #[derive(Deserialize)]
 pub struct AiGenerateRequest {
@@ -137,7 +140,7 @@ pub async fn generate_flashcards_stream(
         options: Some(OllamaOptions { num_predict: 1500 }),
     };
 
-    let response = match client.post(OLLAMA_BASE_URL)
+    let response = match client.post(&get_ollama_url())
         .header("Authorization", format!("Bearer {}", api_key))
         .header("Content-Type", "application/json")
         .json(&ollama_body)
@@ -278,7 +281,7 @@ pub async fn qchat_stream(
         options: Some(OllamaOptions { num_predict: 1000 }),
     };
 
-    let response = match client.post(OLLAMA_BASE_URL)
+    let response = match client.post(&get_ollama_url())
         .header("Authorization", format!("Bearer {}", api_key))
         .header("Content-Type", "application/json")
         .json(&ollama_body)
@@ -399,7 +402,7 @@ pub async fn generate_exercises(
     );
 
     let client = Client::new();
-    let response = client.post(OLLAMA_BASE_URL)
+    let response = client.post(&get_ollama_url())
         .header("Authorization", format!("Bearer {}", api_key))
         .json(&OllamaRequest {
             model: OLLAMA_MODEL.to_string(),
@@ -452,7 +455,7 @@ pub async fn grade_answer(
     );
 
     let client = Client::new();
-    let response = client.post(OLLAMA_BASE_URL)
+    let response = client.post(&get_ollama_url())
         .header("Authorization", format!("Bearer {}", api_key))
         .json(&OllamaRequest {
             model: OLLAMA_MODEL.to_string(),
@@ -500,7 +503,7 @@ pub async fn analyze_content(
         Do not use markdown blocks.";
 
     let client = Client::new();
-    let response = client.post(OLLAMA_BASE_URL)
+    let response = client.post(&get_ollama_url())
         .header("Authorization", format!("Bearer {}", api_key))
         .json(&OllamaRequest {
             model: OLLAMA_MODEL.to_string(),

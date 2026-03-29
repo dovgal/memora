@@ -65,16 +65,14 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
     const session: any = await getServerSession(authOptions as any)
     const token = session?.id_token
 
-    const set = await getSet(id, token)
+    // Start both fetches in parallel
+    const [set, progress] = await Promise.all([
+        getSet(id, token),
+        token ? getProgress(id, token) : Promise.resolve(null)
+    ])
 
     if (!set) {
         notFound()
-    }
-
-    let progress: SetProgressResponse | null = null
-
-    if (token) {
-        progress = await getProgress(id, token)
     }
 
     const role = session?.user?.role || "student"
