@@ -26,12 +26,35 @@ const LANGUAGES = [
     { code: 'de', label: 'Немецкий' },
 ];
 
-const INWORLD_VOICES = [
-    { code: 'Clive', label: 'Clive (Дворецкий/Английский - default male)' },
-    { code: 'Aria', label: 'Aria (Спокойный женский)' },
-    { code: 'Nolan', label: 'Nolan (Молодой мужской)' },
-    { code: 'Bella', label: 'Bella (Энергичный женский)' },
-];
+const INWORLD_VOICES_BY_LANG: Record<string, { code: string; label: string }[]> = {
+    en: [
+        { code: 'Clive', label: 'Clive (Британский мужской)' },
+        { code: 'Aria', label: 'Aria (Спокойный женский)' },
+        { code: 'Nolan', label: 'Nolan (Молодой мужской)' },
+        { code: 'Bella', label: 'Bella (Энергичный женский)' },
+    ],
+    fr: [
+        { code: 'Alain', label: 'Alain (Глубокий мужской)' },
+        { code: 'Étienne', label: 'Étienne (Строгий мужской)' },
+        { code: 'Hélène', label: 'Hélène (Мягкий женский)' },
+        { code: 'Mathieu', label: 'Mathieu (Уверенный мужской)' },
+    ],
+    de: [
+        { code: 'Johanna', label: 'Johanna (Глубокий женский)' },
+        { code: 'Josef', label: 'Josef (Чистый мужской)' },
+    ],
+    ru: [
+        { code: 'Tatiana', label: 'Tatiana (Женский)' },
+        { code: 'Maxim', label: 'Maxim (Мужской)' },
+    ],
+    es: [
+        { code: 'Carmen', label: 'Carmen (Женский)' },
+        { code: 'Diego', label: 'Diego (Мужской)' },
+    ],
+    default: [
+        { code: 'Clive', label: 'Clive (Английский - default male)' },
+    ]
+};
 
 export default function SetTemplateEditor({ fields, onChange, onClose }: Props) {
     const [editingFieldId, setEditingFieldId] = useState<string | null>(null);
@@ -115,7 +138,7 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                                         )}
                                         {field.type === 'text' && field.settings.ttsEnabled && (
                                             <span className="bg-emerald-900/50 text-emerald-300 px-2 py-0.5 rounded flex items-center gap-1">
-                                                TTS: {INWORLD_VOICES.find(v => v.code === field.settings.ttsVoice)?.code || 'Clive'}
+                                                TTS: {field.settings.ttsVoice || 'Clive'}
                                             </span>
                                         )}
                                     </div>
@@ -235,7 +258,17 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                                             <label className="block text-sm font-semibold text-zinc-400 mb-2 uppercase tracking-wider">Язык (клавиатура / проверка)</label>
                                             <select
                                                 value={editingField.settings.language || 'default'}
-                                                onChange={(e) => handleUpdateField(editingField.id, { settings: { ...editingField.settings, language: e.target.value } })}
+                                                onChange={(e) => {
+                                                    const newLang = e.target.value;
+                                                    const newVoices = INWORLD_VOICES_BY_LANG[newLang === 'default' ? 'en' : newLang] || INWORLD_VOICES_BY_LANG['en'];
+                                                    handleUpdateField(editingField.id, { 
+                                                        settings: { 
+                                                            ...editingField.settings, 
+                                                            language: newLang,
+                                                            ttsVoice: editingField.settings.ttsEnabled ? newVoices[0].code : undefined
+                                                        } 
+                                                    });
+                                                }}
                                                 className="w-full bg-[#1a1a3a] border border-zinc-800 rounded-xl p-4 text-white focus:outline-none focus:border-indigo-500 transition-colors appearance-none"
                                             >
                                                 {LANGUAGES.map(lang => (
@@ -272,11 +305,11 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                                                 <div className="mt-4 pt-4 border-t border-zinc-800 animate-in fade-in slide-in-from-top-2">
                                                     <label className="block text-xs font-semibold text-zinc-400 mb-2 uppercase tracking-wider">Выбор голоса</label>
                                                     <select
-                                                        value={editingField.settings.ttsVoice || 'Clive'}
+                                                        value={editingField.settings.ttsVoice || ''}
                                                         onChange={(e) => handleUpdateField(editingField.id, { settings: { ...editingField.settings, ttsVoice: e.target.value } })}
                                                         className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-white focus:outline-none focus:border-emerald-500 transition-colors appearance-none text-sm"
                                                     >
-                                                        {INWORLD_VOICES.map(voice => (
+                                                        {(INWORLD_VOICES_BY_LANG[editingField.settings.language === 'default' ? 'en' : (editingField.settings.language || 'en')] || INWORLD_VOICES_BY_LANG['en']).map(voice => (
                                                             <option key={voice.code} value={voice.code}>{voice.label}</option>
                                                         ))}
                                                     </select>
