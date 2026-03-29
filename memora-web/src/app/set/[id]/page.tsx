@@ -31,8 +31,18 @@ async function getSet(id: string, token?: string): Promise<SetResponse | null> {
         }
 
         const rawText = await res.text();
-        console.log(`\n\n=== RAW API RESPONSE FOR GETSET ${id} ===\n${rawText}\n======================================\n\n`);
-        return JSON.parse(rawText);
+        try {
+            const parsed = JSON.parse(rawText);
+            console.log(`\n\n=== PARSED SET ${id} ===`);
+            console.log(`Keys:`, Object.keys(parsed).join(", "));
+            console.log(`Creator ID (camel):`, parsed.creatorId);
+            console.log(`Creator ID (snake):`, parsed.creator_id);
+            console.log(`==========================\n\n`);
+            return parsed;
+        } catch(e) {
+            console.error("JSON Parse failed on rawText:", rawText.slice(0, 100) + "...");
+            throw e;
+        }
     } catch (error) {
         console.error("Error fetching set:", error)
         return null
