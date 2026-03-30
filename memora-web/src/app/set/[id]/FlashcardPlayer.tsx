@@ -184,13 +184,12 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
 
         const audioUrls: string[] = [];
         for (const field of fieldsForSide) {
-            if (field.type === 'text') {
-                const audioData = currentCard.fieldsData?.[`${field.id}_audio`];
-                if (audioData) {
-                    audioUrls.push(audioData);
-                }
+            if (field.type === 'text' && field.settings?.ttsEnabled) {
+                // Use the new dedicated audio endpoint instead of embedded base64
+                audioUrls.push(`/api/audio/${currentCard.id}/${field.id}`);
             }
         }
+
 
         if (audioUrls.length === 0) return;
 

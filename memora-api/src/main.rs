@@ -103,7 +103,10 @@ async fn main() {
         .route("/api/live/rooms", post(handlers::live::create_room))
         .route("/api/live/rooms/{join_code}", get(handlers::live::resolve_room))
         .route("/api/live/ws", get(handlers::live::ws_handler))
+        // Audio routes
+        .route("/api/audio/{id}/{field}", get(handlers::audio::get_flashcard_audio))
         .layer(cors)
+
         .layer(DefaultBodyLimit::max(20 * 1024 * 1024))
         .with_state(app_state);
 

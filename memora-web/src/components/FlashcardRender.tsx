@@ -81,12 +81,12 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
                                     <span className="text-[10px] md:text-sm text-indigo-400 font-bold uppercase tracking-[0.2em] opacity-80">
                                         {field.name}
                                     </span>
-                                    {audioData && (
+                                    {field.settings?.ttsEnabled && (
                                         <button
                                             onClick={(e) => {
                                                 e.stopPropagation();
-                                                const audio = new Audio(audioData);
-                                                audio.play();
+                                                const audio = new Audio(`/api/audio/${card.id}/${field.id}`);
+                                                audio.play().catch(err => console.warn("Audio playback failed", err));
                                             }}
                                             className="text-indigo-500 hover:text-indigo-400 p-2 bg-indigo-500/10 hover:bg-indigo-500/20 rounded-full transition-all hover:scale-110 active:scale-90"
                                             title="Озвучить"
@@ -94,6 +94,7 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
                                             <Volume2 size={16} />
                                         </button>
                                     )}
+
                                 </div>
                                 <p className={`text-4xl md:text-6xl lg:text-7xl text-center font-black tracking-tight break-words leading-[1.1] text-white`}>
                                     {value}

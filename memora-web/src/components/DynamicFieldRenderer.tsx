@@ -64,9 +64,14 @@ export default function DynamicFieldRenderer({ field, index, register, errors, u
                     </div>
                 );
             case 'audio':
+                const audioValue = getValues(formPath);
+                const resolvedAudioValue = audioValue === "__AUDIO_ON_SERVER__" 
+                    ? `/api/audio/${getValues(`flashcards.${index}.id`)}/${field.id}`
+                    : audioValue;
+
                 return (
                     <AudioInput
-                        value={getValues(formPath)}
+                        value={resolvedAudioValue}
                         onChange={(val) => {
                             if (update) {
                                 const currentCard = getValues(`flashcards.${index}`);
@@ -75,6 +80,7 @@ export default function DynamicFieldRenderer({ field, index, register, errors, u
                         }}
                     />
                 );
+
 
             case 'math':
                 return (

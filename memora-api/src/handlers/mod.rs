@@ -7,3 +7,5 @@ pub mod study;
 pub mod users;
 pub mod folders;
 pub mod errors;
+pub mod audio;
+
