@@ -55,46 +55,88 @@ pub async fn get_public_set(
     .await
     .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
-            // Identify all fields that should have audio based on the schema
-            let mut audio_field_ids = Vec::new();
-            if let Some(schema_array) = set_record.fields_schema.as_array() {
-                for field in schema_array {
-                    if let Some(field_obj) = field.as_object() {
-                        let is_audio_type = field_obj.get("type").and_then(|v| v.as_str()) == Some("audio");
-                        let is_tts_enabled = field_obj.get("settings").and_then(|v| v.as_object()).and_then(|s| s.get("ttsEnabled")).and_then(|v| v.as_bool()) == Some(true);
+    let mut flashcards = Vec::new();
+
+    // Identify all fields that should have audio based on the schema
+    let mut audio_field_ids = Vec::new();
+    if let Some(schema_array) = set_record.fields_schema.as_array() {
+        for field in schema_array {
+            if let Some(field_obj) = field.as_object() {
+                let is_audio_type = field_obj.get("type").and_then(|v| v.as_str()) == Some("audio");
+                let is_tts_enabled = field_obj.get("settings").and_then(|v| v.as_object()).and_then(|s| s.get("ttsEnabled")).and_then(|v| v.as_bool()) == Some(true);
+                
+                if let Some(id) = field_obj.get("id").and_then(|v| v.as_str()) {
+                    if is_audio_type {
+                        audio_field_ids.push(id.to_string());
+                    }
+                    if is_tts_enabled {
+                        audio_field_ids.push(format!("{}_audio", id));
+                    }
+                }
+            }
+        }
+    }
+
+    for record in flashcards_records {
+        let mut fields_data = record.fields_data;
+        let mut modified_in_db = false;
+
+        if let Some(obj) = fields_data.as_object_mut() {
+            for field_id in &audio_field_ids {
+                if let Some(value) = obj.get(field_id) {
+                    if let Some(val_str) = value.as_str() {
+                        // SELF-HEALING: If it's a base64 string, migrate it to binary storage
+                        if val_str.starts_with("data:audio/") {
+                            let clean_base64 = if let Some(pos) = val_str.find("base64,") {
+                                &val_str[pos + 7..]
+                            } else {
+                                val_str
+                            };
+
+                            if let Ok(audio_bytes) = general_purpose::STANDARD.decode(clean_base64) {
+                                // Save to binary table
+                                let _ = sqlx::query(
+                                    "INSERT INTO flashcard_audio (flashcard_id, field_id, audio_data) 
+                                     VALUES ($1, $2, $3) 
+                                     ON CONFLICT (flashcard_id, field_id) DO UPDATE SET audio_data = $3"
+                                )
+                                .bind(record.id)
+                                .bind(field_id)
+                                .bind(audio_bytes)
+                                .execute(&pool)
+                                .await;
+                                
+                                modified_in_db = true;
+                            }
+                        }
                         
-                        if let Some(id) = field_obj.get("id").and_then(|v| v.as_str()) {
-                            if is_audio_type {
-                                audio_field_ids.push(id.to_string());
-                            }
-                            if is_tts_enabled {
-                                audio_field_ids.push(format!("{}_audio", id));
-                            }
+                        // Always return the marker to the client for audio fields if they contain high-volume data
+                        if val_str.starts_with("data:audio/") || val_str == "__AUDIO_ON_SERVER__" {
+                             obj.insert(field_id.clone(), serde_json::json!("__AUDIO_ON_SERVER__"));
                         }
                     }
                 }
             }
+        }
 
-            // Replace heavy audio patterns with a light marker
-            let mut fields_data = fc.fields_data;
-            if let Some(obj) = fields_data.as_object_mut() {
-                for field_id in audio_field_ids {
-                    if obj.contains_key(&field_id) {
-                        obj.insert(field_id, serde_json::json!("__AUDIO_ON_SERVER__"));
-                    }
-                }
-            }
+        if modified_in_db {
+            // Update the record in background to remove heavy base64 from JSON
+            let _ = sqlx::query("UPDATE flashcards SET fields_data = $1 WHERE id = $2")
+                .bind(&fields_data)
+                .bind(record.id)
+                .execute(&pool)
+                .await;
+        }
 
-            FlashcardResponse {
-                id: fc.id.to_string(),
-                term: fc.term,
-                definition: fc.definition,
-                image_url: fc.image_url,
-                order_index: fc.order_index,
-                fields_data,
-            }
-
-        .collect();
+        flashcards.push(FlashcardResponse {
+            id: record.id.to_string(),
+            term: record.term,
+            definition: record.definition,
+            image_url: record.image_url,
+            order_index: record.order_index,
+            fields_data,
+        });
+    }
 
 
     let response = SetResponse {
@@ -341,21 +383,34 @@ pub async fn update_set(
     .await
     .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
-    // 2. We'll simply delete all existing flashcards and insert the new ones
-    sqlx::query!("DELETE FROM flashcards WHERE set_id = $1", set_id)
+    // 2. Identify flashcards to keep and to delete
+    let incoming_ids: Vec<Uuid> = payload.flashcards.iter()
+        .filter_map(|fc| fc.id.as_ref().and_then(|id| Uuid::parse_str(id).ok()))
+        .collect();
+
+    if incoming_ids.is_empty() {
+        sqlx::query!("DELETE FROM flashcards WHERE set_id = $1", set_id)
+            .execute(&mut *tx)
+            .await
+            .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    } else {
+        sqlx::query!(
+            "DELETE FROM flashcards WHERE set_id = $1 AND id != ALL($2)",
+            set_id,
+            &incoming_ids
+        )
         .execute(&mut *tx)
         .await
         .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    }
 
-    // 3. Insert the Flashcards iteratively
+    // 3. Update existing or insert new flashcards iteratively
     let mut response_flashcards = Vec::new();
-    
     for (index, card) in payload.flashcards.into_iter().enumerate() {
         let order_index = index as i32;
-        let image_url_clone = card.image_url.clone();
         let mut fields_data = card.fields_data.clone();
         
-        // Extract and decode audio if present (any field starting with data:audio/)
+        // Extract and decode audio
         let mut extracted_audio = Vec::new();
         if let Some(obj) = fields_data.as_object_mut() {
             let audio_keys: Vec<String> = obj.iter()
@@ -383,58 +438,54 @@ pub async fn update_set(
             }
         }
 
-
-        let fc_id = if let Some(id_str) = &card.id {
-            if let Ok(parsed_id) = Uuid::parse_str(id_str) {
-                Some(parsed_id)
-            } else {
-                None
-            }
-        } else {
-            None
-        };
-
-        let new_id = if let Some(id) = fc_id { id } else { Uuid::new_v4() };
+        let fc_id = card.id.as_ref().and_then(|id_str| Uuid::parse_str(id_str).ok()).unwrap_or_else(Uuid::new_v4);
 
         sqlx::query!(
-            "INSERT INTO flashcards (id, set_id, term, definition, image_url, order_index, fields_data) VALUES ($1, $2, $3, $4, $5, $6, $7)",
-            new_id,
+            "INSERT INTO flashcards (id, set_id, term, definition, image_url, order_index, fields_data) 
+             VALUES ($1, $2, $3, $4, $5, $6, $7)
+             ON CONFLICT (id) DO UPDATE SET 
+                term = EXCLUDED.term, 
+                definition = EXCLUDED.definition, 
+                image_url = EXCLUDED.image_url, 
+                order_index = EXCLUDED.order_index, 
+                fields_data = EXCLUDED.fields_data",
+            fc_id,
             set_id,
             card.term,
             card.definition,
             card.image_url,
             order_index,
-            fields_data // Saved WITHOUT audio
+            fields_data
         )
         .execute(&mut *tx)
         .await
-        .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed adding flashcard: {}", e)))?;
+        .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
-        // 3.5 Save extracted audio
+        // Save audio blobs
         for (field_id, audio_bytes) in extracted_audio {
-            sqlx::query!(
-                "INSERT INTO flashcard_audio (flashcard_id, field_id, audio_data) VALUES ($1, $2, $3) ON CONFLICT (flashcard_id, field_id) DO UPDATE SET audio_data = $3",
-                new_id,
-                field_id,
-                audio_bytes
+            sqlx::query(
+                "INSERT INTO flashcard_audio (flashcard_id, field_id, audio_data) 
+                 VALUES ($1, $2, $3)
+                 ON CONFLICT (flashcard_id, field_id) DO UPDATE SET audio_data = $3"
             )
+            .bind(fc_id)
+            .bind(field_id)
+            .bind(audio_bytes)
             .execute(&mut *tx)
             .await
-            .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed saving audio: {}", e)))?;
+            .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
         }
 
         response_flashcards.push(FlashcardResponse {
-            id: new_id.to_string(),
-            term: card.term.clone(),
-            definition: card.definition.clone(),
-            image_url: image_url_clone,
+            id: fc_id.to_string(),
+            term: card.term,
+            definition: card.definition,
+            image_url: card.image_url,
             order_index,
-            fields_data: card.fields_data
+            fields_data,
         });
     }
 
-
-    // Commit transaction
     tx.commit().await.map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let response = SetResponse {
