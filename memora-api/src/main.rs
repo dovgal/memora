@@ -51,6 +51,12 @@ async fn main() {
         .await
         .expect("Failed to connect to PostgreSQL");
 
+    // Run database migrations
+    sqlx::migrate!()
+        .run(&pool)
+        .await
+        .expect("Failed to run database migrations");
+
     // Initialize Rate Limiter for AI Gateway
     let rate_limiter = middleware::rate_limiter::initialize_rate_limiter();
 

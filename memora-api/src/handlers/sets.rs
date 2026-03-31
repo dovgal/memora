@@ -95,7 +95,7 @@ pub async fn get_public_set(
 
                             if let Ok(audio_bytes) = general_purpose::STANDARD.decode(clean_base64) {
                                 // Save to binary table
-                                let _ = sqlx::query(
+                                if let Err(e) = sqlx::query(
                                     "INSERT INTO flashcard_audio (flashcard_id, field_id, audio_data) 
                                      VALUES ($1, $2, $3) 
                                      ON CONFLICT (flashcard_id, field_id) DO UPDATE SET audio_data = $3"
@@ -104,9 +104,11 @@ pub async fn get_public_set(
                                 .bind(field_id)
                                 .bind(audio_bytes)
                                 .execute(&pool)
-                                .await;
-                                
-                                modified_in_db = true;
+                                .await {
+                                    eprintln!("Failed to migrate audio for card {}: {}", record.id, e);
+                                } else {
+                                    modified_in_db = true;
+                                }
                             }
                         }
                         
