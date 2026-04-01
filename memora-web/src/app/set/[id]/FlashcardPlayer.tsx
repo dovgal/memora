@@ -186,7 +186,8 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
         for (const field of fieldsForSide) {
             if (field.type === 'text' && field.settings?.ttsEnabled) {
                 // Use the new dedicated audio endpoint instead of embedded base64
-                audioUrls.push(`/api/audio/${currentCard.id}/${field.id}`);
+                // TTS audio is stored with the _audio suffix
+                audioUrls.push(`/api/audio/${currentCard.id}/${field.id}_audio`);
             }
         }
 

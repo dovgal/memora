@@ -85,7 +85,7 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
                                         <button
                                             onClick={(e) => {
                                                 e.stopPropagation();
-                                                const audio = new Audio(`/api/audio/${card.id}/${field.id}`);
+                                                const audio = new Audio(`/api/audio/${card.id}/${field.id}_audio`);
                                                 audio.play().catch(err => console.warn("Audio playback failed", err));
                                             }}
                                             className="text-indigo-500 hover:text-indigo-400 p-2 bg-indigo-500/10 hover:bg-indigo-500/20 rounded-full transition-all hover:scale-110 active:scale-90"
@@ -111,10 +111,13 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
                             />
                         );
                     case 'audio':
+                        const src = value === "__AUDIO_ON_SERVER__" 
+                            ? `/api/audio/${card.id}/${field.id}` 
+                            : value;
                         return (
                             <AudioPlayer
                                 key={field.id}
-                                src={value}
+                                src={src}
                                 label={field.name}
                                 icon={FileAudio}
                             />

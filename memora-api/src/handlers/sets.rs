@@ -82,8 +82,11 @@ pub async fn get_public_set(
         let mut modified_in_db = false;
 
         if let Some(obj) = fields_data.as_object_mut() {
-            for field_id in &audio_field_ids {
-                if let Some(value) = obj.get(field_id) {
+            // Collect keys first to avoid concurrent borrow issues
+            let keys: Vec<String> = obj.keys().cloned().collect();
+            
+            for field_id in keys {
+                if let Some(value) = obj.get(&field_id) {
                     if let Some(val_str) = value.as_str() {
                         // SELF-HEALING: If it's a base64 string, migrate it to binary storage
                         if val_str.starts_with("data:audio/") {
@@ -101,18 +104,18 @@ pub async fn get_public_set(
                                      ON CONFLICT (flashcard_id, field_id) DO UPDATE SET audio_data = $3"
                                 )
                                 .bind(record.id)
-                                .bind(field_id)
+                                .bind(&field_id)
                                 .bind(audio_bytes)
                                 .execute(&pool)
                                 .await {
-                                    eprintln!("Failed to migrate audio for card {}: {}", record.id, e);
+                                    eprintln!("Failed to migrate audio for card {} field {}: {}", record.id, field_id, e);
                                 } else {
                                     modified_in_db = true;
                                 }
                             }
                         }
                         
-                        // Always return the marker to the client for audio fields if they contain high-volume data
+                        // If it's a base64 string OR already a marker, ensure we return the marker to the client
                         if val_str.starts_with("data:audio/") || val_str == "__AUDIO_ON_SERVER__" {
                              obj.insert(field_id.clone(), serde_json::json!("__AUDIO_ON_SERVER__"));
                         }
