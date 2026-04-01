@@ -111,6 +111,18 @@ async fn main() {
         .route("/api/live/ws", get(handlers::live::ws_handler))
         // Audio routes
         .route("/api/audio/{id}/{field}", get(handlers::audio::get_flashcard_audio))
+        // Diagnostics (Temporary)
+        .route("/api/diag/db", get(|State(pool): State<sqlx::PgPool>| async move {
+            let audio_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM flashcard_audio").fetch_one(&pool).await.unwrap_or((-1,));
+            let card_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM flashcards").fetch_one(&pool).await.unwrap_or((-1,));
+            let legacy_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM flashcards WHERE fields_data::text LIKE '%audio/mpeg;base64%'").fetch_one(&pool).await.unwrap_or((-1,));
+            let marker_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM flashcards WHERE fields_data::text LIKE '%__AUDIO_ON_SERVER__%'").fetch_one(&pool).await.unwrap_or((-1,));
+            
+            format!(
+                "Audio Rows: {}\nTotal Cards: {}\nLegacy (Base64) Cards: {}\nMarker Cards: {}",
+                audio_count.0, card_count.0, legacy_count.0, marker_count.0
+            )
+        }))
         .layer(cors)
 
         .layer(DefaultBodyLimit::max(20 * 1024 * 1024))
