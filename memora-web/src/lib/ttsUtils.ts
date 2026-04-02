@@ -1,5 +1,9 @@
-import { FieldSchema, FlashcardResponse } from "@/types/schema";
+import { FieldSchema } from "@/types/schema";
 
+/**
+ * Processes flashcards to ensure fields with TTS enabled have the necessary markers.
+ * This function is synchronous but keeps the signature for compatibility with calling sites.
+ */
 export async function processFlashcardsWithTTS(
     flashcards: any[],
     fieldsSchema: FieldSchema[]
@@ -7,10 +11,19 @@ export async function processFlashcardsWithTTS(
     const textFieldsWithTTS = fieldsSchema.filter(f => f.type === 'text' && f.settings?.ttsEnabled);
 
     if (textFieldsWithTTS.length === 0) {
-        return flashcards;
+        // Cleanup markers if TTS was disabled
+        return flashcards.map(card => {
+            const newCard = { ...card, fieldsData: { ...card.fieldsData } };
+            Object.keys(newCard.fieldsData).forEach(key => {
+                if (key.endsWith('_audio') && newCard.fieldsData[key] === "__AUDIO_ON_SERVER__") {
+                    delete newCard.fieldsData[key];
+                }
+            });
+            return newCard;
+        });
     }
 
-    const processedCards = await Promise.all(flashcards.map(async (card) => {
+    return flashcards.map((card) => {
         const newCard = { ...card, fieldsData: { ...card.fieldsData } };
 
         for (const field of textFieldsWithTTS) {
@@ -19,48 +32,26 @@ export async function processFlashcardsWithTTS(
             else if (field.id === 'definition') textToRead = newCard.definition;
             else textToRead = newCard.fieldsData[field.id] || "";
 
-            textToRead = textToRead.trim();
+            textToRead = (textToRead || "").trim();
 
             const audioKey = `${field.id}_audio`;
-            const audioTextKey = `${field.id}_audio_text`;
+            const marker = "__AUDIO_ON_SERVER__";
 
-            // Skip if text is empty
+            // If text is empty, remove marker
             if (!textToRead) {
-                delete newCard.fieldsData[audioKey];
-                delete newCard.fieldsData[audioTextKey];
-                continue;
-            }
-
-            // Skip if the text hasn't changed since we last generated audio
-            if (newCard.fieldsData[audioKey] && newCard.fieldsData[audioTextKey] === textToRead) {
-                continue;
-            }
-
-            // Generate new TTS Audio
-            try {
-                const voiceId = field.settings?.ttsVoice || 'Clive';
-                const response = await fetch('/api/tts', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ text: textToRead, voiceId })
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.audioContent) {
-                        newCard.fieldsData[audioKey] = `data:audio/mp3;base64,${data.audioContent}`;
-                        newCard.fieldsData[audioTextKey] = textToRead;
-                    }
-                } else {
-                    console.error("Failed to generate TTS for field", field.id);
+                if (newCard.fieldsData[audioKey] === marker) {
+                    delete newCard.fieldsData[audioKey];
                 }
-            } catch (err) {
-                console.error("Error generating TTS for field", field.id, err);
+                continue;
+            }
+
+            // Set marker if not present (only if it's currently empty or already a marker)
+            // We don't overwrite user-uploaded base64 audio if it's there
+            if (!newCard.fieldsData[audioKey] || newCard.fieldsData[audioKey] === marker) {
+                newCard.fieldsData[audioKey] = marker;
             }
         }
 
         return newCard;
-    }));
-
-    return processedCards;
+    });
 }

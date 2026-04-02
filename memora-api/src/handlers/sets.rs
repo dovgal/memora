@@ -212,14 +212,7 @@ pub async fn create_set(
                     };
 
                     if let Ok(audio_bytes) = general_purpose::STANDARD.decode(clean_base64) {
-                        // If it ends in _audio (TTS), the field_id is the prefix.
-                        // Otherwise (custom audio type), the field_id is the key itself.
-                        let field_id = if key.ends_with("_audio") {
-                            key.trim_end_matches("_audio").to_string()
-                        } else {
-                            key.clone()
-                        };
-                        extracted_audio.push((field_id, audio_bytes));
+                        extracted_audio.push((key.clone(), audio_bytes));
                     }
                 }
             }
@@ -432,12 +425,7 @@ pub async fn update_set(
                     };
 
                     if let Ok(audio_bytes) = general_purpose::STANDARD.decode(clean_base64) {
-                        let field_id = if key.ends_with("_audio") {
-                            key.trim_end_matches("_audio").to_string()
-                        } else {
-                            key.clone()
-                        };
-                        extracted_audio.push((field_id, audio_bytes));
+                        extracted_audio.push((key.clone(), audio_bytes));
                     }
                 }
             }

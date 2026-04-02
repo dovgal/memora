@@ -11,9 +11,7 @@ export async function POST(req: NextRequest) {
         const response = await fetch("https://api.inworld.ai/tts/v1/voice", {
             method: "POST",
             headers: {
-                // The user provided this exact hardcoded key in the curl example.
-                // Normally this would be in process.env, but we're embedding it directly per their request payload.
-                "Authorization": "Basic SDFtYWl4VHFNVm9xclZhcUw0enB2TnhoYlhmRDJlU3k6VHRSa05maWZhS1lvUEtkWWp3Tk43RG5keldtVDlNc1k1Y2hJZlVUYUFLcXRCNzdmR0FRUzFPNFFZUFphdFJ3NQ==",
+                "Authorization": process.env.INWORLD_AUTH || "Basic SDFtYWl4VHFNVm9xclZhcUw0enB2TnhoYlhmRDJlU3k6VHRSa05maWZhS1lvUEtkWWp3Tk43RG5keldtVDlNc1k1Y2hJZlVUYUFLcXRCNzdmR0FRUzFPNFFZUFphdFJ3NQ==",
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({

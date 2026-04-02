@@ -28,40 +28,81 @@ pub async fn get_flashcard_audio(
     .await
     .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
+    match row {
+        Some(record) => {
+            Ok((
+                [(header::CONTENT_TYPE, "audio/mpeg"), (header::CACHE_CONTROL, "public, max-age=31536000")],
+                record.audio_data,
+            ))
+        },
         None => {
             // AGGRESSIVE RECOVERY: If audio is missing but ends in _audio, it's TTS. Generate it!
             if field_id.ends_with("_audio") {
-                // 1. Fetch the flashcard to get the text
-                let card_record = sqlx::query!(
-                    "SELECT term, definition FROM flashcards WHERE id = $1",
+                // 1. Fetch the flashcard text and set schema to know WHAT to speak and with WHICH VOICE
+                let combined_record = sqlx::query!(
+                    r#"
+                    SELECT f.term, f.definition, f.fields_data, s.fields_schema 
+                    FROM flashcards f 
+                    JOIN sets s ON f.set_id = s.id 
+                    WHERE f.id = $1
+                    "#,
                     flashcard_uuid
                 )
                 .fetch_optional(&pool)
                 .await
                 .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
-                if let Some(card) = card_record {
+                if let Some(record) = combined_record {
+                    let clean_field_id = field_id.trim_end_matches("_audio");
+                    
+                    // A. Extract Text to Speak
                     let text = if field_id == "term_audio" {
-                        Some(card.term)
+                        Some(record.term)
                     } else if field_id == "definition_audio" {
-                        Some(card.definition)
+                        Some(record.definition)
                     } else {
-                        // Handle custom fields if they exist? For now just term/definition
-                        None
+                        // Extract from fields_data JSON for custom fields
+                        record.fields_data.get(clean_field_id).and_then(|v| v.as_str()).map(|s| s.to_string())
                     };
 
                     if let Some(text_to_speak) = text {
                         if !text_to_speak.trim().is_empty() {
-                            println!("DEBUG: Generating TTS on-the-fly for card {} field {}", flashcard_uuid, field_id);
+                            // B. Determine Voice ID from schema
+                            let mut voice_id = "Clive".to_string(); // Ultimate default
+                            
+                            if let Some(schema_array) = record.fields_schema.as_array() {
+                                if let Some(field_schema) = schema_array.iter().find(|f| f.get("id").and_then(|v| v.as_str()) == Some(clean_field_id)) {
+                                    if let Some(settings) = field_schema.get("settings").and_then(|v| v.as_object()) {
+                                        // Use explicit ttsVoice if available
+                                        if let Some(v_id) = settings.get("ttsVoice").and_then(|v| v.as_str()) {
+                                            voice_id = v_id.to_string();
+                                        } else {
+                                            // Fallback to language defaults
+                                            let lang = settings.get("language").and_then(|v| v.as_str()).unwrap_or("en");
+                                            voice_id = match lang {
+                                                "ru" => "Tatiana",
+                                                "fr" => "Alain",
+                                                "de" => "Josef",
+                                                "es" => "Carmen",
+                                                _ => "Clive"
+                                            }.to_string();
+                                        }
+                                    }
+                                }
+                            }
+
+                            println!("DEBUG: Generating TTS on-the-fly: Card={}, Field={}, Voice={}, Text='{}'", 
+                                flashcard_uuid, field_id, voice_id, text_to_speak);
                             
                             let client = Client::new();
-                            let auth_header = "Basic SDFtYWl4VHFNVm9xclZhcUw0enB2TnhoYlhmRDJlU3k6VHRSa05maWZhS1lvUEtkWWp3Tk43RG5keldtVDlNc1k1Y2hJZlVUYUFLcXRCNzdmR0FRUzFPNFFZUFphdFJ3NQ==";
+                            let auth_header = std::env::var("INWORLD_AUTH")
+                                .unwrap_or_else(|_| "Basic SDFtYWl4VHFNVm9xclZhcUw0enB2TnhoYlhmRDJlU3k6VHRSa05maWZhS1lvUEtkWWp3Tk43RG5keldtVDlNc1k1Y2hJZlVUYUFLcXRCNzdmR0FRUzFPNFFZUFphdFJ3NQ==".to_string());
                             
                             let res = client.post("https://api.inworld.ai/tts/v1/voice")
                                 .header("Authorization", auth_header)
                                 .json(&serde_json::json!({
                                     "text": text_to_speak,
-                                    "voiceId": "en-US-Wavenet-B",
+                                    "voiceId": voice_id,
                                     "modelId": "inworld-tts-1.5-max"
                                 }))
                                 .send()
