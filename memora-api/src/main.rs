@@ -117,10 +117,11 @@ async fn main() {
             let card_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM flashcards").fetch_one(&pool).await.unwrap_or((-1,));
             let legacy_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM flashcards WHERE fields_data::text LIKE '%audio/mpeg;base64%'").fetch_one(&pool).await.unwrap_or((-1,));
             let marker_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM flashcards WHERE fields_data::text LIKE '%__AUDIO_ON_SERVER__%'").fetch_one(&pool).await.unwrap_or((-1,));
+            let inworld_auth_set = std::env::var("INWORLD_AUTH").is_ok();
             
             format!(
-                "Audio Rows: {}\nTotal Cards: {}\nLegacy (Base64) Cards: {}\nMarker Cards: {}",
-                audio_count.0, card_count.0, legacy_count.0, marker_count.0
+                "Audio Rows: {}\nTotal Cards: {}\nLegacy (Base64) Cards: {}\nMarker Cards: {}\nINWORLD_AUTH Set: {}",
+                audio_count.0, card_count.0, legacy_count.0, marker_count.0, inworld_auth_set
             )
         }))
         .layer(cors)
@@ -138,4 +139,3 @@ async fn main() {
     println!("Server running on http://{}", addr);
     axum::serve(listener, app).await.unwrap();
 }
-
