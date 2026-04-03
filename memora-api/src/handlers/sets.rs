@@ -5,7 +5,7 @@ use axum::{
     Json,
 };
 use base64::{engine::general_purpose, Engine};
-use sqlx::PgPool;
+use sqlx::{PgPool, Row};
 
 use uuid::Uuid;
 
@@ -25,32 +25,50 @@ pub async fn get_public_set(
         .map_err(|_| ApiError::response(StatusCode::BAD_REQUEST, "Invalid set ID format"))?;
 
     // 1. Fetch the set, allowing either public or private sets to be fetched initially
-    let set_record = sqlx::query!(
-        "SELECT id, title, description, is_public, creator_id, fields_schema FROM sets WHERE id = $1",
-        set_id
+    let set_record = sqlx::query(
+        "SELECT id, title, description, is_public, creator_id, fields_schema FROM sets WHERE id = $1"
     )
+    .bind(set_id)
     .fetch_optional(&pool)
     .await
     .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let set_record = match set_record {
-        Some(record) => record,
+        Some(row) => {
+            let id: Uuid = row.get("id");
+            let title: String = row.get("title");
+            let description: Option<String> = row.get("description");
+            let is_public: bool = row.get("is_public");
+            let creator_id: Uuid = row.get("creator_id");
+            let fields_schema: serde_json::Value = row.get("fields_schema");
+            
+            // Re-wrap into a struct-like object for compatibility with downstream logic
+            serde_json::json!({
+                "id": id,
+                "title": title,
+                "description": description,
+                "is_public": is_public,
+                "creator_id": creator_id,
+                "fields_schema": fields_schema
+            })
+        },
         None => return Err(ApiError::response(StatusCode::NOT_FOUND, "Set not found")),
     };
 
     // 1.5 Check if the user is authorized to view this set
     let requesting_user_id = optional_user.0.and_then(|claims| Uuid::parse_str(&claims.sub).ok());
-    let is_owner = requesting_user_id.is_some() && Some(set_record.creator_id) == requesting_user_id;
+    let creator_id_uuid: Uuid = Uuid::parse_str(set_record.get("creator_id").and_then(|v| v.as_str()).unwrap_or_default()).unwrap_or_default();
+    let is_owner = requesting_user_id.is_some() && Some(creator_id_uuid) == requesting_user_id;
 
-    if !set_record.is_public && !is_owner {
+    if !set_record.get("is_public").and_then(|v| v.as_bool()).unwrap_or(false) && !is_owner {
         return Err(ApiError::response(StatusCode::NOT_FOUND, "Set not found or is private"));
     }
 
     // 2. Fetch the flashcards for this set, ordered appropriately
-    let flashcards_records = sqlx::query!(
-        "SELECT id, term, definition, image_url, order_index, fields_data FROM flashcards WHERE set_id = $1 ORDER BY order_index ASC",
-        set_id
+    let flashcards_records = sqlx::query(
+        "SELECT id, term, definition, image_url, order_index, fields_data FROM flashcards WHERE set_id = $1 ORDER BY order_index ASC"
     )
+    .bind(set_id)
     .fetch_all(&pool)
     .await
     .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
@@ -59,7 +77,8 @@ pub async fn get_public_set(
 
     // Identify all fields that should have audio based on the schema
     let mut audio_field_ids = Vec::new();
-    if let Some(schema_array) = set_record.fields_schema.as_array() {
+    let fields_schema = set_record.get("fields_schema");
+    if let Some(schema_array) = fields_schema.and_then(|v| v.as_array()) {
         for field in schema_array {
             if let Some(field_obj) = field.as_object() {
                 let is_audio_type = field_obj.get("type").and_then(|v| v.as_str()) == Some("audio");
@@ -78,7 +97,8 @@ pub async fn get_public_set(
     }
 
     for record in flashcards_records {
-        let mut fields_data = record.fields_data;
+        let record_id: Uuid = record.get("id");
+        let mut fields_data: serde_json::Value = record.get("fields_data");
         let mut modified_in_db = false;
 
         if let Some(obj) = fields_data.as_object_mut() {
@@ -103,12 +123,12 @@ pub async fn get_public_set(
                                      VALUES ($1, $2, $3) 
                                      ON CONFLICT (flashcard_id, field_id) DO UPDATE SET audio_data = $3"
                                 )
-                                .bind(record.id)
+                                .bind(record_id)
                                 .bind(&field_id)
                                 .bind(audio_bytes)
                                 .execute(&pool)
                                 .await {
-                                    eprintln!("Failed to migrate audio for card {} field {}: {}", record.id, field_id, e);
+                                    eprintln!("Failed to migrate audio for card {} field {}: {}", record_id, field_id, e);
                                 } else {
                                     modified_in_db = true;
                                 }
@@ -128,28 +148,28 @@ pub async fn get_public_set(
             // Update the record in background to remove heavy base64 from JSON
             let _ = sqlx::query("UPDATE flashcards SET fields_data = $1 WHERE id = $2")
                 .bind(&fields_data)
-                .bind(record.id)
+                .bind(record_id)
                 .execute(&pool)
                 .await;
         }
 
         flashcards.push(FlashcardResponse {
-            id: record.id.to_string(),
-            term: record.term,
-            definition: record.definition,
-            image_url: record.image_url,
-            order_index: record.order_index,
+            id: record_id.to_string(),
+            term: record.get("term"),
+            definition: record.get("definition"),
+            image_url: record.get("image_url"),
+            order_index: record.get("order_index"),
             fields_data,
         });
     }
 
 
     let response = SetResponse {
-        id: set_record.id.to_string(),
-        title: set_record.title,
-        description: set_record.description,
-        creator_id: set_record.creator_id.to_string(),
-        fields_schema: set_record.fields_schema,
+        id: set_record.get("id").and_then(|v| v.as_str()).unwrap_or_default().to_string(),
+        title: set_record.get("title").and_then(|v| v.as_str()).unwrap_or_default().to_string(),
+        description: set_record.get("description").and_then(|v| v.as_str()).map(|s| s.to_string()),
+        creator_id: set_record.get("creator_id").and_then(|v| v.as_str()).unwrap_or_default().to_string(),
+        fields_schema: set_record.get("fields_schema").cloned().unwrap_or(serde_json::Value::Null),
         flashcards,
     };
 
@@ -173,19 +193,19 @@ pub async fn create_set(
     let mut tx = pool.begin().await.map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
     
     // 1. Insert the parent Set
-    let set_record = sqlx::query!(
-        "INSERT INTO sets (creator_id, title, description, is_public, fields_schema) VALUES ($1, $2, $3, $4, $5) RETURNING id",
-        creator_id,
-        payload.title,
-        payload.description,
-        payload.is_public,
-        payload.fields_schema
+    let set_record = sqlx::query(
+        "INSERT INTO sets (creator_id, title, description, is_public, fields_schema) VALUES ($1, $2, $3, $4, $5) RETURNING id"
     )
+    .bind(creator_id)
+    .bind(&payload.title)
+    .bind(&payload.description)
+    .bind(payload.is_public)
+    .bind(&payload.fields_schema)
     .fetch_one(&mut *tx)
     .await
     .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
-    let new_set_id = set_record.id;
+    let new_set_id: Uuid = set_record.get("id");
 
     // 2. Insert the Flashcards iteratively
     let mut response_flashcards = Vec::new();
@@ -219,34 +239,36 @@ pub async fn create_set(
         }
 
 
-        let fc_record = sqlx::query!(
-            "INSERT INTO flashcards (set_id, term, definition, image_url, order_index, fields_data) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
-            new_set_id,
-            card.term,
-            card.definition,
-            card.image_url,
-            order_index,
-            fields_data // Saved WITHOUT audio
+        let fc_record = sqlx::query(
+            "INSERT INTO flashcards (set_id, term, definition, image_url, order_index, fields_data) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id"
         )
+        .bind(new_set_id)
+        .bind(&card.term)
+        .bind(&card.definition)
+        .bind(&card.image_url)
+        .bind(order_index)
+        .bind(&fields_data) // Saved WITHOUT audio
         .fetch_one(&mut *tx)
         .await
         .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed adding flashcard: {}", e)))?;
 
+        let fc_id: Uuid = fc_record.get("id");
+
         // 2.5 Save extracted audio to separate table
         for (field_id, audio_bytes) in extracted_audio {
-            sqlx::query!(
-                "INSERT INTO flashcard_audio (flashcard_id, field_id, audio_data) VALUES ($1, $2, $3) ON CONFLICT (flashcard_id, field_id) DO UPDATE SET audio_data = $3",
-                fc_record.id,
-                field_id,
-                audio_bytes
+            sqlx::query(
+                "INSERT INTO flashcard_audio (flashcard_id, field_id, audio_data) VALUES ($1, $2, $3) ON CONFLICT (flashcard_id, field_id) DO UPDATE SET audio_data = $3"
             )
+            .bind(fc_id)
+            .bind(&field_id)
+            .bind(audio_bytes)
             .execute(&mut *tx)
             .await
             .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed saving audio: {}", e)))?;
         }
 
         response_flashcards.push(FlashcardResponse {
-            id: fc_record.id.to_string(),
+            id: fc_id.to_string(),
             term: card.term.clone(),
             definition: card.definition.clone(),
             image_url: image_url_clone,
@@ -279,7 +301,7 @@ pub async fn get_user_sets(
         .map_err(|_| ApiError::response(StatusCode::UNAUTHORIZED, "Invalid user token"))?;
 
     // Updated Query to count cards
-    let sets_records = sqlx::query!(
+    let sets_records = sqlx::query(
         r#"
         SELECT s.id, s.title, s.description, s.created_at, s.fields_schema, COUNT(f.id) as flashcard_count
         FROM sets s
@@ -287,22 +309,26 @@ pub async fn get_user_sets(
         WHERE s.creator_id = $1
         GROUP BY s.id
         ORDER BY s.created_at DESC
-        "#,
-        creator_id
+        "#
     )
+    .bind(creator_id)
     .fetch_all(&pool)
     .await
     .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let response: Vec<SetSummaryResponse> = sets_records
         .into_iter()
-        .map(|record| SetSummaryResponse {
-            id: record.id.to_string(),
-            title: record.title,
-            description: record.description,
-            fields_schema: record.fields_schema,
-            flashcard_count: record.flashcard_count.unwrap_or(0) as i32,
-            created_at: record.created_at.to_string(),
+        .map(|record| {
+            let flashcard_count: i64 = record.get("flashcard_count");
+            let created_at: chrono::DateTime<chrono::Utc> = record.get("created_at");
+            SetSummaryResponse {
+                id: record.get::<Uuid, _>("id").to_string(),
+                title: record.get("title"),
+                description: record.get("description"),
+                fields_schema: record.get("fields_schema"),
+                flashcard_count: flashcard_count as i32,
+                created_at: created_at.to_string(),
+            }
         })
         .collect();
 
@@ -320,11 +346,11 @@ pub async fn delete_set(
     let creator_id = Uuid::parse_str(&user.sub)
         .map_err(|_| ApiError::response(StatusCode::UNAUTHORIZED, "Invalid user token"))?;
 
-    let result = sqlx::query!(
-        "DELETE FROM sets WHERE id = $1 AND creator_id = $2",
-        set_id,
-        creator_id
+    let result = sqlx::query(
+        "DELETE FROM sets WHERE id = $1 AND creator_id = $2"
     )
+    .bind(set_id)
+    .bind(creator_id)
     .execute(&pool)
     .await
     .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
@@ -353,11 +379,11 @@ pub async fn update_set(
     }
 
     // Verify ownership
-    let existing_set = sqlx::query!(
-        "SELECT id FROM sets WHERE id = $1 AND creator_id = $2",
-        set_id,
-        creator_id,
+    let existing_set = sqlx::query(
+        "SELECT id FROM sets WHERE id = $1 AND creator_id = $2"
     )
+    .bind(set_id)
+    .bind(creator_id)
     .fetch_optional(&pool)
     .await
     .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
@@ -369,14 +395,14 @@ pub async fn update_set(
     let mut tx = pool.begin().await.map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     // 1. Update the parent Set
-    sqlx::query!(
-        "UPDATE sets SET title = $1, description = $2, is_public = $3, fields_schema = $4 WHERE id = $5",
-        payload.title,
-        payload.description,
-        payload.is_public,
-        payload.fields_schema,
-        set_id
+    sqlx::query(
+        "UPDATE sets SET title = $1, description = $2, is_public = $3, fields_schema = $4 WHERE id = $5"
     )
+    .bind(&payload.title)
+    .bind(&payload.description)
+    .bind(payload.is_public)
+    .bind(&payload.fields_schema)
+    .bind(set_id)
     .execute(&mut *tx)
     .await
     .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
@@ -387,16 +413,17 @@ pub async fn update_set(
         .collect();
 
     if incoming_ids.is_empty() {
-        sqlx::query!("DELETE FROM flashcards WHERE set_id = $1", set_id)
+        sqlx::query("DELETE FROM flashcards WHERE set_id = $1")
+            .bind(set_id)
             .execute(&mut *tx)
             .await
             .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
     } else {
-        sqlx::query!(
-            "DELETE FROM flashcards WHERE set_id = $1 AND id != ALL($2)",
-            set_id,
-            &incoming_ids
+        sqlx::query(
+            "DELETE FROM flashcards WHERE set_id = $1 AND id != ALL($2)"
         )
+        .bind(set_id)
+        .bind(&incoming_ids)
         .execute(&mut *tx)
         .await
         .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
@@ -433,7 +460,7 @@ pub async fn update_set(
 
         let fc_id = card.id.as_ref().and_then(|id_str| Uuid::parse_str(id_str).ok()).unwrap_or_else(Uuid::new_v4);
 
-        sqlx::query!(
+        sqlx::query(
             "INSERT INTO flashcards (id, set_id, term, definition, image_url, order_index, fields_data) 
              VALUES ($1, $2, $3, $4, $5, $6, $7)
              ON CONFLICT (id) DO UPDATE SET 
@@ -441,15 +468,15 @@ pub async fn update_set(
                 definition = EXCLUDED.definition, 
                 image_url = EXCLUDED.image_url, 
                 order_index = EXCLUDED.order_index, 
-                fields_data = EXCLUDED.fields_data",
-            fc_id,
-            set_id,
-            card.term,
-            card.definition,
-            card.image_url,
-            order_index,
-            fields_data
+                fields_data = EXCLUDED.fields_data"
         )
+        .bind(fc_id)
+        .bind(set_id)
+        .bind(&card.term)
+        .bind(&card.definition)
+        .bind(&card.image_url)
+        .bind(order_index)
+        .bind(&fields_data)
         .execute(&mut *tx)
         .await
         .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;

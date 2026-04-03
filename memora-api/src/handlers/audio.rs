@@ -19,35 +19,37 @@ pub async fn get_flashcard_audio(
     let flashcard_uuid = Uuid::parse_str(&flashcard_id_str)
         .map_err(|_| ApiError::response(StatusCode::BAD_REQUEST, "Invalid flashcard ID format"))?;
 
-    let row = sqlx::query!(
-        "SELECT audio_data FROM flashcard_audio WHERE flashcard_id = $1 AND field_id = $2",
-        flashcard_uuid,
-        field_id
+    use sqlx::Row;
+    let row = sqlx::query(
+        "SELECT audio_data FROM flashcard_audio WHERE flashcard_id = $1 AND field_id = $2"
     )
+    .bind(flashcard_uuid)
+    .bind(&field_id)
     .fetch_optional(&pool)
     .await
     .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     match row {
         Some(record) => {
+            let audio_bytes: Vec<u8> = record.get("audio_data");
             Ok((
                 [(header::CONTENT_TYPE, "audio/mpeg"), (header::CACHE_CONTROL, "public, max-age=31536000")],
-                record.audio_data,
+                audio_bytes,
             ))
         },
         None => {
             // AGGRESSIVE RECOVERY: If audio is missing but ends in _audio, it's TTS. Generate it!
             if field_id.ends_with("_audio") {
                 // 1. Fetch the flashcard text and set schema to know WHAT to speak and with WHICH VOICE
-                let combined_record = sqlx::query!(
+                let combined_record = sqlx::query(
                     r#"
                     SELECT f.term, f.definition, f.fields_data, s.fields_schema 
                     FROM flashcards f 
                     JOIN sets s ON f.set_id = s.id 
                     WHERE f.id = $1
-                    "#,
-                    flashcard_uuid
+                    "#
                 )
+                .bind(flashcard_uuid)
                 .fetch_optional(&pool)
                 .await
                 .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
@@ -55,14 +57,19 @@ pub async fn get_flashcard_audio(
                 if let Some(record) = combined_record {
                     let clean_field_id = field_id.trim_end_matches("_audio");
                     
+                    let term: String = record.get("term");
+                    let definition: String = record.get("definition");
+                    let fields_data: Value = record.get("fields_data");
+                    let fields_schema: Value = record.get("fields_schema");
+
                     // A. Extract Text to Speak
                     let text = if field_id == "term_audio" {
-                        Some(record.term)
+                        Some(term)
                     } else if field_id == "definition_audio" {
-                        Some(record.definition)
+                        Some(definition)
                     } else {
                         // Extract from fields_data JSON for custom fields
-                        record.fields_data.get(clean_field_id).and_then(|v| v.as_str()).map(|s| s.to_string())
+                        fields_data.get(clean_field_id).and_then(|v| v.as_str()).map(|s| s.to_string())
                     };
 
                     let text_to_speak = match text {
@@ -73,7 +80,7 @@ pub async fn get_flashcard_audio(
                     // B. Determine Voice ID from schema
                     let mut voice_id = "Clive".to_string(); // Ultimate default
                     
-                    if let Some(schema_array) = record.fields_schema.as_array() {
+                    if let Some(schema_array) = fields_schema.as_array() {
                         if let Some(field_schema) = schema_array.iter().find(|f| f.get("id").and_then(|v| v.as_str()) == Some(clean_field_id)) {
                             if let Some(settings) = field_schema.get("settings").and_then(|v| v.as_object()) {
                                 // Use explicit ttsVoice if available
