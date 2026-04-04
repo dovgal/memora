@@ -144,7 +144,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    flashcard_id: currentCard.id,
+                    flashcardId: currentCard.id,
                     rating,
                     now: new Date().toISOString()
                 })

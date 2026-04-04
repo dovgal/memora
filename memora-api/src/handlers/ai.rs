@@ -412,7 +412,7 @@ pub async fn generate_exercises(
                 images: None,
             }],
             stream: false,
-            options: Some(OllamaOptions { num_predict: 2000 }),
+            options: Some(OllamaOptions { num_predict: 8192 }),
         })
         .send()
         .await
@@ -512,7 +512,7 @@ pub async fn analyze_content(
                 OllamaMessage { role: "user".to_string(), content: payload.content, images: None }
             ],
             stream: false,
-            options: Some(OllamaOptions { num_predict: 3000 }),
+            options: Some(OllamaOptions { num_predict: 8192 }),
         })
         .send()
         .await

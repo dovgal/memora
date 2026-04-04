@@ -149,7 +149,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                             const resAi = await fetch('/api/ai/learn/generate', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ setId: id, exerciseCount: 15 })
+                                body: JSON.stringify({ setId: id, exerciseCount: 100 })
                             });
                             if (resAi.ok) {
                                 const exercises: AIExercise[] = await resAi.json();

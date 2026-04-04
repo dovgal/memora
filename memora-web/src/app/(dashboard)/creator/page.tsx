@@ -1,17 +1,23 @@
-"use client"
-
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
-import { Send, FileText, Sparkles, Loader2, Check, ArrowRight, BrainCircuit } from "lucide-react"
-import { AIAnalyzeResponse, CreateFlashcardRequest } from "@/types/schema"
+import { Send, FileText, Sparkles, Loader2, Check, ArrowRight, BrainCircuit, Upload, FileUp, File, X } from "lucide-react"
+import { AIAnalyzeResponse } from "@/types/schema"
+import * as pdfjsLib from "pdfjs-dist"
+import mammoth from "mammoth"
+
+// Set up PDF.js worker
+pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`;
 
 export default function CreatorPage() {
     const router = useRouter()
+    const fileInputRef = useRef<HTMLInputElement>(null)
     const [step, setStep] = useState<'input' | 'analyzing' | 'review'>('input')
     const [content, setContent] = useState("")
     const [objective, setObjective] = useState("")
     const [analysis, setAnalysis] = useState<AIAnalyzeResponse | null>(null)
     const [isCreating, setIsCreating] = useState(false)
+    const [isParsing, setIsParsing] = useState(false)
+    const [fileName, setFileName] = useState<string | null>(null)
 
     const handleAnalyze = async () => {
         if (!content || !objective) return
@@ -34,6 +40,53 @@ export default function CreatorPage() {
             console.error(e);
             setStep('input');
         }
+    }
+
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (!file) return
+
+        setIsParsing(true)
+        setFileName(file.name)
+        
+        try {
+            const extension = file.name.split('.').pop()?.toLowerCase()
+            let extractedText = ""
+
+            if (extension === 'pdf') {
+                const arrayBuffer = await file.arrayBuffer()
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise
+                let fullText = ""
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i)
+                    const textContent = await page.getTextContent()
+                    const pageText = textContent.items.map((item: any) => item.str).join(" ")
+                    fullText += pageText + "\n"
+                }
+                extractedText = fullText
+            } else if (extension === 'docx') {
+                const arrayBuffer = await file.arrayBuffer()
+                const result = await mammoth.extractRawText({ arrayBuffer })
+                extractedText = result.value
+            } else {
+                // txt, md
+                extractedText = await file.text()
+            }
+
+            setContent(extractedText)
+        } catch (error) {
+            console.error("Error parsing file:", error)
+            alert("Не удалось прочитать файл. Попробуйте скопировать текст вручную.")
+            setFileName(null)
+        } finally {
+            setIsParsing(false)
+        }
+    }
+
+    const removeFile = () => {
+        setFileName(null)
+        setContent("")
+        if (fileInputRef.current) fileInputRef.current.value = ""
     }
 
     const handleCreateSet = async () => {
@@ -67,7 +120,7 @@ export default function CreatorPage() {
 
     if (step === 'analyzing') {
         return (
-            <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
+            <div className="flex-1 flex flex-col items-center justify-center p-6 text-center h-[80vh]">
                 <div className="relative mb-8">
                     <div className="absolute inset-0 bg-indigo-500 rounded-full blur-3xl opacity-20 animate-pulse" />
                     <BrainCircuit size={80} className="text-indigo-400 relative animate-bounce" />
@@ -87,7 +140,7 @@ export default function CreatorPage() {
 
     if (step === 'review' && analysis) {
         return (
-            <div className="max-w-5xl mx-auto w-full p-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="max-w-5xl mx-auto w-full p-6 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-24">
                 <div className="flex justify-between items-end mb-8">
                     <div>
                         <h1 className="text-4xl font-extrabold mb-2">{analysis.proposedTitle}</h1>
@@ -105,10 +158,10 @@ export default function CreatorPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {analysis.cards.map((card, i) => (
-                        <div key={i} className="bg-zinc-900/50 border border-white/5 p-6 rounded-2xl flex flex-col gap-2 hover:border-indigo-500/30 transition-colors">
+                        <div key={i} className="bg-zinc-900/50 border border-white/5 p-6 rounded-2xl flex flex-col gap-2 hover:border-indigo-500/30 transition-colors group">
                             <span className="text-xs font-bold text-indigo-400 uppercase tracking-tighter">Карточка {i+1}</span>
-                            <div className="text-xl font-bold">{card.term}</div>
-                            <div className="text-zinc-400">{card.definition}</div>
+                            <div className="text-xl font-bold group-hover:text-white transition-colors">{card.term}</div>
+                            <div className="text-zinc-500 group-hover:text-zinc-400 transition-colors">{card.definition}</div>
                         </div>
                     ))}
                 </div>
@@ -124,43 +177,100 @@ export default function CreatorPage() {
                 </div>
                 <h1 className="text-5xl font-black mb-6 tracking-tight">Создавайте за секунды.</h1>
                 <p className="text-xl text-zinc-400 leading-relaxed max-w-2xl mx-auto">
-                    Загрузите текст книги, субтитры или подкаст. Наш AI превратит это в интерактивный курс обучения.
+                    Загрузите PDF, Word или вставьте текст. Наш AI превратит это в полноценную учебную программу.
                 </p>
             </div>
 
-            <div className="space-y-8 bg-zinc-900/30 border border-white/5 p-8 rounded-3xl backdrop-blur-sm">
+            <div className="space-y-8 bg-zinc-900/30 border border-white/5 p-8 rounded-[2.5rem] backdrop-blur-sm shadow-2xl">
+                
+                {/* Content Input Area */}
                 <div className="space-y-4">
-                    <label className="text-sm font-bold text-zinc-500 uppercase flex items-center gap-2">
-                        <FileText size={16} /> Ваш контент
-                    </label>
-                    <textarea 
-                        className="w-full bg-black/40 border-2 border-white/5 rounded-2xl p-6 h-64 focus:border-indigo-500 outline-none transition-all resize-none text-lg leading-relaxed shadow-inner"
-                        placeholder="Вставьте здесь текст, субтитры или сценарий..."
-                        value={content}
-                        onChange={(e) => setContent(e.target.value)}
-                    />
+                    <div className="flex justify-between items-center">
+                        <label className="text-sm font-bold text-zinc-500 uppercase flex items-center gap-2">
+                            <FileText size={16} /> Ваш контент
+                        </label>
+                        
+                        <div className="flex gap-2">
+                            <input 
+                                type="file" 
+                                ref={fileInputRef}
+                                className="hidden" 
+                                accept=".pdf,.docx,.txt,.md"
+                                onChange={handleFileUpload}
+                            />
+                            {fileName ? (
+                                <div className="flex items-center gap-2 px-3 py-1.5 bg-indigo-500/20 border border-indigo-500/30 rounded-full text-xs font-bold text-indigo-400 animate-in zoom-in-95">
+                                    <File size={14} /> {fileName}
+                                    <button onClick={removeFile} className="hover:text-white"><X size={14} /></button>
+                                </div>
+                            ) : (
+                                <button 
+                                    onClick={() => fileInputRef.current?.click()}
+                                    className="flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs font-bold text-zinc-400 transition-all"
+                                >
+                                    <FileUp size={14} /> Загрузить файл
+                                </button>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="relative group">
+                        {isParsing && (
+                            <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] z-10 rounded-3xl flex flex-col items-center justify-center animate-in fade-in">
+                                <Loader2 className="animate-spin text-indigo-500 mb-2" size={32} />
+                                <span className="text-sm font-bold text-white">Читаем документ...</span>
+                            </div>
+                        )}
+                        <textarea 
+                            className="w-full bg-black/40 border-2 border-white/5 rounded-3xl p-8 h-80 focus:border-indigo-500 outline-none transition-all resize-none text-lg leading-relaxed shadow-inner placeholder:text-zinc-700"
+                            placeholder="Вставьте здесь текст книги, субтитры или сценарий. Чем больше контекста, тем лучше результат."
+                            value={content}
+                            onChange={(e) => setContent(e.target.value)}
+                        />
+                    </div>
                 </div>
 
+                {/* Objective Input Area */}
                 <div className="space-y-4">
                     <label className="text-sm font-bold text-zinc-500 uppercase flex items-center gap-2">
                         <ArrowRight size={16} /> Что вы хотите выучить?
                     </label>
-                    <input 
-                        type="text"
-                        className="w-full bg-black/40 border-2 border-white/5 rounded-2xl p-6 focus:border-indigo-500 outline-none transition-all text-xl font-medium"
-                        placeholder="Например: 'Извлеки 20 новых фраз на английском' или 'Создай тест по физике'"
-                        value={objective}
-                        onChange={(e) => setObjective(e.target.value)}
-                    />
+                    <div className="relative group">
+                        <input 
+                            type="text"
+                            className="w-full bg-black/40 border-2 border-white/5 rounded-2xl p-6 focus:border-indigo-500 outline-none transition-all text-xl font-medium placeholder:text-zinc-700"
+                            placeholder="Например: 'Выдели 20 самых полезных фраз'..."
+                            value={objective}
+                            onChange={(e) => setObjective(e.target.value)}
+                        />
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-indigo-500/10 rounded-xl">
+                            <Sparkles size={20} className="text-indigo-500/50" />
+                        </div>
+                    </div>
                 </div>
 
                 <button 
                     onClick={handleAnalyze}
-                    disabled={!content || !objective}
-                    className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-6 rounded-2xl font-black text-xl flex items-center justify-center gap-3 shadow-2xl transition-all hover:scale-[1.01] active:scale-95 disabled:opacity-50"
+                    disabled={!content || !objective || isParsing}
+                    className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-6 rounded-2xl font-black text-xl flex items-center justify-center gap-3 shadow-2xl transition-all hover:scale-[1.01] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed group"
                 >
-                    <BrainCircuit /> Анализировать контент
+                    <BrainCircuit className="group-hover:rotate-12 transition-transform" />
+                    Анализировать контент
                 </button>
+            </div>
+
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+                {[
+                    { icon: <FileText className="text-blue-400" />, title: "PDF & Docs", desc: "Поддержка учебников и конспектов" },
+                    { icon: <BrainCircuit className="text-purple-400" />, title: "Smart Extraction", desc: "AI находит самые важные мысли" },
+                    { icon: <Sparkles className="text-amber-400" />, title: "Instant Sets", desc: "Готовый модуль за 15 секунд" }
+                ].map((feature, i) => (
+                    <div key={i} className="p-6 bg-white/5 border border-white/5 rounded-2xl">
+                        <div className="mb-3">{feature.icon}</div>
+                        <div className="font-bold mb-1 text-white">{feature.title}</div>
+                        <div className="text-sm text-zinc-500 leading-relaxed">{feature.desc}</div>
+                    </div>
+                ))}
             </div>
         </div>
     )

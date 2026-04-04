@@ -20,6 +20,34 @@ const nextConfig: NextConfig = {
         source: "/api/diag/:path*",
         destination: `${rustApiUrl}/api/diag/:path*`,
       },
+      {
+        source: "/api/ai/:path*",
+        destination: `${rustApiUrl}/api/ai/:path*`,
+      },
+      {
+        source: "/api/sets/:path*",
+        destination: `${rustApiUrl}/api/sets/:path*`,
+      },
+      {
+        source: "/api/study/:path*",
+        destination: `${rustApiUrl}/api/study/:path*`,
+      },
+      {
+        source: "/api/folders/:path*",
+        destination: `${rustApiUrl}/api/folders/:path*`,
+      },
+      {
+        source: "/api/users/:path*",
+        destination: `${rustApiUrl}/api/users/:path*`,
+      },
+      {
+        source: "/api/images/:path*",
+        destination: `${rustApiUrl}/api/images/:path*`,
+      },
+      {
+        source: "/api/live/:path*",
+        destination: `${rustApiUrl}/api/live/:path*`,
+      },
     ];
   },
 };
