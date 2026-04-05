@@ -61,72 +61,57 @@ export const authOptions: NextAuthOptions = {
         async signIn() {
             return true;
         },
-        async jwt({ token, user, account, isNewUser, trigger, session }) {
-            console.log("JWT Callback invoked. User attached:", !!user);
+        async jwt({ token, user, account, trigger, session }) {
+            if (user) {
+                token.id = user.id;
+                // @ts-expect-error role is on our custom user
+                token.role = user.role || "student";
+                token.email = user.email;
+            }
 
-            if (account && user) {
-                if (account.provider === 'google') {
-                    try {
-                        const googleUser = {
-                            email: user.email,
-                            firstName: user.name?.split(' ')[0] || "",
-                            lastName: user.name?.split(' ').slice(1).join(' ') || "",
-                            avatarUrl: user.image,
-                        };
-                        const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
-                        const res = await fetch(`${backendUrl}/api/auth/oauth/google`, {
-                            method: 'POST',
-                            body: JSON.stringify(googleUser),
-                            headers: {
-                                "Content-Type": "application/json",
-                                "x-backend-secret": process.env.NEXTAUTH_SECRET as string
-                            },
-                        });
+            if (account?.provider === 'google' && user) {
+                try {
+                    const googleUser = {
+                        email: user.email,
+                        firstName: user.name?.split(' ')[0] || "",
+                        lastName: user.name?.split(' ').slice(1).join(' ') || "",
+                        avatarUrl: user.image,
+                    };
+                    const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+                    const res = await fetch(`${backendUrl}/api/auth/google`, { // Fixed endpoint for consistency
+                        method: 'POST',
+                        body: JSON.stringify(googleUser),
+                        headers: {
+                            "Content-Type": "application/json",
+                            "x-backend-secret": process.env.NEXTAUTH_SECRET as string
+                        },
+                    });
 
-                        if (res.ok) {
-                            const backendUser = await res.json();
-                            token.id = backendUser.id;
-                            token.role = backendUser.role;
-                        } else {
-                            console.error("Failed to sync Google user with backend:", await res.text());
-                        }
-                    } catch (e) {
-                        console.error("Google OAuth backend sync error:", e);
+                    if (res.ok) {
+                        const backendUser = await res.json();
+                        token.id = backendUser.id;
+                        token.role = backendUser.role;
                     }
-                } else if (account.provider === 'credentials') {
-                    token.id = user.id;
-                    // @ts-expect-error casting role from user response
-                    token.role = user.role || "student";
+                } catch (e) {
+                    console.error("Google OAuth backend sync error:", e);
                 }
             }
 
             if (trigger === "update" && session) {
-                if (session.needsOnboarding !== undefined) {
-                    token.needsOnboarding = session.needsOnboarding;
-                }
-                if (session.needsRoleSelection !== undefined) {
-                    token.needsRoleSelection = session.needsRoleSelection;
-                }
-                if (session.role !== undefined) {
-                    token.role = session.role;
-                }
+                if (session.role !== undefined) token.role = session.role;
+                if (session.needsOnboarding !== undefined) token.needsOnboarding = session.needsOnboarding;
+                if (session.needsRoleSelection !== undefined) token.needsRoleSelection = session.needsRoleSelection;
             }
             return token
         },
         async session({ session, token }) {
-            console.log("Session Callback invoked");
-            if (session?.user) {
+            if (session?.user && token.id) {
                 // @ts-expect-error extending next-auth types
                 session.user.id = token.id;
                 // @ts-expect-error extending next-auth types
                 session.user.role = token.role;
-                // @ts-expect-error extending next-auth types
-                session.user.needsOnboarding = token.needsOnboarding;
-                // @ts-expect-error extending next-auth types
-                session.user.needsRoleSelection = token.needsRoleSelection;
-
-                // Create a raw JWT string to send to Rust.
-                // We MUST cast token.id to a string because Rust strictly expects `sub: String`.
+                
+                // Create a raw JWT string for the Rust backend.
                 const rawToken = jsonwebtoken.sign(
                     { sub: String(token.id), email: token.email, role: token.role },
                     process.env.NEXTAUTH_SECRET as string,
