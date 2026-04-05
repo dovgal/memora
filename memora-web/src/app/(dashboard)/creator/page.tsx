@@ -135,23 +135,29 @@ export default function CreatorPage() {
         if (!analysis) return
         setIsCreating(true)
         try {
+            const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+            // @ts-expect-error session.id_token exists from our lib/auth config
+            if (session?.id_token) {
+                // @ts-expect-error session.id_token exists from our lib/auth config
+                headers['Authorization'] = `Bearer ${session.id_token}`;
+            }
+
             const res = await fetch('/api/sets', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers,
                 body: JSON.stringify({
                     title: analysis.proposedTitle,
                     description: analysis.proposedDescription,
                     isPublic: false,
-                    fieldsSchema: [
-                        { id: "f1", name: "Term", type: "text", side: "front", order: 0, settings: {} },
-                        { id: "f2", name: "Definition", type: "text", side: "back", order: 1, settings: {} }
-                    ],
-                    flashcards: analysis.cards
+                    cards: analysis.cards
                 })
             });
             if (res.ok) {
                 const newSet = await res.json();
                 router.push(`/set/${newSet.id}`);
+            } else {
+                const err = await res.json().catch(() => ({}));
+                alert(`Ошибка при сохранении: ${err.error || res.statusText}`);
             }
         } catch (e) {
             console.error(e);

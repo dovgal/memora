@@ -3,7 +3,8 @@ use axum::{
     http::StatusCode,
     response::{sse::{Event, Sse}},
 };
-use futures::{stream, StreamExt, stream::Stream, BoxStream};
+use futures::{stream, StreamExt, stream::Stream};
+use futures::stream::BoxStream;
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use std::{convert::Infallible, env, sync::Arc};
@@ -348,28 +349,35 @@ pub async fn generate_exercises(
     State(_rate_limiter): State<AppRateLimiter>,
     AuthenticatedUser(_user): AuthenticatedUser,
     Json(payload): Json<AIGenerateRequest>,
-) -> Result<Json<Vec<AIExercise>>, (StatusCode, Json<AiGatewayError>)> {
-    let set_id = uuid::Uuid::parse_str(&payload.set_id)
-        .map_err(|_| (StatusCode::BAD_REQUEST, Json(AiGatewayError { error: "Invalid Set ID".to_string() })))?;
+) -> Sse<BoxStream<'static, Result<Event, Infallible>>> {
+    let api_key = match env::var("OLLAMA_API_KEY") {
+        Ok(key) => key,
+        Err(_) => return Sse::new(stream::once(async { Ok(Event::default().data("Error: API Key not set")) }).boxed()),
+    };
 
-    let flashcards = sqlx::query!(
+    let set_id = match uuid::Uuid::parse_str(&payload.set_id) {
+        Ok(id) => id,
+        Err(_) => return Sse::new(stream::once(async { Ok(Event::default().data("Error: Invalid Set ID")) }).boxed()),
+    };
+
+    let set_info = match sqlx::query!("SELECT title, fields_schema FROM sets WHERE id = $1", set_id)
+        .fetch_one(&pool)
+        .await
+    {
+        Ok(row) => row,
+        Err(e) => return Sse::new(stream::once(async move { Ok(Event::default().data(format!("Error: {}", e))) }).boxed()),
+    };
+
+    let flashcards = match sqlx::query!(
         "SELECT id, term, definition, fields_data FROM flashcards WHERE set_id = $1",
         set_id
     )
     .fetch_all(&pool)
     .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: e.to_string() })))?;
-
-    let set_info = sqlx::query!(
-        "SELECT title, fields_schema FROM sets WHERE id = $1",
-        set_id
-    )
-    .fetch_one(&pool)
-    .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: e.to_string() })))?;
-
-    let api_key = env::var("OLLAMA_API_KEY")
-        .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: "API Key not set".to_string() })))?;
+    {
+        Ok(cards) => cards,
+        Err(e) => return Sse::new(stream::once(async move { Ok(Event::default().data(format!("Error: {}", e))) }).boxed()),
+    };
 
     #[derive(Serialize)]
     struct TrimmedCard {
@@ -386,11 +394,13 @@ pub async fn generate_exercises(
         fields_data: c.fields_data,
     }).collect();
 
-    let cards_json = serde_json::to_string(&serializable_cards)
-        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: e.to_string() })))?;
+    let cards_json = match serde_json::to_string(&serializable_cards) {
+        Ok(json) => json,
+        Err(e) => return Sse::new(stream::once(async move { Ok(Event::default().data(format!("Error: {}", e))) }).boxed()),
+    };
 
     let system_prompt = format!(
-        "You are an expert educational content generator. Create {} diverse exercises for this study set: '{}'.
+        "You are an expert educational content generator. Create 100 diverse exercises for this study set: '{}'.
         The fields schema is: {}.
         Available cards: {}.
         Output ONLY a raw JSON array of AIExercise objects.
@@ -398,11 +408,11 @@ pub async fn generate_exercises(
         Types: 'grammar' (change tense/person), 'negation', 'translation', 'listening' (write what you hear), 'context' (fill in blank).
         Shuffle fields: if a card has multiple fields, query different ones randomly.
         Do not use markdown blocks.",
-        payload.exercise_count, set_info.title, set_info.fields_schema, cards_json
+        set_info.title, set_info.fields_schema, cards_json
     );
 
     let client = Client::new();
-    let response = client.post(&get_ollama_url())
+    let response = match client.post(&get_ollama_url())
         .header("Authorization", format!("Bearer {}", api_key))
         .json(&OllamaRequest {
             model: OLLAMA_MODEL.to_string(),
@@ -411,28 +421,33 @@ pub async fn generate_exercises(
                 content: system_prompt,
                 images: None,
             }],
-            stream: false,
+            stream: true,
             options: Some(OllamaOptions { num_predict: 8192 }),
         })
         .send()
         .await
-        .map_err(|e| (StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: e.to_string() })))?;
+    {
+        Ok(res) => res,
+        Err(e) => return Sse::new(stream::once(async move { Ok(Event::default().data(format!("Error: {}", e))) }).boxed()),
+    };
 
-    let body = response.text().await.unwrap_or_default();
-    // Try to parse the message content from Ollama's non-streaming response
-    #[derive(Deserialize)]
-    struct OllamaResponse {
-        message: OllamaDelta,
-    }
-    
-    let parsed: OllamaResponse = serde_json::from_str(&body)
-        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Ollama JSON Error: {} - Body: {}", e, body) })))?;
+    let byte_stream = response.bytes_stream();
+    let event_stream = byte_stream.map(|chunk_result: reqwest::Result<bytes::Bytes>| {
+        match chunk_result {
+            Ok(bytes) => {
+                let text = String::from_utf8_lossy(&bytes);
+                if let Ok(value) = serde_json::from_str::<serde_json::Value>(&text) {
+                    if let Some(content) = value.get("message").and_then(|m| m.get("content")).and_then(|c| c.as_str()) {
+                        return Ok::<Event, Infallible>(Event::default().data(content));
+                    }
+                }
+                Ok::<Event, Infallible>(Event::default())
+            },
+            Err(e) => Ok::<Event, Infallible>(Event::default().data(format!("Error: {}", e))),
+        }
+    });
 
-    let content = parsed.message.content.unwrap_or_default();
-    let exercises: Vec<AIExercise> = serde_json::from_str(&content)
-        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("AI Pattern Error: {} - Content: {}", e, content) })))?;
-
-    Ok(Json(exercises))
+    Sse::new(event_stream.boxed())
 }
 
 pub async fn grade_answer(
@@ -520,11 +535,11 @@ pub async fn analyze_content(
         .await
     {
         Ok(res) => res,
-        Err(e) => return Sse::new(stream::once(async move { Ok(Event::default().data(format!("Error: {}", e))) })),
+        Err(e) => return Sse::new(stream::once(async move { Ok(Event::default().data(format!("Error: {}", e))) }).boxed()),
     };
 
     let byte_stream = response.bytes_stream();
-    let event_stream = byte_stream.map(|chunk_result| {
+    let event_stream = byte_stream.map(|chunk_result: reqwest::Result<bytes::Bytes>| {
         match chunk_result {
             Ok(bytes) => {
                 let text = String::from_utf8_lossy(&bytes);
@@ -539,5 +554,5 @@ pub async fn analyze_content(
         }
     });
 
-    Sse::new(event_stream.boxed()).keep_alive(axum::response::sse::KeepAlive::default())
+    Sse::new(event_stream.boxed())
 }

@@ -153,15 +153,41 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                 headers['Authorization'] = `Bearer ${session.id_token}`;
                             }
 
-                            const resAi = await fetch('/api/ai/learn/generate', {
+                            const response = await fetch('/api/ai/learn/generate', {
                                 method: 'POST',
                                 headers,
                                 body: JSON.stringify({ setId: id, exerciseCount: 100 })
                             });
-                            if (resAi.ok) {
-                                const exercises: AIExercise[] = await resAi.json();
-                                setAiExercises(exercises);
-                                // Queue is handled differently for AI
+
+                            if (!response.ok) {
+                                throw new Error("AI Generation failed");
+                            }
+
+                            const reader = response.body?.getReader();
+                            const decoder = new TextDecoder();
+                            let accumulated = "";
+
+                            if (reader) {
+                                while (true) {
+                                    const { done, value } = await reader.read();
+                                    if (done) break;
+                                    
+                                    const chunk = decoder.decode(value, { stream: true });
+                                    const lines = chunk.split("\n");
+                                    for (const line of lines) {
+                                        if (line.startsWith("data: ")) {
+                                            accumulated += line.slice(6);
+                                        }
+                                    }
+                                }
+                                
+                                try {
+                                    const exercises: AIExercise[] = JSON.parse(accumulated);
+                                    setAiExercises(exercises);
+                                } catch (e) {
+                                    console.error("Failed to parse AI exercises JSON", e, accumulated);
+                                    setIsAiPro(false);
+                                }
                             }
                         } catch (e) {
                             console.error("AI Generation failed, falling back", e);
