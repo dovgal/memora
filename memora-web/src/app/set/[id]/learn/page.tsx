@@ -146,9 +146,16 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                     
                     if (isAiPro) {
                         try {
+                            const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+                            // @ts-expect-error session.id_token exists from our lib/auth config
+                            if (session?.id_token) {
+                                // @ts-expect-error session.id_token exists from our lib/auth config
+                                headers['Authorization'] = `Bearer ${session.id_token}`;
+                            }
+
                             const resAi = await fetch('/api/ai/learn/generate', {
                                 method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
+                                headers,
                                 body: JSON.stringify({ setId: id, exerciseCount: 100 })
                             });
                             if (resAi.ok) {
@@ -190,9 +197,16 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
         if (isAiPro && currentAiEx) {
             setIsGrading(true);
             try {
+                const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+                // @ts-expect-error session.id_token exists from our lib/auth config
+                if (session?.id_token) {
+                    // @ts-expect-error session.id_token exists from our lib/auth config
+                    headers['Authorization'] = `Bearer ${session.id_token}`;
+                }
+
                 const res = await fetch('/api/ai/learn/grade', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers,
                     body: JSON.stringify({
                         setId: id,
                         cardId: currentAiEx.cardId,

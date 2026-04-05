@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
+import { useSession } from "next-auth/react"
 import { Send, FileText, Sparkles, Loader2, Check, ArrowRight, BrainCircuit, Upload, FileUp, File, X } from "lucide-react"
 import { AIAnalyzeResponse } from "@/types/schema"
 import * as pdfjsLib from "pdfjs-dist"
@@ -12,6 +13,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.j
 
 export default function CreatorPage() {
     const router = useRouter()
+    const { data: session } = useSession()
     const fileInputRef = useRef<HTMLInputElement>(null)
     const [step, setStep] = useState<'input' | 'analyzing' | 'review'>('input')
     const [content, setContent] = useState("")
@@ -25,9 +27,16 @@ export default function CreatorPage() {
         if (!content || !objective) return
         setStep('analyzing')
         try {
+            const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+            // @ts-expect-error session.id_token exists from our lib/auth config
+            if (session?.id_token) {
+                // @ts-expect-error session.id_token exists from our lib/auth config
+                headers['Authorization'] = `Bearer ${session.id_token}`;
+            }
+
             const res = await fetch('/api/ai/creator/analyze', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers,
                 body: JSON.stringify({ content, userObjective: objective })
             });
             if (res.ok) {
