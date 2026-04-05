@@ -15,7 +15,7 @@ use std::num::NonZeroU32;
 use crate::middleware::{auth::AuthenticatedUser, rate_limiter::AppRateLimiter};
 use crate::domain::dtos::{
     QChatRequest,
-    AIGenerateRequest, AIExercise, AIGradeRequest, AIGradeResponse, AIAnalyzeRequest, AIAnalyzeResponse
+    AIGenerateRequest, AIGradeRequest, AIGradeResponse, AIAnalyzeRequest
 };
 use sqlx::PgPool;
 

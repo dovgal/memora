@@ -247,18 +247,6 @@ pub struct AIGenerateRequest {
 #[typeshare]
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct AIExercise {
-    pub id: String,
-    pub card_id: String,
-    pub r#type: String, // grammar, tense, negation, listening, etc.
-    pub question: String,
-    pub target_field: String,
-    pub context: Option<String>,
-}
-
-#[typeshare]
-#[derive(Serialize, Deserialize, Debug)]
-#[serde(rename_all = "camelCase")]
 pub struct AIGradeRequest {
     pub set_id: String,
     pub card_id: String,
@@ -283,13 +271,4 @@ pub struct AIGradeResponse {
 pub struct AIAnalyzeRequest {
     pub content: String,
     pub user_objective: String, // translation, terms, summary, etc.
-}
-
-#[typeshare]
-#[derive(Serialize, Deserialize, Debug)]
-#[serde(rename_all = "camelCase")]
-pub struct AIAnalyzeResponse {
-    pub proposed_title: String,
-    pub proposed_description: String,
-    pub cards: Vec<CreateFlashcardRequest>,
 }
