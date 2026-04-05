@@ -78,7 +78,7 @@ export const authOptions: NextAuthOptions = {
                         avatarUrl: user.image,
                     };
                     const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
-                    const res = await fetch(`${backendUrl}/api/auth/google`, { // Fixed endpoint for consistency
+                    const res = await fetch(`${backendUrl}/api/auth/oauth/google`, {
                         method: 'POST',
                         body: JSON.stringify(googleUser),
                         headers: {
