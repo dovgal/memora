@@ -22,10 +22,13 @@ export default function CreatorPage() {
     const [isCreating, setIsCreating] = useState(false)
     const [isParsing, setIsParsing] = useState(false)
     const [fileName, setFileName] = useState<string | null>(null)
+    const [streamingAnalysis, setStreamingAnalysis] = useState("")
 
     const handleAnalyze = async () => {
         if (!content || !objective) return
         setStep('analyzing')
+        setStreamingAnalysis("")
+
         try {
             const headers: Record<string, string> = { 'Content-Type': 'application/json' };
             // @ts-expect-error session.id_token exists from our lib/auth config
@@ -34,22 +37,50 @@ export default function CreatorPage() {
                 headers['Authorization'] = `Bearer ${session.id_token}`;
             }
 
-            const res = await fetch('/api/ai/creator/analyze', {
+            const response = await fetch('/api/ai/creator/analyze', {
                 method: 'POST',
                 headers,
                 body: JSON.stringify({ content, userObjective: objective })
             });
-            if (res.ok) {
-                const data: AIAnalyzeResponse = await res.json();
-                setAnalysis(data);
-                setStep('review');
-            } else {
-                setStep('input');
-                alert("Analysis failed. Try again.");
+
+            if (!response.ok) {
+                throw new Error("Analysis failed");
+            }
+
+            const reader = response.body?.getReader();
+            const decoder = new TextDecoder();
+            let accumulated = "";
+
+            if (reader) {
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    
+                    const chunk = decoder.decode(value, { stream: true });
+                    const lines = chunk.split("\n");
+                    for (const line of lines) {
+                        if (line.startsWith("data: ")) {
+                            const data = line.slice(6);
+                            accumulated += data;
+                            setStreamingAnalysis(accumulated);
+                        }
+                    }
+                }
+                
+                try {
+                    const result: AIAnalyzeResponse = JSON.parse(accumulated);
+                    setAnalysis(result);
+                    setStep('review');
+                } catch (e) {
+                    console.error("Parse error", e);
+                    setStep('input');
+                    alert("Analysis complete but failed to parse results. Please try again.");
+                }
             }
         } catch (e) {
             console.error(e);
             setStep('input');
+            alert("Analysis error. Your document might be too large.");
         }
     }
 
@@ -131,14 +162,18 @@ export default function CreatorPage() {
 
     if (step === 'analyzing') {
         return (
-            <div className="flex-1 flex flex-col items-center justify-center p-6 text-center h-[80vh]">
+            <div className="flex-1 flex flex-col items-center justify-center p-6 text-center min-h-[80vh]">
                 <div className="relative mb-8">
                     <div className="absolute inset-0 bg-indigo-500 rounded-full blur-3xl opacity-20 animate-pulse" />
                     <BrainCircuit size={80} className="text-indigo-400 relative animate-bounce" />
                 </div>
                 <h2 className="text-3xl font-bold mb-4">Магия в процессе...</h2>
+                <div className="bg-zinc-900/50 border border-white/5 rounded-2xl p-6 mb-4 w-full max-w-2xl text-left font-mono text-sm overflow-hidden h-40 relative">
+                    <div className="text-zinc-500 whitespace-pre-wrap">{streamingAnalysis || "Инициализация анализа..."}</div>
+                    <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-zinc-900/90 to-transparent" />
+                </div>
                 <p className="text-zinc-400 max-w-md mx-auto leading-relaxed">
-                    AI анализирует ваш контент, извлекает ключевые концепции и структурирует их в карточки. Это может занять несколько секунд.
+                    AI анализирует ваш контент и извлекает структуру. Это может занять время для больших документов.
                 </p>
                 <div className="mt-8 flex gap-2">
                     <div className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce [animation-delay:-0.3s]" />

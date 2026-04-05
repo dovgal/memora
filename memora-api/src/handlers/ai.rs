@@ -3,7 +3,7 @@ use axum::{
     http::StatusCode,
     response::{sse::{Event, Sse}},
 };
-use futures::stream::Stream;
+use futures::{stream, StreamExt, stream::Stream, BoxStream};
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use std::{convert::Infallible, env, sync::Arc};
@@ -491,9 +491,11 @@ pub async fn analyze_content(
     State(_rate_limiter): State<AppRateLimiter>,
     AuthenticatedUser(_user): AuthenticatedUser,
     Json(payload): Json<AIAnalyzeRequest>,
-) -> Result<Json<AIAnalyzeResponse>, (StatusCode, Json<AiGatewayError>)> {
-    let api_key = env::var("OLLAMA_API_KEY")
-        .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: "API Key not set".to_string() })))?;
+) -> Sse<BoxStream<'static, Result<Event, Infallible>>> {
+    let api_key = match env::var("OLLAMA_API_KEY") {
+        Ok(key) => key,
+        Err(_) => return Sse::new(stream::once(async { Ok(Event::default().data("Error: API Key not set")) }).boxed()),
+    };
 
     let system_prompt = "You are an AI Content Analyst for Memora. 
         Analyze the provided text (books, subtitles, podcasts) and extract structured flashcards.
@@ -503,7 +505,7 @@ pub async fn analyze_content(
         Do not use markdown blocks.";
 
     let client = Client::new();
-    let response = client.post(&get_ollama_url())
+    let response = match client.post(&get_ollama_url())
         .header("Authorization", format!("Bearer {}", api_key))
         .json(&OllamaRequest {
             model: OLLAMA_MODEL.to_string(),
@@ -511,26 +513,31 @@ pub async fn analyze_content(
                 OllamaMessage { role: "system".to_string(), content: system_prompt.replace("{}", &payload.user_objective), images: None },
                 OllamaMessage { role: "user".to_string(), content: payload.content, images: None }
             ],
-            stream: false,
+            stream: true, // Switched to true
             options: Some(OllamaOptions { num_predict: 8192 }),
         })
         .send()
         .await
-        .map_err(|e| (StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: e.to_string() })))?;
+    {
+        Ok(res) => res,
+        Err(e) => return Sse::new(stream::once(async move { Ok(Event::default().data(format!("Error: {}", e))) })),
+    };
 
-    let body = response.text().await.unwrap_or_default();
-    
-    #[derive(Deserialize)]
-    struct OllamaResponse {
-        message: OllamaDelta,
-    }
-    
-    let parsed: OllamaResponse = serde_json::from_str(&body)
-        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Ollama JSON Error: {} - Body: {}", e, body) })))?;
+    let byte_stream = response.bytes_stream();
+    let event_stream = byte_stream.map(|chunk_result| {
+        match chunk_result {
+            Ok(bytes) => {
+                let text = String::from_utf8_lossy(&bytes);
+                if let Ok(value) = serde_json::from_str::<serde_json::Value>(&text) {
+                    if let Some(content) = value.get("message").and_then(|m| m.get("content")).and_then(|c| c.as_str()) {
+                        return Ok::<Event, Infallible>(Event::default().data(content));
+                    }
+                }
+                Ok::<Event, Infallible>(Event::default())
+            },
+            Err(e) => Ok::<Event, Infallible>(Event::default().data(format!("Error: {}", e))),
+        }
+    });
 
-    let content = parsed.message.content.unwrap_or_default();
-    let analysis: AIAnalyzeResponse = serde_json::from_str(&content)
-        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Analysis Parse Error: {} - Content: {}", e, content) })))?;
-
-    Ok(Json(analysis))
+    Sse::new(event_stream.boxed()).keep_alive(axum::response::sse::KeepAlive::default())
 }
