@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { Send, FileText, Sparkles, Loader2, Check, ArrowRight, BrainCircuit, Upload, FileUp, File, X } from "lucide-react"
