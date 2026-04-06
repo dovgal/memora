@@ -155,7 +155,15 @@ export default function CreatorPage() {
                     title: analysis.proposedTitle,
                     description: analysis.proposedDescription,
                     isPublic: false,
-                    cards: analysis.cards
+                    fieldsSchema: [
+                        { id: 'term', name: 'ТЕРМИН', type: 'text', side: 'front', order: 1, settings: { language: 'default' } },
+                        { id: 'definition', name: 'ОПРЕДЕЛЕНИЕ', type: 'text', side: 'back', order: 1, settings: { language: 'default' } }
+                    ],
+                    flashcards: analysis.cards.map((card: any) => ({
+                        term: card.term,
+                        definition: card.definition,
+                        fieldsData: {}
+                    }))
                 })
             });
             if (res.ok) {
