@@ -124,6 +124,7 @@ export default function CreateSetPage() {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    ...(session && (session as any).id_token ? { "Authorization": `Bearer ${(session as any).id_token}` } : {})
                 },
                 body: JSON.stringify(payload),
             })
@@ -218,6 +219,7 @@ export default function CreateSetPage() {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    ...(session && (session as any).id_token ? { "Authorization": `Bearer ${(session as any).id_token}` } : {})
                 },
                 body: JSON.stringify({ prompt }),
             });

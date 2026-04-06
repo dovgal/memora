@@ -111,6 +111,7 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify(payload),
             })
@@ -191,6 +192,7 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify({ prompt }),
             });

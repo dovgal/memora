@@ -9,17 +9,12 @@ export default function AppProvider({
     children: React.ReactNode
 }) {
     useEffect(() => {
-        // Clear Service Worker if there's an install error (Fixes 404 bad-precaching-response)
+        // Unconditionally unregister all service workers to clear stale PWA caches
+        // that cause 'bad-precaching-response' 404 errors after deployments.
         if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
-            // Global handler for bad precaching errors to prevent white screen
-            window.addEventListener('unhandledrejection', (event) => {
-                if (event.reason && (event.reason.name === 'bad-precaching-response' || 
-                    (typeof event.reason.toString === 'function' && event.reason.toString().includes('bad-precaching-response')))) {
-                    console.warn('[Memora] PWA Precache Error detected. Forcing Refresh...');
-                    navigator.serviceWorker.getRegistrations().then(regs => {
-                        regs.forEach(r => r.unregister());
-                        window.location.reload();
-                    });
+            navigator.serviceWorker.getRegistrations().then(registrations => {
+                for (let registration of registrations) {
+                    registration.unregister();
                 }
             });
         }
