@@ -105,21 +105,27 @@ export const authOptions: NextAuthOptions = {
             return token
         },
         async session({ session, token }) {
-            if (session?.user && token.id) {
+            // Using sub as fallback if id is not present (sub is standard in OAuth tokens)
+            const userId = token.id || token.sub;
+            
+            if (session?.user && userId) {
                 // @ts-expect-error extending next-auth types
-                session.user.id = token.id;
+                session.user.id = userId;
                 // @ts-expect-error extending next-auth types
                 session.user.role = token.role;
                 
                 // Create a raw JWT string for the Rust backend.
                 const rawToken = jsonwebtoken.sign(
-                    { sub: String(token.id), email: token.email, role: token.role },
+                    { sub: String(userId), email: token.email, role: token.role },
                     process.env.NEXTAUTH_SECRET as string,
                     { algorithm: 'HS256', expiresIn: '30d' }
                 );
 
+                console.log("[Auth] Signed JWT for Backend successfully. sub:", userId);
                 // @ts-expect-error adding id_token to session
                 session.id_token = rawToken;
+            } else {
+                console.warn("[Auth] Session Callback: ID missing in token", token);
             }
             return session
         }

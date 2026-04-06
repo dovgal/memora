@@ -135,6 +135,12 @@ export default function CreatorPage() {
         if (!analysis) return
         setIsCreating(true)
         try {
+            console.log("[DEBUG] Session check:", { 
+                hasSession: !!session, 
+                hasToken: !!session?.id_token,
+                status: status
+            });
+            
             const headers: Record<string, string> = { 'Content-Type': 'application/json' };
             // @ts-expect-error session.id_token exists from our lib/auth config
             if (session?.id_token) {
