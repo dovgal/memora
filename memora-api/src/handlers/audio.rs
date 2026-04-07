@@ -85,7 +85,12 @@ pub async fn get_flashcard_audio(
                             if let Some(settings) = field_schema.get("settings").and_then(|v| v.as_object()) {
                                 // Use explicit ttsVoice if available
                                 if let Some(v_id) = settings.get("ttsVoice").and_then(|v| v.as_str()) {
-                                    voice_id = v_id.to_string();
+                                    let mapped_voice = match v_id {
+                                        "Nolan" => "Carter",
+                                        "Abby" => "Aria",
+                                        _ => v_id
+                                    };
+                                    voice_id = mapped_voice.to_string();
                                 } else {
                                     // Fallback to language defaults
                                     let lang = settings.get("language").and_then(|v| v.as_str()).unwrap_or("en");
