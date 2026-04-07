@@ -137,7 +137,7 @@ export default function CreatorPage() {
         try {
             console.log("[DEBUG] Session check:", { 
                 hasSession: !!session, 
-                hasToken: !!session?.id_token,
+                hasToken: !!(session as any)?.id_token,
                 status: status
             });
             
