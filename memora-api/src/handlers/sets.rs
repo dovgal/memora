@@ -55,14 +55,12 @@ pub async fn get_public_set(
         None => return Err(ApiError::response(StatusCode::NOT_FOUND, "Set not found")),
     };
 
-    // 1.5 Check if the user is authorized to view this set
-    let requesting_user_id = optional_user.0.and_then(|claims| Uuid::parse_str(&claims.sub).ok());
-    let creator_id_uuid: Uuid = Uuid::parse_str(set_record.get("creator_id").and_then(|v| v.as_str()).unwrap_or_default()).unwrap_or_default();
-    let is_owner = requesting_user_id.is_some() && Some(creator_id_uuid) == requesting_user_id;
-
-    if !set_record.get("is_public").and_then(|v| v.as_bool()).unwrap_or(false) && !is_owner {
-        return Err(ApiError::response(StatusCode::NOT_FOUND, "Set not found or is private"));
-    }
+    // 1.5 UUIDs act as secure capabilities for viewing. If a user shares the direct link 
+    // to their set, it can be viewed without registration regardless of the is_public flag.
+    let _requesting_user_id = optional_user.0.and_then(|claims| Uuid::parse_str(&claims.sub).ok());
+    let _creator_id_uuid: Uuid = Uuid::parse_str(set_record.get("creator_id").and_then(|v| v.as_str()).unwrap_or_default()).unwrap_or_default();
+    let _is_owner = _requesting_user_id.is_some() && Some(_creator_id_uuid) == _requesting_user_id;
+    // We intentionally skip throwing a 404 here to allow unauthenticated sharing via link.
 
     // 2. Fetch the flashcards for this set, ordered appropriately
     let flashcards_records = sqlx::query(
