@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { SetResponse, FlashcardProgressRequest, FieldSchema, AIExercise, AIGradeResponse } from "@/types/schema"
-import { generateLearnQueue, createMultipleChoiceQuestion, TestQuestion, getCardText } from "@/lib/studyUtils"
+import { generateLearnQueue, createMultipleChoiceQuestion, TestQuestion, getCardText, getCardSingleField } from "@/lib/studyUtils"
 import { X, CheckCircle, XCircle, RotateCcw, Loader2, ChevronRight, GraduationCap, Settings, Edit2, Volume2, Shuffle, Star, ChevronDown, ChevronUp, Mic, Play } from "lucide-react"
 import { QChatProvider, WhyWrongButton } from "@/components/QChat"
 
@@ -113,13 +113,20 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                     mcqData: createMultipleChoiceQuestion(c, allCards, aType, schema)
                 }
             } else {
+                // For WRITTEN: pick a single target field on the answer side
+                const answerSide: 'front' | 'back' = aType === 'term' ? 'front' : 'back';
+                const promptSide: 'front' | 'back' = aType === 'term' ? 'back' : 'front';
+                const { name: fieldName, value: fieldValue, isMultiField } = getCardSingleField(c, answerSide, schema);
+                const promptText = getCardText(c, promptSide, schema, false);
+
                 return {
                     flashcard: c,
                     type: 'WRITTEN',
                     writtenData: {
-                        prompt: aType === 'term' ? getCardText(c, 'back', schema) : getCardText(c, 'front', schema),
-                        correctAnswer: aType === 'term' ? getCardText(c, 'front', schema) : getCardText(c, 'back', schema),
-                        answerType: aType
+                        prompt: promptText,
+                        correctAnswer: fieldValue,
+                        answerType: aType,
+                        targetFieldName: isMultiField ? fieldName : undefined
                     }
                 }
             }
@@ -848,7 +855,10 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                             {currentQuestion.type === 'WRITTEN' && currentQuestion.writtenData && (
                                 <div className="w-full">
                                     <p className="text-sm font-semibold text-zinc-400 mb-4 px-2">
-                                        Введите правильный {currentQuestion.writtenData.answerType === 'term' ? 'термин' : 'ответ'}
+                                        {currentQuestion.writtenData.targetFieldName
+                                            ? <>Введите <span className="text-purple-400 font-bold">{currentQuestion.writtenData.targetFieldName}</span></>
+                                            : <>Введите правильный {currentQuestion.writtenData.answerType === 'term' ? 'термин' : 'ответ'}</>
+                                        }
                                     </p>
                                     <form onSubmit={(e) => { e.preventDefault(); handleAnswer(writtenInput); }} className="flex flex-col gap-4">
                                         <input

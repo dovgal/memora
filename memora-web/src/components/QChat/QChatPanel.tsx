@@ -166,6 +166,7 @@ const QChatPanelInner = forwardRef<QChatPanelHandle, QChatPanelProps>(
                     <form
                         onSubmit={handleSubmit}
                         className="shrink-0 px-4 py-4 border-t border-zinc-800 bg-zinc-900/60 backdrop-blur-sm"
+                        style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
                     >
                         <div className="flex items-end gap-2 bg-zinc-800/80 border border-zinc-700/50 rounded-xl px-3 py-2 focus-within:border-indigo-500/50 focus-within:ring-1 focus-within:ring-indigo-500/30 transition-all">
                             <textarea

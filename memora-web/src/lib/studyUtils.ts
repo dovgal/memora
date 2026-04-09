@@ -31,6 +31,43 @@ export interface WrittenQuestion {
     prompt: string
     correctAnswer: string
     answerType: 'term' | 'definition'
+    targetFieldName?: string // set when card has multiple fields on the answer side
+}
+
+/**
+ * Picks a single random text field from the given side of a card.
+ * Returns field name, its value, and whether the card has multiple fields on that side.
+ */
+export function getCardSingleField(
+    card: FlashcardResponse,
+    side: 'front' | 'back',
+    schema?: FieldSchema[]
+): { name: string; value: string; isMultiField: boolean } {
+    if (!schema || schema.length === 0) {
+        return {
+            name: side === 'front' ? 'Term' : 'Definition',
+            value: side === 'front' ? card.term : card.definition,
+            isMultiField: false,
+        };
+    }
+
+    const textFields = schema
+        .filter(f => f.side === side && f.type === 'text')
+        .sort((a, b) => a.order - b.order);
+
+    if (textFields.length === 0) {
+        return { name: '', value: '', isMultiField: false };
+    }
+
+    // Pick a random field
+    const field = textFields[Math.floor(Math.random() * textFields.length)];
+
+    let value = '';
+    if (field.id === 'term') value = card.term;
+    else if (field.id === 'definition') value = card.definition;
+    else value = card.fieldsData?.[field.id] ?? '';
+
+    return { name: field.name, value, isMultiField: textFields.length > 1 };
 }
 
 export interface MatchingQuestion {

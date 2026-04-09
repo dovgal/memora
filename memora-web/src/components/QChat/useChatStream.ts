@@ -4,7 +4,6 @@ import { useState, useCallback, useRef } from 'react';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
 import { ChatMessage } from '@/types/schema';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 const HISTORY_KEY = (setId: string) => `qchat_history_${setId}`;
 
 function loadHistory(setId: string): ChatMessage[] {
@@ -61,7 +60,7 @@ export function useChatStream({ setId, idToken }: UseChatStreamOptions): UseChat
         abortRef.current = new AbortController();
 
         try {
-            await fetchEventSource(`${API_URL}/api/ai/qchat/${setId}`, {
+            await fetchEventSource(`/api/ai/qchat/${setId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
