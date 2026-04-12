@@ -60,8 +60,17 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
         return <p className="text-zinc-500 italic text-sm">Нет полей для отображения</p>;
     }
 
+    // Scale font size down when there are many fields to prevent overflow
+    const textFieldCount = fieldsForSide.filter(f => f.type === 'text').length;
+    const textSizeClass =
+        textFieldCount >= 4 ? 'text-xl md:text-2xl lg:text-3xl' :
+        textFieldCount >= 3 ? 'text-2xl md:text-3xl lg:text-4xl' :
+        textFieldCount >= 2 ? 'text-3xl md:text-4xl lg:text-5xl' :
+        'text-4xl md:text-6xl lg:text-7xl';
+    const gapClass = textFieldCount >= 3 ? 'gap-2' : 'gap-4';
+
     return (
-        <div className="flex flex-col items-center justify-center gap-4 w-full h-full text-white p-4">
+        <div className={`flex flex-col items-center ${gapClass} w-full text-white p-3`}>
             {fieldsForSide.map((field) => {
                 // Determine field value
                 let value: any = null;
@@ -96,7 +105,7 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
                                     )}
 
                                 </div>
-                                <p className={`text-4xl md:text-6xl lg:text-7xl text-center font-black tracking-tight break-words leading-[1.1] text-white`}>
+                                <p className={`${textSizeClass} text-center font-black tracking-tight break-words leading-tight text-white`}>
                                     {value}
                                 </p>
                             </div>

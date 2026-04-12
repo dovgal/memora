@@ -352,7 +352,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
         <div ref={containerRef} className="w-full flex flex-col items-center bg-[#0a0a1a] md:bg-transparent min-h-screen md:min-h-auto justify-center md:justify-start">
 
             {/* The Flashcard Container */}
-            <div className="relative w-full aspect-[16/9] md:aspect-[2/1] max-w-6xl bg-zinc-900 border border-zinc-800 rounded-2xl shadow-xl flex flex-col overflow-hidden mb-6 select-none group">
+            <div className="relative w-full h-[65vh] md:h-auto md:aspect-[2/1] max-w-6xl bg-zinc-900 border border-zinc-800 rounded-2xl shadow-xl flex flex-col overflow-hidden mb-6 select-none group">
 
                 {/* Overlay Settings Modal */}
                 {showSettings && (
@@ -487,7 +487,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                 {/* Card Content Area (Click to flip) */}
                 <div
                     onClick={handleFlip}
-                    className="flex-1 flex items-center justify-center p-12 cursor-pointer perspective-[1000px] w-full h-full"
+                    className="flex-1 flex items-center justify-center p-4 md:p-8 cursor-pointer perspective-[1000px] w-full h-full"
                 >
                     <div
                         className={`w-full h-full flex items-center justify-center transition-transform duration-500 ease-out-expo ${(isFlipped && !showBothSides) ? 'rotate-x-180' : ''}`}
@@ -504,20 +504,24 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                             </div>
                         ) : (
                             <>
-                                {/* Front Side */}
+                                {/* Front Side - scrollable, centered via my-auto trick */}
                                 <div
-                                    className="absolute inset-0 flex flex-col items-center justify-center text-center backface-hidden"
+                                    className="absolute inset-0 flex flex-col items-center text-center backface-hidden overflow-y-auto py-4"
                                     style={{ backfaceVisibility: 'hidden' }}
                                 >
-                                    <FlashcardRender card={currentCard} fieldsSchema={fieldsSchema} side={actualFrontSide} />
+                                    <div className="my-auto w-full">
+                                        <FlashcardRender card={currentCard} fieldsSchema={fieldsSchema} side={actualFrontSide} />
+                                    </div>
                                 </div>
 
-                                {/* Back Side */}
+                                {/* Back Side - scrollable, centered via my-auto trick */}
                                 <div
-                                    className="absolute inset-0 flex flex-col items-center justify-center text-center backface-hidden rotate-x-180 text-indigo-100"
+                                    className="absolute inset-0 flex flex-col items-center text-center backface-hidden overflow-y-auto py-4 text-indigo-100"
                                     style={{ backfaceVisibility: 'hidden', transform: 'rotateX(180deg)' }}
                                 >
-                                    <FlashcardRender card={currentCard} fieldsSchema={fieldsSchema} side={actualBackSide} />
+                                    <div className="my-auto w-full">
+                                        <FlashcardRender card={currentCard} fieldsSchema={fieldsSchema} side={actualBackSide} />
+                                    </div>
                                 </div>
                             </>
                         )}
