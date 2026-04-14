@@ -352,7 +352,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
         <div ref={containerRef} className="w-full flex flex-col items-center bg-[#0a092d] md:bg-transparent min-h-screen md:min-h-auto justify-center md:justify-start">
 
             {/* The Flashcard Container */}
-            <div className="relative w-full h-[65vh] md:h-auto md:aspect-[2/1] max-w-6xl bg-[#0a092d] border border-[#2e3856] rounded-2xl shadow-xl flex flex-col overflow-hidden mb-6 select-none group">
+            <div className="relative w-full h-[65vh] md:h-auto md:aspect-[2/1] max-w-6xl bg-[#2e3856] border border-[#2e3856] rounded-2xl shadow-xl flex flex-col overflow-hidden mb-6 select-none group">
 
                 {/* Overlay Settings Modal */}
                 {showSettings && (
