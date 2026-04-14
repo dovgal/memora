@@ -68,7 +68,7 @@ export default function OnboardingPage() {
     if (isBlocked) {
         return (
             <div className="min-h-screen bg-black flex flex-col justify-center items-center p-4">
-                <div className="max-w-md w-full bg-zinc-950 border border-red-900/50 p-8 rounded-3xl shadow-[0_0_50px_rgba(220,38,38,0.15)] text-center">
+                <div className="max-w-md w-full bg-[#0a092d] border border-red-900/50 p-8 rounded-3xl shadow-[0_0_50px_rgba(220,38,38,0.15)] text-center">
                     <div className="w-16 h-16 bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
                         <span className="text-3xl">🛑</span>
                     </div>
@@ -92,7 +92,7 @@ export default function OnboardingPage() {
             <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] bg-blue-900 rounded-full mix-blend-multiply filter blur-[120px] opacity-50 animate-blob"></div>
             <div className="absolute bottom-[-10%] left-[-10%] w-[60%] h-[60%] bg-indigo-900 rounded-full mix-blend-multiply filter blur-[150px] opacity-40 animate-blob animation-delay-2000"></div>
 
-            <div className="relative z-10 w-full max-w-md p-8 bg-zinc-950/80 backdrop-blur-xl border border-zinc-800 rounded-3xl shadow-2xl">
+            <div className="relative z-10 w-full max-w-md p-8 bg-[#0a092d]/80 backdrop-blur-xl border border-[#2e3856] rounded-3xl shadow-2xl">
                 <div className="text-center mb-8">
                     <h1 className="text-3xl font-bold text-white mb-2">Welcome to Memora</h1>
                     <p className="text-zinc-400">Let's finish setting up your account. We need your age to personalize your experience safely.</p>
@@ -109,7 +109,7 @@ export default function OnboardingPage() {
                             value={dob}
                             onChange={(e) => setDob(e.target.value)}
                             max={new Date().toISOString().split("T")[0]}
-                            className="w-full bg-zinc-900 border border-zinc-700 text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                            className="w-full bg-[#0a092d] border border-[#586380] text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
                             required
                         />
                     </div>
@@ -123,7 +123,7 @@ export default function OnboardingPage() {
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 ease-out active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-[#4255ff] hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 ease-out active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {isSubmitting ? "Saving..." : "Continue"}
                     </button>

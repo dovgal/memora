@@ -41,23 +41,23 @@ export default function FlashcardsStudyPage({ params }: { params: Promise<{ id: 
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-[#0a0a1a] flex items-center justify-center">
-                <Loader2 className="animate-spin text-indigo-500" size={48} />
+            <div className="min-h-screen bg-[#0a092d] flex items-center justify-center">
+                <Loader2 className="animate-spin text-[#4255ff]" size={48} />
             </div>
         )
     }
 
     if (!set || set.flashcards.length === 0) {
         return (
-            <div className="min-h-screen bg-[#0a0a1a] text-white flex flex-col items-center justify-center">
+            <div className="min-h-screen bg-[#0a092d] text-white flex flex-col items-center justify-center">
                 <p>No flashcards found in this set.</p>
-                <button onClick={closeSession} className="mt-4 text-indigo-400">Return to Set</button>
+                <button onClick={closeSession} className="mt-4 text-[#ffcd1f]">Return to Set</button>
             </div>
         )
     }
 
     return (
-        <div className="min-h-screen bg-[#0a0a1a] text-white flex flex-col relative overflow-hidden font-sans">
+        <div className="min-h-screen bg-[#0a092d] text-white flex flex-col relative overflow-hidden font-sans">
             {/* Top Bar */}
             <header className="flex justify-between items-center p-6 z-10 w-full max-w-6xl mx-auto">
                 <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-cyan-400 max-w-[60%] truncate">
@@ -66,7 +66,7 @@ export default function FlashcardsStudyPage({ params }: { params: Promise<{ id: 
                 <div className="flex items-center gap-6">
                     <button
                         onClick={closeSession}
-                        className="p-2 bg-[#1f1f3d] hover:bg-[#2a2a4d] border border-[#2a2a4d] rounded-full transition-colors text-zinc-400 hover:text-white"
+                        className="p-2 bg-[#2e3856] hover:bg-[#2e3856] border border-[#2e3856] rounded-full transition-colors text-zinc-400 hover:text-white"
                     >
                         <X size={24} />
                     </button>

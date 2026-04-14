@@ -26,7 +26,7 @@ export default function OfflineBanner() {
 
     return (
         <div className="fixed bottom-0 left-0 right-0 z-50 p-4 animate-in slide-in-from-bottom duration-300">
-            <div className="max-w-md mx-auto bg-zinc-900 border border-zinc-800 shadow-[0_0_30px_rgba(0,0,0,0.8)] rounded-xl p-4 flex items-center gap-4">
+            <div className="max-w-md mx-auto bg-[#0a092d] border border-[#2e3856] shadow-[0_0_30px_rgba(0,0,0,0.8)] rounded-xl p-4 flex items-center gap-4">
                 <div className="bg-red-950/40 p-2 rounded-full text-red-500 shrink-0">
                     <WifiOff size={24} />
                 </div>

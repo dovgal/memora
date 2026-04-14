@@ -121,13 +121,13 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
 
             {/* Action Buttons */}
             {token && (
-                <button className="flex items-center gap-2 px-4 py-2 bg-transparent border border-zinc-700 hover:border-zinc-500 rounded-lg text-sm font-semibold transition-colors">
+                <button className="flex items-center gap-2 px-4 py-2 bg-transparent border border-[#586380] hover:border-zinc-500 rounded-lg text-sm font-semibold transition-colors">
                     <FolderPlus size={16} /> Сохранено
                 </button>
             )}
 
             {token && (
-                <button className="flex items-center gap-2 px-4 py-2 bg-transparent border border-zinc-700 hover:border-zinc-500 rounded-lg text-sm font-semibold transition-colors">
+                <button className="flex items-center gap-2 px-4 py-2 bg-transparent border border-[#586380] hover:border-zinc-500 rounded-lg text-sm font-semibold transition-colors">
                     <Users size={16} /> Группы
                 </button>
             )}
@@ -136,7 +136,7 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
                 <button 
                     onClick={handleCopySet}
                     disabled={isCopying}
-                    className="flex items-center gap-2 px-6 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-bold transition-all shadow-lg shadow-indigo-500/20 disabled:opacity-50"
+                    className="flex items-center gap-2 px-6 py-2 bg-[#4255ff] hover:bg-[#4255ff] rounded-lg text-sm font-bold transition-all shadow-lg shadow-indigo-500/20 disabled:opacity-50"
                 >
                     {isCopying ? <Loader2 size={16} className="animate-spin" /> : <FolderPlus size={16} />} 
                     Сохранить в библиотеку
@@ -145,7 +145,7 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
 
             <button
                 onClick={() => setIsShareOpen(true)}
-                className="flex items-center justify-center w-10 h-10 bg-transparent border border-zinc-700 hover:border-zinc-500 rounded-lg transition-colors text-zinc-400 hover:text-white"
+                className="flex items-center justify-center w-10 h-10 bg-transparent border border-[#586380] hover:border-zinc-500 rounded-lg transition-colors text-zinc-400 hover:text-white"
                 title="Поделиться"
             >
                 <Share size={18} />
@@ -155,7 +155,7 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
                 <>
                     <button
                         onClick={() => router.push(`/set/${setId}/edit`)}
-                        className="flex items-center justify-center w-10 h-10 bg-zinc-800/50 border border-indigo-500/30 hover:border-indigo-500 rounded-lg transition-colors text-indigo-400"
+                        className="flex items-center justify-center w-10 h-10 bg-[#2e3856]/50 border border-indigo-500/30 hover:border-indigo-500 rounded-lg transition-colors text-[#ffcd1f]"
                         title="Редактировать"
                     >
                         <Edit2 size={18} />
@@ -163,7 +163,7 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
                     <button
                         onClick={handleDelete}
                         disabled={isDeleting}
-                        className="flex items-center justify-center w-10 h-10 bg-zinc-800/50 border border-red-500/30 hover:border-red-500 rounded-lg transition-colors text-red-400 disabled:opacity-50"
+                        className="flex items-center justify-center w-10 h-10 bg-[#2e3856]/50 border border-red-500/30 hover:border-red-500 rounded-lg transition-colors text-red-400 disabled:opacity-50"
                         title="Удалить"
                     >
                         {isDeleting ? <Loader2 size={18} className="animate-spin" /> : <Trash2 size={18} />}
@@ -173,14 +173,14 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
 
             <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className={`flex items-center justify-center w-10 h-10 rounded-lg transition-colors ${isMenuOpen ? 'bg-zinc-800 border border-zinc-600' : 'bg-transparent border border-zinc-700 hover:border-zinc-500'}`}
+                className={`flex items-center justify-center w-10 h-10 rounded-lg transition-colors ${isMenuOpen ? 'bg-[#2e3856] border border-zinc-600' : 'bg-transparent border border-[#586380] hover:border-zinc-500'}`}
             >
                 <MoreHorizontal size={18} />
             </button>
 
             {/* Dropdown Menu */}
             {isMenuOpen && (
-                <div className="absolute right-0 top-12 w-56 bg-[#1a1a36] border border-[#2a2a4d] rounded-xl shadow-2xl py-2 z-50 animate-in fade-in zoom-in-95 duration-100 origin-top-right">
+                <div className="absolute right-0 top-12 w-56 bg-[#1a1a36] border border-[#2e3856] rounded-xl shadow-2xl py-2 z-50 animate-in fade-in zoom-in-95 duration-100 origin-top-right">
                     {isOwner && (
                         <>
                             <button
@@ -188,7 +188,7 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
                                     setIsMenuOpen(false);
                                     router.push(`/set/${setId}/edit`);
                                 }}
-                                className="w-full text-left px-4 py-2.5 text-sm hover:bg-zinc-800 flex items-center gap-3 text-indigo-400 font-semibold"
+                                className="w-full text-left px-4 py-2.5 text-sm hover:bg-[#2e3856] flex items-center gap-3 text-[#ffcd1f] font-semibold"
                             >
                                 <Edit2 size={16} /> Редактировать
                             </button>
@@ -201,13 +201,13 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
                             >
                                 <Trash2 size={16} /> Удалить модуль
                             </button>
-                            <div className="h-px bg-[#2a2a4d] my-1"></div>
+                            <div className="h-px bg-[#2e3856] my-1"></div>
                         </>
                     )}
                     <button
                         onClick={handleCopySet}
                         disabled={isCopying || !token}
-                        className="w-full text-left px-4 py-2.5 text-sm hover:bg-zinc-800 flex items-center gap-3 disabled:opacity-50"
+                        className="w-full text-left px-4 py-2.5 text-sm hover:bg-[#2e3856] flex items-center gap-3 disabled:opacity-50"
                     >
                         {isCopying ? <Loader2 size={16} className="animate-spin" /> : <Copy size={16} />} Создать копию
                     </button>
@@ -216,7 +216,7 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
                             setIsMenuOpen(false);
                             router.push(`/set/${setId}/print`);
                         }}
-                        className="w-full text-left px-4 py-2.5 text-sm hover:bg-zinc-800 flex items-center gap-3"
+                        className="w-full text-left px-4 py-2.5 text-sm hover:bg-[#2e3856] flex items-center gap-3"
                     >
                         <Printer size={16} /> Печать
                     </button>
@@ -225,7 +225,7 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
                             setIsMenuOpen(false);
                             setIsMergeOpen(true);
                         }}
-                        className="w-full text-left px-4 py-2.5 text-sm hover:bg-zinc-800 flex items-center gap-3"
+                        className="w-full text-left px-4 py-2.5 text-sm hover:bg-[#2e3856] flex items-center gap-3"
                     >
                         <GitMerge size={16} /> Объединить
                     </button>
@@ -234,7 +234,7 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
                             setIsMenuOpen(false);
                             setIsExportOpen(true);
                         }}
-                        className="w-full text-left px-4 py-2.5 text-sm hover:bg-zinc-800 flex items-center gap-3"
+                        className="w-full text-left px-4 py-2.5 text-sm hover:bg-[#2e3856] flex items-center gap-3"
                     >
                         <Download size={16} /> Экспортировать
                     </button>
@@ -243,14 +243,14 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
                             setIsMenuOpen(false);
                             setIsEmbedOpen(true);
                         }}
-                        className="w-full text-left px-4 py-2.5 text-sm hover:bg-zinc-800 flex items-center gap-3"
+                        className="w-full text-left px-4 py-2.5 text-sm hover:bg-[#2e3856] flex items-center gap-3"
                     >
                         <Code size={16} /> Внедрить
                     </button>
 
                     {isOwner && (
                         <>
-                            <div className="h-px bg-[#2a2a4d] my-1"></div>
+                            <div className="h-px bg-[#2e3856] my-1"></div>
                             <button
                                 onClick={handleDelete}
                                 disabled={isDeleting}
@@ -361,10 +361,10 @@ function ExportModal({ flashcards, fieldsSchema, onClose }: { flashcards: Flashc
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-            <div className="bg-[#1f1f3d] border border-[#2a2a4d] rounded-2xl w-full max-w-3xl p-8 shadow-2xl relative">
+            <div className="bg-[#2e3856] border border-[#2e3856] rounded-2xl w-full max-w-3xl p-8 shadow-2xl relative">
                 <button
                     onClick={onClose}
-                    className="absolute top-6 right-6 w-8 h-8 flex items-center justify-center rounded-full bg-zinc-800/50 hover:bg-zinc-700 text-zinc-400 hover:text-white transition-colors"
+                    className="absolute top-6 right-6 w-8 h-8 flex items-center justify-center rounded-full bg-[#2e3856]/50 hover:bg-[#586380] text-zinc-400 hover:text-white transition-colors"
                 >
                     <X className="w-5 h-5" />
                 </button>
@@ -378,24 +378,24 @@ function ExportModal({ flashcards, fieldsSchema, onClose }: { flashcards: Flashc
                         <div className="space-y-4">
                             <label className="flex items-center gap-3 cursor-pointer" onClick={() => setTermDelimiter('tab')}>
                                 <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${termDelimiter === 'tab' ? 'border-indigo-500' : 'border-zinc-500'}`}>
-                                    {termDelimiter === 'tab' && <div className="w-2.5 h-2.5 bg-indigo-500 rounded-full" />}
+                                    {termDelimiter === 'tab' && <div className="w-2.5 h-2.5 bg-[#4255ff] rounded-full" />}
                                 </div>
                                 <span className={termDelimiter === 'tab' ? 'text-white' : 'text-zinc-400'}>Tab</span>
                             </label>
 
                             <label className="flex items-center gap-3 cursor-pointer" onClick={() => setTermDelimiter('comma')}>
                                 <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${termDelimiter === 'comma' ? 'border-indigo-500' : 'border-zinc-500'}`}>
-                                    {termDelimiter === 'comma' && <div className="w-2.5 h-2.5 bg-indigo-500 rounded-full" />}
+                                    {termDelimiter === 'comma' && <div className="w-2.5 h-2.5 bg-[#4255ff] rounded-full" />}
                                 </div>
                                 <span className={termDelimiter === 'comma' ? 'text-white' : 'text-zinc-400'}>Запятая</span>
                             </label>
 
                             <label className="flex items-center gap-3 cursor-pointer" onClick={(e) => { e.preventDefault(); setTermDelimiter('custom') }}>
                                 <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${termDelimiter === 'custom' ? 'border-indigo-500' : 'border-zinc-500'}`}>
-                                    {termDelimiter === 'custom' && <div className="w-2.5 h-2.5 bg-indigo-500 rounded-full" />}
+                                    {termDelimiter === 'custom' && <div className="w-2.5 h-2.5 bg-[#4255ff] rounded-full" />}
                                 </div>
                                 <div className="relative w-full max-w-[150px]">
-                                    <span className="absolute -top-2 left-3 bg-[#1f1f3d] px-1 text-[10px] text-zinc-400">На выбор</span>
+                                    <span className="absolute -top-2 left-3 bg-[#2e3856] px-1 text-[10px] text-zinc-400">На выбор</span>
                                     <input
                                         type="text"
                                         value={customTermDelimiter}
@@ -404,7 +404,7 @@ function ExportModal({ flashcards, fieldsSchema, onClose }: { flashcards: Flashc
                                             setTermDelimiter('custom');
                                         }}
                                         onClick={(e) => { e.stopPropagation(); setTermDelimiter('custom'); }}
-                                        className={`w-full bg-[#1a1a36] border rounded-lg px-3 py-2 outline-none transition-colors ${termDelimiter === 'custom' ? 'border-indigo-500 text-white' : 'border-[#2a2a4d] text-zinc-400'}`}
+                                        className={`w-full bg-[#1a1a36] border rounded-lg px-3 py-2 outline-none transition-colors ${termDelimiter === 'custom' ? 'border-indigo-500 text-white' : 'border-[#2e3856] text-zinc-400'}`}
                                     />
                                 </div>
                             </label>
@@ -417,24 +417,24 @@ function ExportModal({ flashcards, fieldsSchema, onClose }: { flashcards: Flashc
                         <div className="space-y-4">
                             <label className="flex items-center gap-3 cursor-pointer" onClick={() => setRowDelimiter('newline')}>
                                 <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${rowDelimiter === 'newline' ? 'border-indigo-500' : 'border-zinc-500'}`}>
-                                    {rowDelimiter === 'newline' && <div className="w-2.5 h-2.5 bg-indigo-500 rounded-full" />}
+                                    {rowDelimiter === 'newline' && <div className="w-2.5 h-2.5 bg-[#4255ff] rounded-full" />}
                                 </div>
                                 <span className={rowDelimiter === 'newline' ? 'text-white' : 'text-zinc-400'}>Разрыв строки</span>
                             </label>
 
                             <label className="flex items-center gap-3 cursor-pointer" onClick={() => setRowDelimiter('semicolon')}>
                                 <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${rowDelimiter === 'semicolon' ? 'border-indigo-500' : 'border-zinc-500'}`}>
-                                    {rowDelimiter === 'semicolon' && <div className="w-2.5 h-2.5 bg-indigo-500 rounded-full" />}
+                                    {rowDelimiter === 'semicolon' && <div className="w-2.5 h-2.5 bg-[#4255ff] rounded-full" />}
                                 </div>
                                 <span className={rowDelimiter === 'semicolon' ? 'text-white' : 'text-zinc-400'}>Точка с запятой</span>
                             </label>
 
                             <label className="flex items-center gap-3 cursor-pointer" onClick={(e) => { e.preventDefault(); setRowDelimiter('custom') }}>
                                 <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${rowDelimiter === 'custom' ? 'border-indigo-500' : 'border-zinc-500'}`}>
-                                    {rowDelimiter === 'custom' && <div className="w-2.5 h-2.5 bg-indigo-500 rounded-full" />}
+                                    {rowDelimiter === 'custom' && <div className="w-2.5 h-2.5 bg-[#4255ff] rounded-full" />}
                                 </div>
                                 <div className="relative w-full max-w-[150px]">
-                                    <span className="absolute -top-2 left-3 bg-[#1f1f3d] px-1 text-[10px] text-zinc-400">На выбор</span>
+                                    <span className="absolute -top-2 left-3 bg-[#2e3856] px-1 text-[10px] text-zinc-400">На выбор</span>
                                     <input
                                         type="text"
                                         value={customRowDelimiter}
@@ -443,7 +443,7 @@ function ExportModal({ flashcards, fieldsSchema, onClose }: { flashcards: Flashc
                                             setRowDelimiter('custom');
                                         }}
                                         onClick={(e) => { e.stopPropagation(); setRowDelimiter('custom'); }}
-                                        className={`w-full bg-[#1a1a36] border rounded-lg px-3 py-2 outline-none transition-colors ${rowDelimiter === 'custom' ? 'border-indigo-500 text-white' : 'border-[#2a2a4d] text-zinc-400'}`}
+                                        className={`w-full bg-[#1a1a36] border rounded-lg px-3 py-2 outline-none transition-colors ${rowDelimiter === 'custom' ? 'border-indigo-500 text-white' : 'border-[#2e3856] text-zinc-400'}`}
                                     />
                                 </div>
                             </label>
@@ -454,19 +454,19 @@ function ExportModal({ flashcards, fieldsSchema, onClose }: { flashcards: Flashc
                 <div className="mb-6">
                     <h4 className="font-semibold text-white mb-4">Параметры</h4>
                     <label className="flex items-center gap-3 cursor-pointer w-max">
-                        <div className={`w-5 h-5 rounded border flex items-center justify-center ${alphabetical ? 'bg-indigo-500 border-indigo-500' : 'bg-transparent border-zinc-500'}`}>
+                        <div className={`w-5 h-5 rounded border flex items-center justify-center ${alphabetical ? 'bg-[#4255ff] border-indigo-500' : 'bg-transparent border-zinc-500'}`}>
                             {alphabetical && <Check className="w-3.5 h-3.5 text-white" />}
                         </div>
                         <span className="text-white">В алфавитном порядке</span>
                     </label>
                 </div>
 
-                <div className="bg-[#1a1a36] border border-[#2a2a4d] rounded-xl overflow-hidden flex flex-col h-64">
-                    <div className="p-4 border-b border-[#2a2a4d] flex justify-between items-center bg-[#212140]">
+                <div className="bg-[#1a1a36] border border-[#2e3856] rounded-xl overflow-hidden flex flex-col h-64">
+                    <div className="p-4 border-b border-[#2e3856] flex justify-between items-center bg-[#212140]">
                         <span className="text-sm text-zinc-400">Скопируйте и вставьте приведенный ниже текст. Он защищен от редактирования.</span>
                         <button
                             onClick={handleCopy}
-                            className="bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2 px-6 rounded-lg transition-colors flex items-center gap-2"
+                            className="bg-[#4255ff] hover:bg-[#4255ff] text-white font-medium py-2 px-6 rounded-lg transition-colors flex items-center gap-2"
                         >
                             {copied ? <Check size={16} /> : null}
                             {copied ? "Скопировано!" : "Копировать текст"}
@@ -505,10 +505,10 @@ function EmbedModal({ setId, onClose }: { setId: string, onClose: () => void }) 
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-            <div className="bg-[#1f1f3d] border border-[#2a2a4d] rounded-2xl w-full max-w-2xl p-8 shadow-2xl relative">
+            <div className="bg-[#2e3856] border border-[#2e3856] rounded-2xl w-full max-w-2xl p-8 shadow-2xl relative">
                 <button
                     onClick={onClose}
-                    className="absolute top-6 right-6 w-8 h-8 flex items-center justify-center rounded-full bg-zinc-800/50 hover:bg-zinc-700 text-zinc-400 hover:text-white transition-colors"
+                    className="absolute top-6 right-6 w-8 h-8 flex items-center justify-center rounded-full bg-[#2e3856]/50 hover:bg-[#586380] text-zinc-400 hover:text-white transition-colors"
                 >
                     <X className="w-5 h-5" />
                 </button>
@@ -519,30 +519,30 @@ function EmbedModal({ setId, onClose }: { setId: string, onClose: () => void }) 
                 <div className="flex gap-4 mb-6">
                     <button
                         onClick={() => setEmbedType("flashcards")}
-                        className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${embedType === "flashcards" ? "bg-indigo-600 text-white" : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"}`}
+                        className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${embedType === "flashcards" ? "bg-[#4255ff] text-white" : "bg-[#2e3856] text-zinc-400 hover:bg-[#586380]"}`}
                     >
                         Карточки
                     </button>
                     <button
                         onClick={() => setEmbedType("learn")}
-                        className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${embedType === "learn" ? "bg-indigo-600 text-white" : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"}`}
+                        className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${embedType === "learn" ? "bg-[#4255ff] text-white" : "bg-[#2e3856] text-zinc-400 hover:bg-[#586380]"}`}
                     >
                         Заучивание
                     </button>
                     <button
                         onClick={() => setEmbedType("test")}
-                        className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${embedType === "test" ? "bg-indigo-600 text-white" : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"}`}
+                        className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${embedType === "test" ? "bg-[#4255ff] text-white" : "bg-[#2e3856] text-zinc-400 hover:bg-[#586380]"}`}
                     >
                         Тест
                     </button>
                 </div>
 
-                <div className="bg-[#1a1a36] border border-[#2a2a4d] rounded-xl overflow-hidden flex flex-col h-48 mb-4">
-                    <div className="p-4 border-b border-[#2a2a4d] flex justify-between items-center bg-[#212140]">
+                <div className="bg-[#1a1a36] border border-[#2e3856] rounded-xl overflow-hidden flex flex-col h-48 mb-4">
+                    <div className="p-4 border-b border-[#2e3856] flex justify-between items-center bg-[#212140]">
                         <span className="text-sm text-zinc-400">Код для вставки (HTML)</span>
                         <button
                             onClick={handleCopy}
-                            className="bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-1.5 px-4 rounded-lg transition-colors flex items-center gap-2 text-sm"
+                            className="bg-[#4255ff] hover:bg-[#4255ff] text-white font-medium py-1.5 px-4 rounded-lg transition-colors flex items-center gap-2 text-sm"
                         >
                             {copied ? <Check size={14} /> : null}
                             {copied ? "Скопировано!" : "Копировать"}
@@ -654,10 +654,10 @@ function MergeModal({
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-            <div className="bg-[#1f1f3d] border border-[#2a2a4d] rounded-2xl w-full max-w-2xl p-8 shadow-2xl relative">
+            <div className="bg-[#2e3856] border border-[#2e3856] rounded-2xl w-full max-w-2xl p-8 shadow-2xl relative">
                 <button
                     onClick={onClose}
-                    className="absolute top-6 right-6 w-8 h-8 flex items-center justify-center rounded-full bg-zinc-800/50 hover:bg-zinc-700 text-zinc-400 hover:text-white transition-colors"
+                    className="absolute top-6 right-6 w-8 h-8 flex items-center justify-center rounded-full bg-[#2e3856]/50 hover:bg-[#586380] text-zinc-400 hover:text-white transition-colors"
                 >
                     <X className="w-5 h-5" />
                 </button>
@@ -671,10 +671,10 @@ function MergeModal({
                     </div>
                 ) : loading ? (
                     <div className="flex justify-center p-12">
-                        <Loader2 className="animate-spin text-indigo-500 w-8 h-8" />
+                        <Loader2 className="animate-spin text-[#4255ff] w-8 h-8" />
                     </div>
                 ) : sets.length === 0 ? (
-                    <div className="p-8 text-center text-zinc-400 border border-dashed border-zinc-700 rounded-xl">
+                    <div className="p-8 text-center text-zinc-400 border border-dashed border-[#586380] rounded-xl">
                         У вас нет других модулей для объединения.
                     </div>
                 ) : (
@@ -684,7 +684,7 @@ function MergeModal({
                                 <button
                                     key={set.id}
                                     onClick={() => setSelectedSetId(set.id)}
-                                    className={`w-full text-left p-4 rounded-xl border transition-all ${selectedSetId === set.id ? "bg-indigo-600/20 border-indigo-500" : "bg-zinc-800/50 border-zinc-700 hover:border-zinc-500"}`}
+                                    className={`w-full text-left p-4 rounded-xl border transition-all ${selectedSetId === set.id ? "bg-[#4255ff]/20 border-indigo-500" : "bg-[#2e3856]/50 border-[#586380] hover:border-zinc-500"}`}
                                 >
                                     <h4 className="font-bold text-white">{set.title}</h4>
                                     <p className="text-sm text-zinc-400 mt-1">{set.flashcardCount} терминов</p>
@@ -692,7 +692,7 @@ function MergeModal({
                             ))}
                         </div>
 
-                        <div className="flex justify-end gap-3 pt-4 border-t border-[#2a2a4d]">
+                        <div className="flex justify-end gap-3 pt-4 border-t border-[#2e3856]">
                             <button
                                 onClick={onClose}
                                 className="px-6 py-2.5 rounded-xl font-bold text-zinc-300 hover:bg-white/5 transition-colors"
@@ -702,7 +702,7 @@ function MergeModal({
                             <button
                                 onClick={handleMerge}
                                 disabled={!selectedSetId || merging}
-                                className="px-6 py-2.5 rounded-xl font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition-colors disabled:opacity-50 flex items-center gap-2"
+                                className="px-6 py-2.5 rounded-xl font-bold bg-[#4255ff] hover:bg-[#4255ff] text-white transition-colors disabled:opacity-50 flex items-center gap-2"
                             >
                                 {merging ? <Loader2 size={18} className="animate-spin" /> : <GitMerge size={18} />}
                                 Объединить и создать

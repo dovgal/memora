@@ -372,7 +372,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
     if (isLoading) {
         return (
             <div className="min-h-screen bg-black flex items-center justify-center">
-                <Loader2 className="animate-spin text-indigo-500" size={48} />
+                <Loader2 className="animate-spin text-[#4255ff]" size={48} />
             </div>
         )
     }
@@ -381,7 +381,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
         return (
             <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center">
                 <p>Not enough flashcards to start Learn mode.</p>
-                <button onClick={closeSession} className="mt-4 text-indigo-400">Return to Set</button>
+                <button onClick={closeSession} className="mt-4 text-[#ffcd1f]">Return to Set</button>
             </div>
         )
     }
@@ -392,14 +392,14 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
     return (
         // QChatProvider mounts QChatPanel and exposes autoSend() to WhyWrongButton via context
         <QChatProvider setId={id}>
-            <div className="min-h-screen bg-zinc-950 text-white flex flex-col relative overflow-hidden">
+            <div className="min-h-screen bg-[#0a092d] text-white flex flex-col relative overflow-hidden">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] bg-purple-900/20 rounded-full blur-[120px] pointer-events-none" />
 
                 {/* Top Bar */}
                 <header className="flex justify-between items-center px-6 py-4 z-10 w-full max-w-5xl mx-auto">
                     <div className="flex items-center gap-4">
                         <h1 className="text-lg font-bold text-white flex items-center gap-2">
-                            <GraduationCap className="text-purple-400" size={20} />
+                            <GraduationCap className="text-[#ffcd1f]" size={20} />
                             Заучивание
                         </h1>
                     </div>
@@ -412,7 +412,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                         </button>
                         <button
                             onClick={closeSession}
-                            className="p-2 hover:bg-[#1f1f3d] rounded-lg transition-colors text-zinc-400 hover:text-white"
+                            className="p-2 hover:bg-[#2e3856] rounded-lg transition-colors text-zinc-400 hover:text-white"
                         >
                             <X size={24} />
                         </button>
@@ -421,11 +421,11 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
 
                 {/* Settings Modal */}
                 {showSettings && (
-                    <div className="absolute inset-0 z-50 bg-[#0a0a1a]/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200">
-                        <div className="w-full max-w-[600px] h-[85vh] bg-[#0a0a1a] rounded-3xl overflow-hidden shadow-2xl relative border border-white/10 flex flex-col">
+                    <div className="absolute inset-0 z-50 bg-[#0a092d]/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200">
+                        <div className="w-full max-w-[600px] h-[85vh] bg-[#0a092d] rounded-3xl overflow-hidden shadow-2xl relative border border-white/10 flex flex-col">
 
                             {/* Sticky Header */}
-                            <div className="flex-none p-8 pb-4 relative z-10 bg-[#0a0a1a]">
+                            <div className="flex-none p-8 pb-4 relative z-10 bg-[#0a092d]">
                                 <button
                                     onClick={() => setShowSettings(false)}
                                     className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10 text-zinc-400 hover:text-white transition-colors"
@@ -446,7 +446,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                     <button
                                         onClick={() => setSoundEffects(!soundEffects)}
                                         className={`border py-3 rounded-2xl flex flex-col items-center justify-center gap-0 text-sm font-bold transition-colors py-[6px]
-                                            ${soundEffects ? 'bg-indigo-600/20 text-indigo-100 border-indigo-500/50' : 'bg-[#2e3856]/40 text-zinc-300 border-white/5 hover:bg-[#2e3856]/60'}
+                                            ${soundEffects ? 'bg-[#4255ff]/20 text-indigo-100 border-indigo-500/50' : 'bg-[#2e3856]/40 text-zinc-300 border-white/5 hover:bg-[#2e3856]/60'}
                                         `}
                                     >
                                         <div className="flex items-center gap-2">
@@ -461,7 +461,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                             <div className="flex-1 overflow-y-auto px-8 pb-8 pt-4 custom-scrollbar">
 
                                 {/* Accordion 1: Типы вопросов */}
-                                <div className="bg-[#1f1f3d] rounded-2xl mb-3 overflow-hidden transition-all duration-300">
+                                <div className="bg-[#2e3856] rounded-2xl mb-3 overflow-hidden transition-all duration-300">
                                     <button
                                         onClick={() => setOpenAccordion(openAccordion === 'questionTypes' ? null : 'questionTypes')}
                                         className="w-full flex items-center justify-between p-5 text-left font-bold text-[15px] hover:bg-white/5 transition-colors"
@@ -507,7 +507,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                 </div>
 
                                 {/* Accordion 2: Ответ */}
-                                <div className="bg-[#1f1f3d] rounded-2xl mb-3 overflow-hidden transition-all duration-300">
+                                <div className="bg-[#2e3856] rounded-2xl mb-3 overflow-hidden transition-all duration-300">
                                     <button
                                         onClick={() => setOpenAccordion(openAccordion === 'answerWith' ? null : 'answerWith')}
                                         className="w-full flex items-center justify-between p-5 text-left font-bold text-[15px] hover:bg-white/5 transition-colors"
@@ -537,7 +537,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                 </div>
 
                                 {/* Accordion 3: Показ изображений */}
-                                <div className="bg-[#1f1f3d] rounded-2xl mb-3 overflow-hidden transition-all duration-300">
+                                <div className="bg-[#2e3856] rounded-2xl mb-3 overflow-hidden transition-all duration-300">
                                     <button
                                         onClick={() => setOpenAccordion(openAccordion === 'showImages' ? null : 'showImages')}
                                         className="w-full flex items-center justify-between p-5 text-left font-bold text-[15px] hover:bg-white/5 transition-colors"
@@ -567,7 +567,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                 </div>
 
                                 {/* Accordion 4: Варианты оценок */}
-                                <div className="bg-[#1f1f3d] rounded-2xl mb-3 overflow-hidden transition-all duration-300">
+                                <div className="bg-[#2e3856] rounded-2xl mb-3 overflow-hidden transition-all duration-300">
                                     <button
                                         onClick={() => setOpenAccordion(openAccordion === 'gradingOptions' ? null : 'gradingOptions')}
                                         className="w-full flex items-center justify-between p-5 text-left font-bold text-[15px] hover:bg-white/5 transition-colors"
@@ -639,7 +639,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                 </div>
 
                                 {/* Other independent rows */}
-                                <div className="bg-[#1f1f3d] rounded-2xl mb-3 overflow-hidden divide-y divide-white/5">
+                                <div className="bg-[#2e3856] rounded-2xl mb-3 overflow-hidden divide-y divide-white/5">
                                     <div className="flex items-center justify-between p-5" id="tts-toggle">
                                         <span className="font-bold text-[15px]">Преобразование текста в речь</span>
                                         <Toggle isOn={ttsEnabled} onToggle={() => setTtsEnabled(!ttsEnabled)} />
@@ -666,7 +666,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                             </div>
 
                             {/* Sticky Footer */}
-                            <div className="flex-none p-6 bg-[#0a0a1a] border-t border-white/5 flex items-center justify-between z-10 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+                            <div className="flex-none p-6 bg-[#0a092d] border-t border-white/5 flex items-center justify-between z-10 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
                                 <button
                                     onClick={() => {
                                         setCurrentIndex(0);
@@ -706,7 +706,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                                 ]);
                                             }
                                         }}
-                                        className="font-bold text-sm text-white bg-indigo-500 hover:bg-indigo-400 transition-colors px-6 py-3 rounded-xl shadow-[0_4px_14px_0_rgba(99,102,241,0.39)] hover:shadow-[0_6px_20px_rgba(99,102,241,0.23)]"
+                                        className="font-bold text-sm text-white bg-[#4255ff] hover:bg-indigo-400 transition-colors px-6 py-3 rounded-xl shadow-[0_4px_14px_0_rgba(99,102,241,0.39)] hover:shadow-[0_6px_20px_rgba(99,102,241,0.23)]"
                                     >
                                         Сохранить
                                     </button>
@@ -718,9 +718,9 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
 
                 {/* Progress Bar */}
                 {!isFinished && (
-                    <div className="w-full bg-[#1f1f3d] h-1.5 max-w-5xl mx-auto rounded-full overflow-hidden mb-8">
+                    <div className="w-full bg-[#2e3856] h-1.5 max-w-5xl mx-auto rounded-full overflow-hidden mb-8">
                         <div
-                            className="bg-purple-500 h-1.5 transition-all duration-300 rounded-full"
+                            className="bg-[#4255ff] h-1.5 transition-all duration-300 rounded-full"
                             style={{ width: `${Math.max(5, (currentIndex / queue.length) * 100)}%` }}
                         />
                     </div>
@@ -729,19 +729,19 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                 {/* Main Content */}
                 <main className="flex-1 flex flex-col items-center justify-start pt-8 p-6 z-10 w-full max-w-3xl mx-auto">
                     {isFinished ? (
-                        <div className="bg-[#1f1f3d] border border-[#2a2a4d] p-10 rounded-2xl w-full text-center shadow-xl animate-in zoom-in duration-500">
+                        <div className="bg-[#2e3856] border border-[#2e3856] p-10 rounded-2xl w-full text-center shadow-xl animate-in zoom-in duration-500">
                             <h2 className="text-3xl font-bold mb-4 text-white">Вы отлично справились!</h2>
                             <p className="text-lg text-zinc-400 mb-8">
                                 Вы изучили {queue.length} терминов. Ваш результат: {Math.round((totalCorrect / queue.length) * 100)}%
                             </p>
 
                             <div className="flex gap-4 justify-center">
-                                <div className="bg-[#0a0a1a] p-6 rounded-xl flex-1 max-w-[200px] border border-[#2a2a4d]">
-                                    <div className="text-3xl font-black text-green-400 mb-2">{totalCorrect}</div>
+                                <div className="bg-[#0a092d] p-6 rounded-xl flex-1 max-w-[200px] border border-[#2e3856]">
+                                    <div className="text-3xl font-semibold text-green-400 mb-2">{totalCorrect}</div>
                                     <div className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Верно</div>
                                 </div>
-                                <div className="bg-[#0a0a1a] p-6 rounded-xl flex-1 max-w-[200px] border border-[#2a2a4d]">
-                                    <div className="text-3xl font-black text-red-500 mb-2">{queue.length - totalCorrect}</div>
+                                <div className="bg-[#0a092d] p-6 rounded-xl flex-1 max-w-[200px] border border-[#2e3856]">
+                                    <div className="text-3xl font-semibold text-red-500 mb-2">{queue.length - totalCorrect}</div>
                                     <div className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Неверно</div>
                                 </div>
                             </div>
@@ -749,7 +749,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                             <div className="mt-12 flex justify-center">
                                 <button
                                     onClick={closeSession}
-                                    className="flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-500 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition-all"
+                                    className="flex items-center justify-center gap-2 bg-[#4255ff] hover:bg-[#4255ff] text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition-all"
                                 >
                                     {isSubmitting ? <Loader2 className="animate-spin" size={20} /> : <CheckCircle size={20} />}
                                     {isSubmitting ? "Сохранение..." : "Вернуться к модулю"}
@@ -765,7 +765,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                         <div className="w-full flex flex-col gap-8 animate-in fade-in duration-300">
 
                             {/* Question Card */}
-                            <div className="bg-[#1f1f3d] border border-[#2a2a4d] p-8 md:p-12 rounded-2xl shadow-lg relative min-h-[250px] flex flex-col justify-center">
+                            <div className="bg-[#2e3856] border border-[#2e3856] p-8 md:p-12 rounded-2xl shadow-lg relative min-h-[250px] flex flex-col justify-center">
                                 <div className="absolute top-6 right-6 flex items-center gap-3 text-zinc-400">
                                     <button className="hover:text-white transition-colors"><Edit2 size={18} /></button>
                                     <button
@@ -796,7 +796,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                         <button 
                                             onClick={recordPronunciation}
                                             disabled={showResult || isRecording}
-                                            className={`p-6 rounded-full transition-all flex items-center gap-3 ${isRecording ? 'bg-red-500 animate-pulse' : 'bg-indigo-600 hover:bg-indigo-500'} shadow-lg`}
+                                            className={`p-6 rounded-full transition-all flex items-center gap-3 ${isRecording ? 'bg-red-500 animate-pulse' : 'bg-[#4255ff] hover:bg-[#4255ff]'} shadow-lg`}
                                         >
                                             <Mic size={24} />
                                             <span className="font-bold">{isRecording ? "Listening..." : "Нажмите и говорите"}</span>
@@ -813,9 +813,9 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                     </p>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {currentQuestion.mcqData.options.map((option, index) => {
-                                            let buttonStateClass = "bg-transparent border-[#2a2a4d] hover:bg-[#1f1f3d] hover:border-purple-500 text-zinc-200"
+                                            let buttonStateClass = "bg-transparent border-[#2e3856] hover:bg-[#2e3856] hover:border-purple-500 text-zinc-200"
                                             let Icon = null;
-                                            let numberTagClass = "bg-[#1f1f3d] text-zinc-400 border border-[#2a2a4d]";
+                                            let numberTagClass = "bg-[#2e3856] text-zinc-400 border border-[#2e3856]";
 
                                             if (showResult) {
                                                 if (index === currentQuestion.mcqData!.correctIndex) {
@@ -827,7 +827,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                                     numberTagClass = "bg-red-500/20 text-red-400 border-red-500/50"
                                                     Icon = <XCircle size={20} className="text-red-500" />
                                                 } else {
-                                                    buttonStateClass = "bg-transparent border-[#2a2a4d] text-zinc-600 opacity-50"
+                                                    buttonStateClass = "bg-transparent border-[#2e3856] text-zinc-600 opacity-50"
                                                 }
                                             }
 
@@ -856,7 +856,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                 <div className="w-full">
                                     <p className="text-sm font-semibold text-zinc-400 mb-4 px-2">
                                         {currentQuestion.writtenData.targetFieldName
-                                            ? <>Введите <span className="text-purple-400 font-bold">{currentQuestion.writtenData.targetFieldName}</span></>
+                                            ? <>Введите <span className="text-[#ffcd1f] font-bold">{currentQuestion.writtenData.targetFieldName}</span></>
                                             : <>Введите правильный {currentQuestion.writtenData.answerType === 'term' ? 'термин' : 'ответ'}</>
                                         }
                                     </p>
@@ -866,14 +866,14 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                             value={writtenInput}
                                             onChange={(e) => setWrittenInput(e.target.value)}
                                             disabled={showResult}
-                                            className="w-full bg-[#0a0a1a] border-2 border-[#2a2a4d] rounded-xl px-5 py-4 focus:border-indigo-500 focus:bg-[#1a1a3a] outline-none transition-all font-medium text-xl text-white shadow-sm disabled:opacity-50"
+                                            className="w-full bg-[#0a092d] border-2 border-[#2e3856] rounded-xl px-5 py-4 focus:border-indigo-500 focus:bg-[#1a1a3a] outline-none transition-all font-medium text-xl text-white shadow-sm disabled:opacity-50"
                                             autoFocus
                                             placeholder="Введите ваш ответ..."
                                         />
                                         <button
                                             type="submit"
                                             disabled={showResult || !writtenInput.trim()}
-                                            className="bg-purple-600 hover:bg-purple-500 text-white font-bold py-4 rounded-xl shadow-lg transition-all text-lg disabled:opacity-50"
+                                            className="bg-[#4255ff] hover:bg-[#4255ff] text-white font-bold py-4 rounded-xl shadow-lg transition-all text-lg disabled:opacity-50"
                                         >
                                             Проверить
                                         </button>
@@ -899,14 +899,14 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                             
                                             {isAiPro && aiFeedback && (
                                                 <div className="mt-6 border-t border-white/10 pt-4 animate-in slide-in-from-top-2">
-                                                    <div className="text-sm font-bold text-indigo-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                                                    <div className="text-sm font-bold text-[#ffcd1f] uppercase tracking-widest mb-2 flex items-center gap-2">
                                                         <GraduationCap size={16} /> AI Разбор
                                                     </div>
                                                     <p className="text-zinc-300 leading-relaxed text-sm italic">
                                                         {aiFeedback.explanation}
                                                     </p>
                                                     {aiFeedback.score < 1.0 && (
-                                                        <div className="mt-3 bg-zinc-950/40 p-3 rounded-lg border border-white/5">
+                                                        <div className="mt-3 bg-[#0a092d]/40 p-3 rounded-lg border border-white/5">
                                                             <span className="text-xs font-bold text-zinc-500 uppercase block mb-1">Как было бы лучше:</span>
                                                             <span className="text-white font-medium">{aiFeedback.correctAnswer}</span>
                                                         </div>
@@ -932,7 +932,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                     <button
                                         id="learn-next-btn"
                                         onClick={handleNext}
-                                        className="flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white font-medium px-5 py-2 rounded-xl border border-zinc-700 hover:border-zinc-600 transition-all"
+                                        className="flex items-center gap-2 bg-[#2e3856] hover:bg-[#586380] text-white font-medium px-5 py-2 rounded-xl border border-[#586380] hover:border-zinc-600 transition-all"
                                     >
                                         Next <ChevronRight className="w-4 h-4" />
                                     </button>

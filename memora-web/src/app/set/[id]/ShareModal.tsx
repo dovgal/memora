@@ -36,37 +36,37 @@ export default function ShareModal({ setId, setTitle, onClose }: ShareModalProps
 
     return (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-            <div className="bg-[#1f1f3d] border border-[#2a2a4d] rounded-3xl w-full max-w-lg p-8 shadow-2xl relative overflow-hidden">
+            <div className="bg-[#2e3856] border border-[#2e3856] rounded-3xl w-full max-w-lg p-8 shadow-2xl relative overflow-hidden">
                 {/* Decorative background elements */}
-                <div className="absolute -top-24 -right-24 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl" />
-                <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl" />
+                <div className="absolute -top-24 -right-24 w-48 h-48 bg-[#4255ff]/10 rounded-full blur-3xl" />
+                <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-[#4255ff]/10 rounded-full blur-3xl" />
 
                 <button
                     onClick={(e) => {
                         e.stopPropagation();
                         onClose();
                     }}
-                    className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-white transition-all z-[120] border border-white/5 active:scale-90"
+                    className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-[#2e3856]/80 hover:bg-[#586380] text-zinc-300 hover:text-white transition-all z-[120] border border-white/5 active:scale-90"
                     aria-label="Close"
                 >
                     <X className="w-6 h-6" />
                 </button>
 
                 <div className="relative z-10">
-                    <h2 className="text-3xl font-black text-white mb-2">Поделиться</h2>
+                    <h2 className="text-3xl font-semibold text-white mb-2">Поделиться</h2>
                     <p className="text-zinc-400 mb-8">Отправьте этот модуль друзьям или коллегам. Регистрация для просмотра не требуется.</p>
 
                     <div className="space-y-6">
                         {/* Copy Link Section */}
                         <div className="space-y-3">
                             <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Прямая ссылка</label>
-                            <div className="flex gap-2 p-1.5 bg-black/40 border border-[#2a2a4d] rounded-2xl">
+                            <div className="flex gap-2 p-1.5 bg-black/40 border border-[#2e3856] rounded-2xl">
                                 <div className="flex-1 px-3 py-2 text-sm text-zinc-300 truncate font-medium">
                                     {shareUrl}
                                 </div>
                                 <button 
                                     onClick={handleCopy}
-                                    className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition-all active:scale-95"
+                                    className="bg-[#4255ff] hover:bg-[#4255ff] text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition-all active:scale-95"
                                 >
                                     {copied ? <Check size={16} /> : <Copy size={16} />}
                                     {copied ? "Готово" : "Копировать"}
@@ -74,7 +74,7 @@ export default function ShareModal({ setId, setTitle, onClose }: ShareModalProps
                             </div>
                         </div>
 
-                        <div className="h-px bg-[#2a2a4d] w-full" />
+                        <div className="h-px bg-[#2e3856] w-full" />
 
                         {/* Email Section */}
                         <form onSubmit={handleSendEmail} className="space-y-3">
@@ -86,13 +86,13 @@ export default function ShareModal({ setId, setTitle, onClose }: ShareModalProps
                                     type="email"
                                     required
                                     placeholder="friend@example.com"
-                                    className="flex-1 bg-black/40 border-2 border-[#2a2a4d] focus:border-indigo-500 rounded-xl px-4 py-3 outline-none transition-all text-sm"
+                                    className="flex-1 bg-black/40 border-2 border-[#2e3856] focus:border-indigo-500 rounded-xl px-4 py-3 outline-none transition-all text-sm"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
                                 <button 
                                     type="submit"
-                                    className="bg-white text-indigo-950 hover:bg-zinc-200 px-6 py-3 rounded-xl text-sm font-black transition-all active:scale-95"
+                                    className="bg-white text-indigo-950 hover:bg-zinc-200 px-6 py-3 rounded-xl text-sm font-semibold transition-all active:scale-95"
                                 >
                                     Отправить
                                 </button>

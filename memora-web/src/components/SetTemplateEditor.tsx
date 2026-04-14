@@ -120,20 +120,20 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
 
         return (
             <div className="space-y-3 mb-6">
-                <div className="flex justify-between items-center bg-zinc-800/50 p-3 rounded-lg border border-zinc-700">
+                <div className="flex justify-between items-center bg-[#2e3856]/50 p-3 rounded-lg border border-[#586380]">
                     <h3 className="font-semibold text-zinc-300">
                         {side === 'front' ? 'Лицевая сторона' : 'Обратная сторона'}
                     </h3>
                     <button
                         onClick={() => handleAddField(side)}
-                        className="flex items-center gap-1 text-sm bg-zinc-700 hover:bg-zinc-600 px-3 py-1.5 rounded-md transition-colors text-white"
+                        className="flex items-center gap-1 text-sm bg-[#586380] hover:bg-[#586380] px-3 py-1.5 rounded-md transition-colors text-white"
                     >
                         <Plus size={16} /> Добавить
                     </button>
                 </div>
 
                 {sideFields.length === 0 ? (
-                    <div className="text-center p-6 border-2 border-dashed border-zinc-800 rounded-xl text-zinc-500">
+                    <div className="text-center p-6 border-2 border-dashed border-[#2e3856] rounded-xl text-zinc-500">
                         Нет полей на этой стороне
                     </div>
                 ) : (
@@ -142,7 +142,7 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                             <div
                                 key={field.id}
                                 onClick={() => setEditingFieldId(field.id)}
-                                className={`flex items-center gap-3 p-4 rounded-xl border transition-colors cursor-pointer group ${editingFieldId === field.id ? 'bg-[#1a1a3a] border-indigo-500/50' : 'bg-zinc-900/50 border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800/30'}`}
+                                className={`flex items-center gap-3 p-4 rounded-xl border transition-colors cursor-pointer group ${editingFieldId === field.id ? 'bg-[#1a1a3a] border-indigo-500/50' : 'bg-[#0a092d]/50 border-[#2e3856] hover:border-[#586380] hover:bg-[#2e3856]/30'}`}
                             >
                                 <div className="text-zinc-600 cursor-grab active:cursor-grabbing">
                                     <GripVertical size={20} />
@@ -150,7 +150,7 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                                 <div className="flex-1">
                                     <div className="font-bold text-white mb-1 uppercase text-sm tracking-wider">{field.name}</div>
                                     <div className="flex items-center gap-2 text-xs text-zinc-400">
-                                        <span className="bg-zinc-800 px-2 py-0.5 rounded">{FIELD_TYPES.find(t => t.type === field.type)?.label || field.type}</span>
+                                        <span className="bg-[#2e3856] px-2 py-0.5 rounded">{FIELD_TYPES.find(t => t.type === field.type)?.label || field.type}</span>
                                         {field.type === 'text' && (
                                             <select
                                                 value={field.settings.language || 'default'}
@@ -195,13 +195,13 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
 
     return (
         <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="w-full max-w-5xl bg-[#0a0a1a] rounded-3xl overflow-hidden shadow-2xl relative border border-white/10 flex flex-col md:flex-row min-h-[600px] max-h-[90vh] animate-in fade-in zoom-in-95 duration-200">
+            <div className="w-full max-w-5xl bg-[#0a092d] rounded-3xl overflow-hidden shadow-2xl relative border border-white/10 flex flex-col md:flex-row min-h-[600px] max-h-[90vh] animate-in fade-in zoom-in-95 duration-200">
 
                 {/* LEFT SIDE: List of Fields */}
                 <div className="flex-1 border-r border-white/5 flex flex-col">
                     <div className="p-6 border-b border-white/5 flex justify-between items-center bg-[#111122]">
                         <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                            <Settings2 className="text-indigo-400" /> Шаблон Карточки
+                            <Settings2 className="text-[#ffcd1f]" /> Шаблон Карточки
                         </h2>
                         <button onClick={onClose} className="p-2 bg-white/5 hover:bg-white/10 rounded-full transition-colors text-zinc-400 cursor-pointer lg:hidden">
                             <X size={20} />
@@ -216,7 +216,7 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                     <div className="p-6 border-t border-white/5 bg-[#111122]">
                         <button
                             onClick={onClose}
-                            className="w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl transition-colors shadow-[0_0_15px_rgba(79,70,229,0.3)]"
+                            className="w-full py-4 bg-[#4255ff] hover:bg-[#4255ff] text-white font-bold rounded-xl transition-colors shadow-[0_0_15px_rgba(79,70,229,0.3)]"
                         >
                             Готово
                         </button>
@@ -228,7 +228,7 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                     {editingField ? (
                         <div className="absolute inset-0 overflow-y-auto p-8 animate-in slide-in-from-right-8 duration-200">
                             <div className="flex justify-between items-start mb-8">
-                                <h3 className="text-2xl font-bold text-white border-b border-zinc-800 pb-4 w-full">Настройки поля</h3>
+                                <h3 className="text-2xl font-bold text-white border-b border-[#2e3856] pb-4 w-full">Настройки поля</h3>
                             </div>
 
                             <div className="space-y-6">
@@ -245,16 +245,16 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
 
                                 <div>
                                     <label className="block text-sm font-semibold text-zinc-400 mb-2 uppercase tracking-wider">Сторона</label>
-                                    <div className="flex bg-[#1a1a3a] rounded-xl overflow-hidden border border-zinc-800">
+                                    <div className="flex bg-[#1a1a3a] rounded-xl overflow-hidden border border-[#2e3856]">
                                         <button
                                             onClick={() => handleUpdateField(editingField.id, { side: 'front' })}
-                                            className={`flex-1 p-3 text-center font-bold transition-colors ${editingField.side === 'front' ? 'bg-indigo-600 text-white' : 'text-zinc-500 hover:bg-zinc-800'}`}
+                                            className={`flex-1 p-3 text-center font-bold transition-colors ${editingField.side === 'front' ? 'bg-[#4255ff] text-white' : 'text-zinc-500 hover:bg-[#2e3856]'}`}
                                         >
                                             Лицевая
                                         </button>
                                         <button
                                             onClick={() => handleUpdateField(editingField.id, { side: 'back' })}
-                                            className={`flex-1 p-3 text-center font-bold transition-colors ${editingField.side === 'back' ? 'bg-indigo-600 text-white' : 'text-zinc-500 hover:bg-zinc-800'}`}
+                                            className={`flex-1 p-3 text-center font-bold transition-colors ${editingField.side === 'back' ? 'bg-[#4255ff] text-white' : 'text-zinc-500 hover:bg-[#2e3856]'}`}
                                         >
                                             Обратная
                                         </button>
@@ -268,7 +268,7 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                                             <div
                                                 key={t.type}
                                                 onClick={() => handleUpdateField(editingField.id, { type: t.type })}
-                                                className={`p-4 rounded-xl border cursor-pointer transition-all ${editingField.type === t.type ? 'border-indigo-500 bg-indigo-500/10' : 'border-zinc-800 bg-[#1a1a3a] hover:border-zinc-600'}`}
+                                                className={`p-4 rounded-xl border cursor-pointer transition-all ${editingField.type === t.type ? 'border-indigo-500 bg-[#4255ff]/10' : 'border-[#2e3856] bg-[#1a1a3a] hover:border-zinc-600'}`}
                                             >
                                                 <div className="font-bold text-white mb-1">{t.label}</div>
                                                 <div className="text-xs text-zinc-500">{t.description}</div>
@@ -278,7 +278,7 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                                 </div>
 
                                 {editingField.type === 'text' && (
-                                    <div className="animate-in fade-in slide-in-from-bottom-4 space-y-6 border-t border-zinc-800 pt-6 mt-6">
+                                    <div className="animate-in fade-in slide-in-from-bottom-4 space-y-6 border-t border-[#2e3856] pt-6 mt-6">
                                         <h4 className="font-bold text-white text-lg">Дополнительные опции</h4>
 
                                         <div>
@@ -296,7 +296,7 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                                                         } 
                                                     });
                                                 }}
-                                                className="w-full bg-[#1a1a3a] border border-zinc-800 rounded-xl p-4 text-white focus:outline-none focus:border-indigo-500 transition-colors appearance-none"
+                                                className="w-full bg-[#1a1a3a] border border-[#2e3856] rounded-xl p-4 text-white focus:outline-none focus:border-indigo-500 transition-colors appearance-none"
                                             >
                                                 {LANGUAGES.map(lang => (
                                                     <option key={lang.code} value={lang.code}>{lang.label}</option>
@@ -304,7 +304,7 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                                             </select>
                                         </div>
 
-                                        <div className="bg-[#1a1a3a] border border-zinc-800 rounded-xl p-5">
+                                        <div className="bg-[#1a1a3a] border border-[#2e3856] rounded-xl p-5">
                                             <div className="flex items-center justify-between mb-4">
                                                 <div>
                                                     <div className="font-bold text-white flex items-center gap-2">Озвучка Inworld TTS</div>
@@ -324,17 +324,17 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                                                             }
                                                         })}
                                                     />
-                                                    <div className="w-11 h-6 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                                                    <div className="w-11 h-6 bg-[#586380] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
                                                 </label>
                                             </div>
 
                                             {editingField.settings.ttsEnabled && (
-                                                <div className="mt-4 pt-4 border-t border-zinc-800 animate-in fade-in slide-in-from-top-2">
+                                                <div className="mt-4 pt-4 border-t border-[#2e3856] animate-in fade-in slide-in-from-top-2">
                                                     <label className="block text-xs font-semibold text-zinc-400 mb-2 uppercase tracking-wider">Выбор голоса</label>
                                                     <select
                                                         value={editingField.settings.ttsVoice || ''}
                                                         onChange={(e) => handleUpdateField(editingField.id, { settings: { ...editingField.settings, ttsVoice: e.target.value } })}
-                                                        className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-white focus:outline-none focus:border-emerald-500 transition-colors appearance-none text-sm"
+                                                        className="w-full bg-[#0a092d] border border-[#586380] rounded-lg p-3 text-white focus:outline-none focus:border-emerald-500 transition-colors appearance-none text-sm"
                                                     >
                                                         {(INWORLD_VOICES_BY_LANG[editingField.settings.language === 'default' ? 'en' : (editingField.settings.language || 'en')] || INWORLD_VOICES_BY_LANG['en']).map(voice => (
                                                             <option key={voice.code} value={voice.code}>{voice.label}</option>
@@ -349,7 +349,7 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                         </div>
                     ) : (
                         <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
-                            <div className="w-20 h-20 bg-zinc-800/50 rounded-full flex items-center justify-center mb-6 text-zinc-600">
+                            <div className="w-20 h-20 bg-[#2e3856]/50 rounded-full flex items-center justify-center mb-6 text-zinc-600">
                                 <Settings2 size={40} />
                             </div>
                             <h3 className="text-2xl font-bold text-zinc-400 mb-2">Выберите поле</h3>

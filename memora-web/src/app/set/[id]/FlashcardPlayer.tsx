@@ -299,7 +299,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
 
     if (!activeCards || activeCards.length === 0) {
         return (
-            <div className="w-full flex-col flex items-center justify-center aspect-[16/9] md:aspect-[2/1] max-w-4xl bg-zinc-900 border border-zinc-800 rounded-2xl shadow-xl mb-6">
+            <div className="w-full flex-col flex items-center justify-center aspect-[16/9] md:aspect-[2/1] max-w-4xl bg-[#0a092d] border border-[#2e3856] rounded-2xl shadow-xl mb-6">
                 <div className="text-zinc-400 font-medium">
                     {trackProgress ? "Отлично! На сегодня карточек для повторения больше нет! 🎉" : "Нет карточек для отображения."}
                 </div>
@@ -307,13 +307,13 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                     <div className="flex flex-col sm:flex-row gap-4 mt-6">
                         <button
                             onClick={handleResetFsrs}
-                            className="bg-[#1f1f3d] hover:bg-[#2a2a4d] border border-white/10 text-white px-6 py-2.5 rounded-xl transition-colors font-semibold"
+                            className="bg-[#2e3856] hover:bg-[#2e3856] border border-white/10 text-white px-6 py-2.5 rounded-xl transition-colors font-semibold"
                         >
                             Сбросить прогресс
                         </button>
                         <button
                             onClick={() => { setTrackProgress(false); }}
-                            className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl transition-colors font-semibold"
+                            className="bg-[#4255ff] hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl transition-colors font-semibold"
                         >
                             Вернуться к обычному просмотру
                         </button>
@@ -326,18 +326,18 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
     // When tracking progress, we exhaust the activeCards list one by one
     if (trackProgress && currentIndex >= activeCards.length) {
         return (
-            <div className="w-full flex-col flex items-center justify-center aspect-[16/9] md:aspect-[2/1] max-w-4xl bg-zinc-900 border border-zinc-800 rounded-2xl shadow-xl mb-6">
+            <div className="w-full flex-col flex items-center justify-center aspect-[16/9] md:aspect-[2/1] max-w-4xl bg-[#0a092d] border border-[#2e3856] rounded-2xl shadow-xl mb-6">
                 <div className="text-zinc-300 text-lg font-bold mb-2">На сегодня карточек для повторения больше нет! 🎉</div>
                 <div className="flex flex-col sm:flex-row gap-4 mt-6">
                     <button
                         onClick={handleResetFsrs}
-                        className="bg-[#1f1f3d] hover:bg-[#2a2a4d] border border-white/10 text-white px-6 py-2.5 rounded-xl transition-colors font-semibold shadow-md inline-flex justify-center"
+                        className="bg-[#2e3856] hover:bg-[#2e3856] border border-white/10 text-white px-6 py-2.5 rounded-xl transition-colors font-semibold shadow-md inline-flex justify-center"
                     >
                         Начать заново (Сбросить прогресс)
                     </button>
                     <button
                         onClick={() => { setTrackProgress(false); }}
-                        className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl transition-colors font-semibold"
+                        className="bg-[#4255ff] hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl transition-colors font-semibold"
                     >
                         Вернуться к обычному просмотру
                     </button>
@@ -349,18 +349,18 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
     const currentCard = activeCards[currentIndex];
 
     return (
-        <div ref={containerRef} className="w-full flex flex-col items-center bg-[#0a0a1a] md:bg-transparent min-h-screen md:min-h-auto justify-center md:justify-start">
+        <div ref={containerRef} className="w-full flex flex-col items-center bg-[#0a092d] md:bg-transparent min-h-screen md:min-h-auto justify-center md:justify-start">
 
             {/* The Flashcard Container */}
-            <div className="relative w-full h-[65vh] md:h-auto md:aspect-[2/1] max-w-6xl bg-zinc-900 border border-zinc-800 rounded-2xl shadow-xl flex flex-col overflow-hidden mb-6 select-none group">
+            <div className="relative w-full h-[65vh] md:h-auto md:aspect-[2/1] max-w-6xl bg-[#0a092d] border border-[#2e3856] rounded-2xl shadow-xl flex flex-col overflow-hidden mb-6 select-none group">
 
                 {/* Overlay Settings Modal */}
                 {showSettings && (
-                    <div className="absolute inset-0 z-50 bg-[#0a0a1a]/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200" onClick={() => setShowSettings(false)}>
-                        <div className="w-full max-w-2xl bg-[#0a0a1a] rounded-3xl overflow-y-auto shadow-2xl relative max-h-full border border-white/5" onClick={e => e.stopPropagation()}>
+                    <div className="absolute inset-0 z-50 bg-[#0a092d]/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200" onClick={() => setShowSettings(false)}>
+                        <div className="w-full max-w-2xl bg-[#0a092d] rounded-3xl overflow-y-auto shadow-2xl relative max-h-full border border-white/5" onClick={e => e.stopPropagation()}>
                             <button
                                 onClick={() => setShowSettings(false)}
-                                className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-[#1b1b2f] hover:bg-[#2a2a4d] text-zinc-300 hover:text-white transition-colors"
+                                className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-[#0a092d] hover:bg-[#2e3856] text-zinc-300 hover:text-white transition-colors"
                             >
                                 <XIcon className="w-5 h-5" />
                             </button>
@@ -394,7 +394,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                                             <select
                                                 value={frontSide}
                                                 onChange={(e) => setFrontSide(e.target.value as any)}
-                                                className="bg-[#1b1b2f] hover:bg-[#2a2a4d] transition-colors appearance-none text-sm font-semibold rounded-full px-5 py-2.5 pr-10 outline-none text-white cursor-pointer"
+                                                className="bg-[#0a092d] hover:bg-[#2e3856] transition-colors appearance-none text-sm font-semibold rounded-full px-5 py-2.5 pr-10 outline-none text-white cursor-pointer"
                                             >
                                                 <option value="term">Термин</option>
                                                 <option value="definition">Определение</option>
@@ -412,8 +412,8 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                                     {/* Row 5 */}
                                     <div className="flex flex-col py-6 border-b border-white/10">
                                         <div className="flex items-center justify-between cursor-pointer group" onClick={() => setShowShortcuts(!showShortcuts)}>
-                                            <p className="font-bold text-base text-white group-hover:text-indigo-400 transition-colors">Сочетания клавиш</p>
-                                            <button className="flex items-center gap-2 text-sm font-semibold text-white group-hover:text-indigo-400 transition-colors">
+                                            <p className="font-bold text-base text-white group-hover:text-[#ffcd1f] transition-colors">Сочетания клавиш</p>
+                                            <button className="flex items-center gap-2 text-sm font-semibold text-white group-hover:text-[#ffcd1f] transition-colors">
                                                 {showShortcuts ? 'Скрыть' : 'Просмотреть'} <ChevronDownIcon className={`w-4 h-4 transition-transform ${showShortcuts ? 'rotate-180' : ''}`} />
                                             </button>
                                         </div>
@@ -529,7 +529,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                 </div>
 
                 {/* Bottom hint banner */}
-                <div className={`absolute bottom-0 left-0 right-0 h-10 flex items-center justify-center bg-indigo-600 font-medium text-sm text-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none ${showBothSides ? 'hidden' : ''}`}>
+                <div className={`absolute bottom-0 left-0 right-0 h-10 flex items-center justify-center bg-[#4255ff] font-medium text-sm text-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none ${showBothSides ? 'hidden' : ''}`}>
                     Нажмите пробел, чтобы перевернуть карточку
                 </div>
             </div>
@@ -538,11 +538,11 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
             {trackProgress && isFlipped && !showBothSides ? (
                 // FSRS Response Buttons (Quizlet Style)
                 <div className="flex items-center justify-center w-full max-w-4xl px-4 gap-4 md:gap-8 mt-2">
-                    <button onClick={() => handleRateFSRS(1)} className="flex-1 max-w-[200px] py-4 rounded-xl bg-[#1f1f3d] hover:bg-[#2a2a4d] border border-[#2a2a4d] transition-colors font-bold text-sm text-white flex items-center justify-center gap-3">
+                    <button onClick={() => handleRateFSRS(1)} className="flex-1 max-w-[200px] py-4 rounded-xl bg-[#2e3856] hover:bg-[#2e3856] border border-[#2e3856] transition-colors font-bold text-sm text-white flex items-center justify-center gap-3">
                         <span className="w-6 h-6 rounded border border-white/20 flex items-center justify-center text-[10px]">←</span>
                         Еще изучаю
                     </button>
-                    <button onClick={() => handleRateFSRS(3)} className="flex-1 max-w-[200px] py-4 rounded-xl bg-[#1f1f3d] hover:bg-[#2a2a4d] border border-[#2a2a4d] transition-colors font-bold text-sm text-white flex items-center justify-center gap-3">
+                    <button onClick={() => handleRateFSRS(3)} className="flex-1 max-w-[200px] py-4 rounded-xl bg-[#2e3856] hover:bg-[#2e3856] border border-[#2e3856] transition-colors font-bold text-sm text-white flex items-center justify-center gap-3">
                         Знаю
                         <span className="w-6 h-6 rounded border border-white/20 flex items-center justify-center text-[10px]">→</span>
                     </button>
@@ -558,7 +558,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                         <button
                             onClick={handlePrev}
                             disabled={trackProgress || currentIndex === 0}
-                            className={`w-12 h-12 flex items-center justify-center rounded-full border border-zinc-700 hover:bg-zinc-800 disabled:opacity-30 disabled:hover:bg-transparent transition-colors text-zinc-300 ${trackProgress ? 'invisible' : ''}`}
+                            className={`w-12 h-12 flex items-center justify-center rounded-full border border-[#586380] hover:bg-[#2e3856] disabled:opacity-30 disabled:hover:bg-transparent transition-colors text-zinc-300 ${trackProgress ? 'invisible' : ''}`}
                         >
                             <ChevronLeft className="w-6 h-6" />
                         </button>
@@ -570,23 +570,23 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                         <button
                             onClick={handleNext}
                             disabled={trackProgress || currentIndex === activeCards.length - 1}
-                            className={`w-12 h-12 flex items-center justify-center rounded-full border border-zinc-700 hover:bg-zinc-800 disabled:opacity-30 disabled:hover:bg-transparent transition-colors text-zinc-300 ${trackProgress ? 'invisible' : ''}`}
+                            className={`w-12 h-12 flex items-center justify-center rounded-full border border-[#586380] hover:bg-[#2e3856] disabled:opacity-30 disabled:hover:bg-transparent transition-colors text-zinc-300 ${trackProgress ? 'invisible' : ''}`}
                         >
                             <ChevronRight className="w-6 h-6" />
                         </button>
                     </div>
 
                     <div className="flex items-center gap-3 text-zinc-400">
-                        <button onClick={() => setIsAutoPlaying(!isAutoPlaying)} className={`w-10 h-10 flex items-center justify-center rounded-full hover:bg-zinc-800 transition-colors ${isAutoPlaying ? 'text-indigo-400' : ''}`} title="Автовоспроизведение">
+                        <button onClick={() => setIsAutoPlaying(!isAutoPlaying)} className={`w-10 h-10 flex items-center justify-center rounded-full hover:bg-[#2e3856] transition-colors ${isAutoPlaying ? 'text-[#ffcd1f]' : ''}`} title="Автовоспроизведение">
                             {isAutoPlaying ? <Pause className="w-5 h-5 fill-current" /> : <Play className="w-5 h-5 fill-current" />}
                         </button>
-                        <button onClick={() => setIsShuffled(!isShuffled)} className={`w-10 h-10 flex items-center justify-center rounded-full hover:bg-zinc-800 transition-colors ${isShuffled ? 'text-indigo-400' : ''}`} title="Перемешать">
+                        <button onClick={() => setIsShuffled(!isShuffled)} className={`w-10 h-10 flex items-center justify-center rounded-full hover:bg-[#2e3856] transition-colors ${isShuffled ? 'text-[#ffcd1f]' : ''}`} title="Перемешать">
                             <Shuffle className="w-5 h-5" />
                         </button>
-                        <button onClick={() => setShowSettings(true)} className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-zinc-800 transition-colors" title="Параметры">
+                        <button onClick={() => setShowSettings(true)} className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[#2e3856] transition-colors" title="Параметры">
                             <Settings className="w-5 h-5" />
                         </button>
-                        <button onClick={toggleFullscreen} className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-zinc-800 transition-colors" title="На весь экран">
+                        <button onClick={toggleFullscreen} className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[#2e3856] transition-colors" title="На весь экран">
                             <Maximize className="w-5 h-5" />
                         </button>
                     </div>
@@ -595,9 +595,9 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
 
             {/* Edit Modal Overlay */}
             {editingCard && (
-                <div className="fixed inset-0 z-[100] bg-[#0a0a1a]/80 backdrop-blur-sm flex items-center justify-center p-4">
-                    <div className="w-full max-w-lg bg-[#171c2e] rounded-2xl shadow-2xl border border-[#2a2a4d] overflow-hidden flex flex-col">
-                        <div className="p-6 border-b border-[#2a2a4d] flex justify-between items-center bg-[#111526]">
+                <div className="fixed inset-0 z-[100] bg-[#0a092d]/80 backdrop-blur-sm flex items-center justify-center p-4">
+                    <div className="w-full max-w-lg bg-[#171c2e] rounded-2xl shadow-2xl border border-[#2e3856] overflow-hidden flex flex-col">
+                        <div className="p-6 border-b border-[#2e3856] flex justify-between items-center bg-[#111526]">
                             <h3 className="text-xl font-bold text-white">Редактировать карточку</h3>
                             <button onClick={() => setEditingCard(null)} className="text-zinc-400 hover:text-white transition-colors">
                                 <XIcon className="w-6 h-6" />
@@ -606,24 +606,24 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                         <div className="p-6 flex flex-col gap-6 bg-[#171c2e] overflow-y-auto max-h-[60vh]">
                             {fieldsSchema.sort((a, b) => a.order - b.order).map(field => (
                                 <div key={field.id}>
-                                    <label className="text-xs font-bold text-indigo-400 mb-2 block uppercase tracking-wider">{field.name}</label>
+                                    <label className="text-xs font-bold text-[#ffcd1f] mb-2 block uppercase tracking-wider">{field.name}</label>
                                     {field.id === 'term' || field.id === 'definition' ? (
                                         field.id === 'term' ? (
                                             <input
-                                                className="w-full bg-[#1b1b2f] border-b-2 border-white/20 focus:border-[#a8b1ff] text-white p-3 outline-none transition-colors rounded-t-md"
+                                                className="w-full bg-[#0a092d] border-b-2 border-white/20 focus:border-[#a8b1ff] text-white p-3 outline-none transition-colors rounded-t-md"
                                                 defaultValue={editingCard?.term}
                                                 onChange={(e) => { if (editingCard) editingCard.term = e.target.value; }}
                                             />
                                         ) : (
                                             <textarea
-                                                className="w-full bg-[#1b1b2f] border-b-2 border-white/20 focus:border-[#a8b1ff] text-white p-3 outline-none transition-colors resize-none min-h-[100px] rounded-t-md"
+                                                className="w-full bg-[#0a092d] border-b-2 border-white/20 focus:border-[#a8b1ff] text-white p-3 outline-none transition-colors resize-none min-h-[100px] rounded-t-md"
                                                 defaultValue={editingCard?.definition}
                                                 onChange={(e) => { if (editingCard) editingCard.definition = e.target.value; }}
                                             />
                                         )
                                     ) : (
                                         <textarea
-                                            className="w-full bg-[#1b1b2f] border-b-2 border-white/20 focus:border-[#a8b1ff] text-white p-3 outline-none transition-colors resize-none min-h-[70px] rounded-t-md"
+                                            className="w-full bg-[#0a092d] border-b-2 border-white/20 focus:border-[#a8b1ff] text-white p-3 outline-none transition-colors resize-none min-h-[70px] rounded-t-md"
                                             defaultValue={editingCard?.fieldsData?.[field.id] || ''}
                                             onChange={(e) => {
                                                 if (editingCard) {
@@ -636,12 +636,12 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                                 </div>
                             ))}
                         </div>
-                        <div className="p-5 border-t border-[#2a2a4d] flex justify-end gap-4 bg-[#111526]">
+                        <div className="p-5 border-t border-[#2e3856] flex justify-end gap-4 bg-[#111526]">
                             <button onClick={() => setEditingCard(null)} className="px-6 py-2.5 rounded-full text-zinc-300 font-semibold hover:bg-white/5 transition-colors">Отмена</button>
                             <button onClick={() => {
                                 setActiveCards(prev => [...prev]);
                                 setEditingCard(null);
-                            }} className="px-8 py-2.5 rounded-full bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition-colors">
+                            }} className="px-8 py-2.5 rounded-full bg-[#4255ff] text-white font-semibold hover:bg-indigo-700 transition-colors">
                                 Готово
                             </button>
                         </div>

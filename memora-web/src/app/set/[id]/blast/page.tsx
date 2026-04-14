@@ -451,7 +451,7 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
             className="min-h-screen bg-[#11112b] text-white flex flex-col relative overflow-hidden select-none font-sans"
             onMouseMove={handleMouseMove}
         >
-            <header className="bg-[#1a1a3a] border-b border-[#2a2a4d] p-4 flex justify-between items-center z-50">
+            <header className="bg-[#1a1a3a] border-b border-[#2e3856] p-4 flex justify-between items-center z-50">
                 <div className="flex items-center gap-4">
                     <h1 className="text-xl font-bold text-white flex items-center gap-2">
                         <Rocket size={20} className="text-cyan-400" /> Blast
@@ -484,7 +484,7 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
 
                 {gameState === 'playing' && (
                     <div className="absolute top-10 left-0 right-0 flex justify-center w-full pointer-events-none opacity-20 z-0">
-                        <span className="text-8xl font-black">{timeLeft}</span>
+                        <span className="text-8xl font-semibold">{timeLeft}</span>
                     </div>
                 )}
 
@@ -549,7 +549,7 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
                         </div>
 
                         <div className="flex flex-col gap-1 w-48 items-end">
-                            <div className="font-bold text-purple-400">
+                            <div className="font-bold text-[#ffcd1f]">
                                 Серия x{currentMultiplier.toFixed(1)}
                             </div>
                             <div className="w-full h-3 flex gap-1 justify-end">
@@ -558,7 +558,7 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
                                         key={i}
                                         className={cn(
                                             "flex-1 rounded-sm border border-purple-900/50 transition-colors duration-300",
-                                            streak > i ? "bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)]" : "bg-purple-900/30"
+                                            streak > i ? "bg-[#4255ff] shadow-[0_0_8px_rgba(168,85,247,0.8)]" : "bg-purple-900/30"
                                         )}
                                     ></div>
                                 ))}
@@ -595,7 +595,7 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
                 {gameState === 'level_passed' && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center z-50 bg-[#11112b]/95 backdrop-blur-md">
                         <h2 className="text-5xl font-bold mb-4 text-zinc-500">Уровень {level} завершен</h2>
-                        <h3 className="text-3xl font-medium mb-12 text-zinc-400">Общий счет: <span className="text-white font-black">{score}</span></h3>
+                        <h3 className="text-3xl font-medium mb-12 text-zinc-400">Общий счет: <span className="text-white font-semibold">{score}</span></h3>
 
                         <button
                             onClick={() => startGame(level + 1, score)}
@@ -617,11 +617,11 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
                         <div className="flex gap-4 mb-12 w-full max-w-xl">
                             <div className="flex-1 bg-[#0b335c] p-6 rounded-2xl flex flex-col items-center justify-center shadow-inner">
                                 <span className="text-sm font-bold text-blue-300 mb-2">Ваш результат</span>
-                                <span className="text-5xl font-black text-white">{score}</span>
+                                <span className="text-5xl font-semibold text-white">{score}</span>
                             </div>
                             <div className="flex-1 bg-[#0b335c] p-6 rounded-2xl flex flex-col items-center justify-center shadow-inner">
                                 <span className="text-sm font-bold text-blue-300 mb-2">Ваш уровень</span>
-                                <span className="text-5xl font-black text-white">{level}</span>
+                                <span className="text-5xl font-semibold text-white">{level}</span>
                             </div>
                         </div>
 

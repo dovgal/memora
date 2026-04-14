@@ -14,7 +14,7 @@ const TEAM_COLOURS: Record<string, { bg: string; border: string; glow: string; e
     Shark: { bg: 'bg-cyan-600', border: 'border-cyan-400', glow: 'shadow-cyan-500/40', emoji: '🦈' },
     Panda: { bg: 'bg-zinc-100', border: 'border-zinc-200', glow: 'shadow-zinc-200/40', emoji: '🐼' },
     Dragon: { bg: 'bg-red-600', border: 'border-red-400', glow: 'shadow-red-500/40', emoji: '🐉' },
-    Phoenix: { bg: 'bg-purple-600', border: 'border-purple-400', glow: 'shadow-purple-500/40', emoji: '🦄' },
+    Phoenix: { bg: 'bg-[#4255ff]', border: 'border-purple-400', glow: 'shadow-purple-500/40', emoji: '🦄' },
 };
 
 interface StudentLobbyPageProps {
@@ -87,7 +87,7 @@ export default function StudentLobbyPage({ params }: StudentLobbyPageProps) {
     const teamStyle = team ? (TEAM_COLOURS[team] ?? TEAM_COLOURS.Tiger) : null;
 
     return (
-        <div className="min-h-screen bg-zinc-950 text-white flex flex-col items-center justify-center p-6 relative overflow-hidden">
+        <div className="min-h-screen bg-[#0a092d] text-white flex flex-col items-center justify-center p-6 relative overflow-hidden">
             {/* Ambient background glow — changes colour when team is assigned */}
             <div
                 className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[160px] pointer-events-none transition-all duration-1000 ${team ? 'opacity-30' : 'opacity-15'
@@ -110,25 +110,25 @@ export default function StudentLobbyPage({ params }: StudentLobbyPageProps) {
                                 }
                             </div>
                             <div className="text-center">
-                                <p className="text-2xl font-extrabold text-white">You're in!</p>
+                                <p className="text-2xl font-semibold text-white">You're in!</p>
                                 <p className="text-zinc-500 text-sm mt-1">Waiting for the teacher to start…</p>
                             </div>
                         </div>
 
                         {/* Join code display */}
-                        <div className="bg-zinc-900/60 border border-zinc-800 rounded-2xl px-8 py-5 text-center">
+                        <div className="bg-[#0a092d]/60 border border-[#2e3856] rounded-2xl px-8 py-5 text-center">
                             <p className="text-xs uppercase tracking-widest text-zinc-500 mb-2">Game Code</p>
-                            <p className="text-4xl font-black tracking-[0.3em] text-indigo-400 tabular-nums">{joinCode}</p>
+                            <p className="text-4xl font-semibold tracking-[0.3em] text-[#ffcd1f] tabular-nums">{joinCode}</p>
                         </div>
 
                         {/* Animated waiting dots */}
                         <div className="flex gap-2 items-center">
-                            <div className="w-2 h-2 bg-zinc-600 rounded-full animate-bounce [animation-delay:0ms]" />
-                            <div className="w-2 h-2 bg-zinc-600 rounded-full animate-bounce [animation-delay:150ms]" />
-                            <div className="w-2 h-2 bg-zinc-600 rounded-full animate-bounce [animation-delay:300ms]" />
+                            <div className="w-2 h-2 bg-[#586380] rounded-full animate-bounce [animation-delay:0ms]" />
+                            <div className="w-2 h-2 bg-[#586380] rounded-full animate-bounce [animation-delay:150ms]" />
+                            <div className="w-2 h-2 bg-[#586380] rounded-full animate-bounce [animation-delay:300ms]" />
                         </div>
 
-                        <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-zinc-900/40 border border-zinc-800">
+                        <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0a092d]/40 border border-[#2e3856]">
                             <Users className="w-4 h-4 text-zinc-500" />
                             <p className="text-sm text-zinc-500">
                                 {isConnected ? 'Connected — waiting for others' : 'Reconnecting…'}
@@ -147,7 +147,7 @@ export default function StudentLobbyPage({ params }: StudentLobbyPageProps) {
                             <span className="text-7xl">{teamStyle!.emoji}</span>
                         </div>
 
-                        <p className={`text-5xl font-black ${team === 'Panda' ? 'text-zinc-900' : 'text-white'}`}>
+                        <p className={`text-5xl font-semibold ${team === 'Panda' ? 'text-zinc-900' : 'text-white'}`}>
                             {team}
                         </p>
 

@@ -122,18 +122,18 @@ export default function AudioInput({ value, onChange }: Props) {
     return (
         <div className="flex flex-col gap-2 mt-2">
             {value ? (
-                <div className="flex items-center gap-3 bg-zinc-800/80 p-3 rounded-xl border border-zinc-700">
+                <div className="flex items-center gap-3 bg-[#2e3856]/80 p-3 rounded-xl border border-[#586380]">
                     <button
                         type="button"
                         onClick={togglePlay}
-                        className="w-10 h-10 flex items-center justify-center bg-indigo-600 hover:bg-indigo-500 rounded-full text-white transition-colors"
+                        className="w-10 h-10 flex items-center justify-center bg-[#4255ff] hover:bg-[#4255ff] rounded-full text-white transition-colors"
                     >
                         {isPlaying ? <Square size={16} fill="currentColor" /> : <Play size={18} fill="currentColor" className="ml-1" />}
                     </button>
 
                     <div className="flex-1 flex flex-col">
                         <span className="text-sm font-semibold text-zinc-300 flex items-center gap-1">
-                            <FileAudio size={14} className="text-indigo-400" /> Аудиозапись
+                            <FileAudio size={14} className="text-[#ffcd1f]" /> Аудиозапись
                         </span>
                         <span className="text-xs text-zinc-500">
                             {isPlaying ? "Воспроизведение..." : "Готово к прослушиванию"}
@@ -149,7 +149,7 @@ export default function AudioInput({ value, onChange }: Props) {
                             }
                             onChange(null);
                         }}
-                        className="p-2 text-zinc-500 hover:bg-zinc-700 hover:text-red-400 rounded-lg transition-all"
+                        className="p-2 text-zinc-500 hover:bg-[#586380] hover:text-red-400 rounded-lg transition-all"
                     >
                         <Trash2 size={18} />
                     </button>
@@ -162,7 +162,7 @@ export default function AudioInput({ value, onChange }: Props) {
                         onClick={isRecording ? stopRecording : startRecording}
                         className={`flex items-center gap-2 px-4 py-3 rounded-xl font-bold transition-all flex-1 justify-center ${isRecording
                                 ? 'bg-red-500/20 text-red-500 border border-red-500/50 animate-pulse'
-                                : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700 border border-transparent'
+                                : 'bg-[#2e3856] text-zinc-300 hover:bg-[#586380] border border-transparent'
                             }`}
                     >
                         {isRecording ? <Square size={18} fill="currentColor" /> : <Mic size={18} />}
@@ -170,7 +170,7 @@ export default function AudioInput({ value, onChange }: Props) {
                     </button>
 
                     {/* Upload button */}
-                    <label className="flex items-center gap-2 px-4 py-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-xl font-bold cursor-pointer transition-all border border-transparent flex-1 justify-center">
+                    <label className="flex items-center gap-2 px-4 py-3 bg-[#2e3856] hover:bg-[#586380] text-zinc-300 rounded-xl font-bold cursor-pointer transition-all border border-transparent flex-1 justify-center">
                         {isUploading ? <Loader2 size={18} className="animate-spin" /> : <Upload size={18} />}
                         <span>Загрузить</span>
                         <input

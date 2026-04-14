@@ -184,11 +184,11 @@ export default function CreatorPage() {
         return (
             <div className="flex-1 flex flex-col items-center justify-center p-6 text-center min-h-[80vh]">
                 <div className="relative mb-8">
-                    <div className="absolute inset-0 bg-indigo-500 rounded-full blur-3xl opacity-20 animate-pulse" />
-                    <BrainCircuit size={80} className="text-indigo-400 relative animate-bounce" />
+                    <div className="absolute inset-0 bg-[#4255ff] rounded-full blur-3xl opacity-20 animate-pulse" />
+                    <BrainCircuit size={80} className="text-[#ffcd1f] relative animate-bounce" />
                 </div>
                 <h2 className="text-3xl font-bold mb-4">Магия в процессе...</h2>
-                <div className="bg-zinc-900/50 border border-white/5 rounded-2xl p-6 mb-4 w-full max-w-2xl text-left font-mono text-sm overflow-hidden h-40 relative">
+                <div className="bg-[#0a092d]/50 border border-white/5 rounded-2xl p-6 mb-4 w-full max-w-2xl text-left font-mono text-sm overflow-hidden h-40 relative">
                     <div className="text-zinc-500 whitespace-pre-wrap">{streamingAnalysis || "Инициализация анализа..."}</div>
                     <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-zinc-900/90 to-transparent" />
                 </div>
@@ -196,9 +196,9 @@ export default function CreatorPage() {
                     AI анализирует ваш контент и извлекает структуру. Это может занять время для больших документов.
                 </p>
                 <div className="mt-8 flex gap-2">
-                    <div className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce [animation-delay:-0.3s]" />
-                    <div className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce [animation-delay:-0.15s]" />
-                    <div className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce" />
+                    <div className="w-2 h-2 bg-[#4255ff] rounded-full animate-bounce [animation-delay:-0.3s]" />
+                    <div className="w-2 h-2 bg-[#4255ff] rounded-full animate-bounce [animation-delay:-0.15s]" />
+                    <div className="w-2 h-2 bg-[#4255ff] rounded-full animate-bounce" />
                 </div>
             </div>
         )
@@ -209,13 +209,13 @@ export default function CreatorPage() {
             <div className="max-w-5xl mx-auto w-full p-6 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-24">
                 <div className="flex justify-between items-end mb-8">
                     <div>
-                        <h1 className="text-4xl font-extrabold mb-2">{analysis.proposedTitle}</h1>
+                        <h1 className="text-4xl font-semibold mb-2">{analysis.proposedTitle}</h1>
                         <p className="text-zinc-400 text-lg">{analysis.proposedDescription}</p>
                     </div>
                     <button 
                         onClick={handleCreateSet}
                         disabled={isCreating}
-                        className="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-4 rounded-2xl font-bold flex items-center gap-2 shadow-xl transition-all disabled:opacity-50"
+                        className="bg-[#4255ff] hover:bg-[#4255ff] text-white px-8 py-4 rounded-2xl font-bold flex items-center gap-2 shadow-xl transition-all disabled:opacity-50"
                     >
                         {isCreating ? <Loader2 className="animate-spin" /> : <Check />}
                         Создать модуль ({analysis.cards.length} карточек)
@@ -224,8 +224,8 @@ export default function CreatorPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {analysis.cards.map((card, i) => (
-                        <div key={i} className="bg-zinc-900/50 border border-white/5 p-6 rounded-2xl flex flex-col gap-2 hover:border-indigo-500/30 transition-colors group">
-                            <span className="text-xs font-bold text-indigo-400 uppercase tracking-tighter">Карточка {i+1}</span>
+                        <div key={i} className="bg-[#0a092d]/50 border border-white/5 p-6 rounded-2xl flex flex-col gap-2 hover:border-indigo-500/30 transition-colors group">
+                            <span className="text-xs font-bold text-[#ffcd1f] uppercase tracking-tighter">Карточка {i+1}</span>
                             <div className="text-xl font-bold group-hover:text-white transition-colors">{card.term}</div>
                             <div className="text-zinc-500 group-hover:text-zinc-400 transition-colors">{card.definition}</div>
                         </div>
@@ -238,16 +238,16 @@ export default function CreatorPage() {
     return (
         <div className="max-w-4xl mx-auto w-full p-6 py-12">
             <div className="mb-12 text-center">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-sm font-bold mb-6">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#4255ff]/10 border border-indigo-500/20 text-[#ffcd1f] text-sm font-bold mb-6">
                     <Sparkles size={16} /> AI Content Creator
                 </div>
-                <h1 className="text-5xl font-black mb-6 tracking-tight">Создавайте за секунды.</h1>
+                <h1 className="text-5xl font-semibold mb-6 tracking-tight">Создавайте за секунды.</h1>
                 <p className="text-xl text-zinc-400 leading-relaxed max-w-2xl mx-auto">
                     Загрузите PDF, Word или вставьте текст. Наш AI превратит это в полноценную учебную программу.
                 </p>
             </div>
 
-            <div className="space-y-8 bg-zinc-900/30 border border-white/5 p-8 rounded-[2.5rem] backdrop-blur-sm shadow-2xl">
+            <div className="space-y-8 bg-[#0a092d]/30 border border-white/5 p-8 rounded-[2.5rem] backdrop-blur-sm shadow-2xl">
                 
                 {/* Content Input Area */}
                 <div className="space-y-4">
@@ -265,7 +265,7 @@ export default function CreatorPage() {
                                 onChange={handleFileUpload}
                             />
                             {fileName ? (
-                                <div className="flex items-center gap-2 px-3 py-1.5 bg-indigo-500/20 border border-indigo-500/30 rounded-full text-xs font-bold text-indigo-400 animate-in zoom-in-95">
+                                <div className="flex items-center gap-2 px-3 py-1.5 bg-[#4255ff]/20 border border-indigo-500/30 rounded-full text-xs font-bold text-[#ffcd1f] animate-in zoom-in-95">
                                     <File size={14} /> {fileName}
                                     <button onClick={removeFile} className="hover:text-white"><X size={14} /></button>
                                 </div>
@@ -283,7 +283,7 @@ export default function CreatorPage() {
                     <div className="relative group">
                         {isParsing && (
                             <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] z-10 rounded-3xl flex flex-col items-center justify-center animate-in fade-in">
-                                <Loader2 className="animate-spin text-indigo-500 mb-2" size={32} />
+                                <Loader2 className="animate-spin text-[#4255ff] mb-2" size={32} />
                                 <span className="text-sm font-bold text-white">Читаем документ...</span>
                             </div>
                         )}
@@ -309,8 +309,8 @@ export default function CreatorPage() {
                             value={objective}
                             onChange={(e) => setObjective(e.target.value)}
                         />
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-indigo-500/10 rounded-xl">
-                            <Sparkles size={20} className="text-indigo-500/50" />
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-[#4255ff]/10 rounded-xl">
+                            <Sparkles size={20} className="text-[#4255ff]/50" />
                         </div>
                     </div>
                 </div>
@@ -318,7 +318,7 @@ export default function CreatorPage() {
                 <button 
                     onClick={handleAnalyze}
                     disabled={!content || !objective || isParsing}
-                    className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-6 rounded-2xl font-black text-xl flex items-center justify-center gap-3 shadow-2xl transition-all hover:scale-[1.01] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed group"
+                    className="w-full bg-[#4255ff] hover:bg-[#4255ff] text-white py-6 rounded-2xl font-semibold text-xl flex items-center justify-center gap-3 shadow-2xl transition-all hover:scale-[1.01] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed group"
                 >
                     <BrainCircuit className="group-hover:rotate-12 transition-transform" />
                     Анализировать контент
@@ -328,7 +328,7 @@ export default function CreatorPage() {
             <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[
                     { icon: <FileText className="text-blue-400" />, title: "PDF & Docs", desc: "Поддержка учебников и конспектов" },
-                    { icon: <BrainCircuit className="text-purple-400" />, title: "Smart Extraction", desc: "AI находит самые важные мысли" },
+                    { icon: <BrainCircuit className="text-[#ffcd1f]" />, title: "Smart Extraction", desc: "AI находит самые важные мысли" },
                     { icon: <Sparkles className="text-amber-400" />, title: "Instant Sets", desc: "Готовый модуль за 15 секунд" }
                 ].map((feature, i) => (
                     <div key={i} className="p-6 bg-white/5 border border-white/5 rounded-2xl">

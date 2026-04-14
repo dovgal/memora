@@ -32,7 +32,7 @@ function JoinCodeDisplay({ code }: { code: string }) {
                 </div>
             </div>
             <p className="text-xs text-zinc-500 uppercase tracking-widest">Join Code</p>
-            <div className="text-6xl font-black tracking-[0.25em] text-white tabular-nums">
+            <div className="text-6xl font-semibold tracking-[0.25em] text-white tabular-nums">
                 {code}
             </div>
         </div>
@@ -99,16 +99,16 @@ export default function TeacherLobbyPage({ params }: TeacherLobbyPageProps) {
 
     if (!resolvedParams) {
         return (
-            <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+            <div className="min-h-screen bg-[#0a092d] flex items-center justify-center">
                 <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-zinc-950 text-white flex flex-col">
+        <div className="min-h-screen bg-[#0a092d] text-white flex flex-col">
             {/* Top bar */}
-            <header className="flex items-center justify-between px-6 py-4 border-b border-zinc-800 bg-zinc-900/60 backdrop-blur-sm">
+            <header className="flex items-center justify-between px-6 py-4 border-b border-[#2e3856] bg-[#0a092d]/60 backdrop-blur-sm">
                 <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
                         <Radio className="w-4 h-4 text-emerald-400" />
@@ -123,7 +123,7 @@ export default function TeacherLobbyPage({ params }: TeacherLobbyPageProps) {
                         </div>
                     </div>
                 </div>
-                <button onClick={handleClose} className="p-2 text-zinc-500 hover:text-white transition-colors rounded-lg hover:bg-zinc-800">
+                <button onClick={handleClose} className="p-2 text-zinc-500 hover:text-white transition-colors rounded-lg hover:bg-[#2e3856]">
                     <X className="w-5 h-5" />
                 </button>
             </header>
@@ -134,20 +134,20 @@ export default function TeacherLobbyPage({ params }: TeacherLobbyPageProps) {
                 <div className="flex flex-col items-center gap-8">
                     <JoinCodeDisplay code={joinCode} />
                     <p className="text-zinc-500 text-sm text-center max-w-[220px]">
-                        Students navigate to <span className="text-indigo-400 font-mono">memora.app/live/join</span> and enter this code
+                        Students navigate to <span className="text-[#ffcd1f] font-mono">memora.app/live/join</span> and enter this code
                     </p>
                 </div>
 
                 {/* Divider */}
-                <div className="hidden md:block w-px h-64 bg-zinc-800" />
+                <div className="hidden md:block w-px h-64 bg-[#2e3856]" />
 
                 {/* Right: Student counter + Start */}
                 <div className="flex flex-col items-center gap-8">
                     <div className="flex flex-col items-center gap-3">
-                        <div className="w-20 h-20 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
-                            <Users className="w-9 h-9 text-indigo-400" />
+                        <div className="w-20 h-20 rounded-2xl bg-[#4255ff]/10 border border-indigo-500/20 flex items-center justify-center">
+                            <Users className="w-9 h-9 text-[#ffcd1f]" />
                         </div>
-                        <div className="text-7xl font-black text-white tabular-nums animate-in fade-in duration-300" key={studentCount}>
+                        <div className="text-7xl font-semibold text-white tabular-nums animate-in fade-in duration-300" key={studentCount}>
                             {studentCount}
                         </div>
                         <p className="text-zinc-400 text-sm font-medium">
@@ -159,7 +159,7 @@ export default function TeacherLobbyPage({ params }: TeacherLobbyPageProps) {
                         id="start-game-btn"
                         onClick={handleStartGame}
                         disabled={studentCount === 0 || isStarting || !isConnected}
-                        className="flex items-center gap-3 bg-emerald-600 hover:bg-emerald-500 disabled:bg-zinc-700 disabled:text-zinc-500 disabled:cursor-not-allowed text-white font-bold py-4 px-10 rounded-2xl text-lg shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:shadow-[0_0_40px_rgba(16,185,129,0.5)] transition-all hover:scale-[1.02] active:scale-[0.98]"
+                        className="flex items-center gap-3 bg-emerald-600 hover:bg-emerald-500 disabled:bg-[#586380] disabled:text-zinc-500 disabled:cursor-not-allowed text-white font-bold py-4 px-10 rounded-2xl text-lg shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:shadow-[0_0_40px_rgba(16,185,129,0.5)] transition-all hover:scale-[1.02] active:scale-[0.98]"
                     >
                         <Play className="w-5 h-5" />
                         Start Game

@@ -235,7 +235,7 @@ export default function MatchModePage({ params }: { params: Promise<{ id: string
             <main className="flex-1 w-full relative flex flex-col items-center p-4 py-8">
                 {/* START SCREEN */}
                 {gameState === 'start' && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center z-40 bg-zinc-900/40 backdrop-blur-sm">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center z-40 bg-[#0a092d]/40 backdrop-blur-sm">
                         <div className="bg-white border text-center border-zinc-200 p-12 rounded-3xl w-full max-w-lg shadow-2xl animate-in zoom-in duration-300">
                             <div className="w-24 h-24 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-blue-100">
                                 <Trophy size={48} />
@@ -255,10 +255,10 @@ export default function MatchModePage({ params }: { params: Promise<{ id: string
 
                 {/* END SCREEN */}
                 {gameState === 'ended' && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center z-40 bg-zinc-900/40 backdrop-blur-sm">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center z-40 bg-[#0a092d]/40 backdrop-blur-sm">
                         <div className="bg-white border text-center border-zinc-200 p-12 rounded-3xl w-full max-w-lg shadow-2xl animate-in zoom-in duration-300">
                             <span className="text-sm font-bold tracking-widest uppercase text-zinc-400 mb-2 block">Ваше время</span>
-                            <h2 className="text-6xl font-black mb-8 text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-400 drop-shadow-sm">
+                            <h2 className="text-6xl font-semibold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-400 drop-shadow-sm">
                                 {formatTime(time)}s
                             </h2>
 

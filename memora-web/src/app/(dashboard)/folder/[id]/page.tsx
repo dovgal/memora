@@ -51,13 +51,13 @@ export default async function FolderPage({ params }: { params: Promise<{ id: str
                     <ChevronLeft size={20} /> Back to Library
                 </Link>
 
-                <header className="mb-12 border-b border-zinc-800 pb-8 flex flex-col md:flex-row md:justify-between md:items-start gap-6">
+                <header className="mb-12 border-b border-[#2e3856] pb-8 flex flex-col md:flex-row md:justify-between md:items-start gap-6">
                     <div className="flex items-start gap-6">
-                        <div className="bg-indigo-500/10 text-indigo-400 p-4 rounded-2xl">
+                        <div className="bg-[#4255ff]/10 text-[#ffcd1f] p-4 rounded-2xl">
                             <Folder size={48} />
                         </div>
                         <div>
-                            <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-2">
+                            <h1 className="text-3xl md:text-5xl font-semibold text-white mb-2">
                                 {folder.name}
                             </h1>
                             {folder.description && (
@@ -73,7 +73,7 @@ export default async function FolderPage({ params }: { params: Promise<{ id: str
 
                     <div className="flex items-center gap-3">
                         <FolderHeaderActions folderId={id} currentSets={folder.sets} />
-                        <button className="flex justify-center flex-shrink-0 items-center w-10 h-10 text-zinc-400 hover:text-white bg-zinc-900 rounded-full border border-zinc-800 transition-colors shadow-lg shadow-black/20">
+                        <button className="flex justify-center flex-shrink-0 items-center w-10 h-10 text-zinc-400 hover:text-white bg-[#0a092d] rounded-full border border-[#2e3856] transition-colors shadow-lg shadow-black/20">
                             <MoreVertical size={20} />
                         </button>
                     </div>
@@ -83,7 +83,7 @@ export default async function FolderPage({ params }: { params: Promise<{ id: str
                     <h2 className="text-xl font-bold mb-6 text-zinc-200">Study Sets in {folder.name}</h2>
 
                     {folder.sets.length === 0 ? (
-                        <div className="bg-[#1f1f3d]/50 border border-[#2a2a4d] rounded-2xl p-8 text-center max-w-2xl">
+                        <div className="bg-[#2e3856]/50 border border-[#2e3856] rounded-2xl p-8 text-center max-w-2xl">
                             <Layers className="w-12 h-12 text-zinc-500 mx-auto mb-4" />
                             <p className="text-zinc-400 mb-4">This folder is empty.</p>
                             <p className="text-sm text-zinc-500">Go to any study set to add it to this folder.</p>
@@ -91,7 +91,7 @@ export default async function FolderPage({ params }: { params: Promise<{ id: str
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {folder.sets.map(set => (
-                                <Link href={`/set/${set.id}`} key={set.id} className="block p-6 rounded-2xl bg-[#1f1f3d] border border-[#2a2a4d] hover:border-indigo-500/50 transition-all group group/card">
+                                <Link href={`/set/${set.id}`} key={set.id} className="block p-6 rounded-2xl bg-[#2e3856] border border-[#2e3856] hover:border-indigo-500/50 transition-all group group/card">
                                     <h3 className="text-lg font-bold text-white mb-2 group-hover/card:text-indigo-300 transition-colors line-clamp-1">{set.title}</h3>
                                     {set.description && <p className="text-zinc-400 text-sm mb-4 line-clamp-2">{set.description}</p>}
                                     <div className="flex items-center gap-2 text-xs font-semibold text-zinc-500 uppercase tracking-widest mt-auto">

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AppProvider from "@/components/AppProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -7,9 +7,9 @@ import OfflineBanner from "@/components/OfflineBanner";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-sans",
+  subsets: ["latin", "cyrillic-ext"],
 });
 
 const geistMono = Geist_Mono({
@@ -87,7 +87,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${plusJakarta.variable} ${geistMono.variable} font-sans antialiased bg-[#0a092d]`}
       >
         <AppProvider>
           <ThemeProvider

@@ -33,16 +33,16 @@ export default async function TeacherDashboard() {
             <section className="mb-12">
                 <h2 className="text-xl font-semibold mb-4 text-zinc-300">Quick Actions</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <Link href="/dashboard/generate" className="block p-6 rounded-2xl bg-[#1f1f3d] border border-[#2a2a4d] hover:border-indigo-500/50 hover:bg-[#2a2a4d]/50 transition-all group">
-                        <div className="h-12 w-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <Link href="/dashboard/generate" className="block p-6 rounded-2xl bg-[#2e3856] border border-[#2e3856] hover:border-indigo-500/50 hover:bg-[#2e3856]/50 transition-all group">
+                        <div className="h-12 w-12 rounded-xl bg-[#4255ff]/10 text-[#ffcd1f] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                             <Sparkles className="w-6 h-6" />
                         </div>
                         <h3 className="text-lg font-semibold mb-2 text-white">Generate with AI</h3>
                         <p className="text-zinc-400 text-sm">Instantly create study sets from your lecture notes, transcripts, or topics using AI.</p>
                     </Link>
 
-                    <Link href="/create" className="block p-6 rounded-2xl bg-[#1f1f3d] border border-[#2a2a4d] hover:border-indigo-500/50 hover:bg-[#2a2a4d]/50 transition-all group">
-                        <div className="h-12 w-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <Link href="/create" className="block p-6 rounded-2xl bg-[#2e3856] border border-[#2e3856] hover:border-indigo-500/50 hover:bg-[#2e3856]/50 transition-all group">
+                        <div className="h-12 w-12 rounded-xl bg-[#4255ff]/10 text-[#ffcd1f] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                             <UploadCloud className="w-6 h-6" />
                         </div>
                         <h3 className="text-lg font-semibold mb-2 text-white">Import Flashcards</h3>
@@ -54,19 +54,19 @@ export default async function TeacherDashboard() {
             <section>
                 <div className="flex items-center justify-between mb-4">
                     <h2 className="text-xl font-semibold text-zinc-300">Your Recent Sets</h2>
-                    <Link href="/library" className="text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors">View Library</Link>
+                    <Link href="/library" className="text-sm font-medium text-[#ffcd1f] hover:text-indigo-300 transition-colors">View Library</Link>
                 </div>
                 {sets.length === 0 ? (
-                    <div className="bg-[#1f1f3d]/50 border border-[#2a2a4d] rounded-2xl p-8 text-center">
+                    <div className="bg-[#2e3856]/50 border border-[#2e3856] rounded-2xl p-8 text-center">
                         <p className="text-zinc-400 mb-4">You haven't created any study sets yet.</p>
-                        <Link href="/create" className="inline-block bg-indigo-500 hover:bg-indigo-400 text-white px-6 py-2 rounded-lg font-medium transition-colors">
+                        <Link href="/create" className="inline-block bg-[#4255ff] hover:bg-indigo-400 text-white px-6 py-2 rounded-lg font-medium transition-colors">
                             Create a Set
                         </Link>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {sets.map(set => (
-                            <Link href={`/set/${set.id}`} key={set.id} className="block p-6 rounded-2xl bg-[#1f1f3d] border border-[#2a2a4d] hover:border-indigo-500/50 transition-all group group/card">
+                            <Link href={`/set/${set.id}`} key={set.id} className="block p-6 rounded-2xl bg-[#2e3856] border border-[#2e3856] hover:border-indigo-500/50 transition-all group group/card">
                                 <h3 className="text-lg font-bold text-white mb-2 group-hover/card:text-indigo-300 transition-colors line-clamp-1">{set.title}</h3>
                                 {set.description && <p className="text-zinc-400 text-sm mb-4 line-clamp-2">{set.description}</p>}
                                 <div className="flex items-center justify-between text-xs font-semibold text-zinc-500 uppercase tracking-widest mt-auto mt-4">

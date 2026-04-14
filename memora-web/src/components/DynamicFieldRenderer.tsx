@@ -34,7 +34,7 @@ export default function DynamicFieldRenderer({ field, index, register, errors, u
                 return (
                     <textarea
                         {...register(formPath)}
-                        className="bg-transparent border-b-2 border-zinc-700 p-2 focus:outline-none focus:border-indigo-500 transition-colors text-lg resize-y min-h-[44px] w-full"
+                        className="bg-transparent border-b-2 border-[#586380] p-2 focus:outline-none focus:border-indigo-500 transition-colors text-lg resize-y min-h-[44px] w-full"
                         placeholder={`Enter ${field.name.toLowerCase()}`}
                     />
                 );
@@ -42,7 +42,7 @@ export default function DynamicFieldRenderer({ field, index, register, errors, u
                 // We'll manage image later through specific UI, for now just show upload placeholder
                 const currentImg = getValues(formPath);
                 return (
-                    <div className="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-zinc-700 rounded-xl overflow-hidden relative group min-h-[100px] bg-zinc-800/30 w-full mt-2">
+                    <div className="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-[#586380] rounded-xl overflow-hidden relative group min-h-[100px] bg-[#2e3856]/30 w-full mt-2">
                         {currentImg ? (
                             <>
                                 <img src={currentImg} alt="Field image" className="w-full h-full object-cover" />
@@ -55,7 +55,7 @@ export default function DynamicFieldRenderer({ field, index, register, errors, u
                                 </button>
                             </>
                         ) : (
-                            <label className="flex-1 w-full h-full flex flex-col items-center justify-center gap-2 py-4 text-zinc-400 hover:text-white hover:bg-zinc-700/50 transition-all cursor-pointer">
+                            <label className="flex-1 w-full h-full flex flex-col items-center justify-center gap-2 py-4 text-zinc-400 hover:text-white hover:bg-[#586380]/50 transition-all cursor-pointer">
                                 <ImageIcon size={20} />
                                 <span className="text-xs font-bold text-center leading-tight">Добавить фото</span>
                                 {/* Note: we actually need a file handler here. We'll wire this in the parent. */}
@@ -87,7 +87,7 @@ export default function DynamicFieldRenderer({ field, index, register, errors, u
                     <div className="mt-2">
                         <textarea
                             {...register(formPath)}
-                            className="bg-zinc-900 border border-zinc-700 rounded-lg p-3 font-mono text-sm focus:outline-none focus:border-indigo-500 transition-colors resize-y min-h-[80px] w-full text-indigo-300"
+                            className="bg-[#0a092d] border border-[#586380] rounded-lg p-3 font-mono text-sm focus:outline-none focus:border-indigo-500 transition-colors resize-y min-h-[80px] w-full text-indigo-300"
                             placeholder="Entex LaTeX math forumla e.g. E = mc^2"
                         />
                         <div className="flex items-center gap-2 mt-2 text-xs text-zinc-500">

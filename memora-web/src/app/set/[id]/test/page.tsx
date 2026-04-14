@@ -38,14 +38,14 @@ function MatchingQuestionView({ question, currentAnswer, onChange }: { question:
 
     const getTermClass = (id: string) => {
         if (parsedAnswer[id]) return "bg-green-500/20 border-green-500/50 text-green-400 opacity-60 cursor-default";
-        if (selectedTermId === id) return "bg-indigo-500/20 border-indigo-500 text-indigo-300 ring-2 ring-indigo-500/50";
-        return "bg-[#0a0a1a] border-[#2a2a4d] hover:border-indigo-500 hover:bg-[#1a1a3a] text-zinc-300 shadow-sm";
+        if (selectedTermId === id) return "bg-[#4255ff]/20 border-indigo-500 text-indigo-300 ring-2 ring-indigo-500/50";
+        return "bg-[#0a092d] border-[#2e3856] hover:border-indigo-500 hover:bg-[#1a1a3a] text-zinc-300 shadow-sm";
     };
 
     const getDefClass = (id: string) => {
         if (Object.values(parsedAnswer).includes(id)) return "bg-green-500/20 border-green-500/50 text-green-400 opacity-60 cursor-default";
-        if (selectedDefId === id) return "bg-indigo-500/20 border-indigo-500 text-indigo-300 ring-2 ring-indigo-500/50";
-        return "bg-[#0a0a1a] border-[#2a2a4d] hover:border-indigo-500 hover:bg-[#1a1a3a] text-zinc-300 shadow-sm";
+        if (selectedDefId === id) return "bg-[#4255ff]/20 border-indigo-500 text-indigo-300 ring-2 ring-indigo-500/50";
+        return "bg-[#0a092d] border-[#2e3856] hover:border-indigo-500 hover:bg-[#1a1a3a] text-zinc-300 shadow-sm";
     };
 
     return (
@@ -234,17 +234,17 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-[#0a0a1a] flex items-center justify-center">
-                <Loader2 className="animate-spin text-indigo-500" size={48} />
+            <div className="min-h-screen bg-[#0a092d] flex items-center justify-center">
+                <Loader2 className="animate-spin text-[#4255ff]" size={48} />
             </div>
         )
     }
 
     if (!set || set.flashcards.length === 0) {
         return (
-            <div className="min-h-screen bg-[#0a0a1a] text-white flex flex-col items-center justify-center">
+            <div className="min-h-screen bg-[#0a092d] text-white flex flex-col items-center justify-center">
                 <p>Not enough flashcards to generate a test.</p>
-                <button onClick={closeTest} className="mt-4 text-indigo-400">Return to Set</button>
+                <button onClick={closeTest} className="mt-4 text-[#ffcd1f]">Return to Set</button>
             </div>
         )
     }
@@ -252,7 +252,7 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
     // Modal: Configuration Screen
     if (isConfiguring) {
         return (
-            <div className="min-h-screen bg-[#0a0a1a] flex flex-col text-white font-sans items-center justify-center relative">
+            <div className="min-h-screen bg-[#0a092d] flex flex-col text-white font-sans items-center justify-center relative">
                 <button
                     onClick={closeConfig}
                     className="absolute top-6 left-6 flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-sm font-semibold"
@@ -260,7 +260,7 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
                     <X size={20} /> Назад
                 </button>
 
-                <div className="w-full max-w-2xl bg-[#1f1f3d] border border-[#2a2a4d] rounded-2xl p-8 md:p-12 shadow-2xl animate-in zoom-in duration-300">
+                <div className="w-full max-w-2xl bg-[#2e3856] border border-[#2e3856] rounded-2xl p-8 md:p-12 shadow-2xl animate-in zoom-in duration-300">
                     <div className="flex flex-col items-center text-center mb-10">
                         <div className="w-16 h-16 bg-orange-500/20 rounded-2xl flex items-center justify-center mb-6 border border-orange-500/30">
                             <FileText size={32} className="text-orange-400" />
@@ -284,7 +284,7 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
                                 max={set.flashcards.length}
                                 value={questionCount}
                                 onChange={(e) => setQuestionCount(Math.min(set.flashcards.length, Math.max(1, parseInt(e.target.value) || 1)))}
-                                className="w-full bg-[#0a0a1a] border border-[#2a2a4d] rounded-xl px-4 py-3 text-white outline-none focus:border-indigo-500 transition-colors font-medium text-lg"
+                                className="w-full bg-[#0a092d] border border-[#2e3856] rounded-xl px-4 py-3 text-white outline-none focus:border-indigo-500 transition-colors font-medium text-lg"
                             />
                         </div>
 
@@ -294,8 +294,8 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
                                 Формат
                             </h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <label className="flex items-center gap-3 p-4 bg-[#0a0a1a] border border-[#2a2a4d] rounded-xl cursor-pointer hover:border-zinc-500 transition-colors">
-                                    <div className={`w-5 h-5 rounded overflow-hidden flex items-center justify-center border ${allowedTypes.trueFalse ? 'bg-indigo-500 border-indigo-500' : 'bg-transparent border-zinc-500'}`}>
+                                <label className="flex items-center gap-3 p-4 bg-[#0a092d] border border-[#2e3856] rounded-xl cursor-pointer hover:border-zinc-500 transition-colors">
+                                    <div className={`w-5 h-5 rounded overflow-hidden flex items-center justify-center border ${allowedTypes.trueFalse ? 'bg-[#4255ff] border-indigo-500' : 'bg-transparent border-zinc-500'}`}>
                                         {allowedTypes.trueFalse && <CheckCircle size={14} className="text-white" />}
                                     </div>
                                     <input
@@ -307,8 +307,8 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
                                     <span className="font-medium">Верно / неверно</span>
                                 </label>
 
-                                <label className="flex items-center gap-3 p-4 bg-[#0a0a1a] border border-[#2a2a4d] rounded-xl cursor-pointer hover:border-zinc-500 transition-colors">
-                                    <div className={`w-5 h-5 rounded overflow-hidden flex items-center justify-center border ${allowedTypes.multipleChoice ? 'bg-indigo-500 border-indigo-500' : 'bg-transparent border-zinc-500'}`}>
+                                <label className="flex items-center gap-3 p-4 bg-[#0a092d] border border-[#2e3856] rounded-xl cursor-pointer hover:border-zinc-500 transition-colors">
+                                    <div className={`w-5 h-5 rounded overflow-hidden flex items-center justify-center border ${allowedTypes.multipleChoice ? 'bg-[#4255ff] border-indigo-500' : 'bg-transparent border-zinc-500'}`}>
                                         {allowedTypes.multipleChoice && <CheckCircle size={14} className="text-white" />}
                                     </div>
                                     <input
@@ -320,8 +320,8 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
                                     <span className="font-medium">С выбором ответа</span>
                                 </label>
 
-                                <label className="flex items-center gap-3 p-4 bg-[#0a0a1a] border border-[#2a2a4d] rounded-xl cursor-pointer hover:border-zinc-500 transition-colors">
-                                    <div className={`w-5 h-5 rounded overflow-hidden flex items-center justify-center border ${allowedTypes.written ? 'bg-indigo-500 border-indigo-500' : 'bg-transparent border-zinc-500'}`}>
+                                <label className="flex items-center gap-3 p-4 bg-[#0a092d] border border-[#2e3856] rounded-xl cursor-pointer hover:border-zinc-500 transition-colors">
+                                    <div className={`w-5 h-5 rounded overflow-hidden flex items-center justify-center border ${allowedTypes.written ? 'bg-[#4255ff] border-indigo-500' : 'bg-transparent border-zinc-500'}`}>
                                         {allowedTypes.written && <CheckCircle size={14} className="text-white" />}
                                     </div>
                                     <input
@@ -333,8 +333,8 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
                                     <span className="font-medium">Письменный</span>
                                 </label>
 
-                                <label className="flex items-center gap-3 p-4 bg-[#0a0a1a] border border-[#2a2a4d] rounded-xl cursor-pointer hover:border-zinc-500 transition-colors">
-                                    <div className={`w-5 h-5 rounded overflow-hidden flex items-center justify-center border ${allowedTypes.matching ? 'bg-indigo-500 border-indigo-500' : 'bg-transparent border-zinc-500'}`}>
+                                <label className="flex items-center gap-3 p-4 bg-[#0a092d] border border-[#2e3856] rounded-xl cursor-pointer hover:border-zinc-500 transition-colors">
+                                    <div className={`w-5 h-5 rounded overflow-hidden flex items-center justify-center border ${allowedTypes.matching ? 'bg-[#4255ff] border-indigo-500' : 'bg-transparent border-zinc-500'}`}>
                                         {allowedTypes.matching && <CheckCircle size={14} className="text-white" />}
                                     </div>
                                     <input
@@ -362,10 +362,10 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
     }
 
     return (
-        <div className="min-h-screen bg-[#0a0a1a] text-white flex flex-col relative font-sans">
+        <div className="min-h-screen bg-[#0a092d] text-white flex flex-col relative font-sans">
 
             {/* Top Bar - Dark Mode */}
-            <header className="sticky top-0 bg-[#0a0a1a] flex justify-between items-center px-6 py-4 z-50 border-b border-[#2a2a4d] shadow-sm">
+            <header className="sticky top-0 bg-[#0a092d] flex justify-between items-center px-6 py-4 z-50 border-b border-[#2e3856] shadow-sm">
                 <div className="flex items-center gap-4">
                     <div>
                         <h1 className="text-lg font-bold text-white">Тест</h1>
@@ -374,12 +374,12 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
                 </div>
                 <div className="flex items-center gap-4">
                     <span className="text-zinc-400 font-semibold text-sm hidden md:block">Вопросов: {testQuestions.length}</span>
-                    <button onClick={() => setIsConfiguring(true)} className="p-2 hover:bg-[#1f1f3d] rounded-lg transition-colors text-zinc-400 hover:text-white" title="Настройки">
+                    <button onClick={() => setIsConfiguring(true)} className="p-2 hover:bg-[#2e3856] rounded-lg transition-colors text-zinc-400 hover:text-white" title="Настройки">
                         <Settings size={24} />
                     </button>
                     <button
                         onClick={closeTest}
-                        className="p-2 hover:bg-[#1f1f3d] rounded-lg transition-colors text-zinc-400 hover:text-white"
+                        className="p-2 hover:bg-[#2e3856] rounded-lg transition-colors text-zinc-400 hover:text-white"
                         title="Закрыть тест"
                     >
                         <X size={24} />
@@ -391,9 +391,9 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
             <main className="flex-1 flex flex-col p-6 z-10 w-full max-w-4xl mx-auto pb-32">
 
                 {isSubmitted ? (
-                    <div className="bg-[#1f1f3d] border text-center border-[#2a2a4d] p-10 rounded-2xl w-full shadow-md animate-in zoom-in duration-500 mb-12 flex flex-col items-center">
+                    <div className="bg-[#2e3856] border text-center border-[#2e3856] p-10 rounded-2xl w-full shadow-md animate-in zoom-in duration-500 mb-12 flex flex-col items-center">
                         <div className="w-24 h-24 mb-6 rounded-full border-8 border-orange-500 flex items-center justify-center">
-                            <span className="text-3xl font-black text-orange-500">{Math.round((score / testQuestions.length) * 100)}%</span>
+                            <span className="text-3xl font-semibold text-orange-500">{Math.round((score / testQuestions.length) * 100)}%</span>
                         </div>
                         <h2 className="text-3xl font-bold mb-2 text-white">Ваш результат</h2>
                         <p className="text-zinc-400 font-medium mb-10">
@@ -402,11 +402,11 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
 
                         <div className="flex gap-6 justify-center w-full max-w-md">
                             <div className="bg-green-500/10 rounded-xl p-4 flex-1 border border-green-500/20">
-                                <div className="text-3xl font-black text-green-400 mb-1">{score}</div>
+                                <div className="text-3xl font-semibold text-green-400 mb-1">{score}</div>
                                 <div className="text-xs font-bold text-green-400/80 uppercase tracking-widest">Верно</div>
                             </div>
                             <div className="bg-red-500/10 rounded-xl p-4 flex-1 border border-red-500/20">
-                                <div className="text-3xl font-black text-red-500 mb-1">{testQuestions.length - score}</div>
+                                <div className="text-3xl font-semibold text-red-500 mb-1">{testQuestions.length - score}</div>
                                 <div className="text-xs font-bold text-red-500/80 uppercase tracking-widest">Неверно</div>
                             </div>
                         </div>
@@ -414,7 +414,7 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
                         <div className="mt-12 flex justify-center gap-4 w-full max-w-md">
                             <button
                                 onClick={() => setIsConfiguring(true)}
-                                className="flex-1 items-center justify-center gap-2 bg-[#0a0a1a] border border-[#2a2a4d] hover:border-zinc-500 text-white font-bold py-3 rounded-xl transition-all"
+                                className="flex-1 items-center justify-center gap-2 bg-[#0a092d] border border-[#2e3856] hover:border-zinc-500 text-white font-bold py-3 rounded-xl transition-all"
                             >
                                 Настроить
                             </button>
@@ -432,28 +432,28 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
                             const isAnswered = userAnswers[question.flashcard.id] !== undefined;
 
                             return (
-                                <div key={question.flashcard.id} className="bg-[#1f1f3d] border border-[#2a2a4d] shadow-sm p-8 rounded-2xl">
-                                    <div className="flex justify-between items-start mb-6 border-b border-[#2a2a4d] pb-6">
+                                <div key={question.flashcard.id} className="bg-[#2e3856] border border-[#2e3856] shadow-sm p-8 rounded-2xl">
+                                    <div className="flex justify-between items-start mb-6 border-b border-[#2e3856] pb-6">
                                         <h3 className="text-xl md:text-2xl font-semibold leading-relaxed">
                                             {question.type === "TRUE_FALSE" && question.tfData
-                                                ? <span className="text-white">Правда или ложь, что <span className="font-bold text-indigo-400 px-1">{question.flashcard.term}</span> означает <span className="font-bold text-indigo-400 px-1">"{question.tfData.statement}"</span>?</span>
+                                                ? <span className="text-white">Правда или ложь, что <span className="font-bold text-[#ffcd1f] px-1">{question.flashcard.term}</span> означает <span className="font-bold text-[#ffcd1f] px-1">"{question.tfData.statement}"</span>?</span>
                                                 : question.type === "MULTIPLE_CHOICE" && question.mcqData
-                                                    ? <span className="text-white">Выберите правильный вариант для: <br /><span className="font-bold text-indigo-400 inline-block mt-2 whitespace-pre-wrap">{question.mcqData.prompt}</span></span>
+                                                    ? <span className="text-white">Выберите правильный вариант для: <br /><span className="font-bold text-[#ffcd1f] inline-block mt-2 whitespace-pre-wrap">{question.mcqData.prompt}</span></span>
                                                     : question.type === "WRITTEN" && question.writtenData
-                                                        ? <span className="text-white">Введите {question.writtenData.answerType === 'term' ? 'термин' : 'определение'} для: <br /><span className="font-bold text-indigo-400 inline-block mt-2 whitespace-pre-wrap">{question.writtenData.prompt}</span></span>
+                                                        ? <span className="text-white">Введите {question.writtenData.answerType === 'term' ? 'термин' : 'определение'} для: <br /><span className="font-bold text-[#ffcd1f] inline-block mt-2 whitespace-pre-wrap">{question.writtenData.prompt}</span></span>
                                                         : question.type === "MATCHING"
                                                             ? <span className="text-white">Сопоставьте термины и определения:</span>
                                                             : <span className="text-white">{question.flashcard.term}</span>
                                             }
                                         </h3>
-                                        <span className="text-zinc-400 font-bold text-sm bg-[#0a0a1a] px-3 py-1 rounded-full shrink-0 ml-4 mt-1 border border-[#2a2a4d]">{qIndex + 1} / {testQuestions.length}</span>
+                                        <span className="text-zinc-400 font-bold text-sm bg-[#0a092d] px-3 py-1 rounded-full shrink-0 ml-4 mt-1 border border-[#2e3856]">{qIndex + 1} / {testQuestions.length}</span>
                                     </div>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {/* MCQ Rendering */}
                                         {question.type === "MULTIPLE_CHOICE" && question.mcqData?.options.map((opt, oIndex) => {
                                             const isSelected = userAnswers[question.flashcard.id] === opt;
-                                            const uiStateClass = isSelected ? "bg-indigo-500/20 border-indigo-500 text-indigo-300 ring-2 ring-indigo-500/50" : "bg-[#0a0a1a] border-[#2a2a4d] hover:border-indigo-500 hover:bg-[#1a1a3a] text-zinc-300 shadow-sm";
+                                            const uiStateClass = isSelected ? "bg-[#4255ff]/20 border-indigo-500 text-indigo-300 ring-2 ring-indigo-500/50" : "bg-[#0a092d] border-[#2e3856] hover:border-indigo-500 hover:bg-[#1a1a3a] text-zinc-300 shadow-sm";
 
                                             return (
                                                 <button
@@ -470,7 +470,7 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
                                         {question.type === "TRUE_FALSE" && ["true", "false"].map((opt) => {
                                             const isSelected = userAnswers[question.flashcard.id] === opt;
                                             const optLabel = opt === "true" ? "Верно" : "Неверно";
-                                            const uiStateClass = isSelected ? "bg-indigo-500/20 border-indigo-500 text-indigo-300 ring-2 ring-indigo-500/50" : "bg-[#0a0a1a] border-[#2a2a4d] hover:border-indigo-500 hover:bg-[#1a1a3a] text-zinc-300 shadow-sm";
+                                            const uiStateClass = isSelected ? "bg-[#4255ff]/20 border-indigo-500 text-indigo-300 ring-2 ring-indigo-500/50" : "bg-[#0a092d] border-[#2e3856] hover:border-indigo-500 hover:bg-[#1a1a3a] text-zinc-300 shadow-sm";
 
                                             return (
                                                 <button
@@ -491,7 +491,7 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
                                                     value={userAnswers[question.flashcard.id] || ""}
                                                     onChange={(e) => handleSelectAnswer(question.flashcard.id, e.target.value)}
                                                     placeholder="Введите ваш ответ..."
-                                                    className="w-full bg-[#0a0a1a] border border-[#2a2a4d] rounded-xl px-5 py-4 focus:border-indigo-500 outline-none transition-all font-medium text-xl text-white shadow-sm"
+                                                    className="w-full bg-[#0a092d] border border-[#2e3856] rounded-xl px-5 py-4 focus:border-indigo-500 outline-none transition-all font-medium text-xl text-white shadow-sm"
                                                     autoComplete="off"
                                                 />
                                             </div>
@@ -514,7 +514,7 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
 
                 {/* Action Button */}
                 {!isSubmitted && (
-                    <div className="mt-12 flex justify-end sticky bottom-6 bg-[#0a0a1a]/80 backdrop-blur border border-[#2a2a4d] p-4 rounded-2xl shadow-lg">
+                    <div className="mt-12 flex justify-end sticky bottom-6 bg-[#0a092d]/80 backdrop-blur border border-[#2e3856] p-4 rounded-2xl shadow-lg">
                         <button
                             onClick={submitTest}
                             disabled={Object.keys(userAnswers).length !== testQuestions.length || isSubmitting}

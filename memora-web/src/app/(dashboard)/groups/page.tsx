@@ -11,7 +11,7 @@ export default function GroupsPage() {
             <p className="text-xl text-zinc-400 max-w-lg mb-8">
                 This feature is currently under development. Soon, you'll be able to create study groups, share flashcard sets, and study collaboratively with your classmates.
             </p>
-            <div className="inline-block bg-zinc-900 border border-zinc-800 text-zinc-300 px-6 py-3 rounded-full font-medium">
+            <div className="inline-block bg-[#0a092d] border border-[#2e3856] text-zinc-300 px-6 py-3 rounded-full font-medium">
                 Coming Soon 👋
             </div>
         </div>

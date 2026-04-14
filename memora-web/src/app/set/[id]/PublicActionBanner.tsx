@@ -12,7 +12,7 @@ export default function PublicActionBanner() {
     }
 
     return (
-        <div className="fixed bottom-0 left-0 right-0 bg-indigo-600 border-t border-indigo-400 p-4 shadow-[0_-10px_40px_rgba(79,70,229,0.3)] z-50">
+        <div className="fixed bottom-0 left-0 right-0 bg-[#4255ff] border-t border-indigo-400 p-4 shadow-[0_-10px_40px_rgba(79,70,229,0.3)] z-50">
             <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
                     <h3 className="text-white font-bold text-lg">Save your progress!</h3>

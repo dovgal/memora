@@ -9,7 +9,7 @@ const TEAM_EMOJIS: Record<string, string> = {
 };
 const TEAM_BG: Record<string, string> = {
     Tiger: 'bg-orange-600', Falcon: 'bg-blue-600', Shark: 'bg-cyan-600',
-    Panda: 'bg-zinc-100', Dragon: 'bg-red-600', Phoenix: 'bg-purple-600',
+    Panda: 'bg-zinc-100', Dragon: 'bg-red-600', Phoenix: 'bg-[#4255ff]',
 };
 const TEAM_TEXT: Record<string, string> = {
     Panda: 'text-zinc-900',
@@ -60,9 +60,9 @@ export default function ResultsPage({ params }: ResultsPageProps) {
     const podiumOrder = [sorted[1], sorted[0], sorted[2]].filter(Boolean); // 2nd, 1st, 3rd visual layout
 
     return (
-        <div className="min-h-screen bg-zinc-950 text-white flex flex-col">
+        <div className="min-h-screen bg-[#0a092d] text-white flex flex-col">
             {/* Header */}
-            <header className="flex items-center justify-between px-6 py-4 border-b border-zinc-800">
+            <header className="flex items-center justify-between px-6 py-4 border-b border-[#2e3856]">
                 <div className="flex items-center gap-2">
                     <Trophy className="w-5 h-5 text-yellow-400" />
                     <span className="font-bold text-sm">Game Over</span>
@@ -70,13 +70,13 @@ export default function ResultsPage({ params }: ResultsPageProps) {
                 <div className="flex gap-3">
                     <button
                         onClick={() => router.push('/dashboard/teacher')}
-                        className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white px-3 py-1.5 rounded-lg border border-zinc-700 hover:border-zinc-500 transition-colors"
+                        className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white px-3 py-1.5 rounded-lg border border-[#586380] hover:border-zinc-500 transition-colors"
                     >
                         <Home className="w-3.5 h-3.5" /> Dashboard
                     </button>
                     <button
                         onClick={() => router.back()}
-                        className="flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 px-3 py-1.5 rounded-lg border border-indigo-500/30 hover:border-indigo-500/60 transition-colors"
+                        className="flex items-center gap-1.5 text-xs text-[#ffcd1f] hover:text-indigo-300 px-3 py-1.5 rounded-lg border border-indigo-500/30 hover:border-indigo-500/60 transition-colors"
                     >
                         <RotateCcw className="w-3.5 h-3.5" /> Play Again
                     </button>
@@ -93,7 +93,7 @@ export default function ResultsPage({ params }: ResultsPageProps) {
                             {podiumOrder.map((team, displayIdx) => {
                                 if (!team) return null;
                                 const actualRank = sorted.indexOf(team);
-                                const bg = TEAM_BG[team.team] ?? 'bg-indigo-600';
+                                const bg = TEAM_BG[team.team] ?? 'bg-[#4255ff]';
                                 const textColor = TEAM_TEXT[team.team] ?? 'text-white';
                                 const podiumH = PODIUM_HEIGHTS[actualRank] ?? 'h-20';
                                 const label = PODIUM_LABELS[actualRank] ?? '';
@@ -138,12 +138,12 @@ export default function ResultsPage({ params }: ResultsPageProps) {
                                     ? Math.round((item.errorCount / item.totalAnswers) * 100)
                                     : 0;
                                 return (
-                                    <div key={item.term} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4">
+                                    <div key={item.term} className="bg-[#0a092d] border border-[#2e3856] rounded-2xl p-4">
                                         <div className="flex items-start justify-between gap-3 mb-3">
                                             <p className="font-semibold text-white leading-snug">{item.term}</p>
                                             <span className="text-red-400 text-sm font-bold tabular-nums shrink-0">{errorPct}% wrong</span>
                                         </div>
-                                        <div className="w-full bg-zinc-800 rounded-full h-2">
+                                        <div className="w-full bg-[#2e3856] rounded-full h-2">
                                             <div
                                                 className="h-2 bg-red-500 rounded-full transition-all duration-1000 ease-out"
                                                 style={{ width: isAnimated ? `${errorPct}%` : '0%' }}

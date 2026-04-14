@@ -34,14 +34,14 @@ function AudioPlayer({ src, label, icon: Icon }: { src: string, label: string, i
         <button
             type="button"
             onClick={togglePlay}
-            className="flex items-center gap-3 bg-zinc-800/80 hover:bg-zinc-700 p-3 rounded-xl border border-zinc-700 transition-colors mt-2 text-left w-full max-w-sm"
+            className="flex items-center gap-3 bg-[#2e3856]/80 hover:bg-[#586380] p-3 rounded-xl border border-[#586380] transition-colors mt-2 text-left w-full max-w-sm"
         >
-            <div className="w-10 h-10 flex items-center justify-center bg-indigo-600 rounded-full text-white shrink-0">
+            <div className="w-10 h-10 flex items-center justify-center bg-[#4255ff] rounded-full text-white shrink-0">
                 {isPlaying ? <Square size={16} fill="currentColor" /> : <Play size={18} fill="currentColor" className="ml-1" />}
             </div>
             <div className="flex-1 min-w-0">
                 <span className="text-sm font-semibold text-zinc-300 flex items-center gap-1">
-                    <Icon size={14} className="text-indigo-400 shrink-0" /> {label}
+                    <Icon size={14} className="text-[#ffcd1f] shrink-0" /> {label}
                 </span>
                 <span className="text-xs text-zinc-500 block truncate">
                     {isPlaying ? "Воспроизведение..." : "Нажмите, чтобы прослушать"}
@@ -66,7 +66,7 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
         textFieldCount >= 4 ? 'text-xl md:text-2xl lg:text-3xl' :
         textFieldCount >= 3 ? 'text-2xl md:text-3xl lg:text-4xl' :
         textFieldCount >= 2 ? 'text-3xl md:text-4xl lg:text-5xl' :
-        'text-4xl md:text-6xl lg:text-7xl';
+        'text-4xl md:text-4xl lg:text-5xl';
     const gapClass = textFieldCount >= 3 ? 'gap-2' : 'gap-4';
 
     return (
@@ -87,7 +87,7 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
                         return (
                             <div key={field.id} className="flex flex-col items-center gap-2 w-full max-w-4xl mx-auto">
                                 <div className="flex items-center gap-3">
-                                    <span className="text-[10px] md:text-sm text-indigo-400 font-bold uppercase tracking-[0.2em] opacity-80">
+                                    <span className="text-[10px] md:text-sm text-[#ffcd1f] font-bold uppercase tracking-[0.2em] opacity-80">
                                         {field.name}
                                     </span>
                                     {field.settings?.ttsEnabled && (
@@ -97,7 +97,7 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
                                                 const audio = new Audio(`/api/audio/${card.id}/${field.id}_audio`);
                                                 audio.play().catch(err => console.warn("Audio playback failed", err));
                                             }}
-                                            className="text-indigo-500 hover:text-indigo-400 p-2 bg-indigo-500/10 hover:bg-indigo-500/20 rounded-full transition-all hover:scale-110 active:scale-90"
+                                            className="text-[#4255ff] hover:text-[#ffcd1f] p-2 bg-[#4255ff]/10 hover:bg-[#4255ff]/20 rounded-full transition-all hover:scale-110 active:scale-90"
                                             title="Озвучить"
                                         >
                                             <Volume2 size={16} />
@@ -105,7 +105,7 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
                                     )}
 
                                 </div>
-                                <p className={`${textSizeClass} text-center font-black tracking-tight break-words leading-tight text-white`}>
+                                <p className={`${textSizeClass} text-center font-semibold tracking-tight break-words leading-tight text-white`}>
                                     {value}
                                 </p>
                             </div>
@@ -135,7 +135,7 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
                     case 'math':
                         // Fallback to text if KaTeX is not fully implemented, but use mono and smaller size
                         return (
-                            <div key={field.id} className="font-mono text-xl md:text-2xl text-indigo-300 bg-zinc-900/50 p-4 rounded-xl border border-zinc-800 text-center inline-block">
+                            <div key={field.id} className="font-mono text-xl md:text-2xl text-indigo-300 bg-[#0a092d]/50 p-4 rounded-xl border border-[#2e3856] text-center inline-block">
                                 {value}
                             </div>
                         );

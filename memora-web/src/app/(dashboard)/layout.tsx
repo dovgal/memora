@@ -53,7 +53,7 @@ export default async function DashboardLayout({
             {/* Sidebar */}
             <aside className="w-64 bg-card border-r border-border flex flex-col pt-6 hidden md:flex">
                 <div className="px-6 mb-8 flex items-center gap-3">
-                    <div className="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center font-bold text-white">
+                    <div className="w-8 h-8 bg-[#4255ff] rounded-lg flex items-center justify-center font-bold text-white">
                         M
                     </div>
                     <span className="text-xl font-bold text-white tracking-wide">Memora</span>
@@ -78,13 +78,13 @@ export default async function DashboardLayout({
                             <span className="absolute top-2 left-6 w-2 h-2 bg-pink-500 rounded-full"></span>
                             Notifications
                         </Link>
-                        <Link href="/creator" className="flex items-center gap-3 px-3 py-2.5 bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 rounded-xl transition-all font-bold border border-indigo-500/20 group">
+                        <Link href="/creator" className="flex items-center gap-3 px-3 py-2.5 bg-[#4255ff]/10 text-[#ffcd1f] hover:bg-[#4255ff]/20 rounded-xl transition-all font-bold border border-indigo-500/20 group">
                             <Sparkles className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                             AI Creator
                         </Link>
                     </nav>
 
-                    <div className="pt-4 border-t border-[#1f1f3d]">
+                    <div className="pt-4 border-t border-[#2e3856]">
                         <h3 className="px-3 text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">Your Folders</h3>
                         <nav className="space-y-1 max-h-[30vh] overflow-y-auto pr-1">
                             {folders.length === 0 ? (
@@ -92,13 +92,13 @@ export default async function DashboardLayout({
                             ) : (
                                 folders.map(folder => (
                                     <Link key={folder.id} href={`/folder/${folder.id}`} className="flex items-center gap-3 px-3 py-2 hover:bg-[#1a1a36] rounded-lg transition-colors text-sm group">
-                                        <Folder className="w-4 h-4 text-zinc-500 group-hover:text-indigo-400 transition-colors shrink-0" />
+                                        <Folder className="w-4 h-4 text-zinc-500 group-hover:text-[#ffcd1f] transition-colors shrink-0" />
                                         <span className="truncate">{folder.name}</span>
                                     </Link>
                                 ))
                             )}
                         </nav>
-                        <Link href="/library" className="flex items-center gap-2 px-3 py-2 mt-2 text-sm text-indigo-400 hover:text-indigo-300 font-medium w-full text-left">
+                        <Link href="/library" className="flex items-center gap-2 px-3 py-2 mt-2 text-sm text-[#ffcd1f] hover:text-indigo-300 font-medium w-full text-left">
                             <Plus className="w-4 h-4" /> New Folder
                         </Link>
                     </div>
@@ -124,7 +124,7 @@ export default async function DashboardLayout({
                         <ThemeToggle />
                         
                         {/* Restoring the global Create button */}
-                        <Link href="/create" className="hidden sm:flex items-center justify-center w-8 h-8 rounded-full bg-indigo-500 hover:bg-indigo-400 text-white transition-colors shadow-lg shadow-indigo-500/20">
+                        <Link href="/create" className="hidden sm:flex items-center justify-center w-8 h-8 rounded-full bg-[#4255ff] hover:bg-indigo-400 text-white transition-colors shadow-lg shadow-indigo-500/20">
                             <Plus className="w-5 h-5" />
                         </Link>
 
@@ -133,7 +133,7 @@ export default async function DashboardLayout({
                         </button>
 
                         <div className="relative group">
-                            <button className="w-9 h-9 rounded-full bg-indigo-600 text-white flex items-center justify-center font-medium border-2 border-transparent hover:border-zinc-500 transition-all cursor-pointer shadow-indigo-500/50 shadow-lg">
+                            <button className="w-9 h-9 rounded-full bg-[#4255ff] text-white flex items-center justify-center font-medium border-2 border-transparent hover:border-zinc-500 transition-all cursor-pointer shadow-indigo-500/50 shadow-lg">
                                 {initial}
                             </button>
                             <div className="absolute right-0 top-full mt-2 w-48 bg-[#171c2e] border border-[#262c40] rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all origin-top-right transform -translate-y-2 group-hover:translate-y-0 p-2 z-50">

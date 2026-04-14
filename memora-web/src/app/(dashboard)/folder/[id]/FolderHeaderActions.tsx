@@ -100,7 +100,7 @@ export default function FolderHeaderActions({ folderId, currentSets: initialSets
             <div className="flex items-center gap-3">
                 <button
                     onClick={() => setIsModalOpen(true)}
-                    className="flex justify-center items-center w-10 h-10 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white transition-colors shadow-lg shadow-indigo-500/20"
+                    className="flex justify-center items-center w-10 h-10 rounded-full bg-[#4255ff] hover:bg-[#4255ff] text-white transition-colors shadow-lg shadow-indigo-500/20"
                     title="Добавить материалы"
                 >
                     <Plus size={24} />
@@ -109,13 +109,13 @@ export default function FolderHeaderActions({ folderId, currentSets: initialSets
 
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-                    <div className="w-full max-w-2xl bg-[#0a0a1a] rounded-3xl overflow-hidden shadow-2xl relative border border-white/10 flex flex-col max-h-[85vh] animate-in fade-in zoom-in-95 duration-200">
+                    <div className="w-full max-w-2xl bg-[#0a092d] rounded-3xl overflow-hidden shadow-2xl relative border border-white/10 flex flex-col max-h-[85vh] animate-in fade-in zoom-in-95 duration-200">
                         {/* Header */}
                         <div className="p-6 md:p-8 flex items-center justify-between border-b border-white/5 shrink-0">
                             <div>
                                 <h2 className="text-2xl font-bold text-white">Добавить материалы</h2>
                                 <div className="flex gap-4 mt-4">
-                                    <button className="text-indigo-400 font-semibold border-b-2 border-indigo-400 pb-2">
+                                    <button className="text-[#ffcd1f] font-semibold border-b-2 border-indigo-400 pb-2">
                                         Ваша библиотека
                                     </button>
                                 </div>
@@ -132,11 +132,11 @@ export default function FolderHeaderActions({ folderId, currentSets: initialSets
                         </div>
 
                         {/* Actions */}
-                        <div className="px-6 py-4 flex justify-between items-center border-b border-zinc-800 shrink-0">
+                        <div className="px-6 py-4 flex justify-between items-center border-b border-[#2e3856] shrink-0">
                             <span className="text-sm font-semibold text-zinc-400">Модули</span>
                             <Link
                                 href={`/create?folderId=${folderId}`}
-                                className="flex items-center gap-1 text-indigo-400 hover:text-indigo-300 font-semibold text-sm transition-colors"
+                                className="flex items-center gap-1 text-[#ffcd1f] hover:text-indigo-300 font-semibold text-sm transition-colors"
                             >
                                 <Plus size={16} /> Создать
                             </Link>
@@ -146,7 +146,7 @@ export default function FolderHeaderActions({ folderId, currentSets: initialSets
                         <div className="p-6 overflow-y-auto flex-1 space-y-3">
                             {isLoading ? (
                                 <div className="flex justify-center items-center py-12">
-                                    <Loader2 className="animate-spin text-indigo-500 w-8 h-8" />
+                                    <Loader2 className="animate-spin text-[#4255ff] w-8 h-8" />
                                 </div>
                             ) : userSets.length === 0 ? (
                                 <div className="text-center py-8 text-zinc-500">
@@ -158,9 +158,9 @@ export default function FolderHeaderActions({ folderId, currentSets: initialSets
                                     const isProcessing = processingSetId === set.id;
 
                                     return (
-                                        <div key={set.id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-zinc-900 border border-zinc-800 rounded-xl hover:border-zinc-700 transition-colors gap-4">
+                                        <div key={set.id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-[#0a092d] border border-[#2e3856] rounded-xl hover:border-[#586380] transition-colors gap-4">
                                             <div className="flex items-start gap-4 flex-1 overflow-hidden">
-                                                <div className="bg-[#1f1f3d] p-3 rounded-lg text-indigo-400 shrink-0">
+                                                <div className="bg-[#2e3856] p-3 rounded-lg text-[#ffcd1f] shrink-0">
                                                     <Layers size={20} />
                                                 </div>
                                                 <div className="min-w-0 flex-1">
@@ -177,8 +177,8 @@ export default function FolderHeaderActions({ folderId, currentSets: initialSets
                                                 onClick={() => toggleSetInFolder(set)}
                                                 disabled={isProcessing}
                                                 className={`shrink-0 flex items-center justify-center rounded-full p-2 transition-colors disabled:opacity-50 ${isInFolder
-                                                    ? "text-indigo-400 hover:bg-indigo-500/10 hover:text-indigo-300"
-                                                    : "text-zinc-400 hover:bg-zinc-800 hover:text-white"
+                                                    ? "text-[#ffcd1f] hover:bg-[#4255ff]/10 hover:text-indigo-300"
+                                                    : "text-zinc-400 hover:bg-[#2e3856] hover:text-white"
                                                     }`}
                                             >
                                                 {isProcessing ? (
@@ -195,13 +195,13 @@ export default function FolderHeaderActions({ folderId, currentSets: initialSets
                             )}
                         </div>
 
-                        <div className="p-6 bg-[#0a0a1a] border-t border-white/5 flex justify-center shrink-0">
+                        <div className="p-6 bg-[#0a092d] border-t border-white/5 flex justify-center shrink-0">
                             <button
                                 onClick={() => {
                                     setIsModalOpen(false);
                                     window.location.reload();
                                 }}
-                                className="px-8 py-3 rounded-xl font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition-colors w-full sm:w-auto min-w-[200px]"
+                                className="px-8 py-3 rounded-xl font-bold bg-[#4255ff] hover:bg-[#4255ff] text-white transition-colors w-full sm:w-auto min-w-[200px]"
                             >
                                 Готово
                             </button>

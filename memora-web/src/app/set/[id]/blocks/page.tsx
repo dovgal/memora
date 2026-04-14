@@ -25,11 +25,11 @@ const SHAPES = [
     { shape: [[1, 1, 1]], color: 'bg-sky-400', shadow: 'shadow-[0_4px_0_0_#0284c7]' },
     { shape: [[1], [1], [1]], color: 'bg-sky-400', shadow: 'shadow-[0_4px_0_0_#0284c7]' },
     // 1x4 Horizontal / Vertical
-    { shape: [[1, 1, 1, 1]], color: 'bg-indigo-500', shadow: 'shadow-[0_4px_0_0_#4f46e5]' },
-    { shape: [[1], [1], [1], [1]], color: 'bg-indigo-500', shadow: 'shadow-[0_4px_0_0_#4f46e5]' },
+    { shape: [[1, 1, 1, 1]], color: 'bg-[#4255ff]', shadow: 'shadow-[0_4px_0_0_#4f46e5]' },
+    { shape: [[1], [1], [1], [1]], color: 'bg-[#4255ff]', shadow: 'shadow-[0_4px_0_0_#4f46e5]' },
     // 1x5 Horizontal / Vertical
-    { shape: [[1, 1, 1, 1, 1]], color: 'bg-purple-500', shadow: 'shadow-[0_4px_0_0_#9333ea]' },
-    { shape: [[1], [1], [1], [1], [1]], color: 'bg-purple-500', shadow: 'shadow-[0_4px_0_0_#9333ea]' },
+    { shape: [[1, 1, 1, 1, 1]], color: 'bg-[#4255ff]', shadow: 'shadow-[0_4px_0_0_#9333ea]' },
+    { shape: [[1], [1], [1], [1], [1]], color: 'bg-[#4255ff]', shadow: 'shadow-[0_4px_0_0_#9333ea]' },
     // 2x2
     { shape: [[1, 1], [1, 1]], color: 'bg-yellow-400', shadow: 'shadow-[0_4px_0_0_#eab308]' },
     // 3x3
@@ -539,7 +539,7 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
                             <div className="flex items-center justify-between">
                                 <span className="font-semibold text-zinc-300">Отвечать термином <br /> <span className="text-xs font-normal text-zinc-500">(вижу Определение, печатаю Термин)</span></span>
                                 <div
-                                    className={`relative w-12 h-6 rounded-full cursor-pointer transition-colors ${answerWith === 'term' ? 'bg-indigo-600' : 'bg-zinc-600'}`}
+                                    className={`relative w-12 h-6 rounded-full cursor-pointer transition-colors ${answerWith === 'term' ? 'bg-[#4255ff]' : 'bg-[#586380]'}`}
                                     onClick={() => setAnswerWith(answerWith === 'term' ? 'definition' : 'term')}
                                 >
                                     <div className={`absolute top-1 bottom-1 w-4 h-4 bg-white rounded-full transition-transform ${answerWith === 'term' ? 'translate-x-7' : 'translate-x-1'}`} />
@@ -563,11 +563,11 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
                             <div className="bg-blue-500 rounded-sm"></div>
                             <div className="bg-blue-400 rounded-sm"></div>
                             <div className="bg-sky-400 rounded-sm"></div>
-                            <div className="bg-indigo-500 rounded-sm"></div>
+                            <div className="bg-[#4255ff] rounded-sm"></div>
                             <div className="bg-[#1a2049] rounded-sm"></div>
-                            <div className="bg-purple-500 rounded-sm"></div>
-                            <div className="bg-indigo-600 rounded-sm"></div>
-                            <div className="bg-indigo-500 rounded-sm"></div>
+                            <div className="bg-[#4255ff] rounded-sm"></div>
+                            <div className="bg-[#4255ff] rounded-sm"></div>
+                            <div className="bg-[#4255ff] rounded-sm"></div>
                             <div className="bg-blue-600 rounded-sm"></div>
                         </div>
                         <h2 className="text-3xl font-bold text-white mb-4">Сыграйте в "Блоки"</h2>
@@ -576,7 +576,7 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
                         </p>
                         <button
                             onClick={startGame}
-                            className="w-full bg-indigo-500 hover:bg-indigo-400 text-white font-bold py-5 rounded-2xl shadow-[0_6px_0_0_#3730a3] active:translate-y-[6px] active:shadow-none transition-all text-lg mb-4"
+                            className="w-full bg-[#4255ff] hover:bg-indigo-400 text-white font-bold py-5 rounded-2xl shadow-[0_6px_0_0_#3730a3] active:translate-y-[6px] active:shadow-none transition-all text-lg mb-4"
                         >
                             Играть
                         </button>
@@ -742,7 +742,7 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
                             <h2 className="text-4xl font-bold text-white mb-8">Больше нет ходов!</h2>
                             <div className="bg-[#1b2354] w-full max-w-sm rounded-[32px] p-8 flex flex-col items-center shadow-2xl mb-8">
                                 <span className="text-zinc-400 font-medium mb-2">ВАШ СЧЕТ</span>
-                                <span className="text-7xl font-black text-white mb-2">{score}</span>
+                                <span className="text-7xl font-semibold text-white mb-2">{score}</span>
                                 {score >= highScore && score > 0 && (
                                     <span className="bg-yellow-500/20 text-yellow-400 px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wide mt-2">Новый рекорд!</span>
                                 )}
@@ -750,7 +750,7 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
 
                             <button
                                 onClick={startGame}
-                                className="w-full max-w-sm bg-indigo-500 hover:bg-indigo-400 text-white font-bold py-6 rounded-[24px] shadow-[0_8px_0_0_#3730a3] active:translate-y-[8px] active:shadow-none transition-all text-xl"
+                                className="w-full max-w-sm bg-[#4255ff] hover:bg-indigo-400 text-white font-bold py-6 rounded-[24px] shadow-[0_8px_0_0_#3730a3] active:translate-y-[8px] active:shadow-none transition-all text-xl"
                             >
                                 Сыграть еще раз
                             </button>

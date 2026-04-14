@@ -161,10 +161,10 @@ export default function PrintSetLayout({ set }: { set: SetResponse }) {
                 }
             `}</style>
 
-            <div className="min-h-screen bg-[#0a0a1a] text-white overflow-hidden flex flex-col items-center">
+            <div className="min-h-screen bg-[#0a092d] text-white overflow-hidden flex flex-col items-center">
                 {/* Header */}
                 <header className="w-full max-w-[1400px] mx-auto p-4 flex items-center justify-between">
-                    <Link href={`/set/${set.id}`} className="inline-flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors font-medium">
+                    <Link href={`/set/${set.id}`} className="inline-flex items-center gap-2 text-[#ffcd1f] hover:text-indigo-300 transition-colors font-medium">
                         <ChevronLeft size={20} /> Назад к модулю
                     </Link>
                 </header>
@@ -176,7 +176,7 @@ export default function PrintSetLayout({ set }: { set: SetResponse }) {
                     <div className="w-full lg:w-[400px] shrink-0">
                         <h2 className="text-3xl font-bold mb-6">Печать</h2>
 
-                        <div className="bg-[#111126] border border-[#2a2a4d] rounded-xl overflow-hidden">
+                        <div className="bg-[#111126] border border-[#2e3856] rounded-xl overflow-hidden">
                             <div className="p-6">
                                 {/* Section 1 */}
                                 <div className="mb-8">
@@ -191,7 +191,7 @@ export default function PrintSetLayout({ set }: { set: SetResponse }) {
                                         ].map((opt) => (
                                             <label key={opt.id} className="flex items-center gap-3 cursor-pointer group">
                                                 <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${internalLayout === opt.id ? 'border-indigo-500' : 'border-zinc-500 group-hover:border-zinc-400'}`}>
-                                                    {internalLayout === opt.id && <div className="w-2.5 h-2.5 bg-indigo-500 rounded-full" />}
+                                                    {internalLayout === opt.id && <div className="w-2.5 h-2.5 bg-[#4255ff] rounded-full" />}
                                                 </div>
                                                 <input
                                                     type="radio"
@@ -211,7 +211,7 @@ export default function PrintSetLayout({ set }: { set: SetResponse }) {
                                 <div className="mb-8">
                                     <h3 className="font-bold text-lg mb-4">2. Настройте параметры</h3>
                                     <label className="flex items-center gap-3 cursor-pointer group">
-                                        <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${swap ? 'border-indigo-500 bg-indigo-500' : 'border-zinc-500 group-hover:border-zinc-400'}`}>
+                                        <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${swap ? 'border-indigo-500 bg-[#4255ff]' : 'border-zinc-500 group-hover:border-zinc-400'}`}>
                                             {swap && <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
                                         </div>
                                         <input
@@ -241,7 +241,7 @@ export default function PrintSetLayout({ set }: { set: SetResponse }) {
                                 <span className="text-sm font-semibold tracking-widest text-[#5c5c6c]">ПРЕДПРОСМОТР</span>
                             </div>
                             <div className="flex items-center gap-2">
-                                <button onClick={handlePrint} className="p-2 hover:bg-zinc-600/50 rounded transition-colors text-white" title="Распечатать PDF">
+                                <button onClick={handlePrint} className="p-2 hover:bg-[#586380]/50 rounded transition-colors text-white" title="Распечатать PDF">
                                     <Printer size={20} />
                                 </button>
                             </div>

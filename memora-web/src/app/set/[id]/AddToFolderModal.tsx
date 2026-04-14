@@ -69,14 +69,14 @@ export default function AddToFolderModal({ setId, token }: AddToFolderModalProps
         <>
             <button
                 onClick={() => setIsOpen(true)}
-                className="flex items-center gap-1 cursor-pointer hover:text-indigo-400 transition-colors"
+                className="flex items-center gap-1 cursor-pointer hover:text-[#ffcd1f] transition-colors"
             >
                 <FolderPlus size={14} /> Add to Folder
             </button>
 
             {isOpen && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-                    <div className="bg-[#1f1f3d] border border-[#2a2a4d] rounded-2xl w-full max-w-md p-6 shadow-2xl relative">
+                    <div className="bg-[#2e3856] border border-[#2e3856] rounded-2xl w-full max-w-md p-6 shadow-2xl relative">
                         <div className="flex justify-between items-center mb-6">
                             <h2 className="text-2xl font-bold text-white">Add to Folder</h2>
                             <button onClick={() => setIsOpen(false)} className="text-zinc-400 hover:text-white transition-colors">
@@ -104,25 +104,25 @@ export default function AddToFolderModal({ setId, token }: AddToFolderModalProps
                                             disabled={isAdded || isSaving}
                                             onClick={() => addToFolder(folder.id)}
                                             className={`p-4 rounded-xl border text-left transition-all flex items-center justify-between ${isAdded
-                                                    ? 'bg-indigo-500/10 border-indigo-500/50 text-white cursor-default'
-                                                    : 'bg-black/50 border-[#2a2a4d] hover:border-indigo-500/50 text-zinc-300 hover:bg-[#2a2a4d]/50'
+                                                    ? 'bg-[#4255ff]/10 border-indigo-500/50 text-white cursor-default'
+                                                    : 'bg-black/50 border-[#2e3856] hover:border-indigo-500/50 text-zinc-300 hover:bg-[#2e3856]/50'
                                                 }`}
                                         >
                                             <div className="flex items-center gap-3">
-                                                <Folder size={20} className={isAdded ? "text-indigo-400" : "text-zinc-500"} />
+                                                <Folder size={20} className={isAdded ? "text-[#ffcd1f]" : "text-zinc-500"} />
                                                 <span className="font-medium truncate max-w-[200px]">{folder.name}</span>
                                             </div>
-                                            {isAdded && <Check size={20} className="text-indigo-400" />}
+                                            {isAdded && <Check size={20} className="text-[#ffcd1f]" />}
                                         </button>
                                     )
                                 })}
                             </div>
                         )}
 
-                        <div className="mt-6 pt-4 border-t border-[#2a2a4d] flex justify-end">
+                        <div className="mt-6 pt-4 border-t border-[#2e3856] flex justify-end">
                             <button
                                 onClick={() => setIsOpen(false)}
-                                className="bg-zinc-800 hover:bg-zinc-700 text-white font-medium py-2 px-6 rounded-lg transition-colors"
+                                className="bg-[#2e3856] hover:bg-[#586380] text-white font-medium py-2 px-6 rounded-lg transition-colors"
                             >
                                 Done
                             </button>
