@@ -299,15 +299,15 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
 
     if (!activeCards || activeCards.length === 0) {
         return (
-            <div className="w-full flex-col flex items-center justify-center aspect-[16/9] md:aspect-[2/1] max-w-4xl bg-[#0a092d] border border-[#2e3856] rounded-2xl shadow-xl mb-6">
-                <div className="text-zinc-400 font-medium">
+            <div className="w-full flex-col flex items-center justify-center aspect-[16/9] md:aspect-[2/1] max-w-4xl bg-qz-bg border border-qz-border-light rounded-2xl shadow-xl mb-6">
+                <div className="text-qz-text-muted font-medium">
                     {trackProgress ? "Отлично! На сегодня карточек для повторения больше нет! 🎉" : "Нет карточек для отображения."}
                 </div>
                 {trackProgress && (
                     <div className="flex flex-col sm:flex-row gap-4 mt-6">
                         <button
                             onClick={handleResetFsrs}
-                            className="bg-[#2e3856] hover:bg-[#2e3856] border border-white/10 text-white px-6 py-2.5 rounded-xl transition-colors font-semibold"
+                            className="bg-qz-card hover:bg-qz-card border border-white/10 text-qz-text px-6 py-2.5 rounded-xl transition-colors font-semibold"
                         >
                             Сбросить прогресс
                         </button>
@@ -326,12 +326,12 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
     // When tracking progress, we exhaust the activeCards list one by one
     if (trackProgress && currentIndex >= activeCards.length) {
         return (
-            <div className="w-full flex-col flex items-center justify-center aspect-[16/9] md:aspect-[2/1] max-w-4xl bg-[#0a092d] border border-[#2e3856] rounded-2xl shadow-xl mb-6">
-                <div className="text-zinc-300 text-lg font-bold mb-2">На сегодня карточек для повторения больше нет! 🎉</div>
+            <div className="w-full flex-col flex items-center justify-center aspect-[16/9] md:aspect-[2/1] max-w-4xl bg-qz-bg border border-qz-border-light rounded-2xl shadow-xl mb-6">
+                <div className="text-qz-text-muted text-lg font-bold mb-2">На сегодня карточек для повторения больше нет! 🎉</div>
                 <div className="flex flex-col sm:flex-row gap-4 mt-6">
                     <button
                         onClick={handleResetFsrs}
-                        className="bg-[#2e3856] hover:bg-[#2e3856] border border-white/10 text-white px-6 py-2.5 rounded-xl transition-colors font-semibold shadow-md inline-flex justify-center"
+                        className="bg-qz-card hover:bg-qz-card border border-white/10 text-qz-text px-6 py-2.5 rounded-xl transition-colors font-semibold shadow-md inline-flex justify-center"
                     >
                         Начать заново (Сбросить прогресс)
                     </button>
@@ -349,30 +349,30 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
     const currentCard = activeCards[currentIndex];
 
     return (
-        <div ref={containerRef} className="w-full flex flex-col items-center bg-[#0a092d] md:bg-transparent min-h-screen md:min-h-auto justify-center md:justify-start">
+        <div ref={containerRef} className="w-full flex flex-col items-center bg-qz-bg md:bg-transparent min-h-screen md:min-h-auto justify-center md:justify-start">
 
             {/* The Flashcard Container */}
-            <div className="relative w-full h-[65vh] md:h-auto md:aspect-[2/1] max-w-6xl bg-[#2e3856] border border-[#2e3856] rounded-2xl shadow-xl flex flex-col overflow-hidden mb-6 select-none group">
+            <div className="relative w-full h-[65vh] md:h-auto md:aspect-[2/1] max-w-6xl bg-qz-card border border-qz-border-light rounded-2xl shadow-xl flex flex-col overflow-hidden mb-6 select-none group">
 
                 {/* Overlay Settings Modal */}
                 {showSettings && (
-                    <div className="absolute inset-0 z-50 bg-[#0a092d]/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200" onClick={() => setShowSettings(false)}>
-                        <div className="w-full max-w-2xl bg-[#0a092d] rounded-3xl overflow-y-auto shadow-2xl relative max-h-full border border-white/5" onClick={e => e.stopPropagation()}>
+                    <div className="absolute inset-0 z-50 bg-qz-bg/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200" onClick={() => setShowSettings(false)}>
+                        <div className="w-full max-w-2xl bg-qz-bg rounded-3xl overflow-y-auto shadow-2xl relative max-h-full border border-white/5" onClick={e => e.stopPropagation()}>
                             <button
                                 onClick={() => setShowSettings(false)}
-                                className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-[#0a092d] hover:bg-[#2e3856] text-zinc-300 hover:text-white transition-colors"
+                                className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-qz-bg hover:bg-qz-card text-qz-text-muted hover:text-qz-text transition-colors"
                             >
                                 <XIcon className="w-5 h-5" />
                             </button>
                             <div className="p-8 sm:p-10">
-                                <h3 className="text-3xl font-bold text-white mb-2">Параметры</h3>
+                                <h3 className="text-3xl font-bold text-qz-text mb-2">Параметры</h3>
 
                                 <div className="mt-8 flex flex-col">
                                     {/* Row 1 */}
                                     <div className="flex items-start justify-between py-6 border-b border-white/10">
                                         <div className="pr-8">
-                                            <p className="font-bold text-base text-white">Отслеживайте прогресс</p>
-                                            <p className="text-[13px] text-zinc-400 mt-2 leading-relaxed max-w-lg">
+                                            <p className="font-bold text-base text-qz-text">Отслеживайте прогресс</p>
+                                            <p className="text-[13px] text-qz-text-muted mt-2 leading-relaxed max-w-lg">
                                                 Интеллектуальный алгоритм. Показывает только карточки, которые вы можете скоро забыть.
                                             </p>
                                         </div>
@@ -383,58 +383,58 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
 
                                     {/* Row 3 */}
                                     <div className="flex items-center justify-between py-6 border-b border-white/10">
-                                        <p className="font-bold text-base text-white">Изучать только термины с ★</p>
+                                        <p className="font-bold text-base text-qz-text">Изучать только термины с ★</p>
                                         <Toggle isOn={studyStarredOnly} onToggle={() => setStudyStarredOnly(!studyStarredOnly)} />
                                     </div>
 
                                     {/* Row 3 */}
                                     <div className="flex items-center justify-between py-6 border-b border-white/10">
-                                        <p className="font-bold text-base text-white">Лицевая сторона</p>
+                                        <p className="font-bold text-base text-qz-text">Лицевая сторона</p>
                                         <div className="relative">
                                             <select
                                                 value={frontSide}
                                                 onChange={(e) => setFrontSide(e.target.value as any)}
-                                                className="bg-[#0a092d] hover:bg-[#2e3856] transition-colors appearance-none text-sm font-semibold rounded-full px-5 py-2.5 pr-10 outline-none text-white cursor-pointer"
+                                                className="bg-qz-bg hover:bg-qz-card transition-colors appearance-none text-sm font-semibold rounded-full px-5 py-2.5 pr-10 outline-none text-qz-text cursor-pointer"
                                             >
                                                 <option value="term">Термин</option>
                                                 <option value="definition">Определение</option>
                                             </select>
-                                            <ChevronDownIcon className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-white" />
+                                            <ChevronDownIcon className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-qz-text" />
                                         </div>
                                     </div>
 
                                     {/* Row 4 */}
                                     <div className="flex items-center justify-between py-6 border-b border-white/10">
-                                        <p className="font-bold text-base text-white">Показывать обе стороны карточек</p>
+                                        <p className="font-bold text-base text-qz-text">Показывать обе стороны карточек</p>
                                         <Toggle isOn={showBothSides} onToggle={() => setShowBothSides(!showBothSides)} />
                                     </div>
 
                                     {/* Row 5 */}
                                     <div className="flex flex-col py-6 border-b border-white/10">
                                         <div className="flex items-center justify-between cursor-pointer group" onClick={() => setShowShortcuts(!showShortcuts)}>
-                                            <p className="font-bold text-base text-white group-hover:text-[#ffcd1f] transition-colors">Сочетания клавиш</p>
-                                            <button className="flex items-center gap-2 text-sm font-semibold text-white group-hover:text-[#ffcd1f] transition-colors">
+                                            <p className="font-bold text-base text-qz-text group-hover:text-[#ffcd1f] transition-colors">Сочетания клавиш</p>
+                                            <button className="flex items-center gap-2 text-sm font-semibold text-qz-text group-hover:text-[#ffcd1f] transition-colors">
                                                 {showShortcuts ? 'Скрыть' : 'Просмотреть'} <ChevronDownIcon className={`w-4 h-4 transition-transform ${showShortcuts ? 'rotate-180' : ''}`} />
                                             </button>
                                         </div>
                                         {showShortcuts && (
-                                            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8 text-[15px] text-zinc-300">
-                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-white">Знаю</span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">→</kbd></div>
-                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-white">Перемешать</span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">H</kbd></div>
-                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-white">Еще изучаю</span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">←</kbd></div>
-                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-white">Аудио</span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">A</kbd></div>
-                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-white">Перевернуть</span><kbd className="px-3 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center h-8">Пробел</kbd></div>
-                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-white">Отвечать термином</span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">T</kbd></div>
-                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-white shadow-sm flex items-center gap-2 text-base">Пометить <Star className="w-5 h-5 fill-white text-white" /></span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">S</kbd></div>
-                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-white flex flex-col justify-start items-start gap-1"><span>Отвечать</span> <span>определением</span></span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">D</kbd></div>
-                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-white">Редактировать</span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">E</kbd></div>
+                                            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8 text-[15px] text-qz-text-muted">
+                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-qz-text">Знаю</span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">→</kbd></div>
+                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-qz-text">Перемешать</span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">H</kbd></div>
+                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-qz-text">Еще изучаю</span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">←</kbd></div>
+                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-qz-text">Аудио</span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">A</kbd></div>
+                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-qz-text">Перевернуть</span><kbd className="px-3 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center h-8">Пробел</kbd></div>
+                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-qz-text">Отвечать термином</span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">T</kbd></div>
+                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-qz-text shadow-sm flex items-center gap-2 text-base">Пометить <Star className="w-5 h-5 fill-white text-qz-text" /></span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">S</kbd></div>
+                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-qz-text flex flex-col justify-start items-start gap-1"><span>Отвечать</span> <span>определением</span></span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">D</kbd></div>
+                                                <div className="flex justify-between items-center py-2.5 border-b border-white/5"><span className="text-qz-text">Редактировать</span><kbd className="px-2 py-1 bg-transparent border-2 border-white/20 rounded font-bold text-xs uppercase flex items-center justify-center w-8 h-8">E</kbd></div>
                                             </div>
                                         )}
                                     </div>
 
                                     {/* Row 6 */}
                                     <div className="flex items-center justify-between py-6 border-b border-white/10">
-                                        <p className="font-bold text-base text-white">Преобразование текста в речь</p>
+                                        <p className="font-bold text-base text-qz-text">Преобразование текста в речь</p>
                                         <Toggle isOn={ttsEnabled} onToggle={() => setTtsEnabled(!ttsEnabled)} />
                                     </div>
 
@@ -470,15 +470,15 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
 
                 {/* Top Toolbar inside card */}
                 <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-center z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="flex items-center gap-2 text-zinc-400">
-                        <HelpCircleIcon className="w-5 h-5 cursor-pointer hover:text-white transition-colors" /> Показать подсказку
+                    <div className="flex items-center gap-2 text-qz-text-muted">
+                        <HelpCircleIcon className="w-5 h-5 cursor-pointer hover:text-qz-text transition-colors" /> Показать подсказку
                     </div>
-                    <div className="flex items-center gap-4 text-zinc-400">
-                        <Edit2 onClick={(e) => { e.stopPropagation(); setEditingCard(currentCard); }} className="w-5 h-5 cursor-pointer hover:text-white transition-colors" />
+                    <div className="flex items-center gap-4 text-qz-text-muted">
+                        <Edit2 onClick={(e) => { e.stopPropagation(); setEditingCard(currentCard); }} className="w-5 h-5 cursor-pointer hover:text-qz-text transition-colors" />
                         {ttsEnabled ? (
-                            <Volume2 onClick={(e) => { e.stopPropagation(); setTtsEnabled(false); }} className="w-5 h-5 cursor-pointer text-[#a8b1ff] hover:text-white transition-colors" />
+                            <Volume2 onClick={(e) => { e.stopPropagation(); setTtsEnabled(false); }} className="w-5 h-5 cursor-pointer text-[#a8b1ff] hover:text-qz-text transition-colors" />
                         ) : (
-                            <VolumeX onClick={(e) => { e.stopPropagation(); setTtsEnabled(true); }} className="w-5 h-5 cursor-pointer text-zinc-500 hover:text-white transition-colors" />
+                            <VolumeX onClick={(e) => { e.stopPropagation(); setTtsEnabled(true); }} className="w-5 h-5 cursor-pointer text-zinc-500 hover:text-qz-text transition-colors" />
                         )}
                         <Star onClick={(e) => toggleStar(e, currentCard?.id)} className={`w-5 h-5 cursor-pointer transition-colors ${starredIds.has(currentCard?.id) ? 'text-yellow-400 fill-yellow-400' : 'hover:text-yellow-400'}`} />
                     </div>
@@ -495,7 +495,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                     >
                         {showBothSides ? (
                             <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 gap-8 overflow-y-auto w-full h-full">
-                                <div className="font-semibold text-white text-[22px] border-b border-white/10 pb-6 w-full flex-1 flex flex-col justify-end">
+                                <div className="font-semibold text-qz-text text-[22px] border-b border-white/10 pb-6 w-full flex-1 flex flex-col justify-end">
                                     <FlashcardRender card={currentCard} fieldsSchema={fieldsSchema} side={actualFrontSide} />
                                 </div>
                                 <div className="font-medium text-indigo-100 text-lg w-full flex-1 flex flex-col justify-start">
@@ -538,11 +538,11 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
             {trackProgress && isFlipped && !showBothSides ? (
                 // FSRS Response Buttons (Quizlet Style)
                 <div className="flex items-center justify-center w-full max-w-4xl px-4 gap-4 md:gap-8 mt-2">
-                    <button onClick={() => handleRateFSRS(1)} className="flex-1 max-w-[200px] py-4 rounded-xl bg-[#2e3856] hover:bg-[#2e3856] border border-[#2e3856] transition-colors font-bold text-sm text-white flex items-center justify-center gap-3">
+                    <button onClick={() => handleRateFSRS(1)} className="flex-1 max-w-[200px] py-4 rounded-xl bg-qz-card hover:bg-qz-card border border-qz-border-light transition-colors font-bold text-sm text-qz-text flex items-center justify-center gap-3">
                         <span className="w-6 h-6 rounded border border-white/20 flex items-center justify-center text-[10px]">←</span>
                         Еще изучаю
                     </button>
-                    <button onClick={() => handleRateFSRS(3)} className="flex-1 max-w-[200px] py-4 rounded-xl bg-[#2e3856] hover:bg-[#2e3856] border border-[#2e3856] transition-colors font-bold text-sm text-white flex items-center justify-center gap-3">
+                    <button onClick={() => handleRateFSRS(3)} className="flex-1 max-w-[200px] py-4 rounded-xl bg-qz-card hover:bg-qz-card border border-qz-border-light transition-colors font-bold text-sm text-qz-text flex items-center justify-center gap-3">
                         Знаю
                         <span className="w-6 h-6 rounded border border-white/20 flex items-center justify-center text-[10px]">→</span>
                     </button>
@@ -550,7 +550,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
             ) : (
                 <div className="flex items-center justify-between w-full max-w-6xl px-4">
                     <div className="flex items-center gap-3 cursor-pointer group" onClick={() => setTrackProgress(!trackProgress)}>
-                        <span className="text-sm font-medium text-zinc-400 group-hover:text-white transition-colors">Отслеживать прогресс</span>
+                        <span className="text-sm font-medium text-qz-text-muted group-hover:text-qz-text transition-colors">Отслеживать прогресс</span>
                         <Toggle isOn={trackProgress} onToggle={() => setTrackProgress(!trackProgress)} />
                     </div>
 
@@ -558,35 +558,35 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                         <button
                             onClick={handlePrev}
                             disabled={trackProgress || currentIndex === 0}
-                            className={`w-12 h-12 flex items-center justify-center rounded-full border border-[#586380] hover:bg-[#2e3856] disabled:opacity-30 disabled:hover:bg-transparent transition-colors text-zinc-300 ${trackProgress ? 'invisible' : ''}`}
+                            className={`w-12 h-12 flex items-center justify-center rounded-full border border-qz-border hover:bg-qz-card disabled:opacity-30 disabled:hover:bg-transparent transition-colors text-qz-text-muted ${trackProgress ? 'invisible' : ''}`}
                         >
                             <ChevronLeft className="w-6 h-6" />
                         </button>
 
-                        <div className="text-sm font-bold tracking-widest text-zinc-400 min-w-[60px] text-center">
+                        <div className="text-sm font-bold tracking-widest text-qz-text-muted min-w-[60px] text-center">
                             {currentIndex + 1} / {activeCards.length}
                         </div>
 
                         <button
                             onClick={handleNext}
                             disabled={trackProgress || currentIndex === activeCards.length - 1}
-                            className={`w-12 h-12 flex items-center justify-center rounded-full border border-[#586380] hover:bg-[#2e3856] disabled:opacity-30 disabled:hover:bg-transparent transition-colors text-zinc-300 ${trackProgress ? 'invisible' : ''}`}
+                            className={`w-12 h-12 flex items-center justify-center rounded-full border border-qz-border hover:bg-qz-card disabled:opacity-30 disabled:hover:bg-transparent transition-colors text-qz-text-muted ${trackProgress ? 'invisible' : ''}`}
                         >
                             <ChevronRight className="w-6 h-6" />
                         </button>
                     </div>
 
-                    <div className="flex items-center gap-3 text-zinc-400">
-                        <button onClick={() => setIsAutoPlaying(!isAutoPlaying)} className={`w-10 h-10 flex items-center justify-center rounded-full hover:bg-[#2e3856] transition-colors ${isAutoPlaying ? 'text-[#ffcd1f]' : ''}`} title="Автовоспроизведение">
+                    <div className="flex items-center gap-3 text-qz-text-muted">
+                        <button onClick={() => setIsAutoPlaying(!isAutoPlaying)} className={`w-10 h-10 flex items-center justify-center rounded-full hover:bg-qz-card transition-colors ${isAutoPlaying ? 'text-[#ffcd1f]' : ''}`} title="Автовоспроизведение">
                             {isAutoPlaying ? <Pause className="w-5 h-5 fill-current" /> : <Play className="w-5 h-5 fill-current" />}
                         </button>
-                        <button onClick={() => setIsShuffled(!isShuffled)} className={`w-10 h-10 flex items-center justify-center rounded-full hover:bg-[#2e3856] transition-colors ${isShuffled ? 'text-[#ffcd1f]' : ''}`} title="Перемешать">
+                        <button onClick={() => setIsShuffled(!isShuffled)} className={`w-10 h-10 flex items-center justify-center rounded-full hover:bg-qz-card transition-colors ${isShuffled ? 'text-[#ffcd1f]' : ''}`} title="Перемешать">
                             <Shuffle className="w-5 h-5" />
                         </button>
-                        <button onClick={() => setShowSettings(true)} className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[#2e3856] transition-colors" title="Параметры">
+                        <button onClick={() => setShowSettings(true)} className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-qz-card transition-colors" title="Параметры">
                             <Settings className="w-5 h-5" />
                         </button>
-                        <button onClick={toggleFullscreen} className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[#2e3856] transition-colors" title="На весь экран">
+                        <button onClick={toggleFullscreen} className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-qz-card transition-colors" title="На весь экран">
                             <Maximize className="w-5 h-5" />
                         </button>
                     </div>
@@ -595,11 +595,11 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
 
             {/* Edit Modal Overlay */}
             {editingCard && (
-                <div className="fixed inset-0 z-[100] bg-[#0a092d]/80 backdrop-blur-sm flex items-center justify-center p-4">
-                    <div className="w-full max-w-lg bg-[#171c2e] rounded-2xl shadow-2xl border border-[#2e3856] overflow-hidden flex flex-col">
-                        <div className="p-6 border-b border-[#2e3856] flex justify-between items-center bg-[#111526]">
-                            <h3 className="text-xl font-bold text-white">Редактировать карточку</h3>
-                            <button onClick={() => setEditingCard(null)} className="text-zinc-400 hover:text-white transition-colors">
+                <div className="fixed inset-0 z-[100] bg-qz-bg/80 backdrop-blur-sm flex items-center justify-center p-4">
+                    <div className="w-full max-w-lg bg-[#171c2e] rounded-2xl shadow-2xl border border-qz-border-light overflow-hidden flex flex-col">
+                        <div className="p-6 border-b border-qz-border-light flex justify-between items-center bg-[#111526]">
+                            <h3 className="text-xl font-bold text-qz-text">Редактировать карточку</h3>
+                            <button onClick={() => setEditingCard(null)} className="text-qz-text-muted hover:text-qz-text transition-colors">
                                 <XIcon className="w-6 h-6" />
                             </button>
                         </div>
@@ -610,20 +610,20 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                                     {field.id === 'term' || field.id === 'definition' ? (
                                         field.id === 'term' ? (
                                             <input
-                                                className="w-full bg-[#0a092d] border-b-2 border-white/20 focus:border-[#a8b1ff] text-white p-3 outline-none transition-colors rounded-t-md"
+                                                className="w-full bg-qz-bg border-b-2 border-white/20 focus:border-[#a8b1ff] text-qz-text p-3 outline-none transition-colors rounded-t-md"
                                                 defaultValue={editingCard?.term}
                                                 onChange={(e) => { if (editingCard) editingCard.term = e.target.value; }}
                                             />
                                         ) : (
                                             <textarea
-                                                className="w-full bg-[#0a092d] border-b-2 border-white/20 focus:border-[#a8b1ff] text-white p-3 outline-none transition-colors resize-none min-h-[100px] rounded-t-md"
+                                                className="w-full bg-qz-bg border-b-2 border-white/20 focus:border-[#a8b1ff] text-qz-text p-3 outline-none transition-colors resize-none min-h-[100px] rounded-t-md"
                                                 defaultValue={editingCard?.definition}
                                                 onChange={(e) => { if (editingCard) editingCard.definition = e.target.value; }}
                                             />
                                         )
                                     ) : (
                                         <textarea
-                                            className="w-full bg-[#0a092d] border-b-2 border-white/20 focus:border-[#a8b1ff] text-white p-3 outline-none transition-colors resize-none min-h-[70px] rounded-t-md"
+                                            className="w-full bg-qz-bg border-b-2 border-white/20 focus:border-[#a8b1ff] text-qz-text p-3 outline-none transition-colors resize-none min-h-[70px] rounded-t-md"
                                             defaultValue={editingCard?.fieldsData?.[field.id] || ''}
                                             onChange={(e) => {
                                                 if (editingCard) {
@@ -636,8 +636,8 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                                 </div>
                             ))}
                         </div>
-                        <div className="p-5 border-t border-[#2e3856] flex justify-end gap-4 bg-[#111526]">
-                            <button onClick={() => setEditingCard(null)} className="px-6 py-2.5 rounded-full text-zinc-300 font-semibold hover:bg-white/5 transition-colors">Отмена</button>
+                        <div className="p-5 border-t border-qz-border-light flex justify-end gap-4 bg-[#111526]">
+                            <button onClick={() => setEditingCard(null)} className="px-6 py-2.5 rounded-full text-qz-text-muted font-semibold hover:bg-white/5 transition-colors">Отмена</button>
                             <button onClick={() => {
                                 setActiveCards(prev => [...prev]);
                                 setEditingCard(null);

@@ -87,7 +87,7 @@ export default function StudentLobbyPage({ params }: StudentLobbyPageProps) {
     const teamStyle = team ? (TEAM_COLOURS[team] ?? TEAM_COLOURS.Tiger) : null;
 
     return (
-        <div className="min-h-screen bg-[#0a092d] text-white flex flex-col items-center justify-center p-6 relative overflow-hidden">
+        <div className="min-h-screen bg-qz-bg text-qz-text flex flex-col items-center justify-center p-6 relative overflow-hidden">
             {/* Ambient background glow — changes colour when team is assigned */}
             <div
                 className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[160px] pointer-events-none transition-all duration-1000 ${team ? 'opacity-30' : 'opacity-15'
@@ -110,13 +110,13 @@ export default function StudentLobbyPage({ params }: StudentLobbyPageProps) {
                                 }
                             </div>
                             <div className="text-center">
-                                <p className="text-2xl font-semibold text-white">You're in!</p>
+                                <p className="text-2xl font-semibold text-qz-text">You're in!</p>
                                 <p className="text-zinc-500 text-sm mt-1">Waiting for the teacher to start…</p>
                             </div>
                         </div>
 
                         {/* Join code display */}
-                        <div className="bg-[#0a092d]/60 border border-[#2e3856] rounded-2xl px-8 py-5 text-center">
+                        <div className="bg-qz-bg/60 border border-qz-border-light rounded-2xl px-8 py-5 text-center">
                             <p className="text-xs uppercase tracking-widest text-zinc-500 mb-2">Game Code</p>
                             <p className="text-4xl font-semibold tracking-[0.3em] text-[#ffcd1f] tabular-nums">{joinCode}</p>
                         </div>
@@ -128,7 +128,7 @@ export default function StudentLobbyPage({ params }: StudentLobbyPageProps) {
                             <div className="w-2 h-2 bg-[#586380] rounded-full animate-bounce [animation-delay:300ms]" />
                         </div>
 
-                        <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0a092d]/40 border border-[#2e3856]">
+                        <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-qz-bg/40 border border-qz-border-light">
                             <Users className="w-4 h-4 text-zinc-500" />
                             <p className="text-sm text-zinc-500">
                                 {isConnected ? 'Connected — waiting for others' : 'Reconnecting…'}
@@ -140,14 +140,14 @@ export default function StudentLobbyPage({ params }: StudentLobbyPageProps) {
                     <div className={`flex flex-col items-center gap-6 animate-in zoom-in fade-in duration-700 ${isRevealing ? 'opacity-0 scale-90' : 'opacity-100 scale-100'} transition-all`}>
                         <div className="flex flex-col items-center gap-2">
                             <Sparkles className="w-6 h-6 text-yellow-400 animate-spin" />
-                            <p className="text-zinc-400 text-sm uppercase tracking-widest font-bold">You're on team</p>
+                            <p className="text-qz-text-muted text-sm uppercase tracking-widest font-bold">You're on team</p>
                         </div>
 
                         <div className={`w-48 h-48 rounded-3xl ${teamStyle!.bg} ${teamStyle!.border} border-4 shadow-2xl ${teamStyle!.glow} flex flex-col items-center justify-center gap-3 transition-all`}>
                             <span className="text-7xl">{teamStyle!.emoji}</span>
                         </div>
 
-                        <p className={`text-5xl font-semibold ${team === 'Panda' ? 'text-zinc-900' : 'text-white'}`}>
+                        <p className={`text-5xl font-semibold ${team === 'Panda' ? 'text-zinc-900' : 'text-qz-text'}`}>
                             {team}
                         </p>
 

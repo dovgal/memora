@@ -8,10 +8,10 @@ export default function DashboardFallback() {
 
     return (
         <div className="flex h-screen w-full flex-col items-center justify-center bg-black p-4">
-            <div className="max-w-md w-full bg-[#0a092d] border border-[#2e3856] p-8 rounded-2xl shadow-xl text-center">
+            <div className="max-w-md w-full bg-qz-bg border border-qz-border-light p-8 rounded-2xl shadow-xl text-center">
                 <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-                <h1 className="text-2xl font-bold text-white mb-2">Account Sync Error</h1>
-                <p className="text-zinc-400 mb-6">
+                <h1 className="text-2xl font-bold text-qz-text mb-2">Account Sync Error</h1>
+                <p className="text-qz-text-muted mb-6">
                     We could not retrieve your account data from the internal server. This usually happens if the backend API is misconfigured or unreachable.
                 </p>
                 <div className="bg-black/50 border border-red-900 text-red-400 text-sm p-4 rounded-xl mb-6 text-left">

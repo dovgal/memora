@@ -75,7 +75,7 @@ export default function StudentGamePage({ params }: StudentGamePageProps) {
 
     if (!question) {
         return (
-            <div className="min-h-screen bg-[#0a092d] flex flex-col items-center justify-center gap-4 text-white">
+            <div className="min-h-screen bg-qz-bg flex flex-col items-center justify-center gap-4 text-qz-text">
                 <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
                 <p className="text-zinc-500 text-sm">Waiting for the next question…</p>
             </div>
@@ -85,10 +85,10 @@ export default function StudentGamePage({ params }: StudentGamePageProps) {
     const isAnswered = selectedAnswer !== null;
 
     return (
-        <div className="min-h-screen bg-[#0a092d] text-white flex flex-col">
+        <div className="min-h-screen bg-qz-bg text-qz-text flex flex-col">
             {/* Header */}
-            <header className="flex items-center justify-between px-4 py-3 border-b border-[#2e3856] bg-[#0a092d]/60">
-                {team && <span className="text-sm font-bold text-zinc-400">Team {team}</span>}
+            <header className="flex items-center justify-between px-4 py-3 border-b border-qz-border-light bg-qz-bg/60">
+                {team && <span className="text-sm font-bold text-qz-text-muted">Team {team}</span>}
                 <span className="text-sm text-zinc-500 tabular-nums mx-auto">
                     Q {question.index} / {question.total}
                 </span>
@@ -115,7 +115,7 @@ export default function StudentGamePage({ params }: StudentGamePageProps) {
                     if (correctAnswer !== null) {
                         if (isCorrect) stateClass = 'bg-green-600 border-green-400';
                         else if (isWrong) stateClass = 'bg-red-900/60 border-red-700 opacity-70';
-                        else stateClass = 'bg-[#2e3856] border-[#586380] opacity-40';
+                        else stateClass = 'bg-qz-card border-qz-border opacity-40';
                     }
 
                     return (
@@ -124,7 +124,7 @@ export default function StudentGamePage({ params }: StudentGamePageProps) {
                             id={`answer-option-${i}`}
                             onClick={() => handleAnswer(i)}
                             disabled={isAnswered}
-                            className={`relative w-full rounded-2xl border-2 p-6 text-left font-semibold text-white transition-all duration-300 disabled:cursor-not-allowed ${stateClass} ${isSelected && !correctAnswer ? 'ring-4 ring-white/30 scale-[0.98]' : ''
+                            className={`relative w-full rounded-2xl border-2 p-6 text-left font-semibold text-qz-text transition-all duration-300 disabled:cursor-not-allowed ${stateClass} ${isSelected && !correctAnswer ? 'ring-4 ring-white/30 scale-[0.98]' : ''
                                 }`}
                         >
                             <span className="leading-relaxed">{opt}</span>

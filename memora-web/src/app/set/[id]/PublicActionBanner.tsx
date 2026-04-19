@@ -15,7 +15,7 @@ export default function PublicActionBanner() {
         <div className="fixed bottom-0 left-0 right-0 bg-[#4255ff] border-t border-indigo-400 p-4 shadow-[0_-10px_40px_rgba(79,70,229,0.3)] z-50">
             <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
-                    <h3 className="text-white font-bold text-lg">Save your progress!</h3>
+                    <h3 className="text-qz-text font-bold text-lg">Save your progress!</h3>
                     <p className="text-indigo-200 text-sm">Create a free account to track your mastery of these flashcards and customize the set.</p>
                 </div>
                 <Link

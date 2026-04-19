@@ -492,7 +492,7 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
     }
 
     return (
-        <div className="min-h-[100dvh] bg-[#0c102a] text-white flex flex-col font-sans select-none overflow-hidden touch-none"
+        <div className="min-h-[100dvh] bg-[#0c102a] text-qz-text flex flex-col font-sans select-none overflow-hidden touch-none"
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}
             onPointerCancel={handlePointerUp}
@@ -508,17 +508,17 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
                     <span className="font-bold">Блоки</span>
                 </div>
 
-                <div className="text-zinc-400 text-sm font-medium">
+                <div className="text-qz-text-muted text-sm font-medium">
                     {set.title}
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <button onClick={() => setShowSettings(true)} className="p-2 hover:bg-white/10 rounded-full transition-colors text-zinc-400">
+                    <button onClick={() => setShowSettings(true)} className="p-2 hover:bg-white/10 rounded-full transition-colors text-qz-text-muted">
                         <Settings size={20} />
                     </button>
                     <Link
                         href={`/set/${id}`}
-                        className="p-2 hover:bg-white/10 rounded-full transition-colors text-zinc-400 hover:text-white"
+                        className="p-2 hover:bg-white/10 rounded-full transition-colors text-qz-text-muted hover:text-qz-text"
                     >
                         <X size={24} />
                     </Link>
@@ -531,13 +531,13 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
                     <div className="w-full max-w-lg bg-[#141a40] rounded-2xl shadow-2xl flex flex-col">
                         <div className="flex justify-between items-center p-6 border-b border-white/5">
                             <h2 className="text-2xl font-bold">Параметры</h2>
-                            <button onClick={() => setShowSettings(false)} className="text-zinc-400 hover:text-white">
+                            <button onClick={() => setShowSettings(false)} className="text-qz-text-muted hover:text-qz-text">
                                 <X size={24} />
                             </button>
                         </div>
                         <div className="p-6 flex flex-col gap-6">
                             <div className="flex items-center justify-between">
-                                <span className="font-semibold text-zinc-300">Отвечать термином <br /> <span className="text-xs font-normal text-zinc-500">(вижу Определение, печатаю Термин)</span></span>
+                                <span className="font-semibold text-qz-text-muted">Отвечать термином <br /> <span className="text-xs font-normal text-zinc-500">(вижу Определение, печатаю Термин)</span></span>
                                 <div
                                     className={`relative w-12 h-6 rounded-full cursor-pointer transition-colors ${answerWith === 'term' ? 'bg-[#4255ff]' : 'bg-[#586380]'}`}
                                     onClick={() => setAnswerWith(answerWith === 'term' ? 'definition' : 'term')}
@@ -570,8 +570,8 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
                             <div className="bg-[#4255ff] rounded-sm"></div>
                             <div className="bg-blue-600 rounded-sm"></div>
                         </div>
-                        <h2 className="text-3xl font-bold text-white mb-4">Сыграйте в "Блоки"</h2>
-                        <p className="text-zinc-400 mb-8 leading-relaxed max-w-sm">
+                        <h2 className="text-3xl font-bold text-qz-text mb-4">Сыграйте в "Блоки"</h2>
+                        <p className="text-qz-text-muted mb-8 leading-relaxed max-w-sm">
                             Зарабатывайте блоки, правильно отвечая на вопросы. Заполняйте сетку и зарабатывайте очки, завершая вертикальные или горизонтальные линии.
                         </p>
                         <button
@@ -590,7 +590,7 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
 
                     {/* Score Info Area */}
                     <div className="flex justify-between items-center mb-8 px-2 font-bold text-xl">
-                        <div className="text-white flex-1">{score}</div>
+                        <div className="text-qz-text flex-1">{score}</div>
                         <div className="text-yellow-500 flex items-center gap-2 justify-end flex-1">
                             <Trophy size={18} /> {highScore}
                         </div>
@@ -660,11 +660,11 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
                         {/* ANSWERING PHASE RENDERING */}
                         {gamePhase === 'ANSWERING' && (
                             <div className="absolute inset-0 z-20 flex flex-col animate-in fade-in slide-in-from-bottom-8 duration-500 bg-[#0c102a]/80 backdrop-blur-md pt-4">
-                                <div className="text-zinc-400 text-sm font-semibold mb-2">
+                                <div className="text-qz-text-muted text-sm font-semibold mb-2">
                                     {answerWith === 'term' ? 'ОПРЕДЕЛЕНИЕ' : 'ТЕРМИН'}
                                     {activeQuestionCard?.imageUrl && <img src={activeQuestionCard.imageUrl} alt="img" className="h-16 inline-block ml-4 rounded-md" />}
                                 </div>
-                                <h3 className="text-3xl font-medium text-white mb-10 leading-relaxed">
+                                <h3 className="text-3xl font-medium text-qz-text mb-10 leading-relaxed">
                                     {currentPrompt}
                                 </h3>
 
@@ -678,7 +678,7 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
                                             placeholder="Введите ответ"
                                             disabled={showCorrectAnswerOverlay}
                                             className={cn(
-                                                "w-full bg-[#1b2354] border-2 rounded-2xl py-5 pl-6 pr-16 text-xl text-white outline-none transition-colors",
+                                                "w-full bg-[#1b2354] border-2 rounded-2xl py-5 pl-6 pr-16 text-xl text-qz-text outline-none transition-colors",
                                                 wrongAttempts > 0 && wrongAttempts < MAX_STRIKES ? "border-red-500" : "border-[#2e3b7a] focus:border-indigo-500"
                                             )}
                                         />
@@ -691,7 +691,7 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
                                     {wrongAttempts > 0 && wrongAttempts < MAX_STRIKES && !showCorrectAnswerOverlay && (
                                         <p className="text-red-400 mt-3 font-medium px-4 flex justify-between items-center">
                                             <span>Неверно! Попробуйте еще.</span>
-                                            <button type="button" onClick={handleRefreshQuestion} className="text-zinc-400 hover:text-white flex items-center gap-1 text-sm bg-black/20 px-3 py-1 rounded-full">
+                                            <button type="button" onClick={handleRefreshQuestion} className="text-qz-text-muted hover:text-white flex items-center gap-1 text-sm bg-black/20 px-3 py-1 rounded-full">
                                                 <RefreshCcw size={14} /> Пропустить
                                             </button>
                                         </p>
@@ -700,7 +700,7 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
                                     {/* Action Buttons if not wrong yet */}
                                     {wrongAttempts === 0 && (
                                         <div className="flex justify-between items-center mt-4 px-2">
-                                            <button type="button" onClick={handleRefreshQuestion} className="text-zinc-400 hover:text-white flex items-center gap-2 font-medium">
+                                            <button type="button" onClick={handleRefreshQuestion} className="text-qz-text-muted hover:text-qz-text flex items-center gap-2 font-medium">
                                                 <RefreshCcw size={18} /> Обновить
                                             </button>
                                         </div>
@@ -714,11 +714,11 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
                                         <h4 className="text-2xl text-[#8d97be] line-through mb-8">{typedAnswer}</h4>
 
                                         <div className="text-green-400 text-sm font-bold uppercase mb-2">ПРАВИЛЬНЫЙ ОТВЕТ</div>
-                                        <h4 className="text-3xl text-white font-medium mb-auto whitespace-pre-wrap">{currentExpectedAnswer}</h4>
+                                        <h4 className="text-3xl text-qz-text font-medium mb-auto whitespace-pre-wrap">{currentExpectedAnswer}</h4>
 
                                         <button
                                             onClick={skipQuestion}
-                                            className="w-full bg-blue-600 hover:bg-blue-500 font-bold text-white py-5 rounded-xl transition-colors mt-auto text-lg shadow-[0_4px_0_0_#2563eb] active:translate-y-[4px] active:shadow-none"
+                                            className="w-full bg-blue-600 hover:bg-blue-500 font-bold text-qz-text py-5 rounded-xl transition-colors mt-auto text-lg shadow-[0_4px_0_0_#2563eb] active:translate-y-[4px] active:shadow-none"
                                         >
                                             Нажмите любую клавишу для продолжения
                                         </button>
@@ -739,10 +739,10 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
                     {/* --- GAME OVER SCREEN --- */}
                     {gameState === 'GAME_OVER' && (
                         <div className="absolute inset-0 z-50 bg-[#0c102a]/98 flex flex-col items-center justify-center p-6 animate-in fade-in duration-500">
-                            <h2 className="text-4xl font-bold text-white mb-8">Больше нет ходов!</h2>
+                            <h2 className="text-4xl font-bold text-qz-text mb-8">Больше нет ходов!</h2>
                             <div className="bg-[#1b2354] w-full max-w-sm rounded-[32px] p-8 flex flex-col items-center shadow-2xl mb-8">
-                                <span className="text-zinc-400 font-medium mb-2">ВАШ СЧЕТ</span>
-                                <span className="text-7xl font-semibold text-white mb-2">{score}</span>
+                                <span className="text-qz-text-muted font-medium mb-2">ВАШ СЧЕТ</span>
+                                <span className="text-7xl font-semibold text-qz-text mb-2">{score}</span>
                                 {score >= highScore && score > 0 && (
                                     <span className="bg-yellow-500/20 text-yellow-400 px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wide mt-2">Новый рекорд!</span>
                                 )}

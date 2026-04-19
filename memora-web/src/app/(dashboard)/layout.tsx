@@ -56,12 +56,12 @@ export default async function DashboardLayout({
                     <div className="w-8 h-8 bg-[#4255ff] rounded-lg flex items-center justify-center font-bold text-white">
                         M
                     </div>
-                    <span className="text-xl font-bold text-white tracking-wide">Memora</span>
+                    <span className="text-xl font-bold text-qz-text tracking-wide">Memora</span>
                 </div>
 
                 <div className="flex-1 overflow-y-auto px-4 space-y-6 scrollbar-thin scrollbar-thumb-zinc-800">
                     <nav className="space-y-1">
-                        <Link href={`/dashboard/${role}`} className="flex items-center gap-3 px-3 py-2.5 hover:bg-[#1a1a36] text-zinc-300 rounded-lg font-medium transition-colors">
+                        <Link href={`/dashboard/${role}`} className="flex items-center gap-3 px-3 py-2.5 hover:bg-[#1a1a36] text-qz-text-muted rounded-lg font-medium transition-colors">
                             <Home className="w-5 h-5" />
                             Home
                         </Link>
@@ -84,7 +84,7 @@ export default async function DashboardLayout({
                         </Link>
                     </nav>
 
-                    <div className="pt-4 border-t border-[#2e3856]">
+                    <div className="pt-4 border-t border-qz-border-light">
                         <h3 className="px-3 text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">Your Folders</h3>
                         <nav className="space-y-1 max-h-[30vh] overflow-y-auto pr-1">
                             {folders.length === 0 ? (
@@ -138,7 +138,7 @@ export default async function DashboardLayout({
                             </button>
                             <div className="absolute right-0 top-full mt-2 w-48 bg-[#171c2e] border border-[#262c40] rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all origin-top-right transform -translate-y-2 group-hover:translate-y-0 p-2 z-50">
                                 <div className="px-3 py-2 border-b border-[#262c40] mb-2">
-                                    <p className="text-sm font-medium text-white">{session?.user?.email || "User"}</p>
+                                    <p className="text-sm font-medium text-qz-text">{session?.user?.email || "User"}</p>
                                     <p className="text-xs text-[#8e95ae] capitalize">{role}</p>
                                 </div>
                                 <LogoutButton />

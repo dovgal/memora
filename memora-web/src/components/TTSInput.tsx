@@ -62,29 +62,29 @@ export default function TTSInput({ value, onChange, lang = "en" }: Props) {
     return (
         <div className="flex flex-col gap-2 mt-2">
             {!currentAudioData ? (
-                <div className="flex flex-col gap-2 bg-[#2e3856]/30 p-3 rounded-xl border border-[#586380]">
-                    <div className="flex items-center gap-2 bg-[#0a092d] border border-[#586380] px-3 py-2 rounded-lg">
+                <div className="flex flex-col gap-2 bg-qz-card/30 p-3 rounded-xl border border-qz-border">
+                    <div className="flex items-center gap-2 bg-qz-bg border border-qz-border px-3 py-2 rounded-lg">
                         <Type size={16} className="text-zinc-500" />
                         <input
                             type="text"
                             value={currentText}
                             onChange={(e) => onChange({ text: e.target.value, audioData: null })}
                             placeholder="Текст для озвучивания..."
-                            className="bg-transparent border-none outline-none text-sm w-full text-zinc-300"
+                            className="bg-transparent border-none outline-none text-sm w-full text-qz-text-muted"
                         />
                     </div>
                     <button
                         type="button"
                         onClick={generateAudio}
                         disabled={!currentText.trim() || isGenerating}
-                        className="flex items-center justify-center gap-2 py-2 px-4 bg-[#4255ff] hover:bg-[#4255ff] disabled:bg-[#2e3856] disabled:text-zinc-500 text-white text-sm font-bold rounded-lg transition-colors"
+                        className="flex items-center justify-center gap-2 py-2 px-4 bg-[#4255ff] hover:bg-[#4255ff] disabled:bg-qz-card disabled:text-zinc-500 text-white text-sm font-bold rounded-lg transition-colors"
                     >
                         {isGenerating ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
                         {isGenerating ? "Генерация..." : `Сгенерировать ИИ голос (${lang.toUpperCase()})`}
                     </button>
                 </div>
             ) : (
-                <div className="flex items-center gap-3 bg-[#2e3856]/80 p-3 rounded-xl border border-[#586380]">
+                <div className="flex items-center gap-3 bg-qz-card/80 p-3 rounded-xl border border-qz-border">
                     <button
                         type="button"
                         onClick={togglePlay}
@@ -94,7 +94,7 @@ export default function TTSInput({ value, onChange, lang = "en" }: Props) {
                     </button>
 
                     <div className="flex-1 flex flex-col overflow-hidden">
-                        <span className="text-sm font-semibold text-zinc-300 flex items-center gap-1">
+                        <span className="text-sm font-semibold text-qz-text-muted flex items-center gap-1">
                             <Volume2 size={14} className="text-[#ffcd1f]" /> ИИ Озвучка
                         </span>
                         <span className="text-xs text-zinc-500 truncate">

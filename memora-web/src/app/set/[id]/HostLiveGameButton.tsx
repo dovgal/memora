@@ -53,7 +53,7 @@ export default function HostLiveGameButton({ setId }: HostLiveGameButtonProps) {
                 id="host-live-game-btn"
                 onClick={handleHost}
                 disabled={isCreating}
-                className="w-full bg-emerald-600 hover:bg-emerald-500 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold py-4 px-6 rounded-xl flex items-center justify-between transition-all shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-[0_0_30px_rgba(16,185,129,0.4)] hover:-translate-y-1"
+                className="w-full bg-emerald-600 hover:bg-emerald-500 disabled:opacity-60 disabled:cursor-not-allowed text-qz-text font-bold py-4 px-6 rounded-xl flex items-center justify-between transition-all shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-[0_0_30px_rgba(16,185,129,0.4)] hover:-translate-y-1"
             >
                 <span className="flex items-center gap-3">
                     {isCreating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Radio size={20} />}

@@ -8,10 +8,10 @@ export default function GroupsPage() {
                 <Users size={48} />
             </div>
             <h1 className="text-4xl font-bold mb-4">Study Groups</h1>
-            <p className="text-xl text-zinc-400 max-w-lg mb-8">
+            <p className="text-xl text-qz-text-muted max-w-lg mb-8">
                 This feature is currently under development. Soon, you'll be able to create study groups, share flashcard sets, and study collaboratively with your classmates.
             </p>
-            <div className="inline-block bg-[#0a092d] border border-[#2e3856] text-zinc-300 px-6 py-3 rounded-full font-medium">
+            <div className="inline-block bg-qz-bg border border-qz-border-light text-qz-text-muted px-6 py-3 rounded-full font-medium">
                 Coming Soon 👋
             </div>
         </div>

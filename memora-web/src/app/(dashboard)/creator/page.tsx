@@ -188,11 +188,11 @@ export default function CreatorPage() {
                     <BrainCircuit size={80} className="text-[#ffcd1f] relative animate-bounce" />
                 </div>
                 <h2 className="text-3xl font-bold mb-4">Магия в процессе...</h2>
-                <div className="bg-[#0a092d]/50 border border-white/5 rounded-2xl p-6 mb-4 w-full max-w-2xl text-left font-mono text-sm overflow-hidden h-40 relative">
+                <div className="bg-qz-bg/50 border border-white/5 rounded-2xl p-6 mb-4 w-full max-w-2xl text-left font-mono text-sm overflow-hidden h-40 relative">
                     <div className="text-zinc-500 whitespace-pre-wrap">{streamingAnalysis || "Инициализация анализа..."}</div>
                     <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-zinc-900/90 to-transparent" />
                 </div>
-                <p className="text-zinc-400 max-w-md mx-auto leading-relaxed">
+                <p className="text-qz-text-muted max-w-md mx-auto leading-relaxed">
                     AI анализирует ваш контент и извлекает структуру. Это может занять время для больших документов.
                 </p>
                 <div className="mt-8 flex gap-2">
@@ -210,7 +210,7 @@ export default function CreatorPage() {
                 <div className="flex justify-between items-end mb-8">
                     <div>
                         <h1 className="text-4xl font-semibold mb-2">{analysis.proposedTitle}</h1>
-                        <p className="text-zinc-400 text-lg">{analysis.proposedDescription}</p>
+                        <p className="text-qz-text-muted text-lg">{analysis.proposedDescription}</p>
                     </div>
                     <button 
                         onClick={handleCreateSet}
@@ -224,10 +224,10 @@ export default function CreatorPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {analysis.cards.map((card, i) => (
-                        <div key={i} className="bg-[#0a092d]/50 border border-white/5 p-6 rounded-2xl flex flex-col gap-2 hover:border-indigo-500/30 transition-colors group">
+                        <div key={i} className="bg-qz-bg/50 border border-white/5 p-6 rounded-2xl flex flex-col gap-2 hover:border-indigo-500/30 transition-colors group">
                             <span className="text-xs font-bold text-[#ffcd1f] uppercase tracking-tighter">Карточка {i+1}</span>
-                            <div className="text-xl font-bold group-hover:text-white transition-colors">{card.term}</div>
-                            <div className="text-zinc-500 group-hover:text-zinc-400 transition-colors">{card.definition}</div>
+                            <div className="text-xl font-bold group-hover:text-qz-text transition-colors">{card.term}</div>
+                            <div className="text-zinc-500 group-hover:text-qz-text-muted transition-colors">{card.definition}</div>
                         </div>
                     ))}
                 </div>
@@ -242,12 +242,12 @@ export default function CreatorPage() {
                     <Sparkles size={16} /> AI Content Creator
                 </div>
                 <h1 className="text-5xl font-semibold mb-6 tracking-tight">Создавайте за секунды.</h1>
-                <p className="text-xl text-zinc-400 leading-relaxed max-w-2xl mx-auto">
+                <p className="text-xl text-qz-text-muted leading-relaxed max-w-2xl mx-auto">
                     Загрузите PDF, Word или вставьте текст. Наш AI превратит это в полноценную учебную программу.
                 </p>
             </div>
 
-            <div className="space-y-8 bg-[#0a092d]/30 border border-white/5 p-8 rounded-[2.5rem] backdrop-blur-sm shadow-2xl">
+            <div className="space-y-8 bg-qz-bg/30 border border-white/5 p-8 rounded-[2.5rem] backdrop-blur-sm shadow-2xl">
                 
                 {/* Content Input Area */}
                 <div className="space-y-4">
@@ -267,12 +267,12 @@ export default function CreatorPage() {
                             {fileName ? (
                                 <div className="flex items-center gap-2 px-3 py-1.5 bg-[#4255ff]/20 border border-indigo-500/30 rounded-full text-xs font-bold text-[#ffcd1f] animate-in zoom-in-95">
                                     <File size={14} /> {fileName}
-                                    <button onClick={removeFile} className="hover:text-white"><X size={14} /></button>
+                                    <button onClick={removeFile} className="hover:text-qz-text"><X size={14} /></button>
                                 </div>
                             ) : (
                                 <button 
                                     onClick={() => fileInputRef.current?.click()}
-                                    className="flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs font-bold text-zinc-400 transition-all"
+                                    className="flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs font-bold text-qz-text-muted transition-all"
                                 >
                                     <FileUp size={14} /> Загрузить файл
                                 </button>
@@ -284,7 +284,7 @@ export default function CreatorPage() {
                         {isParsing && (
                             <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] z-10 rounded-3xl flex flex-col items-center justify-center animate-in fade-in">
                                 <Loader2 className="animate-spin text-[#4255ff] mb-2" size={32} />
-                                <span className="text-sm font-bold text-white">Читаем документ...</span>
+                                <span className="text-sm font-bold text-qz-text">Читаем документ...</span>
                             </div>
                         )}
                         <textarea 
@@ -333,7 +333,7 @@ export default function CreatorPage() {
                 ].map((feature, i) => (
                     <div key={i} className="p-6 bg-white/5 border border-white/5 rounded-2xl">
                         <div className="mb-3">{feature.icon}</div>
-                        <div className="font-bold mb-1 text-white">{feature.title}</div>
+                        <div className="font-bold mb-1 text-qz-text">{feature.title}</div>
                         <div className="text-sm text-zinc-500 leading-relaxed">{feature.desc}</div>
                     </div>
                 ))}

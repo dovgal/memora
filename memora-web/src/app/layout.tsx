@@ -87,7 +87,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${plusJakarta.variable} ${geistMono.variable} font-sans antialiased bg-[#0a092d]`}
+        className={`${plusJakarta.variable} ${geistMono.variable} font-sans antialiased bg-qz-bg`}
       >
         <AppProvider>
           <ThemeProvider

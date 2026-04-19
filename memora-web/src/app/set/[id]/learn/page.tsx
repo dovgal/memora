@@ -392,13 +392,13 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
     return (
         // QChatProvider mounts QChatPanel and exposes autoSend() to WhyWrongButton via context
         <QChatProvider setId={id}>
-            <div className="min-h-screen bg-[#0a092d] text-white flex flex-col relative overflow-hidden">
+            <div className="min-h-screen bg-qz-bg text-qz-text flex flex-col relative overflow-hidden">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] bg-purple-900/20 rounded-full blur-[120px] pointer-events-none" />
 
                 {/* Top Bar */}
                 <header className="flex justify-between items-center px-6 py-4 z-10 w-full max-w-5xl mx-auto">
                     <div className="flex items-center gap-4">
-                        <h1 className="text-lg font-bold text-white flex items-center gap-2">
+                        <h1 className="text-lg font-bold text-qz-text flex items-center gap-2">
                             <GraduationCap className="text-[#ffcd1f]" size={20} />
                             Заучивание
                         </h1>
@@ -406,13 +406,13 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                     <div className="flex items-center gap-4">
                         <button
                             onClick={() => setShowSettings(true)}
-                            className="flex items-center gap-2 text-sm font-semibold text-zinc-400 hover:text-white transition-colors"
+                            className="flex items-center gap-2 text-sm font-semibold text-qz-text-muted hover:text-qz-text transition-colors"
                         >
                             <Settings size={18} /> Параметры
                         </button>
                         <button
                             onClick={closeSession}
-                            className="p-2 hover:bg-[#2e3856] rounded-lg transition-colors text-zinc-400 hover:text-white"
+                            className="p-2 hover:bg-qz-card rounded-lg transition-colors text-qz-text-muted hover:text-qz-text"
                         >
                             <X size={24} />
                         </button>
@@ -421,32 +421,32 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
 
                 {/* Settings Modal */}
                 {showSettings && (
-                    <div className="absolute inset-0 z-50 bg-[#0a092d]/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200">
-                        <div className="w-full max-w-[600px] h-[85vh] bg-[#0a092d] rounded-3xl overflow-hidden shadow-2xl relative border border-white/10 flex flex-col">
+                    <div className="absolute inset-0 z-50 bg-qz-bg/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200">
+                        <div className="w-full max-w-[600px] h-[85vh] bg-qz-bg rounded-3xl overflow-hidden shadow-2xl relative border border-white/10 flex flex-col">
 
                             {/* Sticky Header */}
-                            <div className="flex-none p-8 pb-4 relative z-10 bg-[#0a092d]">
+                            <div className="flex-none p-8 pb-4 relative z-10 bg-qz-bg">
                                 <button
                                     onClick={() => setShowSettings(false)}
-                                    className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10 text-zinc-400 hover:text-white transition-colors"
+                                    className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10 text-qz-text-muted hover:text-qz-text transition-colors"
                                 >
                                     <X className="w-6 h-6" />
                                 </button>
-                                <h3 className="text-[28px] leading-tight font-bold text-white mb-6">Параметры</h3>
+                                <h3 className="text-[28px] leading-tight font-bold text-qz-text mb-6">Параметры</h3>
 
                                 {/* Quick Action Pills */}
                                 <div className="grid grid-cols-3 gap-3">
-                                    <button className="bg-[#2e3856]/40 hover:bg-[#2e3856]/60 border border-white/5 py-3 rounded-2xl flex items-center justify-center gap-2 text-sm font-bold text-zinc-300 transition-colors pointer-events-none opacity-50">
+                                    <button className="bg-qz-card/40 hover:bg-qz-card/60 border border-white/5 py-3 rounded-2xl flex items-center justify-center gap-2 text-sm font-bold text-qz-text-muted transition-colors pointer-events-none opacity-50">
                                         <Shuffle className="w-4 h-4" /> Перемешать
                                     </button>
-                                    <button className="bg-[#2e3856]/40 hover:bg-[#2e3856]/60 border border-white/5 py-3 rounded-2xl flex items-center justify-center gap-2 text-sm font-bold text-zinc-300 transition-colors pointer-events-none opacity-50 flex-col py-[6px] gap-0">
+                                    <button className="bg-qz-card/40 hover:bg-qz-card/60 border border-white/5 py-3 rounded-2xl flex items-center justify-center gap-2 text-sm font-bold text-qz-text-muted transition-colors pointer-events-none opacity-50 flex-col py-[6px] gap-0">
                                         <span className="text-xs text-zinc-500 font-semibold">Изучать термины с</span>
                                         <Star className="w-4 h-4 text-zinc-600" />
                                     </button>
                                     <button
                                         onClick={() => setSoundEffects(!soundEffects)}
                                         className={`border py-3 rounded-2xl flex flex-col items-center justify-center gap-0 text-sm font-bold transition-colors py-[6px]
-                                            ${soundEffects ? 'bg-[#4255ff]/20 text-indigo-100 border-indigo-500/50' : 'bg-[#2e3856]/40 text-zinc-300 border-white/5 hover:bg-[#2e3856]/60'}
+                                            ${soundEffects ? 'bg-[#4255ff]/20 text-indigo-100 border-indigo-500/50' : 'bg-qz-card/40 text-qz-text-muted border-white/5 hover:bg-qz-card/60'}
                                         `}
                                     >
                                         <div className="flex items-center gap-2">
@@ -461,20 +461,20 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                             <div className="flex-1 overflow-y-auto px-8 pb-8 pt-4 custom-scrollbar">
 
                                 {/* Accordion 1: Типы вопросов */}
-                                <div className="bg-[#2e3856] rounded-2xl mb-3 overflow-hidden transition-all duration-300">
+                                <div className="bg-qz-card rounded-2xl mb-3 overflow-hidden transition-all duration-300">
                                     <button
                                         onClick={() => setOpenAccordion(openAccordion === 'questionTypes' ? null : 'questionTypes')}
                                         className="w-full flex items-center justify-between p-5 text-left font-bold text-[15px] hover:bg-white/5 transition-colors"
                                     >
                                         Типы вопросов
-                                        {openAccordion === 'questionTypes' ? <ChevronUp className="w-5 h-5 text-zinc-400" /> : <ChevronDown className="w-5 h-5 text-zinc-400" />}
+                                        {openAccordion === 'questionTypes' ? <ChevronUp className="w-5 h-5 text-qz-text-muted" /> : <ChevronDown className="w-5 h-5 text-qz-text-muted" />}
                                     </button>
 
                                     <div className={`transition-all overflow-hidden ${openAccordion === 'questionTypes' ? 'max-h-[300px] opacity-100' : 'max-h-0 opacity-0'}`}>
                                         <div className="px-5 pb-5 space-y-5 border-t border-white/5 pt-4">
                                             <div className="flex items-center justify-between">
                                                 <div className="flex items-center gap-3">
-                                                    <ListIcon className="w-5 h-5 text-zinc-400" />
+                                                    <ListIcon className="w-5 h-5 text-qz-text-muted" />
                                                     <span className="font-semibold text-sm">Вопросы с выбором ответа</span>
                                                 </div>
                                                 <Toggle
@@ -484,7 +484,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                             </div>
                                             <div className="flex items-center justify-between">
                                                 <div className="flex items-center gap-3">
-                                                    <Edit2 className="w-5 h-5 text-zinc-400" />
+                                                    <Edit2 className="w-5 h-5 text-qz-text-muted" />
                                                     <span className="font-semibold text-sm">Письменные вопросы</span>
                                                 </div>
                                                 <Toggle
@@ -494,7 +494,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                             </div>
                                             <div className="flex items-center justify-between">
                                                 <div className="flex items-center gap-3">
-                                                    <RectIcon className="w-5 h-5 text-zinc-400" />
+                                                    <RectIcon className="w-5 h-5 text-qz-text-muted" />
                                                     <span className="font-semibold text-sm">Карточки</span>
                                                 </div>
                                                 <Toggle
@@ -507,13 +507,13 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                 </div>
 
                                 {/* Accordion 2: Ответ */}
-                                <div className="bg-[#2e3856] rounded-2xl mb-3 overflow-hidden transition-all duration-300">
+                                <div className="bg-qz-card rounded-2xl mb-3 overflow-hidden transition-all duration-300">
                                     <button
                                         onClick={() => setOpenAccordion(openAccordion === 'answerWith' ? null : 'answerWith')}
                                         className="w-full flex items-center justify-between p-5 text-left font-bold text-[15px] hover:bg-white/5 transition-colors"
                                     >
                                         Ответ
-                                        {openAccordion === 'answerWith' ? <ChevronUp className="w-5 h-5 text-zinc-400" /> : <ChevronDown className="w-5 h-5 text-zinc-400" />}
+                                        {openAccordion === 'answerWith' ? <ChevronUp className="w-5 h-5 text-qz-text-muted" /> : <ChevronDown className="w-5 h-5 text-qz-text-muted" />}
                                     </button>
 
                                     <div className={`transition-all overflow-hidden ${openAccordion === 'answerWith' ? 'max-h-[300px] opacity-100' : 'max-h-0 opacity-0'}`}>
@@ -537,13 +537,13 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                 </div>
 
                                 {/* Accordion 3: Показ изображений */}
-                                <div className="bg-[#2e3856] rounded-2xl mb-3 overflow-hidden transition-all duration-300">
+                                <div className="bg-qz-card rounded-2xl mb-3 overflow-hidden transition-all duration-300">
                                     <button
                                         onClick={() => setOpenAccordion(openAccordion === 'showImages' ? null : 'showImages')}
                                         className="w-full flex items-center justify-between p-5 text-left font-bold text-[15px] hover:bg-white/5 transition-colors"
                                     >
                                         Показ изображений
-                                        {openAccordion === 'showImages' ? <ChevronUp className="w-5 h-5 text-zinc-400" /> : <ChevronDown className="w-5 h-5 text-zinc-400" />}
+                                        {openAccordion === 'showImages' ? <ChevronUp className="w-5 h-5 text-qz-text-muted" /> : <ChevronDown className="w-5 h-5 text-qz-text-muted" />}
                                     </button>
 
                                     <div className={`transition-all overflow-hidden ${openAccordion === 'showImages' ? 'max-h-[300px] opacity-100' : 'max-h-0 opacity-0'}`}>
@@ -567,13 +567,13 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                 </div>
 
                                 {/* Accordion 4: Варианты оценок */}
-                                <div className="bg-[#2e3856] rounded-2xl mb-3 overflow-hidden transition-all duration-300">
+                                <div className="bg-qz-card rounded-2xl mb-3 overflow-hidden transition-all duration-300">
                                     <button
                                         onClick={() => setOpenAccordion(openAccordion === 'gradingOptions' ? null : 'gradingOptions')}
                                         className="w-full flex items-center justify-between p-5 text-left font-bold text-[15px] hover:bg-white/5 transition-colors"
                                     >
                                         Варианты оценок
-                                        {openAccordion === 'gradingOptions' ? <ChevronUp className="w-5 h-5 text-zinc-400" /> : <ChevronDown className="w-5 h-5 text-zinc-400" />}
+                                        {openAccordion === 'gradingOptions' ? <ChevronUp className="w-5 h-5 text-qz-text-muted" /> : <ChevronDown className="w-5 h-5 text-qz-text-muted" />}
                                     </button>
 
                                     <div className={`transition-all overflow-hidden ${openAccordion === 'gradingOptions' ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
@@ -588,7 +588,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                                 </div>
                                                 <div className="flex-1">
                                                     <div className="font-bold text-[15px] mb-1">Мягкое</div>
-                                                    <div className="text-[13px] text-zinc-400 leading-relaxed">Засчитывается общий смысл ответа. Допускаются синонимы, перефразирование и опечатки.</div>
+                                                    <div className="text-[13px] text-qz-text-muted leading-relaxed">Засчитывается общий смысл ответа. Допускаются синонимы, перефразирование и опечатки.</div>
                                                 </div>
                                                 <input type="radio" className="hidden" checked={gradingOption === 'soft'} onChange={() => setGradingOption('soft')} />
                                             </label>
@@ -602,7 +602,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                                 </div>
                                                 <div className="flex-1">
                                                     <div className="font-bold text-[15px] mb-1">Умеренное</div>
-                                                    <div className="text-[13px] text-zinc-400 leading-relaxed">Требуется точное совпадение, но допускаются орфографические ошибки (знаки ударения, пропущенные буквы и т. п.).</div>
+                                                    <div className="text-[13px] text-qz-text-muted leading-relaxed">Требуется точное совпадение, но допускаются орфографические ошибки (знаки ударения, пропущенные буквы и т. п.).</div>
                                                 </div>
                                                 <input type="radio" className="hidden" checked={gradingOption === 'moderate'} onChange={() => setGradingOption('moderate')} />
                                             </label>
@@ -616,7 +616,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                                 </div>
                                                 <div className="flex-1">
                                                     <div className="font-bold text-[15px] mb-1">Строгое</div>
-                                                    <div className="text-[13px] text-zinc-400 leading-relaxed">Требуется точное совпадение. Допускаются только небольшие стилистические ошибки (регистр, знаки препинания или текст в скобках).</div>
+                                                    <div className="text-[13px] text-qz-text-muted leading-relaxed">Требуется точное совпадение. Допускаются только небольшие стилистические ошибки (регистр, знаки препинания или текст в скобках).</div>
                                                 </div>
                                                 <input type="radio" className="hidden" checked={gradingOption === 'strict'} onChange={() => setGradingOption('strict')} />
                                             </label>
@@ -627,7 +627,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                             <div className="py-4 flex items-start justify-between gap-4">
                                                 <div className="flex-1">
                                                     <div className="font-bold text-[15px] mb-1">Повторять ввод правильных ответов</div>
-                                                    <div className="text-[13px] text-zinc-400 leading-relaxed">Если вы неправильно ответите на письменный вопрос, вам отобразится правильный ответ и просьба ввести его, прежде чем перейти к следующему вопросу. Это доступно только при включенных письменных вопросах.</div>
+                                                    <div className="text-[13px] text-qz-text-muted leading-relaxed">Если вы неправильно ответите на письменный вопрос, вам отобразится правильный ответ и просьба ввести его, прежде чем перейти к следующему вопросу. Это доступно только при включенных письменных вопросах.</div>
                                                 </div>
                                                 <div className="pt-1">
                                                     <Toggle isOn={requireRetype} onToggle={() => setRequireRetype(!requireRetype)} />
@@ -639,20 +639,20 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                 </div>
 
                                 {/* Other independent rows */}
-                                <div className="bg-[#2e3856] rounded-2xl mb-3 overflow-hidden divide-y divide-white/5">
+                                <div className="bg-qz-card rounded-2xl mb-3 overflow-hidden divide-y divide-white/5">
                                     <div className="flex items-center justify-between p-5" id="tts-toggle">
                                         <span className="font-bold text-[15px]">Преобразование текста в речь</span>
                                         <Toggle isOn={ttsEnabled} onToggle={() => setTtsEnabled(!ttsEnabled)} />
                                     </div>
                                     <div className="flex items-center justify-between p-5">
                                         <span className="font-bold text-[15px]">Письмо</span>
-                                        <button className="text-sm font-bold text-zinc-300 hover:text-white transition-colors flex items-center">
+                                        <button className="text-sm font-bold text-qz-text-muted hover:text-qz-text transition-colors flex items-center">
                                             Начать <ChevronRight className="w-4 h-4 ml-1" />
                                         </button>
                                     </div>
                                     <div className="flex items-center justify-between p-5">
                                         <span className="font-bold text-[15px]">Правописание</span>
-                                        <button className="text-sm font-bold text-zinc-300 hover:text-white transition-colors flex items-center">
+                                        <button className="text-sm font-bold text-qz-text-muted hover:text-qz-text transition-colors flex items-center">
                                             Начать <ChevronRight className="w-4 h-4 ml-1" />
                                         </button>
                                     </div>
@@ -666,7 +666,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                             </div>
 
                             {/* Sticky Footer */}
-                            <div className="flex-none p-6 bg-[#0a092d] border-t border-white/5 flex items-center justify-between z-10 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+                            <div className="flex-none p-6 bg-qz-bg border-t border-white/5 flex items-center justify-between z-10 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
                                 <button
                                     onClick={() => {
                                         setCurrentIndex(0);
@@ -688,7 +688,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                 <div className="flex items-center gap-3">
                                     <button
                                         onClick={() => setShowSettings(false)}
-                                        className="font-bold text-sm text-zinc-300 bg-[#2e3856]/40 hover:bg-[#2e3856]/60 transition-colors px-6 py-3 rounded-xl"
+                                        className="font-bold text-sm text-qz-text-muted bg-qz-card/40 hover:bg-qz-card/60 transition-colors px-6 py-3 rounded-xl"
                                     >
                                         Отмена
                                     </button>
@@ -718,7 +718,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
 
                 {/* Progress Bar */}
                 {!isFinished && (
-                    <div className="w-full bg-[#2e3856] h-1.5 max-w-5xl mx-auto rounded-full overflow-hidden mb-8">
+                    <div className="w-full bg-qz-card h-1.5 max-w-5xl mx-auto rounded-full overflow-hidden mb-8">
                         <div
                             className="bg-[#4255ff] h-1.5 transition-all duration-300 rounded-full"
                             style={{ width: `${Math.max(5, (currentIndex / queue.length) * 100)}%` }}
@@ -729,18 +729,18 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                 {/* Main Content */}
                 <main className="flex-1 flex flex-col items-center justify-start pt-8 p-6 z-10 w-full max-w-3xl mx-auto">
                     {isFinished ? (
-                        <div className="bg-[#2e3856] border border-[#2e3856] p-10 rounded-2xl w-full text-center shadow-xl animate-in zoom-in duration-500">
-                            <h2 className="text-3xl font-bold mb-4 text-white">Вы отлично справились!</h2>
-                            <p className="text-lg text-zinc-400 mb-8">
+                        <div className="bg-qz-card border border-qz-border-light p-10 rounded-2xl w-full text-center shadow-xl animate-in zoom-in duration-500">
+                            <h2 className="text-3xl font-bold mb-4 text-qz-text">Вы отлично справились!</h2>
+                            <p className="text-lg text-qz-text-muted mb-8">
                                 Вы изучили {queue.length} терминов. Ваш результат: {Math.round((totalCorrect / queue.length) * 100)}%
                             </p>
 
                             <div className="flex gap-4 justify-center">
-                                <div className="bg-[#0a092d] p-6 rounded-xl flex-1 max-w-[200px] border border-[#2e3856]">
+                                <div className="bg-qz-bg p-6 rounded-xl flex-1 max-w-[200px] border border-qz-border-light">
                                     <div className="text-3xl font-semibold text-green-400 mb-2">{totalCorrect}</div>
                                     <div className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Верно</div>
                                 </div>
-                                <div className="bg-[#0a092d] p-6 rounded-xl flex-1 max-w-[200px] border border-[#2e3856]">
+                                <div className="bg-qz-bg p-6 rounded-xl flex-1 max-w-[200px] border border-qz-border-light">
                                     <div className="text-3xl font-semibold text-red-500 mb-2">{queue.length - totalCorrect}</div>
                                     <div className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Неверно</div>
                                 </div>
@@ -765,11 +765,11 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                         <div className="w-full flex flex-col gap-8 animate-in fade-in duration-300">
 
                             {/* Question Card */}
-                            <div className="bg-[#2e3856] border border-[#2e3856] p-8 md:p-12 rounded-2xl shadow-lg relative min-h-[250px] flex flex-col justify-center">
-                                <div className="absolute top-6 right-6 flex items-center gap-3 text-zinc-400">
-                                    <button className="hover:text-white transition-colors"><Edit2 size={18} /></button>
+                            <div className="bg-qz-card border border-qz-border-light p-8 md:p-12 rounded-2xl shadow-lg relative min-h-[250px] flex flex-col justify-center">
+                                <div className="absolute top-6 right-6 flex items-center gap-3 text-qz-text-muted">
+                                    <button className="hover:text-qz-text transition-colors"><Edit2 size={18} /></button>
                                     <button
-                                        className="hover:text-white transition-colors"
+                                        className="hover:text-qz-text transition-colors"
                                         onClick={() => playQuestionAudio(currentQuestion)}
                                     >
                                         <Volume2 size={18} />
@@ -780,14 +780,14 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                         <img src={currentQuestion.flashcard.imageUrl} alt="Flashcard image" className="max-h-[200px] object-contain rounded-lg shadow-md" />
                                     </div>
                                 )}
-                                <p className={`text-2xl md:text-3xl font-medium leading-relaxed text-white text-center ${currentQuestion.flashcard.imageUrl ? '' : 'mt-4'}`}>
+                                <p className={`text-2xl md:text-3xl font-medium leading-relaxed text-qz-text text-center ${currentQuestion.flashcard.imageUrl ? '' : 'mt-4'}`}>
                                     {isAiPro && aiExercises[currentIndex] 
                                         ? aiExercises[currentIndex].question 
                                         : (currentQuestion.type === 'MULTIPLE_CHOICE' ? currentQuestion.mcqData?.prompt : currentQuestion.writtenData?.prompt)
                                     }
                                 </p>
                                 {isAiPro && aiExercises[currentIndex]?.context && (
-                                    <p className="mt-4 text-sm text-zinc-400 italic text-center">
+                                    <p className="mt-4 text-sm text-qz-text-muted italic text-center">
                                         Context: {aiExercises[currentIndex].context}
                                     </p>
                                 )}
@@ -808,14 +808,14 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                             {/* Answer Grid / Inputs */}
                             {currentQuestion.type === 'MULTIPLE_CHOICE' && currentQuestion.mcqData && (
                                 <div className="w-full">
-                                    <p className="text-sm font-semibold text-zinc-400 mb-4 px-2">
+                                    <p className="text-sm font-semibold text-qz-text-muted mb-4 px-2">
                                         {currentQuestion.mcqData.answerType === 'term' ? 'Выберите правильный термин' : 'Выберите правильное определение'}
                                     </p>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {currentQuestion.mcqData.options.map((option, index) => {
-                                            let buttonStateClass = "bg-transparent border-[#2e3856] hover:bg-[#2e3856] hover:border-purple-500 text-zinc-200"
+                                            let buttonStateClass = "bg-transparent border-qz-border-light hover:bg-qz-card hover:border-purple-500 text-zinc-200"
                                             let Icon = null;
-                                            let numberTagClass = "bg-[#2e3856] text-zinc-400 border border-[#2e3856]";
+                                            let numberTagClass = "bg-qz-card text-qz-text-muted border border-qz-border-light";
 
                                             if (showResult) {
                                                 if (index === currentQuestion.mcqData!.correctIndex) {
@@ -827,7 +827,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                                     numberTagClass = "bg-red-500/20 text-red-400 border-red-500/50"
                                                     Icon = <XCircle size={20} className="text-red-500" />
                                                 } else {
-                                                    buttonStateClass = "bg-transparent border-[#2e3856] text-zinc-600 opacity-50"
+                                                    buttonStateClass = "bg-transparent border-qz-border-light text-zinc-600 opacity-50"
                                                 }
                                             }
 
@@ -854,7 +854,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
 
                             {currentQuestion.type === 'WRITTEN' && currentQuestion.writtenData && (
                                 <div className="w-full">
-                                    <p className="text-sm font-semibold text-zinc-400 mb-4 px-2">
+                                    <p className="text-sm font-semibold text-qz-text-muted mb-4 px-2">
                                         {currentQuestion.writtenData.targetFieldName
                                             ? <>Введите <span className="text-[#ffcd1f] font-bold">{currentQuestion.writtenData.targetFieldName}</span></>
                                             : <>Введите правильный {currentQuestion.writtenData.answerType === 'term' ? 'термин' : 'ответ'}</>
@@ -866,7 +866,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                             value={writtenInput}
                                             onChange={(e) => setWrittenInput(e.target.value)}
                                             disabled={showResult}
-                                            className="w-full bg-[#0a092d] border-2 border-[#2e3856] rounded-xl px-5 py-4 focus:border-indigo-500 focus:bg-[#1a1a3a] outline-none transition-all font-medium text-xl text-white shadow-sm disabled:opacity-50"
+                                            className="w-full bg-qz-bg border-2 border-qz-border-light rounded-xl px-5 py-4 focus:border-indigo-500 focus:bg-[#1a1a3a] outline-none transition-all font-medium text-xl text-qz-text shadow-sm disabled:opacity-50"
                                             autoFocus
                                             placeholder="Введите ваш ответ..."
                                         />
@@ -889,10 +889,10 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                             </div>
                                             {isWrongAnswer && (
                                                 <div className="mt-4">
-                                                    <div className="text-sm text-zinc-400 font-bold uppercase mb-1">Правильный ответ:</div>
-                                                    <div className="text-lg text-white mb-4 whitespace-pre-wrap">{currentQuestion.writtenData.correctAnswer}</div>
+                                                    <div className="text-sm text-qz-text-muted font-bold uppercase mb-1">Правильный ответ:</div>
+                                                    <div className="text-lg text-qz-text mb-4 whitespace-pre-wrap">{currentQuestion.writtenData.correctAnswer}</div>
 
-                                                    <div className="text-sm text-zinc-400 font-bold uppercase mb-1">Ваш ответ:</div>
+                                                    <div className="text-sm text-qz-text-muted font-bold uppercase mb-1">Ваш ответ:</div>
                                                     <div className="text-lg text-red-300 opacity-80 whitespace-pre-wrap">{writtenInput}</div>
                                                 </div>
                                             )}
@@ -902,13 +902,13 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                                     <div className="text-sm font-bold text-[#ffcd1f] uppercase tracking-widest mb-2 flex items-center gap-2">
                                                         <GraduationCap size={16} /> AI Разбор
                                                     </div>
-                                                    <p className="text-zinc-300 leading-relaxed text-sm italic">
+                                                    <p className="text-qz-text-muted leading-relaxed text-sm italic">
                                                         {aiFeedback.explanation}
                                                     </p>
                                                     {aiFeedback.score < 1.0 && (
-                                                        <div className="mt-3 bg-[#0a092d]/40 p-3 rounded-lg border border-white/5">
+                                                        <div className="mt-3 bg-qz-bg/40 p-3 rounded-lg border border-white/5">
                                                             <span className="text-xs font-bold text-zinc-500 uppercase block mb-1">Как было бы лучше:</span>
-                                                            <span className="text-white font-medium">{aiFeedback.correctAnswer}</span>
+                                                            <span className="text-qz-text font-medium">{aiFeedback.correctAnswer}</span>
                                                         </div>
                                                     )}
                                                 </div>
@@ -932,7 +932,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                     <button
                                         id="learn-next-btn"
                                         onClick={handleNext}
-                                        className="flex items-center gap-2 bg-[#2e3856] hover:bg-[#586380] text-white font-medium px-5 py-2 rounded-xl border border-[#586380] hover:border-zinc-600 transition-all"
+                                        className="flex items-center gap-2 bg-qz-card hover:bg-[#586380] text-qz-text font-medium px-5 py-2 rounded-xl border border-qz-border hover:border-zinc-600 transition-all"
                                     >
                                         Next <ChevronRight className="w-4 h-4" />
                                     </button>

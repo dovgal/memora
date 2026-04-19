@@ -76,10 +76,10 @@ export default function AddToFolderModal({ setId, token }: AddToFolderModalProps
 
             {isOpen && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-                    <div className="bg-[#2e3856] border border-[#2e3856] rounded-2xl w-full max-w-md p-6 shadow-2xl relative">
+                    <div className="bg-qz-card border border-qz-border-light rounded-2xl w-full max-w-md p-6 shadow-2xl relative">
                         <div className="flex justify-between items-center mb-6">
-                            <h2 className="text-2xl font-bold text-white">Add to Folder</h2>
-                            <button onClick={() => setIsOpen(false)} className="text-zinc-400 hover:text-white transition-colors">
+                            <h2 className="text-2xl font-bold text-qz-text">Add to Folder</h2>
+                            <button onClick={() => setIsOpen(false)} className="text-qz-text-muted hover:text-qz-text transition-colors">
                                 <X size={24} />
                             </button>
                         </div>
@@ -89,7 +89,7 @@ export default function AddToFolderModal({ setId, token }: AddToFolderModalProps
                                 <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
                             </div>
                         ) : folders.length === 0 ? (
-                            <div className="text-center py-8 text-zinc-400">
+                            <div className="text-center py-8 text-qz-text-muted">
                                 <Folder className="w-12 h-12 text-zinc-600 mx-auto mb-3" />
                                 <p>You don't have any folders yet.</p>
                                 <p className="text-sm mt-2 text-zinc-500">Go to your Library to create one.</p>
@@ -105,7 +105,7 @@ export default function AddToFolderModal({ setId, token }: AddToFolderModalProps
                                             onClick={() => addToFolder(folder.id)}
                                             className={`p-4 rounded-xl border text-left transition-all flex items-center justify-between ${isAdded
                                                     ? 'bg-[#4255ff]/10 border-indigo-500/50 text-white cursor-default'
-                                                    : 'bg-black/50 border-[#2e3856] hover:border-indigo-500/50 text-zinc-300 hover:bg-[#2e3856]/50'
+                                                    : 'bg-black/50 border-qz-border-light hover:border-indigo-500/50 text-qz-text-muted hover:bg-qz-card/50'
                                                 }`}
                                         >
                                             <div className="flex items-center gap-3">
@@ -119,10 +119,10 @@ export default function AddToFolderModal({ setId, token }: AddToFolderModalProps
                             </div>
                         )}
 
-                        <div className="mt-6 pt-4 border-t border-[#2e3856] flex justify-end">
+                        <div className="mt-6 pt-4 border-t border-qz-border-light flex justify-end">
                             <button
                                 onClick={() => setIsOpen(false)}
-                                className="bg-[#2e3856] hover:bg-[#586380] text-white font-medium py-2 px-6 rounded-lg transition-colors"
+                                className="bg-qz-card hover:bg-[#586380] text-qz-text font-medium py-2 px-6 rounded-lg transition-colors"
                             >
                                 Done
                             </button>

@@ -448,26 +448,26 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
 
     return (
         <div
-            className="min-h-screen bg-[#11112b] text-white flex flex-col relative overflow-hidden select-none font-sans"
+            className="min-h-screen bg-[#11112b] text-qz-text flex flex-col relative overflow-hidden select-none font-sans"
             onMouseMove={handleMouseMove}
         >
-            <header className="bg-[#1a1a3a] border-b border-[#2e3856] p-4 flex justify-between items-center z-50">
+            <header className="bg-[#1a1a3a] border-b border-qz-border-light p-4 flex justify-between items-center z-50">
                 <div className="flex items-center gap-4">
-                    <h1 className="text-xl font-bold text-white flex items-center gap-2">
+                    <h1 className="text-xl font-bold text-qz-text flex items-center gap-2">
                         <Rocket size={20} className="text-cyan-400" /> Blast
                     </h1>
                 </div>
 
                 <div className="flex items-center gap-6">
-                    <button onClick={() => setAudioEnabled(!audioEnabled)} className="text-zinc-400 hover:text-white transition-colors p-2">
+                    <button onClick={() => setAudioEnabled(!audioEnabled)} className="text-qz-text-muted hover:text-qz-text transition-colors p-2">
                         {audioEnabled ? <Volume2 size={22} /> : <VolumeX size={22} />}
                     </button>
-                    <button className="text-zinc-400 hover:text-yellow-400 transition-colors p-2">
+                    <button className="text-qz-text-muted hover:text-yellow-400 transition-colors p-2">
                         <Trophy size={22} />
                     </button>
                     <Link
                         href={`/set/${id}`}
-                        className="p-2 hover:bg-white/10 rounded-full transition-colors text-zinc-400 hover:text-white"
+                        className="p-2 hover:bg-white/10 rounded-full transition-colors text-qz-text-muted hover:text-qz-text"
                     >
                         <X size={24} />
                     </Link>
@@ -513,7 +513,7 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
                     >
                         <div className="absolute inset-0 w-full h-full rounded-full opacity-30 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #2a2a7a 10%, transparent 20%), radial-gradient(circle, #272765 10%, transparent 20%)', backgroundSize: '40px 40px, 30px 30px', backgroundPosition: '0 0, 20px 20px' }}></div>
 
-                        <span className="font-bold text-white text-center px-4 leading-tight drop-shadow-md z-10 text-sm md:text-base pointer-events-none whitespace-pre-wrap">
+                        <span className="font-bold text-qz-text text-center px-4 leading-tight drop-shadow-md z-10 text-sm md:text-base pointer-events-none whitespace-pre-wrap">
                             {ast.text}
                         </span>
                     </div>
@@ -526,7 +526,7 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
                         style={{ transform: `translateX(-50%) rotate(${shipAngle}deg)` }}
                     >
                         <div className="w-20 h-20 rounded-full bg-[#1b8bc2] flex items-center justify-center shadow-inner">
-                            <span className="text-white text-4xl font-bold font-mono">E</span>
+                            <span className="text-qz-text text-4xl font-bold font-mono">E</span>
                         </div>
                         <div className="absolute -top-4 w-4 h-8 bg-zinc-300 left-8 rounded-full shadow-md"></div>
                         <div className="absolute -top-4 w-4 h-8 bg-zinc-300 right-8 rounded-full shadow-md"></div>
@@ -538,7 +538,7 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
                         <div className="flex flex-col gap-1 w-48">
                             <div className="flex justify-between font-bold">
                                 <span className="text-[#f1f11e]">Уров. {level}</span>
-                                <span className="text-white">{score}/{targetScore}</span>
+                                <span className="text-qz-text">{score}/{targetScore}</span>
                             </div>
                             <div className="w-full h-2 bg-[#1a1a3a] rounded-full overflow-hidden border border-white/10">
                                 <div
@@ -579,13 +579,13 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
                             <Rocket size={40} className="text-[#11112b]" />
                         </div>
                         <h2 className="text-4xl font-bold mb-4 text-[#f1f11e]">Уровень 1</h2>
-                        <h3 className="text-2xl font-medium mb-12 text-zinc-300 text-center">
+                        <h3 className="text-2xl font-medium mb-12 text-qz-text-muted text-center">
                             Цель: {targetScore} очков <br /> <span className="text-lg opacity-70">Направляйте мышь на корабль и кликайте на правильные ответы.</span>
                         </h3>
 
                         <button
                             onClick={() => startGame(1, 0)}
-                            className="w-full max-w-sm bg-blue-600 hover:bg-blue-500 text-white font-bold py-5 px-8 rounded-full flex items-center justify-center gap-3 transition-transform hover:scale-105 shadow-xl"
+                            className="w-full max-w-sm bg-blue-600 hover:bg-blue-500 text-qz-text font-bold py-5 px-8 rounded-full flex items-center justify-center gap-3 transition-transform hover:scale-105 shadow-xl"
                         >
                             Начать <Play fill="currentColor" size={20} />
                         </button>
@@ -595,11 +595,11 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
                 {gameState === 'level_passed' && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center z-50 bg-[#11112b]/95 backdrop-blur-md">
                         <h2 className="text-5xl font-bold mb-4 text-zinc-500">Уровень {level} завершен</h2>
-                        <h3 className="text-3xl font-medium mb-12 text-zinc-400">Общий счет: <span className="text-white font-semibold">{score}</span></h3>
+                        <h3 className="text-3xl font-medium mb-12 text-qz-text-muted">Общий счет: <span className="text-qz-text font-semibold">{score}</span></h3>
 
                         <button
                             onClick={() => startGame(level + 1, score)}
-                            className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-5 px-12 rounded-full transition-transform hover:scale-105 shadow-[0_0_30px_rgba(37,99,235,0.4)] text-lg"
+                            className="bg-blue-600 hover:bg-blue-500 text-qz-text font-bold py-5 px-12 rounded-full transition-transform hover:scale-105 shadow-[0_0_30px_rgba(37,99,235,0.4)] text-lg"
                         >
                             Следующий уровень
                         </button>
@@ -611,25 +611,25 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
                         <div className="mb-6">
                             <Trophy size={80} className="text-[#f1f11e] drop-shadow-[0_0_40px_rgba(241,241,30,0.6)] mx-auto" />
                         </div>
-                        <h2 className="text-4xl font-bold mb-4 text-white">Отличная игра!</h2>
-                        <h3 className="text-2xl font-medium mb-12 text-zinc-300">Вот ваш итоговый результат</h3>
+                        <h2 className="text-4xl font-bold mb-4 text-qz-text">Отличная игра!</h2>
+                        <h3 className="text-2xl font-medium mb-12 text-qz-text-muted">Вот ваш итоговый результат</h3>
 
                         <div className="flex gap-4 mb-12 w-full max-w-xl">
                             <div className="flex-1 bg-[#0b335c] p-6 rounded-2xl flex flex-col items-center justify-center shadow-inner">
                                 <span className="text-sm font-bold text-blue-300 mb-2">Ваш результат</span>
-                                <span className="text-5xl font-semibold text-white">{score}</span>
+                                <span className="text-5xl font-semibold text-qz-text">{score}</span>
                             </div>
                             <div className="flex-1 bg-[#0b335c] p-6 rounded-2xl flex flex-col items-center justify-center shadow-inner">
                                 <span className="text-sm font-bold text-blue-300 mb-2">Ваш уровень</span>
-                                <span className="text-5xl font-semibold text-white">{level}</span>
+                                <span className="text-5xl font-semibold text-qz-text">{level}</span>
                             </div>
                         </div>
 
                         <div className="flex flex-col w-full max-w-[300px] gap-2 items-center">
-                            <span className="text-sm font-bold text-white mb-2">Следующие шаги</span>
+                            <span className="text-sm font-bold text-qz-text mb-2">Следующие шаги</span>
                             <button
                                 onClick={() => startGame(1, 0)}
-                                className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-8 rounded-full flex items-center justify-center gap-3 transition-transform hover:scale-105 shadow-xl"
+                                className="w-full bg-blue-600 hover:bg-blue-500 text-qz-text font-bold py-4 px-8 rounded-full flex items-center justify-center gap-3 transition-transform hover:scale-105 shadow-xl"
                             >
                                 <RotateCcw size={20} /> Играть снова
                             </button>

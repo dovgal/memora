@@ -26,13 +26,13 @@ export default function OfflineBanner() {
 
     return (
         <div className="fixed bottom-0 left-0 right-0 z-50 p-4 animate-in slide-in-from-bottom duration-300">
-            <div className="max-w-md mx-auto bg-[#0a092d] border border-[#2e3856] shadow-[0_0_30px_rgba(0,0,0,0.8)] rounded-xl p-4 flex items-center gap-4">
+            <div className="max-w-md mx-auto bg-qz-bg border border-qz-border-light shadow-[0_0_30px_rgba(0,0,0,0.8)] rounded-xl p-4 flex items-center gap-4">
                 <div className="bg-red-950/40 p-2 rounded-full text-red-500 shrink-0">
                     <WifiOff size={24} />
                 </div>
                 <div>
-                    <h4 className="text-white font-bold text-sm">You are offline</h4>
-                    <p className="text-zinc-400 text-xs mt-0.5">
+                    <h4 className="text-qz-text font-bold text-sm">You are offline</h4>
+                    <p className="text-qz-text-muted text-xs mt-0.5">
                         You can still view cached study sets, but some features may be unavailable.
                     </p>
                 </div>

@@ -72,16 +72,16 @@ export default function LibraryClient({ initialSets, initialFolders, token }: Li
             </div>
 
             {/* Tabs */}
-            <div className="flex gap-6 border-b border-[#2e3856] mb-8">
+            <div className="flex gap-6 border-b border-qz-border-light mb-8">
                 <button
                     onClick={() => setActiveTab('sets')}
-                    className={`pb-4 px-2 font-medium transition-colors border-b-2 ${activeTab === 'sets' ? 'border-indigo-500 text-white' : 'border-transparent text-zinc-400 hover:text-zinc-300'}`}
+                    className={`pb-4 px-2 font-medium transition-colors border-b-2 ${activeTab === 'sets' ? 'border-indigo-500 text-qz-text' : 'border-transparent text-qz-text-muted hover:text-qz-text-muted'}`}
                 >
                     Study Sets
                 </button>
                 <button
                     onClick={() => setActiveTab('folders')}
-                    className={`pb-4 px-2 font-medium transition-colors border-b-2 ${activeTab === 'folders' ? 'border-indigo-500 text-white' : 'border-transparent text-zinc-400 hover:text-zinc-300'}`}
+                    className={`pb-4 px-2 font-medium transition-colors border-b-2 ${activeTab === 'folders' ? 'border-indigo-500 text-qz-text' : 'border-transparent text-qz-text-muted hover:text-qz-text-muted'}`}
                 >
                     Folders
                 </button>
@@ -91,9 +91,9 @@ export default function LibraryClient({ initialSets, initialFolders, token }: Li
             {activeTab === 'sets' && (
                 <div>
                     {initialSets.length === 0 ? (
-                        <div className="bg-[#2e3856]/50 border border-[#2e3856] rounded-2xl p-8 text-center mt-12">
+                        <div className="bg-qz-card/50 border border-qz-border-light rounded-2xl p-8 text-center mt-12">
                             <Layers className="w-12 h-12 text-zinc-500 mx-auto mb-4" />
-                            <p className="text-zinc-400 mb-4">You have not created any sets yet.</p>
+                            <p className="text-qz-text-muted mb-4">You have not created any sets yet.</p>
                             <Link href="/dashboard/import" className="inline-block bg-[#4255ff] hover:bg-indigo-400 text-white px-6 py-2 rounded-lg font-medium transition-colors">
                                 Create a Set
                             </Link>
@@ -101,9 +101,9 @@ export default function LibraryClient({ initialSets, initialFolders, token }: Li
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {initialSets.map(set => (
-                                <Link href={`/set/${set.id}`} key={set.id} className="block p-6 rounded-2xl bg-[#2e3856] border border-[#2e3856] hover:border-indigo-500/50 transition-all group group/card">
-                                    <h3 className="text-lg font-bold text-white mb-2 group-hover/card:text-indigo-300 transition-colors line-clamp-1">{set.title}</h3>
-                                    {set.description && <p className="text-zinc-400 text-sm mb-4 line-clamp-2">{set.description}</p>}
+                                <Link href={`/set/${set.id}`} key={set.id} className="block p-6 rounded-2xl bg-qz-card border border-qz-border-light hover:border-indigo-500/50 transition-all group group/card">
+                                    <h3 className="text-lg font-bold text-qz-text mb-2 group-hover/card:text-indigo-300 transition-colors line-clamp-1">{set.title}</h3>
+                                    {set.description && <p className="text-qz-text-muted text-sm mb-4 line-clamp-2">{set.description}</p>}
                                     <div className="flex items-center gap-2 text-xs font-semibold text-zinc-500 uppercase tracking-widest mt-auto">
                                         <Layers className="w-4 h-4" /> {set.flashcardCount} Terms
                                     </div>
@@ -118,9 +118,9 @@ export default function LibraryClient({ initialSets, initialFolders, token }: Li
             {activeTab === 'folders' && (
                 <div>
                     {initialFolders.length === 0 ? (
-                        <div className="bg-[#2e3856]/50 border border-[#2e3856] rounded-2xl p-8 text-center mt-12">
+                        <div className="bg-qz-card/50 border border-qz-border-light rounded-2xl p-8 text-center mt-12">
                             <Folder className="w-12 h-12 text-zinc-500 mx-auto mb-4" />
-                            <p className="text-zinc-400 mb-4">Organize your study sets into folders.</p>
+                            <p className="text-qz-text-muted mb-4">Organize your study sets into folders.</p>
                             <button
                                 onClick={() => setIsCreateModalOpen(true)}
                                 className="inline-block bg-[#4255ff] hover:bg-indigo-400 text-white px-6 py-2 rounded-lg font-medium transition-colors"
@@ -131,9 +131,9 @@ export default function LibraryClient({ initialSets, initialFolders, token }: Li
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {initialFolders.map(folder => (
-                                <Link href={`/folder/${folder.id}`} key={folder.id} className="block p-6 flex flex-col items-center justify-center text-center rounded-2xl bg-[#2e3856] border border-[#2e3856] hover:border-indigo-500/50 transition-all group group/card min-h-[160px]">
-                                    <Folder className="w-10 h-10 text-zinc-400 group-hover/card:text-[#ffcd1f] mb-3 transition-colors" />
-                                    <h3 className="text-lg font-bold text-white mb-1 group-hover/card:text-indigo-300 transition-colors line-clamp-1">{folder.name}</h3>
+                                <Link href={`/folder/${folder.id}`} key={folder.id} className="block p-6 flex flex-col items-center justify-center text-center rounded-2xl bg-qz-card border border-qz-border-light hover:border-indigo-500/50 transition-all group group/card min-h-[160px]">
+                                    <Folder className="w-10 h-10 text-qz-text-muted group-hover/card:text-[#ffcd1f] mb-3 transition-colors" />
+                                    <h3 className="text-lg font-bold text-qz-text mb-1 group-hover/card:text-indigo-300 transition-colors line-clamp-1">{folder.name}</h3>
                                     <p className="text-zinc-500 text-sm">{folder.setCount} sets</p>
                                 </Link>
                             ))}
@@ -145,42 +145,42 @@ export default function LibraryClient({ initialSets, initialFolders, token }: Li
             {/* Create Folder Modal */}
             {isCreateModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-                    <div className="bg-[#2e3856] border border-[#2e3856] rounded-2xl w-full max-w-md p-6 shadow-2xl">
+                    <div className="bg-qz-card border border-qz-border-light rounded-2xl w-full max-w-md p-6 shadow-2xl">
                         <div className="flex justify-between items-center mb-6">
-                            <h2 className="text-2xl font-bold text-white">Create a new folder</h2>
-                            <button onClick={() => setIsCreateModalOpen(false)} className="text-zinc-400 hover:text-white transition-colors">
+                            <h2 className="text-2xl font-bold text-qz-text">Create a new folder</h2>
+                            <button onClick={() => setIsCreateModalOpen(false)} className="text-qz-text-muted hover:text-qz-text transition-colors">
                                 <X size={24} />
                             </button>
                         </div>
 
                         <form onSubmit={handleCreateFolder}>
                             <div className="mb-4">
-                                <label className="block text-sm font-medium text-zinc-300 mb-1">Folder title</label>
+                                <label className="block text-sm font-medium text-qz-text-muted mb-1">Folder title</label>
                                 <input
                                     type="text"
                                     required
                                     value={folderName}
                                     onChange={e => setFolderName(e.target.value)}
                                     placeholder="Enter a title"
-                                    className="w-full bg-black/50 border border-[#2e3856] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                                    className="w-full bg-black/50 border border-qz-border-light rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                                 />
                             </div>
 
                             <div className="mb-6">
-                                <label className="block text-sm font-medium text-zinc-300 mb-1">Description (optional)</label>
+                                <label className="block text-sm font-medium text-qz-text-muted mb-1">Description (optional)</label>
                                 <input
                                     type="text"
                                     value={folderDesc}
                                     onChange={e => setFolderDesc(e.target.value)}
                                     placeholder="Enter a description"
-                                    className="w-full bg-black/50 border border-[#2e3856] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                                    className="w-full bg-black/50 border border-qz-border-light rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                                 />
                             </div>
 
                             <button
                                 type="submit"
                                 disabled={!folderName.trim() || isCreating}
-                                className="w-full bg-[#4255ff] hover:bg-[#4255ff] disabled:bg-[#2e3856] disabled:text-zinc-500 text-white font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center shadow-lg"
+                                className="w-full bg-[#4255ff] hover:bg-[#4255ff] disabled:bg-qz-card disabled:text-zinc-500 text-white font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center shadow-lg"
                             >
                                 {isCreating ? 'Creating...' : 'Create folder'}
                             </button>

@@ -82,9 +82,9 @@ export default function TeacherGamePage({ params }: TeacherGamePageProps) {
     const maxScore = Math.max(...scores.map(s => s.score), 1);
 
     return (
-        <div className="min-h-screen bg-[#0a092d] text-white flex flex-col">
+        <div className="min-h-screen bg-qz-bg text-qz-text flex flex-col">
             {/* Header */}
-            <header className="flex items-center justify-between px-6 py-3 border-b border-[#2e3856] bg-[#0a092d]/60">
+            <header className="flex items-center justify-between px-6 py-3 border-b border-qz-border-light bg-qz-bg/60">
                 <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm">
                     <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
                     Live Game
@@ -104,7 +104,7 @@ export default function TeacherGamePage({ params }: TeacherGamePageProps) {
                 <div className="flex-1 flex flex-col items-center justify-center p-8 gap-8">
                     {question ? (
                         <>
-                            <div className="bg-[#0a092d] border border-[#2e3856] rounded-3xl p-10 w-full max-w-2xl text-center shadow-2xl">
+                            <div className="bg-qz-bg border border-qz-border-light rounded-3xl p-10 w-full max-w-2xl text-center shadow-2xl">
                                 <p className="text-xs uppercase tracking-widest text-zinc-500 mb-4">Term</p>
                                 <p className="text-4xl font-bold leading-tight">{question.term}</p>
                             </div>
@@ -118,8 +118,8 @@ export default function TeacherGamePage({ params }: TeacherGamePageProps) {
                                             className={`p-5 rounded-2xl border-2 text-sm font-medium transition-all duration-500 ${answer
                                                     ? isCorrect
                                                         ? 'bg-green-950/50 border-green-500 text-green-300'
-                                                        : 'bg-[#0a092d] border-[#2e3856] text-zinc-600 opacity-50'
-                                                    : 'bg-[#0a092d] border-[#586380] text-zinc-300'
+                                                        : 'bg-qz-bg border-qz-border-light text-zinc-600 opacity-50'
+                                                    : 'bg-qz-bg border-qz-border text-qz-text-muted'
                                                 }`}
                                         >
                                             {opt}
@@ -155,8 +155,8 @@ export default function TeacherGamePage({ params }: TeacherGamePageProps) {
 
                 {/* Right: Leaderboard */}
                 {scores.length > 0 && (
-                    <div className="w-full lg:w-72 border-t lg:border-t-0 lg:border-l border-[#2e3856] bg-[#0a092d]/40 p-6 flex flex-col gap-4">
-                        <div className="flex items-center gap-2 text-sm font-bold text-zinc-400 uppercase tracking-widest">
+                    <div className="w-full lg:w-72 border-t lg:border-t-0 lg:border-l border-qz-border-light bg-qz-bg/40 p-6 flex flex-col gap-4">
+                        <div className="flex items-center gap-2 text-sm font-bold text-qz-text-muted uppercase tracking-widest">
                             <Trophy className="w-4 h-4 text-yellow-400" /> Leaderboard
                         </div>
                         <div className="flex flex-col gap-3">
@@ -168,9 +168,9 @@ export default function TeacherGamePage({ params }: TeacherGamePageProps) {
                                             {s.team}
                                             {i === 0 && <span className="text-yellow-400 text-xs">👑</span>}
                                         </span>
-                                        <span className="font-bold tabular-nums text-zinc-300">{s.score}</span>
+                                        <span className="font-bold tabular-nums text-qz-text-muted">{s.score}</span>
                                     </div>
-                                    <div className="w-full bg-[#2e3856] rounded-full h-2">
+                                    <div className="w-full bg-qz-card rounded-full h-2">
                                         <div
                                             className={`h-2 rounded-full transition-all duration-700 ${TEAM_COLOURS[s.team] ?? 'bg-[#4255ff]'}`}
                                             style={{ width: `${(s.score / maxScore) * 100}%` }}

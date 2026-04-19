@@ -18,7 +18,7 @@ const TypingIndicator = () => (
         <div className="w-7 h-7 rounded-full bg-[#4255ff]/20 border border-indigo-500/30 flex items-center justify-center shrink-0">
             <Bot className="w-3.5 h-3.5 text-[#ffcd1f]" />
         </div>
-        <div className="bg-[#2e3856] border border-[#586380]/50 px-4 py-3 rounded-2xl rounded-bl-sm">
+        <div className="bg-qz-card border border-qz-border/50 px-4 py-3 rounded-2xl rounded-bl-sm">
             <span className="flex gap-1 items-center h-4">
                 <span className="w-1.5 h-1.5 bg-zinc-400 rounded-full animate-bounce [animation-delay:0ms]" />
                 <span className="w-1.5 h-1.5 bg-zinc-400 rounded-full animate-bounce [animation-delay:150ms]" />
@@ -89,16 +89,16 @@ const QChatPanelInner = forwardRef<QChatPanelHandle, QChatPanelProps>(
                 {/* Side panel */}
                 <div
                     id="qchat-panel"
-                    className={`fixed top-0 right-0 h-full w-full sm:w-[380px] z-40 flex flex-col bg-[#0a092d] border-l border-[#2e3856] shadow-2xl transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+                    className={`fixed top-0 right-0 h-full w-full sm:w-[380px] z-40 flex flex-col bg-qz-bg border-l border-qz-border-light shadow-2xl transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
                 >
                     {/* Header */}
-                    <div className="flex items-center justify-between px-5 py-4 border-b border-[#2e3856] bg-[#0a092d]/80 backdrop-blur-sm shrink-0">
+                    <div className="flex items-center justify-between px-5 py-4 border-b border-qz-border-light bg-qz-bg/80 backdrop-blur-sm shrink-0">
                         <div className="flex items-center gap-3">
                             <div className="w-8 h-8 rounded-lg bg-[#4255ff]/20 border border-indigo-500/30 flex items-center justify-center">
                                 <Bot className="w-4 h-4 text-[#ffcd1f]" />
                             </div>
                             <div>
-                                <p className="text-sm font-bold text-white">Q-Chat</p>
+                                <p className="text-sm font-bold text-qz-text">Q-Chat</p>
                                 <p className="text-xs text-zinc-500">Ask anything about this set</p>
                             </div>
                         </div>
@@ -118,7 +118,7 @@ const QChatPanelInner = forwardRef<QChatPanelHandle, QChatPanelProps>(
                                 <div className="w-14 h-14 rounded-2xl bg-[#4255ff]/10 border border-indigo-500/20 flex items-center justify-center">
                                     <Bot className="w-7 h-7 text-[#ffcd1f]" />
                                 </div>
-                                <p className="text-sm font-semibold text-zinc-300">Ask me anything!</p>
+                                <p className="text-sm font-semibold text-qz-text-muted">Ask me anything!</p>
                                 <p className="text-xs text-zinc-500 leading-relaxed">
                                     I know everything in this study set. Ask me to explain a term, quiz you, or help you understand a concept.
                                 </p>
@@ -144,7 +144,7 @@ const QChatPanelInner = forwardRef<QChatPanelHandle, QChatPanelProps>(
                                 {/* Bubble */}
                                 <div className={`max-w-[80%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${msg.role === 'user'
                                         ? 'bg-[#4255ff] text-white rounded-br-sm'
-                                        : 'bg-[#2e3856] border border-[#586380]/50 text-zinc-200 rounded-bl-sm'
+                                        : 'bg-qz-card border border-qz-border/50 text-zinc-200 rounded-bl-sm'
                                     }`}>
                                     {msg.content || (msg.role === 'assistant' && isStreaming && idx === messages.length - 1
                                         ? '…'
@@ -165,10 +165,10 @@ const QChatPanelInner = forwardRef<QChatPanelHandle, QChatPanelProps>(
                     {/* Input */}
                     <form
                         onSubmit={handleSubmit}
-                        className="shrink-0 px-4 py-4 border-t border-[#2e3856] bg-[#0a092d]/60 backdrop-blur-sm"
+                        className="shrink-0 px-4 py-4 border-t border-qz-border-light bg-qz-bg/60 backdrop-blur-sm"
                         style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
                     >
-                        <div className="flex items-end gap-2 bg-[#2e3856]/80 border border-[#586380]/50 rounded-xl px-3 py-2 focus-within:border-indigo-500/50 focus-within:ring-1 focus-within:ring-indigo-500/30 transition-all">
+                        <div className="flex items-end gap-2 bg-qz-card/80 border border-qz-border/50 rounded-xl px-3 py-2 focus-within:border-indigo-500/50 focus-within:ring-1 focus-within:ring-indigo-500/30 transition-all">
                             <textarea
                                 id="qchat-input"
                                 value={inputValue}
@@ -177,7 +177,7 @@ const QChatPanelInner = forwardRef<QChatPanelHandle, QChatPanelProps>(
                                 placeholder="Ask about this set… (Enter to send)"
                                 disabled={isStreaming}
                                 rows={1}
-                                className="flex-1 bg-transparent text-white text-sm placeholder-zinc-500 resize-none outline-none max-h-32 leading-relaxed py-1 disabled:opacity-50"
+                                className="flex-1 bg-transparent text-qz-text text-sm placeholder-zinc-500 resize-none outline-none max-h-32 leading-relaxed py-1 disabled:opacity-50"
                                 style={{ scrollbarWidth: 'none' }}
                             />
                             <button

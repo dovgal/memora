@@ -39,7 +39,7 @@ export default async function StudentDashboard() {
 
                 {/* Jump back in Section (Big Interactive Carousel Cards) */}
                 <section>
-                    <h2 className="text-xl font-bold mb-6 text-white tracking-wide">Jump back in</h2>
+                    <h2 className="text-xl font-bold mb-6 text-qz-text tracking-wide">Jump back in</h2>
 
                     {sets.length === 0 ? (
                         <div className="bg-[#171c2e] border border-[#262c40] rounded-3xl p-12 text-center shadow-lg">
@@ -72,10 +72,10 @@ export default async function StudentDashboard() {
                                         <div className="relative z-10 p-8 flex-1 flex flex-col justify-between h-full">
                                             <div>
                                                 <div className="flex justify-between items-start mb-6">
-                                                    <h3 className="text-2xl font-bold text-white group-hover:text-indigo-300 transition-colors line-clamp-2 leading-tight">
+                                                    <h3 className="text-2xl font-bold text-qz-text group-hover:text-indigo-300 transition-colors line-clamp-2 leading-tight">
                                                         {set.title}
                                                     </h3>
-                                                    <button className="text-zinc-500 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-full">
+                                                    <button className="text-zinc-500 hover:text-qz-text transition-colors p-2 hover:bg-white/10 rounded-full">
                                                         <Sparkles className="w-5 h-5" />
                                                     </button>
                                                 </div>
@@ -104,7 +104,7 @@ export default async function StudentDashboard() {
                 {/* Keep your brain fresh (Games Promotion Block) */}
                 {topGameSet && (
                     <section>
-                        <h2 className="text-xl font-bold mb-6 text-white tracking-wide">Keep your brain fresh</h2>
+                        <h2 className="text-xl font-bold mb-6 text-qz-text tracking-wide">Keep your brain fresh</h2>
                         <div className="relative rounded-[2rem] bg-[#171c2e] overflow-hidden border border-[#262c40] group">
                             <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 to-purple-900/10 z-0"></div>
 
@@ -113,18 +113,18 @@ export default async function StudentDashboard() {
                                     <div className="w-12 h-12 bg-blue-500/20 rounded-2xl flex items-center justify-center mb-6 text-blue-400 border border-blue-500/30">
                                         <Sparkles className="w-6 h-6" />
                                     </div>
-                                    <h3 className="text-3xl font-semibold text-white mb-2 leading-tight">from {topGameSet.title}</h3>
+                                    <h3 className="text-3xl font-semibold text-qz-text mb-2 leading-tight">from {topGameSet.title}</h3>
                                     <p className="text-[#8e95ae] text-lg mb-8 max-w-md">Get more moves by answering correctly before time runs out.</p>
 
                                     <div className="flex gap-4">
-                                        <Link href={`/set/${topGameSet.id}`} className="bg-[#2e3856] hover:bg-[#586380] border border-[#586380] text-white font-bold py-3 px-8 rounded-full transition-all hover:border-zinc-500 shadow-md">
+                                        <Link href={`/set/${topGameSet.id}`} className="bg-qz-card hover:bg-[#586380] border border-qz-border text-qz-text font-bold py-3 px-8 rounded-full transition-all hover:border-zinc-500 shadow-md">
                                             Play Blast
                                         </Link>
                                     </div>
                                 </div>
 
                                 {/* Abstract decorative illustration mimicking a game */}
-                                <div className="flex-1 w-full max-w-md relative aspect-video bg-[#0a0f1d] rounded-2xl border border-[#2e3856]/50 overflow-hidden shadow-2xl flex items-center justify-center">
+                                <div className="flex-1 w-full max-w-md relative aspect-video bg-[#0a0f1d] rounded-2xl border border-qz-border-light/50 overflow-hidden shadow-2xl flex items-center justify-center">
                                     <div className="relative w-full h-full p-6 flex flex-wrap gap-2 content-center justify-center opacity-80 group-hover:scale-105 transition-transform duration-700">
                                         <div className="w-16 h-16 bg-blue-500 rounded-lg animate-bounce" style={{ animationDelay: '0ms' }}></div>
                                         <div className="w-16 h-16 bg-[#4255ff] rounded-lg animate-bounce" style={{ animationDelay: '200ms' }}></div>
@@ -141,7 +141,7 @@ export default async function StudentDashboard() {
                 {/* Recents Section (Compact 2-column list) */}
                 {otherSets.length > 0 && (
                     <section>
-                        <h2 className="text-xl font-bold mb-6 text-white tracking-wide">Recents</h2>
+                        <h2 className="text-xl font-bold mb-6 text-qz-text tracking-wide">Recents</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {otherSets.map(set => (
                                 <Link href={`/set/${set.id}`} key={set.id} className="flex items-center gap-6 p-5 rounded-2xl bg-[#171c2e] border border-transparent hover:border-[#262c40] hover:bg-[#1a1f33] transition-all group cursor-pointer shadow-sm hover:shadow-md">

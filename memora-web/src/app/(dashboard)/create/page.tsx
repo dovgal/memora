@@ -274,14 +274,14 @@ export default function CreateSetPage() {
             <div className="max-w-4xl mx-auto relative z-10">
                 <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                     <div>
-                        <h1 className="text-3xl font-semibold text-white">Create a new study set</h1>
-                        <p className="text-zinc-400 mt-2">Add term and definition pairs to generate flashcards.</p>
+                        <h1 className="text-3xl font-semibold text-qz-text">Create a new study set</h1>
+                        <p className="text-qz-text-muted mt-2">Add term and definition pairs to generate flashcards.</p>
                     </div>
                     <div className="flex items-center gap-3">
                         <button
                             type="button"
                             onClick={() => setIsTemplateEditorOpen(true)}
-                            className="flex items-center gap-2 bg-[#0a092d] hover:bg-[#2e3856] text-[#ffcd1f] font-semibold py-3 px-6 rounded-xl transition-all border border-indigo-500/30 hover:border-indigo-500 shadow-sm"
+                            className="flex items-center gap-2 bg-qz-bg hover:bg-qz-card text-[#ffcd1f] font-semibold py-3 px-6 rounded-xl transition-all border border-indigo-500/30 hover:border-indigo-500 shadow-sm"
                         >
                             <Settings2 size={20} />
                             <span className="hidden sm:inline">Параметры карточек</span>
@@ -297,7 +297,7 @@ export default function CreateSetPage() {
                         <button
                             type="button"
                             onClick={() => setIsImportOpen(true)}
-                            className="flex items-center gap-2 bg-[#0a092d] hover:bg-[#2e3856] text-white font-semibold py-3 px-6 rounded-xl transition-all border border-[#586380] hover:border-zinc-500 shadow-sm"
+                            className="flex items-center gap-2 bg-qz-bg hover:bg-qz-card text-qz-text font-semibold py-3 px-6 rounded-xl transition-all border border-qz-border hover:border-zinc-500 shadow-sm"
                         >
                             <FileDown size={20} />
                             <span className="hidden sm:inline">Импорт</span>
@@ -326,13 +326,13 @@ export default function CreateSetPage() {
                 )}
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-                    <section className="bg-[#0a092d]/60 backdrop-blur border border-[#2e3856] p-6 sm:p-8 rounded-2xl flex flex-col gap-6">
+                    <section className="bg-qz-bg/60 backdrop-blur border border-qz-border-light p-6 sm:p-8 rounded-2xl flex flex-col gap-6">
                         <div>
                             <input
                                 type="text"
                                 placeholder="Enter a title, like 'Biology - Chapter 22: Evolution'"
                                 {...register("title")}
-                                className="w-full bg-transparent border-b-2 border-[#586380] text-2xl font-bold p-2 focus:outline-none focus:border-indigo-500 transition-colors text-white placeholder:text-zinc-600"
+                                className="w-full bg-transparent border-b-2 border-qz-border text-2xl font-bold p-2 focus:outline-none focus:border-indigo-500 transition-colors text-qz-text placeholder:text-zinc-600"
                             />
                             {errors.title && <p className="text-red-400 text-sm mt-2">{errors.title.message}</p>}
                         </div>
@@ -342,7 +342,7 @@ export default function CreateSetPage() {
                                 type="text"
                                 placeholder="Add a description (optional)"
                                 {...register("description")}
-                                className="w-full bg-transparent border-b-2 border-[#586380] text-lg p-2 focus:outline-none focus:border-indigo-500 transition-colors text-zinc-300 placeholder:text-zinc-600"
+                                className="w-full bg-transparent border-b-2 border-qz-border text-lg p-2 focus:outline-none focus:border-indigo-500 transition-colors text-qz-text-muted placeholder:text-zinc-600"
                             />
                         </div>
 
@@ -350,9 +350,9 @@ export default function CreateSetPage() {
                             <input
                                 type="checkbox"
                                 {...register("isPublic")}
-                                className="w-5 h-5 rounded border-[#586380] bg-[#2e3856] text-[#4255ff] focus:ring-indigo-500/50"
+                                className="w-5 h-5 rounded border-qz-border bg-qz-card text-[#4255ff] focus:ring-indigo-500/50"
                             />
-                            <span className="text-zinc-300">Make this set visible to everyone</span>
+                            <span className="text-qz-text-muted">Make this set visible to everyone</span>
                         </label>
                     </section>
 
@@ -360,7 +360,7 @@ export default function CreateSetPage() {
                         {fields.map((field, index) => (
                             <div
                                 key={field.id}
-                                className="bg-[#0a092d]/80 backdrop-blur border border-[#2e3856] p-6 rounded-2xl transition-colors hover:border-[#586380] relative group"
+                                className="bg-qz-bg/80 backdrop-blur border border-qz-border-light p-6 rounded-2xl transition-colors hover:border-qz-border relative group"
                                 onDragOver={(e) => {
                                     e.preventDefault();
                                     e.stopPropagation();
@@ -385,7 +385,7 @@ export default function CreateSetPage() {
                                     }
                                 }}
                             >
-                                <div className="flex justify-between items-center mb-4 border-b border-[#2e3856] pb-2">
+                                <div className="flex justify-between items-center mb-4 border-b border-qz-border-light pb-2">
                                     <span className="font-bold text-zinc-500 select-none">{index + 1}</span>
                                     {fields.length > 2 && (
                                         <button
@@ -401,7 +401,7 @@ export default function CreateSetPage() {
 
                                 <div className="flex flex-col md:flex-row gap-6">
                                     {/* FRONT SIDE */}
-                                    <div className="flex-1 flex flex-col gap-4 border-r border-[#2e3856]/50 pr-4">
+                                    <div className="flex-1 flex flex-col gap-4 border-r border-qz-border-light/50 pr-4">
                                         <div className="text-sm font-bold text-zinc-600 mb-2">Лицевая сторона</div>
                                         {frontFields.map(f => (
                                             <DynamicFieldRenderer
@@ -444,7 +444,7 @@ export default function CreateSetPage() {
                         <button
                             type="button"
                             onClick={() => append({ term: "", definition: "" })}
-                            className="group flex items-center justify-center gap-2 w-full md:w-auto bg-[#0a092d] border-2 border-dashed border-[#586380] hover:border-indigo-500 text-zinc-400 hover:text-[#ffcd1f] font-bold py-6 px-12 rounded-2xl transition-all"
+                            className="group flex items-center justify-center gap-2 w-full md:w-auto bg-qz-bg border-2 border-dashed border-qz-border hover:border-indigo-500 text-qz-text-muted hover:text-[#ffcd1f] font-bold py-6 px-12 rounded-2xl transition-all"
                         >
                             <Plus size={24} className="group-hover:scale-110 transition-transform" />
                             ADD CARD
@@ -456,18 +456,18 @@ export default function CreateSetPage() {
             {/* Import Modal */}
             {isImportOpen && (
                 <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
-                    <div className="w-full max-w-5xl h-[90vh] bg-[#0a092d] rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(79,70,229,0.2)] border border-white/10 flex flex-col animate-in fade-in zoom-in-95 duration-300">
+                    <div className="w-full max-w-5xl h-[90vh] bg-qz-bg rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(79,70,229,0.2)] border border-white/10 flex flex-col animate-in fade-in zoom-in-95 duration-300">
                         {/* Header */}
-                        <div className="p-6 border-b border-white/5 flex items-center justify-between bg-[#0a092d]/50">
+                        <div className="p-6 border-b border-white/5 flex items-center justify-between bg-qz-bg/50">
                             <div>
-                                <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+                                <h2 className="text-2xl font-bold text-qz-text flex items-center gap-3">
                                     <FileDown className="text-[#ffcd1f]" /> Импортировать данные
                                 </h2>
                                 <p className="text-zinc-500 text-sm mt-1">Скопируйте и вставьте свои данные (из Word, Excel, Google Docs и т.п.)</p>
                             </div>
                             <button
                                 onClick={() => setIsImportOpen(false)}
-                                className="p-3 bg-white/5 hover:bg-white/10 rounded-xl transition-all text-zinc-400 hover:text-white group"
+                                className="p-3 bg-white/5 hover:bg-white/10 rounded-xl transition-all text-qz-text-muted hover:text-qz-text group"
                             >
                                 <X size={24} className="group-hover:rotate-90 transition-transform" />
                             </button>
@@ -485,7 +485,7 @@ export default function CreateSetPage() {
                                     value={importText}
                                     onChange={(e) => setImportText(e.target.value)}
                                     placeholder="Слово 1   Определение 1&#10;Слово 2   Определение 2&#10;Слово 3   Определение 3"
-                                    className="flex-1 w-full bg-[#111122] border border-[#2e3856] rounded-2xl p-6 text-white text-lg font-medium focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all resize-none placeholder:text-zinc-700 custom-scrollbar shadow-inner"
+                                    className="flex-1 w-full bg-[#111122] border border-qz-border-light rounded-2xl p-6 text-qz-text text-lg font-medium focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all resize-none placeholder:text-zinc-700 custom-scrollbar shadow-inner"
                                 />
                             </div>
 
@@ -509,7 +509,7 @@ export default function CreateSetPage() {
                                                     className={`py-3 px-4 rounded-xl text-sm font-bold transition-all border ${
                                                         termSeparator === opt.value
                                                             ? 'bg-[#4255ff]/20 border-indigo-500 text-[#ffcd1f] shadow-[0_0_15px_rgba(99,102,241,0.2)]'
-                                                            : 'bg-white/5 border-transparent text-zinc-400 hover:bg-white/10'
+                                                            : 'bg-white/5 border-transparent text-qz-text-muted hover:bg-white/10'
                                                     }`}
                                                 >
                                                     {opt.label}
@@ -522,7 +522,7 @@ export default function CreateSetPage() {
                                                 value={customTermSeparator}
                                                 onChange={(e) => setCustomTermSeparator(e.target.value)}
                                                 placeholder="Введите символ..."
-                                                className="w-full bg-white/5 border border-indigo-500/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-all"
+                                                className="w-full bg-white/5 border border-indigo-500/30 rounded-xl px-4 py-3 text-qz-text focus:outline-none focus:border-indigo-500 transition-all"
                                             />
                                         )}
                                     </div>
@@ -542,7 +542,7 @@ export default function CreateSetPage() {
                                                     className={`py-3 px-4 rounded-xl text-sm font-bold transition-all border ${
                                                         cardSeparator === opt.value
                                                             ? 'bg-[#4255ff]/20 border-indigo-500 text-[#ffcd1f] shadow-[0_0_15px_rgba(99,102,241,0.2)]'
-                                                            : 'bg-white/5 border-transparent text-zinc-400 hover:bg-white/10'
+                                                            : 'bg-white/5 border-transparent text-qz-text-muted hover:bg-white/10'
                                                     }`}
                                                 >
                                                     {opt.label}
@@ -555,7 +555,7 @@ export default function CreateSetPage() {
                                                 value={customCardSeparator}
                                                 onChange={(e) => setCustomCardSeparator(e.target.value)}
                                                 placeholder="Введите символ..."
-                                                className="w-full bg-white/5 border border-indigo-500/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-all"
+                                                className="w-full bg-white/5 border border-indigo-500/30 rounded-xl px-4 py-3 text-qz-text focus:outline-none focus:border-indigo-500 transition-all"
                                             />
                                         )}
                                     </div>
@@ -573,7 +573,7 @@ export default function CreateSetPage() {
                                                             <span className="opacity-50">#{i + 1}</span>
                                                             {card.term || <span className="text-zinc-600 italic">Пусто</span>}
                                                         </div>
-                                                        <div className="text-sm text-zinc-300 truncate">
+                                                        <div className="text-sm text-qz-text-muted truncate">
                                                             {card.definition || <span className="text-zinc-600 italic">Нет определения</span>}
                                                         </div>
                                                     </div>
@@ -594,7 +594,7 @@ export default function CreateSetPage() {
 
                                     <div className="bg-[#4255ff]/10 border border-indigo-500/20 p-4 rounded-2xl flex items-center justify-between">
                                         <div className="flex flex-col">
-                                            <span className="text-2xl font-semibold text-white">{parsedImportPreview.length}</span>
+                                            <span className="text-2xl font-semibold text-qz-text">{parsedImportPreview.length}</span>
                                             <span className="text-[10px] font-bold text-[#ffcd1f] uppercase tracking-tighter">Будет создано</span>
                                         </div>
                                         <ChevronRight size={24} className="text-[#4255ff]" />
@@ -612,7 +612,7 @@ export default function CreateSetPage() {
                             <div className="flex gap-3">
                                 <button
                                     onClick={() => setIsImportOpen(false)}
-                                    className="px-8 py-4 rounded-xl font-bold text-zinc-400 hover:text-white hover:bg-white/5 transition-all text-sm uppercase tracking-widest"
+                                    className="px-8 py-4 rounded-xl font-bold text-qz-text-muted hover:text-qz-text hover:bg-white/5 transition-all text-sm uppercase tracking-widest"
                                 >
                                     Отмена
                                 </button>

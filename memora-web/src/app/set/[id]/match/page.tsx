@@ -224,7 +224,7 @@ export default function MatchModePage({ params }: { params: Promise<{ id: string
                     )}
                     <Link
                         href={`/set/${id}`}
-                        className="p-2 hover:bg-zinc-100 rounded-xl transition-colors text-zinc-400 hover:text-zinc-600"
+                        className="p-2 hover:bg-zinc-100 rounded-xl transition-colors text-qz-text-muted hover:text-zinc-600"
                     >
                         <X size={24} />
                     </Link>
@@ -235,7 +235,7 @@ export default function MatchModePage({ params }: { params: Promise<{ id: string
             <main className="flex-1 w-full relative flex flex-col items-center p-4 py-8">
                 {/* START SCREEN */}
                 {gameState === 'start' && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center z-40 bg-[#0a092d]/40 backdrop-blur-sm">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center z-40 bg-qz-bg/40 backdrop-blur-sm">
                         <div className="bg-white border text-center border-zinc-200 p-12 rounded-3xl w-full max-w-lg shadow-2xl animate-in zoom-in duration-300">
                             <div className="w-24 h-24 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-blue-100">
                                 <Trophy size={48} />
@@ -245,7 +245,7 @@ export default function MatchModePage({ params }: { params: Promise<{ id: string
 
                             <button
                                 onClick={initializeGame}
-                                className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-8 rounded-xl flex items-center justify-center gap-3 transition-transform hover:scale-105 shadow-xl shadow-blue-600/20"
+                                className="w-full bg-blue-600 hover:bg-blue-500 text-qz-text font-bold py-4 px-8 rounded-xl flex items-center justify-center gap-3 transition-transform hover:scale-105 shadow-xl shadow-blue-600/20"
                             >
                                 <Play fill="currentColor" size={20} /> Начать игру
                             </button>
@@ -255,9 +255,9 @@ export default function MatchModePage({ params }: { params: Promise<{ id: string
 
                 {/* END SCREEN */}
                 {gameState === 'ended' && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center z-40 bg-[#0a092d]/40 backdrop-blur-sm">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center z-40 bg-qz-bg/40 backdrop-blur-sm">
                         <div className="bg-white border text-center border-zinc-200 p-12 rounded-3xl w-full max-w-lg shadow-2xl animate-in zoom-in duration-300">
-                            <span className="text-sm font-bold tracking-widest uppercase text-zinc-400 mb-2 block">Ваше время</span>
+                            <span className="text-sm font-bold tracking-widest uppercase text-qz-text-muted mb-2 block">Ваше время</span>
                             <h2 className="text-6xl font-semibold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-400 drop-shadow-sm">
                                 {formatTime(time)}s
                             </h2>
@@ -277,7 +277,7 @@ export default function MatchModePage({ params }: { params: Promise<{ id: string
                                 </Link>
                                 <button
                                     onClick={initializeGame}
-                                    className="flex-2 bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-xl shadow-blue-600/20 flex items-center justify-center gap-2"
+                                    className="flex-2 bg-blue-600 hover:bg-blue-500 text-qz-text font-bold py-4 px-8 rounded-xl transition-all shadow-xl shadow-blue-600/20 flex items-center justify-center gap-2"
                                 >
                                     <RotateCcw size={20} /> Играть снова
                                 </button>

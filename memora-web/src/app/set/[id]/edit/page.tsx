@@ -30,7 +30,7 @@ export default async function EditSetPage({ params }: { params: Promise<{ id: st
     const session: any = await getServerSession(authOptions as any)
 
     if (!session || !session.id_token) {
-        return <div className="p-12 text-center text-white">Вы должны войти в систему.</div>
+        return <div className="p-12 text-center text-qz-text">Вы должны войти в систему.</div>
     }
 
     const set = await getSet(id, session.id_token)

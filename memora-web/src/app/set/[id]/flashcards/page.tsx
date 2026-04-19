@@ -41,7 +41,7 @@ export default function FlashcardsStudyPage({ params }: { params: Promise<{ id: 
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-[#0a092d] flex items-center justify-center">
+            <div className="min-h-screen bg-qz-bg flex items-center justify-center">
                 <Loader2 className="animate-spin text-[#4255ff]" size={48} />
             </div>
         )
@@ -49,7 +49,7 @@ export default function FlashcardsStudyPage({ params }: { params: Promise<{ id: 
 
     if (!set || set.flashcards.length === 0) {
         return (
-            <div className="min-h-screen bg-[#0a092d] text-white flex flex-col items-center justify-center">
+            <div className="min-h-screen bg-qz-bg text-qz-text flex flex-col items-center justify-center">
                 <p>No flashcards found in this set.</p>
                 <button onClick={closeSession} className="mt-4 text-[#ffcd1f]">Return to Set</button>
             </div>
@@ -57,7 +57,7 @@ export default function FlashcardsStudyPage({ params }: { params: Promise<{ id: 
     }
 
     return (
-        <div className="min-h-screen bg-[#0a092d] text-white flex flex-col relative overflow-hidden font-sans">
+        <div className="min-h-screen bg-qz-bg text-qz-text flex flex-col relative overflow-hidden font-sans">
             {/* Top Bar */}
             <header className="flex justify-between items-center p-6 z-10 w-full max-w-6xl mx-auto">
                 <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-cyan-400 max-w-[60%] truncate">
@@ -66,7 +66,7 @@ export default function FlashcardsStudyPage({ params }: { params: Promise<{ id: 
                 <div className="flex items-center gap-6">
                     <button
                         onClick={closeSession}
-                        className="p-2 bg-[#2e3856] hover:bg-[#2e3856] border border-[#2e3856] rounded-full transition-colors text-zinc-400 hover:text-white"
+                        className="p-2 bg-qz-card hover:bg-qz-card border border-qz-border-light rounded-full transition-colors text-qz-text-muted hover:text-qz-text"
                     >
                         <X size={24} />
                     </button>
