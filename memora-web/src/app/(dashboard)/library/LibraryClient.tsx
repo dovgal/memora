@@ -144,7 +144,7 @@ export default function LibraryClient({ initialSets, initialFolders, token }: Li
 
             {/* Create Folder Modal */}
             {isCreateModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-qz-bg/80 backdrop-blur-sm animate-in fade-in duration-200">
                     <div className="bg-qz-card border border-qz-border-light rounded-2xl w-full max-w-md p-6 shadow-2xl">
                         <div className="flex justify-between items-center mb-6">
                             <h2 className="text-2xl font-bold text-qz-text">Create a new folder</h2>
@@ -162,7 +162,7 @@ export default function LibraryClient({ initialSets, initialFolders, token }: Li
                                     value={folderName}
                                     onChange={e => setFolderName(e.target.value)}
                                     placeholder="Enter a title"
-                                    className="w-full bg-black/50 border border-qz-border-light rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                                    className="w-full bg-qz-bg/50 border border-qz-border-light rounded-xl px-4 py-3 text-qz-text focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                                 />
                             </div>
 
@@ -173,7 +173,7 @@ export default function LibraryClient({ initialSets, initialFolders, token }: Li
                                     value={folderDesc}
                                     onChange={e => setFolderDesc(e.target.value)}
                                     placeholder="Enter a description"
-                                    className="w-full bg-black/50 border border-qz-border-light rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                                    className="w-full bg-qz-bg/50 border border-qz-border-light rounded-xl px-4 py-3 text-qz-text focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                                 />
                             </div>
 

@@ -67,7 +67,7 @@ export default function OnboardingPage() {
 
     if (isBlocked) {
         return (
-            <div className="min-h-screen bg-black flex flex-col justify-center items-center p-4">
+            <div className="min-h-screen bg-qz-bg flex flex-col justify-center items-center p-4">
                 <div className="max-w-md w-full bg-qz-bg border border-red-900/50 p-8 rounded-3xl shadow-[0_0_50px_rgba(220,38,38,0.15)] text-center">
                     <div className="w-16 h-16 bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
                         <span className="text-3xl">🛑</span>
@@ -87,7 +87,7 @@ export default function OnboardingPage() {
     }
 
     return (
-        <div className="min-h-screen bg-black flex flex-col justify-center items-center relative overflow-hidden p-4">
+        <div className="min-h-screen bg-qz-bg flex flex-col justify-center items-center relative overflow-hidden p-4">
             {/* Background Gradients */}
             <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] bg-blue-900 rounded-full mix-blend-multiply filter blur-[120px] opacity-50 animate-blob"></div>
             <div className="absolute bottom-[-10%] left-[-10%] w-[60%] h-[60%] bg-indigo-900 rounded-full mix-blend-multiply filter blur-[150px] opacity-40 animate-blob animation-delay-2000"></div>

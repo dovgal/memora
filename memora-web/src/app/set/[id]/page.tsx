@@ -205,7 +205,7 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
                                 return (
                                     <div
                                         key={card.id}
-                                        className="bg-[#171c2e] border border-transparent shadow-[0_2px_8px_rgba(0,0,0,0.2)] md:hover:shadow-[0_4px_12px_rgba(0,0,0,0.3)] p-4 md:p-6 rounded-xl flex flex-col md:flex-row gap-4 md:gap-8 transition-all group cursor-default"
+                                        className="bg-qz-card border border-transparent shadow-[0_2px_8px_rgba(0,0,0,0.2)] md:hover:shadow-[0_4px_12px_rgba(0,0,0,0.3)] p-4 md:p-6 rounded-xl flex flex-col md:flex-row gap-4 md:gap-8 transition-all group cursor-default"
                                     >
                                         <div className="md:w-1/3 border-b md:border-b-0 md:border-r border-[#262c40] pb-4 md:pb-0 md:pr-8 flex items-center">
                                             {getPreviewText('front')}

@@ -282,13 +282,13 @@ export default function CreatorPage() {
 
                     <div className="relative group">
                         {isParsing && (
-                            <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] z-10 rounded-3xl flex flex-col items-center justify-center animate-in fade-in">
+                            <div className="absolute inset-0 bg-qz-bg/60 backdrop-blur-[2px] z-10 rounded-3xl flex flex-col items-center justify-center animate-in fade-in">
                                 <Loader2 className="animate-spin text-[#4255ff] mb-2" size={32} />
                                 <span className="text-sm font-bold text-qz-text">Читаем документ...</span>
                             </div>
                         )}
                         <textarea 
-                            className="w-full bg-black/40 border-2 border-white/5 rounded-3xl p-8 h-80 focus:border-indigo-500 outline-none transition-all resize-none text-lg leading-relaxed shadow-inner placeholder:text-zinc-700"
+                            className="w-full bg-qz-bg/40 border-2 border-white/5 rounded-3xl p-8 h-80 focus:border-indigo-500 outline-none transition-all resize-none text-lg leading-relaxed shadow-inner placeholder:text-zinc-700"
                             placeholder="Вставьте здесь текст книги, субтитры или сценарий. Чем больше контекста, тем лучше результат."
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
@@ -304,7 +304,7 @@ export default function CreatorPage() {
                     <div className="relative group">
                         <input 
                             type="text"
-                            className="w-full bg-black/40 border-2 border-white/5 rounded-2xl p-6 focus:border-indigo-500 outline-none transition-all text-xl font-medium placeholder:text-zinc-700"
+                            className="w-full bg-qz-bg/40 border-2 border-white/5 rounded-2xl p-6 focus:border-indigo-500 outline-none transition-all text-xl font-medium placeholder:text-zinc-700"
                             placeholder="Например: 'Выдели 20 самых полезных фраз'..."
                             value={objective}
                             onChange={(e) => setObjective(e.target.value)}

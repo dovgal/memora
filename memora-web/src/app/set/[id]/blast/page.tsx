@@ -440,7 +440,7 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
 
     if (!set) {
         return (
-            <div className="min-h-screen bg-[#11112b] flex items-center justify-center">
+            <div className="min-h-screen bg-qz-card flex items-center justify-center">
                 <div className="w-8 h-8 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
             </div>
         );
@@ -448,10 +448,10 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
 
     return (
         <div
-            className="min-h-screen bg-[#11112b] text-qz-text flex flex-col relative overflow-hidden select-none font-sans"
+            className="min-h-screen bg-qz-card text-qz-text flex flex-col relative overflow-hidden select-none font-sans"
             onMouseMove={handleMouseMove}
         >
-            <header className="bg-[#1a1a3a] border-b border-qz-border-light p-4 flex justify-between items-center z-50">
+            <header className="bg-qz-bg border-b border-qz-border-light p-4 flex justify-between items-center z-50">
                 <div className="flex items-center gap-4">
                     <h1 className="text-xl font-bold text-qz-text flex items-center gap-2">
                         <Rocket size={20} className="text-cyan-400" /> Blast
@@ -488,7 +488,7 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
                     </div>
                 )}
 
-                <div className="absolute inset-0 bg-[#11112b] z-[-2]">
+                <div className="absolute inset-0 bg-qz-card z-[-2]">
                     <div className="absolute w-[800px] h-[800px] rounded-full bg-blue-900/10 mix-blend-screen blur-[100px] -left-[200px] top-[100px]"></div>
                     <div className="absolute w-[600px] h-[600px] rounded-full bg-purple-900/10 mix-blend-screen blur-[100px] right-[100px] bottom-[100px]"></div>
                 </div>
@@ -540,7 +540,7 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
                                 <span className="text-[#f1f11e]">Уров. {level}</span>
                                 <span className="text-qz-text">{score}/{targetScore}</span>
                             </div>
-                            <div className="w-full h-2 bg-[#1a1a3a] rounded-full overflow-hidden border border-white/10">
+                            <div className="w-full h-2 bg-qz-bg rounded-full overflow-hidden border border-white/10">
                                 <div
                                     className="h-full bg-[#f1f11e] transition-all duration-300"
                                     style={{ width: `${Math.min(100, (score / targetScore) * 100)}%` }}
@@ -568,13 +568,13 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
                 )}
 
                 {gameState === 'time_up' && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center z-50 bg-black/40 backdrop-blur-sm animate-in fade-in duration-300">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center z-50 bg-qz-bg/40 backdrop-blur-sm animate-in fade-in duration-300">
                         <h2 className="text-6xl font-bold text-yellow-400 drop-shadow-[0_0_20px_rgba(250,204,21,0.5)]">Время вышло!</h2>
                     </div>
                 )}
 
                 {gameState === 'start' && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center z-50 bg-[#11112b] backdrop-blur-sm">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center z-50 bg-qz-card backdrop-blur-sm">
                         <div className="w-24 h-24 mb-6 rounded-full bg-[#3ae0ba] flex items-center justify-center shadow-[0_0_40px_rgba(58,224,186,0.5)] animate-bounce">
                             <Rocket size={40} className="text-[#11112b]" />
                         </div>
@@ -593,7 +593,7 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
                 )}
 
                 {gameState === 'level_passed' && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center z-50 bg-[#11112b]/95 backdrop-blur-md">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center z-50 bg-qz-card/95 backdrop-blur-md">
                         <h2 className="text-5xl font-bold mb-4 text-zinc-500">Уровень {level} завершен</h2>
                         <h3 className="text-3xl font-medium mb-12 text-qz-text-muted">Общий счет: <span className="text-qz-text font-semibold">{score}</span></h3>
 
@@ -607,7 +607,7 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
                 )}
 
                 {gameState === 'game_over' && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center z-50 bg-[#11112b]/95 backdrop-blur-md">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center z-50 bg-qz-card/95 backdrop-blur-md">
                         <div className="mb-6">
                             <Trophy size={80} className="text-[#f1f11e] drop-shadow-[0_0_40px_rgba(241,241,30,0.6)] mx-auto" />
                         </div>

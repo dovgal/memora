@@ -144,7 +144,7 @@ const QChatPanelInner = forwardRef<QChatPanelHandle, QChatPanelProps>(
                                 {/* Bubble */}
                                 <div className={`max-w-[80%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${msg.role === 'user'
                                         ? 'bg-[#4255ff] text-white rounded-br-sm'
-                                        : 'bg-qz-card border border-qz-border/50 text-zinc-200 rounded-bl-sm'
+                                        : 'bg-qz-card border border-qz-border/50 text-qz-text rounded-bl-sm'
                                     }`}>
                                     {msg.content || (msg.role === 'assistant' && isStreaming && idx === messages.length - 1
                                         ? '…'
@@ -198,7 +198,7 @@ const QChatPanelInner = forwardRef<QChatPanelHandle, QChatPanelProps>(
                 {/* Backdrop on mobile */}
                 {isOpen && (
                     <div
-                        className="fixed inset-0 z-30 bg-black/60 sm:hidden"
+                        className="fixed inset-0 z-30 bg-qz-bg/60 sm:hidden"
                         onClick={() => setIsOpen(false)}
                     />
                 )}

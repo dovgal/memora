@@ -34,7 +34,7 @@ export default async function StudentDashboard() {
     const otherSets = sets.slice(3, 9); // Limit recents
 
     return (
-        <div className="min-h-screen bg-[#0a0f1d] text-white selection:bg-[#4255ff]/30">
+        <div className="min-h-screen bg-qz-card text-qz-text selection:bg-[#4255ff]/30">
             <div className="p-8 max-w-7xl mx-auto space-y-16">
 
                 {/* Jump back in Section (Big Interactive Carousel Cards) */}
@@ -42,8 +42,8 @@ export default async function StudentDashboard() {
                     <h2 className="text-xl font-bold mb-6 text-qz-text tracking-wide">Jump back in</h2>
 
                     {sets.length === 0 ? (
-                        <div className="bg-[#171c2e] border border-[#262c40] rounded-3xl p-12 text-center shadow-lg">
-                            <div className="w-20 h-20 bg-[#262c40] rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <div className="bg-qz-card border border-[#262c40] rounded-3xl p-12 text-center shadow-lg">
+                            <div className="w-20 h-20 bg-qz-card rounded-2xl flex items-center justify-center mx-auto mb-6">
                                 <Layers className="w-10 h-10 text-[#ffcd1f]" />
                             </div>
                             <h3 className="text-2xl font-bold mb-2">Welcome to Memora</h3>
@@ -64,7 +64,7 @@ export default async function StudentDashboard() {
                                 const mockProgress = Math.floor(Math.random() * 40) + 10;
 
                                 return (
-                                    <div key={set.id} className="min-w-[400px] w-[500px] snap-start relative group rounded-[2rem] bg-[#171c2e] overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_20px_40px_-15px_rgba(79,70,229,0.2)] border border-[#262c40] hover:border-indigo-500/50 flex flex-col cursor-pointer">
+                                    <div key={set.id} className="min-w-[400px] w-[500px] snap-start relative group rounded-[2rem] bg-qz-card overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_20px_40px_-15px_rgba(79,70,229,0.2)] border border-[#262c40] hover:border-indigo-500/50 flex flex-col cursor-pointer">
                                         {/* Background Decoration */}
                                         <div className={`absolute inset-0 bg-gradient-to-br ${bgGradient} opacity-50`}></div>
                                         <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] bg-[#4255ff]/10 rounded-full mix-blend-screen filter blur-[40px] group-hover:bg-[#4255ff]/20 transition-all duration-500"></div>
@@ -81,7 +81,7 @@ export default async function StudentDashboard() {
                                                 </div>
 
                                                 <div className="space-y-2 mb-8">
-                                                    <div className="w-3/4 h-2 bg-[#0a0f1d] rounded-full overflow-hidden border border-[#262c40]">
+                                                    <div className="w-3/4 h-2 bg-qz-card rounded-full overflow-hidden border border-[#262c40]">
                                                         <div className="h-full bg-[#4255ff] rounded-full relative" style={{ width: `${mockProgress}%` }}>
                                                             <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
                                                         </div>
@@ -105,7 +105,7 @@ export default async function StudentDashboard() {
                 {topGameSet && (
                     <section>
                         <h2 className="text-xl font-bold mb-6 text-qz-text tracking-wide">Keep your brain fresh</h2>
-                        <div className="relative rounded-[2rem] bg-[#171c2e] overflow-hidden border border-[#262c40] group">
+                        <div className="relative rounded-[2rem] bg-qz-card overflow-hidden border border-[#262c40] group">
                             <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 to-purple-900/10 z-0"></div>
 
                             <div className="relative z-10 p-10 flex flex-col md:flex-row items-center justify-between gap-12">
@@ -124,7 +124,7 @@ export default async function StudentDashboard() {
                                 </div>
 
                                 {/* Abstract decorative illustration mimicking a game */}
-                                <div className="flex-1 w-full max-w-md relative aspect-video bg-[#0a0f1d] rounded-2xl border border-qz-border-light/50 overflow-hidden shadow-2xl flex items-center justify-center">
+                                <div className="flex-1 w-full max-w-md relative aspect-video bg-qz-card rounded-2xl border border-qz-border-light/50 overflow-hidden shadow-2xl flex items-center justify-center">
                                     <div className="relative w-full h-full p-6 flex flex-wrap gap-2 content-center justify-center opacity-80 group-hover:scale-105 transition-transform duration-700">
                                         <div className="w-16 h-16 bg-blue-500 rounded-lg animate-bounce" style={{ animationDelay: '0ms' }}></div>
                                         <div className="w-16 h-16 bg-[#4255ff] rounded-lg animate-bounce" style={{ animationDelay: '200ms' }}></div>
@@ -144,12 +144,12 @@ export default async function StudentDashboard() {
                         <h2 className="text-xl font-bold mb-6 text-qz-text tracking-wide">Recents</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {otherSets.map(set => (
-                                <Link href={`/set/${set.id}`} key={set.id} className="flex items-center gap-6 p-5 rounded-2xl bg-[#171c2e] border border-transparent hover:border-[#262c40] hover:bg-[#1a1f33] transition-all group cursor-pointer shadow-sm hover:shadow-md">
-                                    <div className="w-12 h-12 bg-[#2d3348] rounded-xl flex items-center justify-center text-[#8e95ae] group-hover:bg-[#4255ff]/20 group-hover:text-[#ffcd1f] transition-colors shrink-0">
+                                <Link href={`/set/${set.id}`} key={set.id} className="flex items-center gap-6 p-5 rounded-2xl bg-qz-card border border-transparent hover:border-[#262c40] hover:bg-qz-card transition-all group cursor-pointer shadow-sm hover:shadow-md">
+                                    <div className="w-12 h-12 bg-qz-card rounded-xl flex items-center justify-center text-[#8e95ae] group-hover:bg-[#4255ff]/20 group-hover:text-[#ffcd1f] transition-colors shrink-0">
                                         <Layers className="w-6 h-6" />
                                     </div>
                                     <div>
-                                        <h4 className="text-lg font-bold text-zinc-100 group-hover:text-indigo-300 transition-colors line-clamp-1">{set.title}</h4>
+                                        <h4 className="text-lg font-bold text-qz-text group-hover:text-indigo-300 transition-colors line-clamp-1">{set.title}</h4>
                                         <p className="text-sm font-medium text-[#8e95ae]">{set.flashcardCount} cards</p>
                                     </div>
                                 </Link>

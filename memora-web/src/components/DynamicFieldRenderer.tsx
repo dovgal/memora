@@ -49,7 +49,7 @@ export default function DynamicFieldRenderer({ field, index, register, errors, u
                                 <button
                                     type="button"
                                     onClick={() => update && update(index, { ...getValues(`flashcards.${index}`), [isLegacyImg ? 'imageUrl' : `fieldsData.${field.id}`]: null })}
-                                    className="absolute top-2 right-2 bg-black/70 p-1.5 rounded-md text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500"
+                                    className="absolute top-2 right-2 bg-qz-bg/70 p-1.5 rounded-md text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500"
                                 >
                                     <Trash2 size={14} />
                                 </button>

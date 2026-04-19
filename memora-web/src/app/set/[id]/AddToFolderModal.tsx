@@ -75,7 +75,7 @@ export default function AddToFolderModal({ setId, token }: AddToFolderModalProps
             </button>
 
             {isOpen && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-qz-bg/80 backdrop-blur-sm animate-in fade-in duration-200">
                     <div className="bg-qz-card border border-qz-border-light rounded-2xl w-full max-w-md p-6 shadow-2xl relative">
                         <div className="flex justify-between items-center mb-6">
                             <h2 className="text-2xl font-bold text-qz-text">Add to Folder</h2>
@@ -105,7 +105,7 @@ export default function AddToFolderModal({ setId, token }: AddToFolderModalProps
                                             onClick={() => addToFolder(folder.id)}
                                             className={`p-4 rounded-xl border text-left transition-all flex items-center justify-between ${isAdded
                                                     ? 'bg-[#4255ff]/10 border-indigo-500/50 text-white cursor-default'
-                                                    : 'bg-black/50 border-qz-border-light hover:border-indigo-500/50 text-qz-text-muted hover:bg-qz-card/50'
+                                                    : 'bg-qz-bg/50 border-qz-border-light hover:border-indigo-500/50 text-qz-text-muted hover:bg-qz-card/50'
                                                 }`}
                                         >
                                             <div className="flex items-center gap-3">

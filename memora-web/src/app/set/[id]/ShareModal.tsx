@@ -35,7 +35,7 @@ export default function ShareModal({ setId, setTitle, onClose }: ShareModalProps
     };
 
     return (
-        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-qz-bg/80 backdrop-blur-sm animate-in fade-in duration-200">
             <div className="bg-qz-card border border-qz-border-light rounded-3xl w-full max-w-lg p-8 shadow-2xl relative overflow-hidden">
                 {/* Decorative background elements */}
                 <div className="absolute -top-24 -right-24 w-48 h-48 bg-[#4255ff]/10 rounded-full blur-3xl" />
@@ -60,7 +60,7 @@ export default function ShareModal({ setId, setTitle, onClose }: ShareModalProps
                         {/* Copy Link Section */}
                         <div className="space-y-3">
                             <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Прямая ссылка</label>
-                            <div className="flex gap-2 p-1.5 bg-black/40 border border-qz-border-light rounded-2xl">
+                            <div className="flex gap-2 p-1.5 bg-qz-bg/40 border border-qz-border-light rounded-2xl">
                                 <div className="flex-1 px-3 py-2 text-sm text-qz-text-muted truncate font-medium">
                                     {shareUrl}
                                 </div>
@@ -86,7 +86,7 @@ export default function ShareModal({ setId, setTitle, onClose }: ShareModalProps
                                     type="email"
                                     required
                                     placeholder="friend@example.com"
-                                    className="flex-1 bg-black/40 border-2 border-qz-border-light focus:border-indigo-500 rounded-xl px-4 py-3 outline-none transition-all text-sm"
+                                    className="flex-1 bg-qz-bg/40 border-2 border-qz-border-light focus:border-indigo-500 rounded-xl px-4 py-3 outline-none transition-all text-sm"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />

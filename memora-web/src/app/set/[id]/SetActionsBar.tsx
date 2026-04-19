@@ -184,7 +184,7 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
 
             {/* Dropdown Menu */}
             {isMenuOpen && (
-                <div className="absolute right-0 top-12 w-56 bg-[#1a1a36] border border-qz-border-light rounded-xl shadow-2xl py-2 z-50 animate-in fade-in zoom-in-95 duration-100 origin-top-right">
+                <div className="absolute right-0 top-12 w-56 bg-qz-card border border-qz-border-light rounded-xl shadow-2xl py-2 z-50 animate-in fade-in zoom-in-95 duration-100 origin-top-right">
                     {isOwner && (
                         <>
                             <button
@@ -364,7 +364,7 @@ function ExportModal({ flashcards, fieldsSchema, onClose }: { flashcards: Flashc
     };
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-qz-bg/80 backdrop-blur-sm animate-in fade-in duration-200">
             <div className="bg-qz-card border border-qz-border-light rounded-2xl w-full max-w-3xl p-8 shadow-2xl relative">
                 <button
                     onClick={onClose}
@@ -408,7 +408,7 @@ function ExportModal({ flashcards, fieldsSchema, onClose }: { flashcards: Flashc
                                             setTermDelimiter('custom');
                                         }}
                                         onClick={(e) => { e.stopPropagation(); setTermDelimiter('custom'); }}
-                                        className={`w-full bg-[#1a1a36] border rounded-lg px-3 py-2 outline-none transition-colors ${termDelimiter === 'custom' ? 'border-indigo-500 text-qz-text' : 'border-qz-border-light text-qz-text-muted'}`}
+                                        className={`w-full bg-qz-card border rounded-lg px-3 py-2 outline-none transition-colors ${termDelimiter === 'custom' ? 'border-indigo-500 text-qz-text' : 'border-qz-border-light text-qz-text-muted'}`}
                                     />
                                 </div>
                             </label>
@@ -447,7 +447,7 @@ function ExportModal({ flashcards, fieldsSchema, onClose }: { flashcards: Flashc
                                             setRowDelimiter('custom');
                                         }}
                                         onClick={(e) => { e.stopPropagation(); setRowDelimiter('custom'); }}
-                                        className={`w-full bg-[#1a1a36] border rounded-lg px-3 py-2 outline-none transition-colors ${rowDelimiter === 'custom' ? 'border-indigo-500 text-qz-text' : 'border-qz-border-light text-qz-text-muted'}`}
+                                        className={`w-full bg-qz-card border rounded-lg px-3 py-2 outline-none transition-colors ${rowDelimiter === 'custom' ? 'border-indigo-500 text-qz-text' : 'border-qz-border-light text-qz-text-muted'}`}
                                     />
                                 </div>
                             </label>
@@ -465,8 +465,8 @@ function ExportModal({ flashcards, fieldsSchema, onClose }: { flashcards: Flashc
                     </label>
                 </div>
 
-                <div className="bg-[#1a1a36] border border-qz-border-light rounded-xl overflow-hidden flex flex-col h-64">
-                    <div className="p-4 border-b border-qz-border-light flex justify-between items-center bg-[#212140]">
+                <div className="bg-qz-card border border-qz-border-light rounded-xl overflow-hidden flex flex-col h-64">
+                    <div className="p-4 border-b border-qz-border-light flex justify-between items-center bg-qz-card">
                         <span className="text-sm text-qz-text-muted">Скопируйте и вставьте приведенный ниже текст. Он защищен от редактирования.</span>
                         <button
                             onClick={handleCopy}
@@ -508,7 +508,7 @@ function EmbedModal({ setId, onClose }: { setId: string, onClose: () => void }) 
     };
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-qz-bg/80 backdrop-blur-sm animate-in fade-in duration-200">
             <div className="bg-qz-card border border-qz-border-light rounded-2xl w-full max-w-2xl p-8 shadow-2xl relative">
                 <button
                     onClick={onClose}
@@ -541,8 +541,8 @@ function EmbedModal({ setId, onClose }: { setId: string, onClose: () => void }) 
                     </button>
                 </div>
 
-                <div className="bg-[#1a1a36] border border-qz-border-light rounded-xl overflow-hidden flex flex-col h-48 mb-4">
-                    <div className="p-4 border-b border-qz-border-light flex justify-between items-center bg-[#212140]">
+                <div className="bg-qz-card border border-qz-border-light rounded-xl overflow-hidden flex flex-col h-48 mb-4">
+                    <div className="p-4 border-b border-qz-border-light flex justify-between items-center bg-qz-card">
                         <span className="text-sm text-qz-text-muted">Код для вставки (HTML)</span>
                         <button
                             onClick={handleCopy}
@@ -657,7 +657,7 @@ function MergeModal({
     };
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-qz-bg/80 backdrop-blur-sm animate-in fade-in duration-200">
             <div className="bg-qz-card border border-qz-border-light rounded-2xl w-full max-w-2xl p-8 shadow-2xl relative">
                 <button
                     onClick={onClose}

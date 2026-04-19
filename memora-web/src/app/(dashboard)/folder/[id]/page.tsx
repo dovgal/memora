@@ -45,7 +45,7 @@ export default async function FolderPage({ params }: { params: Promise<{ id: str
     }
 
     return (
-        <div className="min-h-screen bg-black text-white p-6 md:p-12 relative overflow-hidden pb-32">
+        <div className="min-h-screen bg-qz-bg text-qz-text p-6 md:p-12 relative overflow-hidden pb-32">
             <div className="max-w-7xl mx-auto relative z-10">
                 <Link href="/library" className="inline-flex items-center gap-2 text-qz-text-muted hover:text-qz-text transition-colors mb-6 font-medium">
                     <ChevronLeft size={20} /> Back to Library
@@ -80,7 +80,7 @@ export default async function FolderPage({ params }: { params: Promise<{ id: str
                 </header>
 
                 <div className="mb-8">
-                    <h2 className="text-xl font-bold mb-6 text-zinc-200">Study Sets in {folder.name}</h2>
+                    <h2 className="text-xl font-bold mb-6 text-qz-text">Study Sets in {folder.name}</h2>
 
                     {folder.sets.length === 0 ? (
                         <div className="bg-qz-card/50 border border-qz-border-light rounded-2xl p-8 text-center max-w-2xl">

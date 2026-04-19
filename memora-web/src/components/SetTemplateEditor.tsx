@@ -142,7 +142,7 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                             <div
                                 key={field.id}
                                 onClick={() => setEditingFieldId(field.id)}
-                                className={`flex items-center gap-3 p-4 rounded-xl border transition-colors cursor-pointer group ${editingFieldId === field.id ? 'bg-[#1a1a3a] border-indigo-500/50' : 'bg-qz-bg/50 border-qz-border-light hover:border-qz-border hover:bg-qz-card/30'}`}
+                                className={`flex items-center gap-3 p-4 rounded-xl border transition-colors cursor-pointer group ${editingFieldId === field.id ? 'bg-qz-bg border-indigo-500/50' : 'bg-qz-bg/50 border-qz-border-light hover:border-qz-border hover:bg-qz-card/30'}`}
                             >
                                 <div className="text-zinc-600 cursor-grab active:cursor-grabbing">
                                     <GripVertical size={20} />
@@ -159,7 +159,7 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                                                 className="bg-indigo-900/40 text-indigo-300 px-2 py-0.5 rounded border-none text-[10px] outline-none cursor-pointer hover:bg-indigo-900/60 transition-colors"
                                             >
                                                 {LANGUAGES.map(lang => (
-                                                    <option key={lang.code} value={lang.code} className="bg-[#1a1a3a]">{lang.label}</option>
+                                                    <option key={lang.code} value={lang.code} className="bg-qz-bg">{lang.label}</option>
                                                 ))}
                                             </select>
                                         )}
@@ -194,12 +194,12 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
     const editingField = fields.find(f => f.id === editingFieldId);
 
     return (
-        <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[100] bg-qz-bg/80 backdrop-blur-sm flex items-center justify-center p-4">
             <div className="w-full max-w-5xl bg-qz-bg rounded-3xl overflow-hidden shadow-2xl relative border border-white/10 flex flex-col md:flex-row min-h-[600px] max-h-[90vh] animate-in fade-in zoom-in-95 duration-200">
 
                 {/* LEFT SIDE: List of Fields */}
                 <div className="flex-1 border-r border-white/5 flex flex-col">
-                    <div className="p-6 border-b border-white/5 flex justify-between items-center bg-[#111122]">
+                    <div className="p-6 border-b border-white/5 flex justify-between items-center bg-qz-card">
                         <h2 className="text-xl font-bold text-qz-text flex items-center gap-2">
                             <Settings2 className="text-[#ffcd1f]" /> Шаблон Карточки
                         </h2>
@@ -213,7 +213,7 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                         {renderFieldList('back')}
                     </div>
 
-                    <div className="p-6 border-t border-white/5 bg-[#111122]">
+                    <div className="p-6 border-t border-white/5 bg-qz-card">
                         <button
                             onClick={onClose}
                             className="w-full py-4 bg-[#4255ff] hover:bg-[#4255ff] text-white font-bold rounded-xl transition-colors shadow-[0_0_15px_rgba(79,70,229,0.3)]"
@@ -224,7 +224,7 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                 </div>
 
                 {/* RIGHT SIDE: Field Details Editor */}
-                <div className="hidden md:flex flex-1 flex-col bg-[#111122]/50 relative">
+                <div className="hidden md:flex flex-1 flex-col bg-qz-card/50 relative">
                     {editingField ? (
                         <div className="absolute inset-0 overflow-y-auto p-8 animate-in slide-in-from-right-8 duration-200">
                             <div className="flex justify-between items-start mb-8">
@@ -238,14 +238,14 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                                         type="text"
                                         value={editingField.name}
                                         onChange={(e) => handleUpdateField(editingField.id, { name: e.target.value.toUpperCase() })}
-                                        className="w-full bg-[#1a1a3a] border border-indigo-500/30 rounded-xl p-4 text-qz-text focus:outline-none focus:border-indigo-500 transition-colors font-bold"
+                                        className="w-full bg-qz-bg border border-indigo-500/30 rounded-xl p-4 text-qz-text focus:outline-none focus:border-indigo-500 transition-colors font-bold"
                                         placeholder="Введите название..."
                                     />
                                 </div>
 
                                 <div>
                                     <label className="block text-sm font-semibold text-qz-text-muted mb-2 uppercase tracking-wider">Сторона</label>
-                                    <div className="flex bg-[#1a1a3a] rounded-xl overflow-hidden border border-qz-border-light">
+                                    <div className="flex bg-qz-bg rounded-xl overflow-hidden border border-qz-border-light">
                                         <button
                                             onClick={() => handleUpdateField(editingField.id, { side: 'front' })}
                                             className={`flex-1 p-3 text-center font-bold transition-colors ${editingField.side === 'front' ? 'bg-[#4255ff] text-white' : 'text-zinc-500 hover:bg-qz-card'}`}
@@ -268,7 +268,7 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                                             <div
                                                 key={t.type}
                                                 onClick={() => handleUpdateField(editingField.id, { type: t.type })}
-                                                className={`p-4 rounded-xl border cursor-pointer transition-all ${editingField.type === t.type ? 'border-indigo-500 bg-[#4255ff]/10' : 'border-qz-border-light bg-[#1a1a3a] hover:border-zinc-600'}`}
+                                                className={`p-4 rounded-xl border cursor-pointer transition-all ${editingField.type === t.type ? 'border-indigo-500 bg-[#4255ff]/10' : 'border-qz-border-light bg-qz-bg hover:border-zinc-600'}`}
                                             >
                                                 <div className="font-bold text-qz-text mb-1">{t.label}</div>
                                                 <div className="text-xs text-zinc-500">{t.description}</div>
@@ -296,7 +296,7 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                                                         } 
                                                     });
                                                 }}
-                                                className="w-full bg-[#1a1a3a] border border-qz-border-light rounded-xl p-4 text-qz-text focus:outline-none focus:border-indigo-500 transition-colors appearance-none"
+                                                className="w-full bg-qz-bg border border-qz-border-light rounded-xl p-4 text-qz-text focus:outline-none focus:border-indigo-500 transition-colors appearance-none"
                                             >
                                                 {LANGUAGES.map(lang => (
                                                     <option key={lang.code} value={lang.code}>{lang.label}</option>
@@ -304,7 +304,7 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                                             </select>
                                         </div>
 
-                                        <div className="bg-[#1a1a3a] border border-qz-border-light rounded-xl p-5">
+                                        <div className="bg-qz-bg border border-qz-border-light rounded-xl p-5">
                                             <div className="flex items-center justify-between mb-4">
                                                 <div>
                                                     <div className="font-bold text-qz-text flex items-center gap-2">Озвучка Inworld TTS</div>

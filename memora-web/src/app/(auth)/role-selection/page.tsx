@@ -42,7 +42,7 @@ export default function RoleSelectionPage() {
     }
 
     return (
-        <div className="min-h-screen bg-black flex flex-col justify-center items-center relative overflow-hidden p-4">
+        <div className="min-h-screen bg-qz-bg flex flex-col justify-center items-center relative overflow-hidden p-4">
             {/* Background Gradients */}
             <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] bg-blue-900 rounded-full mix-blend-multiply filter blur-[120px] opacity-40 animate-blob"></div>
             <div className="absolute bottom-[-10%] left-[-10%] w-[60%] h-[60%] bg-purple-900 rounded-full mix-blend-multiply filter blur-[150px] opacity-30 animate-blob animation-delay-2000"></div>

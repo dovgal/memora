@@ -485,21 +485,21 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
     // Loading State
     if (!set) {
         return (
-            <div className="min-h-screen bg-[#11112b] flex items-center justify-center">
+            <div className="min-h-screen bg-qz-card flex items-center justify-center">
                 <div className="w-8 h-8 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-[100dvh] bg-[#0c102a] text-qz-text flex flex-col font-sans select-none overflow-hidden touch-none"
+        <div className="min-h-[100dvh] bg-qz-card text-qz-text flex flex-col font-sans select-none overflow-hidden touch-none"
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}
             onPointerCancel={handlePointerUp}
         >
 
             {/* --- HEADER --- */}
-            <header className="bg-[#141a40] p-4 flex justify-between items-center z-20">
+            <header className="bg-qz-card p-4 flex justify-between items-center z-20">
                 <div className="flex items-center gap-2">
                     <div className="w-6 h-6 grid grid-cols-3 gap-[2px] opacity-80">
                         {/* Tiny blocks icon */}
@@ -527,8 +527,8 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
 
             {/* --- SETTINGS MODAL --- */}
             {showSettings && (
-                <div className="absolute inset-0 z-50 bg-[#0c102a]/95 backdrop-blur-sm flex items-center justify-center p-4">
-                    <div className="w-full max-w-lg bg-[#141a40] rounded-2xl shadow-2xl flex flex-col">
+                <div className="absolute inset-0 z-50 bg-qz-card/95 backdrop-blur-sm flex items-center justify-center p-4">
+                    <div className="w-full max-w-lg bg-qz-card rounded-2xl shadow-2xl flex flex-col">
                         <div className="flex justify-between items-center p-6 border-b border-white/5">
                             <h2 className="text-2xl font-bold">Параметры</h2>
                             <button onClick={() => setShowSettings(false)} className="text-qz-text-muted hover:text-qz-text">
@@ -557,14 +557,14 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
             {/* --- DEFAULT START SCREEN --- */}
             {gameState === 'START' && (
                 <div className="flex-1 flex flex-col items-center justify-center p-4 animate-in fade-in zoom-in-95 duration-300">
-                    <div className="mb-8 p-6 bg-[#1a2049] rounded-3xl shadow-[0_0_80px_rgba(37,99,235,0.2)] text-center max-w-lg w-full flex flex-col items-center">
+                    <div className="mb-8 p-6 bg-qz-card rounded-3xl shadow-[0_0_80px_rgba(37,99,235,0.2)] text-center max-w-lg w-full flex flex-col items-center">
                         <div className="w-20 h-20 grid grid-cols-3 gap-1 mb-6">
                             {/* Decorative large icon block */}
                             <div className="bg-blue-500 rounded-sm"></div>
                             <div className="bg-blue-400 rounded-sm"></div>
                             <div className="bg-sky-400 rounded-sm"></div>
                             <div className="bg-[#4255ff] rounded-sm"></div>
-                            <div className="bg-[#1a2049] rounded-sm"></div>
+                            <div className="bg-qz-card rounded-sm"></div>
                             <div className="bg-[#4255ff] rounded-sm"></div>
                             <div className="bg-[#4255ff] rounded-sm"></div>
                             <div className="bg-[#4255ff] rounded-sm"></div>
@@ -603,12 +603,12 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
                         <div className={cn("transition-opacity duration-300 flex flex-col flex-1", gamePhase === 'PLACING' ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none absolute inset-0')}>
 
                             {/* Grid Board */}
-                            <div className="w-full max-w-[400px] aspect-square mx-auto bg-[#1b2354] rounded-lg p-[4px] relative mb-12" ref={gridRef}>
+                            <div className="w-full max-w-[400px] aspect-square mx-auto bg-qz-card rounded-lg p-[4px] relative mb-12" ref={gridRef}>
                                 {/* Draw actual cells */}
                                 <div className="w-full h-full grid grid-cols-8 grid-rows-8 gap-[4px]">
                                     {grid.map((row, rIdx) => (
                                         row.map((cell, cIdx) => (
-                                            <div key={`${rIdx}-${cIdx}`} className={cn("w-full h-full rounded-[4px] relative", cell.active ? "bg-transparent" : "bg-[#111636]")}>
+                                            <div key={`${rIdx}-${cIdx}`} className={cn("w-full h-full rounded-[4px] relative", cell.active ? "bg-transparent" : "bg-qz-card")}>
                                                 {/* Placed Block Content */}
                                                 {cell.active && (
                                                     <div className={cn("absolute inset-0 rounded-[4px]", cell.color, cell.shadow)}></div>
@@ -659,7 +659,7 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
 
                         {/* ANSWERING PHASE RENDERING */}
                         {gamePhase === 'ANSWERING' && (
-                            <div className="absolute inset-0 z-20 flex flex-col animate-in fade-in slide-in-from-bottom-8 duration-500 bg-[#0c102a]/80 backdrop-blur-md pt-4">
+                            <div className="absolute inset-0 z-20 flex flex-col animate-in fade-in slide-in-from-bottom-8 duration-500 bg-qz-card/80 backdrop-blur-md pt-4">
                                 <div className="text-qz-text-muted text-sm font-semibold mb-2">
                                     {answerWith === 'term' ? 'ОПРЕДЕЛЕНИЕ' : 'ТЕРМИН'}
                                     {activeQuestionCard?.imageUrl && <img src={activeQuestionCard.imageUrl} alt="img" className="h-16 inline-block ml-4 rounded-md" />}
@@ -678,7 +678,7 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
                                             placeholder="Введите ответ"
                                             disabled={showCorrectAnswerOverlay}
                                             className={cn(
-                                                "w-full bg-[#1b2354] border-2 rounded-2xl py-5 pl-6 pr-16 text-xl text-qz-text outline-none transition-colors",
+                                                "w-full bg-qz-card border-2 rounded-2xl py-5 pl-6 pr-16 text-xl text-qz-text outline-none transition-colors",
                                                 wrongAttempts > 0 && wrongAttempts < MAX_STRIKES ? "border-red-500" : "border-[#2e3b7a] focus:border-indigo-500"
                                             )}
                                         />
@@ -691,7 +691,7 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
                                     {wrongAttempts > 0 && wrongAttempts < MAX_STRIKES && !showCorrectAnswerOverlay && (
                                         <p className="text-red-400 mt-3 font-medium px-4 flex justify-between items-center">
                                             <span>Неверно! Попробуйте еще.</span>
-                                            <button type="button" onClick={handleRefreshQuestion} className="text-qz-text-muted hover:text-white flex items-center gap-1 text-sm bg-black/20 px-3 py-1 rounded-full">
+                                            <button type="button" onClick={handleRefreshQuestion} className="text-qz-text-muted hover:text-white flex items-center gap-1 text-sm bg-qz-bg/20 px-3 py-1 rounded-full">
                                                 <RefreshCcw size={14} /> Пропустить
                                             </button>
                                         </p>
@@ -709,7 +709,7 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
 
                                 {/* Fail / Correct Reveal Overlay */}
                                 {showCorrectAnswerOverlay && (
-                                    <div className="absolute inset-0 bg-[#0c102a]/95 flex flex-col z-30 p-6 animate-in fade-in duration-300 rounded-2xl border border-white/5">
+                                    <div className="absolute inset-0 bg-qz-card/95 flex flex-col z-30 p-6 animate-in fade-in duration-300 rounded-2xl border border-white/5">
                                         <div className="text-red-400 text-sm font-bold uppercase mb-2">ВЫ ОТВЕТИЛИ</div>
                                         <h4 className="text-2xl text-[#8d97be] line-through mb-8">{typedAnswer}</h4>
 
@@ -738,9 +738,9 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
 
                     {/* --- GAME OVER SCREEN --- */}
                     {gameState === 'GAME_OVER' && (
-                        <div className="absolute inset-0 z-50 bg-[#0c102a]/98 flex flex-col items-center justify-center p-6 animate-in fade-in duration-500">
+                        <div className="absolute inset-0 z-50 bg-qz-card/98 flex flex-col items-center justify-center p-6 animate-in fade-in duration-500">
                             <h2 className="text-4xl font-bold text-qz-text mb-8">Больше нет ходов!</h2>
-                            <div className="bg-[#1b2354] w-full max-w-sm rounded-[32px] p-8 flex flex-col items-center shadow-2xl mb-8">
+                            <div className="bg-qz-card w-full max-w-sm rounded-[32px] p-8 flex flex-col items-center shadow-2xl mb-8">
                                 <span className="text-qz-text-muted font-medium mb-2">ВАШ СЧЕТ</span>
                                 <span className="text-7xl font-semibold text-qz-text mb-2">{score}</span>
                                 {score >= highScore && score > 0 && (

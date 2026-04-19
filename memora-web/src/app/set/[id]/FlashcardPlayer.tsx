@@ -596,14 +596,14 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
             {/* Edit Modal Overlay */}
             {editingCard && (
                 <div className="fixed inset-0 z-[100] bg-qz-bg/80 backdrop-blur-sm flex items-center justify-center p-4">
-                    <div className="w-full max-w-lg bg-[#171c2e] rounded-2xl shadow-2xl border border-qz-border-light overflow-hidden flex flex-col">
-                        <div className="p-6 border-b border-qz-border-light flex justify-between items-center bg-[#111526]">
+                    <div className="w-full max-w-lg bg-qz-card rounded-2xl shadow-2xl border border-qz-border-light overflow-hidden flex flex-col">
+                        <div className="p-6 border-b border-qz-border-light flex justify-between items-center bg-qz-card">
                             <h3 className="text-xl font-bold text-qz-text">Редактировать карточку</h3>
                             <button onClick={() => setEditingCard(null)} className="text-qz-text-muted hover:text-qz-text transition-colors">
                                 <XIcon className="w-6 h-6" />
                             </button>
                         </div>
-                        <div className="p-6 flex flex-col gap-6 bg-[#171c2e] overflow-y-auto max-h-[60vh]">
+                        <div className="p-6 flex flex-col gap-6 bg-qz-card overflow-y-auto max-h-[60vh]">
                             {fieldsSchema.sort((a, b) => a.order - b.order).map(field => (
                                 <div key={field.id}>
                                     <label className="text-xs font-bold text-[#ffcd1f] mb-2 block uppercase tracking-wider">{field.name}</label>
@@ -636,7 +636,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                                 </div>
                             ))}
                         </div>
-                        <div className="p-5 border-t border-qz-border-light flex justify-end gap-4 bg-[#111526]">
+                        <div className="p-5 border-t border-qz-border-light flex justify-end gap-4 bg-qz-card">
                             <button onClick={() => setEditingCard(null)} className="px-6 py-2.5 rounded-full text-qz-text-muted font-semibold hover:bg-white/5 transition-colors">Отмена</button>
                             <button onClick={() => {
                                 setActiveCards(prev => [...prev]);

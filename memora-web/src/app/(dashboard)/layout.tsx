@@ -61,19 +61,19 @@ export default async function DashboardLayout({
 
                 <div className="flex-1 overflow-y-auto px-4 space-y-6 scrollbar-thin scrollbar-thumb-zinc-800">
                     <nav className="space-y-1">
-                        <Link href={`/dashboard/${role}`} className="flex items-center gap-3 px-3 py-2.5 hover:bg-[#1a1a36] text-qz-text-muted rounded-lg font-medium transition-colors">
+                        <Link href={`/dashboard/${role}`} className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card text-qz-text-muted rounded-lg font-medium transition-colors">
                             <Home className="w-5 h-5" />
                             Home
                         </Link>
-                        <Link href="/library" className="flex items-center gap-3 px-3 py-2.5 hover:bg-[#1a1a36] rounded-lg transition-colors font-medium">
+                        <Link href="/library" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium">
                             <Library className="w-5 h-5" />
                             Your Library
                         </Link>
-                        <Link href="/groups" className="flex items-center gap-3 px-3 py-2.5 hover:bg-[#1a1a36] rounded-lg transition-colors font-medium">
+                        <Link href="/groups" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium">
                             <Users className="w-5 h-5" />
                             Study Groups
                         </Link>
-                        <Link href="/notifications" className="flex items-center gap-3 px-3 py-2.5 hover:bg-[#1a1a36] rounded-lg transition-colors font-medium relative">
+                        <Link href="/notifications" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium relative">
                             <Bell className="w-5 h-5" />
                             <span className="absolute top-2 left-6 w-2 h-2 bg-pink-500 rounded-full"></span>
                             Notifications
@@ -91,7 +91,7 @@ export default async function DashboardLayout({
                                 <div className="px-3 py-2 text-sm text-zinc-500 italic">No folders yet</div>
                             ) : (
                                 folders.map(folder => (
-                                    <Link key={folder.id} href={`/folder/${folder.id}`} className="flex items-center gap-3 px-3 py-2 hover:bg-[#1a1a36] rounded-lg transition-colors text-sm group">
+                                    <Link key={folder.id} href={`/folder/${folder.id}`} className="flex items-center gap-3 px-3 py-2 hover:bg-qz-card rounded-lg transition-colors text-sm group">
                                         <Folder className="w-4 h-4 text-zinc-500 group-hover:text-[#ffcd1f] transition-colors shrink-0" />
                                         <span className="truncate">{folder.name}</span>
                                     </Link>
@@ -136,7 +136,7 @@ export default async function DashboardLayout({
                             <button className="w-9 h-9 rounded-full bg-[#4255ff] text-white flex items-center justify-center font-medium border-2 border-transparent hover:border-zinc-500 transition-all cursor-pointer shadow-indigo-500/50 shadow-lg">
                                 {initial}
                             </button>
-                            <div className="absolute right-0 top-full mt-2 w-48 bg-[#171c2e] border border-[#262c40] rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all origin-top-right transform -translate-y-2 group-hover:translate-y-0 p-2 z-50">
+                            <div className="absolute right-0 top-full mt-2 w-48 bg-qz-card border border-[#262c40] rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all origin-top-right transform -translate-y-2 group-hover:translate-y-0 p-2 z-50">
                                 <div className="px-3 py-2 border-b border-[#262c40] mb-2">
                                     <p className="text-sm font-medium text-qz-text">{session?.user?.email || "User"}</p>
                                     <p className="text-xs text-[#8e95ae] capitalize">{role}</p>

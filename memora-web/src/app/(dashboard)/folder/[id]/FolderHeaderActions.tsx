@@ -108,7 +108,7 @@ export default function FolderHeaderActions({ folderId, currentSets: initialSets
             </div>
 
             {isModalOpen && (
-                <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+                <div className="fixed inset-0 z-50 bg-qz-bg/80 backdrop-blur-sm flex items-center justify-center p-4">
                     <div className="w-full max-w-2xl bg-qz-bg rounded-3xl overflow-hidden shadow-2xl relative border border-white/10 flex flex-col max-h-[85vh] animate-in fade-in zoom-in-95 duration-200">
                         {/* Header */}
                         <div className="p-6 md:p-8 flex items-center justify-between border-b border-white/5 shrink-0">

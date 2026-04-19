@@ -39,13 +39,13 @@ function MatchingQuestionView({ question, currentAnswer, onChange }: { question:
     const getTermClass = (id: string) => {
         if (parsedAnswer[id]) return "bg-green-500/20 border-green-500/50 text-green-400 opacity-60 cursor-default";
         if (selectedTermId === id) return "bg-[#4255ff]/20 border-indigo-500 text-indigo-300 ring-2 ring-indigo-500/50";
-        return "bg-qz-bg border-qz-border-light hover:border-indigo-500 hover:bg-[#1a1a3a] text-qz-text-muted shadow-sm";
+        return "bg-qz-bg border-qz-border-light hover:border-indigo-500 hover:bg-qz-bg text-qz-text-muted shadow-sm";
     };
 
     const getDefClass = (id: string) => {
         if (Object.values(parsedAnswer).includes(id)) return "bg-green-500/20 border-green-500/50 text-green-400 opacity-60 cursor-default";
         if (selectedDefId === id) return "bg-[#4255ff]/20 border-indigo-500 text-indigo-300 ring-2 ring-indigo-500/50";
-        return "bg-qz-bg border-qz-border-light hover:border-indigo-500 hover:bg-[#1a1a3a] text-qz-text-muted shadow-sm";
+        return "bg-qz-bg border-qz-border-light hover:border-indigo-500 hover:bg-qz-bg text-qz-text-muted shadow-sm";
     };
 
     return (
@@ -453,7 +453,7 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
                                         {/* MCQ Rendering */}
                                         {question.type === "MULTIPLE_CHOICE" && question.mcqData?.options.map((opt, oIndex) => {
                                             const isSelected = userAnswers[question.flashcard.id] === opt;
-                                            const uiStateClass = isSelected ? "bg-[#4255ff]/20 border-indigo-500 text-indigo-300 ring-2 ring-indigo-500/50" : "bg-qz-bg border-qz-border-light hover:border-indigo-500 hover:bg-[#1a1a3a] text-qz-text-muted shadow-sm";
+                                            const uiStateClass = isSelected ? "bg-[#4255ff]/20 border-indigo-500 text-indigo-300 ring-2 ring-indigo-500/50" : "bg-qz-bg border-qz-border-light hover:border-indigo-500 hover:bg-qz-bg text-qz-text-muted shadow-sm";
 
                                             return (
                                                 <button
@@ -470,7 +470,7 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
                                         {question.type === "TRUE_FALSE" && ["true", "false"].map((opt) => {
                                             const isSelected = userAnswers[question.flashcard.id] === opt;
                                             const optLabel = opt === "true" ? "Верно" : "Неверно";
-                                            const uiStateClass = isSelected ? "bg-[#4255ff]/20 border-indigo-500 text-indigo-300 ring-2 ring-indigo-500/50" : "bg-qz-bg border-qz-border-light hover:border-indigo-500 hover:bg-[#1a1a3a] text-qz-text-muted shadow-sm";
+                                            const uiStateClass = isSelected ? "bg-[#4255ff]/20 border-indigo-500 text-indigo-300 ring-2 ring-indigo-500/50" : "bg-qz-bg border-qz-border-light hover:border-indigo-500 hover:bg-qz-bg text-qz-text-muted shadow-sm";
 
                                             return (
                                                 <button

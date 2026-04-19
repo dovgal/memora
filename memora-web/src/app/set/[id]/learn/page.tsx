@@ -371,7 +371,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-black flex items-center justify-center">
+            <div className="min-h-screen bg-qz-bg flex items-center justify-center">
                 <Loader2 className="animate-spin text-[#4255ff]" size={48} />
             </div>
         )
@@ -379,7 +379,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
 
     if (!set || queue.length === 0) {
         return (
-            <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center">
+            <div className="min-h-screen bg-qz-bg text-qz-text flex flex-col items-center justify-center">
                 <p>Not enough flashcards to start Learn mode.</p>
                 <button onClick={closeSession} className="mt-4 text-[#ffcd1f]">Return to Set</button>
             </div>
@@ -813,7 +813,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                     </p>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {currentQuestion.mcqData.options.map((option, index) => {
-                                            let buttonStateClass = "bg-transparent border-qz-border-light hover:bg-qz-card hover:border-purple-500 text-zinc-200"
+                                            let buttonStateClass = "bg-transparent border-qz-border-light hover:bg-qz-card hover:border-purple-500 text-qz-text"
                                             let Icon = null;
                                             let numberTagClass = "bg-qz-card text-qz-text-muted border border-qz-border-light";
 
@@ -866,7 +866,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                             value={writtenInput}
                                             onChange={(e) => setWrittenInput(e.target.value)}
                                             disabled={showResult}
-                                            className="w-full bg-qz-bg border-2 border-qz-border-light rounded-xl px-5 py-4 focus:border-indigo-500 focus:bg-[#1a1a3a] outline-none transition-all font-medium text-xl text-qz-text shadow-sm disabled:opacity-50"
+                                            className="w-full bg-qz-bg border-2 border-qz-border-light rounded-xl px-5 py-4 focus:border-indigo-500  outline-none transition-all font-medium text-xl text-qz-text shadow-sm disabled:opacity-50"
                                             autoFocus
                                             placeholder="Введите ваш ответ..."
                                         />

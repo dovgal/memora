@@ -268,7 +268,7 @@ export default function CreateSetPage() {
     };
 
     return (
-        <div className="min-h-screen bg-black text-white p-6 md:p-12 relative overflow-hidden">
+        <div className="min-h-screen bg-qz-bg text-qz-text p-6 md:p-12 relative overflow-hidden">
             <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-900 rounded-full mix-blend-multiply filter blur-[150px] opacity-30 pointer-events-none"></div>
 
             <div className="max-w-4xl mx-auto relative z-10">
@@ -455,7 +455,7 @@ export default function CreateSetPage() {
 
             {/* Import Modal */}
             {isImportOpen && (
-                <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+                <div className="fixed inset-0 z-50 bg-qz-bg/90 backdrop-blur-md flex items-center justify-center p-4">
                     <div className="w-full max-w-5xl h-[90vh] bg-qz-bg rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(79,70,229,0.2)] border border-white/10 flex flex-col animate-in fade-in zoom-in-95 duration-300">
                         {/* Header */}
                         <div className="p-6 border-b border-white/5 flex items-center justify-between bg-qz-bg/50">
@@ -485,12 +485,12 @@ export default function CreateSetPage() {
                                     value={importText}
                                     onChange={(e) => setImportText(e.target.value)}
                                     placeholder="Слово 1   Определение 1&#10;Слово 2   Определение 2&#10;Слово 3   Определение 3"
-                                    className="flex-1 w-full bg-[#111122] border border-qz-border-light rounded-2xl p-6 text-qz-text text-lg font-medium focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all resize-none placeholder:text-zinc-700 custom-scrollbar shadow-inner"
+                                    className="flex-1 w-full bg-qz-card border border-qz-border-light rounded-2xl p-6 text-qz-text text-lg font-medium focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all resize-none placeholder:text-zinc-700 custom-scrollbar shadow-inner"
                                 />
                             </div>
 
                             {/* Right: Settings & Preview */}
-                            <div className="w-full md:w-[400px] flex flex-col bg-[#050510]">
+                            <div className="w-full md:w-[400px] flex flex-col bg-qz-bg">
                                 {/* Settings */}
                                 <div className="p-6 space-y-8 border-b border-white/5">
                                     {/* Term Separator */}
@@ -604,7 +604,7 @@ export default function CreateSetPage() {
                         </div>
 
                         {/* Footer */}
-                        <div className="p-6 bg-black border-t border-white/5 flex items-center justify-between">
+                        <div className="p-6 bg-qz-bg border-t border-white/5 flex items-center justify-between">
                             <div className="flex items-center gap-2 text-zinc-500">
                                 <div className="w-2 h-2 rounded-full bg-[#4255ff] animate-pulse"></div>
                                 <span className="text-xs font-bold uppercase tracking-widest">Система готова к импорту</span>

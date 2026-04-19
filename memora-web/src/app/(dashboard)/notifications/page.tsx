@@ -10,14 +10,14 @@ export default function NotificationsPage() {
                         <Bell className="text-[#4255ff] w-8 h-8" />
                         Уведомления
                     </h1>
-                    <button className="text-sm text-[#ffcd1f] hover:text-indigo-300 transition-colors flex items-center gap-2 font-medium bg-[#1a1a36] px-4 py-2 rounded-lg border border-qz-border-light">
+                    <button className="text-sm text-[#ffcd1f] hover:text-indigo-300 transition-colors flex items-center gap-2 font-medium bg-qz-card px-4 py-2 rounded-lg border border-qz-border-light">
                         <Check size={16} /> Пометить все как прочитанные
                     </button>
                 </div>
 
                 <div className="space-y-4">
                     {/* Placeholder Notification 1 */}
-                    <div className="bg-[#1a1a36] border border-qz-border-light rounded-xl p-5 flex items-start gap-4 transition-colors hover:bg-qz-card">
+                    <div className="bg-qz-card border border-qz-border-light rounded-xl p-5 flex items-start gap-4 transition-colors hover:bg-qz-card">
                         <div className="w-10 h-10 rounded-full bg-[#4255ff]/20 text-[#ffcd1f] flex items-center justify-center shrink-0 mt-1">
                             <Bell size={20} />
                         </div>
@@ -37,7 +37,7 @@ export default function NotificationsPage() {
                     </div>
 
                     {/* Placeholder Notification 2 */}
-                    <div className="bg-[#1a1a36] border border-qz-border-light rounded-xl p-5 flex items-start gap-4 transition-colors hover:bg-qz-card opacity-75">
+                    <div className="bg-qz-card border border-qz-border-light rounded-xl p-5 flex items-start gap-4 transition-colors hover:bg-qz-card opacity-75">
                         <div className="w-10 h-10 rounded-full bg-qz-card text-qz-text-muted flex items-center justify-center shrink-0 mt-1">
                             <Check size={20} />
                         </div>

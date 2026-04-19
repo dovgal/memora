@@ -28,7 +28,7 @@ export default function PrintSetLayout({ set }: { set: SetResponse }) {
 
         const ContentHeader = () => (
             <div className="flex items-center gap-4 mb-6 pb-4 border-b border-zinc-200">
-                <div className="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center font-bold text-2xl shrink-0">
+                <div className="w-12 h-12 bg-qz-bg text-white rounded-full flex items-center justify-center font-bold text-2xl shrink-0">
                     M
                 </div>
                 <div>
@@ -176,7 +176,7 @@ export default function PrintSetLayout({ set }: { set: SetResponse }) {
                     <div className="w-full lg:w-[400px] shrink-0">
                         <h2 className="text-3xl font-bold mb-6">Печать</h2>
 
-                        <div className="bg-[#111126] border border-qz-border-light rounded-xl overflow-hidden">
+                        <div className="bg-qz-card border border-qz-border-light rounded-xl overflow-hidden">
                             <div className="p-6">
                                 {/* Section 1 */}
                                 <div className="mb-8">
@@ -233,10 +233,10 @@ export default function PrintSetLayout({ set }: { set: SetResponse }) {
                     </div>
 
                     {/* Right Panel: Interactive Preview */}
-                    <div className="flex-1 w-full bg-[#1e1e24] rounded-t-xl rounded-b-xl overflow-hidden shadow-2xl flex flex-col max-h-full border border-black h-full">
+                    <div className="flex-1 w-full bg-qz-card rounded-t-xl rounded-b-xl overflow-hidden shadow-2xl flex flex-col max-h-full border border-black h-full">
 
                         {/* Fake Browser Toolbar for Preview */}
-                        <div className="bg-[#2b2b36] h-12 flex items-center justify-between px-4 shrink-0">
+                        <div className="bg-qz-card h-12 flex items-center justify-between px-4 shrink-0">
                             <div className="flex items-center gap-4 text-qz-text-muted">
                                 <span className="text-sm font-semibold tracking-widest text-[#5c5c6c]">ПРЕДПРОСМОТР</span>
                             </div>
@@ -248,7 +248,7 @@ export default function PrintSetLayout({ set }: { set: SetResponse }) {
                         </div>
 
                         {/* Document Viewport */}
-                        <div className="flex-1 bg-[#1e1e24] overflow-y-auto p-4 md:p-8 custom-scrollbar relative">
+                        <div className="flex-1 bg-qz-card overflow-y-auto p-4 md:p-8 custom-scrollbar relative">
                             <div className="max-w-4xl mx-auto shadow-2xl relative">
 
                                 {/* The actual printable area */}
