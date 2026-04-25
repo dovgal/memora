@@ -35,8 +35,8 @@ export default function RoleSelectionPage() {
             router.push(`/dashboard/${role}`)
             router.refresh()
 
-        } catch (err: any) {
-            setError(err.message || "An unexpected error occurred.")
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : "An unexpected error occurred.")
             setIsSubmitting(false)
         }
     }
@@ -50,7 +50,7 @@ export default function RoleSelectionPage() {
             <div className="relative z-10 w-full max-w-4xl p-8 bg-qz-bg/80 backdrop-blur-xl border border-qz-border-light rounded-3xl shadow-2xl">
                 <div className="text-center mb-12">
                     <h1 className="text-4xl font-bold text-qz-text mb-4">Choose Your Path</h1>
-                    <p className="text-qz-text-muted text-lg">Select how you'll be using Memora to personalize your dashboard.</p>
+                    <p className="text-qz-text-muted text-lg">Select how you&apos;ll be using Memora to personalize your dashboard.</p>
                 </div>
 
                 {error && (
@@ -69,7 +69,7 @@ export default function RoleSelectionPage() {
                         <div className="w-16 h-16 bg-[#4255ff]/10 text-[#ffcd1f] rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#4255ff] group-hover:text-white transition-colors duration-300">
                             <GraduationCap className="w-8 h-8" />
                         </div>
-                        <h2 className="text-2xl font-bold text-qz-text mb-3">I'm a Student</h2>
+                        <h2 className="text-2xl font-bold text-qz-text mb-3">I&apos;m a Student</h2>
                         <p className="text-qz-text-muted leading-relaxed">
                             Join classes, study flashcards with spaced repetition, and use the AI tutor to master your material faster.
                         </p>
@@ -84,7 +84,7 @@ export default function RoleSelectionPage() {
                         <div className="w-16 h-16 bg-[#4255ff]/10 text-[#ffcd1f] rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#4255ff] group-hover:text-white transition-colors duration-300">
                             <BookOpen className="w-8 h-8" />
                         </div>
-                        <h2 className="text-2xl font-bold text-qz-text mb-3">I'm a Teacher</h2>
+                        <h2 className="text-2xl font-bold text-qz-text mb-3">I&apos;m a Teacher</h2>
                         <p className="text-qz-text-muted leading-relaxed">
                             Create study sets, generate flashcards with AI, host live classroom games, and track student progress.
                         </p>

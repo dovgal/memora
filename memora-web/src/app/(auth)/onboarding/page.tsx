@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 
 export default function OnboardingPage() {
-    const { data: session, update } = useSession()
+    const { update } = useSession()
     const router = useRouter()
 
     const [dob, setDob] = useState("")
@@ -45,7 +45,7 @@ export default function OnboardingPage() {
 
         try {
             // Route through the local Next.js API proxy which attaches the real JWT
-            const res = await fetch("/api/users/onboarding", {
+            await fetch("/api/users/onboarding", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -59,8 +59,8 @@ export default function OnboardingPage() {
             router.push("/dashboard")
             router.refresh()
 
-        } catch (err: any) {
-            setError(err.message || "An unexpected error occurred.")
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : "An unexpected error occurred.")
             setIsSubmitting(false)
         }
     }
@@ -75,7 +75,7 @@ export default function OnboardingPage() {
                     <h2 className="text-2xl font-bold text-qz-text mb-4">Parental Consent Required</h2>
                     <p className="text-qz-text-muted mb-6 leading-relaxed">
                         Based on the date of birth you provided, you are under 13 years old.
-                        In accordance with the Children's Online Privacy Protection Act (COPPA),
+                        In accordance with the Children&apos;s Online Privacy Protection Act (COPPA),
                         we require verifiable parental consent before you can use Memora.
                     </p>
                     <p className="text-zinc-500 text-sm">
@@ -95,7 +95,7 @@ export default function OnboardingPage() {
             <div className="relative z-10 w-full max-w-md p-8 bg-qz-bg/80 backdrop-blur-xl border border-qz-border-light rounded-3xl shadow-2xl">
                 <div className="text-center mb-8">
                     <h1 className="text-3xl font-bold text-qz-text mb-2">Welcome to Memora</h1>
-                    <p className="text-qz-text-muted">Let's finish setting up your account. We need your age to personalize your experience safely.</p>
+                    <p className="text-qz-text-muted">Let&apos;s finish setting up your account. We need your age to personalize your experience safely.</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">

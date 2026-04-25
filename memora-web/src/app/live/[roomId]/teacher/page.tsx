@@ -5,7 +5,6 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { Radio, Users, Play, X, Wifi, WifiOff } from 'lucide-react';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 const WS_URL = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:8000';
 
 interface TeacherLobbyPageProps {
@@ -40,7 +39,7 @@ function JoinCodeDisplay({ code }: { code: string }) {
 }
 
 export default function TeacherLobbyPage({ params }: TeacherLobbyPageProps) {
-    const resolvedParams = use_params(params);
+    const resolvedParams = useAsyncParams(params);
     const searchParams = useSearchParams();
     const router = useRouter();
     const { data: session } = useSession();
@@ -177,7 +176,7 @@ export default function TeacherLobbyPage({ params }: TeacherLobbyPageProps) {
 }
 
 // React.use() wrapper for async params in Next.js 15+
-function use_params<T>(promise: Promise<T>): T | null {
+function useAsyncParams<T>(promise: Promise<T>): T | null {
     const [value, setValue] = useState<T | null>(null);
     useEffect(() => {
         promise.then(setValue);

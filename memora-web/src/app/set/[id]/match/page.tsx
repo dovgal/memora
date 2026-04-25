@@ -21,7 +21,7 @@ type CardItem = {
 export default function MatchModePage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = React.use(params);
     const router = useRouter();
-    const { data: session } = useSession();
+    useSession();
 
     const [set, setSet] = useState<SetResponse | null>(null);
     const [gameState, setGameState] = useState<'start' | 'playing' | 'ended'>('start');
@@ -29,7 +29,7 @@ export default function MatchModePage({ params }: { params: Promise<{ id: string
     // Core game state
     const [cards, setCards] = useState<CardItem[]>([]);
     const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
-    const [matchedPairCount, setMatchedPairCount] = useState(0);
+    const [, setMatchedPairCount] = useState(0);
 
     // Timer state
     const [time, setTime] = useState(0);
@@ -54,11 +54,6 @@ export default function MatchModePage({ params }: { params: Promise<{ id: string
         fetchSet();
     }, [id, router]);
 
-    // Cleanup timer on unmount
-    useEffect(() => {
-        return () => stopTimer();
-    }, []);
-
     // Timer logic
     const startTimer = () => {
         setTime(0);
@@ -70,6 +65,11 @@ export default function MatchModePage({ params }: { params: Promise<{ id: string
     const stopTimer = () => {
         if (timerRef.current) clearInterval(timerRef.current);
     };
+
+    // Cleanup timer on unmount
+    useEffect(() => {
+        return () => stopTimer();
+    }, []);
 
     const formatTime = (ms: number) => {
         const totalSeconds = ms / 1000;

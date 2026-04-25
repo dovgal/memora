@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Trophy, Target, Home, RotateCcw } from 'lucide-react';
 
 const TEAM_EMOJIS: Record<string, string> = {
@@ -28,33 +28,27 @@ const PODIUM_LABELS = ['🥇 1st', '🥈 2nd', '🥉 3rd'];
 
 export default function ResultsPage({ params }: ResultsPageProps) {
     const router = useRouter();
-    const searchParams = useSearchParams();
 
     const [roomId, setRoomId] = useState<string | null>(null);
-    const [scores, setScores] = useState<TeamScore[]>([]);
-    const [missed, setMissed] = useState<MissedTerm[]>([]);
+    const [scores] = useState<TeamScore[]>(() => {
+        const scoresParam = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('scores') : null;
+        if (scoresParam) { try { return JSON.parse(decodeURIComponent(scoresParam)); } catch { /* ignore */ } }
+        return [];
+    });
+    const [missed] = useState<MissedTerm[]>(() => {
+        const missedParam = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('missed') : null;
+        if (missedParam) { try { return JSON.parse(decodeURIComponent(missedParam)); } catch { /* ignore */ } }
+        return [];
+    });
     const [isAnimated, setIsAnimated] = useState(false);
 
     useEffect(() => { params.then(p => setRoomId(p.roomId)); }, [params]);
 
-    // Simulate receiving results from game state (in prod, these come from WS final message or a REST call)
+    // Animate podium after roomId is known
     useEffect(() => {
         if (!roomId) return;
-
-        // Parse scores from query params (passed by teacher/student game pages on game_over)
-        const scoresParam = searchParams.get('scores');
-        const missedParam = searchParams.get('missed');
-
-        if (scoresParam) {
-            try { setScores(JSON.parse(decodeURIComponent(scoresParam))); } catch { /* ignore */ }
-        }
-        if (missedParam) {
-            try { setMissed(JSON.parse(decodeURIComponent(missedParam))); } catch { /* ignore */ }
-        }
-
-        // Animate podium after mount
         setTimeout(() => setIsAnimated(true), 100);
-    }, [roomId, searchParams]);
+    }, [roomId]);
 
     const sorted = [...scores].sort((a, b) => b.score - a.score);
     const podiumOrder = [sorted[1], sorted[0], sorted[2]].filter(Boolean); // 2nd, 1st, 3rd visual layout

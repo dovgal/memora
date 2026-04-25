@@ -27,7 +27,7 @@ async function getSet(id: string, token: string): Promise<SetResponse | null> {
 
 export default async function EditSetPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params
-    const session: any = await getServerSession(authOptions as any)
+    const session = await getServerSession(authOptions) as { id_token?: string } | null
 
     if (!session || !session.id_token) {
         return <div className="p-12 text-center text-qz-text">Вы должны войти в систему.</div>

@@ -61,8 +61,8 @@ export default function JoinPage() {
 
             const data = await res.json();
             router.push(`/live/${data.roomId}/student?joinCode=${joinCode}`);
-        } catch (e: any) {
-            setError(e.message || 'Connection error');
+        } catch (e: unknown) {
+            setError(e instanceof Error ? e.message : 'Connection error');
             setIsJoining(false);
         }
     };
@@ -82,7 +82,7 @@ export default function JoinPage() {
                     </div>
                     <div className="text-center">
                         <h1 className="text-2xl font-semibold text-qz-text">Join Live Game</h1>
-                        <p className="text-zinc-500 text-sm mt-1">Enter the 6-digit code from your teacher's screen</p>
+                        <p className="text-zinc-500 text-sm mt-1">Enter the 6-digit code from your teacher&apos;s screen</p>
                     </div>
                 </div>
 

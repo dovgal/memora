@@ -2,21 +2,22 @@
 
 import { UseFormRegister, FieldErrors } from "react-hook-form";
 import { FieldSchema } from "@/types/schema";
-import { Volume2, Calculator, Loader2, Sparkles, Image as ImageIcon, Trash2 } from "lucide-react";
+import { Calculator, Image as ImageIcon, Trash2 } from "lucide-react";
 import AudioInput from "./AudioInput";
-import TTSInput from "./TTSInput";
+import NextImage from "next/image";
+
+type AnyFieldValues = Record<string, unknown>;
 
 interface Props {
     field: FieldSchema;
     index: number;
-    register: UseFormRegister<any>;
-    errors: FieldErrors<any>;
-    update?: (index: number, obj: any) => void;
-    getValues: (path?: any) => any;
+    register: UseFormRegister<AnyFieldValues>;
+    errors: FieldErrors<AnyFieldValues>;
+    update?: (index: number, obj: AnyFieldValues) => void;
+    getValues: (path?: string) => unknown;
 }
 
-export default function DynamicFieldRenderer({ field, index, register, errors, update, getValues }: Props) {
-    const errorPath = `flashcards.${index}.fieldsData.${field.id}`;
+export default function DynamicFieldRenderer({ field, index, register, errors: _errors, update, getValues }: Props) {
     // Support legacy native fields falling back to the new field structure while migrating
     const isLegacyTerm = field.id === 'term';
     const isLegacyDef = field.id === 'definition';
@@ -45,7 +46,7 @@ export default function DynamicFieldRenderer({ field, index, register, errors, u
                     <div className="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-qz-border rounded-xl overflow-hidden relative group min-h-[100px] bg-qz-card/30 w-full mt-2">
                         {currentImg ? (
                             <>
-                                <img src={currentImg} alt="Field image" className="w-full h-full object-cover" />
+                                <NextImage src={currentImg as string} alt="Field image" width={400} height={300} className="w-full h-full object-cover" />
                                 <button
                                     type="button"
                                     onClick={() => update && update(index, { ...getValues(`flashcards.${index}`), [isLegacyImg ? 'imageUrl' : `fieldsData.${field.id}`]: null })}

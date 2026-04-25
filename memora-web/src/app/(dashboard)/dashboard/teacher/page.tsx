@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Sparkles, UploadCloud, Layers, Folder, Users } from 'lucide-react';
+import { Sparkles, UploadCloud, Layers } from 'lucide-react';
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { SetSummaryResponse } from "@/types/schema";
@@ -19,7 +19,7 @@ async function getUserSets(token: string): Promise<SetSummaryResponse[]> {
 }
 
 export default async function TeacherDashboard() {
-    const session: any = await getServerSession(authOptions as any);
+    const session = await getServerSession(authOptions);
     let sets: SetSummaryResponse[] = [];
 
     if (session?.id_token) {
@@ -58,7 +58,7 @@ export default async function TeacherDashboard() {
                 </div>
                 {sets.length === 0 ? (
                     <div className="bg-qz-card/50 border border-qz-border-light rounded-2xl p-8 text-center">
-                        <p className="text-qz-text-muted mb-4">You haven't created any study sets yet.</p>
+                        <p className="text-qz-text-muted mb-4">You haven&apos;t created any study sets yet.</p>
                         <Link href="/create" className="inline-block bg-[#4255ff] hover:bg-indigo-400 text-white px-6 py-2 rounded-lg font-medium transition-colors">
                             Create a Set
                         </Link>

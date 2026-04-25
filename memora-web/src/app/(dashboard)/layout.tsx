@@ -6,13 +6,11 @@ import {
     Bell,
     Plus,
     Search,
-    BookOpen,
     Folder,
     Sparkles
 } from "lucide-react";
 import LogoutButton from "@/components/LogoutButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import AppProvider from "@/components/AppProvider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { FolderSummaryResponse } from "@/types/schema";

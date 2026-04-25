@@ -3,6 +3,7 @@
 import { FlashcardResponse, FieldSchema } from "@/types/schema";
 import { Play, Square, FileAudio, Volume2 } from "lucide-react";
 import { useState, useRef } from "react";
+import Image from "next/image";
 
 interface FlashcardRenderProps {
     card: FlashcardResponse;
@@ -10,7 +11,7 @@ interface FlashcardRenderProps {
     side: 'front' | 'back';
 }
 
-function AudioPlayer({ src, label, icon: Icon }: { src: string, label: string, icon: any }) {
+function AudioPlayer({ src, label, icon: Icon }: { src: string, label: string, icon: (props: { className?: string; size?: number }) => JSX.Element }) {
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -73,7 +74,7 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
         <div className={`flex flex-col items-center ${gapClass} w-full text-qz-text p-3`}>
             {fieldsForSide.map((field) => {
                 // Determine field value
-                let value: any = null;
+                let value: string | null | undefined = null;
                 if (field.id === 'term') value = card.term;
                 else if (field.id === 'definition') value = card.definition;
                 else if (field.id === 'image') value = card.imageUrl;
@@ -83,7 +84,6 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
 
                 switch (field.type) {
                     case 'text':
-                        const audioData = card.fieldsData?.[`${field.id}_audio`];
                         return (
                             <div key={field.id} className="flex flex-col items-center gap-2 w-full max-w-4xl mx-auto">
                                 <div className="flex items-center gap-3">
@@ -112,10 +112,12 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
                         );
                     case 'image':
                         return (
-                            <img
+                            <Image
                                 key={field.id}
                                 src={value}
                                 alt={field.name}
+                                width={400}
+                                height={200}
                                 className="max-h-[200px] object-contain rounded-lg shadow-lg"
                             />
                         );

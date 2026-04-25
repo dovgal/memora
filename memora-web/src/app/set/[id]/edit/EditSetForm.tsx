@@ -1,12 +1,12 @@
 "use client"
 
-import { useState, useEffect, useMemo } from "react"
+import { useState, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { useForm, useFieldArray } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { Plus, Trash2, Save, Loader2, Image as ImageIcon, Sparkles, X, ChevronLeft, FileDown, Settings2, Info, ChevronRight } from "lucide-react"
-import { SetResponse, FlashcardResponse, FieldSchema } from "@/types/schema"
+import { Plus, Trash2, Save, Loader2, Sparkles, X, ChevronLeft, FileDown, Settings2, Info, ChevronRight } from "lucide-react"
+import { SetResponse, FieldSchema } from "@/types/schema"
 import Link from "next/link"
 import SetTemplateEditor from "@/components/SetTemplateEditor"
 import DynamicFieldRenderer from "@/components/DynamicFieldRenderer"
@@ -39,7 +39,6 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
     const router = useRouter()
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [submitError, setSubmitError] = useState<string | null>(null)
-    const [isGeneratingImage, setIsGeneratingImage] = useState<Record<number, boolean>>({})
     const [imageError, setImageError] = useState<string | null>(null)
 
     const [isTemplateEditorOpen, setIsTemplateEditorOpen] = useState(false)
@@ -99,7 +98,7 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
             const payload = {
                 ...data,
                 fieldsSchema: currentSchema,
-                flashcards: processedFlashcards.map((card: any) => ({
+                flashcards: processedFlashcards.map((card: { term?: string; definition?: string; fieldsData?: Record<string, unknown>; [key: string]: unknown }) => ({
                     ...card,
                     term: card.term || "",
                     definition: card.definition || "",
@@ -124,8 +123,8 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
             // Successfully updated
             router.push(`/set/${setId}`)
             router.refresh()
-        } catch (err: any) {
-            setSubmitError(err.message)
+        } catch (err: unknown) {
+            setSubmitError(err instanceof Error ? err.message : 'Unknown error')
             setIsSubmitting(false)
         }
     }
@@ -140,7 +139,7 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
         
         return cardStrings.map(cardStr => {
             const parts = cardStr.split(effectiveTermSeparator).map(p => p.trim());
-            const cardData: any = { term: "", definition: "", imageUrl: null, fieldsData: {} };
+            const cardData: { term: string; definition: string; imageUrl: null; fieldsData: Record<string, string> } = { term: "", definition: "", imageUrl: null, fieldsData: {} };
 
             orderedTextFields.forEach((field, i) => {
                 let value = "";
@@ -172,46 +171,6 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
         setImportText("");
     };
 
-    const handleGenerateImage = async (index: number) => {
-        const currentCards = control._formValues.flashcards;
-        const term = currentCards[index]?.term;
-        const def = currentCards[index]?.definition || "";
-
-        if (!term) {
-            setImageError("Please enter a term first to generate an image.");
-            setTimeout(() => setImageError(null), 3000);
-            return;
-        }
-
-        setIsGeneratingImage(prev => ({ ...prev, [index]: true }));
-        setImageError(null);
-
-        try {
-            const prompt = `${term} - ${def}`;
-            const res = await fetch("/api/images/generate", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify({ prompt }),
-            });
-
-            if (!res.ok) {
-                const errorData = await res.json();
-                throw new Error(errorData.error || "Failed to generate image");
-            }
-
-            const data = await res.json();
-            update(index, { ...currentCards[index], imageUrl: data.url });
-
-        } catch (err: any) {
-            setImageError(err.message);
-            setTimeout(() => setImageError(null), 3000);
-        } finally {
-            setIsGeneratingImage(prev => ({ ...prev, [index]: false }));
-        }
-    };
 
     const handleImageUpload = (index: number, file: File) => {
         if (!file.type.startsWith('image/')) {

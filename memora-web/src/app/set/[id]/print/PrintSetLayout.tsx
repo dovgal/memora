@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useRef } from "react"
-import { useRouter } from "next/navigation"
+import { useState } from "react"
+import Image from "next/image"
 import { SetResponse } from "@/types/schema"
 import { ChevronLeft, Printer } from "lucide-react"
 import Link from "next/link"
@@ -9,12 +9,7 @@ import Link from "next/link"
 type LayoutType = "table" | "glossary" | "small" | "medium" | "large"
 
 export default function PrintSetLayout({ set }: { set: SetResponse }) {
-    const router = useRouter()
-    const [layout, setLayout] = useState<LayoutType>("маленький" as any) // Based on user image, starting with 'маленький' or 'table'
     const [swap, setSwap] = useState(false)
-
-    // Actually the values should be English internally, let's map them
-    const actualLayout = layout as any as LayoutType;
 
     // We'll manage state internally as English, display as Russian
     const [internalLayout, setInternalLayout] = useState<LayoutType>("small")
@@ -46,7 +41,7 @@ export default function PrintSetLayout({ set }: { set: SetResponse }) {
                     <ContentHeader />
                     <table className="w-full border-collapse">
                         <tbody>
-                            {cards.map((card, idx) => (
+                            {cards.map((card) => (
                                 <tr key={card.id} className="border-b border-zinc-200">
                                     <td className="py-3 px-4 w-1/2 align-top text-lg">
                                         {swap ? card.definition : card.term}
@@ -54,10 +49,10 @@ export default function PrintSetLayout({ set }: { set: SetResponse }) {
                                     <td className="py-3 px-4 w-1/2 align-top text-lg text-zinc-600">
                                         {swap ? card.term : card.definition}
                                         {card.imageUrl && !swap && (
-                                            <div className="mt-2"><img src={card.imageUrl} alt="Flashcard" className="max-w-[150px] max-h-[150px] object-contain rounded" /></div>
+                                            <div className="mt-2"><Image src={card.imageUrl} alt="Flashcard" width={150} height={150} className="max-w-[150px] max-h-[150px] object-contain rounded" /></div>
                                         )}
                                         {card.imageUrl && swap && (
-                                            <div className="mt-2"><img src={card.imageUrl} alt="Flashcard" className="max-w-[150px] max-h-[150px] object-contain rounded" /></div>
+                                            <div className="mt-2"><Image src={card.imageUrl} alt="Flashcard" width={150} height={150} className="max-w-[150px] max-h-[150px] object-contain rounded" /></div>
                                         )}
                                     </td>
                                 </tr>
@@ -73,7 +68,7 @@ export default function PrintSetLayout({ set }: { set: SetResponse }) {
                 <div className="text-black bg-white">
                     <ContentHeader />
                     <div className="space-y-4">
-                        {cards.map((card, idx) => (
+                        {cards.map((card) => (
                             <div key={card.id} className="flex gap-4 border-b border-zinc-100 pb-4">
                                 <div className="w-1/3 font-bold text-lg">
                                     {swap ? card.definition : card.term}
@@ -81,7 +76,7 @@ export default function PrintSetLayout({ set }: { set: SetResponse }) {
                                 <div className="w-2/3 text-lg text-zinc-700">
                                     {swap ? card.term : card.definition}
                                     {card.imageUrl && (
-                                        <div className="mt-2"><img src={card.imageUrl} alt="Flashcard" className="max-w-[150px] max-h-[150px] object-contain rounded" /></div>
+                                        <div className="mt-2"><Image src={card.imageUrl} alt="Flashcard" width={150} height={150} className="max-w-[150px] max-h-[150px] object-contain rounded" /></div>
                                     )}
                                 </div>
                             </div>
@@ -125,7 +120,7 @@ export default function PrintSetLayout({ set }: { set: SetResponse }) {
                                 </span>
                                 {card.imageUrl && (
                                     <div className="mt-4 flex justify-center shrink-0">
-                                        <img src={card.imageUrl} alt="Flashcard" className="max-h-[100px] object-contain rounded" />
+                                        <Image src={card.imageUrl} alt="Flashcard" width={100} height={100} className="max-h-[100px] object-contain rounded" />
                                     </div>
                                 )}
                             </div>

@@ -1,13 +1,12 @@
 import { notFound } from "next/navigation"
-import { SetResponse, SetProgressResponse } from "@/types/schema"
+import { SetResponse, FlashcardResponse, SetProgressResponse } from "@/types/schema"
 import PublicActionBanner from "./PublicActionBanner"
 import QChatWrapper from "./QChatWrapper"
 import HostLiveGameButton from "./HostLiveGameButton"
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/lib/auth"
 import Link from "next/link"
-import { GraduationCap, Copy, Share2, BookOpen, Layers, ChevronLeft } from "lucide-react"
-import AddToFolderModal from "./AddToFolderModal"
+import { GraduationCap, Copy, BookOpen, Layers, ChevronLeft } from "lucide-react"
 import FlashcardPlayer from "./FlashcardPlayer"
 import SetActionsBar from "./SetActionsBar"
 
@@ -62,7 +61,7 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
     const { id } = await params
 
     // Attempt to get session. Type any here guards against strict authOptions typing issues from route.ts
-    const session: any = await getServerSession(authOptions as any)
+    const session = await getServerSession(authOptions) as { id_token?: string; user?: { id?: string; email?: string; role?: string } } | null
     const token = session?.id_token
 
     // Start both fetches in parallel
@@ -106,11 +105,14 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
                             flashcards={set.flashcards}
                             fieldsSchema={set.fieldsSchema || []}
                             isOwner={
-                                session?.user?.id === set.creatorId || 
-                                session?.user?.id === (set as any).creator_id ||
-                                (session?.user as any)?.id === set.creatorId ||
-                                (session?.user as any)?.id === (set as any).creator_id ||
-                                session?.user?.email === (set as any).creator_email // Added email as ultimate fallback
+                                (() => {
+                                    const s = set as unknown as { creator_id?: string; creator_email?: string };
+                                    return (
+                                        session?.user?.id === set.creatorId ||
+                                        session?.user?.id === s.creator_id ||
+                                        session?.user?.email === s.creator_email
+                                    );
+                                })()
                             }
                             title={set.title}
                             description={set.description || ""}
@@ -156,9 +158,9 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
                                 progress.cards.forEach(c => progressMap.set(c.flashcardId, c.state));
                             }
 
-                            const mastered: any[] = []; // State 2
-                            const learning: any[] = []; // State 1 or 3
-                            const notStudied: any[] = []; // State 0 or missing
+                            const mastered: FlashcardResponse[] = []; // State 2
+                            const learning: FlashcardResponse[] = []; // State 1 or 3
+                            const notStudied: FlashcardResponse[] = []; // State 0 or missing
 
                             set.flashcards.forEach(card => {
                                 const state = progressMap.get(card.id) ?? 0;
@@ -170,7 +172,7 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
                             const schema = set.fieldsSchema || [];
 
                             // Reusable Card Renderer
-                            const renderCard = (card: any) => {
+                            const renderCard = (card: FlashcardResponse) => {
                                 const getPreviewText = (side: 'front' | 'back') => {
                                     if (!schema.length) return <p className="font-semibold text-lg break-words">{side === 'front' ? card.term : card.definition}</p>;
                                     const textFields = schema.filter(f => f.side === side && f.type === 'text').sort((a, b) => a.order - b.order);
@@ -228,7 +230,7 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
                                 );
                             };
 
-                            const renderGroup = (title: string, cards: any[], colorClass: string, subtitle?: string) => {
+                            const renderGroup = (title: string, cards: FlashcardResponse[], colorClass: string, subtitle?: string) => {
                                 if (cards.length === 0) return null;
                                 return (
                                     <div className="mb-12">

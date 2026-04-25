@@ -32,7 +32,7 @@ export default async function FolderPage({ params }: { params: Promise<{ id: str
     const { id } = await params
 
     // Attempt to get session
-    const session: any = await getServerSession(authOptions as any)
+    const session = await getServerSession(authOptions)
 
     if (!session || !session.id_token) {
         redirect("/login")

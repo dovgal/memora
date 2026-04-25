@@ -1,14 +1,15 @@
 "use client"
 
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from "next-auth/react";
 import { SetResponse, FlashcardResponse } from '@/types/schema';
-import { X, Trophy, RefreshCcw, Settings, Star, Play, RotateCcw, Keyboard } from 'lucide-react';
+import { X, Trophy, RefreshCcw, Settings, Keyboard } from 'lucide-react';
 import Link from 'next/link';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { generateLearnQueue, getCardText } from '@/lib/studyUtils';
+import Image from 'next/image';
 
 function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -67,7 +68,7 @@ const MAX_STRIKES = 3;
 export default function BlocksGameMode({ params }: { params: Promise<{ id: string }> }) {
     const { id } = React.use(params);
     const router = useRouter();
-    const { data: session } = useSession();
+    useSession();
 
     // Core External Data
     const [set, setSet] = useState<SetResponse | null>(null);
@@ -98,6 +99,24 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
     const [dragPos, setDragPos] = useState({ x: 0, y: 0 }); // Current cursor pos
     const [dragStartOffset, setDragStartOffset] = useState({ x: 0, y: 0 }); // Mouse offset within the piece
     const gridRef = useRef<HTMLDivElement>(null);
+    const [gridWidth, setGridWidth] = useState(0);
+    const [gridRect, setGridRect] = useState<{ left: number; top: number }>({ left: 0, top: 0 });
+
+    // Keep gridWidth and gridRect in sync with the actual DOM element size
+    useEffect(() => {
+        const el = gridRef.current;
+        if (!el) return;
+        const updateRect = () => {
+            const rect = el.getBoundingClientRect();
+            setGridWidth(rect.width);
+            setGridRect({ left: rect.left, top: rect.top });
+        };
+        const observer = new ResizeObserver(updateRect);
+        observer.observe(el);
+        updateRect();
+        window.addEventListener('scroll', updateRect, true);
+        return () => { observer.disconnect(); window.removeEventListener('scroll', updateRect, true); };
+    }, []);
 
     // Initial Data Fetch
     useEffect(() => {
@@ -189,8 +208,8 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
     }, []);
 
     const clearLinesAndScore = (newGrid: GridCell[][]) => {
-        let rowsToClear = new Set<number>();
-        let colsToClear = new Set<number>();
+        const rowsToClear = new Set<number>();
+        const colsToClear = new Set<number>();
 
         // Find full rows
         for (let r = 0; r < GRID_SIZE; r++) {
@@ -279,7 +298,7 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
         setDragPos({ x: e.clientX, y: e.clientY });
     };
 
-    const handlePointerUp = (e: React.PointerEvent) => {
+    const handlePointerUp = (_e: React.PointerEvent) => {
         if (!draggingPiece) return;
 
         const { piece, handIndex } = draggingPiece;
@@ -362,14 +381,13 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
 
     // Hover validation logic (for rendering shadows under the finger)
     const getHoverState = () => {
-        if (!draggingPiece || !gridRef.current) return null;
+        if (!draggingPiece || gridWidth === 0) return null;
 
-        const gridRect = gridRef.current.getBoundingClientRect();
         const dropX = dragPos.x - dragStartOffset.x;
         const dropY = dragPos.y - dragStartOffset.y;
         const relX = dropX - gridRect.left;
         const relY = dropY - gridRect.top;
-        const cellSize = gridRect.width / GRID_SIZE;
+        const cellSize = gridWidth / GRID_SIZE;
         const col = Math.round(relX / cellSize);
         const row = Math.round(relY / cellSize);
 
@@ -570,7 +588,7 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
                             <div className="bg-[#4255ff] rounded-sm"></div>
                             <div className="bg-blue-600 rounded-sm"></div>
                         </div>
-                        <h2 className="text-3xl font-bold text-qz-text mb-4">Сыграйте в "Блоки"</h2>
+                        <h2 className="text-3xl font-bold text-qz-text mb-4">Сыграйте в &quot;Блоки&quot;</h2>
                         <p className="text-qz-text-muted mb-8 leading-relaxed max-w-sm">
                             Зарабатывайте блоки, правильно отвечая на вопросы. Заполняйте сетку и зарабатывайте очки, завершая вертикальные или горизонтальные линии.
                         </p>
@@ -619,12 +637,12 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
                                 </div>
 
                                 {/* Hover Projection */}
-                                {hoverState && hoverState.isValid && gamePhase === 'PLACING' && (
+                                {hoverState && hoverState.isValid && gamePhase === 'PLACING' && gridWidth > 0 && (
                                     <div className="absolute" style={{
-                                        top: 4 + (hoverState.row * (gridRef.current!.getBoundingClientRect().width / 8)),
-                                        left: 4 + (hoverState.col * (gridRef.current!.getBoundingClientRect().width / 8)),
-                                        width: (hoverState.shape[0].length * (gridRef.current!.getBoundingClientRect().width / 8)),
-                                        height: (hoverState.shape.length * (gridRef.current!.getBoundingClientRect().width / 8)),
+                                        top: 4 + (hoverState.row * (gridWidth / 8)),
+                                        left: 4 + (hoverState.col * (gridWidth / 8)),
+                                        width: (hoverState.shape[0].length * (gridWidth / 8)),
+                                        height: (hoverState.shape.length * (gridWidth / 8)),
                                     }}>
                                         <div className="w-full h-full relative" style={{ display: 'grid', gridTemplateColumns: `repeat(${hoverState.shape[0].length}, 1fr)`, gridTemplateRows: `repeat(${hoverState.shape.length}, 1fr)`, gap: '4px' }}>
                                             {hoverState.shape.map((r, ri) => r.map((c, ci) => (
@@ -662,7 +680,7 @@ export default function BlocksGameMode({ params }: { params: Promise<{ id: strin
                             <div className="absolute inset-0 z-20 flex flex-col animate-in fade-in slide-in-from-bottom-8 duration-500 bg-qz-card/80 backdrop-blur-md pt-4">
                                 <div className="text-qz-text-muted text-sm font-semibold mb-2">
                                     {answerWith === 'term' ? 'ОПРЕДЕЛЕНИЕ' : 'ТЕРМИН'}
-                                    {activeQuestionCard?.imageUrl && <img src={activeQuestionCard.imageUrl} alt="img" className="h-16 inline-block ml-4 rounded-md" />}
+                                    {activeQuestionCard?.imageUrl && <Image src={activeQuestionCard.imageUrl} alt="img" width={64} height={64} className="h-16 inline-block ml-4 rounded-md" />}
                                 </div>
                                 <h3 className="text-3xl font-medium text-qz-text mb-10 leading-relaxed">
                                     {currentPrompt}

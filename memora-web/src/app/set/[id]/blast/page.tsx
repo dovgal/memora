@@ -31,7 +31,7 @@ type Asteroid = {
 export default function BlastModePage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = React.use(params);
     const router = useRouter();
-    const { data: session } = useSession();
+    useSession();
 
     const gameAreaRef = useRef<HTMLDivElement>(null);
     const shipRef = useRef<HTMLDivElement>(null);
@@ -69,7 +69,7 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
     const initAudio = useCallback(() => {
         if (!audioEnabled) return;
         if (!audioCtxRef.current) {
-            audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+            audioCtxRef.current = new (window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext!)();
         }
         if (audioCtxRef.current.state === 'suspended') {
             audioCtxRef.current.resume();
@@ -142,6 +142,7 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
     const lastTimeRef = useRef<number>(0);
     const timerRef = useRef<number>(0);
     const targetCooldownRef = useRef<number>(0);
+    const gameLoopRef = useRef<(timestamp: number) => void>(() => {});
 
     const targetScore = level * 50;
 
@@ -237,7 +238,7 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
         setShipAngle(angle);
     };
 
-    const handleAsteroidClick = (e: React.MouseEvent, ast: Asteroid) => {
+    const handleAsteroidClick = useCallback((e: React.MouseEvent, ast: Asteroid) => {
         e.stopPropagation();
         if (gameState !== 'playing') return;
 
@@ -271,7 +272,7 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
                 setAsteroids(prev => prev.map(a => a.id === ast.id ? { ...a, isShaking: false } : a));
             }, 500);
         }
-    };
+    }, [gameState, currentMultiplier, initAudio, playShootSound, playCorrectSound, playErrorSound, pickNewPrompt, targetCooldownRef]);
 
     const gameLoop = useCallback((timestamp: number) => {
         if (stateRef.current.gameState !== 'playing') {
@@ -299,7 +300,7 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
 
         // Move asteroids
         setAsteroids(prev => {
-            let nextAsteroids = prev.map(ast => {
+            const nextAsteroids = prev.map(ast => {
                 let nx = ast.x + (ast.vx || 0) * (deltaTime / 16);
                 let ny = ast.y + (ast.vy || ast.speed) * (deltaTime / 16);
                 let nvx = ast.vx !== undefined ? ast.vx : 0;
@@ -394,14 +395,18 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
         });
 
         if (stateRef.current.gameState === 'playing') {
-            animationFrameId.current = requestAnimationFrame(gameLoop);
+            animationFrameId.current = requestAnimationFrame(gameLoopRef.current);
         }
     }, [spawnAsteroid]);
 
     useEffect(() => {
+        gameLoopRef.current = gameLoop;
+    });
+
+    useEffect(() => {
         if (gameState === 'playing') {
             lastTimeRef.current = performance.now();
-            animationFrameId.current = requestAnimationFrame(gameLoop);
+            animationFrameId.current = requestAnimationFrame(gameLoopRef.current);
         } else if (gameState === 'time_up') {
             setTimeout(() => {
                 if (score >= targetScore) {

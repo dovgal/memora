@@ -22,9 +22,11 @@ export default function FolderHeaderActions({ folderId, currentSets: initialSets
     const [processingSetId, setProcessingSetId] = useState<string | null>(null)
 
     useEffect(() => {
-        if (isModalOpen && (session as any)?.id_token && userSets.length === 0) {
+        if (isModalOpen && session?.id_token && userSets.length === 0) {
             fetchUserSets()
         }
+        // fetchUserSets is stable within the modal open lifecycle; userSets.length guards against re-fetching
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isModalOpen, session])
 
     const fetchUserSets = async () => {
@@ -33,7 +35,7 @@ export default function FolderHeaderActions({ folderId, currentSets: initialSets
             const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000"
             const res = await fetch(`${apiUrl}/api/sets`, {
                 headers: {
-                    "Authorization": `Bearer ${(session as any)?.id_token}`
+                    "Authorization": `Bearer ${session?.id_token}`
                 }
             })
             if (res.ok) {
@@ -48,7 +50,7 @@ export default function FolderHeaderActions({ folderId, currentSets: initialSets
     }
 
     const toggleSetInFolder = async (set: SetSummaryResponse) => {
-        if (!(session as any)?.id_token || processingSetId) return;
+        if (!session?.id_token || processingSetId) return;
 
         const isAdding = !folderSetIds.has(set.id);
         const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
@@ -60,7 +62,7 @@ export default function FolderHeaderActions({ folderId, currentSets: initialSets
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${(session as any).id_token}`
+                        "Authorization": `Bearer ${session?.id_token}`
                     },
                     body: JSON.stringify({ setId: set.id })
                 });
@@ -76,7 +78,7 @@ export default function FolderHeaderActions({ folderId, currentSets: initialSets
                 const res = await fetch(`${apiUrl}/api/folders/${folderId}/sets/${set.id}`, {
                     method: "DELETE",
                     headers: {
-                        "Authorization": `Bearer ${(session as any).id_token}`
+                        "Authorization": `Bearer ${session?.id_token}`
                     }
                 });
 

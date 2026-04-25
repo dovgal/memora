@@ -3,7 +3,7 @@
 import React, { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
-import { Send, FileText, Sparkles, Loader2, Check, ArrowRight, BrainCircuit, Upload, FileUp, File, X } from "lucide-react"
+import { FileText, Sparkles, Loader2, Check, ArrowRight, BrainCircuit, FileUp, File, X } from "lucide-react"
 import { AIAnalyzeResponse } from "@/types/schema"
 import * as pdfjsLib from "pdfjs-dist"
 import mammoth from "mammoth"
@@ -102,7 +102,7 @@ export default function CreatorPage() {
                 for (let i = 1; i <= pdf.numPages; i++) {
                     const page = await pdf.getPage(i)
                     const textContent = await page.getTextContent()
-                    const pageText = textContent.items.map((item: any) => item.str).join(" ")
+                    const pageText = textContent.items.map((item) => ('str' in item ? item.str : '')).join(" ")
                     fullText += pageText + "\n"
                 }
                 extractedText = fullText
@@ -135,16 +135,14 @@ export default function CreatorPage() {
         if (!analysis) return
         setIsCreating(true)
         try {
-            console.log("[DEBUG] Session check:", { 
-                hasSession: !!session, 
-                hasToken: !!(session as any)?.id_token,
+            console.log("[DEBUG] Session check:", {
+                hasSession: !!session,
+                hasToken: !!session?.id_token,
                 status: status
             });
-            
+
             const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-            // @ts-expect-error session.id_token exists from our lib/auth config
             if (session?.id_token) {
-                // @ts-expect-error session.id_token exists from our lib/auth config
                 headers['Authorization'] = `Bearer ${session.id_token}`;
             }
 
@@ -159,7 +157,7 @@ export default function CreatorPage() {
                         { id: 'term', name: 'ТЕРМИН', type: 'text', side: 'front', order: 1, settings: { language: 'default' } },
                         { id: 'definition', name: 'ОПРЕДЕЛЕНИЕ', type: 'text', side: 'back', order: 1, settings: { language: 'default' } }
                     ],
-                    flashcards: analysis.cards.map((card: any) => ({
+                    flashcards: analysis.cards.map((card) => ({
                         term: card.term,
                         definition: card.definition,
                         fieldsData: {}

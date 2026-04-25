@@ -1,13 +1,13 @@
-import { FieldSchema } from "@/types/schema";
+import { CreateFlashcardRequest, FieldSchema } from "@/types/schema";
 
 /**
  * Processes flashcards to ensure fields with TTS enabled have the necessary markers.
  * This function is synchronous but keeps the signature for compatibility with calling sites.
  */
 export async function processFlashcardsWithTTS(
-    flashcards: any[],
+    flashcards: CreateFlashcardRequest[],
     fieldsSchema: FieldSchema[]
-): Promise<any[]> {
+): Promise<CreateFlashcardRequest[]> {
     const textFieldsWithTTS = fieldsSchema.filter(f => f.type === 'text' && f.settings?.ttsEnabled);
 
     if (textFieldsWithTTS.length === 0) {

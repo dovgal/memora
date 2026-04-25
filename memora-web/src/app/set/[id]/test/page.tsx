@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { SetResponse } from "@/types/schema"
 import { generateTest, TestQuestion, TestConfig } from "@/lib/studyUtils"
-import { X, CheckCircle, XCircle, RotateCcw, Loader2, FileText, Settings, Layers, ListTodo } from "lucide-react"
+import { X, CheckCircle, RotateCcw, Loader2, FileText, Settings, Layers, ListTodo } from "lucide-react"
 
 function MatchingQuestionView({ question, currentAnswer, onChange }: { question: TestQuestion, currentAnswer: string, onChange: (val: string) => void }) {
     const data = question.matchingData!;
@@ -52,7 +52,7 @@ function MatchingQuestionView({ question, currentAnswer, onChange }: { question:
         <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8 mt-2">
             <div className="flex flex-col gap-3">
                 <h4 className="font-bold text-zinc-500 mb-2 uppercase text-xs tracking-wider">Все термины</h4>
-                {data.pairs.map((p, i) => (
+                {data.pairs.map((p) => (
                     <button key={p.flashcardId} onClick={() => handleTermClick(p.flashcardId)} className={`p-4 rounded-xl border-2 text-left font-medium transition-all duration-200 text-lg ${getTermClass(p.flashcardId)}`}>
                         {p.term}
                     </button>
@@ -73,7 +73,7 @@ function MatchingQuestionView({ question, currentAnswer, onChange }: { question:
 export default function TestModePage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = React.use(params);
     const router = useRouter()
-    const { data: session } = useSession()
+    useSession()
 
     const [set, setSet] = useState<SetResponse | null>(null)
 
@@ -192,7 +192,7 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
                         currentScore++
                         isCorrect = true
                     }
-                } catch (e) { }
+                } catch { }
             }
 
             progressUpdates.push({
@@ -429,14 +429,12 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
                 ) : (
                     <div className="flex flex-col gap-10">
                         {testQuestions.map((question, qIndex) => {
-                            const isAnswered = userAnswers[question.flashcard.id] !== undefined;
-
                             return (
                                 <div key={question.flashcard.id} className="bg-qz-card border border-qz-border-light shadow-sm p-8 rounded-2xl">
                                     <div className="flex justify-between items-start mb-6 border-b border-qz-border-light pb-6">
                                         <h3 className="text-xl md:text-2xl font-semibold leading-relaxed">
                                             {question.type === "TRUE_FALSE" && question.tfData
-                                                ? <span className="text-qz-text">Правда или ложь, что <span className="font-bold text-[#ffcd1f] px-1">{question.flashcard.term}</span> означает <span className="font-bold text-[#ffcd1f] px-1">"{question.tfData.statement}"</span>?</span>
+                                                ? <span className="text-qz-text">Правда или ложь, что <span className="font-bold text-[#ffcd1f] px-1">{question.flashcard.term}</span> означает <span className="font-bold text-[#ffcd1f] px-1">&quot;{question.tfData.statement}&quot;</span>?</span>
                                                 : question.type === "MULTIPLE_CHOICE" && question.mcqData
                                                     ? <span className="text-qz-text">Выберите правильный вариант для: <br /><span className="font-bold text-[#ffcd1f] inline-block mt-2 whitespace-pre-wrap">{question.mcqData.prompt}</span></span>
                                                     : question.type === "WRITTEN" && question.writtenData

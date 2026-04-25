@@ -33,7 +33,7 @@ async function getUserFolders(token: string): Promise<FolderSummaryResponse[]> {
 }
 
 export default async function LibraryPage() {
-    const session: any = await getServerSession(authOptions as any);
+    const session = await getServerSession(authOptions);
 
     if (!session || !session.id_token) {
         redirect("/login");

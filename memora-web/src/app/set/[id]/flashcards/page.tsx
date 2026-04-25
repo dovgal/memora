@@ -10,7 +10,7 @@ import FlashcardPlayer from "../FlashcardPlayer"
 export default function FlashcardsStudyPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = React.use(params);
     const router = useRouter()
-    const { data: session } = useSession()
+    useSession()
     const [set, setSet] = useState<SetResponse | null>(null)
 
     const [isLoading, setIsLoading] = useState(true)

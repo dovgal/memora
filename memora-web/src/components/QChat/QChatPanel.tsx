@@ -190,7 +190,7 @@ const QChatPanelInner = forwardRef<QChatPanelHandle, QChatPanelProps>(
                             </button>
                         </div>
                         <p className="text-[10px] text-zinc-600 mt-2 text-center">
-                            Q-Chat only knows this set's material
+                            Q-Chat only knows this set&apos;s material
                         </p>
                     </form>
                 </div>

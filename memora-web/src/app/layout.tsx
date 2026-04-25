@@ -37,7 +37,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await getServerSession(authOptions);
-  const token = (session as any)?.id_token || "";
+  const token = (session as { id_token?: string } | null)?.id_token || "";
 
   return (
     <html lang="en" suppressHydrationWarning>

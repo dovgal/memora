@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import { X, Copy, Mail, Check, Link as LinkIcon, ExternalLink } from "lucide-react"
+import { X, Copy, Mail, Check, ExternalLink } from "lucide-react"
 
 interface ShareModalProps {
     setId: string;

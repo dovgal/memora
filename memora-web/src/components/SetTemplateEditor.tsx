@@ -88,7 +88,7 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
 
     const handleAddField = (side: FieldSide) => {
         const newField: FieldSchema = {
-            id: `field_${Date.now()}`,
+            id: `field_${crypto.randomUUID()}`,
             name: 'НОВОЕ ПОЛЕ',
             type: 'text',
             side: side,
@@ -103,7 +103,7 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
         e.stopPropagation();
         const updatedFields = fields.filter(f => f.id !== id);
         // Re-calculate order
-        updatedFields.forEach((f, idx) => {
+        updatedFields.forEach((f) => {
             if (f.side === 'front') f.order = updatedFields.filter(f2 => f2.side === 'front').indexOf(f) + 1;
             if (f.side === 'back') f.order = updatedFields.filter(f2 => f2.side === 'back').indexOf(f) + 1;
         });

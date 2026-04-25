@@ -190,7 +190,7 @@ export function generateTest(allCards: FlashcardResponse[], config: TestConfig):
     }
 
     const testQuestions: TestQuestion[] = [];
-    let processingCards = [...selectedCards];
+    const processingCards = [...selectedCards];
 
     const availableTypes: QuestionType[] = [];
     if (config.allowedTypes.multipleChoice) availableTypes.push("MULTIPLE_CHOICE");

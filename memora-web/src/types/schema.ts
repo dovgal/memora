@@ -10,7 +10,7 @@ export interface FieldSettings {
 	language?: string;
 	ttsEnabled?: boolean;
 	ttsVoice?: string;
-	[key: string]: any;
+	[key: string]: string | boolean | undefined;
 }
 
 export interface FieldSchema {
@@ -22,7 +22,7 @@ export interface FieldSchema {
 	settings: FieldSettings;
 }
 
-export type FieldData = Record<string, any>;
+export type FieldData = Record<string, string | boolean | null | undefined>;
 
 export interface AddSetToFolderRequest {
 	setId: string;

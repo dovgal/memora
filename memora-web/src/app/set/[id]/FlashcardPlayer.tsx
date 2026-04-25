@@ -59,7 +59,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
             const res = await fetch(`/api/sets/${setId}/fsrs/due`);
             const data = await res.json();
             let newCards = data && Array.isArray(data) ? data : [];
-            if (studyStarredOnly) newCards = newCards.filter((c: any) => starredIds.has(c.id));
+            if (studyStarredOnly) newCards = newCards.filter((c: { id: string }) => starredIds.has(c.id));
             if (isShuffled) newCards = [...newCards].sort(() => Math.random() - 0.5);
             setActiveCards(newCards);
             setCurrentIndex(0);
@@ -77,7 +77,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
         if (setId && typeof window !== 'undefined') {
             const saved = localStorage.getItem(`starred_${setId}`);
             if (saved) {
-                try { setStarredIds(new Set(JSON.parse(saved))); } catch (e) { }
+                try { setStarredIds(new Set(JSON.parse(saved))); } catch { }
             }
         }
     }, [setId]);
@@ -132,7 +132,8 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
             });
 
         return () => { isMounted = false; };
-        // deliberately excluding starredIds from deps to avoid re-shuffling on every star click
+    // deliberately excluding starredIds to avoid re-shuffling on every star click
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [trackProgress, flashcards, setId, studyStarredOnly, isShuffled]);
 
     const handleRateFSRS = useCallback(async (rating: number) => {
@@ -207,7 +208,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
         };
 
         playNext();
-    }, [currentIndex, isFlipped, activeCards, fieldsSchema, visibleSide]);
+    }, [currentIndex, activeCards, fieldsSchema, visibleSide]);
 
     // Auto-play TTS on card flip/change
     useEffect(() => {
@@ -393,7 +394,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                                         <div className="relative">
                                             <select
                                                 value={frontSide}
-                                                onChange={(e) => setFrontSide(e.target.value as any)}
+                                                onChange={(e) => setFrontSide(e.target.value as 'term' | 'definition')}
                                                 className="bg-qz-bg hover:bg-qz-card transition-colors appearance-none text-sm font-semibold rounded-full px-5 py-2.5 pr-10 outline-none text-qz-text cursor-pointer"
                                             >
                                                 <option value="term">Термин</option>

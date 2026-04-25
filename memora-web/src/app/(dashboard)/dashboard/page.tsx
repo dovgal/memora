@@ -1,10 +1,9 @@
 "use client"
 
-import { useSession, signOut } from "next-auth/react"
+import { signOut } from "next-auth/react"
 import { AlertCircle } from "lucide-react"
 
 export default function DashboardFallback() {
-    const { data: session } = useSession()
 
     return (
         <div className="flex h-screen w-full flex-col items-center justify-center bg-qz-bg p-4">

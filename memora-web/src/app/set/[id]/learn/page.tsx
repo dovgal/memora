@@ -4,10 +4,11 @@ import React, { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
-import { SetResponse, FlashcardProgressRequest, FieldSchema, AIExercise, AIGradeResponse } from "@/types/schema"
+import { SetResponse, FlashcardResponse, FlashcardProgressRequest, FieldSchema, AIExercise, AIGradeResponse } from "@/types/schema"
 import { generateLearnQueue, createMultipleChoiceQuestion, TestQuestion, getCardText, getCardSingleField } from "@/lib/studyUtils"
-import { X, CheckCircle, XCircle, RotateCcw, Loader2, ChevronRight, GraduationCap, Settings, Edit2, Volume2, Shuffle, Star, ChevronDown, ChevronUp, Mic, Play } from "lucide-react"
+import { X, CheckCircle, XCircle, Loader2, ChevronRight, GraduationCap, Settings, Edit2, Volume2, Shuffle, Star, ChevronDown, ChevronUp, Mic } from "lucide-react"
 import { QChatProvider, WhyWrongButton } from "@/components/QChat"
+import Image from "next/image"
 
 export default function LearnModePage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = React.use(params);
@@ -34,7 +35,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
     const [isAiPro, setIsAiPro] = useState(true)
     const [aiExercises, setAiExercises] = useState<AIExercise[]>([])
     const [aiFeedback, setAiFeedback] = useState<AIGradeResponse | null>(null)
-    const [isGrading, setIsGrading] = useState(false)
+    const [, setIsGrading] = useState(false)
     const [isRecording, setIsRecording] = useState(false)
 
     // Settings State
@@ -88,12 +89,14 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
         if (ttsEnabled && queue[currentIndex] && !showResult) {
             playQuestionAudio(queue[currentIndex]);
         }
+    // playQuestionAudio is defined inline without useCallback; adding it would cause infinite re-runs
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentIndex, ttsEnabled, queue, showResult]);
 
     // Track latest progress ref for async submitProgress call
     const progressRef = useRef<FlashcardProgressRequest[]>([])
 
-    const regenerateQueue = (currentCards: any[], qTypes: any, aWith: any, allCards: any[], schema?: FieldSchema[]): TestQuestion[] => {
+    const regenerateQueue = (currentCards: FlashcardResponse[], qTypes: { mcq: boolean; written: boolean; flashcards: boolean }, aWith: { term: boolean; definition: boolean }, allCards: FlashcardResponse[], schema?: FieldSchema[]): TestQuestion[] => {
         return currentCards.map(c => {
             let aType: 'term' | 'definition' = 'definition';
             if (aWith.term && !aWith.definition) aType = 'term';
@@ -140,7 +143,6 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                 // However, our proxy expects Authorization header since it reads it, OR it reads getServerSession.
                 // Our Next.js API route reads getServerSession, so we don't strictly need to attach headers,
                 // but doing so prevents errors if Next.js drops session.
-                const headers: Record<string, string> = {};
                 // if (activeSession?.id_token) headers["Authorization"] = `Bearer ${activeSession.id_token}`;
                 const resSet = await Promise.all([
                     fetch(`/api/sets/${id}`),
@@ -216,7 +218,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
         }
 
         fetchSetAndProgress()
-    }, [id, session, router])
+    }, [id, session, router, isAiPro])
 
     const handleAnswer = async (answer: number | string) => {
         if (showResult || !set) return
@@ -309,7 +311,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
         }
         
         setIsRecording(true);
-        // @ts-ignore
+        // @ts-expect-error webkitSpeechRecognition is non-standard
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         const recognition = new SpeechRecognition();
         
@@ -317,7 +319,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
         recognition.interimResults = false;
         recognition.maxAlternatives = 1;
         
-        recognition.onresult = (event: any) => {
+        recognition.onresult = (event: SpeechRecognitionEvent) => {
             const transcript = event.results[0][0].transcript;
             setWrittenInput(transcript);
             handleAnswer(transcript);
@@ -777,7 +779,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                 </div>
                                 {currentQuestion.flashcard.imageUrl && (
                                     <div className="w-full flex justify-center mt-2 mb-4">
-                                        <img src={currentQuestion.flashcard.imageUrl} alt="Flashcard image" className="max-h-[200px] object-contain rounded-lg shadow-md" />
+                                        <Image src={currentQuestion.flashcard.imageUrl} alt="Flashcard image" width={400} height={200} className="max-h-[200px] object-contain rounded-lg shadow-md" />
                                     </div>
                                 )}
                                 <p className={`text-2xl md:text-3xl font-medium leading-relaxed text-qz-text text-center ${currentQuestion.flashcard.imageUrl ? '' : 'mt-4'}`}>

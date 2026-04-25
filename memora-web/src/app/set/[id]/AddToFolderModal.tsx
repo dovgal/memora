@@ -20,6 +20,8 @@ export default function AddToFolderModal({ setId, token }: AddToFolderModalProps
         if (isOpen && folders.length === 0) {
             fetchFolders()
         }
+    // fetchFolders is defined inline without useCallback; adding it would cause infinite refetches
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen])
 
     const fetchFolders = async () => {
@@ -91,7 +93,7 @@ export default function AddToFolderModal({ setId, token }: AddToFolderModalProps
                         ) : folders.length === 0 ? (
                             <div className="text-center py-8 text-qz-text-muted">
                                 <Folder className="w-12 h-12 text-zinc-600 mx-auto mb-3" />
-                                <p>You don't have any folders yet.</p>
+                                <p>You don&apos;t have any folders yet.</p>
                                 <p className="text-sm mt-2 text-zinc-500">Go to your Library to create one.</p>
                             </div>
                         ) : (

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Sparkles, UploadCloud, Layers } from 'lucide-react';
+import { Sparkles, Layers } from 'lucide-react';
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { SetSummaryResponse } from "@/types/schema";
@@ -19,7 +19,7 @@ async function getUserSets(token: string): Promise<SetSummaryResponse[]> {
 }
 
 export default async function StudentDashboard() {
-    const session: any = await getServerSession(authOptions as any);
+    const session = await getServerSession(authOptions);
     let sets: SetSummaryResponse[] = [];
 
     if (session?.id_token) {
@@ -47,7 +47,7 @@ export default async function StudentDashboard() {
                                 <Layers className="w-10 h-10 text-[#ffcd1f]" />
                             </div>
                             <h3 className="text-2xl font-bold mb-2">Welcome to Memora</h3>
-                            <p className="text-[#8e95ae] mb-6 max-w-sm mx-auto">You don't have any study sets yet. Open your Library or Sidebar to create one.</p>
+                            <p className="text-[#8e95ae] mb-6 max-w-sm mx-auto">You don&apos;t have any study sets yet. Open your Library or Sidebar to create one.</p>
                         </div>
                     ) : (
                         <div className="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide">
@@ -60,8 +60,8 @@ export default async function StudentDashboard() {
                                 ];
                                 const bgGradient = gradients[idx % gradients.length];
 
-                                // Mock progress for UI feeling
-                                const mockProgress = Math.floor(Math.random() * 40) + 10;
+                                // Mock progress for UI feeling — deterministic per index to avoid re-render instability
+                                const mockProgress = (idx * 13 + 17) % 40 + 10;
 
                                 return (
                                     <div key={set.id} className="min-w-[400px] w-[500px] snap-start relative group rounded-[2rem] bg-qz-card overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_20px_40px_-15px_rgba(79,70,229,0.2)] border border-[#262c40] hover:border-indigo-500/50 flex flex-col cursor-pointer">

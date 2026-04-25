@@ -110,7 +110,7 @@ export default function StudentLobbyPage({ params }: StudentLobbyPageProps) {
                                 }
                             </div>
                             <div className="text-center">
-                                <p className="text-2xl font-semibold text-qz-text">You're in!</p>
+                                <p className="text-2xl font-semibold text-qz-text">You&apos;re in!</p>
                                 <p className="text-zinc-500 text-sm mt-1">Waiting for the teacher to start…</p>
                             </div>
                         </div>
@@ -140,7 +140,7 @@ export default function StudentLobbyPage({ params }: StudentLobbyPageProps) {
                     <div className={`flex flex-col items-center gap-6 animate-in zoom-in fade-in duration-700 ${isRevealing ? 'opacity-0 scale-90' : 'opacity-100 scale-100'} transition-all`}>
                         <div className="flex flex-col items-center gap-2">
                             <Sparkles className="w-6 h-6 text-yellow-400 animate-spin" />
-                            <p className="text-qz-text-muted text-sm uppercase tracking-widest font-bold">You're on team</p>
+                            <p className="text-qz-text-muted text-sm uppercase tracking-widest font-bold">You&apos;re on team</p>
                         </div>
 
                         <div className={`w-48 h-48 rounded-3xl ${teamStyle!.bg} ${teamStyle!.border} border-4 shadow-2xl ${teamStyle!.glow} flex flex-col items-center justify-center gap-3 transition-all`}>

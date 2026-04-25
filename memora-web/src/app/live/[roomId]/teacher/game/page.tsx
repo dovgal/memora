@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef, useCallback } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { Trophy, ChevronRight, Clock, Users } from 'lucide-react';
 
@@ -32,7 +32,6 @@ const TEAM_COLOURS: Record<string, string> = {
 };
 
 export default function TeacherGamePage({ params }: TeacherGamePageProps) {
-    const searchParams = useSearchParams();
     const router = useRouter();
     const { data: session } = useSession();
 
@@ -40,7 +39,6 @@ export default function TeacherGamePage({ params }: TeacherGamePageProps) {
     const [question, setQuestion] = useState<Question | null>(null);
     const [scores, setScores] = useState<TeamScore[]>([]);
     const [answer, setAnswer] = useState<string | null>(null); // revealed correct answer
-    const [isFinished, setIsFinished] = useState(false);
     const wsRef = useRef<WebSocket | null>(null);
 
     useEffect(() => { params.then(p => setRoomId(p.roomId)); }, [params]);
@@ -62,7 +60,6 @@ export default function TeacherGamePage({ params }: TeacherGamePageProps) {
                     setAnswer(null); // clear for next question
                 }
                 if (msg.type === 'game_over') {
-                    setIsFinished(true);
                     router.push(`/live/${roomId}/results`);
                 }
             } catch { /* ignore */ }

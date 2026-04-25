@@ -101,8 +101,8 @@ export function useChatStream({ setId, idToken }: UseChatStreamOptions): UseChat
                     throw err; // stop retrying on fatal errors
                 },
             });
-        } catch (err: any) {
-            if (err?.name !== 'AbortError') {
+        } catch (err: unknown) {
+            if (!(err instanceof Error && err.name === 'AbortError')) {
                 console.error('QChat fetch error:', err);
             }
         } finally {

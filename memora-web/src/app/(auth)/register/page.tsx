@@ -3,7 +3,6 @@
 import { signIn } from "next-auth/react"
 import { Play } from "lucide-react"
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 import Link from "next/link"
 
 export default function RegisterPage() {
@@ -12,7 +11,6 @@ export default function RegisterPage() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -46,15 +44,15 @@ export default function RegisterPage() {
             }
 
             // Successfully registered, now sign in via NextAuth
-            const signInRes = await signIn("credentials", {
+            await signIn("credentials", {
                 email,
                 password,
                 redirect: true,
                 callbackUrl: "/onboarding",
             });
             // With redirect: true, signIn will navigate out if successful.
-        } catch (err: any) {
-            setError(err.message || "Something went wrong during registration");
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : "Something went wrong during registration");
         } finally {
             setLoading(false);
         }

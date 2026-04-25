@@ -9,7 +9,7 @@ export default function GroupsPage() {
             </div>
             <h1 className="text-4xl font-bold mb-4">Study Groups</h1>
             <p className="text-xl text-qz-text-muted max-w-lg mb-8">
-                This feature is currently under development. Soon, you'll be able to create study groups, share flashcard sets, and study collaboratively with your classmates.
+                This feature is currently under development. Soon, you&apos;ll be able to create study groups, share flashcard sets, and study collaboratively with your classmates.
             </p>
             <div className="inline-block bg-qz-bg border border-qz-border-light text-qz-text-muted px-6 py-3 rounded-full font-medium">
                 Coming Soon 👋

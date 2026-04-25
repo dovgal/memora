@@ -41,8 +41,8 @@ export default function HostLiveGameButton({ setId }: HostLiveGameButtonProps) {
 
             const data = await res.json();
             router.push(`/live/${data.roomId}/teacher?joinCode=${data.joinCode}&setId=${setId}`);
-        } catch (e: any) {
-            setError(e.message || 'Failed to start game');
+        } catch (e: unknown) {
+            setError(e instanceof Error ? e.message : 'Failed to start game');
             setIsCreating(false);
         }
     };

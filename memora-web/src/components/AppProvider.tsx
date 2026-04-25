@@ -13,7 +13,7 @@ export default function AppProvider({
         // that cause 'bad-precaching-response' 404 errors after deployments.
         if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
             navigator.serviceWorker.getRegistrations().then(registrations => {
-                for (let registration of registrations) {
+                for (const registration of registrations) {
                     registration.unregister();
                 }
             });

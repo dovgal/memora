@@ -312,12 +312,12 @@ function ExportModal({ flashcards, fieldsSchema, onClose }: { flashcards: Flashc
     const [customTermDelimiter, setCustomTermDelimiter] = useState("-");
     const [rowDelimiter, setRowDelimiter] = useState<"newline" | "semicolon" | "custom">("newline");
     const [customRowDelimiter, setCustomRowDelimiter] = useState("\\n\\n");
-    const [alphabetical, setAlphabetical] = useState(false);
+    const [alphabetical] = useState(false);
     const [copied, setCopied] = useState(false);
 
     // Generate output string
     const generateOutput = () => {
-        let cards = [...flashcards];
+        const cards = [...flashcards];
         if (alphabetical) {
             cards.sort((a, b) => a.term.localeCompare(b.term));
         }
@@ -577,7 +577,7 @@ function MergeModal({
     onClose: () => void
 }) {
     const router = useRouter();
-    const [sets, setSets] = useState<any[]>([]);
+    const [sets, setSets] = useState<{ id: string; title: string }[]>([]);
     const [loading, setLoading] = useState(true);
     const [merging, setMerging] = useState(false);
     const [selectedSetId, setSelectedSetId] = useState<string | null>(null);
@@ -594,7 +594,7 @@ function MergeModal({
                 if (res.ok) {
                     const data = await res.json();
                     // Filter out the current set
-                    setSets(data.filter((s: any) => s.id !== currentSetId));
+                    setSets(data.filter((s: { id: string }) => s.id !== currentSetId));
                 }
             } catch (error) {
                 console.error("Error fetching sets for merge", error);
@@ -622,7 +622,7 @@ function MergeModal({
             // Combine flashcards
             const combinedFlashcards = [
                 ...currentSetFlashcards.map(c => ({ term: c.term, definition: c.definition, imageUrl: c.imageUrl || null })),
-                ...targetSet.flashcards.map((c: any) => ({ term: c.term, definition: c.definition, imageUrl: c.imageUrl || null }))
+                ...targetSet.flashcards.map((c: { term: string; definition: string; imageUrl?: string | null }) => ({ term: c.term, definition: c.definition, imageUrl: c.imageUrl || null }))
             ];
 
             const payload = {
