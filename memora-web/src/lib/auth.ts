@@ -19,8 +19,6 @@ export const authOptions: NextAuthOptions = {
                 if (!credentials?.email || !credentials?.password) return null;
 
                 try {
-                    console.log("Attempting to login with:", credentials.email);
-
                     const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
                     const res = await fetch(`${backendUrl}/api/auth/login`, {
                         method: 'POST',
@@ -32,10 +30,8 @@ export const authOptions: NextAuthOptions = {
                         cache: 'no-store'
                     });
 
-                    console.log("Backend login response status:", res.status);
                     if (res.ok) {
                         const user = await res.json();
-                        console.log("Backend login success:", user.email);
                         // Important: DTO has lowercase 'email' and 'id' and 'role'
                         return {
                             id: user.id,
@@ -121,11 +117,9 @@ export const authOptions: NextAuthOptions = {
                     { algorithm: 'HS256', expiresIn: '30d' }
                 );
 
-                console.log("[Auth] Signed JWT for Backend successfully. sub:", userId);
                 // @ts-expect-error adding id_token to session
                 session.id_token = rawToken;
             } else {
-                console.warn("[Auth] Session Callback: ID missing in token", token);
             }
             return session
         }
@@ -134,5 +128,5 @@ export const authOptions: NextAuthOptions = {
     session: {
         strategy: "jwt",
     },
-    debug: true,
+    debug: process.env.NODE_ENV === "development",
 }
