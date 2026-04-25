@@ -625,7 +625,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                                     ) : (
                                         <textarea
                                             className="w-full bg-qz-bg border-b-2 border-white/20 focus:border-[#a8b1ff] text-qz-text p-3 outline-none transition-colors resize-none min-h-[70px] rounded-t-md"
-                                            defaultValue={editingCard?.fieldsData?.[field.id] || ''}
+                                            defaultValue={typeof editingCard?.fieldsData?.[field.id] === 'string' ? editingCard.fieldsData[field.id] as string : ''}
                                             onChange={(e) => {
                                                 if (editingCard) {
                                                     if (!editingCard.fieldsData) editingCard.fieldsData = {};

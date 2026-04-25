@@ -18,7 +18,6 @@ export default function HostLiveGameButton({ setId }: HostLiveGameButtonProps) {
     const [error, setError] = useState<string | null>(null);
 
     const handleHost = async () => {
-        // @ts-expect-error id_token injected by custom authOptions
         if (!session?.id_token) return;
 
         setIsCreating(true);
@@ -29,7 +28,6 @@ export default function HostLiveGameButton({ setId }: HostLiveGameButtonProps) {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // @ts-expect-error id_token injected by custom authOptions
                     'Authorization': `Bearer ${session.id_token}`,
                 },
                 body: JSON.stringify({ set_id: setId }),

@@ -93,17 +93,19 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
         setSubmitError(null)
 
         try {
-            const processedFlashcards = await processFlashcardsWithTTS(data.flashcards, currentSchema);
+            const cardIds = data.flashcards.map((card) => card.id);
+            const normalizedFlashcards = data.flashcards.map((card) => ({
+                term: card.term || "",
+                definition: card.definition || "",
+                imageUrl: card.imageUrl ?? undefined,
+                fieldsData: card.fieldsData || {}
+            }));
+            const processedFlashcards = await processFlashcardsWithTTS(normalizedFlashcards, currentSchema);
 
             const payload = {
                 ...data,
                 fieldsSchema: currentSchema,
-                flashcards: processedFlashcards.map((card: { term?: string; definition?: string; fieldsData?: Record<string, unknown>; [key: string]: unknown }) => ({
-                    ...card,
-                    term: card.term || "",
-                    definition: card.definition || "",
-                    fieldsData: card.fieldsData || {}
-                }))
+                flashcards: processedFlashcards.map((card, i) => ({ id: cardIds[i], ...card }))
             };
 
             const res = await fetch(`/api/sets/${setId}`, {
@@ -566,8 +568,15 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
                         const hasTTS = newFields.some(f => f.type === 'text' && f.settings?.ttsEnabled);
                         if (hasTTS) {
                             const currentCards = getValues('flashcards');
-                            const processed = await processFlashcardsWithTTS(currentCards, newFields);
-                            replace(processed);
+                            const ids = currentCards.map((c) => c.id);
+                            const normalized = currentCards.map((card) => ({
+                                term: card.term || "",
+                                definition: card.definition || "",
+                                imageUrl: card.imageUrl ?? undefined,
+                                fieldsData: card.fieldsData || {}
+                            }));
+                            const processed = await processFlashcardsWithTTS(normalized, newFields);
+                            replace(processed.map((card, i) => ({ id: ids[i], ...card })));
                         }
                     }}
                     onClose={() => setIsTemplateEditorOpen(false)}

@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import LogoutButton from "@/components/LogoutButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { FolderSummaryResponse } from "@/types/schema";
 
@@ -35,14 +35,11 @@ export default async function DashboardLayout({
     children: React.ReactNode;
 }) {
     const session = await getServerSession(authOptions);
-    // @ts-expect-error extension
     const role = session?.user?.role || "student";
     const initial = session?.user?.email ? session.user.email[0].toUpperCase() : "U";
 
     let folders: FolderSummaryResponse[] = [];
-    // @ts-expect-error extension
     if (session && session.id_token) {
-        // @ts-expect-error extension
         folders = await getUserFolders(session.id_token);
     }
 

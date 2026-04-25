@@ -11,7 +11,7 @@ export function getCardText(card: FlashcardResponse, side: 'front' | 'back', sch
         let value = "";
         if (field.id === 'term') value = card.term;
         else if (field.id === 'definition') value = card.definition;
-        else value = card.fieldsData?.[field.id] || "";
+        else { const v = card.fieldsData?.[field.id]; value = typeof v === 'string' ? v : ""; }
 
         if (!value) return null;
         if (textFields.length === 1 || !includeLabels) return value;
@@ -65,7 +65,7 @@ export function getCardSingleField(
     let value = '';
     if (field.id === 'term') value = card.term;
     else if (field.id === 'definition') value = card.definition;
-    else value = card.fieldsData?.[field.id] ?? '';
+    else { const v = card.fieldsData?.[field.id]; value = typeof v === 'string' ? v : ''; }
 
     return { name: field.name, value, isMultiField: textFields.length > 1 };
 }

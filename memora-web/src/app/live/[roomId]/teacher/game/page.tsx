@@ -45,7 +45,6 @@ export default function TeacherGamePage({ params }: TeacherGamePageProps) {
 
     const connectWs = useCallback(() => {
         if (!roomId) return;
-        // @ts-expect-error id_token injected by custom authOptions
         const token = session?.id_token ?? 'anonymous';
         const ws = new WebSocket(`${WS_URL}/api/live/ws?room_id=${roomId}&token=${token}`);
         wsRef.current = ws;

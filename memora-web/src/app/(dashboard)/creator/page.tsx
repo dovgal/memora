@@ -31,9 +31,7 @@ export default function CreatorPage() {
 
         try {
             const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-            // @ts-expect-error session.id_token exists from our lib/auth config
             if (session?.id_token) {
-                // @ts-expect-error session.id_token exists from our lib/auth config
                 headers['Authorization'] = `Bearer ${session.id_token}`;
             }
 

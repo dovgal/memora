@@ -2,7 +2,7 @@
 
 import { FlashcardResponse, FieldSchema } from "@/types/schema";
 import { Play, Square, FileAudio, Volume2 } from "lucide-react";
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 
 interface FlashcardRenderProps {
@@ -11,7 +11,7 @@ interface FlashcardRenderProps {
     side: 'front' | 'back';
 }
 
-function AudioPlayer({ src, label, icon: Icon }: { src: string, label: string, icon: (props: { className?: string; size?: number }) => JSX.Element }) {
+function AudioPlayer({ src, label, icon: Icon }: { src: string, label: string, icon: React.ComponentType<{ className?: string; size?: number }> }) {
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -78,7 +78,7 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
                 if (field.id === 'term') value = card.term;
                 else if (field.id === 'definition') value = card.definition;
                 else if (field.id === 'image') value = card.imageUrl;
-                else value = card.fieldsData?.[field.id];
+                else { const v = card.fieldsData?.[field.id]; value = typeof v === 'string' ? v : null; }
 
                 if (!value) return null;
 

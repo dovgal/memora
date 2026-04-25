@@ -577,7 +577,7 @@ function MergeModal({
     onClose: () => void
 }) {
     const router = useRouter();
-    const [sets, setSets] = useState<{ id: string; title: string }[]>([]);
+    const [sets, setSets] = useState<{ id: string; title: string; flashcardCount?: number }[]>([]);
     const [loading, setLoading] = useState(true);
     const [merging, setMerging] = useState(false);
     const [selectedSetId, setSelectedSetId] = useState<string | null>(null);

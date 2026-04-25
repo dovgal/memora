@@ -30,7 +30,7 @@ export async function processFlashcardsWithTTS(
             let textToRead = "";
             if (field.id === 'term') textToRead = newCard.term;
             else if (field.id === 'definition') textToRead = newCard.definition;
-            else textToRead = newCard.fieldsData[field.id] || "";
+            else { const v = newCard.fieldsData[field.id]; textToRead = typeof v === 'string' ? v : ""; }
 
             textToRead = (textToRead || "").trim();
 

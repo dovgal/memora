@@ -184,7 +184,7 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
                                                 let val = "";
                                                 if (field.id === 'term') val = card.term;
                                                 else if (field.id === 'definition') val = card.definition;
-                                                else val = card.fieldsData?.[field.id] || "";
+                                                else { const v = card.fieldsData?.[field.id]; val = typeof v === 'string' ? v : ""; }
                                                 if (!val) return null;
 
                                                 return (

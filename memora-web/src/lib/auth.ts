@@ -1,4 +1,4 @@
-import { NextAuthOptions } from "next-auth"
+import type { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import GoogleProvider from "next-auth/providers/google"
 import * as jsonwebtoken from "jsonwebtoken"
@@ -60,8 +60,7 @@ export const authOptions: NextAuthOptions = {
         async jwt({ token, user, account, trigger, session }) {
             if (user) {
                 token.id = user.id;
-                // @ts-expect-error role is on our custom user
-                token.role = user.role || "student";
+                token.role = (user as { role?: string }).role || "student";
                 token.email = user.email;
             }
 
@@ -105,11 +104,9 @@ export const authOptions: NextAuthOptions = {
             const userId = token.id || token.sub;
             
             if (session?.user && userId) {
-                // @ts-expect-error extending next-auth types
                 session.user.id = userId;
-                // @ts-expect-error extending next-auth types
-                session.user.role = token.role;
-                
+                session.user.role = token.role as string;
+
                 // Create a raw JWT string for the Rust backend.
                 const rawToken = jsonwebtoken.sign(
                     { sub: String(userId), email: token.email, role: token.role },
@@ -117,9 +114,7 @@ export const authOptions: NextAuthOptions = {
                     { algorithm: 'HS256', expiresIn: '30d' }
                 );
 
-                // @ts-expect-error adding id_token to session
                 session.id_token = rawToken;
-            } else {
             }
             return session
         }

@@ -1,18 +1,20 @@
 "use client";
 
-import { UseFormRegister, FieldErrors } from "react-hook-form";
 import { FieldSchema } from "@/types/schema";
 import { Calculator, Image as ImageIcon, Trash2 } from "lucide-react";
 import AudioInput from "./AudioInput";
 import NextImage from "next/image";
 
-type AnyFieldValues = Record<string, unknown>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AnyFieldValues = Record<string, any>;
 
 interface Props {
     field: FieldSchema;
     index: number;
-    register: UseFormRegister<AnyFieldValues>;
-    errors: FieldErrors<AnyFieldValues>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    register: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    errors: any;
     update?: (index: number, obj: AnyFieldValues) => void;
     getValues: (path?: string) => unknown;
 }
@@ -49,7 +51,7 @@ export default function DynamicFieldRenderer({ field, index, register, errors: _
                                 <NextImage src={currentImg as string} alt="Field image" width={400} height={300} className="w-full h-full object-cover" />
                                 <button
                                     type="button"
-                                    onClick={() => update && update(index, { ...getValues(`flashcards.${index}`), [isLegacyImg ? 'imageUrl' : `fieldsData.${field.id}`]: null })}
+                                    onClick={() => update && update(index, { ...(getValues(`flashcards.${index}`) as AnyFieldValues), [isLegacyImg ? 'imageUrl' : `fieldsData.${field.id}`]: null })}
                                     className="absolute top-2 right-2 bg-qz-bg/70 p-1.5 rounded-md text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500"
                                 >
                                     <Trash2 size={14} />
@@ -64,23 +66,24 @@ export default function DynamicFieldRenderer({ field, index, register, errors: _
                         )}
                     </div>
                 );
-            case 'audio':
-                const audioValue = getValues(formPath);
-                const resolvedAudioValue = audioValue === "__AUDIO_ON_SERVER__" 
-                    ? `/api/audio/${getValues(`flashcards.${index}.id`)}/${field.id}`
+            case 'audio': {
+                const audioValue = getValues(formPath) as string | null | undefined;
+                const resolvedAudioValue = audioValue === "__AUDIO_ON_SERVER__"
+                    ? `/api/audio/${getValues(`flashcards.${index}.id`) as string}/${field.id}`
                     : audioValue;
 
                 return (
                     <AudioInput
-                        value={resolvedAudioValue}
+                        value={resolvedAudioValue ?? null}
                         onChange={(val) => {
                             if (update) {
-                                const currentCard = getValues(`flashcards.${index}`);
-                                update(index, { ...currentCard, fieldsData: { ...(currentCard.fieldsData || {}), [field.id]: val } });
+                                const currentCard = getValues(`flashcards.${index}`) as AnyFieldValues;
+                                update(index, { ...currentCard, fieldsData: { ...(currentCard.fieldsData as AnyFieldValues || {}), [field.id]: val } });
                             }
                         }}
                     />
                 );
+            }
 
 
             case 'math':

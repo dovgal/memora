@@ -31,7 +31,6 @@ const TypingIndicator = () => (
 const QChatPanelInner = forwardRef<QChatPanelHandle, QChatPanelProps>(
     function QChatPanel({ setId }, ref) {
         const { data: session } = useSession();
-        // @ts-expect-error id_token injected by custom authOptions
         const idToken: string = session?.id_token ?? '';
 
         const { messages, isStreaming, sendMessage, clearHistory } = useChatStream({ setId, idToken });

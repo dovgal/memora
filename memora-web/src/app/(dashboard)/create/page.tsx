@@ -106,17 +106,18 @@ export default function CreateSetPage() {
         setSubmitError(null)
 
         try {
-            const processedFlashcards = await processFlashcardsWithTTS(data.flashcards, currentSchema);
+            const normalizedFlashcards = data.flashcards.map((card) => ({
+                term: card.term || "",
+                definition: card.definition || "",
+                imageUrl: card.imageUrl ?? undefined,
+                fieldsData: card.fieldsData || {}
+            }));
+            const processedFlashcards = await processFlashcardsWithTTS(normalizedFlashcards, currentSchema);
 
             const payload = {
                 ...data,
                 fieldsSchema: currentSchema,
-                flashcards: processedFlashcards.map((card) => ({
-                    ...card,
-                    term: card.term || "",
-                    definition: card.definition || "",
-                    fieldsData: card.fieldsData || {}
-                }))
+                flashcards: processedFlashcards
             };
 
             const res = await fetch("/api/sets", {
@@ -596,7 +597,12 @@ export default function CreateSetPage() {
                         // If TTS settings changed, we should re-process cards
                         const hasTTS = newFields.some(f => f.type === 'text' && f.settings?.ttsEnabled);
                         if (hasTTS) {
-                            const currentCards = getValues('flashcards');
+                            const currentCards = getValues('flashcards').map((card) => ({
+                                term: card.term || "",
+                                definition: card.definition || "",
+                                imageUrl: card.imageUrl ?? undefined,
+                                fieldsData: card.fieldsData || {}
+                            }));
                             const processed = await processFlashcardsWithTTS(currentCards, newFields);
                             replace(processed);
                         }

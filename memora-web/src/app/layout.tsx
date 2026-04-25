@@ -4,7 +4,7 @@ import "./globals.css";
 import AppProvider from "@/components/AppProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import OfflineBanner from "@/components/OfflineBanner";
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 
 const plusJakarta = Plus_Jakarta_Sans({

@@ -54,7 +54,6 @@ export default function TeacherLobbyPage({ params }: TeacherLobbyPageProps) {
 
     useEffect(() => {
         if (!resolvedParams || !session) return;
-        // @ts-expect-error id_token injected by custom authOptions
         const token = session?.id_token;
         if (!token) return;
 

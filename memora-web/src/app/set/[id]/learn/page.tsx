@@ -68,7 +68,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
         for (const field of fieldsForSide) {
             if (field.type === 'text') {
                 const d = currentCard.fieldsData?.[`${field.id}_audio`];
-                if (d) audioUrls.push(d);
+                if (typeof d === 'string') audioUrls.push(d);
             }
         }
 
@@ -156,9 +156,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                     if (isAiPro) {
                         try {
                             const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-                            // @ts-expect-error session.id_token exists from our lib/auth config
                             if (session?.id_token) {
-                                // @ts-expect-error session.id_token exists from our lib/auth config
                                 headers['Authorization'] = `Bearer ${session.id_token}`;
                             }
 
@@ -233,9 +231,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
             setIsGrading(true);
             try {
                 const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-                // @ts-expect-error session.id_token exists from our lib/auth config
                 if (session?.id_token) {
-                    // @ts-expect-error session.id_token exists from our lib/auth config
                     headers['Authorization'] = `Bearer ${session.id_token}`;
                 }
 
@@ -319,7 +315,8 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
         recognition.interimResults = false;
         recognition.maxAlternatives = 1;
         
-        recognition.onresult = (event: SpeechRecognitionEvent) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        recognition.onresult = (event: any) => {
             const transcript = event.results[0][0].transcript;
             setWrittenInput(transcript);
             handleAnswer(transcript);
