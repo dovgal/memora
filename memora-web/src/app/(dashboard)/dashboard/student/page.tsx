@@ -37,25 +37,39 @@ export default async function StudentDashboard() {
         <div className="min-h-screen bg-qz-card text-qz-text selection:bg-[#4255ff]/30">
             <div className="p-8 max-w-7xl mx-auto space-y-16">
 
-                {/* Featured Course: French A1 */}
+                {/* Featured Courses: French A1 / A2 */}
                 <section>
-                    <h2 className="text-xl font-bold mb-6 text-qz-text tracking-wide">Курсы</h2>
-                    <Link href="/dashboard/student/courses/french-a1" className="block group">
-                        <div className="relative overflow-hidden rounded-3xl border border-[#262c40] bg-gradient-to-br from-indigo-900/40 via-purple-900/20 to-transparent p-8 transition-all duration-300 hover:scale-[1.01] hover:border-indigo-500/50">
-                            <div className="absolute top-[-20%] right-[-5%] w-[40%] h-[80%] bg-[#4255ff]/10 rounded-full blur-[50px]" />
-                            <div className="relative z-10 flex items-center justify-between gap-6 flex-wrap">
-                                <div>
+                    <h2 className="text-xl font-bold mb-6 text-qz-text tracking-wide">Курсы французского</h2>
+                    <div className="grid md:grid-cols-2 gap-4">
+                        <Link href="/dashboard/student/courses/french-a1" className="block group">
+                            <div className="relative h-full overflow-hidden rounded-3xl border border-[#262c40] bg-gradient-to-br from-indigo-900/40 via-purple-900/20 to-transparent p-7 transition-all duration-300 hover:scale-[1.01] hover:border-indigo-500/50">
+                                <div className="absolute top-[-20%] right-[-5%] w-[45%] h-[80%] bg-[#4255ff]/10 rounded-full blur-[50px]" />
+                                <div className="relative z-10">
                                     <div className="flex items-center gap-2 mb-2">
                                         <Sparkles className="w-5 h-5 text-[#ffcd1f]" />
-                                        <span className="text-xs font-bold uppercase tracking-wider text-[#ffcd1f]">Встроенный курс</span>
+                                        <span className="text-xs font-bold uppercase tracking-wider text-[#ffcd1f]">Уровень A1</span>
                                     </div>
-                                    <h3 className="text-2xl font-bold mb-1">Французский язык — уровень A1</h3>
-                                    <p className="text-[#8e95ae] max-w-lg">100 интерактивных заданий с объяснениями, озвучиванием, проверкой произношения и ИИ-проверкой ответов. Сменяемые задания и итоговый разбор.</p>
+                                    <h3 className="text-xl font-bold mb-1">Французский — A1</h3>
+                                    <p className="text-[#8e95ae] text-sm mb-4">100 заданий с объяснениями, озвучиванием, проверкой произношения и ИИ-проверкой.</p>
+                                    <span className="inline-block px-4 py-2 rounded-xl bg-[#4255ff] text-white text-sm font-semibold group-hover:bg-[#3144e0] transition-colors">Начать →</span>
                                 </div>
-                                <span className="px-5 py-3 rounded-xl bg-[#4255ff] text-white font-semibold whitespace-nowrap group-hover:bg-[#3144e0] transition-colors">Начать курс →</span>
                             </div>
-                        </div>
-                    </Link>
+                        </Link>
+                        <Link href="/dashboard/student/courses/french-a2" className="block group">
+                            <div className="relative h-full overflow-hidden rounded-3xl border border-[#262c40] bg-gradient-to-br from-emerald-900/40 via-teal-900/20 to-transparent p-7 transition-all duration-300 hover:scale-[1.01] hover:border-emerald-500/50">
+                                <div className="absolute top-[-20%] right-[-5%] w-[45%] h-[80%] bg-emerald-500/10 rounded-full blur-[50px]" />
+                                <div className="relative z-10">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <Sparkles className="w-5 h-5 text-emerald-400" />
+                                        <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">Уровень A2 · Édito A2</span>
+                                    </div>
+                                    <h3 className="text-xl font-bold mb-1">Французский — A2</h3>
+                                    <p className="text-[#8e95ae] text-sm mb-4">12 юнитов: диагностика пробелов + тренажёры грамматики, лексики, аудирования и говорения.</p>
+                                    <span className="inline-block px-4 py-2 rounded-xl bg-emerald-600 text-white text-sm font-semibold group-hover:bg-emerald-500 transition-colors">Начать →</span>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
                 </section>
 
                 {/* Jump back in Section (Big Interactive Carousel Cards) */}
