@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
     const rustApiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
     return [
       {
+        source: "/api/audio/transcribe",
+        destination: `${rustApiUrl}/api/audio/transcribe`,
+      },
+      {
         source: "/api/audio/:id/:field",
         destination: `${rustApiUrl}/api/audio/:id/:field`,
       },

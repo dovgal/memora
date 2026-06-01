@@ -37,6 +37,27 @@ export default async function StudentDashboard() {
         <div className="min-h-screen bg-qz-card text-qz-text selection:bg-[#4255ff]/30">
             <div className="p-8 max-w-7xl mx-auto space-y-16">
 
+                {/* Featured Course: French A1 */}
+                <section>
+                    <h2 className="text-xl font-bold mb-6 text-qz-text tracking-wide">Курсы</h2>
+                    <Link href="/dashboard/student/courses/french-a1" className="block group">
+                        <div className="relative overflow-hidden rounded-3xl border border-[#262c40] bg-gradient-to-br from-indigo-900/40 via-purple-900/20 to-transparent p-8 transition-all duration-300 hover:scale-[1.01] hover:border-indigo-500/50">
+                            <div className="absolute top-[-20%] right-[-5%] w-[40%] h-[80%] bg-[#4255ff]/10 rounded-full blur-[50px]" />
+                            <div className="relative z-10 flex items-center justify-between gap-6 flex-wrap">
+                                <div>
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <Sparkles className="w-5 h-5 text-[#ffcd1f]" />
+                                        <span className="text-xs font-bold uppercase tracking-wider text-[#ffcd1f]">Встроенный курс</span>
+                                    </div>
+                                    <h3 className="text-2xl font-bold mb-1">Французский язык — уровень A1</h3>
+                                    <p className="text-[#8e95ae] max-w-lg">100 интерактивных заданий с объяснениями, озвучиванием, проверкой произношения и ИИ-проверкой ответов. Сменяемые задания и итоговый разбор.</p>
+                                </div>
+                                <span className="px-5 py-3 rounded-xl bg-[#4255ff] text-white font-semibold whitespace-nowrap group-hover:bg-[#3144e0] transition-colors">Начать курс →</span>
+                            </div>
+                        </div>
+                    </Link>
+                </section>
+
                 {/* Jump back in Section (Big Interactive Carousel Cards) */}
                 <section>
                     <h2 className="text-xl font-bold mb-6 text-qz-text tracking-wide">Jump back in</h2>

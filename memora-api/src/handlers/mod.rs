@@ -9,3 +9,7 @@ pub mod folders;
 pub mod errors;
 pub mod audio;
 
+// Серверная проверка произношения (whisper.cpp). Компилируется только с --features stt.
+#[cfg(feature = "stt")]
+pub mod pronunciation;
+
