@@ -23,7 +23,11 @@ import {
   A2_PHRASES, phraseCategories, PHRASE_TEST, phraseCardUuid,
   A2_HARD_DICTATIONS, A2_DIALOGUES_EXTRA,
 } from "@/lib/courses/frenchA2Phrases";
+import {
+  A2_WRITING_TASKS, buildWritingGradePrompt, countWords, WRITING_TYPE_LABELS, WritingTask,
+} from "@/lib/courses/frenchA2Writing";
 import { speakInworld, speakCardInworld } from "@/lib/courses/ttsInworld";
+import { PenLine } from "lucide-react";
 
 type Status = "right" | "wrong";
 interface AnswerState { status: Status; given: string; explanation: string; aiChecked?: boolean; }
@@ -59,7 +63,7 @@ async function aiGrade(session: ReturnType<typeof useSession>["data"], question:
   } catch { return null; }
 }
 
-type Tab = "diagnostic" | "path" | "grammar" | "conjug" | "vocab" | "phrases" | "listening" | "dictation" | "dialogue" | "speaking" | "exam";
+type Tab = "diagnostic" | "path" | "grammar" | "conjug" | "vocab" | "phrases" | "listening" | "dictation" | "dialogue" | "speaking" | "writing" | "exam";
 
 export default function FrenchA2CoursePage() {
   const { data: session } = useSession();
@@ -110,6 +114,7 @@ export default function FrenchA2CoursePage() {
             ["dictation", "Диктанты", Headphones],
             ["dialogue", "Диалоги", MessagesSquare],
             ["speaking", "Говорение", Mic],
+            ["writing", "Письмо", PenLine],
             ["exam", "Экзамен DELF", Award],
           ] as [Tab, string, typeof Brain][]).map(([t, label, Icon]) => (
             <button key={t} onClick={() => setTab(t)} className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium border transition-colors ${tab === t ? "bg-[#4255ff] text-white border-[#4255ff]" : "border-border text-qz-text-muted hover:bg-qz-card"}`}>
@@ -128,6 +133,7 @@ export default function FrenchA2CoursePage() {
         {tab === "dictation" && <DictationTrainer session={session} />}
         {tab === "dialogue" && <DialogueTrainer />}
         {tab === "speaking" && <SkillTrainer session={session} skill="speaking" title="Тренажёр говорения" hint="Нажмите 🎙, произнесите фразу — оценим произношение." />}
+        {tab === "writing" && <WritingTrainer session={session} />}
         {tab === "exam" && <ExamMode session={session} />}
       </div>
     </div>
@@ -616,7 +622,7 @@ function ExamMode({ session }: { session: ReturnType<typeof useSession>["data"] 
     <div className="bg-qz-card border border-border rounded-2xl p-8 text-center">
       <Award className="w-12 h-12 mx-auto text-[#ffcd1f] mb-3" />
       <h3 className="font-bold text-lg mb-1">Épreuve blanche DELF A2</h3>
-      <p className="text-qz-text-muted text-sm mb-4">Строгий экзамен: 100 смешанных заданий со всех 12 юнитов и 4 навыков, с таймером. Порог сдачи — 60% (повышенная строгость). За успех — бейдж и 50 XP.</p>
+      <p className="text-qz-text-muted text-sm mb-4">Строгий экзамен: 100 случайных заданий из банка 400+ (все 12 юнитов и 4 навыка), с таймером. Каждый раз новый набор. Порог сдачи — 60%. За успех — бейдж и 50 XP.</p>
       <button onClick={start} className="px-6 py-3 rounded-xl bg-[#ffcd1f] text-[#1a1d28] font-bold flex items-center gap-2 mx-auto"><Clock className="w-4 h-4" /> Начать экзамен</button>
     </div>
   );
@@ -720,6 +726,115 @@ function PhraseTrainer({ session }: { session: ReturnType<typeof useSession>["da
           </div>
         );
       })}
+    </div>
+  );
+}
+
+// ───────── Тренажёр письменной речи (production écrite) ─────────
+function WritingTrainer({ session }: { session: ReturnType<typeof useSession>["data"] }) {
+  const [taskId, setTaskId] = useState<number>(A2_WRITING_TASKS[0].id);
+  const task: WritingTask = A2_WRITING_TASKS.find((t) => t.id === taskId)!;
+  const [text, setText] = useState("");
+  const [result, setResult] = useState<{ ok: boolean; explanation: string; correct: string } | null>(null);
+  const [grading, setGrading] = useState(false);
+
+  const words = countWords(text);
+  const inRange = words >= task.minWords && words <= task.maxWords;
+
+  const submit = async () => {
+    if (grading || !text.trim()) return;
+    setResult(null);
+    setGrading(true);
+    try {
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (session?.id_token) headers["Authorization"] = `Bearer ${session.id_token}`;
+      const res = await fetch("/api/ai/learn/grade", {
+        method: "POST", headers,
+        body: JSON.stringify({
+          setId: "00000000-0000-0000-0000-000000000000",
+          cardId: "00000000-0000-0000-0000-000000000000",
+          questionType: "writing",
+          userAnswer: text,
+          questionText: buildWritingGradePrompt(task, text),
+        }),
+      });
+      if (res.ok) {
+        const g = await res.json() as { isCorrect: boolean; explanation: string; correctAnswer: string };
+        setResult({ ok: g.isCorrect, explanation: g.explanation, correct: g.correctAnswer });
+        if (g.isCorrect) addXp(15);
+      } else {
+        setResult({ ok: false, explanation: "ИИ-проверка недоступна. Сверьтесь с опорными фразами и обязательными пунктами выше.", correct: "" });
+      }
+    } catch {
+      setResult({ ok: false, explanation: "Ошибка сети при проверке.", correct: "" });
+    } finally {
+      setGrading(false);
+    }
+  };
+
+  const reset = () => { setText(""); setResult(null); };
+
+  return (
+    <div className="space-y-4">
+      <div className="bg-[#4255ff]/5 border border-[#4255ff]/20 rounded-xl p-4 text-sm">
+        <b className="text-[#4255ff]">Письменная речь (production écrite) A2.</b> Выберите задание формата DELF A2, напишите текст в рамках объёма и отправьте на ИИ-проверку: оценка по критериям, конкретные ошибки и улучшенная версия.
+      </div>
+
+      <div className="flex gap-2 flex-wrap">
+        {A2_WRITING_TASKS.map((t) => (
+          <button key={t.id} onClick={() => { setTaskId(t.id); reset(); }} className={`px-3 py-1.5 rounded-full text-sm border ${taskId === t.id ? "bg-[#4255ff] text-white border-[#4255ff]" : "border-border text-qz-text-muted"}`}>
+            {WRITING_TYPE_LABELS[t.type]}
+          </button>
+        ))}
+      </div>
+
+      <div className="bg-qz-card border border-border rounded-2xl p-5 space-y-3">
+        <div className="font-semibold">{task.title}</div>
+        <div className="text-sm">{task.prompt}</div>
+        <div className="text-xs text-qz-text-muted">Объём: {task.minWords}–{task.maxWords} слов · Грамматика: {task.grammarFocus}</div>
+        <div className="bg-background rounded-lg p-3 text-sm">
+          <div className="mb-1"><b className="text-[#4255ff]">Нужно отразить:</b> {task.mustInclude.join("; ")}.</div>
+          <div className="flex flex-wrap gap-2 mt-2">
+            {task.usefulPhrases.map((p, i) => (
+              <span key={i} className="inline-flex items-center gap-1 text-xs bg-[#4255ff]/10 text-[#4255ff] rounded-full px-2 py-1">
+                {p}<button onClick={() => speakInworld(p)}><Volume2 className="w-3 h-3" /></button>
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <textarea
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          disabled={grading}
+          placeholder="Écrivez votre texte ici…"
+          rows={8}
+          className="w-full px-3 py-2.5 rounded-xl border-2 border-border bg-background text-sm resize-y"
+        />
+        <div className="flex items-center justify-between flex-wrap gap-2">
+          <span className={`text-xs ${inRange ? "text-green-500" : "text-amber-500"}`}>
+            {words} слов {inRange ? "✓ в рамках" : `(нужно ${task.minWords}–${task.maxWords})`}
+          </span>
+          <div className="flex gap-2">
+            <button onClick={reset} className="px-4 py-2 rounded-xl border border-border text-sm">Очистить</button>
+            <button onClick={submit} disabled={grading || !text.trim()} className="px-5 py-2 rounded-xl bg-[#4255ff] text-white font-semibold text-sm disabled:opacity-60 flex items-center gap-2">
+              {grading ? <><Loader2 className="w-4 h-4 animate-spin" /> Проверяю…</> : <><Sparkles className="w-4 h-4" /> Проверить ИИ</>}
+            </button>
+          </div>
+        </div>
+
+        {result && (
+          <div className="mt-2">
+            <div className={`text-sm font-semibold ${result.ok ? "text-green-500" : "text-amber-500"}`}>
+              {result.ok ? "✔ Соответствует уровню A2" : "↻ Есть что улучшить"}
+            </div>
+            <div className="mt-1.5 bg-[#4255ff]/5 border-l-[3px] border-[#4255ff] rounded-r-lg px-3 py-2 text-sm whitespace-pre-wrap">{result.explanation}</div>
+            {result.correct && (
+              <div className="mt-2 text-sm"><b className="text-green-600">Улучшенный вариант:</b> <span className="italic">{result.correct}</span></div>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

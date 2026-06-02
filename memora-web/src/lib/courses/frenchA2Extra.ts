@@ -4,9 +4,10 @@
 
 import { A2_DIAGNOSTIC, A2Question, normalizeA2 } from "./frenchA2";
 import { A2_BANK } from "./frenchA2Bank";
+import { A2_BANK2 } from "./frenchA2Bank2";
 
-// Полный пул вопросов = базовая диагностика + расширенный банк (205 шт.)
-export const A2_FULL_POOL: A2Question[] = [...A2_DIAGNOSTIC, ...A2_BANK];
+// Полный пул вопросов = диагностика + банк 1 + банк 2 (400+ шт.)
+export const A2_FULL_POOL: A2Question[] = [...A2_DIAGNOSTIC, ...A2_BANK, ...A2_BANK2];
 
 // ─────────────────────────────────────────────────────────────
 // ИДЕЯ 3: ГЕНЕРАТИВНЫЙ ТРЕНАЖЁР СПРЯЖЕНИЙ
