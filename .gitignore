@@ -1,3 +1,26 @@
 # BMAD (local only) - Commented out for config repo tracking
 # .bmad-core/
 .bmad-*/
+
+# Rust build artifacts (НИКОГДА не коммитить — раздувают репозиторий и билд)
+target/
+**/target/
+*.rs.bk
+
+# Node / Next.js
+node_modules/
+**/node_modules/
+.next/
+**/.next/
+out/
+**/out/
+*.tsbuildinfo
+
+# Env / секреты
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+**/.DS_Store

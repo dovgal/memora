@@ -1,0 +1,8 @@
+# Не отправлять в build-контекст
+node_modules/
+.next/
+out/
+.git/
+.env*
+npm-debug.log*
+*.tsbuildinfo

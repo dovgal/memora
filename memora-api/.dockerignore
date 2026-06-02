@@ -1,0 +1,6 @@
+# Не отправлять в build-контекст (резко уменьшает snapshot на Railway)
+target/
+**/target/
+.git/
+.env
+*.rs.bk

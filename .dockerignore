@@ -1,0 +1,8 @@
+# Корневой .dockerignore (на случай сборки из корня монорепо)
+**/target/
+**/node_modules/
+**/.next/
+**/out/
+.git/
+**/.env
+**/.DS_Store
