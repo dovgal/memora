@@ -3,6 +3,10 @@
 // Весь контент написан по программе A2 (без копирования учебника).
 
 import { A2_DIAGNOSTIC, A2Question, normalizeA2 } from "./frenchA2";
+import { A2_BANK } from "./frenchA2Bank";
+
+// Полный пул вопросов = базовая диагностика + расширенный банк (205 шт.)
+export const A2_FULL_POOL: A2Question[] = [...A2_DIAGNOSTIC, ...A2_BANK];
 
 // ─────────────────────────────────────────────────────────────
 // ИДЕЯ 3: ГЕНЕРАТИВНЫЙ ТРЕНАЖЁР СПРЯЖЕНИЙ
@@ -89,6 +93,48 @@ export const A2_VERBS: VerbForms[] = [
     imparfait: { je: "pouvais", tu: "pouvais", il: "pouvait", nous: "pouvions", vous: "pouviez", ils: "pouvaient" },
     futur: { je: "pourrai", tu: "pourras", il: "pourra", nous: "pourrons", vous: "pourrez", ils: "pourront" },
     subjonctif: { je: "puisse", tu: "puisses", il: "puisse", nous: "puissions", vous: "puissiez", ils: "puissent" },
+  },
+  {
+    inf: "vouloir", ru: "хотеть", aux: "avoir", pp: "voulu",
+    present: { je: "veux", tu: "veux", il: "veut", nous: "voulons", vous: "voulez", ils: "veulent" },
+    imparfait: { je: "voulais", tu: "voulais", il: "voulait", nous: "voulions", vous: "vouliez", ils: "voulaient" },
+    futur: { je: "voudrai", tu: "voudras", il: "voudra", nous: "voudrons", vous: "voudrez", ils: "voudront" },
+    subjonctif: { je: "veuille", tu: "veuilles", il: "veuille", nous: "voulions", vous: "vouliez", ils: "veuillent" },
+  },
+  {
+    inf: "devoir", ru: "быть должным", aux: "avoir", pp: "dû",
+    present: { je: "dois", tu: "dois", il: "doit", nous: "devons", vous: "devez", ils: "doivent" },
+    imparfait: { je: "devais", tu: "devais", il: "devait", nous: "devions", vous: "deviez", ils: "devaient" },
+    futur: { je: "devrai", tu: "devras", il: "devra", nous: "devrons", vous: "devrez", ils: "devront" },
+    subjonctif: { je: "doive", tu: "doives", il: "doive", nous: "devions", vous: "deviez", ils: "doivent" },
+  },
+  {
+    inf: "savoir", ru: "знать (уметь)", aux: "avoir", pp: "su",
+    present: { je: "sais", tu: "sais", il: "sait", nous: "savons", vous: "savez", ils: "savent" },
+    imparfait: { je: "savais", tu: "savais", il: "savait", nous: "savions", vous: "saviez", ils: "savaient" },
+    futur: { je: "saurai", tu: "sauras", il: "saura", nous: "saurons", vous: "saurez", ils: "sauront" },
+    subjonctif: { je: "sache", tu: "saches", il: "sache", nous: "sachions", vous: "sachiez", ils: "sachent" },
+  },
+  {
+    inf: "finir", ru: "заканчивать", aux: "avoir", pp: "fini",
+    present: { je: "finis", tu: "finis", il: "finit", nous: "finissons", vous: "finissez", ils: "finissent" },
+    imparfait: { je: "finissais", tu: "finissais", il: "finissait", nous: "finissions", vous: "finissiez", ils: "finissaient" },
+    futur: { je: "finirai", tu: "finiras", il: "finira", nous: "finirons", vous: "finirez", ils: "finiront" },
+    subjonctif: { je: "finisse", tu: "finisses", il: "finisse", nous: "finissions", vous: "finissiez", ils: "finissent" },
+  },
+  {
+    inf: "partir", ru: "уезжать", aux: "être", pp: "parti",
+    present: { je: "pars", tu: "pars", il: "part", nous: "partons", vous: "partez", ils: "partent" },
+    imparfait: { je: "partais", tu: "partais", il: "partait", nous: "partions", vous: "partiez", ils: "partaient" },
+    futur: { je: "partirai", tu: "partiras", il: "partira", nous: "partirons", vous: "partirez", ils: "partiront" },
+    subjonctif: { je: "parte", tu: "partes", il: "parte", nous: "partions", vous: "partiez", ils: "partent" },
+  },
+  {
+    inf: "voir", ru: "видеть", aux: "avoir", pp: "vu",
+    present: { je: "vois", tu: "vois", il: "voit", nous: "voyons", vous: "voyez", ils: "voient" },
+    imparfait: { je: "voyais", tu: "voyais", il: "voyait", nous: "voyions", vous: "voyiez", ils: "voyaient" },
+    futur: { je: "verrai", tu: "verras", il: "verra", nous: "verrons", vous: "verrez", ils: "verront" },
+    subjonctif: { je: "voie", tu: "voies", il: "voie", nous: "voyions", vous: "voyiez", ils: "voient" },
   },
 ];
 
@@ -239,13 +285,13 @@ export const VOCAB_EMOJI: Record<string, string> = {
 // ─────────────────────────────────────────────────────────────
 // ИДЕЯ «ÉPREUVE BLANCHE DELF A2» — выборка смешанного экзамена
 // ─────────────────────────────────────────────────────────────
-export function buildExam(count = 20): A2Question[] {
-  const pool = [...A2_DIAGNOSTIC];
+export function buildExam(count = 100): A2Question[] {
+  const pool = [...A2_FULL_POOL];
   for (let i = pool.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [pool[i], pool[j]] = [pool[j], pool[i]];
   }
-  return pool.slice(0, count);
+  return pool.slice(0, Math.min(count, pool.length));
 }
 
 // ─────────────────────────────────────────────────────────────

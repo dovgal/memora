@@ -7,16 +7,22 @@ import {
   Volume2, Mic, Shuffle, CheckCircle2, XCircle, Loader2,
   ChevronLeft, Sparkles, ArrowRight, BookOpen, Headphones, MessageCircle,
   GraduationCap, Brain, RefreshCw, Trophy, Flame, Zap, Target, Award, Clock,
+  MessagesSquare, Quote,
 } from "lucide-react";
 import {
-  A2_UNITS, A2_DIAGNOSTIC, A2_SKILL_LABELS, normalizeA2,
+  A2_UNITS, A2_SKILL_LABELS, normalizeA2,
   A2Question, A2Skill, A2VocabCard,
 } from "@/lib/courses/frenchA2";
 import {
   Tense, TENSE_LABELS, generateConjugation, checkConjugation, ConjugationItem,
   A2_DIALOGUES, A2_DICTATIONS, mistakeOfTheDay, VOCAB_EMOJI, buildExam,
   loadGamification, addXp, awardBadge, setWeakUnits, levelFromXp, Gamification,
+  A2_FULL_POOL,
 } from "@/lib/courses/frenchA2Extra";
+import {
+  A2_PHRASES, phraseCategories, PHRASE_TEST, phraseCardUuid,
+  A2_HARD_DICTATIONS, A2_DIALOGUES_EXTRA,
+} from "@/lib/courses/frenchA2Phrases";
 import { speakInworld, speakCardInworld } from "@/lib/courses/ttsInworld";
 
 type Status = "right" | "wrong";
@@ -53,13 +59,17 @@ async function aiGrade(session: ReturnType<typeof useSession>["data"], question:
   } catch { return null; }
 }
 
-type Tab = "diagnostic" | "path" | "grammar" | "conjug" | "vocab" | "listening" | "dictation" | "dialogue" | "speaking" | "exam";
+type Tab = "diagnostic" | "path" | "grammar" | "conjug" | "vocab" | "phrases" | "listening" | "dictation" | "dialogue" | "speaking" | "exam";
 
 export default function FrenchA2CoursePage() {
   const { data: session } = useSession();
   const [tab, setTab] = useState<Tab>("diagnostic");
   const [game, setGame] = useState<Gamification | null>(null);
-  useEffect(() => { setGame(loadGamification()); }, [tab]);
+  // читаем геймификацию из localStorage на клиенте при смене вкладки (без setState в effect-теле напрямую)
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setGame(loadGamification()));
+    return () => cancelAnimationFrame(id);
+  }, [tab]);
 
   const lvl = game ? levelFromXp(game.xp) : null;
 
@@ -95,9 +105,10 @@ export default function FrenchA2CoursePage() {
             ["grammar", "Грамматика", Brain],
             ["conjug", "Спряжения", RefreshCw],
             ["vocab", "Лексика", BookOpen],
+            ["phrases", "Фразы", Quote],
             ["listening", "Аудирование", Headphones],
             ["dictation", "Диктанты", Headphones],
-            ["dialogue", "Диалоги", MessageCircle],
+            ["dialogue", "Диалоги", MessagesSquare],
             ["speaking", "Говорение", Mic],
             ["exam", "Экзамен DELF", Award],
           ] as [Tab, string, typeof Brain][]).map(([t, label, Icon]) => (
@@ -112,6 +123,7 @@ export default function FrenchA2CoursePage() {
         {tab === "grammar" && <GrammarTrainer />}
         {tab === "conjug" && <ConjugationTrainer session={session} />}
         {tab === "vocab" && <VocabTrainer />}
+        {tab === "phrases" && <PhraseTrainer session={session} />}
         {tab === "listening" && <SkillTrainer session={session} skill="listening" title="Тренажёр аудирования" hint="Нажмите 🔊, послушайте и ответьте." />}
         {tab === "dictation" && <DictationTrainer session={session} />}
         {tab === "dialogue" && <DialogueTrainer />}
@@ -148,7 +160,7 @@ function MistakeOfDay() {
 
 // ───────── Диагностика ─────────
 function DiagnosticTest({ session, onDone }: { session: ReturnType<typeof useSession>["data"]; onDone: (weakUnits: number[]) => void }) {
-  const [order, setOrder] = useState<number[]>(() => A2_DIAGNOSTIC.map((_, i) => i));
+  const [order, setOrder] = useState<number[]>(() => A2_FULL_POOL.map((_, i) => i));
   const [answers, setAnswers] = useState<Record<number, AnswerState>>({});
   const [inputs, setInputs] = useState<Record<number, string>>({});
   const [gradingId, setGradingId] = useState<number | null>(null);
@@ -156,8 +168,8 @@ function DiagnosticTest({ session, onDone }: { session: ReturnType<typeof useSes
   const [pron, setPron] = useState<Record<number, { ok: boolean; heard: string; score: number }>>({});
   const [recId, setRecId] = useState<number | null>(null);
 
-  const questions = useMemo(() => order.map((i) => A2_DIAGNOSTIC[i]), [order]);
-  const total = A2_DIAGNOSTIC.length;
+  const questions = useMemo(() => order.map((i) => A2_FULL_POOL[i]), [order]);
+  const total = A2_FULL_POOL.length;
   const answered = Object.keys(answers).length;
   const right = Object.values(answers).filter((a) => a.status === "right").length;
 
@@ -194,7 +206,7 @@ function DiagnosticTest({ session, onDone }: { session: ReturnType<typeof useSes
   const results = useMemo(() => {
     const byUnit: Record<number, { r: number; t: number }> = {};
     const bySkill: Record<string, { r: number; t: number }> = {};
-    A2_DIAGNOSTIC.forEach((q) => {
+    A2_FULL_POOL.forEach((q) => {
       byUnit[q.unit] = byUnit[q.unit] || { r: 0, t: 0 }; byUnit[q.unit].t++;
       bySkill[q.skill] = bySkill[q.skill] || { r: 0, t: 0 }; bySkill[q.skill].t++;
       if (answers[q.id]?.status === "right") { byUnit[q.unit].r++; bySkill[q.skill].r++; }
@@ -202,7 +214,7 @@ function DiagnosticTest({ session, onDone }: { session: ReturnType<typeof useSes
     const units = Object.entries(byUnit).map(([u, v]) => ({ u: +u, ...v, p: Math.round(v.r / v.t * 100) })).sort((a, b) => a.u - b.u);
     const skills = Object.entries(bySkill).map(([s, v]) => ({ s: s as A2Skill, ...v, p: Math.round(v.r / v.t * 100) }));
     const weakUnits = units.filter((x) => x.p < 70).sort((a, b) => a.p - b.p);
-    const wrong = A2_DIAGNOSTIC.filter((q) => answers[q.id]?.status === "wrong");
+    const wrong = A2_FULL_POOL.filter((q) => answers[q.id]?.status === "wrong");
     return { units, skills, weakUnits, wrong, p: Math.round(right / total * 100) };
   }, [answers, right, total]);
 
@@ -215,7 +227,7 @@ function DiagnosticTest({ session, onDone }: { session: ReturnType<typeof useSes
 
   return (
     <>
-      <div className="bg-[#4255ff]/5 border border-[#4255ff]/20 rounded-xl p-4 text-sm"><b className="text-[#4255ff]">Диагностический тест A2.</b> 45 заданий по 12 юнитам и 4 навыкам. После завершения — разбор по юнитам, рекомендации и автосбор «Моего плана».</div>
+      <div className="bg-[#4255ff]/5 border border-[#4255ff]/20 rounded-xl p-4 text-sm"><b className="text-[#4255ff]">Полный диагностический тест A2.</b> {total} заданий по 12 юнитам и 4 навыкам — для точного выявления любых пробелов. После завершения — разбор по юнитам, рекомендации и автосбор «Моего плана». Можно «Перемешать» и проходить частями.</div>
       <div className="sticky top-0 z-10 bg-background py-3 flex items-center gap-3 flex-wrap">
         <div className="flex-1 min-w-[140px] h-2.5 bg-qz-card rounded-full overflow-hidden"><div className="h-full bg-[#ffcd1f]" style={{ width: `${(answered / total) * 100}%` }} /></div>
         <span className="text-sm font-semibold whitespace-nowrap">{answered}/{total} · <span className="text-green-500">✔ {right}</span> · <span className="text-red-500">✗ {answered - right}</span></span>
@@ -269,11 +281,14 @@ function QuestionCard({ q, ans, input, grading, pron, recording, onInput, onText
 // ───────── Мой план (адаптивный) ─────────
 function MyPath({ session }: { session: ReturnType<typeof useSession>["data"] }) {
   const [game, setGame] = useState<Gamification | null>(null);
-  useEffect(() => { setGame(loadGamification()); }, []);
-  const weak = game?.weakUnits ?? [];
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setGame(loadGamification()));
+    return () => cancelAnimationFrame(id);
+  }, []);
+  const weak = useMemo(() => game?.weakUnits ?? [], [game]);
   const items = useMemo(() => {
     if (weak.length === 0) return [];
-    return A2_DIAGNOSTIC.filter((q) => weak.includes(q.unit));
+    return A2_FULL_POOL.filter((q) => weak.includes(q.unit));
   }, [weak]);
 
   const [answers, setAnswers] = useState<Record<number, AnswerState>>({});
@@ -408,38 +423,60 @@ function VocabTrainer() {
 }
 
 // ───────── Аудио-диктанты ─────────
+interface MergedDictation { key: string; unit: number; fr: string; ru: string; level: number; }
 function DictationTrainer({ session }: { session: ReturnType<typeof useSession>["data"] }) {
-  const [answers, setAnswers] = useState<Record<number, { ok: boolean; given: string; expl: string }>>({});
-  const [inputs, setInputs] = useState<Record<number, string>>({});
-  const [gradingId, setGradingId] = useState<number | null>(null);
+  const [answers, setAnswers] = useState<Record<string, { ok: boolean; given: string; expl: string }>>({});
+  const [inputs, setInputs] = useState<Record<string, string>>({});
+  const [gradingId, setGradingId] = useState<string | null>(null);
+  const [levelFilter, setLevelFilter] = useState<number | "all">("all");
+  const [slow, setSlow] = useState(false);
 
-  const check = async (d: typeof A2_DICTATIONS[0]) => {
-    if (answers[d.id]) return;
-    const v = (inputs[d.id] ?? "").trim(); if (!v) return;
-    if (similarity(normalizeA2(v), normalizeA2(d.fr)) >= 0.85) { setAnswers((p) => ({ ...p, [d.id]: { ok: true, given: v, expl: `Отлично! «${d.fr}»` } })); addXp(4); return; }
-    setGradingId(d.id);
+  const all: MergedDictation[] = useMemo(() => [
+    ...A2_DICTATIONS.map((d) => ({ key: `s${d.id}`, unit: d.unit, fr: d.fr, ru: d.ru, level: 1 })),
+    ...A2_HARD_DICTATIONS.map((d) => ({ key: `h${d.id}`, unit: d.unit, fr: d.fr, ru: d.ru, level: d.level })),
+  ], []);
+  const items = useMemo(() => levelFilter === "all" ? all : all.filter((d) => d.level === levelFilter), [all, levelFilter]);
+
+  // «Медленный» режим читает фразу по словам с паузами — для тренировки до автоматизма.
+  const playDictation = (fr: string) => {
+    if (!slow) { speakInworld(fr); return; }
+    const words = fr.split(" ");
+    let i = 0;
+    const step = () => { if (i < words.length) { speakInworld(words[i]); i++; setTimeout(step, 900); } };
+    step();
+  };
+
+  const check = async (d: MergedDictation) => {
+    if (answers[d.key]) return;
+    const v = (inputs[d.key] ?? "").trim(); if (!v) return;
+    if (similarity(normalizeA2(v), normalizeA2(d.fr)) >= 0.85) { setAnswers((p) => ({ ...p, [d.key]: { ok: true, given: v, expl: `Отлично! «${d.fr}»` } })); addXp(d.level * 3); return; }
+    setGradingId(d.key);
     const g = await aiGrade(session, `Диктант (запиши услышанное): ${d.ru}`, d.fr, v);
     setGradingId(null);
-    if (g) setAnswers((p) => ({ ...p, [d.id]: { ok: g.ok, given: v, expl: `${g.explanation || ""} Эталон: «${d.fr}»` } }));
-    else setAnswers((p) => ({ ...p, [d.id]: { ok: false, given: v, expl: `Эталон: «${d.fr}»` } }));
-    if (g?.ok) addXp(4);
+    if (g) setAnswers((p) => ({ ...p, [d.key]: { ok: g.ok, given: v, expl: `${g.explanation || ""} Эталон: «${d.fr}»` } }));
+    else setAnswers((p) => ({ ...p, [d.key]: { ok: false, given: v, expl: `Эталон: «${d.fr}»` } }));
+    if (g?.ok) addXp(d.level * 3);
   };
 
   return (
     <div className="space-y-4">
-      <div className="bg-[#4255ff]/5 border border-[#4255ff]/20 rounded-xl p-4 text-sm"><b className="text-[#4255ff]">Аудио-диктанты.</b> Нажмите 🔊, прослушайте французскую фразу и запишите её. ИИ сверит и подсветит ошибки.</div>
-      {A2_DICTATIONS.map((d) => {
-        const a = answers[d.id];
+      <div className="bg-[#4255ff]/5 border border-[#4255ff]/20 rounded-xl p-4 text-sm"><b className="text-[#4255ff]">Аудио-диктанты (до автоматизма).</b> Нажмите 🔊, прослушайте фразу и запишите её. Уровни 1–3 по сложности. Режим «по словам» помогает разбирать речь на слух.</div>
+      <div className="flex gap-2 flex-wrap items-center">
+        {(["all", 1, 2, 3] as const).map((l) => (<button key={l} onClick={() => setLevelFilter(l)} className={`px-3 py-1.5 rounded-full text-sm border ${levelFilter === l ? "bg-[#4255ff] text-white border-[#4255ff]" : "border-border text-qz-text-muted"}`}>{l === "all" ? "Все" : `Уровень ${l}`}</button>))}
+        <label className="ml-auto flex items-center gap-1.5 text-sm cursor-pointer"><input type="checkbox" checked={slow} onChange={(e) => setSlow(e.target.checked)} /> по словам</label>
+      </div>
+      {items.map((d) => {
+        const a = answers[d.key];
         return (
-          <div key={d.id} className="bg-qz-card border border-border rounded-2xl p-5">
+          <div key={d.key} className="bg-qz-card border border-border rounded-2xl p-5">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#4255ff]/10 text-[#4255ff]">U{d.unit} · Диктант</span>
-              <button onClick={() => browserSpeak(d.fr)} className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border hover:bg-background text-sm"><Volume2 className="w-4 h-4 text-[#4255ff]" /> Прослушать</button>
+              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#4255ff]/10 text-[#4255ff]">U{d.unit} · Диктант · ур.{d.level}</span>
+              <button onClick={() => playDictation(d.fr)} className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border hover:bg-background text-sm"><Volume2 className="w-4 h-4 text-[#4255ff]" /> Прослушать</button>
             </div>
             <div className="text-sm text-qz-text-muted mb-2">Подсказка (перевод): {d.ru}</div>
             <div className="flex gap-2 flex-wrap">
-              <input type="text" disabled={!!a} value={inputs[d.id] ?? ""} onChange={(e) => setInputs((p) => ({ ...p, [d.id]: e.target.value }))} onKeyDown={(e) => { if (e.key === "Enter") check(d); }} placeholder="Запишите услышанное по-французски…" className={`flex-1 min-w-[200px] px-3 py-2.5 rounded-xl border-2 bg-background ${a ? (a.ok ? "border-green-500 bg-green-500/10" : "border-red-500 bg-red-500/10") : "border-border"}`} />
-              <button disabled={!!a || gradingId === d.id} onClick={() => check(d)} className="px-4 py-2.5 rounded-xl bg-[#4255ff] text-white font-semibold disabled:opacity-60 flex items-center gap-2">{gradingId === d.id ? <><Loader2 className="w-4 h-4 animate-spin" /> ИИ…</> : "Проверить"}</button>
+              <input type="text" disabled={!!a} value={inputs[d.key] ?? ""} onChange={(e) => setInputs((p) => ({ ...p, [d.key]: e.target.value }))} onKeyDown={(e) => { if (e.key === "Enter") check(d); }} placeholder="Запишите услышанное по-французски…" className={`flex-1 min-w-[200px] px-3 py-2.5 rounded-xl border-2 bg-background ${a ? (a.ok ? "border-green-500 bg-green-500/10" : "border-red-500 bg-red-500/10") : "border-border"}`} />
+              <button disabled={!!a || gradingId === d.key} onClick={() => check(d)} className="px-4 py-2.5 rounded-xl bg-[#4255ff] text-white font-semibold disabled:opacity-60 flex items-center gap-2">{gradingId === d.key ? <><Loader2 className="w-4 h-4 animate-spin" /> ИИ…</> : "Проверить"}</button>
             </div>
             {a && (<div className={`mt-3 text-sm font-semibold ${a.ok ? "text-green-500" : "text-red-500"}`}>{a.ok ? "✔ Верно!" : "✗ Есть ошибки."}<div className="mt-1.5 bg-[#4255ff]/5 border-l-[3px] border-[#4255ff] rounded-r-lg px-3 py-2 text-foreground font-normal">{a.expl}</div></div>)}
           </div>
@@ -450,9 +487,10 @@ function DictationTrainer({ session }: { session: ReturnType<typeof useSession>[
 }
 
 // ───────── Ролевые диалоги ─────────
+const ALL_DIALOGUES = [...A2_DIALOGUES, ...A2_DIALOGUES_EXTRA];
 function DialogueTrainer() {
   const [active, setActive] = useState<string | null>(null);
-  const dlg = A2_DIALOGUES.find((d) => d.id === active);
+  const dlg = ALL_DIALOGUES.find((d) => d.id === active);
   const [step, setStep] = useState(0);
   const [pron, setPron] = useState<Record<number, { ok: boolean; heard: string; score: number }>>({});
   const [recIdx, setRecIdx] = useState<number | null>(null);
@@ -472,7 +510,7 @@ function DialogueTrainer() {
       <div className="space-y-4">
         <div className="bg-[#4255ff]/5 border border-[#4255ff]/20 rounded-xl p-4 text-sm"><b className="text-[#4255ff]">Ролевые диалоги.</b> Выберите сценарий. Бот говорит свои реплики, вы произносите свои — мы оцениваем произношение.</div>
         <div className="grid sm:grid-cols-3 gap-3">
-          {A2_DIALOGUES.map((d) => (<button key={d.id} onClick={() => { setActive(d.id); setStep(0); setPron({}); }} className="bg-qz-card border border-border rounded-2xl p-5 text-left hover:border-[#4255ff]/50"><MessageCircle className="w-6 h-6 text-[#4255ff] mb-2" /><div className="font-semibold">{d.title}</div><div className="text-sm text-qz-text-muted mt-1">U{d.unit} · {d.scene}</div></button>))}
+          {ALL_DIALOGUES.map((d) => (<button key={d.id} onClick={() => { setActive(d.id); setStep(0); setPron({}); }} className="bg-qz-card border border-border rounded-2xl p-5 text-left hover:border-[#4255ff]/50"><MessageCircle className="w-6 h-6 text-[#4255ff] mb-2" /><div className="font-semibold">{d.title}</div><div className="text-sm text-qz-text-muted mt-1">U{d.unit} · {d.scene}</div></button>))}
         </div>
       </div>
     );
@@ -505,7 +543,7 @@ function DialogueTrainer() {
 
 // ───────── Аудирование / Говорение (общий тренажёр) ─────────
 function SkillTrainer({ session, skill, title, hint }: { session: ReturnType<typeof useSession>["data"]; skill: A2Skill; title: string; hint: string; }) {
-  const items = useMemo(() => A2_DIAGNOSTIC.filter((q) => q.skill === skill), [skill]);
+  const items = useMemo(() => A2_FULL_POOL.filter((q) => q.skill === skill), [skill]);
   const [answers, setAnswers] = useState<Record<number, AnswerState>>({});
   const [inputs, setInputs] = useState<Record<number, string>>({});
   const [pron, setPron] = useState<Record<number, { ok: boolean; heard: string; score: number }>>({});
@@ -557,7 +595,7 @@ function ExamMode({ session }: { session: ReturnType<typeof useSession>["data"] 
     return () => clearInterval(t);
   }, [started, finished]);
 
-  const start = () => { setQuestions(buildExam(20)); setAnswers({}); setInputs({}); setSeconds(0); setFinished(false); setStarted(true); };
+  const start = () => { setQuestions(buildExam(100)); setAnswers({}); setInputs({}); setSeconds(0); setFinished(false); setStarted(true); };
   const record = (q: A2Question, status: Status, given: string, expl: string, ai = false) => setAnswers((p) => ({ ...p, [q.id]: { status, given, explanation: expl, aiChecked: ai } }));
   const handleText = async (q: A2Question) => {
     if (answers[q.id]) return; const v = (inputs[q.id] ?? "").trim(); if (!v) return;
@@ -570,15 +608,15 @@ function ExamMode({ session }: { session: ReturnType<typeof useSession>["data"] 
 
   const right = Object.values(answers).filter((a) => a.status === "right").length;
   const score = questions.length ? Math.round(right / questions.length * 100) : 0;
-  const passed = score >= 50; // DELF A2 порог ~50%
+  const passed = score >= 60; // повышенная строгость
 
-  const finish = () => { setFinished(true); addXp(passed ? 30 : 10); if (passed) awardBadge("delf-a2-blanche"); setTimeout(() => document.getElementById("exam-res")?.scrollIntoView({ behavior: "smooth" }), 50); };
+  const finish = () => { setFinished(true); addXp(passed ? 50 : 15); if (passed) awardBadge("delf-a2-blanche"); setTimeout(() => document.getElementById("exam-res")?.scrollIntoView({ behavior: "smooth" }), 50); };
 
   if (!started) return (
     <div className="bg-qz-card border border-border rounded-2xl p-8 text-center">
       <Award className="w-12 h-12 mx-auto text-[#ffcd1f] mb-3" />
       <h3 className="font-bold text-lg mb-1">Épreuve blanche DELF A2</h3>
-      <p className="text-qz-text-muted text-sm mb-4">Пробный экзамен: 20 смешанных заданий со всех юнитов, с таймером. Порог сдачи — 50% (как в DELF A2). За успех — бейдж и 30 XP.</p>
+      <p className="text-qz-text-muted text-sm mb-4">Строгий экзамен: 100 смешанных заданий со всех 12 юнитов и 4 навыков, с таймером. Порог сдачи — 60% (повышенная строгость). За успех — бейдж и 50 XP.</p>
       <button onClick={start} className="px-6 py-3 rounded-xl bg-[#ffcd1f] text-[#1a1d28] font-bold flex items-center gap-2 mx-auto"><Clock className="w-4 h-4" /> Начать экзамен</button>
     </div>
   );
@@ -601,11 +639,87 @@ function ExamMode({ session }: { session: ReturnType<typeof useSession>["data"] 
         <div id="exam-res" className="bg-qz-card border border-border rounded-2xl p-6 text-center space-y-4">
           <div className={`w-28 h-28 rounded-full grid place-items-center mx-auto ${passed ? "bg-green-500/10" : "bg-amber-500/10"}`}><span className="text-3xl font-bold">{score}%</span></div>
           <div className="text-xl font-bold">{passed ? "🎉 Экзамен сдан!" : "Почти получилось"}</div>
-          <p className="text-qz-text-muted text-sm">{right} из {questions.length} верно за {mm}:{ss}. {passed ? "Уровень соответствует A2 — отличная работа! Бейдж получен." : "Порог DELF A2 — 50%. Проработайте «Мой план» и попробуйте снова."}</p>
+          <p className="text-qz-text-muted text-sm">{right} из {questions.length} верно за {mm}:{ss}. {passed ? "Уровень соответствует A2 — отличная работа! Бейдж получен." : "Порог — 60%. Проработайте «Мой план» и попробуйте снова."}</p>
           {passed && <div className="inline-flex items-center gap-2 bg-emerald-500/15 text-emerald-600 px-4 py-2 rounded-full font-semibold"><Award className="w-5 h-5" /> Сертификат: DELF A2 blanche</div>}
           <div><button onClick={start} className="px-5 py-2.5 rounded-xl bg-[#4255ff] text-white font-semibold">Пройти заново</button></div>
         </div>
       )}
+    </div>
+  );
+}
+
+// ───────── Тренажёр ФРАЗ (карточки + тест RU→FR) ─────────
+function PhraseTrainer({ session }: { session: ReturnType<typeof useSession>["data"] }) {
+  const [mode, setMode] = useState<"cards" | "test">("cards");
+  const [catFilter, setCatFilter] = useState<string>("Все");
+  const cats = useMemo(() => ["Все", ...phraseCategories()], []);
+  const phrases = useMemo(() => catFilter === "Все" ? A2_PHRASES : A2_PHRASES.filter((p) => p.category === catFilter), [catFilter]);
+
+  // карточки
+  const [pos, setPos] = useState(0);
+  const [flipped, setFlipped] = useState(false);
+  const card = phrases[pos % Math.max(phrases.length, 1)];
+
+  // тест
+  const test = useMemo(() => catFilter === "Все" ? PHRASE_TEST : PHRASE_TEST.filter((p) => p.category === catFilter), [catFilter]);
+  const [answers, setAnswers] = useState<Record<number, { ok: boolean; given: string; expl: string }>>({});
+  const [inputs, setInputs] = useState<Record<number, string>>({});
+  const [gradingId, setGradingId] = useState<number | null>(null);
+
+  const checkPhrase = async (q: typeof PHRASE_TEST[0]) => {
+    if (answers[q.id]) return;
+    const v = (inputs[q.id] ?? "").trim(); if (!v) return;
+    if (q.accept.some((a) => normalizeA2(a) === normalizeA2(v))) { setAnswers((p) => ({ ...p, [q.id]: { ok: true, given: v, expl: `Отлично! «${q.fr}»` } })); addXp(3); return; }
+    setGradingId(q.id);
+    const g = await aiGrade(session, `Скажи по-французски: ${q.ru}`, q.fr, v);
+    setGradingId(null);
+    if (g) setAnswers((p) => ({ ...p, [q.id]: { ok: g.ok, given: v, expl: `${g.explanation || ""} Вариант: «${q.fr}»` } }));
+    else setAnswers((p) => ({ ...p, [q.id]: { ok: false, given: v, expl: `Вариант: «${q.fr}»` } }));
+    if (g?.ok) addXp(3);
+  };
+
+  return (
+    <div className="space-y-4">
+      <div className="bg-[#4255ff]/5 border border-[#4255ff]/20 rounded-xl p-4 text-sm"><b className="text-[#4255ff]">Ходовые фразы A2.</b> {A2_PHRASES.length} выражений для реальных ситуаций. Учите карточками (с озвучкой Inworld и FSRS после сидинга) или проверьте себя тестом RU→FR — так соберётся персональный план фраз.</div>
+      <div className="flex gap-2 flex-wrap items-center">
+        <button onClick={() => setMode("cards")} className={`px-3 py-1.5 rounded-full text-sm border ${mode === "cards" ? "bg-[#4255ff] text-white border-[#4255ff]" : "border-border text-qz-text-muted"}`}>Карточки</button>
+        <button onClick={() => setMode("test")} className={`px-3 py-1.5 rounded-full text-sm border ${mode === "test" ? "bg-[#4255ff] text-white border-[#4255ff]" : "border-border text-qz-text-muted"}`}>Тест фраз</button>
+      </div>
+      <div className="flex gap-2 flex-wrap">
+        {cats.map((c) => (<button key={c} onClick={() => { setCatFilter(c); setPos(0); setFlipped(false); }} className={`px-3 py-1.5 rounded-full text-sm border ${catFilter === c ? "bg-emerald-600 text-white border-emerald-600" : "border-border text-qz-text-muted"}`}>{c}</button>))}
+      </div>
+
+      {mode === "cards" && card && (
+        <>
+          <button onClick={() => setFlipped((f) => !f)} className="w-full bg-qz-card border border-border rounded-2xl p-10 text-center min-h-[200px] flex flex-col items-center justify-center gap-3 hover:border-[#4255ff]/40">
+            <span className="text-xs text-qz-text-muted">{card.category} · {flipped ? "français" : "русский"} · нажмите, чтобы перевернуть</span>
+            <span className="text-2xl font-bold">{flipped ? card.fr : card.ru}</span>
+            {flipped && card.note && <span className="text-sm text-qz-text-muted italic">{card.note}</span>}
+            <span onClick={(e) => { e.stopPropagation(); speakCardInworld(phraseCardUuid(card.id), card.fr); }} className="mt-2 inline-flex items-center gap-1.5 text-[#4255ff] text-sm cursor-pointer"><Volume2 className="w-4 h-4" /> Озвучить</span>
+          </button>
+          <div className="flex items-center justify-between">
+            <button onClick={() => { setFlipped(false); setPos((p) => (p - 1 + phrases.length) % phrases.length); }} className="px-4 py-2 rounded-xl border border-border hover:bg-qz-card">← Назад</button>
+            <span className="text-sm text-qz-text-muted">{(pos % phrases.length) + 1} / {phrases.length}</span>
+            <button onClick={() => { setFlipped(false); setPos((p) => (p + 1) % phrases.length); addXp(1); }} className="px-4 py-2 rounded-xl bg-[#4255ff] text-white">Далее →</button>
+          </div>
+        </>
+      )}
+
+      {mode === "test" && test.map((q) => {
+        const a = answers[q.id];
+        return (
+          <div key={q.id} className="bg-qz-card border border-border rounded-2xl p-5">
+            <div className="flex justify-between items-center mb-2"><span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-600/10 text-emerald-600">{q.category}</span></div>
+            <p className="text-lg mb-3">{q.prompt}</p>
+            <div className="flex gap-2 flex-wrap">
+              <input type="text" disabled={!!a} value={inputs[q.id] ?? ""} onChange={(e) => setInputs((p) => ({ ...p, [q.id]: e.target.value }))} onKeyDown={(e) => { if (e.key === "Enter") checkPhrase(q); }} placeholder="Введите фразу по-французски…" className={`flex-1 min-w-[200px] px-3 py-2.5 rounded-xl border-2 bg-background ${a ? (a.ok ? "border-green-500 bg-green-500/10" : "border-red-500 bg-red-500/10") : "border-border"}`} />
+              <button disabled={!!a || gradingId === q.id} onClick={() => checkPhrase(q)} className="px-4 py-2.5 rounded-xl bg-[#4255ff] text-white font-semibold disabled:opacity-60 flex items-center gap-2">{gradingId === q.id ? <><Loader2 className="w-4 h-4 animate-spin" /> ИИ…</> : "Проверить"}</button>
+              <button onClick={() => speakCardInworld(phraseCardUuid(q.id), q.fr)} className="px-3 py-2.5 rounded-xl border border-border"><Volume2 className="w-5 h-5 text-[#4255ff]" /></button>
+            </div>
+            {a && (<div className={`mt-3 text-sm font-semibold ${a.ok ? "text-green-500" : "text-red-500"}`}>{a.ok ? "✔ Верно!" : "✗ Неточно."}<div className="mt-1.5 bg-[#4255ff]/5 border-l-[3px] border-[#4255ff] rounded-r-lg px-3 py-2 text-foreground font-normal">{a.expl}</div></div>)}
+          </div>
+        );
+      })}
     </div>
   );
 }
