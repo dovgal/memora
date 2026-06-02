@@ -1,2 +1,0 @@
-generate_exercises::{closure#0}::Record
-Vec<generate_exercises::{closure#0}::Record>

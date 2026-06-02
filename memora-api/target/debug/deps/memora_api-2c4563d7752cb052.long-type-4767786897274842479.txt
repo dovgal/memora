@@ -1,1 +1,0 @@
-MethodRouter<Arc<DashMap<Uuid, Arc<RateLimiter<NotKeyed, InMemoryState, QuantaClock, NoOpMiddleware<QuantaInstant>>>>>>
