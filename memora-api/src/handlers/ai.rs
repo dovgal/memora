@@ -556,3 +556,102 @@ pub async fn analyze_content(
 
     Sse::new(event_stream.boxed())
 }
+
+#[derive(Deserialize)]
+pub struct GenerateA2Request {
+    pub topics: Vec<String>,   // слабые темы (грам.точки A2)
+    pub count: Option<u32>,    // сколько заданий (по умолчанию 8, максимум 15)
+}
+
+#[derive(Serialize)]
+pub struct GeneratedQuestion {
+    pub topic: String,
+    #[serde(rename = "type")]
+    pub qtype: String,         // "mc" | "text"
+    pub prompt: String,
+    pub options: Option<Vec<String>>,
+    pub answer_index: Option<i32>,
+    pub accept: Option<Vec<String>>,
+    pub speak: String,
+    pub explanation: String,
+}
+
+/// POST /api/ai/a2/generate-questions
+/// Генерирует НОВЫЕ задания уровня A2 по указанным слабым темам через Ollama.
+/// Возвращает массив GeneratedQuestion (для бесконечного «Моего плана»).
+pub async fn generate_a2_questions(
+    State(rate_limiter): State<AppRateLimiter>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Json(payload): Json<GenerateA2Request>,
+) -> Result<Json<Vec<GeneratedQuestion>>, (StatusCode, Json<AiGatewayError>)> {
+    // rate limit
+    let user_uuid = uuid::Uuid::parse_str(&user.sub)
+        .map_err(|_| (StatusCode::UNAUTHORIZED, Json(AiGatewayError { error: "Invalid User UUID".to_string() })))?;
+    let limiter = rate_limiter.entry(user_uuid).or_insert_with(|| {
+        Arc::new(RateLimiter::direct(Quota::per_minute(NonZeroU32::new(5).unwrap())))
+    });
+    if limiter.check().is_err() {
+        return Err((StatusCode::TOO_MANY_REQUESTS, Json(AiGatewayError { error: "Rate limit exceeded. Try again in a minute.".to_string() })));
+    }
+
+    let api_key = env::var("OLLAMA_API_KEY")
+        .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: "API Key not set".to_string() })))?;
+
+    let count = payload.count.unwrap_or(8).min(15);
+    let topics = if payload.topics.is_empty() {
+        "общие темы A2 (passé composé, imparfait, futur, pronoms, subjonctif)".to_string()
+    } else {
+        payload.topics.join(", ")
+    };
+
+    let system_prompt = format!(
+        "Ты — генератор учебных заданий по французскому языку уровня A2 (CEFR). \
+         Сгенерируй {count} РАЗНЫХ заданий по этим темам: {topics}. \
+         Смешивай типы: примерно половина multiple-choice, половина с вводом ответа. \
+         Выводи ТОЛЬКО валидный JSON-массив без markdown. Каждый элемент строго в формате: \
+         {{\"topic\": string, \"type\": \"mc\"|\"text\", \"prompt\": string (по-русски с французским примером), \
+         \"options\": [string,string,string,string] | null (только для mc), \"answer_index\": number|null (0-based, только для mc), \
+         \"accept\": [string] | null (принимаемые ответы, только для text), \"speak\": string (французская фраза для озвучки), \
+         \"explanation\": string (правило по-русски)}}. \
+         Французский — корректный, объяснения краткие и понятные. Не добавляй ничего кроме JSON-массива."
+    );
+
+    let client = Client::new();
+    let response = client.post(&get_ollama_url())
+        .header("Authorization", format!("Bearer {}", api_key))
+        .json(&OllamaRequest {
+            model: OLLAMA_MODEL.to_string(),
+            messages: vec![
+                OllamaMessage { role: "system".to_string(), content: system_prompt, images: None },
+                OllamaMessage { role: "user".to_string(), content: "Сгенерируй задания сейчас.".to_string(), images: None },
+            ],
+            stream: false,
+            options: Some(OllamaOptions { num_predict: 3000 }),
+        })
+        .send()
+        .await
+        .map_err(|e| (StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: e.to_string() })))?;
+
+    let body = response.text().await.unwrap_or_default();
+
+    #[derive(Deserialize)]
+    struct OllamaResponse { message: OllamaDelta }
+    let parsed: OllamaResponse = serde_json::from_str(&body)
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Ollama JSON Error: {}", e) })))?;
+    let content = parsed.message.content.unwrap_or_default();
+
+    // Иногда модель оборачивает в ```json ... ``` — вырежем массив по первым [ и последним ].
+    let trimmed = {
+        let start = content.find('[');
+        let end = content.rfind(']');
+        match (start, end) {
+            (Some(s), Some(e)) if e > s => &content[s..=e],
+            _ => content.as_str(),
+        }
+    };
+
+    let questions: Vec<GeneratedQuestion> = serde_json::from_str(trimmed)
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Parse Error: {} - Content: {}", e, content) })))?;
+
+    Ok(Json(questions))
+}

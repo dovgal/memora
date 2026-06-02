@@ -97,6 +97,7 @@ async fn main() {
         .route("/api/ai/generate", post(handlers::ai::generate_flashcards_stream))
         .route("/api/ai/learn/generate", post(handlers::ai::generate_exercises))
         .route("/api/ai/learn/grade", post(handlers::ai::grade_answer))
+        .route("/api/ai/a2/generate-questions", post(handlers::ai::generate_a2_questions))
         .route("/api/ai/creator/analyze", post(handlers::ai::analyze_content))
         .route("/api/images/generate", post(handlers::ai::generate_image))
         .route("/api/ai/qchat/{set_id}", post(handlers::ai::qchat_stream))

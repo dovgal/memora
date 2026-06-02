@@ -7,7 +7,7 @@ import {
   Volume2, Mic, Shuffle, CheckCircle2, XCircle, Loader2,
   ChevronLeft, Sparkles, ArrowRight, BookOpen, Headphones, MessageCircle,
   GraduationCap, Brain, RefreshCw, Trophy, Flame, Zap, Target, Award, Clock,
-  MessagesSquare, Quote,
+  MessagesSquare, Quote, PenLine, FileDown, Link2, History, Users, Wand2,
 } from "lucide-react";
 import {
   A2_UNITS, A2_SKILL_LABELS, normalizeA2,
@@ -27,7 +27,12 @@ import {
   A2_WRITING_TASKS, buildWritingGradePrompt, countWords, WRITING_TYPE_LABELS, WritingTask,
 } from "@/lib/courses/frenchA2Writing";
 import { speakInworld, speakCardInworld } from "@/lib/courses/ttsInworld";
-import { PenLine } from "lucide-react";
+import {
+  generateQuestions, reviewSrs, isDue, dueCount,
+  loadWritingHistory, addWritingAttempt, WritingAttempt,
+  getWeeklyGoal, setWeeklyTarget, getLeaderboard,
+  openDiagnosticPdf, DiagReport,
+} from "@/lib/courses/frenchA2Pro";
 
 type Status = "right" | "wrong";
 interface AnswerState { status: Status; given: string; explanation: string; aiChecked?: boolean; }
@@ -63,7 +68,7 @@ async function aiGrade(session: ReturnType<typeof useSession>["data"], question:
   } catch { return null; }
 }
 
-type Tab = "diagnostic" | "path" | "grammar" | "conjug" | "vocab" | "phrases" | "listening" | "dictation" | "dialogue" | "speaking" | "writing" | "exam";
+type Tab = "diagnostic" | "path" | "grammar" | "conjug" | "vocab" | "phrases" | "listening" | "dictation" | "dialogue" | "speaking" | "writing" | "exam" | "progress";
 
 export default function FrenchA2CoursePage() {
   const { data: session } = useSession();
@@ -116,6 +121,7 @@ export default function FrenchA2CoursePage() {
             ["speaking", "Говорение", Mic],
             ["writing", "Письмо", PenLine],
             ["exam", "Экзамен DELF", Award],
+            ["progress", "Прогресс", Users],
           ] as [Tab, string, typeof Brain][]).map(([t, label, Icon]) => (
             <button key={t} onClick={() => setTab(t)} className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium border transition-colors ${tab === t ? "bg-[#4255ff] text-white border-[#4255ff]" : "border-border text-qz-text-muted hover:bg-qz-card"}`}>
               <Icon className="w-4 h-4" /> {label}
@@ -135,6 +141,7 @@ export default function FrenchA2CoursePage() {
         {tab === "speaking" && <SkillTrainer session={session} skill="speaking" title="Тренажёр говорения" hint="Нажмите 🎙, произнесите фразу — оценим произношение." />}
         {tab === "writing" && <WritingTrainer session={session} />}
         {tab === "exam" && <ExamMode session={session} />}
+        {tab === "progress" && <ProgressTab />}
       </div>
     </div>
   );
@@ -173,6 +180,7 @@ function DiagnosticTest({ session, onDone }: { session: ReturnType<typeof useSes
   const [showResults, setShowResults] = useState(false);
   const [pron, setPron] = useState<Record<number, { ok: boolean; heard: string; score: number }>>({});
   const [recId, setRecId] = useState<number | null>(null);
+  const [studentName, setStudentName] = useState("");
 
   const questions = useMemo(() => order.map((i) => A2_FULL_POOL[i]), [order]);
   const total = A2_FULL_POOL.length;
@@ -231,6 +239,20 @@ function DiagnosticTest({ session, onDone }: { session: ReturnType<typeof useSes
     setTimeout(() => document.getElementById("a2-results")?.scrollIntoView({ behavior: "smooth" }), 50);
   };
 
+  const exportPdf = () => {
+    const rep: DiagReport = {
+      studentName,
+      date: new Date().toLocaleDateString("ru-RU"),
+      scorePercent: results.p,
+      rightCount: right,
+      total,
+      bySkill: results.skills.map((s) => ({ label: A2_SKILL_LABELS[s.s], r: s.r, t: s.t, p: s.p })),
+      byUnit: results.units.map((u) => ({ unit: u.u, title: A2_UNITS.find((x) => x.n === u.u)?.titleRu || "", r: u.r, t: u.t, p: u.p })),
+      weakTopics: results.weakUnits.map((u) => `U${u.u} ${A2_UNITS.find((x) => x.n === u.u)?.titleRu || ""}`),
+    };
+    openDiagnosticPdf(rep);
+  };
+
   return (
     <>
       <div className="bg-[#4255ff]/5 border border-[#4255ff]/20 rounded-xl p-4 text-sm"><b className="text-[#4255ff]">Полный диагностический тест A2.</b> {total} заданий по 12 юнитам и 4 навыкам — для точного выявления любых пробелов. После завершения — разбор по юнитам, рекомендации и автосбор «Моего плана». Можно «Перемешать» и проходить частями.</div>
@@ -252,6 +274,10 @@ function DiagnosticTest({ session, onDone }: { session: ReturnType<typeof useSes
           <div className="flex items-center gap-5 flex-wrap">
             <div className="w-28 h-28 rounded-full grid place-items-center shrink-0" style={{ background: `conic-gradient(#ffcd1f ${results.p}%, var(--qz-card-border,#e2e6ef) 0)` }}><span className="w-[88px] h-[88px] bg-background rounded-full grid place-items-center text-2xl font-bold">{results.p}%</span></div>
             <div><div className="text-xl font-bold">{right} из {total} верно</div><div className="text-qz-text-muted text-sm">{results.p >= 85 ? "Сильный A2 — почти готов к DELF A2!" : results.p >= 65 ? "Хороший A2, есть точечные пробелы." : results.p >= 45 ? "Базовый A2, нужна проработка." : "Рекомендуется системно пройти тренажёры."}</div></div>
+          </div>
+          <div className="flex items-center gap-2 flex-wrap bg-background rounded-xl p-3">
+            <input type="text" value={studentName} onChange={(e) => setStudentName(e.target.value)} placeholder="Имя ученика (для отчёта)" className="flex-1 min-w-[160px] px-3 py-2 rounded-lg border border-border bg-qz-card text-sm" />
+            <button onClick={exportPdf} className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#2e5496] text-white text-sm font-semibold"><FileDown className="w-4 h-4" /> Отчёт для преподавателя (PDF)</button>
           </div>
           <div><h3 className="font-semibold mb-2">По навыкам</h3><div className="grid grid-cols-2 gap-2">{results.skills.map((s) => (<div key={s.s} className="flex items-center gap-2 text-sm bg-background rounded-lg px-3 py-2"><span className="flex-1">{A2_SKILL_LABELS[s.s]}</span><span className="font-semibold">{s.r}/{s.t}</span><span className={`text-xs px-2 py-0.5 rounded-full ${s.p >= 70 ? "bg-green-500/15 text-green-500" : "bg-amber-500/15 text-amber-500"}`}>{s.p}%</span></div>))}</div></div>
           <div><h3 className="font-semibold mb-2">По юнитам</h3><div className="space-y-1.5">{results.units.map((u) => { const unit = A2_UNITS.find((x) => x.n === u.u); return (<div key={u.u} className="flex items-center gap-2.5 text-sm"><span className="w-44 shrink-0 truncate">U{u.u}. {unit?.titleRu}</span><span className="flex-1 h-2 bg-red-500/15 rounded-full overflow-hidden"><span className="block h-full bg-green-500" style={{ width: `${u.p}%` }} /></span><span className="w-10 text-right font-semibold">{u.r}/{u.t}</span></div>); })}</div></div>
@@ -300,6 +326,9 @@ function MyPath({ session }: { session: ReturnType<typeof useSession>["data"] })
   const [answers, setAnswers] = useState<Record<number, AnswerState>>({});
   const [inputs, setInputs] = useState<Record<number, string>>({});
   const [gradingId, setGradingId] = useState<number | null>(null);
+  const [aiItems, setAiItems] = useState<A2Question[]>([]);
+  const [generating, setGenerating] = useState(false);
+  const [genError, setGenError] = useState<string | null>(null);
   const record = (q: A2Question, status: Status, given: string, expl: string, ai = false) => setAnswers((p) => ({ ...p, [q.id]: { status, given, explanation: expl, aiChecked: ai } }));
   const handleText = async (q: A2Question) => {
     if (answers[q.id]) return; const v = (inputs[q.id] ?? "").trim(); if (!v) return;
@@ -310,19 +339,53 @@ function MyPath({ session }: { session: ReturnType<typeof useSession>["data"] })
   };
   const handleMc = (q: A2Question, idx: number) => { if (answers[q.id]) return; const ok = idx === q.answerIndex; record(q, ok ? "right" : "wrong", q.options![idx], q.explanation); if (ok) addXp(5); };
 
+  // Темы для генерации = грам.точки слабых юнитов из пула.
+  const weakTopics = useMemo(() => {
+    const set = new Set<string>();
+    A2_FULL_POOL.filter((q) => weak.includes(q.unit)).forEach((q) => set.add(q.grammarPoint));
+    return [...set].slice(0, 8);
+  }, [weak]);
+
+  const generateMore = async () => {
+    setGenerating(true); setGenError(null);
+    try {
+      const fresh = await generateQuestions(weakTopics.length ? weakTopics : ["passé composé", "imparfait", "futur", "subjonctif"], 8, session?.id_token);
+      if (fresh.length === 0) setGenError("ИИ не вернул заданий, попробуйте ещё раз.");
+      setAiItems((p) => [...fresh, ...p]);
+    } catch {
+      setGenError("Не удалось сгенерировать (ИИ недоступен). Попробуйте позже.");
+    } finally { setGenerating(false); }
+  };
+
   if (!game) return null;
-  if (weak.length === 0) return (
+
+  const genButton = (
+    <button onClick={generateMore} disabled={generating} className="px-4 py-2.5 rounded-xl bg-emerald-600 text-white font-semibold disabled:opacity-60 flex items-center gap-2">
+      {generating ? <><Loader2 className="w-4 h-4 animate-spin" /> Генерирую…</> : <><Wand2 className="w-4 h-4" /> Ещё задания (ИИ)</>}
+    </button>
+  );
+
+  if (weak.length === 0 && aiItems.length === 0) return (
     <div className="bg-qz-card border border-border rounded-2xl p-8 text-center">
       <Target className="w-12 h-12 mx-auto text-[#4255ff] mb-3" />
       <h3 className="font-bold text-lg mb-1">План пока пуст</h3>
-      <p className="text-qz-text-muted text-sm">Пройдите «Диагностику» — я автоматически соберу персональный план из заданий по вашим слабым юнитам.</p>
+      <p className="text-qz-text-muted text-sm mb-4">Пройдите «Диагностику» — я соберу план из заданий по слабым юнитам. Или сразу сгенерируйте свежие задания через ИИ.</p>
+      <div className="flex justify-center">{genButton}</div>
+      {genError && <p className="text-amber-500 text-sm mt-2">{genError}</p>}
     </div>
   );
 
   return (
     <div className="space-y-4">
-      <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 text-sm"><b className="text-emerald-600">Ваш персональный план.</b> Собран по слабым юнитам диагностики: {weak.map((u) => `U${u}`).join(", ")}. Проработайте эти задания, затем перепройдите диагностику.</div>
-      {items.map((q) => (
+      <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 text-sm flex items-center justify-between gap-3 flex-wrap">
+        <span><b className="text-emerald-600">Ваш персональный план.</b> {weak.length ? `Слабые юниты: ${weak.map((u) => `U${u}`).join(", ")}.` : "Свежие задания от ИИ."} Бесконечная генерация по вашим темам.</span>
+        {genButton}
+      </div>
+      {genError && <p className="text-amber-500 text-sm">{genError}</p>}
+      {aiItems.length > 0 && (
+        <div className="text-xs text-qz-text-muted flex items-center gap-1.5"><Sparkles className="w-3.5 h-3.5 text-emerald-600" /> Сгенерировано ИИ: {aiItems.length}</div>
+      )}
+      {[...aiItems, ...items].map((q) => (
         <QuestionCard key={q.id} q={q} ans={answers[q.id]} input={inputs[q.id] ?? ""} grading={gradingId === q.id} recording={false}
           onInput={(v) => setInputs((p) => ({ ...p, [q.id]: v }))} onText={() => handleText(q)} onMc={(j) => handleMc(q, j)} onPron={() => {}} />
       ))}
@@ -452,6 +515,13 @@ function DictationTrainer({ session }: { session: ReturnType<typeof useSession>[
     step();
   };
 
+  const [dueOnly, setDueOnly] = useState(false);
+  const [audioUrl, setAudioUrl] = useState("");
+  const [, forceTick] = useState(0); // для перерисовки после SRS-оценки
+
+  const visible = useMemo(() => dueOnly ? items.filter((d) => isDue(`dict_${d.key}`)) : items, [items, dueOnly]);
+  const due = useMemo(() => dueCount(items.map((d) => `dict_${d.key}`)), [items]);
+
   const check = async (d: MergedDictation) => {
     if (answers[d.key]) return;
     const v = (inputs[d.key] ?? "").trim(); if (!v) return;
@@ -464,14 +534,33 @@ function DictationTrainer({ session }: { session: ReturnType<typeof useSession>[
     if (g?.ok) addXp(d.level * 3);
   };
 
+  const rate = (d: MergedDictation, r: "again" | "hard" | "good" | "easy") => {
+    reviewSrs(`dict_${d.key}`, r);
+    forceTick((x) => x + 1);
+  };
+
   return (
     <div className="space-y-4">
-      <div className="bg-[#4255ff]/5 border border-[#4255ff]/20 rounded-xl p-4 text-sm"><b className="text-[#4255ff]">Аудио-диктанты (до автоматизма).</b> Нажмите 🔊, прослушайте фразу и запишите её. Уровни 1–3 по сложности. Режим «по словам» помогает разбирать речь на слух.</div>
+      <div className="bg-[#4255ff]/5 border border-[#4255ff]/20 rounded-xl p-4 text-sm"><b className="text-[#4255ff]">Аудио-диктанты (до автоматизма + интервальные повторения).</b> Прослушайте и запишите фразу. После проверки оцените сложность — трудные вернутся раньше (FSRS). Режим «по словам» помогает разбирать речь.</div>
+
+      {/* Импорт личного аудио учебника по ссылке (без хостинга) */}
+      <div className="bg-qz-card border border-border rounded-2xl p-4">
+        <div className="flex items-center gap-2 text-sm font-semibold mb-2"><Link2 className="w-4 h-4 text-[#4255ff]" /> Своё аудио по ссылке</div>
+        <p className="text-xs text-qz-text-muted mb-2">Вставьте прямую ссылку на аудиофайл (например, mp3 из вашего облака/учебника). Мы только проигрываем его — файл не загружается и не хранится на сервере.</p>
+        <div className="flex gap-2 flex-wrap">
+          <input type="url" value={audioUrl} onChange={(e) => setAudioUrl(e.target.value)} placeholder="https://…/audio.mp3" className="flex-1 min-w-[200px] px-3 py-2 rounded-xl border-2 border-border bg-background text-sm" />
+          <button disabled={!audioUrl.trim()} onClick={() => { try { new Audio(audioUrl).play(); } catch { alert("Не удалось воспроизвести ссылку."); } }} className="px-4 py-2 rounded-xl bg-[#4255ff] text-white text-sm font-semibold disabled:opacity-60 flex items-center gap-1.5"><Volume2 className="w-4 h-4" /> Слушать</button>
+        </div>
+        {audioUrl.trim() && <audio controls src={audioUrl} className="w-full mt-2" />}
+      </div>
+
       <div className="flex gap-2 flex-wrap items-center">
         {(["all", 1, 2, 3] as const).map((l) => (<button key={l} onClick={() => setLevelFilter(l)} className={`px-3 py-1.5 rounded-full text-sm border ${levelFilter === l ? "bg-[#4255ff] text-white border-[#4255ff]" : "border-border text-qz-text-muted"}`}>{l === "all" ? "Все" : `Уровень ${l}`}</button>))}
+        <button onClick={() => setDueOnly((v) => !v)} className={`px-3 py-1.5 rounded-full text-sm border ${dueOnly ? "bg-emerald-600 text-white border-emerald-600" : "border-border text-qz-text-muted"}`}>К повторению ({due})</button>
         <label className="ml-auto flex items-center gap-1.5 text-sm cursor-pointer"><input type="checkbox" checked={slow} onChange={(e) => setSlow(e.target.checked)} /> по словам</label>
       </div>
-      {items.map((d) => {
+      {visible.length === 0 && <div className="text-sm text-qz-text-muted text-center py-6">На сегодня к повторению ничего нет — отличная работа!</div>}
+      {visible.map((d) => {
         const a = answers[d.key];
         return (
           <div key={d.key} className="bg-qz-card border border-border rounded-2xl p-5">
@@ -484,7 +573,18 @@ function DictationTrainer({ session }: { session: ReturnType<typeof useSession>[
               <input type="text" disabled={!!a} value={inputs[d.key] ?? ""} onChange={(e) => setInputs((p) => ({ ...p, [d.key]: e.target.value }))} onKeyDown={(e) => { if (e.key === "Enter") check(d); }} placeholder="Запишите услышанное по-французски…" className={`flex-1 min-w-[200px] px-3 py-2.5 rounded-xl border-2 bg-background ${a ? (a.ok ? "border-green-500 bg-green-500/10" : "border-red-500 bg-red-500/10") : "border-border"}`} />
               <button disabled={!!a || gradingId === d.key} onClick={() => check(d)} className="px-4 py-2.5 rounded-xl bg-[#4255ff] text-white font-semibold disabled:opacity-60 flex items-center gap-2">{gradingId === d.key ? <><Loader2 className="w-4 h-4 animate-spin" /> ИИ…</> : "Проверить"}</button>
             </div>
-            {a && (<div className={`mt-3 text-sm font-semibold ${a.ok ? "text-green-500" : "text-red-500"}`}>{a.ok ? "✔ Верно!" : "✗ Есть ошибки."}<div className="mt-1.5 bg-[#4255ff]/5 border-l-[3px] border-[#4255ff] rounded-r-lg px-3 py-2 text-foreground font-normal">{a.expl}</div></div>)}
+            {a && (
+              <div className="mt-3">
+                <div className={`text-sm font-semibold ${a.ok ? "text-green-500" : "text-red-500"}`}>{a.ok ? "✔ Верно!" : "✗ Есть ошибки."}<div className="mt-1.5 bg-[#4255ff]/5 border-l-[3px] border-[#4255ff] rounded-r-lg px-3 py-2 text-foreground font-normal">{a.expl}</div></div>
+                <div className="mt-2 flex items-center gap-2 flex-wrap text-xs">
+                  <span className="text-qz-text-muted">Когда повторить?</span>
+                  <button onClick={() => rate(d, "again")} className="px-2.5 py-1 rounded-full border border-red-500/40 text-red-500">Снова</button>
+                  <button onClick={() => rate(d, "hard")} className="px-2.5 py-1 rounded-full border border-amber-500/40 text-amber-500">Трудно</button>
+                  <button onClick={() => rate(d, "good")} className="px-2.5 py-1 rounded-full border border-emerald-500/40 text-emerald-600">Хорошо</button>
+                  <button onClick={() => rate(d, "easy")} className="px-2.5 py-1 rounded-full border border-emerald-500/40 text-emerald-600">Легко</button>
+                </div>
+              </div>
+            )}
           </div>
         );
       })}
@@ -737,6 +837,12 @@ function WritingTrainer({ session }: { session: ReturnType<typeof useSession>["d
   const [text, setText] = useState("");
   const [result, setResult] = useState<{ ok: boolean; explanation: string; correct: string } | null>(null);
   const [grading, setGrading] = useState(false);
+  const [history, setHistory] = useState<WritingAttempt[]>([]);
+  const [showHistory, setShowHistory] = useState(false);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setHistory(loadWritingHistory()));
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   const words = countWords(text);
   const inRange = words >= task.minWords && words <= task.maxWords;
@@ -762,6 +868,8 @@ function WritingTrainer({ session }: { session: ReturnType<typeof useSession>["d
         const g = await res.json() as { isCorrect: boolean; explanation: string; correctAnswer: string };
         setResult({ ok: g.isCorrect, explanation: g.explanation, correct: g.correctAnswer });
         if (g.isCorrect) addXp(15);
+        addWritingAttempt({ taskId: task.id, taskTitle: task.title, date: new Date().toISOString(), words, passed: g.isCorrect, excerpt: text.slice(0, 120) });
+        setHistory(loadWritingHistory());
       } else {
         setResult({ ok: false, explanation: "ИИ-проверка недоступна. Сверьтесь с опорными фразами и обязательными пунктами выше.", correct: "" });
       }
@@ -776,9 +884,31 @@ function WritingTrainer({ session }: { session: ReturnType<typeof useSession>["d
 
   return (
     <div className="space-y-4">
-      <div className="bg-[#4255ff]/5 border border-[#4255ff]/20 rounded-xl p-4 text-sm">
-        <b className="text-[#4255ff]">Письменная речь (production écrite) A2.</b> Выберите задание формата DELF A2, напишите текст в рамках объёма и отправьте на ИИ-проверку: оценка по критериям, конкретные ошибки и улучшенная версия.
+      <div className="bg-[#4255ff]/5 border border-[#4255ff]/20 rounded-xl p-4 text-sm flex items-center justify-between gap-3 flex-wrap">
+        <span><b className="text-[#4255ff]">Письменная речь (production écrite) A2.</b> Задание формата DELF A2 → ИИ-проверка по критериям, ошибки и улучшенная версия.</span>
+        <button onClick={() => setShowHistory((v) => !v)} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border text-sm whitespace-nowrap"><History className="w-4 h-4" /> История ({history.length})</button>
       </div>
+
+      {showHistory && (
+        <div className="bg-qz-card border border-border rounded-2xl p-4">
+          <div className="font-semibold text-sm mb-2">История попыток и прогресс</div>
+          {history.length === 0 ? <p className="text-sm text-qz-text-muted">Пока нет попыток. Напишите и проверьте первый текст.</p> : (
+            <>
+              <div className="text-xs text-qz-text-muted mb-2">Зачётов: {history.filter((h) => h.passed).length} из {history.length} ({Math.round(history.filter((h) => h.passed).length / history.length * 100)}%)</div>
+              <div className="space-y-1.5 max-h-64 overflow-y-auto">
+                {history.map((h, i) => (
+                  <div key={i} className="flex items-center gap-2 text-sm border-b border-border pb-1.5">
+                    <span className={h.passed ? "text-green-500" : "text-amber-500"}>{h.passed ? "✔" : "↻"}</span>
+                    <span className="flex-1 truncate">{h.taskTitle}</span>
+                    <span className="text-xs text-qz-text-muted">{h.words} сл.</span>
+                    <span className="text-xs text-qz-text-muted">{new Date(h.date).toLocaleDateString("ru-RU")}</span>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      )}
 
       <div className="flex gap-2 flex-wrap">
         {A2_WRITING_TASKS.map((t) => (
@@ -834,6 +964,71 @@ function WritingTrainer({ session }: { session: ReturnType<typeof useSession>["d
             )}
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+// ───────── Прогресс: недельная цель + таблица лидеров ─────────
+function ProgressTab() {
+  const [game, setGame] = useState<Gamification | null>(null);
+  const [name, setName] = useState("");
+  const [target, setTarget] = useState(150);
+  const [, tick] = useState(0);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => {
+      const g = loadGamification();
+      setGame(g);
+      const goal = getWeeklyGoal(g.xp);
+      setTarget(goal.targetXp);
+      if (typeof window !== "undefined") setName(localStorage.getItem("memora_a2_name") || "");
+    });
+    return () => cancelAnimationFrame(id);
+  }, []);
+  if (!game) return null;
+
+  const goal = getWeeklyGoal(game.xp);
+  const earnedThisWeek = Math.max(0, game.xp - goal.startXp);
+  const goalPct = Math.min(100, Math.round((earnedThisWeek / goal.targetXp) * 100));
+  const board = getLeaderboard(name || "Вы", game.xp);
+
+  const saveName = (v: string) => {
+    setName(v);
+    if (typeof window !== "undefined") localStorage.setItem("memora_a2_name", v);
+  };
+  const applyTarget = (t: number) => { setTarget(t); setWeeklyTarget(t, game.xp); tick((x) => x + 1); };
+
+  return (
+    <div className="space-y-4">
+      {/* Недельная цель */}
+      <div className="bg-qz-card border border-border rounded-2xl p-5">
+        <div className="flex items-center gap-2 font-semibold mb-2"><Target className="w-5 h-5 text-emerald-600" /> Цель недели</div>
+        <div className="text-sm text-qz-text-muted mb-2">Заработано на этой неделе: <b className="text-foreground">{earnedThisWeek}</b> / {goal.targetXp} XP</div>
+        <div className="h-3 bg-background rounded-full overflow-hidden mb-3"><div className="h-full bg-emerald-500 transition-all" style={{ width: `${goalPct}%` }} /></div>
+        {goalPct >= 100 ? <div className="text-green-500 text-sm font-semibold">🎉 Цель недели достигнута!</div> : (
+          <div className="flex items-center gap-2 flex-wrap text-sm">
+            <span className="text-qz-text-muted">Изменить цель:</span>
+            {[100, 150, 250, 400].map((t) => (
+              <button key={t} onClick={() => applyTarget(t)} className={`px-3 py-1 rounded-full border ${target === t ? "bg-emerald-600 text-white border-emerald-600" : "border-border text-qz-text-muted"}`}>{t} XP</button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Таблица лидеров */}
+      <div className="bg-qz-card border border-border rounded-2xl p-5">
+        <div className="flex items-center gap-2 font-semibold mb-3"><Trophy className="w-5 h-5 text-[#ffcd1f]" /> Таблица лидеров класса</div>
+        <input type="text" value={name} onChange={(e) => saveName(e.target.value)} placeholder="Ваше имя" className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm mb-3" />
+        <div className="space-y-1.5">
+          {board.map((row, i) => (
+            <div key={i} className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm ${row.me ? "bg-[#4255ff]/10 font-semibold" : "bg-background"}`}>
+              <span className={`w-6 text-center ${i === 0 ? "text-[#ffcd1f]" : "text-qz-text-muted"}`}>{i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : i + 1}</span>
+              <span className="flex-1">{row.name}{row.me && " (вы)"}</span>
+              <span className="flex items-center gap-1"><Zap className="w-3.5 h-3.5 text-[#4255ff]" /> {row.xp}</span>
+            </div>
+          ))}
+        </div>
+        <p className="text-xs text-qz-text-muted mt-3">Одноклассники в демо-режиме генерируются локально. При подключении общего бэкенда таблица станет реальной для группы.</p>
       </div>
     </div>
   );
