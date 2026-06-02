@@ -8,6 +8,7 @@ pub mod users;
 pub mod folders;
 pub mod errors;
 pub mod audio;
+pub mod classes;
 
 // Серверная проверка произношения (whisper.cpp). Компилируется только с --features stt.
 #[cfg(feature = "stt")]

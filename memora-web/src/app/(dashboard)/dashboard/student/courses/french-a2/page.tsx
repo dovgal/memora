@@ -32,7 +32,13 @@ import {
   loadWritingHistory, addWritingAttempt, WritingAttempt,
   getWeeklyGoal, setWeeklyTarget, getLeaderboard,
   openDiagnosticPdf, DiagReport,
+  catInit, catNext, catUpdate, catScore, questionDifficulty,
 } from "@/lib/courses/frenchA2Pro";
+import {
+  joinClass, classLeaderboard, submitXp, submitDiagnostic, reportErrorStat, myAssignments,
+} from "@/lib/courses/frenchA2Api";
+import { downloadForOffline, isOfflineReady, offlineSupported } from "@/lib/courses/frenchA2Offline";
+import { Download } from "lucide-react";
 
 type Status = "right" | "wrong";
 interface AnswerState { status: Status; given: string; explanation: string; aiChecked?: boolean; }
@@ -95,12 +101,30 @@ export default function FrenchA2CoursePage() {
 
         {/* Геймификация */}
         {game && lvl && (
-          <div className="flex items-center gap-4 bg-qz-card border border-border rounded-2xl px-4 py-3 flex-wrap">
-            <div className="flex items-center gap-1.5"><Trophy className="w-5 h-5 text-[#ffcd1f]" /><span className="font-semibold text-sm">Ур. {lvl.level} · {lvl.title}</span></div>
-            <div className="flex items-center gap-1.5"><Zap className="w-5 h-5 text-[#4255ff]" /><span className="text-sm">{game.xp} XP</span></div>
-            <div className="flex items-center gap-1.5"><Flame className={`w-5 h-5 ${game.streak > 0 ? "text-orange-500" : "text-qz-text-muted"}`} /><span className="text-sm">{game.streak} дн. подряд</span></div>
-            <div className="flex-1 min-w-[100px] h-2 bg-background rounded-full overflow-hidden"><div className="h-full bg-[#ffcd1f]" style={{ width: `${(game.xp % 100)}%` }} /></div>
-            {game.badges.length > 0 && <div className="flex items-center gap-1"><Award className="w-4 h-4 text-emerald-500" /><span className="text-sm">{game.badges.length}</span></div>}
+          <div className="bg-qz-card border border-border rounded-2xl px-4 py-3 space-y-3">
+            <div className="flex items-center gap-4 flex-wrap">
+              <div className="flex items-center gap-1.5"><Trophy className="w-5 h-5 text-[#ffcd1f]" /><span className="font-semibold text-sm">Ур. {lvl.level} · {lvl.title}</span></div>
+              <div className="flex items-center gap-1.5"><Zap className="w-5 h-5 text-[#4255ff]" /><span className="text-sm">{game.xp} XP</span></div>
+              <div className="flex items-center gap-1.5"><Flame className={`w-5 h-5 ${game.streak > 0 ? "text-orange-500" : "text-qz-text-muted"}`} /><span className="text-sm">{game.streak} дн. подряд</span></div>
+              {game.badges.length > 0 && <div className="flex items-center gap-1 ml-auto"><Award className="w-4 h-4 text-emerald-500" /><span className="text-sm">{game.badges.length} бейджей</span></div>}
+            </div>
+            {/* Единый «энергобар» прогресса к B1 */}
+            {(() => {
+              const B1_GOAL = 2000;
+              const pct = Math.min(100, Math.round((game.xp / B1_GOAL) * 100));
+              return (
+                <div>
+                  <div className="flex justify-between text-xs text-qz-text-muted mb-1">
+                    <span>Прогресс к B1 (грамматика · лексика · письмо · говорение · аудирование)</span>
+                    <span>{game.xp} / {B1_GOAL} XP · {pct}%</span>
+                  </div>
+                  <div className="h-3 bg-background rounded-full overflow-hidden">
+                    <div className="h-full bg-gradient-to-r from-[#4255ff] via-emerald-500 to-[#ffcd1f] transition-all" style={{ width: `${pct}%` }} />
+                  </div>
+                  {pct >= 100 && <div className="text-emerald-600 text-xs font-semibold mt-1">🎉 Вы накопили XP уровня A2→B1! Готовы двигаться к B1.</div>}
+                </div>
+              );
+            })()}
           </div>
         )}
 
@@ -189,7 +213,9 @@ function DiagnosticTest({ session, onDone }: { session: ReturnType<typeof useSes
 
   const record = useCallback((q: A2Question, status: Status, given: string, expl: string, ai = false) => {
     setAnswers((p) => ({ ...p, [q.id]: { status, given, explanation: expl, aiChecked: ai } }));
-  }, []);
+    // аналитика ошибок по грам.точкам (агрегируется на сервере)
+    void reportErrorStat(q.grammarPoint, status === "right", session?.id_token);
+  }, [session]);
   const checkText = (q: A2Question, v: string) => (q.accept ?? []).some((a) => normalizeA2(a) === normalizeA2(v));
 
   const handleText = async (q: A2Question) => {
@@ -236,6 +262,13 @@ function DiagnosticTest({ session, onDone }: { session: ReturnType<typeof useSes
     setShowResults(true);
     onDone(results.weakUnits.map((u) => u.u));
     if (results.p >= 70) awardBadge("diagnostic-pass");
+    // отправляем результат на сервер (для кабинета преподавателя), без блокировки UI
+    const bySkill: Record<string, { r: number; t: number }> = {};
+    results.skills.forEach((s) => { bySkill[s.s] = { r: s.r, t: s.t }; });
+    void submitDiagnostic({
+      score_pct: results.p, right_count: right, total,
+      weak_units: results.weakUnits.map((u) => u.u), by_skill: bySkill,
+    }, session?.id_token);
     setTimeout(() => document.getElementById("a2-results")?.scrollIntoView({ behavior: "smooth" }), 50);
   };
 
@@ -313,10 +346,16 @@ function QuestionCard({ q, ans, input, grading, pron, recording, onInput, onText
 // ───────── Мой план (адаптивный) ─────────
 function MyPath({ session }: { session: ReturnType<typeof useSession>["data"] }) {
   const [game, setGame] = useState<Gamification | null>(null);
+  const [assignments, setAssignments] = useState<{ topics: string[]; note: string | null }[]>([]);
   useEffect(() => {
     const id = requestAnimationFrame(() => setGame(loadGamification()));
     return () => cancelAnimationFrame(id);
   }, []);
+  useEffect(() => {
+    let alive = true;
+    (async () => { try { const a = await myAssignments(session?.id_token); if (alive) setAssignments(a.filter((x) => !x.done).map((x) => ({ topics: x.topics, note: x.note }))); } catch { /* нет назначений */ } })();
+    return () => { alive = false; };
+  }, [session]);
   const weak = useMemo(() => game?.weakUnits ?? [], [game]);
   const items = useMemo(() => {
     if (weak.length === 0) return [];
@@ -381,6 +420,14 @@ function MyPath({ session }: { session: ReturnType<typeof useSession>["data"] })
         <span><b className="text-emerald-600">Ваш персональный план.</b> {weak.length ? `Слабые юниты: ${weak.map((u) => `U${u}`).join(", ")}.` : "Свежие задания от ИИ."} Бесконечная генерация по вашим темам.</span>
         {genButton}
       </div>
+      {assignments.length > 0 && (
+        <div className="bg-[#4255ff]/5 border border-[#4255ff]/20 rounded-xl p-4 text-sm">
+          <b className="text-[#4255ff]">Задания от преподавателя:</b>
+          <ul className="list-disc ml-5 mt-1 space-y-1">
+            {assignments.map((a, i) => (<li key={i}>{a.topics.join(", ")}{a.note ? ` — ${a.note}` : ""}</li>))}
+          </ul>
+        </div>
+      )}
       {genError && <p className="text-amber-500 text-sm">{genError}</p>}
       {aiItems.length > 0 && (
         <div className="text-xs text-qz-text-muted flex items-center gap-1.5"><Sparkles className="w-3.5 h-3.5 text-emerald-600" /> Сгенерировано ИИ: {aiItems.length}</div>
@@ -687,6 +734,12 @@ function SkillTrainer({ session, skill, title, hint }: { session: ReturnType<typ
 
 // ───────── Épreuve blanche DELF A2 (экзамен с таймером) ─────────
 function ExamMode({ session }: { session: ReturnType<typeof useSession>["data"] }) {
+  const [mode, setMode] = useState<"menu" | "classic" | "cat">("menu");
+  if (mode === "cat") return <AdaptiveExam session={session} onExit={() => setMode("menu")} />;
+  return <ClassicExam session={session} setMode={setMode} />;
+}
+
+function ClassicExam({ session, setMode }: { session: ReturnType<typeof useSession>["data"]; setMode: (m: "menu" | "classic" | "cat") => void }) {
   const [started, setStarted] = useState(false);
   const [questions, setQuestions] = useState<A2Question[]>([]);
   const [answers, setAnswers] = useState<Record<number, AnswerState>>({});
@@ -719,11 +772,21 @@ function ExamMode({ session }: { session: ReturnType<typeof useSession>["data"] 
   const finish = () => { setFinished(true); addXp(passed ? 50 : 15); if (passed) awardBadge("delf-a2-blanche"); setTimeout(() => document.getElementById("exam-res")?.scrollIntoView({ behavior: "smooth" }), 50); };
 
   if (!started) return (
-    <div className="bg-qz-card border border-border rounded-2xl p-8 text-center">
-      <Award className="w-12 h-12 mx-auto text-[#ffcd1f] mb-3" />
-      <h3 className="font-bold text-lg mb-1">Épreuve blanche DELF A2</h3>
-      <p className="text-qz-text-muted text-sm mb-4">Строгий экзамен: 100 случайных заданий из банка 400+ (все 12 юнитов и 4 навыка), с таймером. Каждый раз новый набор. Порог сдачи — 60%. За успех — бейдж и 50 XP.</p>
-      <button onClick={start} className="px-6 py-3 rounded-xl bg-[#ffcd1f] text-[#1a1d28] font-bold flex items-center gap-2 mx-auto"><Clock className="w-4 h-4" /> Начать экзамен</button>
+    <div className="space-y-4">
+      <div className="grid sm:grid-cols-2 gap-4">
+        <div className="bg-qz-card border border-border rounded-2xl p-6 text-center">
+          <Award className="w-10 h-10 mx-auto text-[#ffcd1f] mb-2" />
+          <h3 className="font-bold mb-1">Épreuve blanche (классика)</h3>
+          <p className="text-qz-text-muted text-sm mb-4">100 случайных заданий из банка 400+, таймер, порог 60%. Бейдж + 50 XP.</p>
+          <button onClick={start} className="px-5 py-2.5 rounded-xl bg-[#ffcd1f] text-[#1a1d28] font-bold flex items-center gap-2 mx-auto"><Clock className="w-4 h-4" /> Начать</button>
+        </div>
+        <div className="bg-qz-card border border-emerald-500/30 rounded-2xl p-6 text-center">
+          <GraduationCap className="w-10 h-10 mx-auto text-emerald-500 mb-2" />
+          <h3 className="font-bold mb-1">Адаптивный экзамен (CAT)</h3>
+          <p className="text-qz-text-muted text-sm mb-4">Сложность подстраивается под ответы — точная оценка уровня за ~12 вопросов вместо 100.</p>
+          <button onClick={() => setMode("cat")} className="px-5 py-2.5 rounded-xl bg-emerald-600 text-white font-bold flex items-center gap-2 mx-auto"><Sparkles className="w-4 h-4" /> Запустить CAT</button>
+        </div>
+      </div>
     </div>
   );
 
@@ -747,9 +810,114 @@ function ExamMode({ session }: { session: ReturnType<typeof useSession>["data"] 
           <div className="text-xl font-bold">{passed ? "🎉 Экзамен сдан!" : "Почти получилось"}</div>
           <p className="text-qz-text-muted text-sm">{right} из {questions.length} верно за {mm}:{ss}. {passed ? "Уровень соответствует A2 — отличная работа! Бейдж получен." : "Порог — 60%. Проработайте «Мой план» и попробуйте снова."}</p>
           {passed && <div className="inline-flex items-center gap-2 bg-emerald-500/15 text-emerald-600 px-4 py-2 rounded-full font-semibold"><Award className="w-5 h-5" /> Сертификат: DELF A2 blanche</div>}
-          <div><button onClick={start} className="px-5 py-2.5 rounded-xl bg-[#4255ff] text-white font-semibold">Пройти заново</button></div>
+          <div className="flex gap-2 justify-center"><button onClick={start} className="px-5 py-2.5 rounded-xl bg-[#4255ff] text-white font-semibold">Пройти заново</button><button onClick={() => setMode("menu")} className="px-5 py-2.5 rounded-xl border border-border font-semibold">К выбору режима</button></div>
         </div>
       )}
+    </div>
+  );
+}
+
+// ───────── Адаптивный экзамен (CAT) ─────────
+function AdaptiveExam({ session, onExit }: { session: ReturnType<typeof useSession>["data"]; onExit: () => void }) {
+  const pool = A2_FULL_POOL;
+  const MAX_Q = 12;
+  const [cat, setCat] = useState(() => catInit());
+  const [curIdx, setCurIdx] = useState<number>(() => catNext(pool, catInit()));
+  const [input, setInput] = useState("");
+  const [feedback, setFeedback] = useState<{ ok: boolean; expl: string } | null>(null);
+  const [grading, setGrading] = useState(false);
+  const [done, setDone] = useState(false);
+
+  const q = pool[curIdx];
+  const score = catScore(cat);
+
+  const advance = (correct: boolean, expl: string) => {
+    setFeedback({ ok: correct, expl });
+    void reportErrorStat(q.grammarPoint, correct, session?.id_token);
+  };
+
+  const submitMc = (j: number) => {
+    if (feedback) return;
+    const correct = j === q.answerIndex;
+    advance(correct, q.explanation);
+  };
+  const submitText = async () => {
+    if (feedback || !input.trim()) return;
+    const v = input.trim();
+    if ((q.accept ?? []).some((a) => normalizeA2(a) === normalizeA2(v))) { advance(true, q.explanation); return; }
+    setGrading(true);
+    const g = await aiGrade(session, q.prompt, q.accept?.[0] ?? "", v);
+    setGrading(false);
+    advance(g ? g.ok : false, g ? (g.explanation || q.explanation) : q.explanation);
+  };
+
+  const nextQuestion = () => {
+    const correct = feedback?.ok ?? false;
+    const ns = catUpdate(cat, curIdx, correct, questionDifficulty(q));
+    setCat(ns);
+    setFeedback(null); setInput("");
+    if (ns.asked.length >= MAX_Q) {
+      setDone(true);
+      const sc = catScore(ns);
+      if (sc.percent >= 60) { addXp(40); awardBadge("cat-a2"); } else addXp(10);
+      return;
+    }
+    setCurIdx(catNext(pool, ns));
+  };
+
+  if (done) {
+    const sc = catScore(cat);
+    return (
+      <div className="bg-qz-card border border-border rounded-2xl p-6 text-center space-y-4">
+        <div className={`w-28 h-28 rounded-full grid place-items-center mx-auto ${sc.percent >= 60 ? "bg-green-500/10" : "bg-amber-500/10"}`}><span className="text-3xl font-bold">{sc.percent}%</span></div>
+        <div className="text-xl font-bold">Адаптивная оценка</div>
+        <p className="text-qz-text-muted text-sm">{sc.verdict} Оценка получена за {cat.asked.length} вопросов (вместо 100). Верных: {cat.history.filter(Boolean).length}.</p>
+        <div className="flex gap-2 justify-center">
+          <button onClick={() => { const i = catInit(); setCat(i); setCurIdx(catNext(pool, i)); setDone(false); setFeedback(null); setInput(""); }} className="px-5 py-2.5 rounded-xl bg-emerald-600 text-white font-semibold">Пройти заново</button>
+          <button onClick={onExit} className="px-5 py-2.5 rounded-xl border border-border font-semibold">К выбору режима</button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center gap-3 flex-wrap">
+        <button onClick={onExit} className="text-sm text-[#4255ff] flex items-center gap-1"><ChevronLeft className="w-4 h-4" /> Выйти</button>
+        <span className="text-sm text-qz-text-muted">Вопрос {cat.asked.length + 1} / {MAX_Q}</span>
+        <span className="ml-auto text-sm flex items-center gap-1.5"><GraduationCap className="w-4 h-4 text-emerald-600" /> Уровень: ~{score.percent}%</span>
+      </div>
+      <div className="h-2 bg-qz-card rounded-full overflow-hidden"><div className="h-full bg-emerald-500 transition-all" style={{ width: `${(cat.asked.length / MAX_Q) * 100}%` }} /></div>
+
+      <div className="bg-qz-card border border-border rounded-2xl p-5">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-600/10 text-emerald-600">{q.grammarPoint} · сложность {Math.round(questionDifficulty(q) * 100)}%</span>
+        </div>
+        <div className="flex items-start gap-2 mb-3"><p className="text-lg flex-1">{q.prompt}</p><button onClick={() => speakInworld(q.speak || q.prompt)} className="p-2 rounded-lg hover:bg-background text-[#4255ff]"><Volume2 className="w-5 h-5" /></button></div>
+
+        {q.type === "mc" && (
+          <div className="grid gap-2">
+            {q.options!.map((opt, j) => {
+              let cls = "border-border hover:border-[#4255ff]";
+              if (feedback) { if (j === q.answerIndex) cls = "border-green-500 bg-green-500/10"; else cls = "border-border opacity-70"; }
+              return <button key={j} disabled={!!feedback} onClick={() => submitMc(j)} className={`flex items-center gap-3 border-2 rounded-xl px-3 py-2.5 text-left ${cls}`}><span className="font-bold text-[#4255ff] w-5">{LETTERS[j]}</span><span>{opt}</span></button>;
+            })}
+          </div>
+        )}
+        {q.type === "text" && (
+          <div className="flex gap-2 flex-wrap">
+            <input type="text" disabled={!!feedback} value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") submitText(); }} placeholder="Введите ответ…" className={`flex-1 min-w-[180px] px-3 py-2.5 rounded-xl border-2 bg-background ${feedback ? (feedback.ok ? "border-green-500 bg-green-500/10" : "border-red-500 bg-red-500/10") : "border-border"}`} />
+            {!feedback && <button disabled={grading} onClick={submitText} className="px-4 py-2.5 rounded-xl bg-[#4255ff] text-white font-semibold flex items-center gap-2">{grading ? <><Loader2 className="w-4 h-4 animate-spin" /> ИИ…</> : "Ответить"}</button>}
+          </div>
+        )}
+        {feedback && (
+          <div className="mt-3">
+            <div className={`text-sm font-semibold ${feedback.ok ? "text-green-500" : "text-red-500"}`}>{feedback.ok ? "✔ Верно!" : "✗ Неверно."}</div>
+            <div className="mt-1.5 bg-[#4255ff]/5 border-l-[3px] border-[#4255ff] rounded-r-lg px-3 py-2 text-sm"><b className="text-[#4255ff]">Правило:</b> {feedback.expl}</div>
+            <button onClick={nextQuestion} className="mt-3 px-5 py-2 rounded-xl bg-emerald-600 text-white text-sm font-semibold flex items-center gap-2">{cat.asked.length + 1 >= MAX_Q ? "Завершить" : "Следующий"} <ArrowRight className="w-4 h-4" /></button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -971,32 +1139,81 @@ function WritingTrainer({ session }: { session: ReturnType<typeof useSession>["d
 
 // ───────── Прогресс: недельная цель + таблица лидеров ─────────
 function ProgressTab() {
+  const { data: session } = useSession();
   const [game, setGame] = useState<Gamification | null>(null);
   const [name, setName] = useState("");
   const [target, setTarget] = useState(150);
   const [, tick] = useState(0);
+
+  // класс / реальный лидерборд
+  const [joinCode, setJoinCode] = useState("");
+  const [joinedCode, setJoinedCode] = useState<string | null>(null);
+  const [realBoard, setRealBoard] = useState<{ name: string; xp: number; me: boolean }[] | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState<string | null>(null);
+  const [offlineBusy, setOfflineBusy] = useState(false);
+  const [offlineReady, setOfflineReady] = useState(false);
+  const [offlineMsg, setOfflineMsg] = useState<string | null>(null);
+  useEffect(() => { isOfflineReady().then(setOfflineReady); }, []);
+
   useEffect(() => {
     const id = requestAnimationFrame(() => {
       const g = loadGamification();
       setGame(g);
-      const goal = getWeeklyGoal(g.xp);
-      setTarget(goal.targetXp);
-      if (typeof window !== "undefined") setName(localStorage.getItem("memora_a2_name") || "");
+      setTarget(getWeeklyGoal(g.xp).targetXp);
+      if (typeof window !== "undefined") {
+        setName(localStorage.getItem("memora_a2_name") || "");
+        setJoinedCode(localStorage.getItem("memora_a2_class") || null);
+      }
     });
     return () => cancelAnimationFrame(id);
   }, []);
+
+  // при наличии класса — тянем реальный лидерборд и отправляем свой XP
+  useEffect(() => {
+    if (!joinedCode || !game) return;
+    let alive = true;
+    (async () => {
+      try {
+        await submitXp(game.xp, game.streak, session?.id_token);
+        const rows = await classLeaderboard(joinedCode, session?.id_token);
+        if (alive) setRealBoard(rows.map((r) => ({ name: r.name, xp: r.xp, me: r.me })));
+      } catch { if (alive) setRealBoard(null); }
+    })();
+    return () => { alive = false; };
+  }, [joinedCode, game, session]);
+
   if (!game) return null;
 
   const goal = getWeeklyGoal(game.xp);
   const earnedThisWeek = Math.max(0, game.xp - goal.startXp);
   const goalPct = Math.min(100, Math.round((earnedThisWeek / goal.targetXp) * 100));
-  const board = getLeaderboard(name || "Вы", game.xp);
+  const demoBoard = getLeaderboard(name || "Вы", game.xp);
+  const board = realBoard ?? demoBoard;
 
-  const saveName = (v: string) => {
-    setName(v);
-    if (typeof window !== "undefined") localStorage.setItem("memora_a2_name", v);
-  };
+  const saveName = (v: string) => { setName(v); if (typeof window !== "undefined") localStorage.setItem("memora_a2_name", v); };
   const applyTarget = (t: number) => { setTarget(t); setWeeklyTarget(t, game.xp); tick((x) => x + 1); };
+
+  const doDownload = async () => {
+    setOfflineBusy(true);
+    const r = await downloadForOffline();
+    setOfflineBusy(false);
+    setOfflineReady(r.ok);
+    setOfflineMsg(r.ok ? `Готово к офлайну (${r.cached} файлов). Можно учиться без сети.` : "Не удалось сохранить офлайн в этом браузере.");
+  };
+
+  const doJoin = async () => {
+    if (!joinCode.trim()) return;
+    setBusy(true); setMsg(null);
+    try {
+      await joinClass(joinCode.trim(), name || "Ученик", session?.id_token);
+      const code = joinCode.trim().toUpperCase();
+      if (typeof window !== "undefined") localStorage.setItem("memora_a2_class", code);
+      setJoinedCode(code); setMsg("Вы вступили в класс!");
+    } catch { setMsg("Не удалось вступить: проверьте код или войдите в аккаунт."); }
+    finally { setBusy(false); }
+  };
+  const leaveClass = () => { if (typeof window !== "undefined") localStorage.removeItem("memora_a2_class"); setJoinedCode(null); setRealBoard(null); };
 
   return (
     <div className="space-y-4">
@@ -1015,10 +1232,39 @@ function ProgressTab() {
         )}
       </div>
 
+      {/* Класс */}
+      <div className="bg-qz-card border border-border rounded-2xl p-5">
+        <div className="flex items-center gap-2 font-semibold mb-3"><Users className="w-5 h-5 text-[#4255ff]" /> Класс</div>
+        <input type="text" value={name} onChange={(e) => saveName(e.target.value)} placeholder="Ваше имя" className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm mb-2" />
+        {joinedCode ? (
+          <div className="flex items-center gap-2 text-sm flex-wrap">
+            <span className="px-2.5 py-1 rounded-full bg-emerald-600/10 text-emerald-600 font-semibold">Класс: {joinedCode}</span>
+            <button onClick={leaveClass} className="px-3 py-1 rounded-full border border-border text-qz-text-muted">Выйти</button>
+          </div>
+        ) : (
+          <div className="flex gap-2 flex-wrap">
+            <input type="text" value={joinCode} onChange={(e) => setJoinCode(e.target.value)} placeholder="Код класса (от преподавателя)" className="flex-1 min-w-[160px] px-3 py-2 rounded-lg border border-border bg-background text-sm" />
+            <button onClick={doJoin} disabled={busy} className="px-4 py-2 rounded-lg bg-[#4255ff] text-white text-sm font-semibold disabled:opacity-60">{busy ? "…" : "Вступить"}</button>
+          </div>
+        )}
+        {msg && <p className="text-xs text-qz-text-muted mt-2">{msg}</p>}
+      </div>
+
+      {/* Офлайн-режим */}
+      <div className="bg-qz-card border border-border rounded-2xl p-5">
+        <div className="flex items-center gap-2 font-semibold mb-2"><Download className="w-5 h-5 text-[#4255ff]" /> Офлайн-режим (в дороге)</div>
+        <p className="text-sm text-qz-text-muted mb-3">Сохраните курс на устройство — карточки, диктанты и задания будут работать без интернета (ИИ-проверка и озвучка требуют сети). {offlineReady && <span className="text-emerald-600">✓ Уже сохранено.</span>}</p>
+        {offlineSupported() ? (
+          <button onClick={doDownload} disabled={offlineBusy} className="px-4 py-2 rounded-lg bg-[#4255ff] text-white text-sm font-semibold disabled:opacity-60 flex items-center gap-2">
+            {offlineBusy ? <><Loader2 className="w-4 h-4 animate-spin" /> Сохраняю…</> : <><Download className="w-4 h-4" /> {offlineReady ? "Обновить офлайн-копию" : "Скачать для офлайна"}</>}
+          </button>
+        ) : <p className="text-xs text-amber-500">Этот браузер не поддерживает офлайн-кэш.</p>}
+        {offlineMsg && <p className="text-xs text-qz-text-muted mt-2">{offlineMsg}</p>}
+      </div>
+
       {/* Таблица лидеров */}
       <div className="bg-qz-card border border-border rounded-2xl p-5">
-        <div className="flex items-center gap-2 font-semibold mb-3"><Trophy className="w-5 h-5 text-[#ffcd1f]" /> Таблица лидеров класса</div>
-        <input type="text" value={name} onChange={(e) => saveName(e.target.value)} placeholder="Ваше имя" className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm mb-3" />
+        <div className="flex items-center gap-2 font-semibold mb-3"><Trophy className="w-5 h-5 text-[#ffcd1f]" /> Таблица лидеров {realBoard ? "класса" : "(демо)"}</div>
         <div className="space-y-1.5">
           {board.map((row, i) => (
             <div key={i} className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm ${row.me ? "bg-[#4255ff]/10 font-semibold" : "bg-background"}`}>
@@ -1028,7 +1274,7 @@ function ProgressTab() {
             </div>
           ))}
         </div>
-        <p className="text-xs text-qz-text-muted mt-3">Одноклассники в демо-режиме генерируются локально. При подключении общего бэкенда таблица станет реальной для группы.</p>
+        {!realBoard && <p className="text-xs text-qz-text-muted mt-3">Вступите в класс по коду — таблица станет реальной для вашей группы.</p>}
       </div>
     </div>
   );

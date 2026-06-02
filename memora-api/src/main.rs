@@ -114,6 +114,16 @@ async fn main() {
         .route("/api/audio/{id}/{field}", get(handlers::audio::get_flashcard_audio))
         // Generic Inworld TTS for arbitrary text (course tests/exercises)
         .route("/api/tts", get(handlers::audio::synthesize_tts))
+        // A2 classes / leaderboard / diagnostics / teacher / analytics
+        .route("/api/a2/classes", post(handlers::classes::create_class).get(handlers::classes::my_classes))
+        .route("/api/a2/classes/join", post(handlers::classes::join_class))
+        .route("/api/a2/classes/{join_code}/leaderboard", get(handlers::classes::class_leaderboard))
+        .route("/api/a2/xp", post(handlers::classes::submit_xp))
+        .route("/api/a2/diagnostic", post(handlers::classes::submit_diagnostic))
+        .route("/api/a2/error-stat", post(handlers::classes::report_error_stat))
+        .route("/api/a2/analytics/errors", get(handlers::classes::error_analytics))
+        .route("/api/a2/teacher/classes/{class_id}/overview", get(handlers::classes::teacher_overview))
+        .route("/api/a2/assignments", post(handlers::classes::create_assignment).get(handlers::classes::my_assignments))
         // Diagnostics (Temporary)
         .route("/api/diag/db", get(|State(pool): State<sqlx::PgPool>| async move {
             let audio_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM flashcard_audio").fetch_one(&pool).await.unwrap_or((-1,));

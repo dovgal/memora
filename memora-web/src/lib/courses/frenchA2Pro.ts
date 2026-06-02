@@ -5,6 +5,66 @@
 import { A2Question } from "./frenchA2";
 
 // ════════════════════════════════════════════════════════════
+// 0) АДАПТИВНЫЙ ЭКЗАМЕН (CAT — Computerized Adaptive Testing)
+// Простая модель «способности» θ в [-3..3]. После каждого ответа корректируем θ
+// и выбираем следующий вопрос с трудностью, близкой к текущей θ.
+// Трудность вопроса оцениваем эвристически: text > mc; subjonctif/gérondif/COD-COI сложнее.
+// ════════════════════════════════════════════════════════════
+const HARD_TOPICS = ["subjonctif", "gérondif", "cod", "coi", "discours", "pronom", "relatif", "comparatif", "superlatif"];
+
+export function questionDifficulty(q: A2Question): number {
+  // 0 (легко) .. 1 (сложно)
+  let d = q.type === "text" ? 0.55 : 0.35;
+  const gp = (q.grammarPoint || "").toLowerCase();
+  if (HARD_TOPICS.some((t) => gp.includes(t))) d += 0.25;
+  if (q.skill === "listening" || q.skill === "speaking") d += 0.1;
+  return Math.min(1, d);
+}
+
+// difficulty 0..1 → шкала θ примерно -2..2
+function diffToTheta(d: number): number { return (d - 0.5) * 4; }
+
+export interface CatState {
+  theta: number;     // текущая оценка способности
+  asked: number[];   // индексы заданных вопросов (в пуле)
+  history: boolean[];// верно/неверно
+}
+
+export function catInit(): CatState { return { theta: 0, asked: [], history: [] }; }
+
+/** Выбирает следующий вопрос из пула: трудность ближе всего к текущей θ, ещё не задан. */
+export function catNext(pool: A2Question[], state: CatState): number {
+  let best = -1, bestGap = Infinity;
+  for (let i = 0; i < pool.length; i++) {
+    if (state.asked.includes(i)) continue;
+    const gap = Math.abs(diffToTheta(questionDifficulty(pool[i])) - state.theta);
+    if (gap < bestGap) { bestGap = gap; best = i; }
+  }
+  return best;
+}
+
+/** Обновляет θ после ответа (шаг зависит от трудности). */
+export function catUpdate(state: CatState, idx: number, correct: boolean, difficulty: number): CatState {
+  const step = 0.4 + difficulty * 0.4;
+  const theta = Math.max(-3, Math.min(3, state.theta + (correct ? step : -step)));
+  return { theta, asked: [...state.asked, idx], history: [...state.history, correct] };
+}
+
+/** θ → примерная оценка уровня (0..100) и вердикт. */
+export function catScore(state: CatState): { percent: number; verdict: string; stable: boolean } {
+  const percent = Math.round(((state.theta + 3) / 6) * 100);
+  // стабильность: последние 4 ответа чередуются вокруг θ (мало изменений)
+  const n = state.history.length;
+  const stable = n >= 8;
+  let verdict: string;
+  if (percent >= 80) verdict = "Уверенный A2 — близко к B1!";
+  else if (percent >= 60) verdict = "Твёрдый A2.";
+  else if (percent >= 40) verdict = "Базовый A2, есть пробелы.";
+  else verdict = "A2 ещё формируется — продолжайте тренироваться.";
+  return { percent, verdict, stable };
+}
+
+// ════════════════════════════════════════════════════════════
 // 1) ГЕНЕРАЦИЯ ВОПРОСОВ ЧЕРЕЗ OLLAMA
 // ════════════════════════════════════════════════════════════
 interface RawGenerated {

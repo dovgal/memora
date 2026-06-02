@@ -33,6 +33,13 @@ export default async function TeacherDashboard() {
             <section className="mb-12">
                 <h2 className="text-xl font-semibold mb-4 text-qz-text-muted">Quick Actions</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <Link href="/dashboard/teacher/a2" className="block p-6 rounded-2xl bg-qz-card border border-emerald-500/30 hover:border-emerald-500/60 hover:bg-qz-card/50 transition-all group">
+                        <div className="h-12 w-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <Layers className="w-6 h-6" />
+                        </div>
+                        <h3 className="text-lg font-semibold mb-2 text-qz-text">Кабинет курса «Французский A2»</h3>
+                        <p className="text-qz-text-muted text-sm">Классы, диагностики учеников, назначение планов и аналитика ошибок.</p>
+                    </Link>
                     <Link href="/dashboard/generate" className="block p-6 rounded-2xl bg-qz-card border border-qz-border-light hover:border-indigo-500/50 hover:bg-qz-card/50 transition-all group">
                         <div className="h-12 w-12 rounded-xl bg-[#4255ff]/10 text-[#ffcd1f] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                             <Sparkles className="w-6 h-6" />
