@@ -346,7 +346,16 @@ export const A2_DIAGNOSTIC: A2Question[] = [
 ];
 
 export function normalizeA2(s: string): string {
-  return s.toLowerCase().trim().replace(/[.,!?;:«»]/g, "").replace(/\s+/g, " ").replace(/œ/g, "oe");
+  return s
+    .toLowerCase()
+    .trim()
+    .replace(/[‘’ʼ`´]/g, "'") // все апострофы → прямой '
+    .replace(/[‐-―−]/g, "-")            // все дефисы/тире → -
+    .replace(/[.,!?;:«»"]/g, "")
+    .replace(/œ/g, "oe")
+    .replace(/\s*'\s*/g, "'")                           // убрать пробелы вокруг апострофа
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 export const A2_SKILL_LABELS: Record<A2Skill, string> = {

@@ -188,7 +188,11 @@ export function normalizeAnswer(s: string): string {
   return s
     .toLowerCase()
     .trim()
-    .replace(/[.,!?;:]/g, "")
+    .replace(/[‘’ʼ`´]/g, "'") // все апострофы → прямой '
+    .replace(/[‐-―−]/g, "-")            // все дефисы/тире → -
+    .replace(/[.,!?;:«»"]/g, "")
+    .replace(/œ/g, "oe")
+    .replace(/\s*'\s*/g, "'")
     .replace(/\s+/g, " ")
-    .replace(/œ/g, "oe");
+    .trim();
 }
