@@ -17,30 +17,18 @@ import {
   A2_DIALOGUES, A2_DICTATIONS, mistakeOfTheDay, VOCAB_EMOJI, buildExam,
   loadGamification, addXp, awardBadge, setWeakUnits, levelFromXp, Gamification,
 } from "@/lib/courses/frenchA2Extra";
+import { speakInworld, speakCardInworld } from "@/lib/courses/ttsInworld";
 
 type Status = "right" | "wrong";
 interface AnswerState { status: Status; given: string; explanation: string; aiChecked?: boolean; }
 const LETTERS = ["A", "B", "C", "D"];
 
-function browserSpeak(text: string) {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = "fr-FR"; u.rate = 0.95;
-  const v = window.speechSynthesis.getVoices().find((x) => x.lang.startsWith("fr"));
-  if (v) u.voice = v;
-  window.speechSynthesis.speak(u);
-}
+// Озвучка ТОЛЬКО через Inworld (см. lib/courses/ttsInworld).
+function browserSpeak(text: string) { void speakInworld(text); }
 function vocabCardUuid(index: number): string {
   return `a2c0a2c0-0000-4a2c-8a2c-${index.toString(16).padStart(12, "0")}`;
 }
-async function speakServerOrBrowser(uuid: string, fallback: string) {
-  try {
-    const res = await fetch(`/api/audio/${uuid}/term_audio`, { cache: "force-cache" });
-    if (res.ok) { const b = await res.blob(); if (b.size > 0) { await new Audio(URL.createObjectURL(b)).play(); return; } }
-  } catch { /* fallthrough */ }
-  browserSpeak(fallback);
-}
+async function speakServerOrBrowser(uuid: string, fallback: string) { await speakCardInworld(uuid, fallback); }
 function similarity(a: string, b: string): number {
   if (a === b) return 1;
   const m = a.length, n = b.length;

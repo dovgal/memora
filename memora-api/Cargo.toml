@@ -26,6 +26,7 @@ bcrypt = "0.18.0"
 fsrs = "5.2.0"
 reqwest = { version = "0.13.2", default-features = false, features = ["json", "stream", "rustls"] }
 base64 = "0.22"
+sha2 = "0.10"
 
 # --- Опциональные зависимости для серверной проверки произношения (whisper.cpp) ---
 # Активируются только при сборке с feature "stt": cargo build --release --features stt

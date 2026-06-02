@@ -111,6 +111,8 @@ async fn main() {
         .route("/api/live/ws", get(handlers::live::ws_handler))
         // Audio routes
         .route("/api/audio/{id}/{field}", get(handlers::audio::get_flashcard_audio))
+        // Generic Inworld TTS for arbitrary text (course tests/exercises)
+        .route("/api/tts", get(handlers::audio::synthesize_tts))
         // Diagnostics (Temporary)
         .route("/api/diag/db", get(|State(pool): State<sqlx::PgPool>| async move {
             let audio_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM flashcard_audio").fetch_one(&pool).await.unwrap_or((-1,));

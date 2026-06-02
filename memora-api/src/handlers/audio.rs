@@ -167,3 +167,96 @@ pub async fn get_flashcard_audio(
         },
     }
 }
+
+use axum::extract::Query;
+use serde::Deserialize;
+
+#[derive(Deserialize)]
+pub struct SynthesizeParams {
+    pub text: String,
+    pub voice: Option<String>,
+}
+
+/// GET /api/tts?text=...&voice=Alain
+/// Озвучивание ПРОИЗВОЛЬНОГО текста ТОЛЬКО через Inworld.ai (с кэшем в БД).
+/// Используется тестами/упражнениями курса, где нет карточки в БД.
+pub async fn synthesize_tts(
+    State(pool): State<PgPool>,
+    Query(params): Query<SynthesizeParams>,
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
+    let text = params.text.trim().to_string();
+    if text.is_empty() {
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "Empty text"));
+    }
+    if text.chars().count() > 600 {
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "Text too long"));
+    }
+    let voice_id = params.voice.unwrap_or_else(|| "Alain".to_string()); // голос для французского по умолчанию
+
+    // Ключ кэша = sha256("voice|text")
+    use sha2::{Digest, Sha256};
+    let mut hasher = Sha256::new();
+    hasher.update(format!("{}|{}", voice_id, text).as_bytes());
+    let cache_key = format!("{:x}", hasher.finalize());
+
+    // 1. Пытаемся отдать из кэша
+    use sqlx::Row;
+    if let Ok(Some(row)) = sqlx::query("SELECT audio_data FROM tts_cache WHERE cache_key = $1")
+        .bind(&cache_key)
+        .fetch_optional(&pool)
+        .await
+    {
+        let bytes: Vec<u8> = row.get("audio_data");
+        return Ok((
+            [(header::CONTENT_TYPE, "audio/mpeg"), (header::CACHE_CONTROL, "public, max-age=31536000")],
+            bytes,
+        ));
+    }
+
+    // 2. Генерируем через Inworld
+    let client = Client::new();
+    let auth_header = std::env::var("INWORLD_AUTH")
+        .map_err(|_| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, "INWORLD_AUTH not configured"))?;
+
+    let res = client.post("https://api.inworld.ai/tts/v1/voice")
+        .header("Authorization", auth_header)
+        .json(&serde_json::json!({
+            "text": text,
+            "voiceId": voice_id,
+            "modelId": "inworld-tts-1.5-max"
+        }))
+        .send()
+        .await
+        .map_err(|e| ApiError::response(StatusCode::BAD_GATEWAY, format!("Inworld API Request Failed: {}", e)))?;
+
+    if !res.status().is_success() {
+        let st = res.status();
+        let body = res.text().await.unwrap_or_default();
+        eprintln!("ERROR: Inworld TTS failed ({}): {}", st, body);
+        return Err(ApiError::response(StatusCode::BAD_GATEWAY, format!("Inworld API Error ({}): {}", st, body)));
+    }
+
+    let json: Value = res.json().await
+        .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to parse Inworld JSON: {}", e)))?;
+    let base64 = json.get("audioContent").and_then(|v| v.as_str())
+        .ok_or_else(|| ApiError::response(StatusCode::BAD_GATEWAY, "Inworld response missing audioContent"))?;
+    let bytes = general_purpose::STANDARD.decode(base64)
+        .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("base64 decode: {}", e)))?;
+
+    // 3. Кэшируем
+    let _ = sqlx::query(
+        "INSERT INTO tts_cache (cache_key, voice_id, text, audio_data) VALUES ($1, $2, $3, $4)
+         ON CONFLICT (cache_key) DO NOTHING"
+    )
+    .bind(&cache_key)
+    .bind(&voice_id)
+    .bind(&text)
+    .bind(&bytes)
+    .execute(&pool)
+    .await;
+
+    Ok((
+        [(header::CONTENT_TYPE, "audio/mpeg"), (header::CACHE_CONTROL, "public, max-age=31536000")],
+        bytes,
+    ))
+}

@@ -10,6 +10,7 @@ import {
 import {
   FRENCH_A1_QUESTIONS, A1_CATEGORIES, normalizeAnswer, A1Question,
 } from "@/lib/courses/frenchA1";
+import { speakCardInworld } from "@/lib/courses/ttsInworld";
 
 type Status = "right" | "wrong";
 
@@ -27,35 +28,10 @@ function cardUuid(questionId: number): string {
   return `a1a1a1a1-0000-4a1a-8a1a-${questionId.toString(16).padStart(12, "0")}`;
 }
 
-// Браузерное озвучивание (fallback, если серверный Inworld-TTS недоступен)
-function browserSpeak(text: string) {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = "fr-FR";
-  u.rate = 0.95;
-  const frVoice = window.speechSynthesis.getVoices().find((v) => v.lang.startsWith("fr"));
-  if (frVoice) u.voice = frVoice;
-  window.speechSynthesis.speak(u);
-}
-
-// Озвучивание: сначала пробуем серверный Inworld-TTS (если курс засижен в БД),
-// иначе — браузерный синтез речи.
-async function speakQuestion(questionId: number, fallbackText: string) {
-  try {
-    const res = await fetch(`/api/audio/${cardUuid(questionId)}/term_audio`, { cache: "force-cache" });
-    if (res.ok) {
-      const blob = await res.blob();
-      if (blob.size > 0) {
-        const audio = new Audio(URL.createObjectURL(blob));
-        await audio.play();
-        return;
-      }
-    }
-  } catch {
-    /* fall through to browser TTS */
-  }
-  browserSpeak(fallbackText);
+// Озвучивание ТОЛЬКО через Inworld.ai: кэш карты в БД, иначе общий /api/tts.
+// Браузерный SpeechSynthesis не используется (низкое качество).
+async function speakQuestion(questionId: number, text: string) {
+  await speakCardInworld(cardUuid(questionId), text);
 }
 
 export default function FrenchA1CoursePage() {
@@ -315,7 +291,7 @@ export default function FrenchA1CoursePage() {
 
                 <div className="flex items-start gap-2 mb-3">
                   <p className="text-lg flex-1">{q.prompt}</p>
-                  <button onClick={() => speakQuestion(q.id, q.speak || q.prompt)} title="Озвучить (Inworld TTS / браузер)" className="p-2 rounded-lg hover:bg-background text-[#4255ff]">
+                  <button onClick={() => speakQuestion(q.id, q.speak || q.prompt)} title="Озвучить (Inworld)" className="p-2 rounded-lg hover:bg-background text-[#4255ff]">
                     <Volume2 className="w-5 h-5" />
                   </button>
                 </div>
