@@ -563,7 +563,7 @@ pub struct GenerateA2Request {
     pub count: Option<u32>,    // сколько заданий (по умолчанию 8, максимум 15)
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 pub struct GeneratedQuestion {
     pub topic: String,
     #[serde(rename = "type")]
