@@ -49,23 +49,23 @@ export function GenderQuiz({ exercise, onComplete }: { exercise: EditoExercise; 
   if (finished) {
     const pct = Math.round((score / items.length) * 100);
     return (
-      <div className="bg-[#13162a] border border-[#262c40] rounded-2xl p-6 text-center">
+      <div className="bg-qz-card border border-border rounded-2xl p-6 text-center">
         <div className="text-4xl mb-3">{pct >= 80 ? '🏆' : pct >= 60 ? '⭐' : '💪'}</div>
-        <h4 className="text-white font-bold text-lg mb-1">{exercise.title}</h4>
-        <p className="text-[#8e95ae] text-sm">{score} / {items.length} · {pct}%</p>
+        <h4 className="text-foreground font-bold text-lg mb-1">{exercise.title}</h4>
+        <p className="text-qz-text-muted text-sm">{score} / {items.length} · {pct}%</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-[#13162a] border border-[#262c40] rounded-2xl p-6">
+    <div className="bg-qz-card border border-border rounded-2xl p-6">
       <div className="flex items-center justify-between mb-3">
-        <h4 className="text-white font-semibold text-sm">{exercise.title}</h4>
-        <span className="text-[#8e95ae] text-xs">{current + 1} / {items.length} · ✓ {score}</span>
+        <h4 className="text-foreground font-semibold text-sm">{exercise.title}</h4>
+        <span className="text-qz-text-muted text-xs">{current + 1} / {items.length} · ✓ {score}</span>
       </div>
 
       {/* Progress */}
-      <div className="h-1 bg-[#1e2640] rounded-full mb-6">
+      <div className="h-1 bg-muted rounded-full mb-6">
         <div className="h-full bg-[#4255ff] rounded-full transition-all duration-300"
           style={{ width: `${(current / items.length) * 100}%` }} />
       </div>
@@ -75,14 +75,14 @@ export function GenderQuiz({ exercise, onComplete }: { exercise: EditoExercise; 
         {item.emoji && <div className="text-5xl mb-3">{item.emoji}</div>}
         <div className="flex items-center justify-center gap-2 mb-1">
           <span className="text-3xl font-bold">
-            <span className={`mr-2 ${selected ? COLORS[item.article].split(' ')[2] : 'text-[#8e95ae]/40'}`}>
+            <span className={`mr-2 ${selected ? COLORS[item.article].split(' ')[2] : 'text-qz-text-muted/40'}`}>
               {selected ? item.article : '___'}
             </span>
             <span className="text-white">{item.word}</span>
           </span>
           <AudioButton text={`${item.article} ${item.word}`} size="md" />
         </div>
-        {item.ru && <p className="text-[#8e95ae] text-sm">{item.ru}</p>}
+        {item.ru && <p className="text-qz-text-muted text-sm">{item.ru}</p>}
       </div>
 
       {/* Article buttons */}
@@ -107,10 +107,10 @@ export function GenderQuiz({ exercise, onComplete }: { exercise: EditoExercise; 
           <div className={`flex gap-2 items-start p-3 rounded-xl text-sm ${isCorrect ? 'bg-emerald-500/10' : 'bg-red-500/10'}`}>
             {isCorrect
               ? <><CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" /><span className="text-emerald-300 font-semibold">Parfait !</span></>
-              : <><XCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" /><span className="text-[#8e95ae]">Правильно: <strong className="text-white">{item.article} {item.word}</strong></span></>
+              : <><XCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" /><span className="text-qz-text-muted">Правильно: <strong className="text-white">{item.article} {item.word}</strong></span></>
             }
           </div>
-          {item.hint && <p className="text-[#8e95ae] text-sm px-1">💡 {item.hint}</p>}
+          {item.hint && <p className="text-qz-text-muted text-sm px-1">💡 {item.hint}</p>}
           <div className="flex justify-end">
             <button onClick={handleNext} className="inline-flex items-center gap-1.5 px-5 py-2 rounded-xl bg-[#4255ff] text-white text-sm font-semibold hover:bg-[#3144e0] transition-colors">
               {current < items.length - 1 ? 'Следующее' : 'Результат'}

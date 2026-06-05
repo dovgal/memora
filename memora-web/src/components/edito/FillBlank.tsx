@@ -45,17 +45,17 @@ export function FillBlank({ exercise, onComplete }: { exercise: EditoExercise; o
   if (finished) {
     const pct = Math.round((correctCount / blanks.length) * 100);
     return (
-      <div className="bg-[#13162a] border border-[#262c40] rounded-2xl p-6">
+      <div className="bg-qz-card border border-border rounded-2xl p-6">
         <div className="text-center mb-5">
           <div className="text-3xl mb-2">{pct >= 80 ? '🏆' : pct >= 60 ? '⭐' : '💪'}</div>
-          <h4 className="text-white font-bold text-base mb-1">{exercise.title}</h4>
-          <p className="text-[#8e95ae] text-sm">{correctCount} / {blanks.length} · {pct}%</p>
+          <h4 className="text-foreground font-bold text-base mb-1">{exercise.title}</h4>
+          <p className="text-qz-text-muted text-sm">{correctCount} / {blanks.length} · {pct}%</p>
         </div>
         {/* Full text with answers */}
-        <div className="bg-[#1e2640] rounded-xl p-4 text-sm leading-8">
+        <div className="bg-muted rounded-xl p-4 text-sm leading-8">
           {parts.map((part, i) => (
             <span key={i}>
-              <span className="text-[#c8cce0]">{part}</span>
+              <span className="text-foreground">{part}</span>
               {i < results.length && (
                 <span className={`inline-flex items-center gap-1 mx-1 px-2 py-0.5 rounded font-semibold ${results[i].correct ? 'bg-emerald-500/20 text-emerald-300' : 'bg-red-500/20 text-red-300'}`}>
                   {results[i].correct ? results[i].answer : (
@@ -74,23 +74,23 @@ export function FillBlank({ exercise, onComplete }: { exercise: EditoExercise; o
   const blank = blanks[current];
 
   return (
-    <div className="bg-[#13162a] border border-[#262c40] rounded-2xl p-6">
+    <div className="bg-qz-card border border-border rounded-2xl p-6">
       <div className="flex items-center justify-between mb-3">
-        <h4 className="text-white font-semibold text-sm">{exercise.title}</h4>
-        <span className="text-[#8e95ae] text-xs">{current + 1} / {blanks.length}</span>
+        <h4 className="text-foreground font-semibold text-sm">{exercise.title}</h4>
+        <span className="text-qz-text-muted text-xs">{current + 1} / {blanks.length}</span>
       </div>
 
       {/* Progress */}
-      <div className="h-1 bg-[#1e2640] rounded-full mb-5">
+      <div className="h-1 bg-muted rounded-full mb-5">
         <div className="h-full bg-[#4255ff] rounded-full transition-all"
           style={{ width: `${(current / blanks.length) * 100}%` }} />
       </div>
 
       {/* Text with current blank highlighted */}
-      <div className="bg-[#1e2640] rounded-xl p-4 text-sm leading-8 mb-5">
+      <div className="bg-muted rounded-xl p-4 text-sm leading-8 mb-5">
         {parts.map((part, i) => (
           <span key={i}>
-            <span className="text-[#c8cce0]">{part}</span>
+            <span className="text-foreground">{part}</span>
             {i < blanks.length && (
               i < current ? (
                 <span className={`inline-flex items-center gap-1 mx-1 px-2 py-0.5 rounded font-semibold text-xs ${results[i]?.correct ? 'bg-emerald-500/20 text-emerald-300' : 'bg-red-500/20 text-red-300'}`}>
@@ -104,7 +104,7 @@ export function FillBlank({ exercise, onComplete }: { exercise: EditoExercise; o
                   ) : '?'}
                 </span>
               ) : (
-                <span className="inline-block mx-1 px-3 py-0.5 rounded border border-[#262c40] text-[#8e95ae]/40 font-semibold text-sm min-w-[50px] text-center">___</span>
+                <span className="inline-block mx-1 px-3 py-0.5 rounded border border-border text-qz-text-muted/40 font-semibold text-sm min-w-[50px] text-center">___</span>
               )
             )}
           </span>
@@ -114,7 +114,7 @@ export function FillBlank({ exercise, onComplete }: { exercise: EditoExercise; o
       {/* Input */}
       {!checked ? (
         <div className="space-y-3">
-          {blank?.hint && <p className="text-[#8e95ae] text-xs">💡 {blank.hint}</p>}
+          {blank?.hint && <p className="text-qz-text-muted text-xs">💡 {blank.hint}</p>}
           <div className="flex gap-2">
             <input
               type="text"
@@ -122,7 +122,7 @@ export function FillBlank({ exercise, onComplete }: { exercise: EditoExercise; o
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleCheck()}
               placeholder="Введите слово..."
-              className="flex-1 bg-[#1e2640] border border-[#262c40] rounded-xl px-4 py-2.5 text-white text-sm outline-none focus:border-[#4255ff] transition-colors placeholder:text-[#8e95ae]/50"
+              className="flex-1 bg-muted border border-border rounded-xl px-4 py-2.5 text-foreground text-sm outline-none focus:border-[#4255ff] transition-colors placeholder:text-qz-text-muted/50"
               autoFocus
             />
             <button onClick={handleCheck} disabled={!input.trim()}
@@ -136,7 +136,7 @@ export function FillBlank({ exercise, onComplete }: { exercise: EditoExercise; o
           <div className={`flex gap-2 items-center p-3 rounded-xl text-sm ${isCorrect ? 'bg-emerald-500/10' : 'bg-red-500/10'}`}>
             {isCorrect
               ? <><CheckCircle2 className="w-4 h-4 text-emerald-400" /><span className="text-emerald-300 font-semibold">Правильно!</span><AudioButton text={blank.answer} /></>
-              : <><XCircle className="w-4 h-4 text-red-400" /><span className="text-[#8e95ae]">Правильно: <strong className="text-white">{blank.answer}</strong></span><AudioButton text={blank.answer} /></>
+              : <><XCircle className="w-4 h-4 text-red-400" /><span className="text-qz-text-muted">Правильно: <strong className="text-white">{blank.answer}</strong></span><AudioButton text={blank.answer} /></>
             }
           </div>
           <div className="flex justify-end">

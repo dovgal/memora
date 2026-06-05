@@ -40,13 +40,13 @@ export function GrammarQuiz({ exercise, onComplete }: { exercise: EditoExercise;
   if (finished) {
     const pct = Math.round((score / questions.length) * 100);
     return (
-      <div className="bg-[#13162a] border border-[#262c40] rounded-2xl p-6 text-center">
+      <div className="bg-qz-card border border-border rounded-2xl p-6 text-center">
         <div className="text-4xl mb-3">{pct >= 80 ? '🏆' : pct >= 60 ? '⭐' : '💪'}</div>
-        <h4 className="text-white font-bold text-lg mb-1">{exercise.title}</h4>
-        <p className="text-[#8e95ae] text-sm mb-4">
+        <h4 className="text-foreground font-bold text-lg mb-1">{exercise.title}</h4>
+        <p className="text-qz-text-muted text-sm mb-4">
           {score} / {questions.length} правильно · {pct}%
         </p>
-        <button onClick={handleRestart} className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1e2640] text-white text-sm hover:bg-[#262c40] transition-colors">
+        <button onClick={handleRestart} className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-muted text-foreground text-sm hover:bg-muted transition-colors">
           <RotateCcw className="w-4 h-4" /> Ещё раз
         </button>
       </div>
@@ -57,14 +57,14 @@ export function GrammarQuiz({ exercise, onComplete }: { exercise: EditoExercise;
   const parts = q.question.split('___');
 
   return (
-    <div className="bg-[#13162a] border border-[#262c40] rounded-2xl p-6">
+    <div className="bg-qz-card border border-border rounded-2xl p-6">
       <div className="flex items-center justify-between mb-4">
-        <h4 className="text-white font-semibold text-sm">{exercise.title}</h4>
-        <span className="text-[#8e95ae] text-xs">{current + 1} / {questions.length} · ✓ {score}</span>
+        <h4 className="text-foreground font-semibold text-sm">{exercise.title}</h4>
+        <span className="text-qz-text-muted text-xs">{current + 1} / {questions.length} · ✓ {score}</span>
       </div>
 
       {/* Progress */}
-      <div className="h-1 bg-[#1e2640] rounded-full mb-5">
+      <div className="h-1 bg-muted rounded-full mb-5">
         <div
           className="h-full bg-[#4255ff] rounded-full transition-all duration-300"
           style={{ width: `${(current / questions.length) * 100}%` }}
@@ -72,7 +72,7 @@ export function GrammarQuiz({ exercise, onComplete }: { exercise: EditoExercise;
       </div>
 
       {/* Question */}
-      <p className="text-white text-base font-medium mb-5 leading-relaxed">
+      <p className="text-foreground text-base font-medium mb-5 leading-relaxed">
         {parts.map((part, i, arr) => (
           <span key={i}>
             {part}
@@ -90,11 +90,11 @@ export function GrammarQuiz({ exercise, onComplete }: { exercise: EditoExercise;
       {/* Options */}
       <div className="grid grid-cols-2 gap-2 mb-4">
         {q.options.map((opt) => {
-          let cls = 'bg-[#1e2640] border-[#262c40] text-white hover:border-[#4255ff]/50';
+          let cls = 'bg-muted border-border text-foreground hover:border-[#4255ff]/50';
           if (selected) {
             if (opt === q.correctAnswer) cls = 'bg-emerald-500/15 border-emerald-500/50 text-emerald-300';
             else if (opt === selected) cls = 'bg-red-500/15 border-red-500/50 text-red-300';
-            else cls = 'bg-[#1e2640] border-[#262c40] text-[#8e95ae]';
+            else cls = 'bg-muted border-border text-qz-text-muted';
           }
           return (
             <button
@@ -118,7 +118,7 @@ export function GrammarQuiz({ exercise, onComplete }: { exercise: EditoExercise;
           {q.explanation && (
             <div className={`flex gap-2 items-start p-3 rounded-xl text-sm ${isCorrect ? 'bg-emerald-500/10 text-emerald-300' : 'bg-red-500/10 text-red-300'}`}>
               {isCorrect ? <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" /> : <XCircle className="w-4 h-4 shrink-0 mt-0.5" />}
-              <span className="text-[#8e95ae]">
+              <span className="text-qz-text-muted">
                 {!isCorrect && <strong className="text-white">Правильно: {q.correctAnswer}. </strong>}
                 {q.explanation}
               </span>
@@ -127,7 +127,7 @@ export function GrammarQuiz({ exercise, onComplete }: { exercise: EditoExercise;
           {!q.explanation && !isCorrect && (
             <div className="flex gap-2 items-center p-3 rounded-xl text-sm bg-red-500/10 text-red-300">
               <XCircle className="w-4 h-4 shrink-0" />
-              Правильно: <strong className="text-white ml-1">{q.correctAnswer}</strong>
+              Правильно: <strong className="text-foreground ml-1">{q.correctAnswer}</strong>
             </div>
           )}
           <div className="flex justify-end">

@@ -53,20 +53,20 @@ export function SentenceBuilder({ exercise, onComplete }: { exercise: EditoExerc
   };
 
   return (
-    <div className="bg-[#13162a] border border-[#262c40] rounded-2xl p-6">
+    <div className="bg-qz-card border border-border rounded-2xl p-6">
       <div className="flex items-center justify-between mb-4">
-        <h4 className="text-white font-semibold text-sm">{exercise.title}</h4>
+        <h4 className="text-foreground font-semibold text-sm">{exercise.title}</h4>
         <AudioButton text={correct} size="md" />
       </div>
 
-      <p className="text-[#8e95ae] text-xs mb-4">Составьте предложение из слов ниже</p>
+      <p className="text-qz-text-muted text-xs mb-4">Составьте предложение из слов ниже</p>
 
       {/* Drop zone */}
-      <div className={`min-h-[56px] bg-[#1e2640] border-2 rounded-xl px-4 py-3 mb-4 flex flex-wrap gap-2 items-center transition-colors ${
-        checked ? (isCorrect ? 'border-emerald-500/50' : 'border-red-500/50') : 'border-[#262c40]'
+      <div className={`min-h-[56px] bg-muted border-2 rounded-xl px-4 py-3 mb-4 flex flex-wrap gap-2 items-center transition-colors ${
+        checked ? (isCorrect ? 'border-emerald-500/50' : 'border-red-500/50') : 'border-border'
       }`}>
         {selected.length === 0 && (
-          <span className="text-[#8e95ae]/40 text-sm select-none">Нажмите на слова ниже...</span>
+          <span className="text-qz-text-muted/40 text-sm select-none">Нажмите на слова ниже...</span>
         )}
         {selected.map((word, i) => (
           <button key={i} onClick={() => removeWord(i)} disabled={checked}
@@ -80,7 +80,7 @@ export function SentenceBuilder({ exercise, onComplete }: { exercise: EditoExerc
       <div className="flex flex-wrap gap-2 mb-5">
         {available.map(item => (
           <button key={item.id} onClick={() => addWord(item)} disabled={checked}
-            className="bg-[#262c40] border border-[#3a4060] text-[#c8cce0] text-sm px-3 py-1.5 rounded-lg hover:border-[#4255ff]/50 hover:bg-[#4255ff]/10 transition-all disabled:opacity-50">
+            className="bg-muted border border-border text-foreground text-sm px-3 py-1.5 rounded-lg hover:border-[#4255ff]/50 hover:bg-[#4255ff]/10 transition-all disabled:opacity-50">
             {item.word}
           </button>
         ))}
@@ -90,7 +90,7 @@ export function SentenceBuilder({ exercise, onComplete }: { exercise: EditoExerc
       {!checked ? (
         <div className="flex gap-2 justify-end">
           <button onClick={handleReset} disabled={!selected.length}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#1e2640] text-white text-sm hover:bg-[#262c40] transition-colors disabled:opacity-40">
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-muted text-foreground text-sm hover:bg-muted transition-colors disabled:opacity-40">
             <RotateCcw className="w-3.5 h-3.5" /> Сброс
           </button>
           <button onClick={handleCheck} disabled={!selected.length}
@@ -106,13 +106,13 @@ export function SentenceBuilder({ exercise, onComplete }: { exercise: EditoExerc
               <div className="w-full">
                 <div className="flex gap-2 items-center mb-2">
                   <XCircle className="w-4 h-4 text-red-400 shrink-0" />
-                  <span className="text-[#8e95ae]">Правильный вариант:</span>
+                  <span className="text-qz-text-muted">Правильный вариант:</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-white font-medium">{correct}</span>
+                  <span className="text-foreground font-medium">{correct}</span>
                   <AudioButton text={correct} />
                 </div>
-                <button onClick={handleReset} className="mt-3 inline-flex items-center gap-1.5 text-xs text-[#8e95ae] hover:text-white transition-colors">
+                <button onClick={handleReset} className="mt-3 inline-flex items-center gap-1.5 text-xs text-qz-text-muted hover:text-white transition-colors">
                   <RotateCcw className="w-3 h-3" /> Попробовать ещё раз
                 </button>
               </div>

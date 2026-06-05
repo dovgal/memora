@@ -17,8 +17,8 @@ export default function EditoA1CoursePage() {
             <Sparkles className="w-5 h-5 text-[#ffcd1f]" />
             <span className="text-xs font-bold uppercase tracking-wider text-[#ffcd1f]">Уровень A1 · Édito A1</span>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Тренажер Édito A1</h1>
-          <p className="text-[#8e95ae] max-w-xl">
+          <h1 className="text-3xl font-bold text-foreground mb-2">Тренажер Édito A1</h1>
+          <p className="text-qz-text-muted max-w-xl">
             10 юнитов с теорией и упражнениями по материалам учебника Édito A1. Грамматика, диалоги,
             роды существительных, числа и лексика — с озвучкой на французском.
           </p>
@@ -26,16 +26,16 @@ export default function EditoA1CoursePage() {
 
         {/* Special modules */}
         <section>
-          <h2 className="text-sm font-bold uppercase tracking-wider text-[#8e95ae] mb-4">Специальные модули</h2>
+          <h2 className="text-sm font-bold uppercase tracking-wider text-qz-text-muted mb-4">Специальные модули</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             {/* Genre */}
             <Link href="/dashboard/student/courses/edito-a1/genre">
-              <div className="relative overflow-hidden rounded-2xl border border-[#262c40] bg-gradient-to-br from-pink-900/30 via-purple-900/20 to-transparent p-6 hover:scale-[1.01] hover:border-pink-500/40 transition-all duration-200 cursor-pointer group">
+              <div className="relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-pink-900/30 via-purple-900/20 to-transparent p-6 hover:scale-[1.01] hover:border-pink-500/40 transition-all duration-200 cursor-pointer group">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-pink-500/10 rounded-full blur-3xl" />
                 <div className="relative z-10">
                   <div className="text-2xl mb-3">🎯</div>
-                  <h3 className="text-white font-bold text-base mb-1">{genre.title}</h3>
-                  <p className="text-[#8e95ae] text-sm mb-3">{genre.description}</p>
+                  <h3 className="text-foreground font-bold text-base mb-1">{genre.title}</h3>
+                  <p className="text-qz-text-muted text-sm mb-3">{genre.description}</p>
                   <div className="flex items-center gap-2">
                     <span className="text-xs bg-pink-500/20 text-pink-300 px-2 py-0.5 rounded-full">{genre.exercises.length} упр.</span>
                     <span className="text-pink-400 text-sm group-hover:translate-x-1 transition-transform">→</span>
@@ -46,12 +46,12 @@ export default function EditoA1CoursePage() {
 
             {/* Numeros */}
             <Link href="/dashboard/student/courses/edito-a1/numeros">
-              <div className="relative overflow-hidden rounded-2xl border border-[#262c40] bg-gradient-to-br from-amber-900/30 via-emerald-900/20 to-transparent p-6 hover:scale-[1.01] hover:border-amber-500/40 transition-all duration-200 cursor-pointer group">
+              <div className="relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-amber-900/30 via-emerald-900/20 to-transparent p-6 hover:scale-[1.01] hover:border-amber-500/40 transition-all duration-200 cursor-pointer group">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-3xl" />
                 <div className="relative z-10">
                   <div className="text-2xl mb-3">🔢</div>
-                  <h3 className="text-white font-bold text-base mb-1">{numeros.title}</h3>
-                  <p className="text-[#8e95ae] text-sm mb-3">{numeros.description}</p>
+                  <h3 className="text-foreground font-bold text-base mb-1">{numeros.title}</h3>
+                  <p className="text-qz-text-muted text-sm mb-3">{numeros.description}</p>
                   <div className="flex items-center gap-2">
                     <span className="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full">{numeros.exercises.length} упр.</span>
                     <span className="text-amber-400 text-sm group-hover:translate-x-1 transition-transform">→</span>
@@ -64,21 +64,21 @@ export default function EditoA1CoursePage() {
 
         {/* Units grid */}
         <section>
-          <h2 className="text-sm font-bold uppercase tracking-wider text-[#8e95ae] mb-4">10 Unités — Édito A1</h2>
+          <h2 className="text-sm font-bold uppercase tracking-wider text-qz-text-muted mb-4">10 Unités — Édito A1</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {regularUnits.map(({ id, unit }) => (
               <Link key={id} href={`/dashboard/student/courses/edito-a1/${id}`}>
-                <div className="bg-[#13162a] border border-[#262c40] rounded-2xl p-5 hover:border-[#4255ff]/40 hover:bg-[#4255ff]/5 transition-all duration-200 cursor-pointer group h-full flex flex-col">
+                <div className="bg-qz-card border border-border rounded-2xl p-5 hover:border-[#4255ff]/40 hover:bg-[#4255ff]/5 transition-all duration-200 cursor-pointer group h-full flex flex-col">
                   <div className="flex items-start justify-between mb-3">
                     <div className="w-9 h-9 rounded-xl bg-[#4255ff]/20 flex items-center justify-center text-[#4255ff] font-bold text-sm shrink-0">
                       {id}
                     </div>
-                    <span className="text-xs text-[#8e95ae] bg-[#1e2640] px-2 py-0.5 rounded-full">
+                    <span className="text-xs text-qz-text-muted bg-muted px-2 py-0.5 rounded-full">
                       {unit.exercises.length} упр.
                     </span>
                   </div>
-                  <h3 className="text-white font-semibold text-sm mb-1 line-clamp-1">{unit.title}</h3>
-                  <p className="text-[#8e95ae] text-xs leading-relaxed flex-1 line-clamp-2">{unit.description}</p>
+                  <h3 className="text-foreground font-semibold text-sm mb-1 line-clamp-1">{unit.title}</h3>
+                  <p className="text-qz-text-muted text-xs leading-relaxed flex-1 line-clamp-2">{unit.description}</p>
                   <div className="mt-3 flex items-center justify-between">
                     <div className="flex gap-1">
                       {unit.exercises.slice(0, 5).map((ex, i) => (
@@ -88,10 +88,10 @@ export default function EditoA1CoursePage() {
                           ex.type === 'gender-quiz' ? 'bg-pink-400' :
                           ex.type === 'dialogue' ? 'bg-emerald-400' :
                           ex.type === 'fill-blank' ? 'bg-violet-400' :
-                          'bg-[#8e95ae]'
+                          'bg-qz-text-muted'
                         }`} />
                       ))}
-                      {unit.exercises.length > 5 && <span className="text-[#8e95ae]/50 text-xs">+{unit.exercises.length - 5}</span>}
+                      {unit.exercises.length > 5 && <span className="text-qz-text-muted/50 text-xs">+{unit.exercises.length - 5}</span>}
                     </div>
                     <span className="text-[#4255ff] text-xs group-hover:translate-x-0.5 transition-transform">→</span>
                   </div>
@@ -102,7 +102,7 @@ export default function EditoA1CoursePage() {
         </section>
 
         {/* Legend */}
-        <div className="flex flex-wrap gap-3 text-xs text-[#8e95ae]">
+        <div className="flex flex-wrap gap-3 text-xs text-qz-text-muted">
           {[
             { color: 'bg-[#ffcd1f]', label: 'Теория' },
             { color: 'bg-[#4255ff]', label: 'Грамматика' },

@@ -11,11 +11,11 @@ function Bubble({ exchange, revealed }: { exchange: DialogueExchange; revealed?:
   return (
     <div className={`flex ${isRight ? 'justify-end' : 'justify-start'} mb-3`}>
       <div className={`max-w-[75%] ${isRight ? 'items-end' : 'items-start'} flex flex-col`}>
-        <span className="text-[#8e95ae] text-xs mb-1 px-1">{exchange.speaker}</span>
+        <span className="text-qz-text-muted text-xs mb-1 px-1">{exchange.speaker}</span>
         <div className={`relative rounded-2xl px-4 py-2.5 text-sm ${
           isRight
-            ? 'bg-[#4255ff]/20 border border-[#4255ff]/30 text-white rounded-tr-sm'
-            : 'bg-[#1e2640] border border-[#262c40] text-[#c8cce0] rounded-tl-sm'
+            ? 'bg-[#4255ff]/20 border border-[#4255ff]/30 text-foreground rounded-tr-sm'
+            : 'bg-muted border border-border text-foreground rounded-tl-sm'
         } ${exchange.isBlank && !revealed ? 'opacity-40 border-dashed' : ''}`}>
           {exchange.isBlank && !revealed ? '❓ ...' : text}
         </div>
@@ -66,14 +66,14 @@ export function DialogueExercise({ exercise, onComplete }: { exercise: EditoExer
   const wasCorrect = answers[activeBlankIdx]?.correct;
 
   return (
-    <div className="bg-[#13162a] border border-[#262c40] rounded-2xl p-6">
+    <div className="bg-qz-card border border-border rounded-2xl p-6">
       <div className="flex items-center justify-between mb-3">
-        <h4 className="text-white font-semibold text-sm">{exercise.title}</h4>
-        {!finished && <span className="text-[#8e95ae] text-xs">{activeBlankIdx + 1} / {blanks.length}</span>}
+        <h4 className="text-foreground font-semibold text-sm">{exercise.title}</h4>
+        {!finished && <span className="text-qz-text-muted text-xs">{activeBlankIdx + 1} / {blanks.length}</span>}
       </div>
 
       {exercise.context && (
-        <p className="text-[#8e95ae] text-xs italic mb-4 bg-[#1e2640] px-3 py-2 rounded-lg">{exercise.context}</p>
+        <p className="text-qz-text-muted text-xs italic mb-4 bg-muted px-3 py-2 rounded-lg">{exercise.context}</p>
       )}
 
       {/* Dialogue */}
@@ -100,7 +100,7 @@ export function DialogueExercise({ exercise, onComplete }: { exercise: EditoExer
               {(activeExchange?.options || []).map(opt => (
                 <button key={opt}
                   onClick={() => handleChoice(opt)}
-                  className="text-left border border-[#262c40] bg-[#1e2640] rounded-xl px-4 py-3 text-sm text-white hover:border-[#4255ff]/50 hover:bg-[#4255ff]/5 transition-all flex items-center justify-between gap-2">
+                  className="text-left border border-border bg-muted rounded-xl px-4 py-3 text-sm text-foreground hover:border-[#4255ff]/50 hover:bg-[#4255ff]/5 transition-all flex items-center justify-between gap-2">
                   {opt}
                   <AudioButton text={opt} />
                 </button>
@@ -113,7 +113,7 @@ export function DialogueExercise({ exercise, onComplete }: { exercise: EditoExer
                   ? <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                   : <XCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
                 }
-                <div className="text-[#8e95ae]">
+                <div className="text-qz-text-muted">
                   {!wasCorrect && <><strong className="text-white">{activeExchange.correctAnswer}</strong> — </>}
                   {activeExchange.explanation}
                 </div>
@@ -130,9 +130,9 @@ export function DialogueExercise({ exercise, onComplete }: { exercise: EditoExer
       )}
 
       {finished && (
-        <div className="bg-[#1e2640] rounded-xl p-4 text-center">
-          <p className="text-white font-semibold mb-1">{correctCount}/{blanks.length} правильно</p>
-          <p className="text-[#8e95ae] text-sm">Диалог завершён!</p>
+        <div className="bg-muted rounded-xl p-4 text-center">
+          <p className="text-foreground font-semibold mb-1">{correctCount}/{blanks.length} правильно</p>
+          <p className="text-qz-text-muted text-sm">Диалог завершён!</p>
         </div>
       )}
     </div>

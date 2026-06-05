@@ -31,7 +31,7 @@ export function AudioButton({ text, size = 'sm', className = '' }: AudioButtonPr
       onClick={handlePlay}
       disabled={playing}
       title={`Произнести: ${text}`}
-      className={`${btnSize} rounded-lg text-[#8e95ae] hover:text-[#4255ff] hover:bg-[#4255ff]/10 transition-colors disabled:opacity-50 ${className}`}
+      className={`${btnSize} rounded-lg text-qz-text-muted hover:text-[#4255ff] hover:bg-[#4255ff]/10 transition-colors disabled:opacity-50 ${className}`}
     >
       {playing
         ? <Loader2 className={`${iconSize} animate-spin`} />

@@ -12,7 +12,7 @@ export default function EditoUnitPage({ params }: { params: Promise<{ unitId: st
 
   if (!unit) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-qz-card text-white">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-qz-card text-foreground">
         <p className="text-2xl font-bold mb-4">Юнит не найден</p>
         <Link href="/dashboard/student/courses/edito-a1" className="text-[#4255ff] hover:underline">
           ← Назад к курсу
@@ -32,21 +32,21 @@ export default function EditoUnitPage({ params }: { params: Promise<{ unitId: st
         {/* Back + header */}
         <div className="mb-6">
           <Link href="/dashboard/student/courses/edito-a1"
-            className="inline-flex items-center gap-1.5 text-[#8e95ae] hover:text-white text-sm transition-colors mb-4">
+            className="inline-flex items-center gap-1.5 text-qz-text-muted hover:text-white text-sm transition-colors mb-4">
             <ChevronLeft className="w-4 h-4" /> К списку юнитов
           </Link>
-          <h1 className="text-2xl font-bold text-white mb-1">{unit.title}</h1>
-          <p className="text-[#8e95ae] text-sm">{unit.description}</p>
+          <h1 className="text-2xl font-bold text-foreground mb-1">{unit.title}</h1>
+          <p className="text-qz-text-muted text-sm">{unit.description}</p>
         </div>
 
         {/* Progress bar */}
         {totalInteractive > 0 && (
-          <div className="bg-[#13162a] border border-[#262c40] rounded-xl p-4 mb-6">
+          <div className="bg-qz-card border border-border rounded-xl p-4 mb-6">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-white text-sm font-medium">Прогресс</span>
-              <span className="text-[#8e95ae] text-xs">{completedCount} / {totalInteractive} выполнено</span>
+              <span className="text-foreground text-sm font-medium">Прогресс</span>
+              <span className="text-qz-text-muted text-xs">{completedCount} / {totalInteractive} выполнено</span>
             </div>
-            <div className="h-2 bg-[#1e2640] rounded-full">
+            <div className="h-2 bg-muted rounded-full">
               <div
                 className="h-full bg-[#4255ff] rounded-full transition-all duration-500"
                 style={{ width: `${pct}%` }}
@@ -65,7 +65,7 @@ export default function EditoUnitPage({ params }: { params: Promise<{ unitId: st
           {unit.exercises.map((ex) => (
             <div key={ex.id} className="relative">
               {completed[ex.id] && ex.type !== 'theory' && (
-                <div className="absolute -top-2 -right-2 z-10 bg-emerald-500 text-white text-xs px-2.5 py-0.5 rounded-full font-semibold flex items-center gap-1 shadow-lg">
+                <div className="absolute -top-2 -right-2 z-10 bg-emerald-500 text-foreground text-xs px-2.5 py-0.5 rounded-full font-semibold flex items-center gap-1 shadow-lg">
                   <CheckCircle2 className="w-3 h-3" /> Выполнено
                 </div>
               )}
@@ -78,9 +78,9 @@ export default function EditoUnitPage({ params }: { params: Promise<{ unitId: st
         </div>
 
         {/* Footer nav */}
-        <div className="mt-8 pt-6 border-t border-[#262c40] flex justify-between items-center">
+        <div className="mt-8 pt-6 border-t border-border flex justify-between items-center">
           <Link href="/dashboard/student/courses/edito-a1"
-            className="inline-flex items-center gap-1.5 text-[#8e95ae] hover:text-white text-sm transition-colors">
+            className="inline-flex items-center gap-1.5 text-qz-text-muted hover:text-white text-sm transition-colors">
             <ChevronLeft className="w-4 h-4" /> Все юниты
           </Link>
           {pct === 100 && (

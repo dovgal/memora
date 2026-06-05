@@ -81,14 +81,14 @@ export function NumberQuiz({ exercise, onComplete }: { exercise: EditoExercise; 
     const uniqueMistakes = [...new Map(mistakes.map(m => [m.number, m])).values()];
 
     return (
-      <div className="bg-[#13162a] border border-[#262c40] rounded-2xl p-6">
+      <div className="bg-qz-card border border-border rounded-2xl p-6">
         <div className="text-center mb-5">
           <div className="text-4xl mb-2">{pct >= 90 ? '🏆' : pct >= 70 ? '⭐' : '💪'}</div>
-          <h4 className="text-white font-bold text-base">{isRetry ? 'Повтор завершён!' : `${exercise.title} — Готово!`}</h4>
+          <h4 className="text-foreground font-bold text-base">{isRetry ? 'Повтор завершён!' : `${exercise.title} — Готово!`}</h4>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-3 mb-5 bg-[#1e2640] rounded-xl p-3">
+        <div className="grid grid-cols-3 gap-3 mb-5 bg-muted rounded-xl p-3">
           {[
             { val: `${score}/${total}`, label: 'Правильно', color: 'text-blue-400' },
             { val: `${pct}%`, label: 'Результат', color: pct >= 80 ? 'text-emerald-400' : pct >= 60 ? 'text-amber-400' : 'text-red-400' },
@@ -96,7 +96,7 @@ export function NumberQuiz({ exercise, onComplete }: { exercise: EditoExercise; 
           ].map(s => (
             <div key={s.label} className="text-center">
               <div className={`text-xl font-bold ${s.color}`}>{s.val}</div>
-              <div className="text-[#8e95ae] text-xs mt-0.5">{s.label}</div>
+              <div className="text-qz-text-muted text-xs mt-0.5">{s.label}</div>
             </div>
           ))}
         </div>
@@ -128,7 +128,7 @@ export function NumberQuiz({ exercise, onComplete }: { exercise: EditoExercise; 
               {uniqueMistakes.map(m => (
                 <div key={m.number} className="flex items-center justify-between bg-red-500/8 border border-red-500/20 rounded-lg px-3 py-2 gap-2">
                   <span className="text-red-400 font-bold text-lg min-w-[2rem]">{m.number}</span>
-                  <span className="text-white text-sm font-medium flex-1">{m.french}</span>
+                  <span className="text-foreground text-sm font-medium flex-1">{m.french}</span>
                   <AudioButton text={m.french} />
                 </div>
               ))}
@@ -138,12 +138,12 @@ export function NumberQuiz({ exercise, onComplete }: { exercise: EditoExercise; 
 
         <div className="flex gap-2 justify-end">
           <button onClick={() => reset(allItems, false)}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#1e2640] text-white text-sm hover:bg-[#262c40] transition-colors">
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-muted text-foreground text-sm hover:bg-muted transition-colors">
             <RotateCcw className="w-3.5 h-3.5" /> Заново
           </button>
           {uniqueMistakes.length > 0 && (
             <button onClick={() => reset(uniqueMistakes, true)}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-red-600 text-white text-sm hover:bg-red-500 transition-colors font-semibold">
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-red-600 text-foreground text-sm hover:bg-red-500 transition-colors font-semibold">
               <RefreshCw className="w-3.5 h-3.5" /> Повторить ошибки ({uniqueMistakes.length})
             </button>
           )}
@@ -153,28 +153,28 @@ export function NumberQuiz({ exercise, onComplete }: { exercise: EditoExercise; 
   }
 
   return (
-    <div className="bg-[#13162a] border border-[#262c40] rounded-2xl p-6">
+    <div className="bg-qz-card border border-border rounded-2xl p-6">
       <div className="flex items-center justify-between mb-3">
-        <h4 className="text-white font-semibold text-sm">
+        <h4 className="text-foreground font-semibold text-sm">
           {exercise.title}
           {isRetry && <span className="ml-2 text-red-400 font-normal text-xs">— повтор ошибок</span>}
         </h4>
         <div className="flex gap-3 text-xs">
           <span className="text-blue-400">✓ {score}</span>
           {streak >= 3 && <span className="text-amber-400">⚡{streak}</span>}
-          <span className="text-[#8e95ae]">{current + 1}/{sessionItems.length}</span>
+          <span className="text-qz-text-muted">{current + 1}/{sessionItems.length}</span>
         </div>
       </div>
 
       {/* Progress */}
-      <div className="h-1 bg-[#1e2640] rounded-full mb-6">
+      <div className="h-1 bg-muted rounded-full mb-6">
         <div className="h-full rounded-full transition-all duration-300"
           style={{ width: `${(current / sessionItems.length) * 100}%`, background: streak >= 5 ? '#f59e0b' : isRetry ? '#ef4444' : '#4255ff' }} />
       </div>
 
       {/* Question */}
       <div className="text-center mb-6">
-        <p className="text-[#8e95ae] text-xs mb-3">{questionLabel}</p>
+        <p className="text-qz-text-muted text-xs mb-3">{questionLabel}</p>
         <div className="flex items-center justify-center gap-3">
           <span className={`font-bold transition-colors ${
             mode === 'digit-to-word' ? 'text-6xl' : 'text-3xl'
@@ -183,17 +183,17 @@ export function NumberQuiz({ exercise, onComplete }: { exercise: EditoExercise; 
           </span>
           {mode === 'word-to-digit' && item?.french && <AudioButton text={item.french} size="md" />}
         </div>
-        {item?.hint && !selected && <p className="text-[#8e95ae] text-xs mt-2">💡 {item.hint}</p>}
+        {item?.hint && !selected && <p className="text-qz-text-muted text-xs mt-2">💡 {item.hint}</p>}
       </div>
 
       {/* Options */}
       <div className="grid grid-cols-2 gap-2 mb-4">
         {options.map((opt, i) => {
-          let cls = 'bg-[#1e2640] border-[#262c40] text-white hover:border-[#4255ff]/50';
+          let cls = 'bg-muted border-border text-foreground hover:border-[#4255ff]/50';
           if (selected) {
             if (opt.correct) cls = 'bg-emerald-500/15 border-emerald-500/50 text-emerald-300';
             else if (opt.label === selected) cls = 'bg-red-500/15 border-red-500/50 text-red-300';
-            else cls = 'bg-[#1e2640] border-[#262c40] text-[#8e95ae]';
+            else cls = 'bg-muted border-border text-qz-text-muted';
           }
           return (
             <button key={i} onClick={() => handleSelect(opt)} disabled={!!selected}
@@ -208,16 +208,16 @@ export function NumberQuiz({ exercise, onComplete }: { exercise: EditoExercise; 
       {selected && (
         <div className="space-y-3">
           {item?.explanation && (
-            <div className={`flex gap-2 text-sm p-3 rounded-xl ${isCorrect ? 'bg-emerald-500/10 text-emerald-300' : 'bg-red-500/10 text-[#8e95ae]'}`}>
+            <div className={`flex gap-2 text-sm p-3 rounded-xl ${isCorrect ? 'bg-emerald-500/10 text-emerald-300' : 'bg-red-500/10 text-qz-text-muted'}`}>
               {isCorrect ? <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400 mt-0.5" /> : <XCircle className="w-4 h-4 shrink-0 text-red-400 mt-0.5" />}
               {!isCorrect && <strong className="text-white">Правильно: {mode === 'digit-to-word' ? item.french : item.number}. </strong>}
               {item.explanation}
             </div>
           )}
           {!item?.explanation && !isCorrect && (
-            <div className="flex gap-2 text-sm p-3 rounded-xl bg-red-500/10 text-[#8e95ae]">
+            <div className="flex gap-2 text-sm p-3 rounded-xl bg-red-500/10 text-qz-text-muted">
               <XCircle className="w-4 h-4 shrink-0 text-red-400 mt-0.5" />
-              Правильно: <strong className="text-white ml-1">{mode === 'digit-to-word' ? item.french : item.number}</strong>
+              Правильно: <strong className="text-foreground ml-1">{mode === 'digit-to-word' ? item.french : item.number}</strong>
             </div>
           )}
           <div className="flex justify-end">
