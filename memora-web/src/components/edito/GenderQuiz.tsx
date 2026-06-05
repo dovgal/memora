@@ -75,10 +75,10 @@ export function GenderQuiz({ exercise, onComplete }: { exercise: EditoExercise; 
         {item.emoji && <div className="text-5xl mb-3">{item.emoji}</div>}
         <div className="flex items-center justify-center gap-2 mb-1">
           <span className="text-3xl font-bold">
-            <span className={`mr-2 ${selected ? COLORS[item.article].split(' ')[2] : 'text-qz-text-muted/40'}`}>
+            <span className={`mr-2 ${selected ? COLORS[item.article].split(' ')[2] : 'text-qz-text-muted/60'}`}>
               {selected ? item.article : '___'}
             </span>
-            <span className="text-white">{item.word}</span>
+            <span className="dark:text-white text-foreground">{item.word}</span>
           </span>
           <AudioButton text={`${item.article} ${item.word}`} size="md" />
         </div>
@@ -104,10 +104,10 @@ export function GenderQuiz({ exercise, onComplete }: { exercise: EditoExercise; 
       {/* Feedback */}
       {selected && (
         <div className="space-y-3">
-          <div className={`flex gap-2 items-start p-3 rounded-xl text-sm ${isCorrect ? 'bg-emerald-500/10' : 'bg-red-500/10'}`}>
+          <div className={`flex gap-2 items-start p-3 rounded-xl text-sm ${isCorrect ? 'dark:bg-emerald-500/10 bg-emerald-50' : 'dark:bg-red-500/10 bg-red-50'}`}>
             {isCorrect
-              ? <><CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" /><span className="text-emerald-300 font-semibold">Parfait !</span></>
-              : <><XCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" /><span className="text-qz-text-muted">Правильно: <strong className="text-white">{item.article} {item.word}</strong></span></>
+              ? <><CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" /><span className="dark:text-emerald-300 text-emerald-700 font-semibold">Parfait !</span></>
+              : <><XCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" /><span className="dark:text-qz-text-muted text-foreground">Правильно: <strong className="dark:text-white text-foreground">{item.article} {item.word}</strong></span></>
             }
           </div>
           {item.hint && <p className="text-qz-text-muted text-sm px-1">💡 {item.hint}</p>}

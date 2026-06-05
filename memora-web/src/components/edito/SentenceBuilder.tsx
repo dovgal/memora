@@ -70,7 +70,7 @@ export function SentenceBuilder({ exercise, onComplete }: { exercise: EditoExerc
         )}
         {selected.map((word, i) => (
           <button key={i} onClick={() => removeWord(i)} disabled={checked}
-            className="bg-[#4255ff]/20 border border-[#4255ff]/40 text-white text-sm px-3 py-1 rounded-lg hover:bg-red-500/20 hover:border-red-500/40 transition-all disabled:cursor-default">
+            className="bg-[#4255ff]/20 border border-[#4255ff]/40 dark:text-white text-foreground text-sm px-3 py-1 rounded-lg hover:bg-red-500/20 hover:border-red-500/40 transition-all disabled:cursor-default">
             {word}
           </button>
         ))}
@@ -99,20 +99,20 @@ export function SentenceBuilder({ exercise, onComplete }: { exercise: EditoExerc
           </button>
         </div>
       ) : (
-        <div className={`flex gap-2 items-start p-3 rounded-xl text-sm ${isCorrect ? 'bg-emerald-500/10' : 'bg-red-500/10'}`}>
+        <div className={`flex gap-2 items-start p-3 rounded-xl text-sm ${isCorrect ? 'dark:bg-emerald-500/10 bg-emerald-50' : 'dark:bg-red-500/10 bg-red-50'}`}>
           {isCorrect
-            ? <><CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" /><span className="text-emerald-300 font-semibold">Отлично! <AudioButton text={correct} /></span></>
+            ? <><CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" /><span className="dark:text-emerald-300 text-emerald-700 font-semibold">Отлично! <AudioButton text={correct} /></span></>
             : (
               <div className="w-full">
                 <div className="flex gap-2 items-center mb-2">
                   <XCircle className="w-4 h-4 text-red-400 shrink-0" />
-                  <span className="text-qz-text-muted">Правильный вариант:</span>
+                  <span className="dark:text-qz-text-muted text-foreground">Правильный вариант:</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-foreground font-medium">{correct}</span>
                   <AudioButton text={correct} />
                 </div>
-                <button onClick={handleReset} className="mt-3 inline-flex items-center gap-1.5 text-xs text-qz-text-muted hover:text-white transition-colors">
+                <button onClick={handleReset} className="mt-3 inline-flex items-center gap-1.5 text-xs text-qz-text-muted hover:text-foreground transition-colors">
                   <RotateCcw className="w-3 h-3" /> Попробовать ещё раз
                 </button>
               </div>

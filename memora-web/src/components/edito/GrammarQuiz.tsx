@@ -92,8 +92,8 @@ export function GrammarQuiz({ exercise, onComplete }: { exercise: EditoExercise;
         {q.options.map((opt) => {
           let cls = 'bg-muted border-border text-foreground hover:border-[#4255ff]/50';
           if (selected) {
-            if (opt === q.correctAnswer) cls = 'bg-emerald-500/15 border-emerald-500/50 text-emerald-300';
-            else if (opt === selected) cls = 'bg-red-500/15 border-red-500/50 text-red-300';
+            if (opt === q.correctAnswer) cls = 'dark:bg-emerald-500/15 bg-emerald-50 border-emerald-500/50 dark:text-emerald-300 text-emerald-700';
+            else if (opt === selected) cls = 'dark:bg-red-500/15 bg-red-50 border-red-500/50 dark:text-red-300 text-red-600';
             else cls = 'bg-muted border-border text-qz-text-muted';
           }
           return (
@@ -116,16 +116,16 @@ export function GrammarQuiz({ exercise, onComplete }: { exercise: EditoExercise;
       {selected && (
         <div className="space-y-3">
           {q.explanation && (
-            <div className={`flex gap-2 items-start p-3 rounded-xl text-sm ${isCorrect ? 'bg-emerald-500/10 text-emerald-300' : 'bg-red-500/10 text-red-300'}`}>
+            <div className={`flex gap-2 items-start p-3 rounded-xl text-sm ${isCorrect ? 'dark:bg-emerald-500/10 bg-emerald-50 dark:text-emerald-300 text-emerald-700' : 'dark:bg-red-500/10 bg-red-50 dark:text-red-600 text-red-700'}`}>
               {isCorrect ? <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" /> : <XCircle className="w-4 h-4 shrink-0 mt-0.5" />}
-              <span className="text-qz-text-muted">
-                {!isCorrect && <strong className="text-white">Правильно: {q.correctAnswer}. </strong>}
+              <span className="dark:text-qz-text-muted text-foreground">
+                {!isCorrect && <strong className="dark:text-white text-foreground">Правильно: {q.correctAnswer}. </strong>}
                 {q.explanation}
               </span>
             </div>
           )}
           {!q.explanation && !isCorrect && (
-            <div className="flex gap-2 items-center p-3 rounded-xl text-sm bg-red-500/10 text-red-300">
+            <div className="flex gap-2 items-center p-3 rounded-xl text-sm dark:bg-red-500/10 bg-red-50 dark:text-red-300 text-red-700">
               <XCircle className="w-4 h-4 shrink-0" />
               Правильно: <strong className="text-foreground ml-1">{q.correctAnswer}</strong>
             </div>

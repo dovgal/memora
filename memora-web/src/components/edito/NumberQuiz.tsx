@@ -126,7 +126,7 @@ export function NumberQuiz({ exercise, onComplete }: { exercise: EditoExercise; 
             </h5>
             <div className="grid grid-cols-2 gap-1.5">
               {uniqueMistakes.map(m => (
-                <div key={m.number} className="flex items-center justify-between bg-red-500/8 border border-red-500/20 rounded-lg px-3 py-2 gap-2">
+                <div key={m.number} className="flex items-center justify-between dark:bg-red-500/8 bg-red-50 border dark:border-red-500/20 border-red-200 rounded-lg px-3 py-2 gap-2">
                   <span className="text-red-400 font-bold text-lg min-w-[2rem]">{m.number}</span>
                   <span className="text-foreground text-sm font-medium flex-1">{m.french}</span>
                   <AudioButton text={m.french} />
@@ -178,7 +178,7 @@ export function NumberQuiz({ exercise, onComplete }: { exercise: EditoExercise; 
         <div className="flex items-center justify-center gap-3">
           <span className={`font-bold transition-colors ${
             mode === 'digit-to-word' ? 'text-6xl' : 'text-3xl'
-          } ${selected ? (isCorrect ? 'text-emerald-400' : 'text-red-400') : 'text-white'}`}>
+          } ${selected ? (isCorrect ? 'text-emerald-400' : 'text-red-400') : 'dark:text-white text-foreground'}`}>
             {question}
           </span>
           {mode === 'word-to-digit' && item?.french && <AudioButton text={item.french} size="md" />}
@@ -191,8 +191,8 @@ export function NumberQuiz({ exercise, onComplete }: { exercise: EditoExercise; 
         {options.map((opt, i) => {
           let cls = 'bg-muted border-border text-foreground hover:border-[#4255ff]/50';
           if (selected) {
-            if (opt.correct) cls = 'bg-emerald-500/15 border-emerald-500/50 text-emerald-300';
-            else if (opt.label === selected) cls = 'bg-red-500/15 border-red-500/50 text-red-300';
+            if (opt.correct) cls = 'dark:bg-emerald-500/15 bg-emerald-50 border-emerald-500/50 dark:text-emerald-300 text-emerald-700';
+            else if (opt.label === selected) cls = 'dark:bg-red-500/15 bg-red-50 border-red-500/50 dark:text-red-300 text-red-600';
             else cls = 'bg-muted border-border text-qz-text-muted';
           }
           return (
@@ -208,14 +208,14 @@ export function NumberQuiz({ exercise, onComplete }: { exercise: EditoExercise; 
       {selected && (
         <div className="space-y-3">
           {item?.explanation && (
-            <div className={`flex gap-2 text-sm p-3 rounded-xl ${isCorrect ? 'bg-emerald-500/10 text-emerald-300' : 'bg-red-500/10 text-qz-text-muted'}`}>
+            <div className={`flex gap-2 text-sm p-3 rounded-xl ${isCorrect ? 'dark:bg-emerald-500/10 bg-emerald-50 dark:text-emerald-300 text-emerald-700' : 'dark:bg-red-500/10 bg-red-50 dark:text-qz-text-muted text-foreground'}`}>
               {isCorrect ? <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400 mt-0.5" /> : <XCircle className="w-4 h-4 shrink-0 text-red-400 mt-0.5" />}
-              {!isCorrect && <strong className="text-white">Правильно: {mode === 'digit-to-word' ? item.french : item.number}. </strong>}
+              {!isCorrect && <strong className="dark:text-white text-foreground">Правильно: {mode === 'digit-to-word' ? item.french : item.number}. </strong>}
               {item.explanation}
             </div>
           )}
           {!item?.explanation && !isCorrect && (
-            <div className="flex gap-2 text-sm p-3 rounded-xl bg-red-500/10 text-qz-text-muted">
+            <div className="flex gap-2 text-sm p-3 rounded-xl dark:bg-red-500/10 bg-red-50 dark:text-qz-text-muted text-foreground">
               <XCircle className="w-4 h-4 shrink-0 text-red-400 mt-0.5" />
               Правильно: <strong className="text-foreground ml-1">{mode === 'digit-to-word' ? item.french : item.number}</strong>
             </div>

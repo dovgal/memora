@@ -108,13 +108,13 @@ export function DialogueExercise({ exercise, onComplete }: { exercise: EditoExer
             </div>
           ) : (
             <div className="space-y-3">
-              <div className={`flex gap-2 items-start text-sm p-3 rounded-xl ${wasCorrect ? 'bg-emerald-500/10' : 'bg-red-500/10'}`}>
+              <div className={`flex gap-2 items-start text-sm p-3 rounded-xl ${wasCorrect ? 'dark:bg-emerald-500/10 bg-emerald-50' : 'dark:bg-red-500/10 bg-red-50'}`}>
                 {wasCorrect
                   ? <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                   : <XCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
                 }
-                <div className="text-qz-text-muted">
-                  {!wasCorrect && <><strong className="text-white">{activeExchange.correctAnswer}</strong> — </>}
+                <div className="dark:text-qz-text-muted text-foreground">
+                  {!wasCorrect && <><strong className="dark:text-white text-foreground">{activeExchange.correctAnswer}</strong> — </>}
                   {activeExchange.explanation}
                 </div>
               </div>
