@@ -1,0 +1,200 @@
+{
+  "id": "unite-2",
+  "title": "Unité 2 : En famille",
+  "description": "Parler de sa famille, décrire les personnes. Les adjectifs possessifs, les adjectifs qualificatifs, le pluriel.",
+  "vocabulary": [
+    { "fr": "la famille", "ru": "семья", "type": "nom" },
+    { "fr": "les parents", "ru": "родители", "type": "nom" },
+    { "fr": "le père", "ru": "отец", "type": "nom" },
+    { "fr": "la mère", "ru": "мать", "type": "nom" },
+    { "fr": "le frère", "ru": "брат", "type": "nom" },
+    { "fr": "la sœur", "ru": "сестра", "type": "nom" },
+    { "fr": "le fils", "ru": "сын", "type": "nom" },
+    { "fr": "la fille", "ru": "дочь", "type": "nom" },
+    { "fr": "le mari", "ru": "муж", "type": "nom" },
+    { "fr": "la femme", "ru": "жена / женщина", "type": "nom" },
+    { "fr": "le grand-père", "ru": "дедушка", "type": "nom" },
+    { "fr": "la grand-mère", "ru": "бабушка", "type": "nom" },
+    { "fr": "l'oncle", "ru": "дядя", "type": "nom" },
+    { "fr": "la tante", "ru": "тётя", "type": "nom" },
+    { "fr": "le cousin / la cousine", "ru": "двоюродный брат / сестра", "type": "nom" },
+    { "fr": "mon / ma / mes", "ru": "мой / моя / мои", "type": "possessif" },
+    { "fr": "ton / ta / tes", "ru": "твой / твоя / твои", "type": "possessif" },
+    { "fr": "son / sa / ses", "ru": "его / её / их", "type": "possessif" },
+    { "fr": "grand(e)", "ru": "большой / высокий", "type": "adjectif" },
+    { "fr": "petit(e)", "ru": "маленький / небольшой", "type": "adjectif" },
+    { "fr": "jeune", "ru": "молодой", "type": "adjectif" },
+    { "fr": "vieux / vieille", "ru": "старый / старая", "type": "adjectif" },
+    { "fr": "beau / belle", "ru": "красивый / красивая", "type": "adjectif" },
+    { "fr": "sympa", "ru": "симпатичный / приятный", "type": "adjectif" }
+  ],
+  "exercises": [
+    {
+      "id": "u2-theory-1",
+      "type": "theory",
+      "title": "Les adjectifs possessifs (Притяжательные прилагательные)",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Лицо</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Муж.р.</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Жен.р.</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Мн.ч.</th></tr><tr><td style='padding:0.5rem'>je</td><td style='padding:0.5rem;color:#60a5fa'>mon</td><td style='padding:0.5rem;color:#60a5fa'>ma</td><td style='padding:0.5rem;color:#60a5fa'>mes</td></tr><tr><td style='padding:0.5rem'>tu</td><td style='padding:0.5rem;color:#34d399'>ton</td><td style='padding:0.5rem;color:#34d399'>ta</td><td style='padding:0.5rem;color:#34d399'>tes</td></tr><tr><td style='padding:0.5rem'>il/elle</td><td style='padding:0.5rem;color:#c084fc'>son</td><td style='padding:0.5rem;color:#c084fc'>sa</td><td style='padding:0.5rem;color:#c084fc'>ses</td></tr><tr><td style='padding:0.5rem'>nous</td><td colspan='2' style='padding:0.5rem;color:#fb923c;text-align:center'>notre</td><td style='padding:0.5rem;color:#fb923c'>nos</td></tr><tr><td style='padding:0.5rem'>vous</td><td colspan='2' style='padding:0.5rem;color:#f472b6;text-align:center'>votre</td><td style='padding:0.5rem;color:#f472b6'>vos</td></tr><tr><td style='padding:0.5rem'>ils/elles</td><td colspan='2' style='padding:0.5rem;color:#a78bfa;text-align:center'>leur</td><td style='padding:0.5rem;color:#a78bfa'>leurs</td></tr></table><p style='padding:1rem;background:rgba(59,130,246,0.15);border-radius:8px'>⚠️ <strong>Важно:</strong> Перед существительными женского рода, начинающимися с гласной, используем mon/ton/son:<br>• <em>mon amie</em> (а не ma amie), <em>ton école</em> (а не ta école)</p>"
+    },
+    {
+      "id": "u2-theory-2",
+      "type": "theory",
+      "title": "Les adjectifs qualificatifs — согласование",
+      "content": "<p style='margin-bottom:1rem'>Прилагательные во французском языке <strong>согласуются</strong> с существительным в роде и числе.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Муж.р. ед.ч.</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Жен.р. (+ e)</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Мн.ч. (+ s)</th></tr><tr><td style='padding:0.5rem;color:#60a5fa'>grand</td><td style='padding:0.5rem;color:#60a5fa'>grande</td><td style='padding:0.5rem;color:#60a5fa'>grands / grandes</td></tr><tr><td style='padding:0.5rem;color:#34d399'>petit</td><td style='padding:0.5rem;color:#34d399'>petite</td><td style='padding:0.5rem;color:#34d399'>petits / petites</td></tr><tr><td style='padding:0.5rem;color:#c084fc'>beau</td><td style='padding:0.5rem;color:#c084fc'>belle</td><td style='padding:0.5rem;color:#c084fc'>beaux / belles</td></tr><tr><td style='padding:0.5rem;color:#fb923c'>vieux</td><td style='padding:0.5rem;color:#fb923c'>vieille</td><td style='padding:0.5rem;color:#fb923c'>vieux / vieilles</td></tr></table><p style='padding:1rem;background:rgba(52,211,153,0.15);border-radius:8px'>💡 <strong>Место прилагательного:</strong><br>Большинство прилагательных стоят <strong>после</strong> существительного:<br>• <em>un frère sympa</em>, <em>une sœur intelligente</em><br>Но некоторые (grand, petit, beau, vieux, jeune) — <strong>перед</strong>:<br>• <em>un grand frère</em>, <em>une petite sœur</em></p>"
+    },
+    {
+      "id": "u2-ex1",
+      "type": "grammar-quiz",
+      "title": "Упражнение 1 : Adjectifs possessifs",
+      "questions": [
+        { "question": "C'est ___ père. (mon / ma / mes)", "options": ["mon", "ma", "mes", "son"], "correctAnswer": "mon" },
+        { "question": "C'est ___ mère. (ton / ta / tes)", "options": ["ton", "ta", "tes", "ma"], "correctAnswer": "ta" },
+        { "question": "C'est ___ sœur. (son / sa / ses)", "options": ["son", "sa", "ses", "ma"], "correctAnswer": "sa" },
+        { "question": "Ce sont ___ enfants. (notre / nos)", "options": ["notre", "nos", "leurs", "ses"], "correctAnswer": "nos" },
+        { "question": "C'est ___ famille. (votre / vos)", "options": ["vos", "votre", "notre", "leur"], "correctAnswer": "votre" },
+        { "question": "Ce sont ___ parents. (leur / leurs)", "options": ["leur", "leurs", "ses", "mes"], "correctAnswer": "leurs" },
+        { "question": "C'est ___ ami. (mon / ma — перед гласной!)", "options": ["ma", "mon", "ton", "son"], "correctAnswer": "mon" }
+      ]
+    },
+    {
+      "id": "u2-ex2",
+      "type": "grammar-quiz",
+      "title": "Упражнение 2 : Accord des adjectifs",
+      "questions": [
+        { "question": "Ma sœur est très ___. (grand)", "options": ["grand", "grande", "grands", "grandes"], "correctAnswer": "grande" },
+        { "question": "Mon frère est ___. (petit)", "options": ["petit", "petite", "petits", "petites"], "correctAnswer": "petit" },
+        { "question": "Mes parents sont ___. (sympa — invariable)", "options": ["sympa", "sympas", "sympa", "sympas"], "correctAnswer": "sympa" },
+        { "question": "C'est une ___ famille. (grand)", "options": ["grand", "grande", "beaux", "belles"], "correctAnswer": "grande" },
+        { "question": "C'est un ___ père. (beau)", "options": ["beau", "belle", "beaux", "belles"], "correctAnswer": "beau" }
+      ]
+    },
+    {
+      "id": "u2-ex3",
+      "type": "sentence-builder",
+      "title": "Упражнение 3 : Описание семьи",
+      "sentences": [
+        { "words": ["C'est", "mon", "père", "."], "ru": "Это мой отец." },
+        { "words": ["Ma", "sœur", "est", "très", "sympa", "."], "ru": "Моя сестра очень приятная." },
+        { "words": ["Mes", "parents", "habitent", "à", "Lyon", "."], "ru": "Мои родители живут в Лионе." },
+        { "words": ["Elle", "a", "un", "petit", "frère", "."], "ru": "У неё есть маленький брат." }
+      ]
+    },
+    {
+      "id": "u2-theory-3",
+      "type": "theory",
+      "title": "Les nombres 21–100 (Числа от 21 до 100)",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Цифра</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Слово</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Цифра</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Слово</th></tr><tr><td style='padding:0.4rem;color:#34d399'>21</td><td style='padding:0.4rem'>vingt et un</td><td style='padding:0.4rem;color:#34d399'>60</td><td style='padding:0.4rem'>soixante</td></tr><tr><td style='padding:0.4rem;color:#34d399'>22</td><td style='padding:0.4rem'>vingt-deux</td><td style='padding:0.4rem;color:#34d399'>70</td><td style='padding:0.4rem'>soixante-dix</td></tr><tr><td style='padding:0.4rem;color:#34d399'>30</td><td style='padding:0.4rem'>trente</td><td style='padding:0.4rem;color:#34d399'>71</td><td style='padding:0.4rem'>soixante et onze</td></tr><tr><td style='padding:0.4rem;color:#34d399'>31</td><td style='padding:0.4rem'>trente et un</td><td style='padding:0.4rem;color:#34d399'>80</td><td style='padding:0.4rem'>quatre-vingts</td></tr><tr><td style='padding:0.4rem;color:#34d399'>40</td><td style='padding:0.4rem'>quarante</td><td style='padding:0.4rem;color:#34d399'>81</td><td style='padding:0.4rem'>quatre-vingt-un</td></tr><tr><td style='padding:0.4rem;color:#34d399'>50</td><td style='padding:0.4rem'>cinquante</td><td style='padding:0.4rem;color:#34d399'>90</td><td style='padding:0.4rem'>quatre-vingt-dix</td></tr><tr><td style='padding:0.4rem;color:#34d399'>51</td><td style='padding:0.4rem'>cinquante et un</td><td style='padding:0.4rem;color:#34d399'>100</td><td style='padding:0.4rem'>cent</td></tr></table><p style='padding:1rem;background:rgba(52,211,153,0.15);border-radius:8px'>⚠️ <strong>Особенности:</strong><br>• 70 = 60+10: <em>soixante-dix</em><br>• 80 = 4×20: <em>quatre-vingts</em> (с -s в конце, но quatre-vingt-un — без s)<br>• 90 = 4×20+10: <em>quatre-vingt-dix</em><br>• <em>Mon père a quarante-cinq ans.</em> — Моему отцу 45 лет.</p>"
+    },
+    {
+      "id": "u2-theory-4",
+      "type": "theory",
+      "title": "La négation avec AVOIR — il n'a pas de...",
+      "content": "<p style='margin-bottom:1rem'>В отрицательных предложениях с <strong>avoir</strong> неопределённый (un/une/des) и частичный артикль заменяются на <strong>de / d'</strong>.</p><div style='padding:1rem;background:rgba(239,68,68,0.15);border-radius:8px;margin:1rem 0'><p>• <em>Il a <strong>un</strong> frère.</em> → <em>Il n'a pas <strong>de</strong> frère.</em> — У него нет брата.</p><p>• <em>Elle a <strong>une</strong> sœur.</em> → <em>Elle n'a pas <strong>de</strong> sœur.</em> — У неё нет сестры.</p><p>• <em>Ils ont <strong>des</strong> enfants.</em> → <em>Ils n'ont pas <strong>d'</strong>enfants.</em> — У них нет детей.</p></div><div style='padding:1rem;background:rgba(59,130,246,0.15);border-radius:8px'>💡 <strong>Формула:</strong> <em>ne + avoir + pas + de/d' + существительное</em><br>Перед гласной: <em>pas d'amis</em>, <em>pas d'enfants</em></div>"
+    },
+    {
+      "id": "u2-ex4",
+      "type": "grammar-quiz",
+      "title": "Упражнение 4 : Descriptions physiques",
+      "questions": [
+        { "question": "Mon frère est très ___. (высокий, муж.р.)", "options": ["grand", "grande", "petite", "brun"], "correctAnswer": "grand" },
+        { "question": "Ma cousine est ___. (маленькая, жен.р.)", "options": ["petit", "petite", "grande", "blonde"], "correctAnswer": "petite" },
+        { "question": "Il a les cheveux ___. (тёмные — brunette desc.)", "options": ["blonds", "roux", "bruns", "blancs"], "correctAnswer": "bruns" },
+        { "question": "Elle a les yeux ___. (голубые)", "options": ["verts", "bruns", "bleus", "noirs"], "correctAnswer": "bleus" },
+        { "question": "Mon grand-père est ___. (старый, муж.р.)", "options": ["vieux", "vieille", "jeune", "beau"], "correctAnswer": "vieux" },
+        { "question": "Ma grand-mère est très ___. (красивая, жен.р.)", "options": ["beau", "belle", "bel", "beaux"], "correctAnswer": "belle" },
+        { "question": "Mes parents sont ___. (молодые, мн.ч.)", "options": ["jeune", "jeunes", "jeunesses", "vieux"], "correctAnswer": "jeunes" },
+        { "question": "Elle est ___. (рыжеволосая, жен.р.)", "options": ["roux", "rousse", "blonde", "brune"], "correctAnswer": "rousse" }
+      ]
+    },
+    {
+      "id": "u2-ex5",
+      "type": "grammar-quiz",
+      "title": "Упражнение 5 : Avoir + âge et famille",
+      "questions": [
+        { "question": "Mon père ___ cinquante-deux ans.", "options": ["ai", "as", "a", "avons"], "correctAnswer": "a" },
+        { "question": "Tu ___ des frères et sœurs ?", "options": ["ai", "as", "a", "avez"], "correctAnswer": "as" },
+        { "question": "Mes grands-parents ___ soixante-dix ans.", "options": ["a", "avons", "avez", "ont"], "correctAnswer": "ont" },
+        { "question": "Nous ___ deux enfants.", "options": ["ai", "as", "a", "avons"], "correctAnswer": "avons" },
+        { "question": "Je n'___ pas de sœur.", "options": ["ai", "as", "a", "avons"], "correctAnswer": "ai" },
+        { "question": "Elle n'a pas ___ frère. (отрицание!)", "options": ["un", "une", "de", "des"], "correctAnswer": "de" },
+        { "question": "Ils n'ont pas ___ enfants. (перед гласной!)", "options": ["de", "d'", "des", "un"], "correctAnswer": "d'" }
+      ]
+    },
+    {
+      "id": "u2-genre1",
+      "type": "gender-quiz",
+      "title": "Quel article ? — La famille",
+      "items": [
+        { "word": "père", "emoji": "👨", "ru": "отец", "article": "le", "hint": "Мужской род: le père" },
+        { "word": "mère", "emoji": "👩", "ru": "мать", "article": "la", "hint": "Женский род: la mère" },
+        { "word": "frère", "emoji": "👦", "ru": "брат", "article": "le", "hint": "Мужской род: le frère" },
+        { "word": "sœur", "emoji": "👧", "ru": "сестра", "article": "la", "hint": "Женский род: la sœur" },
+        { "word": "fils", "emoji": "🧒", "ru": "сын", "article": "le", "hint": "Мужской род: le fils" },
+        { "word": "fille", "emoji": "👱‍♀️", "ru": "дочь", "article": "la", "hint": "Женский род: la fille" },
+        { "word": "mari", "emoji": "💍", "ru": "муж", "article": "le", "hint": "Мужской род: le mari" },
+        { "word": "femme", "emoji": "👰", "ru": "жена", "article": "la", "hint": "Женский род: la femme" },
+        { "word": "cousin", "emoji": "🧑", "ru": "двоюродный брат", "article": "le", "hint": "Мужской род: le cousin" },
+        { "word": "cousine", "emoji": "👩", "ru": "двоюродная сестра", "article": "la", "hint": "Женский род: la cousine" }
+      ]
+    },
+    {
+      "id": "u2-dialogue1",
+      "type": "dialogue",
+      "title": "Dialogue : Emma parle de sa famille",
+      "context": "Эмма рассказывает Лукасу о своей семье за чашкой кофе.",
+      "exchanges": [
+        { "speaker": "Lucas", "side": "right", "text": "Tu as des frères et sœurs, Emma ?" },
+        { "speaker": "Emma", "side": "left", "text": "___", "isBlank": true, "options": ["Oui, j'ai un frère et une sœur.", "Non, je suis fille unique.", "Je n'ai pas de famille.", "Oui, j'ai trois chiens."], "correctAnswer": "Oui, j'ai un frère et une sœur.", "explanation": "Emma a un frère et une sœur — у Эммы есть брат и сестра. Глагол avoir для описания семьи." },
+        { "speaker": "Lucas", "side": "right", "text": "Ils ont quel âge ?" },
+        { "speaker": "Emma", "side": "left", "text": "Mon frère a vingt-deux ans et ma sœur a seize ans. Et toi ?" },
+        { "speaker": "Lucas", "side": "right", "text": "___", "isBlank": true, "options": ["Je suis fils unique, mais j'ai deux cousins.", "J'ai quatre frères et cinq sœurs.", "Je n'ai pas de parents.", "Ma famille est grande."], "correctAnswer": "Je suis fils unique, mais j'ai deux cousins.", "explanation": "Lucas — fils unique (единственный ребёнок). Mais (но) вводит дополнительную информацию." },
+        { "speaker": "Emma", "side": "left", "text": "Tes parents, ils ont quel âge ?" },
+        { "speaker": "Lucas", "side": "right", "text": "Mon père a cinquante ans et ma mère a quarante-huit ans. Ils sont jeunes !" },
+        { "speaker": "Emma", "side": "left", "text": "C'est vrai, ils sont encore jeunes !" }
+      ]
+    },
+    {
+      "id": "u2-fill1",
+      "type": "fill-blank",
+      "title": "Complétez le texte : La famille Martin",
+      "context": "Лукас описывает семью своей подруги. Заполните пропуски правильными словами.",
+      "text": "Voici la famille Martin. Le père ___ quarante-cinq ans. Il est grand et ___. La mère est petite et ___. Ils ont deux enfants : un fils et ___ fille. Le fils s'appelle Thomas, il est ___. La fille ___ appelle Julie, elle est blonde.",
+      "blanks": [
+        { "options": ["a", "ai", "as", "ont"], "correctAnswer": "a", "hint": "Глагол avoir, 3-е лицо ед.ч.", "explanation": "Il a — у него есть / ему (лет)" },
+        { "options": ["brun", "brune", "blond", "roux"], "correctAnswer": "brun", "hint": "Прилагательное для мужского рода — тёмноволосый", "explanation": "Le père est grand et brun — отец высокий и темноволосый" },
+        { "options": ["belle", "beau", "beaux", "belles"], "correctAnswer": "belle", "hint": "Женский род от beau", "explanation": "La mère est belle — мать красивая (жен.р.)" },
+        { "options": ["une", "un", "la", "le"], "correctAnswer": "une", "hint": "Неопределённый артикль, женский род", "explanation": "une fille — дочь (женский род, неопределённый артикль)" },
+        { "options": ["brun", "brune", "blonde", "belle"], "correctAnswer": "brun", "hint": "Тёмноволосый — мужской род", "explanation": "Thomas est brun — Тома темноволосый (муж.р.)" },
+        { "options": ["s'", "m'", "t'", "se"], "correctAnswer": "s'", "hint": "Возвратное местоимение для 3-го лица", "explanation": "Elle s'appelle — её зовут (3-е лицо ед.ч.)" }
+      ]
+    },
+    {
+      "id": "u2-ex6",
+      "type": "sentence-builder",
+      "title": "Упражнение 6 : Descriptions de la famille",
+      "sentences": [
+        { "words": ["Mon", "grand-père", "a", "soixante-dix", "ans", "."], "ru": "Моему дедушке семьдесят лет." },
+        { "words": ["Elle", "est", "grande", "et", "elle", "a", "les", "yeux", "verts", "."], "ru": "Она высокая и у неё зелёные глаза." },
+        { "words": ["Je", "n'ai", "pas", "de", "frère", ",", "je", "suis", "fils", "unique", "."], "ru": "У меня нет брата, я единственный ребёнок в семье." },
+        { "words": ["Ses", "parents", "sont", "très", "sympa", "."], "ru": "Его родители очень приятные." }
+      ]
+    },
+    {
+      "id": "u2-audio1",
+      "type": "listening",
+      "title": "Аудирование : Ma famille",
+      "audioFile": "piste_010.mp3",
+      "source": "cahier",
+      "questions": [
+        { "question": "De quoi parle le dialogue ? (О чём диалог?)", "options": ["De la famille", "Du travail", "De l'école", "Des amis"], "correctAnswer": "De la famille" }
+      ]
+    },
+    {
+      "id": "u2-video1",
+      "type": "video",
+      "title": "Vidéo Unité 2 : En famille",
+      "videoFile": "U02_ST_720p.mp4",
+      "source": "sub",
+      "description": "Regardez la vidéo. Identifiez les membres de la famille."
+    }
+  ]
+}

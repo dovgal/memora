@@ -1,0 +1,197 @@
+{
+  "id": "unite-5",
+  "title": "Unité 5 : En ville",
+  "description": "S'orienter dans la ville, demander et indiquer le chemin. Les prépositions de lieu, l'impératif, les verbes aller et venir.",
+  "vocabulary": [
+    { "fr": "la rue", "ru": "улица", "type": "ville" },
+    { "fr": "l'avenue", "ru": "проспект", "type": "ville" },
+    { "fr": "le boulevard", "ru": "бульвар", "type": "ville" },
+    { "fr": "la place", "ru": "площадь", "type": "ville" },
+    { "fr": "la mairie", "ru": "мэрия / городская администрация", "type": "ville" },
+    { "fr": "la gare", "ru": "вокзал", "type": "ville" },
+    { "fr": "l'hôpital", "ru": "больница", "type": "ville" },
+    { "fr": "la pharmacie", "ru": "аптека", "type": "ville" },
+    { "fr": "la boulangerie", "ru": "булочная", "type": "ville" },
+    { "fr": "le supermarché", "ru": "супермаркет", "type": "ville" },
+    { "fr": "la banque", "ru": "банк", "type": "ville" },
+    { "fr": "le musée", "ru": "музей", "type": "ville" },
+    { "fr": "à gauche", "ru": "налево / слева", "type": "direction" },
+    { "fr": "à droite", "ru": "направо / справа", "type": "direction" },
+    { "fr": "tout droit", "ru": "прямо", "type": "direction" },
+    { "fr": "au bout de", "ru": "в конце", "type": "direction" },
+    { "fr": "en face de", "ru": "напротив", "type": "preposition" },
+    { "fr": "à côté de", "ru": "рядом с", "type": "preposition" },
+    { "fr": "près de", "ru": "вблизи от / рядом", "type": "preposition" },
+    { "fr": "loin de", "ru": "далеко от", "type": "preposition" },
+    { "fr": "Excusez-moi, où est... ?", "ru": "Извините, где находится...?", "type": "phrase" },
+    { "fr": "Prenez la rue...", "ru": "Пройдите по улице...", "type": "phrase" },
+    { "fr": "Tournez à gauche / à droite.", "ru": "Поверните налево / направо.", "type": "phrase" }
+  ],
+  "exercises": [
+    {
+      "id": "u5-theory-1",
+      "type": "theory",
+      "title": "L'impératif (Повелительное наклонение)",
+      "content": "<p style='margin-bottom:1rem'>Повелительное наклонение образуется от формы настоящего времени для <strong>tu, nous, vous</strong>, без местоимения.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Лицо</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>aller</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>prendre</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>tourner</th></tr><tr><td style='padding:0.5rem'>tu</td><td style='padding:0.5rem;color:#60a5fa'>Va !</td><td style='padding:0.5rem;color:#60a5fa'>Prends !</td><td style='padding:0.5rem;color:#60a5fa'>Tourne !</td></tr><tr><td style='padding:0.5rem'>nous</td><td style='padding:0.5rem;color:#34d399'>Allons !</td><td style='padding:0.5rem;color:#34d399'>Prenons !</td><td style='padding:0.5rem;color:#34d399'>Tournons !</td></tr><tr><td style='padding:0.5rem'>vous</td><td style='padding:0.5rem;color:#c084fc'>Allez !</td><td style='padding:0.5rem;color:#c084fc'>Prenez !</td><td style='padding:0.5rem;color:#c084fc'>Tournez !</td></tr></table><p style='padding:1rem;background:rgba(59,130,246,0.15);border-radius:8px'>⚠️ У глаголов на -ER в форме <strong>tu</strong> нет окончания -s:<br>• <em>tu tournes</em> → Impératif: <em>Tourne !</em> (не «tournes»)</p>"
+    },
+    {
+      "id": "u5-theory-2",
+      "type": "theory",
+      "title": "Les verbes ALLER et VENIR",
+      "content": "<div style='display:grid;grid-template-columns:1fr 1fr;gap:1rem'><div><h4 style='color:#60a5fa;margin-bottom:0.5rem'>ALLER (идти/ехать)</h4><table style='width:100%;border-collapse:collapse'><tr><td style='padding:0.3rem'>je</td><td style='padding:0.3rem;color:#60a5fa;font-weight:bold'>vais</td></tr><tr><td style='padding:0.3rem'>tu</td><td style='padding:0.3rem;color:#60a5fa;font-weight:bold'>vas</td></tr><tr><td style='padding:0.3rem'>il/elle</td><td style='padding:0.3rem;color:#60a5fa;font-weight:bold'>va</td></tr><tr><td style='padding:0.3rem'>nous</td><td style='padding:0.3rem;color:#60a5fa;font-weight:bold'>allons</td></tr><tr><td style='padding:0.3rem'>vous</td><td style='padding:0.3rem;color:#60a5fa;font-weight:bold'>allez</td></tr><tr><td style='padding:0.3rem'>ils</td><td style='padding:0.3rem;color:#60a5fa;font-weight:bold'>vont</td></tr></table></div><div><h4 style='color:#34d399;margin-bottom:0.5rem'>VENIR (приходить)</h4><table style='width:100%;border-collapse:collapse'><tr><td style='padding:0.3rem'>je</td><td style='padding:0.3rem;color:#34d399;font-weight:bold'>viens</td></tr><tr><td style='padding:0.3rem'>tu</td><td style='padding:0.3rem;color:#34d399;font-weight:bold'>viens</td></tr><tr><td style='padding:0.3rem'>il/elle</td><td style='padding:0.3rem;color:#34d399;font-weight:bold'>vient</td></tr><tr><td style='padding:0.3rem'>nous</td><td style='padding:0.3rem;color:#34d399;font-weight:bold'>venons</td></tr><tr><td style='padding:0.3rem'>vous</td><td style='padding:0.3rem;color:#34d399;font-weight:bold'>venez</td></tr><tr><td style='padding:0.3rem'>ils</td><td style='padding:0.3rem;color:#34d399;font-weight:bold'>viennent</td></tr></table></div></div><p style='margin-top:1rem;padding:1rem;background:rgba(59,130,246,0.15);border-radius:8px'>💡 Aller + инфинитив = <strong>ближайшее будущее</strong>:<br>• <em>Je <strong>vais</strong> partir.</em> — Я собираюсь уехать. (скоро)</p>"
+    },
+    {
+      "id": "u5-ex1",
+      "type": "grammar-quiz",
+      "title": "Упражнение 1 : Aller et Venir",
+      "questions": [
+        { "question": "Je ___ à la gare. (aller)", "options": ["vais", "vas", "va", "vont"], "correctAnswer": "vais" },
+        { "question": "Tu ___ d'où ? (venir)", "options": ["viens", "vient", "venez", "viennent"], "correctAnswer": "viens" },
+        { "question": "Elle ___ au musée demain. (aller)", "options": ["vais", "vas", "va", "vont"], "correctAnswer": "va" },
+        { "question": "Nous ___ chez des amis. (aller)", "options": ["vais", "allez", "allons", "vont"], "correctAnswer": "allons" },
+        { "question": "Vous ___ à Paris pour les vacances ? (venir)", "options": ["viens", "vient", "venez", "viennent"], "correctAnswer": "venez" },
+        { "question": "Ils ___ manger bientôt. (aller = futur proche)", "options": ["vais", "vas", "va", "vont"], "correctAnswer": "vont" }
+      ]
+    },
+    {
+      "id": "u5-ex2",
+      "type": "grammar-quiz",
+      "title": "Упражнение 2 : Prépositions de lieu",
+      "questions": [
+        { "question": "La pharmacie est ___ de la boulangerie.", "options": ["à côté", "loin", "au bout", "à gauche"], "correctAnswer": "à côté" },
+        { "question": "Le musée est ___ de la gare (очень далеко).", "options": ["près", "loin", "en face", "à droite"], "correctAnswer": "loin" },
+        { "question": "L'hôtel est ___ de l'hôpital (напротив).", "options": ["près", "loin", "en face", "à côté"], "correctAnswer": "en face" },
+        { "question": "Tournez ___ au feu rouge. (направо)", "options": ["à gauche", "à droite", "tout droit", "au bout"], "correctAnswer": "à droite" },
+        { "question": "Continuez ___. (прямо)", "options": ["à gauche", "à droite", "tout droit", "en face"], "correctAnswer": "tout droit" }
+      ]
+    },
+    {
+      "id": "u5-ex3",
+      "type": "sentence-builder",
+      "title": "Упражнение 3 : Demander le chemin",
+      "sentences": [
+        { "words": ["Excusez-moi", ",", "où", "est", "la", "gare", "?"], "ru": "Извините, где находится вокзал?" },
+        { "words": ["Tournez", "à", "gauche", "au", "feu", "rouge", "."], "ru": "Поверните налево на светофоре." },
+        { "words": ["La", "pharmacie", "est", "en", "face", "de", "la", "banque", "."], "ru": "Аптека находится напротив банка." },
+        { "words": ["Je", "vais", "au", "musée", "demain", "."], "ru": "Я иду в музей завтра." }
+      ]
+    },
+    {
+      "id": "u5-theory-3",
+      "type": "theory",
+      "title": "Les contractions au/aux, du/des (Слияние артиклей)",
+      "content": "<p style='margin-bottom:1rem'>Когда предлоги <strong>à</strong> и <strong>de</strong> стоят перед определённым артиклем <strong>le</strong> или <strong>les</strong>, происходит слияние.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Предлог</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>+ le</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>+ la</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>+ l'</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>+ les</th></tr><tr><td style='padding:0.4rem;color:#60a5fa'>à</td><td style='padding:0.4rem;color:#60a5fa;font-weight:bold'>au</td><td style='padding:0.4rem'>à la</td><td style='padding:0.4rem'>à l'</td><td style='padding:0.4rem;color:#60a5fa;font-weight:bold'>aux</td></tr><tr><td style='padding:0.4rem;color:#34d399'>de</td><td style='padding:0.4rem;color:#34d399;font-weight:bold'>du</td><td style='padding:0.4rem'>de la</td><td style='padding:0.4rem'>de l'</td><td style='padding:0.4rem;color:#34d399;font-weight:bold'>des</td></tr></table><div style='padding:1rem;background:rgba(59,130,246,0.15);border-radius:8px;margin:1rem 0'>💡 <strong>Примеры с à:</strong><br>• <em>Je vais <strong>au</strong> cinéma.</em> (à + le cinéma) — Я иду в кино.<br>• <em>Je vais <strong>à la</strong> gare.</em> — Я иду на вокзал.<br>• <em>Je vais <strong>à l'</strong>hôpital.</em> — Я иду в больницу.<br>• <em>Je vais <strong>aux</strong> musées.</em> — Я иду в музеи.</div><div style='padding:1rem;background:rgba(52,211,153,0.15);border-radius:8px'>💡 <strong>Примеры с de:</strong><br>• <em>Je viens <strong>du</strong> supermarché.</em> (de + le) — Я иду из супермаркета.<br>• <em>Je viens <strong>de la</strong> pharmacie.</em> — Я иду из аптеки.<br>• <em>Je viens <strong>des</strong> musées.</em> — Я иду из музеев.</div>"
+    },
+    {
+      "id": "u5-theory-4",
+      "type": "theory",
+      "title": "Le futur proche (Ближайшее будущее) — aller + infinitif",
+      "content": "<p style='margin-bottom:1rem'>Для выражения ближайшего будущего (что-то произойдёт скоро) используем <strong>aller + инфинитив</strong>.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Субъект</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Aller</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Инфинитив</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th></tr><tr><td style='padding:0.4rem'>Je</td><td style='padding:0.4rem;color:#60a5fa'>vais</td><td style='padding:0.4rem'>partir</td><td style='padding:0.4rem'>Я собираюсь уехать.</td></tr><tr><td style='padding:0.4rem'>Tu</td><td style='padding:0.4rem;color:#60a5fa'>vas</td><td style='padding:0.4rem'>manger</td><td style='padding:0.4rem'>Ты собираешься поесть.</td></tr><tr><td style='padding:0.4rem'>Il/Elle</td><td style='padding:0.4rem;color:#60a5fa'>va</td><td style='padding:0.4rem'>prendre le métro</td><td style='padding:0.4rem'>Он/Она поедет на метро.</td></tr><tr><td style='padding:0.4rem'>Nous</td><td style='padding:0.4rem;color:#60a5fa'>allons</td><td style='padding:0.4rem'>visiter Paris</td><td style='padding:0.4rem'>Мы собираемся посетить Париж.</td></tr><tr><td style='padding:0.4rem'>Vous</td><td style='padding:0.4rem;color:#60a5fa'>allez</td><td style='padding:0.4rem'>tourner à droite</td><td style='padding:0.4rem'>Вы повернёте направо.</td></tr><tr><td style='padding:0.4rem'>Ils/Elles</td><td style='padding:0.4rem;color:#60a5fa'>vont</td><td style='padding:0.4rem'>arriver bientôt</td><td style='padding:0.4rem'>Они скоро приедут.</td></tr></table><p style='padding:1rem;background:rgba(239,68,68,0.15);border-radius:8px'>⚠️ <strong>Отрицание:</strong> ne + aller + pas + infinitif:<br>• <em>Je <strong>ne vais pas</strong> prendre le bus.</em> — Я не собираюсь ехать на автобусе.</p>"
+    },
+    {
+      "id": "u5-ex4",
+      "type": "grammar-quiz",
+      "title": "Упражнение 4 : Contractions au/du",
+      "questions": [
+        { "question": "Je vais ___ cinéma. (à + le)", "options": ["à le", "au", "aux", "à la"], "correctAnswer": "au" },
+        { "question": "Elle vient ___ supermarché. (de + le)", "options": ["de le", "du", "des", "de la"], "correctAnswer": "du" },
+        { "question": "Nous allons ___ musées. (à + les)", "options": ["à les", "au", "aux", "à la"], "correctAnswer": "aux" },
+        { "question": "Il revient ___ gare. (de + la)", "options": ["du", "des", "de la", "de l'"], "correctAnswer": "de la" },
+        { "question": "Tu vas ___ hôpital ? (à + l')", "options": ["au", "à l'", "à la", "aux"], "correctAnswer": "à l'" },
+        { "question": "Je viens ___ boulangerie. (de + la)", "options": ["du", "des", "de l'", "de la"], "correctAnswer": "de la" },
+        { "question": "Ils vont ___ restaurants du quartier. (à + les)", "options": ["au", "aux", "à les", "à la"], "correctAnswer": "aux" },
+        { "question": "On vient ___ marché. (de + le)", "options": ["du", "de la", "de l'", "des"], "correctAnswer": "du" }
+      ]
+    },
+    {
+      "id": "u5-ex5",
+      "type": "grammar-quiz",
+      "title": "Упражнение 5 : Le futur proche et les directions",
+      "questions": [
+        { "question": "Nous ___ visiter le musée demain. (futur proche)", "options": ["allons", "vais", "vas", "vont"], "correctAnswer": "allons" },
+        { "question": "Elle ___ prendre le bus. (futur proche)", "options": ["vais", "vas", "va", "vont"], "correctAnswer": "va" },
+        { "question": "Vous ___ tourner à droite après la pharmacie.", "options": ["allez", "allons", "vont", "vas"], "correctAnswer": "allez" },
+        { "question": "Ils ___ arriver à la gare dans cinq minutes.", "options": ["vais", "vas", "va", "vont"], "correctAnswer": "vont" },
+        { "question": "Continuez ___ droit jusqu'au feu rouge.", "options": ["à gauche", "à droite", "tout", "au bout"], "correctAnswer": "tout" },
+        { "question": "La gare est ___ au bout de la rue, à droite.", "options": ["loin", "juste", "très", "toujours"], "correctAnswer": "juste" }
+      ]
+    },
+    {
+      "id": "u5-genre1",
+      "type": "gender-quiz",
+      "title": "Quel article ? — Lieux de la ville",
+      "items": [
+        { "word": "rue", "emoji": "🛣️", "ru": "улица", "article": "la", "hint": "Женский род: la rue" },
+        { "word": "avenue", "emoji": "🌳", "ru": "проспект", "article": "l'", "hint": "Женский род, начинается с гласной: l'avenue" },
+        { "word": "boulevard", "emoji": "🏙️", "ru": "бульвар", "article": "le", "hint": "Мужской род: le boulevard" },
+        { "word": "place", "emoji": "🏛️", "ru": "площадь", "article": "la", "hint": "Женский род: la place" },
+        { "word": "gare", "emoji": "🚉", "ru": "вокзал", "article": "la", "hint": "Женский род: la gare" },
+        { "word": "musée", "emoji": "🖼️", "ru": "музей", "article": "le", "hint": "Мужской род: le musée" },
+        { "word": "hôpital", "emoji": "🏥", "ru": "больница", "article": "l'", "hint": "Мужской род, начинается с гласной (h немое): l'hôpital" },
+        { "word": "pharmacie", "emoji": "💊", "ru": "аптека", "article": "la", "hint": "Женский род: la pharmacie" },
+        { "word": "boulangerie", "emoji": "🥐", "ru": "булочная", "article": "la", "hint": "Женский род: la boulangerie" },
+        { "word": "supermarché", "emoji": "🛒", "ru": "супермаркет", "article": "le", "hint": "Мужской род: le supermarché" }
+      ]
+    },
+    {
+      "id": "u5-dialogue1",
+      "type": "dialogue",
+      "title": "Dialogue : Emma demande son chemin pour aller à la gare",
+      "context": "Эмма опаздывает на поезд и просит прохожего объяснить дорогу до вокзала.",
+      "exchanges": [
+        { "speaker": "Emma", "side": "left", "text": "___", "isBlank": true, "options": ["Excusez-moi, monsieur, où est la gare, s'il vous plaît ?", "Salut ! Tu sais où est la gare ?", "La gare, c'est loin d'ici ?", "Je cherche le bus pour la gare."], "correctAnswer": "Excusez-moi, monsieur, où est la gare, s'il vous plaît ?", "explanation": "Вежливое обращение к незнакомцу: Excusez-moi + monsieur/madame + вопрос. Всегда используйте 'vous' с незнакомыми людьми." },
+        { "speaker": "Passant", "side": "right", "text": "Oui, bien sûr ! Vous allez tout droit jusqu'au feu rouge." },
+        { "speaker": "Emma", "side": "left", "text": "D'accord. Et ensuite ?" },
+        { "speaker": "Passant", "side": "right", "text": "Ensuite, vous tournez à gauche dans l'avenue de la République." },
+        { "speaker": "Emma", "side": "left", "text": "C'est loin ?" },
+        { "speaker": "Passant", "side": "right", "text": "___", "isBlank": true, "options": ["Non, c'est à cinq minutes à pied, juste en face du musée.", "Oui, c'est très loin, prenez un taxi.", "Je ne sais pas exactement.", "La gare est fermée aujourd'hui."], "correctAnswer": "Non, c'est à cinq minutes à pied, juste en face du musée.", "explanation": "Пешее расстояние: c'est à X minutes à pied. Ориентир: juste en face de (прямо напротив)." },
+        { "speaker": "Emma", "side": "left", "text": "Merci beaucoup, monsieur !" },
+        { "speaker": "Passant", "side": "right", "text": "De rien. Bon voyage !" }
+      ]
+    },
+    {
+      "id": "u5-fill1",
+      "type": "fill-blank",
+      "title": "Complétez le texte : Les indications de chemin",
+      "context": "Лукас объясняет маршрут своему другу. Заполните пропуски словами направления и сокращёнными артиклями.",
+      "text": "Pour aller ___ gare, prends ___ rue Victor Hugo. Tu vas tout ___ jusqu'au feu rouge. Après le feu, tourne ___ gauche. Continue jusqu'à la place. La gare est ___ face de la banque, à côté ___ pharmacie.",
+      "blanks": [
+        { "options": ["à la", "au", "aux", "à l'"], "correctAnswer": "à la", "hint": "Gare — женский род, предлог à без слияния", "explanation": "à la gare — на вокзал (la gare — женский род, à + la = à la)" },
+        { "options": ["la", "le", "l'", "les"], "correctAnswer": "la", "hint": "Rue — женский род, определённый артикль", "explanation": "la rue Victor Hugo — улица Виктора Гюго (женский род)" },
+        { "options": ["droit", "gauche", "droite", "bout"], "correctAnswer": "droit", "hint": "Tout droit = прямо", "explanation": "tout droit — прямо (идти прямо до светофора)" },
+        { "options": ["à", "de", "en", "sur"], "correctAnswer": "à", "hint": "Tourner à gauche / à droite", "explanation": "tourner à gauche — повернуть налево (предлог à)" },
+        { "options": ["en", "à", "de", "sur"], "correctAnswer": "en", "hint": "En face de = напротив", "explanation": "en face de — напротив (устойчивое выражение)" },
+        { "options": ["de la", "du", "de l'", "des"], "correctAnswer": "de la", "hint": "Pharmacie — женский род, de + la", "explanation": "à côté de la pharmacie — рядом с аптекой (женский род)" }
+      ]
+    },
+    {
+      "id": "u5-ex6",
+      "type": "sentence-builder",
+      "title": "Упражнение 6 : Se repérer en ville",
+      "sentences": [
+        { "words": ["Je", "vais", "aller", "au", "musée", "demain", "matin", "."], "ru": "Я собираюсь пойти в музей завтра утром." },
+        { "words": ["Tournez", "à", "droite", "et", "continuez", "tout", "droit", "."], "ru": "Поверните направо и продолжайте прямо." },
+        { "words": ["La", "pharmacie", "est", "à", "côté", "de", "la", "boulangerie", "."], "ru": "Аптека находится рядом с булочной." },
+        { "words": ["Excusez-moi", ",", "c'est", "loin", "d'ici", ",", "la", "gare", "?"], "ru": "Извините, вокзал далеко отсюда?" }
+      ]
+    },
+    {
+      "id": "u5-audio1",
+      "type": "listening",
+      "title": "Аудирование : Demander le chemin",
+      "audioFile": "piste_040.mp3",
+      "source": "cahier",
+      "questions": [
+        { "question": "Où est-ce que la personne veut aller ? (Куда хочет попасть человек?)", "options": ["À la gare", "Au musée", "À la pharmacie", "À la banque"], "correctAnswer": "À la gare" }
+      ]
+    },
+    {
+      "id": "u5-video1",
+      "type": "video",
+      "title": "Vidéo Unité 5 : En ville",
+      "videoFile": "U05_ST_720p.mp4",
+      "source": "sub",
+      "description": "Regardez la vidéo. Observez comment on demande son chemin en France."
+    }
+  ]
+}

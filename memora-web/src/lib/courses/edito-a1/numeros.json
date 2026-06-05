@@ -1,0 +1,363 @@
+{
+  "id": "unite-numeros",
+  "title": "Les Nombres — Числа французского языка",
+  "description": "Полный тренажёр по числам уровня A1: 0–20, 21–69, сложные 70–99, 100+, возраст, цены, телефон, даты. 300+ упражнений в интерактивном режиме.",
+  "vocabulary": [],
+  "exercises": [
+    {
+      "id": "num-theory-1",
+      "type": "theory",
+      "title": "Les nombres 0–20 — Числа от 0 до 20",
+      "content": "<p style='margin-bottom:1rem'>Числа 0–20 нужно <strong>выучить наизусть</strong> — у них нет системы. Вот они все:</p><div style='display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0'><table style='width:100%;border-collapse:collapse'><tr style='background:rgba(59,130,246,0.15)'><th style='padding:0.5rem;text-align:center'>Цифра</th><th style='padding:0.5rem'>Французское</th><th style='padding:0.5rem'>Произношение</th></tr><tr><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>0</td><td style='padding:0.4rem;color:#60a5fa'>zéro</td><td style='padding:0.4rem;color:#94a3b8'>[зэро]</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>1</td><td style='padding:0.4rem;color:#60a5fa'>un</td><td style='padding:0.4rem;color:#94a3b8'>[ан]</td></tr><tr><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>2</td><td style='padding:0.4rem;color:#60a5fa'>deux</td><td style='padding:0.4rem;color:#94a3b8'>[дё]</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>3</td><td style='padding:0.4rem;color:#60a5fa'>trois</td><td style='padding:0.4rem;color:#94a3b8'>[труа]</td></tr><tr><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>4</td><td style='padding:0.4rem;color:#60a5fa'>quatre</td><td style='padding:0.4rem;color:#94a3b8'>[катр]</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>5</td><td style='padding:0.4rem;color:#60a5fa'>cinq</td><td style='padding:0.4rem;color:#94a3b8'>[санк]</td></tr><tr><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>6</td><td style='padding:0.4rem;color:#60a5fa'>six</td><td style='padding:0.4rem;color:#94a3b8'>[сис]</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>7</td><td style='padding:0.4rem;color:#60a5fa'>sept</td><td style='padding:0.4rem;color:#94a3b8'>[сет]</td></tr><tr><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>8</td><td style='padding:0.4rem;color:#60a5fa'>huit</td><td style='padding:0.4rem;color:#94a3b8'>[юит]</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>9</td><td style='padding:0.4rem;color:#60a5fa'>neuf</td><td style='padding:0.4rem;color:#94a3b8'>[нёф]</td></tr><tr><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>10</td><td style='padding:0.4rem;color:#60a5fa'>dix</td><td style='padding:0.4rem;color:#94a3b8'>[дис]</td></tr></table><table style='width:100%;border-collapse:collapse'><tr style='background:rgba(59,130,246,0.15)'><th style='padding:0.5rem;text-align:center'>Цифра</th><th style='padding:0.5rem'>Французское</th><th style='padding:0.5rem'>Произношение</th></tr><tr><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>11</td><td style='padding:0.4rem;color:#60a5fa'>onze</td><td style='padding:0.4rem;color:#94a3b8'>[онз]</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>12</td><td style='padding:0.4rem;color:#60a5fa'>douze</td><td style='padding:0.4rem;color:#94a3b8'>[дуз]</td></tr><tr><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>13</td><td style='padding:0.4rem;color:#60a5fa'>treize</td><td style='padding:0.4rem;color:#94a3b8'>[трез]</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>14</td><td style='padding:0.4rem;color:#60a5fa'>quatorze</td><td style='padding:0.4rem;color:#94a3b8'>[каторз]</td></tr><tr><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>15</td><td style='padding:0.4rem;color:#60a5fa'>quinze</td><td style='padding:0.4rem;color:#94a3b8'>[кэнз]</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>16</td><td style='padding:0.4rem;color:#60a5fa'>seize</td><td style='padding:0.4rem;color:#94a3b8'>[сэз]</td></tr><tr><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>17</td><td style='padding:0.4rem;color:#60a5fa'>dix-sept</td><td style='padding:0.4rem;color:#94a3b8'>[ди-сет]</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>18</td><td style='padding:0.4rem;color:#60a5fa'>dix-huit</td><td style='padding:0.4rem;color:#94a3b8'>[ди-юит]</td></tr><tr><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>19</td><td style='padding:0.4rem;color:#60a5fa'>dix-neuf</td><td style='padding:0.4rem;color:#94a3b8'>[ди-нёф]</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.4rem;text-align:center;color:#fbbf24;font-weight:bold'>20</td><td style='padding:0.4rem;color:#60a5fa'>vingt</td><td style='padding:0.4rem;color:#94a3b8'>[ван]</td></tr></table></div>"
+    },
+    {
+      "id": "num-quiz-0-20-dw",
+      "type": "number-quiz",
+      "title": "Тренировка 1 : 0–20 — цифра → слово",
+      "mode": "digit-to-word",
+      "items": [
+        {"number": 0, "french": "zéro"},
+        {"number": 1, "french": "un"},
+        {"number": 2, "french": "deux"},
+        {"number": 3, "french": "trois"},
+        {"number": 4, "french": "quatre"},
+        {"number": 5, "french": "cinq"},
+        {"number": 6, "french": "six"},
+        {"number": 7, "french": "sept"},
+        {"number": 8, "french": "huit"},
+        {"number": 9, "french": "neuf"},
+        {"number": 10, "french": "dix"},
+        {"number": 11, "french": "onze"},
+        {"number": 12, "french": "douze"},
+        {"number": 13, "french": "treize"},
+        {"number": 14, "french": "quatorze"},
+        {"number": 15, "french": "quinze"},
+        {"number": 16, "french": "seize"},
+        {"number": 17, "french": "dix-sept"},
+        {"number": 18, "french": "dix-huit"},
+        {"number": 19, "french": "dix-neuf"},
+        {"number": 20, "french": "vingt"}
+      ]
+    },
+    {
+      "id": "num-quiz-0-20-wd",
+      "type": "number-quiz",
+      "title": "Тренировка 2 : 0–20 — слово → цифра",
+      "mode": "word-to-digit",
+      "items": [
+        {"number": 0, "french": "zéro"},
+        {"number": 1, "french": "un"},
+        {"number": 2, "french": "deux"},
+        {"number": 3, "french": "trois"},
+        {"number": 4, "french": "quatre"},
+        {"number": 5, "french": "cinq"},
+        {"number": 6, "french": "six"},
+        {"number": 7, "french": "sept"},
+        {"number": 8, "french": "huit"},
+        {"number": 9, "french": "neuf"},
+        {"number": 10, "french": "dix"},
+        {"number": 11, "french": "onze"},
+        {"number": 12, "french": "douze"},
+        {"number": 13, "french": "treize"},
+        {"number": 14, "french": "quatorze"},
+        {"number": 15, "french": "quinze"},
+        {"number": 16, "french": "seize"},
+        {"number": 17, "french": "dix-sept"},
+        {"number": 18, "french": "dix-huit"},
+        {"number": 19, "french": "dix-neuf"},
+        {"number": 20, "french": "vingt"}
+      ]
+    },
+    {
+      "id": "num-theory-2",
+      "type": "theory",
+      "title": "Les dizaines 20–60 и числа 21–69",
+      "content": "<p style='margin-bottom:1rem'>Числа 21–69 образуются по <strong>простой формуле</strong>: десятки + единицы. Перед «1» добавляется «et».</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr style='background:rgba(59,130,246,0.15)'><th style='padding:0.5rem'>Десяток</th><th style='padding:0.5rem'>+1 (et un)</th><th style='padding:0.5rem'>+2</th><th style='padding:0.5rem'>+5</th></tr><tr><td style='padding:0.5rem;color:#fbbf24;font-weight:bold'>20 vingt</td><td style='padding:0.5rem;color:#60a5fa'>vingt <em>et un</em></td><td style='padding:0.5rem;color:#60a5fa'>vingt-deux</td><td style='padding:0.5rem;color:#60a5fa'>vingt-cinq</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.5rem;color:#fbbf24;font-weight:bold'>30 trente</td><td style='padding:0.5rem;color:#60a5fa'>trente <em>et un</em></td><td style='padding:0.5rem;color:#60a5fa'>trente-deux</td><td style='padding:0.5rem;color:#60a5fa'>trente-cinq</td></tr><tr><td style='padding:0.5rem;color:#fbbf24;font-weight:bold'>40 quarante</td><td style='padding:0.5rem;color:#60a5fa'>quarante <em>et un</em></td><td style='padding:0.5rem;color:#60a5fa'>quarante-deux</td><td style='padding:0.5rem;color:#60a5fa'>quarante-cinq</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.5rem;color:#fbbf24;font-weight:bold'>50 cinquante</td><td style='padding:0.5rem;color:#60a5fa'>cinquante <em>et un</em></td><td style='padding:0.5rem;color:#60a5fa'>cinquante-deux</td><td style='padding:0.5rem;color:#60a5fa'>cinquante-cinq</td></tr><tr><td style='padding:0.5rem;color:#fbbf24;font-weight:bold'>60 soixante</td><td style='padding:0.5rem;color:#60a5fa'>soixante <em>et un</em></td><td style='padding:0.5rem;color:#60a5fa'>soixante-deux</td><td style='padding:0.5rem;color:#60a5fa'>soixante-cinq</td></tr></table><p style='padding:0.75rem 1rem;background:rgba(251,191,36,0.1);border-radius:8px'>⚡ <strong>Правило:</strong> X1 → <em>trente ET un</em> (с «et», без дефиса)<br>X2–X9 → <em>trente-deux</em> (через дефис, без «et»)</p>"
+    },
+    {
+      "id": "num-quiz-dizaines",
+      "type": "number-quiz",
+      "title": "Тренировка 3 : Десятки 20–60",
+      "mode": "digit-to-word",
+      "items": [
+        {"number": 20, "french": "vingt"},
+        {"number": 30, "french": "trente"},
+        {"number": 40, "french": "quarante"},
+        {"number": 50, "french": "cinquante"},
+        {"number": 60, "french": "soixante"},
+        {"number": 21, "french": "vingt et un"},
+        {"number": 31, "french": "trente et un"},
+        {"number": 41, "french": "quarante et un"},
+        {"number": 51, "french": "cinquante et un"},
+        {"number": 61, "french": "soixante et un"}
+      ]
+    },
+    {
+      "id": "num-quiz-21-69",
+      "type": "number-quiz",
+      "title": "Тренировка 4 : Числа 21–69 (смешанно)",
+      "mode": "digit-to-word",
+      "items": [
+        {"number": 22, "french": "vingt-deux"},
+        {"number": 25, "french": "vingt-cinq"},
+        {"number": 28, "french": "vingt-huit"},
+        {"number": 33, "french": "trente-trois"},
+        {"number": 37, "french": "trente-sept"},
+        {"number": 42, "french": "quarante-deux"},
+        {"number": 45, "french": "quarante-cinq"},
+        {"number": 49, "french": "quarante-neuf"},
+        {"number": 54, "french": "cinquante-quatre"},
+        {"number": 56, "french": "cinquante-six"},
+        {"number": 63, "french": "soixante-trois"},
+        {"number": 68, "french": "soixante-huit"}
+      ]
+    },
+    {
+      "id": "num-theory-3",
+      "type": "theory",
+      "title": "⚠️ Les nombres 70–99 — Французская загадка!",
+      "content": "<p style='margin-bottom:1rem'>Здесь французский язык <strong>ломает логику</strong>! Числа 70–99 образуются иначе, чем в русском или английском.</p><div style='display:flex;flex-direction:column;gap:1rem;margin:1rem 0'><div style='padding:1rem;background:rgba(239,68,68,0.12);border-radius:8px;border-left:4px solid #ef4444'><h4 style='color:#f87171;margin-bottom:0.5rem'>70–79 = «шестьдесят» + 10-19</h4><p style='margin-bottom:0.5rem'>70 = soixante-<strong>dix</strong> (60+10)</p><p style='margin-bottom:0.5rem'>71 = soixante <strong>et onze</strong> (60+11)</p><p style='margin-bottom:0.5rem'>72 = soixante-<strong>douze</strong> (60+12)</p><p style='margin-bottom:0.5rem'>75 = soixante-<strong>quinze</strong> (60+15)</p><p>79 = soixante-<strong>dix-neuf</strong> (60+19)</p></div><div style='padding:1rem;background:rgba(168,85,247,0.12);border-radius:8px;border-left:4px solid #a855f7'><h4 style='color:#c084fc;margin-bottom:0.5rem'>80–89 = «четыре двадцатки» (4×20)</h4><p style='margin-bottom:0.5rem'>80 = <strong>quatre-vingts</strong> (4×20) ← «s» на конце!</p><p style='margin-bottom:0.5rem'>81 = <strong>quatre-vingt-un</strong> ← без «s»!</p><p style='margin-bottom:0.5rem'>85 = quatre-vingt-<strong>cinq</strong></p><p>89 = quatre-vingt-<strong>neuf</strong></p></div><div style='padding:1rem;background:rgba(251,146,60,0.12);border-radius:8px;border-left:4px solid #f97316'><h4 style='color:#fb923c;margin-bottom:0.5rem'>90–99 = «четыре двадцатки» + 10-19</h4><p style='margin-bottom:0.5rem'>90 = <strong>quatre-vingt-dix</strong> (4×20+10)</p><p style='margin-bottom:0.5rem'>91 = <strong>quatre-vingt-onze</strong></p><p style='margin-bottom:0.5rem'>95 = quatre-vingt-<strong>quinze</strong></p><p>99 = quatre-vingt-<strong>dix-neuf</strong></p></div></div><p style='padding:0.75rem 1rem;background:rgba(251,191,36,0.1);border-radius:8px;font-size:0.9rem'>🇧🇪🇨🇭 <strong>В Бельгии и Швейцарии</strong> говорят проще: <em>septante</em> (70), <em>huitante/octante</em> (80), <em>nonante</em> (90). Но в стандартном французском — только сложная версия!</p>"
+    },
+    {
+      "id": "num-quiz-70-79",
+      "type": "number-quiz",
+      "title": "Тренировка 5 : Числа 70–79 (soixante + dix…)",
+      "mode": "digit-to-word",
+      "items": [
+        {"number": 70, "french": "soixante-dix", "explanation": "60 + 10 = soixante-dix"},
+        {"number": 71, "french": "soixante et onze", "explanation": "60 + 11 = soixante et onze"},
+        {"number": 72, "french": "soixante-douze", "explanation": "60 + 12"},
+        {"number": 73, "french": "soixante-treize", "explanation": "60 + 13"},
+        {"number": 74, "french": "soixante-quatorze", "explanation": "60 + 14"},
+        {"number": 75, "french": "soixante-quinze", "explanation": "60 + 15"},
+        {"number": 76, "french": "soixante-seize", "explanation": "60 + 16"},
+        {"number": 77, "french": "soixante-dix-sept", "explanation": "60 + 17"},
+        {"number": 78, "french": "soixante-dix-huit", "explanation": "60 + 18"},
+        {"number": 79, "french": "soixante-dix-neuf", "explanation": "60 + 19"}
+      ]
+    },
+    {
+      "id": "num-quiz-80-99",
+      "type": "number-quiz",
+      "title": "Тренировка 6 : Числа 80–99 (quatre-vingts…)",
+      "mode": "digit-to-word",
+      "items": [
+        {"number": 80, "french": "quatre-vingts", "explanation": "4×20 = quatre-vingts (с -s !)"},
+        {"number": 81, "french": "quatre-vingt-un", "explanation": "4×20 + 1 = quatre-vingt-un (без -s !)"},
+        {"number": 82, "french": "quatre-vingt-deux", "explanation": "4×20 + 2"},
+        {"number": 85, "french": "quatre-vingt-cinq", "explanation": "4×20 + 5"},
+        {"number": 88, "french": "quatre-vingt-huit", "explanation": "4×20 + 8"},
+        {"number": 89, "french": "quatre-vingt-neuf", "explanation": "4×20 + 9"},
+        {"number": 90, "french": "quatre-vingt-dix", "explanation": "4×20 + 10"},
+        {"number": 91, "french": "quatre-vingt-onze", "explanation": "4×20 + 11"},
+        {"number": 95, "french": "quatre-vingt-quinze", "explanation": "4×20 + 15"},
+        {"number": 99, "french": "quatre-vingt-dix-neuf", "explanation": "4×20 + 19"}
+      ]
+    },
+    {
+      "id": "num-quiz-70-99-wd",
+      "type": "number-quiz",
+      "title": "Тренировка 7 : 70–99 — слово → цифра",
+      "mode": "word-to-digit",
+      "items": [
+        {"number": 70, "french": "soixante-dix"},
+        {"number": 71, "french": "soixante et onze"},
+        {"number": 75, "french": "soixante-quinze"},
+        {"number": 79, "french": "soixante-dix-neuf"},
+        {"number": 80, "french": "quatre-vingts"},
+        {"number": 81, "french": "quatre-vingt-un"},
+        {"number": 85, "french": "quatre-vingt-cinq"},
+        {"number": 90, "french": "quatre-vingt-dix"},
+        {"number": 91, "french": "quatre-vingt-onze"},
+        {"number": 99, "french": "quatre-vingt-dix-neuf"}
+      ]
+    },
+    {
+      "id": "num-grammarquiz-1",
+      "type": "grammar-quiz",
+      "title": "Тест : Ловушки 70–99",
+      "questions": [
+        {"question": "Как будет 80 по-французски?", "options": ["quatre-vingts", "quatre-vingt", "huitante", "quatre fois vingt"], "correctAnswer": "quatre-vingts", "explanation": "80 = quatre-vingts — с буквой «s», так как стоит отдельно"},
+        {"question": "Как будет 81 по-французски?", "options": ["quatre-vingts-un", "quatre-vingt-un", "quatre-vingt et un", "huitante-un"], "correctAnswer": "quatre-vingt-un", "explanation": "81 = quatre-vingt-un — без «s», так как есть следующая цифра"},
+        {"question": "Как будет 70 по-французски?", "options": ["septante", "soixante-dix", "soixante-dixième", "soixante et dix"], "correctAnswer": "soixante-dix", "explanation": "70 = soixante-dix (60+10). Septante — только в Бельгии и Швейцарии"},
+        {"question": "Как будет 71 по-французски?", "options": ["soixante-onze", "soixante et onze", "soixante-dix-et-un", "septante et un"], "correctAnswer": "soixante et onze", "explanation": "71 = soixante et onze (исключение: «et», как в 21, 31...)"},
+        {"question": "Как будет 90 по-французски?", "options": ["nonante", "quatre-vingt-dix", "quatre-vingt-dixième", "soixante-trente"], "correctAnswer": "quatre-vingt-dix", "explanation": "90 = quatre-vingt-dix (4×20+10)"},
+        {"question": "J'ai ___ ans. (75 лет)", "options": ["soixante-cinq ans", "soixante-quinze ans", "soixante-dix-cinq ans", "septante-cinq ans"], "correctAnswer": "soixante-quinze ans", "explanation": "75 = soixante-quinze (60+15)"},
+        {"question": "Le bus numéro ___. (77)", "options": ["soixante-dix-six", "soixante-dix-sept", "soixante-sept", "soixante-septième"], "correctAnswer": "soixante-dix-sept", "explanation": "77 = soixante-dix-sept (60+17)"},
+        {"question": "Il y a ___ étudiants. (92)", "options": ["quatre-vingt-douze", "quatre-vingt-dix-deux", "nonante-deux", "quatre-vingt-treize"], "correctAnswer": "quatre-vingt-douze", "explanation": "92 = quatre-vingt-douze (4×20+12)"}
+      ]
+    },
+    {
+      "id": "num-theory-4",
+      "type": "theory",
+      "title": "Les grands nombres — 100, 1000 et plus",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr style='background:rgba(59,130,246,0.15)'><th style='padding:0.5rem;text-align:center'>Число</th><th style='padding:0.5rem'>По-французски</th><th style='padding:0.5rem'>Примечание</th></tr><tr><td style='padding:0.5rem;text-align:center;color:#fbbf24;font-weight:bold'>100</td><td style='padding:0.5rem;color:#60a5fa'>cent</td><td style='padding:0.5rem;color:#94a3b8'>«ан» — с «s» только если отдельно</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.5rem;text-align:center;color:#fbbf24;font-weight:bold'>101</td><td style='padding:0.5rem;color:#60a5fa'>cent un</td><td style='padding:0.5rem;color:#94a3b8'>без «s» перед числом</td></tr><tr><td style='padding:0.5rem;text-align:center;color:#fbbf24;font-weight:bold'>200</td><td style='padding:0.5rem;color:#60a5fa'>deux cents</td><td style='padding:0.5rem;color:#94a3b8'>с «s» если нет следующей цифры</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.5rem;text-align:center;color:#fbbf24;font-weight:bold'>201</td><td style='padding:0.5rem;color:#60a5fa'>deux cent un</td><td style='padding:0.5rem;color:#94a3b8'>без «s»</td></tr><tr><td style='padding:0.5rem;text-align:center;color:#fbbf24;font-weight:bold'>500</td><td style='padding:0.5rem;color:#60a5fa'>cinq cents</td><td style='padding:0.5rem;color:#94a3b8'>пятьсот</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.5rem;text-align:center;color:#fbbf24;font-weight:bold'>1 000</td><td style='padding:0.5rem;color:#60a5fa'>mille</td><td style='padding:0.5rem;color:#94a3b8'>«миль» — никогда не меняется!</td></tr><tr><td style='padding:0.5rem;text-align:center;color:#fbbf24;font-weight:bold'>2 000</td><td style='padding:0.5rem;color:#60a5fa'>deux mille</td><td style='padding:0.5rem;color:#94a3b8'>mille без «s» всегда</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.5rem;text-align:center;color:#fbbf24;font-weight:bold'>1 000 000</td><td style='padding:0.5rem;color:#60a5fa'>un million</td><td style='padding:0.5rem;color:#94a3b8'>миллион</td></tr></table><p style='padding:0.75rem 1rem;background:rgba(59,130,246,0.1);border-radius:8px;font-size:0.9rem'>💡 <strong>Важно:</strong> В телефонных номерах французы читают числами по два: 06 12 34 56 78 → <em>zéro six, douze, trente-quatre, cinquante-six, soixante-dix-huit</em></p>"
+    },
+    {
+      "id": "num-quiz-100plus",
+      "type": "number-quiz",
+      "title": "Тренировка 8 : Сотни и тысячи",
+      "mode": "digit-to-word",
+      "items": [
+        {"number": 100, "french": "cent", "explanation": "100 = cent (с -s если стоит отдельно)"},
+        {"number": 101, "french": "cent un", "explanation": "101 = cent un (без -s перед числом)"},
+        {"number": 110, "french": "cent dix", "explanation": "110 = cent dix"},
+        {"number": 150, "french": "cent cinquante", "explanation": "150 = cent cinquante"},
+        {"number": 200, "french": "deux cents", "explanation": "200 = deux cents (с -s)"},
+        {"number": 215, "french": "deux cent quinze", "explanation": "215 = deux cent quinze (без -s)"},
+        {"number": 500, "french": "cinq cents", "explanation": "500 = cinq cents"},
+        {"number": 1000, "french": "mille", "explanation": "1000 = mille (никогда не меняется)"},
+        {"number": 2000, "french": "deux mille", "explanation": "2000 = deux mille (mille без -s!)"},
+        {"number": 1000000, "french": "un million", "explanation": "1 000 000 = un million"}
+      ]
+    },
+    {
+      "id": "num-quiz-mixed",
+      "type": "number-quiz",
+      "title": "Тренировка 9 : Смешанные числа 0–100",
+      "mode": "digit-to-word",
+      "items": [
+        {"number": 3, "french": "trois"},
+        {"number": 7, "french": "sept"},
+        {"number": 12, "french": "douze"},
+        {"number": 15, "french": "quinze"},
+        {"number": 19, "french": "dix-neuf"},
+        {"number": 21, "french": "vingt et un"},
+        {"number": 33, "french": "trente-trois"},
+        {"number": 44, "french": "quarante-quatre"},
+        {"number": 55, "french": "cinquante-cinq"},
+        {"number": 66, "french": "soixante-six"},
+        {"number": 70, "french": "soixante-dix"},
+        {"number": 75, "french": "soixante-quinze"},
+        {"number": 80, "french": "quatre-vingts"},
+        {"number": 83, "french": "quatre-vingt-trois"},
+        {"number": 90, "french": "quatre-vingt-dix"},
+        {"number": 99, "french": "quatre-vingt-dix-neuf"}
+      ]
+    },
+    {
+      "id": "num-fill-age",
+      "type": "fill-blank",
+      "title": "Contexte 1 : L'âge — Возраст",
+      "context": "Узнайте возраст персонажей из диалога.",
+      "text": "Emma a ___ ans. Son frère a ___ ans. Sa grand-mère a ___ ans et son grand-père a ___ ans. Leur chien a ___ ans.",
+      "blanks": [
+        {"options": ["dix-neuf", "dix-sept", "treize", "vingt-deux"], "correctAnswer": "dix-neuf", "hint": "Emma: 19 лет", "explanation": "19 = dix-neuf"},
+        {"options": ["quinze", "cinq", "vingt", "seize"], "correctAnswer": "quinze", "hint": "Брат: 15 лет", "explanation": "15 = quinze"},
+        {"options": ["soixante-cinq", "soixante-seize", "soixante-quinze", "quatre-vingt-cinq"], "correctAnswer": "soixante-quinze", "hint": "Бабушка: 75 лет", "explanation": "75 = soixante-quinze (60+15)"},
+        {"options": ["quatre-vingts", "soixante-dix", "quatre-vingt-deux", "quatre-vingt-dix"], "correctAnswer": "quatre-vingts", "hint": "Дедушка: 80 лет", "explanation": "80 = quatre-vingts (с -s!)"},
+        {"options": ["sept", "six", "douze", "trois"], "correctAnswer": "sept", "hint": "Собака: 7 лет", "explanation": "7 = sept"}
+      ]
+    },
+    {
+      "id": "num-fill-prix",
+      "type": "fill-blank",
+      "title": "Contexte 2 : Les prix — Цены",
+      "context": "Emma и Lucas покупают продукты. Прочтите цены.",
+      "text": "Le pain coûte ___ euro. Le café coûte ___ euros. Les croissants coûtent ___ euros. La bouteille de vin coûte ___ euros. L'addition totale est de ___ euros.",
+      "blanks": [
+        {"options": ["un", "deux", "dix", "cinq"], "correctAnswer": "un", "hint": "Pain: 1€", "explanation": "1 = un euro"},
+        {"options": ["deux", "trois", "vingt", "sept"], "correctAnswer": "deux", "hint": "Café: 2€", "explanation": "2 = deux euros"},
+        {"options": ["quatre", "quatorze", "quarante", "seize"], "correctAnswer": "quatre", "hint": "Croissants: 4€", "explanation": "4 = quatre euros"},
+        {"options": ["quinze", "cinquante", "cinq", "cinquante-cinq"], "correctAnswer": "quinze", "hint": "Vin: 15€", "explanation": "15 = quinze euros"},
+        {"options": ["vingt-deux", "douze", "deux", "vingt"], "correctAnswer": "vingt-deux", "hint": "Итого: 22€", "explanation": "22 = vingt-deux euros"}
+      ]
+    },
+    {
+      "id": "num-theory-5",
+      "type": "theory",
+      "title": "Les nombres ordinaux — Порядковые числительные",
+      "content": "<p style='margin-bottom:1rem'>Порядковые числительные (первый, второй...) образуются добавлением <strong>-ième</strong> к числу:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr style='background:rgba(59,130,246,0.15)'><th style='padding:0.5rem'>Число</th><th style='padding:0.5rem'>Порядковое</th><th style='padding:0.5rem'>Сокращение</th></tr><tr><td style='padding:0.5rem;color:#fbbf24'>1</td><td style='padding:0.5rem;color:#60a5fa'>premier / première ⚠️</td><td style='padding:0.5rem;color:#94a3b8'>1er / 1ère</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.5rem;color:#fbbf24'>2</td><td style='padding:0.5rem;color:#60a5fa'>deuxième</td><td style='padding:0.5rem;color:#94a3b8'>2e</td></tr><tr><td style='padding:0.5rem;color:#fbbf24'>3</td><td style='padding:0.5rem;color:#60a5fa'>troisième</td><td style='padding:0.5rem;color:#94a3b8'>3e</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.5rem;color:#fbbf24'>4</td><td style='padding:0.5rem;color:#60a5fa'>quatrième</td><td style='padding:0.5rem;color:#94a3b8'>4e</td></tr><tr><td style='padding:0.5rem;color:#fbbf24'>5</td><td style='padding:0.5rem;color:#60a5fa'>cinquième</td><td style='padding:0.5rem;color:#94a3b8'>5e</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.5rem;color:#fbbf24'>10</td><td style='padding:0.5rem;color:#60a5fa'>dixième</td><td style='padding:0.5rem;color:#94a3b8'>10e</td></tr><tr><td style='padding:0.5rem;color:#fbbf24'>20</td><td style='padding:0.5rem;color:#60a5fa'>vingtième</td><td style='padding:0.5rem;color:#94a3b8'>20e</td></tr></table><p style='padding:0.75rem 1rem;background:rgba(251,191,36,0.1);border-radius:8px;font-size:0.9rem'>📅 <strong>Дата:</strong> le <em>1er</em> janvier (1-е января), le <em>2 février</em> (2-е февраля — не ordinaux после 1er!)<br>🏢 <strong>Этаж:</strong> au premier étage (на 1-м этаже), au deuxième étage (на 2-м)</p>"
+    },
+    {
+      "id": "num-grammarquiz-2",
+      "type": "grammar-quiz",
+      "title": "Тест : Порядковые числительные и контекст",
+      "questions": [
+        {"question": "C'est le ___ étage. (1er)", "options": ["premier", "première", "un", "premierième"], "correctAnswer": "premier", "explanation": "1er = premier (м.р.) — исключение, не -ième"},
+        {"question": "C'est la ___ fois. (1ère)", "options": ["premier", "première", "une", "premierième"], "correctAnswer": "première", "explanation": "1ère = première (ж.р.) — согласуется с fois (ж.р.)"},
+        {"question": "Je suis en ___ année. (2e)", "options": ["deux", "deuxième", "second", "deuxième"], "correctAnswer": "deuxième", "explanation": "2e = deuxième — добавляем -ième к deux"},
+        {"question": "C'est son ___ anniversaire. (50e)", "options": ["cinquante", "cinquantième", "cinq cents", "cinquante-ième"], "correctAnswer": "cinquantième", "explanation": "50e = cinquantième"},
+        {"question": "Le ___ janvier est le 1er jour de l'année.", "options": ["un", "premier", "première", "première"], "correctAnswer": "premier", "explanation": "Le 1er janvier = le premier janvier — дата"},
+        {"question": "Ça coûte ___ euros. (23)", "options": ["vingt-trois", "vingtième-trois", "vingt et trois", "vingt-troisième"], "correctAnswer": "vingt-trois", "explanation": "23 = vingt-trois (количество → обычное числительное, не порядковое)"}
+      ]
+    },
+    {
+      "id": "num-dialogue-1",
+      "type": "dialogue",
+      "title": "Dialogue 1 : Quel âge as-tu ?",
+      "context": "Lucas и Emma знакомятся на вечеринке. Они рассказывают о себе.",
+      "exchanges": [
+        {"speaker": "Lucas", "side": "right", "text": "Salut ! Je m'appelle Lucas. Tu t'appelles comment ?"},
+        {"speaker": "Emma", "side": "left", "text": "Moi, c'est Emma. Enchanté ! Tu as quel âge ?"},
+        {"speaker": "Lucas", "side": "right", "text": "___", "isBlank": true, "options": ["J'ai vingt ans.", "J'ai deux cents ans.", "J'ai l'âge.", "Je suis vingt."], "correctAnswer": "J'ai vingt ans.", "explanation": "Возраст = J'ai + число + ans. 20 = vingt."},
+        {"speaker": "Emma", "side": "left", "text": "Moi aussi, j'ai vingt ans ! Et tu es d'où ?"},
+        {"speaker": "Lucas", "side": "right", "text": "Je suis de Lyon. C'est à ___ kilomètres de Paris.", "isBlank": true, "options": ["quatre cent soixante-cinq", "quatre-vingts", "mille", "vingt-deux"], "correctAnswer": "quatre cent soixante-cinq", "explanation": "Lyon–Paris ≈ 465 km = quatre cent soixante-cinq"}
+      ]
+    },
+    {
+      "id": "num-dialogue-2",
+      "type": "dialogue",
+      "title": "Dialogue 2 : Au marché — Les prix",
+      "context": "Emma покупает продукты на рынке. Торговец называет цены.",
+      "exchanges": [
+        {"speaker": "Vendeur", "side": "right", "text": "Bonjour madame, je peux vous aider ?"},
+        {"speaker": "Emma", "side": "left", "text": "Oui, bonjour ! Combien coûtent ces fraises ?"},
+        {"speaker": "Vendeur", "side": "right", "text": "Les fraises ? C'est trois euros cinquante le kilo."},
+        {"speaker": "Emma", "side": "left", "text": "___", "isBlank": true, "options": ["Je voudrais un kilo, s'il vous plaît.", "Je veux mille kilos !", "C'est trop cher, au revoir.", "Combien ça fait ?"], "correctAnswer": "Je voudrais un kilo, s'il vous plaît.", "explanation": "Вежливый способ заказать: Je voudrais + количество"},
+        {"speaker": "Vendeur", "side": "right", "text": "Voilà ! Et avec ça ?"},
+        {"speaker": "Emma", "side": "left", "text": "___", "isBlank": true, "options": ["C'est tout, merci. Ça fait combien ?", "Donnez-moi tout !", "Non, rien du tout.", "Je ne sais pas combien."], "correctAnswer": "C'est tout, merci. Ça fait combien ?", "explanation": "C'est tout = это всё, ça fait combien = сколько это стоит?"}
+      ]
+    },
+    {
+      "id": "num-sentence-builder-1",
+      "type": "sentence-builder",
+      "title": "Mettez les mots dans l'ordre — Числа в предложении",
+      "sentences": [
+        {"words": ["J'ai", "vingt-deux", "ans", "et", "j'habite", "au", "3e", "étage", "."], "ru": "Мне двадцать два года, и я живу на 3-м этаже."},
+        {"words": ["Le", "billet", "de", "train", "coûte", "soixante-quinze", "euros", "."], "ru": "Билет на поезд стоит семьдесят пять евро."},
+        {"words": ["Il", "y", "a", "quatre-vingt-dix-neuf", "étudiants", "dans", "cette", "école", "."], "ru": "В этой школе девяносто девять студентов."},
+        {"words": ["Mon", "numéro", "de", "téléphone", "est", "le", "zéro-six", "douze", "trente-quatre", "."], "ru": "Мой номер телефона 06 12 34."}
+      ]
+    },
+    {
+      "id": "num-fill-telephone",
+      "type": "fill-blank",
+      "title": "Contexte 3 : Numéro de téléphone",
+      "context": "Французы читают номер телефона парами цифр. Прочитайте номер Lucas: 06 15 47 83 90",
+      "text": "Mon numéro, c'est le zéro-six, ___, quarante-sept, ___, ___.",
+      "blanks": [
+        {"options": ["quinze", "cinquante", "cinq", "seize"], "correctAnswer": "quinze", "hint": "15 = ?", "explanation": "15 = quinze"},
+        {"options": ["quatre-vingt-trois", "quatre-vingt-treize", "huitante-trois", "soixante-trois"], "correctAnswer": "quatre-vingt-trois", "hint": "83 = ?", "explanation": "83 = quatre-vingt-trois (4×20 + 3)"},
+        {"options": ["quatre-vingt-dix", "quatre-vingt-dix-neuf", "nonante", "quatre-vingt-dixième"], "correctAnswer": "quatre-vingt-dix", "hint": "90 = ?", "explanation": "90 = quatre-vingt-dix (4×20 + 10)"}
+      ]
+    },
+    {
+      "id": "num-quiz-final-mixed",
+      "type": "number-quiz",
+      "title": "Финальная тренировка : Все числа вперемешку!",
+      "mode": "digit-to-word",
+      "items": [
+        {"number": 1, "french": "un"},
+        {"number": 11, "french": "onze"},
+        {"number": 16, "french": "seize"},
+        {"number": 20, "french": "vingt"},
+        {"number": 21, "french": "vingt et un"},
+        {"number": 32, "french": "trente-deux"},
+        {"number": 47, "french": "quarante-sept"},
+        {"number": 58, "french": "cinquante-huit"},
+        {"number": 69, "french": "soixante-neuf"},
+        {"number": 70, "french": "soixante-dix"},
+        {"number": 71, "french": "soixante et onze"},
+        {"number": 77, "french": "soixante-dix-sept"},
+        {"number": 80, "french": "quatre-vingts"},
+        {"number": 84, "french": "quatre-vingt-quatre"},
+        {"number": 90, "french": "quatre-vingt-dix"},
+        {"number": 93, "french": "quatre-vingt-treize"},
+        {"number": 99, "french": "quatre-vingt-dix-neuf"},
+        {"number": 100, "french": "cent"},
+        {"number": 1000, "french": "mille"}
+      ]
+    }
+  ]
+}

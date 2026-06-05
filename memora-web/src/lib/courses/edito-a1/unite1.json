@@ -1,0 +1,224 @@
+{
+  "id": "unite-1",
+  "title": "Unité 1 : Bonjour !",
+  "description": "Se présenter, saluer, donner ses coordonnées. L'alphabet, les verbes être et avoir, les articles définis et indéfinis.",
+  "vocabulary": [
+    { "fr": "Bonjour", "ru": "Здравствуйте / Добрый день", "type": "salutation" },
+    { "fr": "Bonsoir", "ru": "Добрый вечер", "type": "salutation" },
+    { "fr": "Salut", "ru": "Привет / Пока (разг.)", "type": "salutation" },
+    { "fr": "Au revoir", "ru": "До свидания", "type": "salutation" },
+    { "fr": "Bonne nuit", "ru": "Спокойной ночи", "type": "salutation" },
+    { "fr": "S'il vous plaît", "ru": "Пожалуйста (вежл.)", "type": "politesse" },
+    { "fr": "Merci", "ru": "Спасибо", "type": "politesse" },
+    { "fr": "Excusez-moi", "ru": "Извините (вежл.)", "type": "politesse" },
+    { "fr": "Je m'appelle...", "ru": "Меня зовут...", "type": "phrase" },
+    { "fr": "Comment vous appelez-vous ?", "ru": "Как вас зовут? (вежл.)", "type": "phrase" },
+    { "fr": "Comment tu t'appelles ?", "ru": "Как тебя зовут? (неформ.)", "type": "phrase" },
+    { "fr": "Enchanté(e)", "ru": "Очень приятно / Рад(а) познакомиться", "type": "phrase" },
+    { "fr": "Je suis français(e)", "ru": "Я француз(женщина)", "type": "phrase" },
+    { "fr": "J'habite à Paris", "ru": "Я живу в Париже", "type": "phrase" },
+    { "fr": "un étudiant", "ru": "студент", "type": "nom" },
+    { "fr": "une étudiante", "ru": "студентка", "type": "nom" },
+    { "fr": "un professeur", "ru": "преподаватель", "type": "nom" },
+    { "fr": "un ami", "ru": "друг", "type": "nom" },
+    { "fr": "une amie", "ru": "подруга", "type": "nom" }
+  ],
+  "exercises": [
+    {
+      "id": "u1-theory-1",
+      "type": "theory",
+      "title": "Le verbe ÊTRE (быть) — Présent",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Лицо</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Форма</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th></tr><tr><td style='padding:0.5rem'>je</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>suis</td><td style='padding:0.5rem'>я есть</td></tr><tr><td style='padding:0.5rem'>tu</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>es</td><td style='padding:0.5rem'>ты есть</td></tr><tr><td style='padding:0.5rem'>il / elle / on</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>est</td><td style='padding:0.5rem'>он/она/мы</td></tr><tr><td style='padding:0.5rem'>nous</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>sommes</td><td style='padding:0.5rem'>мы</td></tr><tr><td style='padding:0.5rem'>vous</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>êtes</td><td style='padding:0.5rem'>вы</td></tr><tr><td style='padding:0.5rem'>ils / elles</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>sont</td><td style='padding:0.5rem'>они</td></tr></table><p style='margin-top:1rem;padding:1rem;background:rgba(59,130,246,0.15);border-radius:8px'>💡 <strong>Примеры:</strong><br>• <em>Je suis étudiant.</em> — Я студент.<br>• <em>Elle est française.</em> — Она француженка.<br>• <em>Vous êtes professeur ?</em> — Вы преподаватель?</p>"
+    },
+    {
+      "id": "u1-theory-2",
+      "type": "theory",
+      "title": "Le verbe AVOIR (иметь) — Présent",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Лицо</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Форма</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th></tr><tr><td style='padding:0.5rem'>je</td><td style='padding:0.5rem;color:#34d399;font-weight:bold'>ai</td><td style='padding:0.5rem'>у меня есть</td></tr><tr><td style='padding:0.5rem'>tu</td><td style='padding:0.5rem;color:#34d399;font-weight:bold'>as</td><td style='padding:0.5rem'>у тебя есть</td></tr><tr><td style='padding:0.5rem'>il / elle / on</td><td style='padding:0.5rem;color:#34d399;font-weight:bold'>a</td><td style='padding:0.5rem'>у него/неё</td></tr><tr><td style='padding:0.5rem'>nous</td><td style='padding:0.5rem;color:#34d399;font-weight:bold'>avons</td><td style='padding:0.5rem'>у нас</td></tr><tr><td style='padding:0.5rem'>vous</td><td style='padding:0.5rem;color:#34d399;font-weight:bold'>avez</td><td style='padding:0.5rem'>у вас</td></tr><tr><td style='padding:0.5rem'>ils / elles</td><td style='padding:0.5rem;color:#34d399;font-weight:bold'>ont</td><td style='padding:0.5rem'>у них</td></tr></table><p style='margin-top:1rem;padding:1rem;background:rgba(52,211,153,0.15);border-radius:8px'>💡 <strong>Примеры:</strong><br>• <em>J'ai un passeport.</em> — У меня есть паспорт.<br>• <em>Tu as une amie ?</em> — У тебя есть подруга?<br>• <em>Il a vingt ans.</em> — Ему 20 лет.</p>"
+    },
+    {
+      "id": "u1-theory-3",
+      "type": "theory",
+      "title": "Les articles (артикли) — un, une, le, la, l', les",
+      "content": "<p style='margin-bottom:1rem'>Во французском языке у каждого существительного есть <strong>род</strong> (мужской или женский).</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Тип</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Мужской</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Женский</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Мн.ч.</th></tr><tr><td style='padding:0.5rem'>Неопределённый (a/an)</td><td style='padding:0.5rem;color:#c084fc'>un</td><td style='padding:0.5rem;color:#c084fc'>une</td><td style='padding:0.5rem;color:#c084fc'>des</td></tr><tr><td style='padding:0.5rem'>Определённый (the)</td><td style='padding:0.5rem;color:#fb923c'>le</td><td style='padding:0.5rem;color:#fb923c'>la</td><td style='padding:0.5rem;color:#fb923c'>les</td></tr><tr><td style='padding:0.5rem'>Перед гласной</td><td colspan='2' style='padding:0.5rem;color:#fb923c;text-align:center'>l'</td><td style='padding:0.5rem;color:#fb923c'>les</td></tr></table><p style='padding:1rem;background:rgba(192,132,252,0.15);border-radius:8px'>💡 <strong>Примеры:</strong><br>• <em>un ami</em> — (один) друг; <em>le ami → l'ami</em> — (этот) друг<br>• <em>une amie</em> — (одна) подруга; <em>l'amie</em> — (эта) подруга<br>• <em>des amis</em> — друзья; <em>les amis</em> — (эти) друзья</p>"
+    },
+    {
+      "id": "u1-ex1",
+      "type": "grammar-quiz",
+      "title": "Упражнение 1 : Глагол être",
+      "questions": [
+        { "question": "Je ___ étudiant(e).", "options": ["suis", "es", "est", "sommes"], "correctAnswer": "suis" },
+        { "question": "Tu ___ français(e) ?", "options": ["suis", "es", "est", "êtes"], "correctAnswer": "es" },
+        { "question": "Elle ___ professeure.", "options": ["es", "suis", "est", "sont"], "correctAnswer": "est" },
+        { "question": "Nous ___ amis.", "options": ["sommes", "sont", "êtes", "suis"], "correctAnswer": "sommes" },
+        { "question": "Vous ___ de Paris ?", "options": ["es", "êtes", "sommes", "sont"], "correctAnswer": "êtes" },
+        { "question": "Ils ___ étudiants.", "options": ["est", "sont", "sommes", "êtes"], "correctAnswer": "sont" }
+      ]
+    },
+    {
+      "id": "u1-ex2",
+      "type": "grammar-quiz",
+      "title": "Упражнение 2 : Глагол avoir",
+      "questions": [
+        { "question": "J'___ un passeport.", "options": ["ai", "as", "a", "avons"], "correctAnswer": "ai" },
+        { "question": "Tu ___ une amie ?", "options": ["ai", "as", "a", "avez"], "correctAnswer": "as" },
+        { "question": "Il ___ vingt ans.", "options": ["as", "ai", "a", "ont"], "correctAnswer": "a" },
+        { "question": "Nous ___ un appartement.", "options": ["avez", "avons", "ont", "ai"], "correctAnswer": "avons" },
+        { "question": "Vous ___ des enfants ?", "options": ["avons", "ont", "avez", "ai"], "correctAnswer": "avez" },
+        { "question": "Elles ___ un chat.", "options": ["avez", "avons", "a", "ont"], "correctAnswer": "ont" }
+      ]
+    },
+    {
+      "id": "u1-ex3",
+      "type": "grammar-quiz",
+      "title": "Упражнение 3 : Articles — un, une, le, la, l'",
+      "questions": [
+        { "question": "___ étudiant s'appelle Lucas.", "options": ["Un", "Une", "Le", "La"], "correctAnswer": "Un" },
+        { "question": "Je cherche ___ amie.", "options": ["un", "une", "le", "la"], "correctAnswer": "une" },
+        { "question": "___ professeur est sympa.", "options": ["Un", "Une", "Le", "La"], "correctAnswer": "Le" },
+        { "question": "C'est ___ université.", "options": ["un", "une", "le", "l'"], "correctAnswer": "l'" },
+        { "question": "Voici ___ ami de Marie.", "options": ["un", "une", "le", "l'"], "correctAnswer": "l'" },
+        { "question": "J'ai ___ passeport français.", "options": ["un", "une", "le", "la"], "correctAnswer": "un" }
+      ]
+    },
+    {
+      "id": "u1-ex4",
+      "type": "sentence-builder",
+      "title": "Упражнение 4 : Составьте фразы для знакомства",
+      "sentences": [
+        { "words": ["Je", "m'appelle", "Marie", "."], "ru": "Меня зовут Мари." },
+        { "words": ["Tu", "es", "étudiant", "?"], "ru": "Ты студент?" },
+        { "words": ["Il", "est", "professeur", "de", "français", "."], "ru": "Он преподаватель французского." },
+        { "words": ["Nous", "sommes", "amis", "."], "ru": "Мы друзья." }
+      ]
+    },
+    {
+      "id": "u1-theory-4",
+      "type": "theory",
+      "title": "L'alphabet français (Французский алфавит)",
+      "content": "<p style='margin-bottom:1rem'>Французский алфавит содержит <strong>26 букв</strong>. Ниже — произношение каждой буквы с подсказками на русском.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Буква</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Произношение</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Буква</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Произношение</th></tr><tr><td style='padding:0.4rem;color:#60a5fa'>A a</td><td style='padding:0.4rem'>[а]</td><td style='padding:0.4rem;color:#60a5fa'>N n</td><td style='padding:0.4rem'>[эн]</td></tr><tr><td style='padding:0.4rem;color:#60a5fa'>B b</td><td style='padding:0.4rem'>[бэ]</td><td style='padding:0.4rem;color:#60a5fa'>O o</td><td style='padding:0.4rem'>[о]</td></tr><tr><td style='padding:0.4rem;color:#60a5fa'>C c</td><td style='padding:0.4rem'>[сэ]</td><td style='padding:0.4rem;color:#60a5fa'>P p</td><td style='padding:0.4rem'>[пэ]</td></tr><tr><td style='padding:0.4rem;color:#60a5fa'>D d</td><td style='padding:0.4rem'>[дэ]</td><td style='padding:0.4rem;color:#60a5fa'>Q q</td><td style='padding:0.4rem'>[кю]</td></tr><tr><td style='padding:0.4rem;color:#60a5fa'>E e</td><td style='padding:0.4rem'>[э/ё]</td><td style='padding:0.4rem;color:#60a5fa'>R r</td><td style='padding:0.4rem'>[эр] (горловой)</td></tr><tr><td style='padding:0.4rem;color:#60a5fa'>F f</td><td style='padding:0.4rem'>[эф]</td><td style='padding:0.4rem;color:#60a5fa'>S s</td><td style='padding:0.4rem'>[эс]</td></tr><tr><td style='padding:0.4rem;color:#60a5fa'>G g</td><td style='padding:0.4rem'>[жэ]</td><td style='padding:0.4rem;color:#60a5fa'>T t</td><td style='padding:0.4rem'>[тэ]</td></tr><tr><td style='padding:0.4rem;color:#60a5fa'>H h</td><td style='padding:0.4rem'>[аш] (не читается!)</td><td style='padding:0.4rem;color:#60a5fa'>U u</td><td style='padding:0.4rem'>[ю] (губы трубочкой)</td></tr><tr><td style='padding:0.4rem;color:#60a5fa'>I i</td><td style='padding:0.4rem'>[и]</td><td style='padding:0.4rem;color:#60a5fa'>V v</td><td style='padding:0.4rem'>[вэ]</td></tr><tr><td style='padding:0.4rem;color:#60a5fa'>J j</td><td style='padding:0.4rem'>[жи]</td><td style='padding:0.4rem;color:#60a5fa'>W w</td><td style='padding:0.4rem'>[дублевэ]</td></tr><tr><td style='padding:0.4rem;color:#60a5fa'>K k</td><td style='padding:0.4rem'>[ка]</td><td style='padding:0.4rem;color:#60a5fa'>X x</td><td style='padding:0.4rem'>[икс]</td></tr><tr><td style='padding:0.4rem;color:#60a5fa'>L l</td><td style='padding:0.4rem'>[эль]</td><td style='padding:0.4rem;color:#60a5fa'>Y y</td><td style='padding:0.4rem'>[игрек]</td></tr><tr><td style='padding:0.4rem;color:#60a5fa'>M m</td><td style='padding:0.4rem'>[эм]</td><td style='padding:0.4rem;color:#60a5fa'>Z z</td><td style='padding:0.4rem'>[зэд]</td></tr></table><p style='padding:1rem;background:rgba(59,130,246,0.15);border-radius:8px'>💡 <strong>Акценты (ударения):</strong> é [э закрытый], è/ê [э открытый], â [а долгий], ç [с], ô [о долгий], ù [ю]</p>"
+    },
+    {
+      "id": "u1-theory-5",
+      "type": "theory",
+      "title": "Les nombres 0–20 (Числа от 0 до 20)",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Цифра</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Слово</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Цифра</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Слово</th></tr><tr><td style='padding:0.4rem;color:#34d399'>0</td><td style='padding:0.4rem'>zéro</td><td style='padding:0.4rem;color:#34d399'>11</td><td style='padding:0.4rem'>onze</td></tr><tr><td style='padding:0.4rem;color:#34d399'>1</td><td style='padding:0.4rem'>un / une</td><td style='padding:0.4rem;color:#34d399'>12</td><td style='padding:0.4rem'>douze</td></tr><tr><td style='padding:0.4rem;color:#34d399'>2</td><td style='padding:0.4rem'>deux</td><td style='padding:0.4rem;color:#34d399'>13</td><td style='padding:0.4rem'>treize</td></tr><tr><td style='padding:0.4rem;color:#34d399'>3</td><td style='padding:0.4rem'>trois</td><td style='padding:0.4rem;color:#34d399'>14</td><td style='padding:0.4rem'>quatorze</td></tr><tr><td style='padding:0.4rem;color:#34d399'>4</td><td style='padding:0.4rem'>quatre</td><td style='padding:0.4rem;color:#34d399'>15</td><td style='padding:0.4rem'>quinze</td></tr><tr><td style='padding:0.4rem;color:#34d399'>5</td><td style='padding:0.4rem'>cinq</td><td style='padding:0.4rem;color:#34d399'>16</td><td style='padding:0.4rem'>seize</td></tr><tr><td style='padding:0.4rem;color:#34d399'>6</td><td style='padding:0.4rem'>six</td><td style='padding:0.4rem;color:#34d399'>17</td><td style='padding:0.4rem'>dix-sept</td></tr><tr><td style='padding:0.4rem;color:#34d399'>7</td><td style='padding:0.4rem'>sept</td><td style='padding:0.4rem;color:#34d399'>18</td><td style='padding:0.4rem'>dix-huit</td></tr><tr><td style='padding:0.4rem;color:#34d399'>8</td><td style='padding:0.4rem'>huit</td><td style='padding:0.4rem;color:#34d399'>19</td><td style='padding:0.4rem'>dix-neuf</td></tr><tr><td style='padding:0.4rem;color:#34d399'>9</td><td style='padding:0.4rem'>neuf</td><td style='padding:0.4rem;color:#34d399'>20</td><td style='padding:0.4rem'>vingt</td></tr><tr><td style='padding:0.4rem;color:#34d399'>10</td><td style='padding:0.4rem'>dix</td><td style='padding:0.4rem'></td><td style='padding:0.4rem'></td></tr></table><p style='padding:1rem;background:rgba(52,211,153,0.15);border-radius:8px'>💡 <strong>Примеры:</strong><br>• <em>J'ai dix-neuf ans.</em> — Мне 19 лет.<br>• <em>Il a vingt ans.</em> — Ему 20 лет.<br>• <em>Mon numéro, c'est le zéro-six...</em> — Мой номер: 06...</p>"
+    },
+    {
+      "id": "u1-ex5",
+      "type": "grammar-quiz",
+      "title": "Упражнение 5 : Les nationalités",
+      "questions": [
+        { "question": "Je suis de France. Je suis ___.", "options": ["français", "française", "espagnol", "russe"], "correctAnswer": "français" },
+        { "question": "Maria est de Russie. Elle est ___.", "options": ["russe", "russe", "française", "espagnole"], "correctAnswer": "russe" },
+        { "question": "Pedro est d'Espagne. Il est ___.", "options": ["espagnol", "espagnole", "italien", "anglais"], "correctAnswer": "espagnol" },
+        { "question": "Anna est d'Italie. Elle est ___.", "options": ["italienne", "italien", "française", "espagnole"], "correctAnswer": "italienne" },
+        { "question": "Tom est d'Angleterre. Il est ___.", "options": ["anglais", "anglaise", "américain", "irlandais"], "correctAnswer": "anglais" },
+        { "question": "Sophie est de Belgique. Elle est ___.", "options": ["belge", "belge", "suisse", "française"], "correctAnswer": "belge" },
+        { "question": "Carlos est du Mexique. Il est ___.", "options": ["mexicain", "mexicaine", "brésilien", "argentin"], "correctAnswer": "mexicain" },
+        { "question": "Yuki est du Japon. Elle est ___.", "options": ["japonaise", "japonais", "chinoise", "coréenne"], "correctAnswer": "japonaise" }
+      ]
+    },
+    {
+      "id": "u1-ex6",
+      "type": "grammar-quiz",
+      "title": "Упражнение 6 : Questions formelles et informelles",
+      "questions": [
+        { "question": "Форма «vous» для вопроса «Как вас зовут?»:", "options": ["Comment vous appelez-vous ?", "Comment tu t'appelles ?", "Tu t'appelles comment ?", "Vous êtes qui ?"], "correctAnswer": "Comment vous appelez-vous ?" },
+        { "question": "Форма «tu» для вопроса «Как тебя зовут?»:", "options": ["Comment vous appelez-vous ?", "Comment tu t'appelles ?", "Vous appelez-vous comment ?", "Comment il s'appelle ?"], "correctAnswer": "Comment tu t'appelles ?" },
+        { "question": "Форма «vous» для «Откуда вы?»:", "options": ["Tu viens d'où ?", "Vous venez d'où ?", "D'où tu viens ?", "Il vient d'où ?"], "correctAnswer": "Vous venez d'où ?" },
+        { "question": "Форма «tu» для «Ты студент?»:", "options": ["Vous êtes étudiant ?", "Tu es étudiant ?", "Il est étudiant ?", "Êtes-vous étudiant ?"], "correctAnswer": "Tu es étudiant ?" },
+        { "question": "Вежливое приветствие при встрече незнакомца:", "options": ["Salut !", "Bonjour !", "Coucou !", "Hé !"], "correctAnswer": "Bonjour !" },
+        { "question": "Неформальное прощание с другом:", "options": ["Au revoir, Monsieur.", "Bonne nuit.", "Salut !", "À bientôt, Madame."], "correctAnswer": "Salut !" },
+        { "question": "Как по-французски «Очень приятно познакомиться»?", "options": ["Merci beaucoup.", "Excusez-moi.", "Enchanté(e).", "Pardon."], "correctAnswer": "Enchanté(e)." }
+      ]
+    },
+    {
+      "id": "u1-genre1",
+      "type": "gender-quiz",
+      "title": "Quel article ? — Vocabulaire de l'unité 1",
+      "items": [
+        { "word": "étudiant", "emoji": "🎓", "ru": "студент", "article": "un", "hint": "Мужской род: un étudiant" },
+        { "word": "étudiante", "emoji": "👩‍🎓", "ru": "студентка", "article": "une", "hint": "Женский род: une étudiante" },
+        { "word": "ami", "emoji": "🤝", "ru": "друг", "article": "un", "hint": "Мужской род: un ami (перед гласной l'ami)" },
+        { "word": "amie", "emoji": "👭", "ru": "подруга", "article": "une", "hint": "Женский род: une amie (перед гласной l'amie)" },
+        { "word": "passeport", "emoji": "🛂", "ru": "паспорт", "article": "le", "hint": "Мужской род: le passeport" },
+        { "word": "université", "emoji": "🏛️", "ru": "университет", "article": "l'", "hint": "Женский род, начинается с гласной: l'université" },
+        { "word": "café", "emoji": "☕", "ru": "кафе / кофе", "article": "le", "hint": "Мужской род: le café" },
+        { "word": "classe", "emoji": "🏫", "ru": "класс / аудитория", "article": "la", "hint": "Женский род: la classe" },
+        { "word": "salle", "emoji": "🚪", "ru": "зал / комната", "article": "la", "hint": "Женский род: la salle" },
+        { "word": "livre", "emoji": "📖", "ru": "книга", "article": "le", "hint": "Мужской род: le livre" }
+      ]
+    },
+    {
+      "id": "u1-dialogue1",
+      "type": "dialogue",
+      "title": "Dialogue : Au café — première rencontre",
+      "context": "Эмма и Лукас встречаются в кафе университета первый раз. Лукас решает познакомиться.",
+      "exchanges": [
+        { "speaker": "Lucas", "side": "right", "text": "Bonjour ! Je m'appelle Lucas. Et toi ?" },
+        { "speaker": "Emma", "side": "left", "text": "___", "isBlank": true, "options": ["Bonjour ! Je m'appelle Emma.", "Au revoir, Lucas.", "Merci beaucoup.", "Je suis étudiante."], "correctAnswer": "Bonjour ! Je m'appelle Emma.", "explanation": "При знакомстве сначала отвечают на приветствие, потом называют своё имя: Bonjour ! Je m'appelle..." },
+        { "speaker": "Lucas", "side": "right", "text": "Tu es étudiante ici ?" },
+        { "speaker": "Emma", "side": "left", "text": "Oui, je suis étudiante en langues. Et toi, tu es étudiant ?" },
+        { "speaker": "Lucas", "side": "right", "text": "Oui ! Je suis étudiant en informatique. Tu es française ?" },
+        { "speaker": "Emma", "side": "left", "text": "___", "isBlank": true, "options": ["Non, je suis belge. Je viens de Bruxelles.", "Oui, je suis espagnole.", "Je ne sais pas.", "Enchanté !"], "correctAnswer": "Non, je suis belge. Je viens de Bruxelles.", "explanation": "Emma est belge — она бельгийка и родом из Брюсселя. Nationalité + ville d'origine." },
+        { "speaker": "Lucas", "side": "right", "text": "Super ! Moi, je suis français, de Lyon. Enchanté, Emma !" },
+        { "speaker": "Emma", "side": "left", "text": "Enchantée, Lucas !" }
+      ]
+    },
+    {
+      "id": "u1-fill1",
+      "type": "fill-blank",
+      "title": "Complétez le texte : Emma se présente",
+      "context": "Эмма пишет небольшое представление о себе. Заполните пропуски правильными формами глаголов и словами.",
+      "text": "Je ___ Emma Petit. Je ___ étudiante à l'université de Paris. J'___ dix-neuf ans. Je ___ belge, mais j'habite à Paris. J'___ un ami français, il ___ Lucas.",
+      "blanks": [
+        { "options": ["m'appelle", "s'appelle", "t'appelles", "vous appelez"], "correctAnswer": "m'appelle", "hint": "1-е лицо ед.ч. глагола s'appeler", "explanation": "Je m'appelle — меня зовут (1-е лицо)" },
+        { "options": ["suis", "es", "est", "sommes"], "correctAnswer": "suis", "hint": "Глагол être, 1-е лицо ед.ч.", "explanation": "Je suis étudiante — я студентка" },
+        { "options": ["ai", "as", "a", "avons"], "correctAnswer": "ai", "hint": "Глагол avoir, 1-е лицо ед.ч.", "explanation": "J'ai dix-neuf ans — мне 19 лет" },
+        { "options": ["suis", "es", "est", "sont"], "correctAnswer": "suis", "hint": "Глагол être, национальность", "explanation": "Je suis belge — я бельгийка" },
+        { "options": ["ai", "as", "a", "avons"], "correctAnswer": "ai", "hint": "Глагол avoir — у меня есть", "explanation": "J'ai un ami — у меня есть друг" },
+        { "options": ["s'appelle", "m'appelle", "t'appelles", "vous appelez"], "correctAnswer": "s'appelle", "hint": "3-е лицо ед.ч. глагола s'appeler", "explanation": "Il s'appelle Lucas — его зовут Лукас" }
+      ]
+    },
+    {
+      "id": "u1-ex7",
+      "type": "sentence-builder",
+      "title": "Упражнение 7 : Nationalités et présentations",
+      "sentences": [
+        { "words": ["Elle", "est", "espagnole", ",", "elle", "vient", "de", "Madrid", "."], "ru": "Она испанка, она родом из Мадрида." },
+        { "words": ["Je", "suis", "russe", "et", "j'habite", "à", "Moscou", "."], "ru": "Я россиянин(ка) и живу в Москве." },
+        { "words": ["Il", "est", "étudiant", "et", "il", "s'appelle", "Marc", "."], "ru": "Он студент, и его зовут Марк." },
+        { "words": ["Vous", "êtes", "professeur", "de", "français", "?"], "ru": "Вы преподаватель французского?" }
+      ]
+    },
+    {
+      "id": "u1-audio1",
+      "type": "listening",
+      "title": "Аудирование 1 : Dialogue — Bonjour !",
+      "audioFile": "piste_001.mp3",
+      "source": "cahier",
+      "questions": [
+        { "question": "Quel mot entend-on pour saluer ? (Какое слово используется для приветствия?)", "options": ["Bonjour", "Bonsoir", "Au revoir", "Merci"], "correctAnswer": "Bonjour" }
+      ]
+    },
+    {
+      "id": "u1-audio2",
+      "type": "listening",
+      "title": "Аудирование 2 : Les nationalités",
+      "audioFile": "piste_002.mp3",
+      "source": "cahier",
+      "questions": [
+        { "question": "Qu'est-ce que vous avez entendu ? (Что вы услышали?)", "options": ["Nationalités", "Chiffres", "Couleurs", "Jours"], "correctAnswer": "Nationalités" }
+      ]
+    },
+    {
+      "id": "u1-video1",
+      "type": "video",
+      "title": "Vidéo Unité 1 : Premières rencontres",
+      "videoFile": "U01_ST_720p.mp4",
+      "source": "sub",
+      "description": "Regardez la vidéo. Observez comment les personnes se présentent et se saluent."
+    }
+  ]
+}

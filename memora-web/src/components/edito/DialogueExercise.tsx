@@ -1,0 +1,140 @@
+'use client';
+import { useState } from 'react';
+import { CheckCircle2, XCircle, ChevronRight } from 'lucide-react';
+import { EditoExercise, DialogueExchange } from '@/lib/courses/edito-a1';
+import { AudioButton } from './AudioButton';
+
+function Bubble({ exchange, revealed }: { exchange: DialogueExchange; revealed?: boolean }) {
+  const isRight = exchange.side === 'right';
+  const text = revealed ? (exchange.correctAnswer || '') : (exchange.text || '');
+
+  return (
+    <div className={`flex ${isRight ? 'justify-end' : 'justify-start'} mb-3`}>
+      <div className={`max-w-[75%] ${isRight ? 'items-end' : 'items-start'} flex flex-col`}>
+        <span className="text-[#8e95ae] text-xs mb-1 px-1">{exchange.speaker}</span>
+        <div className={`relative rounded-2xl px-4 py-2.5 text-sm ${
+          isRight
+            ? 'bg-[#4255ff]/20 border border-[#4255ff]/30 text-white rounded-tr-sm'
+            : 'bg-[#1e2640] border border-[#262c40] text-[#c8cce0] rounded-tl-sm'
+        } ${exchange.isBlank && !revealed ? 'opacity-40 border-dashed' : ''}`}>
+          {exchange.isBlank && !revealed ? '❓ ...' : text}
+        </div>
+        {text && <div className={`mt-1 ${isRight ? 'self-end' : 'self-start'}`}><AudioButton text={text} /></div>}
+      </div>
+    </div>
+  );
+}
+
+export function DialogueExercise({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: () => void }) {
+  const exchanges: DialogueExchange[] = exercise.exchanges || [];
+  const blanks = exchanges.filter(e => e.isBlank);
+
+  const [answers, setAnswers] = useState<Record<number, { given: string; correct: boolean }>>({});
+  const [activeBlankIdx, setActiveBlankIdx] = useState(0);
+  const [finished, setFinished] = useState(false);
+
+  const currentBlankExchangeIdx = (() => {
+    let blankCount = -1;
+    for (let i = 0; i < exchanges.length; i++) {
+      if (exchanges[i].isBlank) {
+        blankCount++;
+        if (blankCount === activeBlankIdx) return i;
+      }
+    }
+    return -1;
+  })();
+
+  const activeExchange = blanks[activeBlankIdx];
+
+  const handleChoice = (opt: string) => {
+    if (answers[activeBlankIdx]) return;
+    const correct = opt === activeExchange.correctAnswer;
+    setAnswers(prev => ({ ...prev, [activeBlankIdx]: { given: opt, correct } }));
+  };
+
+  const handleNext = () => {
+    if (activeBlankIdx < blanks.length - 1) {
+      setActiveBlankIdx(i => i + 1);
+    } else {
+      setFinished(true);
+      onComplete?.();
+    }
+  };
+
+  const correctCount = Object.values(answers).filter(a => a.correct).length;
+  const isAnswered = !!answers[activeBlankIdx];
+  const wasCorrect = answers[activeBlankIdx]?.correct;
+
+  return (
+    <div className="bg-[#13162a] border border-[#262c40] rounded-2xl p-6">
+      <div className="flex items-center justify-between mb-3">
+        <h4 className="text-white font-semibold text-sm">{exercise.title}</h4>
+        {!finished && <span className="text-[#8e95ae] text-xs">{activeBlankIdx + 1} / {blanks.length}</span>}
+      </div>
+
+      {exercise.context && (
+        <p className="text-[#8e95ae] text-xs italic mb-4 bg-[#1e2640] px-3 py-2 rounded-lg">{exercise.context}</p>
+      )}
+
+      {/* Dialogue */}
+      <div className="mb-5 space-y-1">
+        {exchanges.map((ex, i) => {
+          const blankOrder = (() => { let n = -1; for (let j = 0; j <= i; j++) if (exchanges[j].isBlank) n++; return n; })();
+          const isAnsweredBlank = ex.isBlank && answers[blankOrder] !== undefined;
+          return <Bubble key={i} exchange={ex} revealed={isAnsweredBlank} />;
+        })}
+      </div>
+
+      {!finished && (
+        <div>
+          {/* Active blank prompt */}
+          <div className="bg-[#4255ff]/10 border border-[#4255ff]/30 rounded-xl px-4 py-3 mb-3">
+            <p className="text-[#4255ff] text-xs font-semibold mb-0.5">
+              Что отвечает {activeExchange?.speaker}?
+            </p>
+          </div>
+
+          {/* Options */}
+          {!isAnswered ? (
+            <div className="grid gap-2">
+              {(activeExchange?.options || []).map(opt => (
+                <button key={opt}
+                  onClick={() => handleChoice(opt)}
+                  className="text-left border border-[#262c40] bg-[#1e2640] rounded-xl px-4 py-3 text-sm text-white hover:border-[#4255ff]/50 hover:bg-[#4255ff]/5 transition-all flex items-center justify-between gap-2">
+                  {opt}
+                  <AudioButton text={opt} />
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div className="space-y-3">
+              <div className={`flex gap-2 items-start text-sm p-3 rounded-xl ${wasCorrect ? 'bg-emerald-500/10' : 'bg-red-500/10'}`}>
+                {wasCorrect
+                  ? <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  : <XCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                }
+                <div className="text-[#8e95ae]">
+                  {!wasCorrect && <><strong className="text-white">{activeExchange.correctAnswer}</strong> — </>}
+                  {activeExchange.explanation}
+                </div>
+              </div>
+              <div className="flex justify-end">
+                <button onClick={handleNext}
+                  className="inline-flex items-center gap-1.5 px-5 py-2 rounded-xl bg-[#4255ff] text-white text-sm font-semibold hover:bg-[#3144e0] transition-colors">
+                  {activeBlankIdx < blanks.length - 1 ? 'Далее' : 'Завершить'} <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {finished && (
+        <div className="bg-[#1e2640] rounded-xl p-4 text-center">
+          <p className="text-white font-semibold mb-1">{correctCount}/{blanks.length} правильно</p>
+          <p className="text-[#8e95ae] text-sm">Диалог завершён!</p>
+        </div>
+      )}
+    </div>
+  );
+}

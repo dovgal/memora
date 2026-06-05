@@ -40,7 +40,22 @@ export default async function StudentDashboard() {
                 {/* Featured Courses: French A1 / A2 */}
                 <section>
                     <h2 className="text-xl font-bold mb-6 text-qz-text tracking-wide">Курсы французского</h2>
-                    <div className="grid md:grid-cols-2 gap-4">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {/* Édito A1 — new full trainer */}
+                        <Link href="/dashboard/student/courses/edito-a1" className="block group">
+                            <div className="relative h-full overflow-hidden rounded-3xl border border-[#262c40] bg-gradient-to-br from-orange-900/40 via-yellow-900/20 to-transparent p-7 transition-all duration-300 hover:scale-[1.01] hover:border-orange-500/50">
+                                <div className="absolute top-[-20%] right-[-5%] w-[45%] h-[80%] bg-orange-500/10 rounded-full blur-[50px]" />
+                                <div className="relative z-10">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <Sparkles className="w-5 h-5 text-orange-400" />
+                                        <span className="text-xs font-bold uppercase tracking-wider text-orange-400">Тренажер · Édito A1</span>
+                                    </div>
+                                    <h3 className="text-xl font-bold mb-1">Édito A1 — Тренажер</h3>
+                                    <p className="text-[#8e95ae] text-sm mb-4">10 юнитов: теория, диалоги, роды, числа, грамматика. Озвучка на французском через Inworld.</p>
+                                    <span className="inline-block px-4 py-2 rounded-xl bg-orange-600 text-white text-sm font-semibold group-hover:bg-orange-500 transition-colors">Открыть →</span>
+                                </div>
+                            </div>
+                        </Link>
                         <Link href="/dashboard/student/courses/french-a1" className="block group">
                             <div className="relative h-full overflow-hidden rounded-3xl border border-[#262c40] bg-gradient-to-br from-indigo-900/40 via-purple-900/20 to-transparent p-7 transition-all duration-300 hover:scale-[1.01] hover:border-indigo-500/50">
                                 <div className="absolute top-[-20%] right-[-5%] w-[45%] h-[80%] bg-[#4255ff]/10 rounded-full blur-[50px]" />

@@ -1,0 +1,201 @@
+{
+  "id": "unite-3",
+  "title": "Unité 3 : Au quotidien",
+  "description": "Parler de sa vie quotidienne, décrire ses activités. Les verbes en -ER, la négation, les adverbes de fréquence.",
+  "vocabulary": [
+    { "fr": "se lever", "ru": "вставать", "type": "verbe" },
+    { "fr": "se coucher", "ru": "ложиться спать", "type": "verbe" },
+    { "fr": "travailler", "ru": "работать", "type": "verbe" },
+    { "fr": "manger", "ru": "есть / кушать", "type": "verbe" },
+    { "fr": "boire", "ru": "пить", "type": "verbe" },
+    { "fr": "regarder la télé", "ru": "смотреть телевизор", "type": "verbe" },
+    { "fr": "écouter de la musique", "ru": "слушать музыку", "type": "verbe" },
+    { "fr": "lire", "ru": "читать", "type": "verbe" },
+    { "fr": "dormir", "ru": "спать", "type": "verbe" },
+    { "fr": "aller", "ru": "идти / ехать", "type": "verbe" },
+    { "fr": "le matin", "ru": "утром", "type": "temps" },
+    { "fr": "l'après-midi", "ru": "после обеда / днём", "type": "temps" },
+    { "fr": "le soir", "ru": "вечером", "type": "temps" },
+    { "fr": "la nuit", "ru": "ночью", "type": "temps" },
+    { "fr": "toujours", "ru": "всегда", "type": "adverbe" },
+    { "fr": "souvent", "ru": "часто", "type": "adverbe" },
+    { "fr": "parfois / quelquefois", "ru": "иногда", "type": "adverbe" },
+    { "fr": "rarement", "ru": "редко", "type": "adverbe" },
+    { "fr": "jamais", "ru": "никогда", "type": "adverbe" },
+    { "fr": "le petit-déjeuner", "ru": "завтрак", "type": "nom" },
+    { "fr": "le déjeuner", "ru": "обед", "type": "nom" },
+    { "fr": "le dîner", "ru": "ужин", "type": "nom" }
+  ],
+  "exercises": [
+    {
+      "id": "u3-theory-1",
+      "type": "theory",
+      "title": "Les verbes en -ER (1er groupe) — Présent",
+      "content": "<p style='margin-bottom:1rem'>Глаголы 1-й группы — самые распространённые. Окончание инфинитива: <strong>-ER</strong>.<br>Пример: <em>parler</em> (говорить), <em>manger</em> (есть), <em>travailler</em> (работать)</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Лицо</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Окончание</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>parler</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>travailler</th></tr><tr><td style='padding:0.5rem'>je</td><td style='padding:0.5rem;color:#60a5fa'>-e</td><td style='padding:0.5rem'>parl<strong>e</strong></td><td style='padding:0.5rem'>travaill<strong>e</strong></td></tr><tr><td style='padding:0.5rem'>tu</td><td style='padding:0.5rem;color:#60a5fa'>-es</td><td style='padding:0.5rem'>parl<strong>es</strong></td><td style='padding:0.5rem'>travaill<strong>es</strong></td></tr><tr><td style='padding:0.5rem'>il/elle/on</td><td style='padding:0.5rem;color:#60a5fa'>-e</td><td style='padding:0.5rem'>parl<strong>e</strong></td><td style='padding:0.5rem'>travaill<strong>e</strong></td></tr><tr><td style='padding:0.5rem'>nous</td><td style='padding:0.5rem;color:#60a5fa'>-ons</td><td style='padding:0.5rem'>parl<strong>ons</strong></td><td style='padding:0.5rem'>travaill<strong>ons</strong></td></tr><tr><td style='padding:0.5rem'>vous</td><td style='padding:0.5rem;color:#60a5fa'>-ez</td><td style='padding:0.5rem'>parl<strong>ez</strong></td><td style='padding:0.5rem'>travaill<strong>ez</strong></td></tr><tr><td style='padding:0.5rem'>ils/elles</td><td style='padding:0.5rem;color:#60a5fa'>-ent</td><td style='padding:0.5rem'>parl<strong>ent</strong></td><td style='padding:0.5rem'>travaill<strong>ent</strong></td></tr></table>"
+    },
+    {
+      "id": "u3-theory-2",
+      "type": "theory",
+      "title": "La négation — ne ... pas",
+      "content": "<p style='margin-bottom:1rem'>Для отрицания во французском используется конструкция <strong>ne ... pas</strong>, которая обрамляет глагол с двух сторон.</p><div style='padding:1rem;background:rgba(239,68,68,0.15);border-radius:8px;margin:1rem 0'><p><strong>Формула:</strong> Суб. + <em>ne</em> + Глагол + <em>pas</em></p><br><p>• <em>Je travaille.</em> → <em>Je <strong>ne</strong> travaille <strong>pas</strong>.</em> — Я не работаю.</p><p>• <em>Il mange.</em> → <em>Il <strong>ne</strong> mange <strong>pas</strong>.</em> — Он не ест.</p></div><div style='padding:1rem;background:rgba(59,130,246,0.15);border-radius:8px'>⚠️ Перед гласной <em>ne</em> → <em>n'</em>:<br>• <em>Il <strong>n'</strong>aime pas le café.</em> — Ему не нравится кофе.</div>"
+    },
+    {
+      "id": "u3-theory-3",
+      "type": "theory",
+      "title": "Les adverbes de fréquence (наречия частотности)",
+      "content": "<p style='margin-bottom:1rem'>Эти наречия показывают, <strong>как часто</strong> что-то происходит.</p><div style='display:flex;flex-direction:column;gap:0.5rem'><div style='padding:0.5rem 1rem;background:rgba(16,185,129,0.2);border-radius:6px'><strong>toujours</strong> — всегда (100%)</div><div style='padding:0.5rem 1rem;background:rgba(59,130,246,0.2);border-radius:6px'><strong>souvent</strong> — часто (70-80%)</div><div style='padding:0.5rem 1rem;background:rgba(168,85,247,0.2);border-radius:6px'><strong>parfois / quelquefois</strong> — иногда (30-50%)</div><div style='padding:0.5rem 1rem;background:rgba(251,146,60,0.2);border-radius:6px'><strong>rarement</strong> — редко (10-20%)</div><div style='padding:0.5rem 1rem;background:rgba(239,68,68,0.2);border-radius:6px'><strong>ne ... jamais</strong> — никогда (0%)</div></div><p style='margin-top:1rem;padding:1rem;background:rgba(59,130,246,0.15);border-radius:8px'>💡 <em>Je <strong>souvent</strong> mange à la maison.</em> → <strong>НЕТ!</strong><br><em>Je mange <strong>souvent</strong> à la maison.</em> — Я часто ем дома. ✓</p>"
+    },
+    {
+      "id": "u3-ex1",
+      "type": "grammar-quiz",
+      "title": "Упражнение 1 : Conjugaison des verbes en -ER",
+      "questions": [
+        { "question": "Je ___ le français. (parler)", "options": ["parle", "parles", "parlez", "parlent"], "correctAnswer": "parle" },
+        { "question": "Tu ___ dans un café ? (travailler)", "options": ["travaille", "travailles", "travaillez", "travaillent"], "correctAnswer": "travailles" },
+        { "question": "Elle ___ de la musique. (écouter)", "options": ["écoute", "écoutes", "écoutez", "écoutent"], "correctAnswer": "écoute" },
+        { "question": "Nous ___ à 7 heures. (manger)", "options": ["mangons", "mangeons", "mangez", "mangent"], "correctAnswer": "mangeons" },
+        { "question": "Vous ___ la télé ? (regarder)", "options": ["regardes", "regardons", "regardez", "regardent"], "correctAnswer": "regardez" },
+        { "question": "Ils ___ beaucoup. (travailler)", "options": ["travaille", "travailles", "travaillez", "travaillent"], "correctAnswer": "travaillent" }
+      ]
+    },
+    {
+      "id": "u3-ex2",
+      "type": "grammar-quiz",
+      "title": "Упражнение 2 : La négation",
+      "questions": [
+        { "question": "Je travaille. (поставьте в отрицание)", "options": ["Je ne travaille pas.", "Je pas travaille.", "Je travaille ne pas.", "Je n'pas travaille."], "correctAnswer": "Je ne travaille pas." },
+        { "question": "Elle mange le matin. (отрицание)", "options": ["Elle ne mange pas le matin.", "Elle mange ne pas.", "Elle ne pas mange.", "Elle pas mange."], "correctAnswer": "Elle ne mange pas le matin." },
+        { "question": "Tu aimes le café. (отрицание — ne → n' перед гласной)", "options": ["Tu ne aimes pas.", "Tu n'aimes pas.", "Tu pas aimes.", "Tu aimes n'pas."], "correctAnswer": "Tu n'aimes pas." },
+        { "question": "Nous regardons la télé. (отрицание)", "options": ["Nous ne regardons pas.", "Nous regardons ne pas.", "Nous pas regardons.", "Nous n'regardons pas."], "correctAnswer": "Nous ne regardons pas." }
+      ]
+    },
+    {
+      "id": "u3-ex3",
+      "type": "sentence-builder",
+      "title": "Упражнение 3 : Ma journée (Мой день)",
+      "sentences": [
+        { "words": ["Le", "matin", ",", "je", "mange", "un", "croissant", "."], "ru": "Утром я ем круассан." },
+        { "words": ["Elle", "ne", "travaille", "pas", "le", "week-end", "."], "ru": "Она не работает в выходные." },
+        { "words": ["Nous", "regardons", "souvent", "la", "télé", "le", "soir", "."], "ru": "Мы часто смотрим телевизор вечером." },
+        { "words": ["Tu", "écoutes", "de", "la", "musique", "?"], "ru": "Ты слушаешь музыку?" }
+      ]
+    },
+    {
+      "id": "u3-theory-4",
+      "type": "theory",
+      "title": "Les verbes pronominaux (Возвратные глаголы) — Présent",
+      "content": "<p style='margin-bottom:1rem'>Возвратные глаголы используют местоимения <strong>me, te, se, nous, vous, se</strong> перед глаголом.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Лицо</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>se lever</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>se coucher</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>se laver</th></tr><tr><td style='padding:0.4rem'>je</td><td style='padding:0.4rem;color:#60a5fa'>me lève</td><td style='padding:0.4rem;color:#60a5fa'>me couche</td><td style='padding:0.4rem;color:#60a5fa'>me lave</td></tr><tr><td style='padding:0.4rem'>tu</td><td style='padding:0.4rem;color:#34d399'>te lèves</td><td style='padding:0.4rem;color:#34d399'>te couches</td><td style='padding:0.4rem;color:#34d399'>te laves</td></tr><tr><td style='padding:0.4rem'>il/elle/on</td><td style='padding:0.4rem;color:#c084fc'>se lève</td><td style='padding:0.4rem;color:#c084fc'>se couche</td><td style='padding:0.4rem;color:#c084fc'>se lave</td></tr><tr><td style='padding:0.4rem'>nous</td><td style='padding:0.4rem;color:#fb923c'>nous levons</td><td style='padding:0.4rem;color:#fb923c'>nous couchons</td><td style='padding:0.4rem;color:#fb923c'>nous lavons</td></tr><tr><td style='padding:0.4rem'>vous</td><td style='padding:0.4rem;color:#f472b6'>vous levez</td><td style='padding:0.4rem;color:#f472b6'>vous couchez</td><td style='padding:0.4rem;color:#f472b6'>vous lavez</td></tr><tr><td style='padding:0.4rem'>ils/elles</td><td style='padding:0.4rem;color:#a78bfa'>se lèvent</td><td style='padding:0.4rem;color:#a78bfa'>se couchent</td><td style='padding:0.4rem;color:#a78bfa'>se lavent</td></tr></table><p style='padding:1rem;background:rgba(59,130,246,0.15);border-radius:8px'>⚠️ В отрицании: <em>Je <strong>ne me lève pas</strong> tôt.</em> — Я не встаю рано.<br>Перед гласной: me→m', te→t', se→s': <em>il s'habille, je m'habille</em></p>"
+    },
+    {
+      "id": "u3-theory-5",
+      "type": "theory",
+      "title": "L'heure (Время) — Quelle heure est-il ?",
+      "content": "<p style='margin-bottom:1rem'>Для обозначения времени используют конструкцию <strong>Il est + heure(s)</strong>.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Время</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>По-французски</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th></tr><tr><td style='padding:0.4rem'>8:00</td><td style='padding:0.4rem;color:#60a5fa'>Il est huit heures.</td><td style='padding:0.4rem'>Восемь часов.</td></tr><tr><td style='padding:0.4rem'>8:15</td><td style='padding:0.4rem;color:#60a5fa'>Il est huit heures et quart.</td><td style='padding:0.4rem'>Восемь пятнадцать.</td></tr><tr><td style='padding:0.4rem'>8:30</td><td style='padding:0.4rem;color:#60a5fa'>Il est huit heures et demie.</td><td style='padding:0.4rem'>Половина девятого.</td></tr><tr><td style='padding:0.4rem'>8:45</td><td style='padding:0.4rem;color:#60a5fa'>Il est neuf heures moins le quart.</td><td style='padding:0.4rem'>Без четверти девять.</td></tr><tr><td style='padding:0.4rem'>12:00</td><td style='padding:0.4rem;color:#60a5fa'>Il est midi.</td><td style='padding:0.4rem'>Полдень.</td></tr><tr><td style='padding:0.4rem'>0:00</td><td style='padding:0.4rem;color:#60a5fa'>Il est minuit.</td><td style='padding:0.4rem'>Полночь.</td></tr></table><p style='padding:1rem;background:rgba(52,211,153,0.15);border-radius:8px'>💡 <strong>Вопрос:</strong> <em>Quelle heure est-il ?</em> — Который час?<br><strong>Ответ:</strong> <em>Il est deux heures vingt.</em> — 2:20<br>Официальное время: <em>Il est quatorze heures</em> (14:00)</p>"
+    },
+    {
+      "id": "u3-ex4",
+      "type": "grammar-quiz",
+      "title": "Упражнение 4 : Les verbes pronominaux",
+      "questions": [
+        { "question": "Je ___ à sept heures. (se lever)", "options": ["me lève", "te lèves", "se lève", "nous levons"], "correctAnswer": "me lève" },
+        { "question": "Tu ___ à minuit ? (se coucher)", "options": ["me couche", "te couches", "se couche", "vous couchez"], "correctAnswer": "te couches" },
+        { "question": "Elle ___ tous les matins. (se laver)", "options": ["me lave", "te laves", "se lave", "nous lavons"], "correctAnswer": "se lave" },
+        { "question": "Nous ___ à huit heures. (se lever)", "options": ["me lève", "te lèves", "se lève", "nous levons"], "correctAnswer": "nous levons" },
+        { "question": "Vous ___ à quelle heure ? (se coucher)", "options": ["me couche", "te couches", "se couche", "vous couchez"], "correctAnswer": "vous couchez" },
+        { "question": "Ils ___ devant la télé. (s'endormir — ils...)", "options": ["m'endors", "t'endors", "s'endorment", "nous endormons"], "correctAnswer": "s'endorment" },
+        { "question": "Il ___ vite le matin. (s'habiller)", "options": ["m'habille", "t'habilles", "s'habille", "nous habillons"], "correctAnswer": "s'habille" }
+      ]
+    },
+    {
+      "id": "u3-ex5",
+      "type": "grammar-quiz",
+      "title": "Упражнение 5 : L'heure",
+      "questions": [
+        { "question": "Il est 7h00 — comment dit-on ?", "options": ["Il est sept heures.", "Il est six heures.", "Il est sept heures et demie.", "Il est huit heures."], "correctAnswer": "Il est sept heures." },
+        { "question": "Il est 9h30 — comment dit-on ?", "options": ["Il est neuf heures et quart.", "Il est neuf heures et demie.", "Il est dix heures moins le quart.", "Il est neuf heures."], "correctAnswer": "Il est neuf heures et demie." },
+        { "question": "Il est 10h15 — comment dit-on ?", "options": ["Il est dix heures et demie.", "Il est dix heures et quart.", "Il est dix heures moins le quart.", "Il est onze heures moins le quart."], "correctAnswer": "Il est dix heures et quart." },
+        { "question": "Il est 11h45 — comment dit-on ?", "options": ["Il est onze heures et demie.", "Il est onze heures et quart.", "Il est midi moins le quart.", "Il est midi et quart."], "correctAnswer": "Il est midi moins le quart." },
+        { "question": "Quelle heure est-il à midi ?", "options": ["Il est douze heures.", "Il est midi.", "Il est minuit.", "Il est onze heures."], "correctAnswer": "Il est midi." },
+        { "question": "Lucas ___ à sept heures du matin. (se lever)", "options": ["se lève", "me lève", "te lèves", "nous levons"], "correctAnswer": "se lève" }
+      ]
+    },
+    {
+      "id": "u3-genre1",
+      "type": "gender-quiz",
+      "title": "Quel article ? — Objets du quotidien",
+      "items": [
+        { "word": "téléphone", "emoji": "📱", "ru": "телефон", "article": "le", "hint": "Мужской род: le téléphone" },
+        { "word": "ordinateur", "emoji": "💻", "ru": "компьютер", "article": "l'", "hint": "Мужской род, начинается с гласной: l'ordinateur" },
+        { "word": "cuisine", "emoji": "🍳", "ru": "кухня", "article": "la", "hint": "Женский род: la cuisine" },
+        { "word": "douche", "emoji": "🚿", "ru": "душ", "article": "la", "hint": "Женский род: la douche" },
+        { "word": "café", "emoji": "☕", "ru": "кофе", "article": "le", "hint": "Мужской род: le café" },
+        { "word": "livre", "emoji": "📖", "ru": "книга", "article": "le", "hint": "Мужской род: le livre" },
+        { "word": "musique", "emoji": "🎵", "ru": "музыка", "article": "la", "hint": "Женский род: la musique" },
+        { "word": "journal", "emoji": "📰", "ru": "газета", "article": "le", "hint": "Мужской род: le journal" },
+        { "word": "télévision", "emoji": "📺", "ru": "телевизор", "article": "la", "hint": "Женский род: la télévision (разг. la télé)" },
+        { "word": "voiture", "emoji": "🚗", "ru": "машина", "article": "la", "hint": "Женский род: la voiture" }
+      ]
+    },
+    {
+      "id": "u3-dialogue1",
+      "type": "dialogue",
+      "title": "Dialogue : Lucas décrit sa matinée",
+      "context": "Лукас рассказывает Эмме о своей утренней рутине.",
+      "exchanges": [
+        { "speaker": "Emma", "side": "left", "text": "Tu te lèves à quelle heure le matin, Lucas ?" },
+        { "speaker": "Lucas", "side": "right", "text": "___", "isBlank": true, "options": ["Je me lève à sept heures.", "Je ne travaille pas le matin.", "Je mange beaucoup le soir.", "Je me couche à minuit."], "correctAnswer": "Je me lève à sept heures.", "explanation": "На вопрос 'à quelle heure tu te lèves?' отвечают: Je me lève à... + время. Возвратный глагол se lever." },
+        { "speaker": "Emma", "side": "left", "text": "Et après, qu'est-ce que tu fais ?" },
+        { "speaker": "Lucas", "side": "right", "text": "Je me lave, je m'habille et je prends le petit-déjeuner." },
+        { "speaker": "Emma", "side": "left", "text": "Tu prends quoi au petit-déjeuner ?" },
+        { "speaker": "Lucas", "side": "right", "text": "___", "isBlank": true, "options": ["Je mange un croissant et je bois du café.", "Je ne mange jamais le matin.", "Je préfère le dîner.", "Je mange souvent au restaurant."], "correctAnswer": "Je mange un croissant et je bois du café.", "explanation": "Типичный французский завтрак: croissant + café. Глаголы manger (есть) и boire (пить)." },
+        { "speaker": "Emma", "side": "left", "text": "Moi aussi ! Je bois toujours un café le matin." },
+        { "speaker": "Lucas", "side": "right", "text": "Et tu te couches à quelle heure ?" },
+        { "speaker": "Emma", "side": "left", "text": "Assez tard, vers minuit. Je regarde souvent des films le soir." }
+      ]
+    },
+    {
+      "id": "u3-fill1",
+      "type": "fill-blank",
+      "title": "Complétez le texte : La journée de Sophie",
+      "context": "Описание типичного дня Софи. Заполните пропуски правильными формами глаголов.",
+      "text": "Sophie ___ à six heures et demie. Elle ___ et elle prend son petit-déjeuner. Elle ___ toujours du café. Elle travaille de neuf heures à dix-sept heures. Le soir, elle ___ souvent de la musique. Elle ne ___ jamais la télé. Elle ___ vers vingt-trois heures.",
+      "blanks": [
+        { "options": ["se lève", "me lève", "te lèves", "se lèvent"], "correctAnswer": "se lève", "hint": "Se lever, 3-е лицо ед.ч.", "explanation": "Elle se lève — она встаёт (3-е лицо)" },
+        { "options": ["se lave", "me lave", "te laves", "nous lavons"], "correctAnswer": "se lave", "hint": "Se laver, 3-е лицо ед.ч.", "explanation": "Elle se lave — она умывается" },
+        { "options": ["boit", "bois", "buvons", "boivent"], "correctAnswer": "boit", "hint": "Boire, 3-е лицо ед.ч.", "explanation": "Elle boit — она пьёт (нерегулярный глагол boire)" },
+        { "options": ["écoute", "écoutes", "écoutons", "écoutez"], "correctAnswer": "écoute", "hint": "Écouter, 3-е лицо ед.ч.", "explanation": "Elle écoute de la musique — она слушает музыку" },
+        { "options": ["regarde", "regardes", "regardons", "regardez"], "correctAnswer": "regarde", "hint": "Regarder в отрицании: ne regarde jamais", "explanation": "Elle ne regarde jamais la télé — она никогда не смотрит телевизор" },
+        { "options": ["se couche", "me couche", "te couches", "vous couchez"], "correctAnswer": "se couche", "hint": "Se coucher, 3-е лицо ед.ч.", "explanation": "Elle se couche — она ложится спать" }
+      ]
+    },
+    {
+      "id": "u3-ex6",
+      "type": "sentence-builder",
+      "title": "Упражнение 6 : La routine quotidienne",
+      "sentences": [
+        { "words": ["Je", "me", "lève", "à", "sept", "heures", "du", "matin", "."], "ru": "Я встаю в семь часов утра." },
+        { "words": ["Il", "se", "couche", "toujours", "avant", "minuit", "."], "ru": "Он всегда ложится спать до полуночи." },
+        { "words": ["Elle", "ne", "se", "lève", "jamais", "avant", "huit", "heures", "."], "ru": "Она никогда не встаёт до восьми часов." },
+        { "words": ["Nous", "mangeons", "souvent", "ensemble", "le", "soir", "."], "ru": "Мы часто едим вместе вечером." }
+      ]
+    },
+    {
+      "id": "u3-audio1",
+      "type": "listening",
+      "title": "Аудирование : Une journée typique",
+      "audioFile": "piste_020.mp3",
+      "source": "cahier",
+      "questions": [
+        { "question": "Quel moment de la journée est décrit ? (Какое время дня описано?)", "options": ["Le matin", "L'après-midi", "Le soir", "La nuit"], "correctAnswer": "Le matin" }
+      ]
+    },
+    {
+      "id": "u3-video1",
+      "type": "video",
+      "title": "Vidéo Unité 3 : Au quotidien",
+      "videoFile": "U03_ST_720p.mp4",
+      "source": "sub",
+      "description": "Regardez la vidéo et observez les activités quotidiennes des personnages."
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+'use client';
+import { use, useState } from 'react';
+import Link from 'next/link';
+import { ChevronLeft, CheckCircle2 } from 'lucide-react';
+import { EDITO_A1_UNITS } from '@/lib/courses/edito-a1';
+import { ExerciseRenderer } from '@/components/edito/ExerciseRenderer';
+
+export default function EditoUnitPage({ params }: { params: Promise<{ unitId: string }> }) {
+  const { unitId } = use(params);
+  const unit = EDITO_A1_UNITS[unitId];
+  const [completed, setCompleted] = useState<Record<string, boolean>>({});
+
+  if (!unit) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-qz-card text-white">
+        <p className="text-2xl font-bold mb-4">Юнит не найден</p>
+        <Link href="/dashboard/student/courses/edito-a1" className="text-[#4255ff] hover:underline">
+          ← Назад к курсу
+        </Link>
+      </div>
+    );
+  }
+
+  const completedCount = Object.keys(completed).length;
+  const totalInteractive = unit.exercises.filter(e => e.type !== 'theory').length;
+  const pct = totalInteractive > 0 ? Math.round((completedCount / totalInteractive) * 100) : 100;
+
+  return (
+    <div className="min-h-screen bg-qz-card text-qz-text">
+      <div className="max-w-3xl mx-auto px-4 py-6 md:py-8">
+
+        {/* Back + header */}
+        <div className="mb-6">
+          <Link href="/dashboard/student/courses/edito-a1"
+            className="inline-flex items-center gap-1.5 text-[#8e95ae] hover:text-white text-sm transition-colors mb-4">
+            <ChevronLeft className="w-4 h-4" /> К списку юнитов
+          </Link>
+          <h1 className="text-2xl font-bold text-white mb-1">{unit.title}</h1>
+          <p className="text-[#8e95ae] text-sm">{unit.description}</p>
+        </div>
+
+        {/* Progress bar */}
+        {totalInteractive > 0 && (
+          <div className="bg-[#13162a] border border-[#262c40] rounded-xl p-4 mb-6">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-white text-sm font-medium">Прогресс</span>
+              <span className="text-[#8e95ae] text-xs">{completedCount} / {totalInteractive} выполнено</span>
+            </div>
+            <div className="h-2 bg-[#1e2640] rounded-full">
+              <div
+                className="h-full bg-[#4255ff] rounded-full transition-all duration-500"
+                style={{ width: `${pct}%` }}
+              />
+            </div>
+            {pct === 100 && (
+              <p className="text-emerald-400 text-xs mt-2 flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5" /> Юнит завершён!
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* Exercises */}
+        <div className="space-y-5">
+          {unit.exercises.map((ex) => (
+            <div key={ex.id} className="relative">
+              {completed[ex.id] && ex.type !== 'theory' && (
+                <div className="absolute -top-2 -right-2 z-10 bg-emerald-500 text-white text-xs px-2.5 py-0.5 rounded-full font-semibold flex items-center gap-1 shadow-lg">
+                  <CheckCircle2 className="w-3 h-3" /> Выполнено
+                </div>
+              )}
+              <ExerciseRenderer
+                exercise={ex}
+                onComplete={(id) => setCompleted(prev => ({ ...prev, [id]: true }))}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Footer nav */}
+        <div className="mt-8 pt-6 border-t border-[#262c40] flex justify-between items-center">
+          <Link href="/dashboard/student/courses/edito-a1"
+            className="inline-flex items-center gap-1.5 text-[#8e95ae] hover:text-white text-sm transition-colors">
+            <ChevronLeft className="w-4 h-4" /> Все юниты
+          </Link>
+          {pct === 100 && (
+            <span className="text-emerald-400 text-sm font-semibold flex items-center gap-1.5">
+              <CheckCircle2 className="w-4 h-4" /> Юнит пройден!
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

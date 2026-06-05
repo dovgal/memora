@@ -1,0 +1,191 @@
+{
+  "id": "unite-10",
+  "title": "Unité 10 : Projets et avenir",
+  "description": "Parler de ses projets, ses rêves et son avenir. Le futur simple, les conjonctions (parce que, pour que), exprimer l'intention.",
+  "vocabulary": [
+    { "fr": "un projet", "ru": "проект / план", "type": "nom" },
+    { "fr": "un rêve", "ru": "мечта", "type": "nom" },
+    { "fr": "l'avenir", "ru": "будущее", "type": "nom" },
+    { "fr": "un métier", "ru": "профессия", "type": "nom" },
+    { "fr": "un diplôme", "ru": "диплом", "type": "nom" },
+    { "fr": "trouver un travail", "ru": "найти работу", "type": "expression" },
+    { "fr": "gagner de l'argent", "ru": "зарабатывать деньги", "type": "expression" },
+    { "fr": "apprendre une langue", "ru": "изучить язык", "type": "expression" },
+    { "fr": "voyager dans le monde entier", "ru": "путешествовать по всему миру", "type": "expression" },
+    { "fr": "se marier", "ru": "жениться / выйти замуж", "type": "verbe" },
+    { "fr": "habiter à l'étranger", "ru": "жить за рубежом", "type": "expression" },
+    { "fr": "parce que", "ru": "потому что", "type": "conjonction" },
+    { "fr": "pour + infinitif", "ru": "чтобы + инфинитив", "type": "conjonction" },
+    { "fr": "si + présent", "ru": "если + настоящее", "type": "conjonction" },
+    { "fr": "demain", "ru": "завтра", "type": "temps" },
+    { "fr": "la semaine prochaine", "ru": "на следующей неделе", "type": "temps" },
+    { "fr": "l'année prochaine", "ru": "в следующем году", "type": "temps" },
+    { "fr": "dans dix ans", "ru": "через десять лет", "type": "temps" }
+  ],
+  "exercises": [
+    {
+      "id": "u10-theory-1",
+      "type": "theory",
+      "title": "Le futur simple",
+      "content": "<p style='margin-bottom:1rem'>Futur simple выражает действия в будущем. Образование: <strong>инфинитив + окончания</strong> (для глаголов -ER и -IR). Глаголы -RE теряют конечное -e.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Лицо</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Окончание</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>parler</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>finir</th></tr><tr><td style='padding:0.5rem'>je</td><td style='padding:0.5rem;color:#60a5fa'>-rai</td><td style='padding:0.5rem'>parler<strong>ai</strong></td><td style='padding:0.5rem'>finir<strong>ai</strong></td></tr><tr><td style='padding:0.5rem'>tu</td><td style='padding:0.5rem;color:#60a5fa'>-ras</td><td style='padding:0.5rem'>parler<strong>as</strong></td><td style='padding:0.5rem'>finir<strong>as</strong></td></tr><tr><td style='padding:0.5rem'>il/elle</td><td style='padding:0.5rem;color:#60a5fa'>-ra</td><td style='padding:0.5rem'>parler<strong>a</strong></td><td style='padding:0.5rem'>finir<strong>a</strong></td></tr><tr><td style='padding:0.5rem'>nous</td><td style='padding:0.5rem;color:#60a5fa'>-rons</td><td style='padding:0.5rem'>parler<strong>ons</strong></td><td style='padding:0.5rem'>finir<strong>ons</strong></td></tr><tr><td style='padding:0.5rem'>vous</td><td style='padding:0.5rem;color:#60a5fa'>-rez</td><td style='padding:0.5rem'>parler<strong>ez</strong></td><td style='padding:0.5rem'>finir<strong>ez</strong></td></tr><tr><td style='padding:0.5rem'>ils</td><td style='padding:0.5rem;color:#60a5fa'>-ront</td><td style='padding:0.5rem'>parler<strong>ont</strong></td><td style='padding:0.5rem'>finir<strong>ont</strong></td></tr></table><div style='padding:1rem;background:rgba(239,68,68,0.15);border-radius:8px;margin-top:1rem'><p><strong>Нерегулярные основы:</strong></p><p>• être → <strong>ser-</strong> : je serai</p><p>• avoir → <strong>aur-</strong> : j'aurai</p><p>• aller → <strong>ir-</strong> : j'irai</p><p>• faire → <strong>fer-</strong> : je ferai</p><p>• venir → <strong>viendr-</strong> : je viendrai</p><p>• pouvoir → <strong>pourr-</strong> : je pourrai</p></div>"
+    },
+    {
+      "id": "u10-theory-2",
+      "type": "theory",
+      "title": "Exprimer l'intention et la cause",
+      "content": "<div style='display:flex;flex-direction:column;gap:1rem'><div style='padding:1rem;background:rgba(59,130,246,0.15);border-radius:8px'><p><strong>Pour + infinitif</strong> (чтобы, для того чтобы):</p><p>• <em>J'étudie <strong>pour</strong> trouver un bon travail.</em> — Я учусь, чтобы найти хорошую работу.</p></div><div style='padding:1rem;background:rgba(52,211,153,0.15);border-radius:8px'><p><strong>Parce que / Car</strong> (потому что):</p><p>• <em>Je veux voyager <strong>parce que</strong> j'adore découvrir de nouveaux pays.</em></p></div><div style='padding:1rem;background:rgba(168,85,247,0.15);border-radius:8px'><p><strong>Si + présent, ... futur</strong> (если ... то ...):</p><p>• <em><strong>Si</strong> je travaille bien, je <strong>réussirai</strong>.</em> — Если я буду хорошо работать, то добьюсь успеха.</p></div></div>"
+    },
+    {
+      "id": "u10-ex1",
+      "type": "grammar-quiz",
+      "title": "Упражнение 1 : Futur simple",
+      "questions": [
+        { "question": "Demain, je ___ à la bibliothèque. (aller → ir-)", "options": ["irai", "iras", "ira", "iront"], "correctAnswer": "irai" },
+        { "question": "L'année prochaine, elle ___ en France. (habiter)", "options": ["habitera", "habiter", "habitait", "habitons"], "correctAnswer": "habitera" },
+        { "question": "Nous ___ un diplôme dans deux ans. (avoir → aur-)", "options": ["avons", "aurons", "aurez", "ont"], "correctAnswer": "aurons" },
+        { "question": "Tu ___ médecin plus tard ? (être → ser-)", "options": ["es", "sera", "seras", "serons"], "correctAnswer": "seras" },
+        { "question": "Ils ___ du bénévolat. (faire → fer-)", "options": ["font", "feront", "faisaient", "ferez"], "correctAnswer": "feront" },
+        { "question": "Si tu travailles bien, tu ___ réussir. (pouvoir → pourr-)", "options": ["peux", "pourras", "pouvais", "pouvez"], "correctAnswer": "pourras" }
+      ]
+    },
+    {
+      "id": "u10-ex2",
+      "type": "grammar-quiz",
+      "title": "Упражнение 2 : Pour, parce que, si",
+      "questions": [
+        { "question": "J'apprends le français ___ travailler en France.", "options": ["parce que", "pour", "si", "mais"], "correctAnswer": "pour" },
+        { "question": "Je voyage beaucoup ___ j'aime découvrir de nouvelles cultures.", "options": ["pour", "si", "parce que", "mais"], "correctAnswer": "parce que" },
+        { "question": "___ tu viens avec moi, ce sera parfait !", "options": ["Parce que", "Pour", "Si", "Mais"], "correctAnswer": "Si" },
+        { "question": "Elle étudie la médecine ___ devenir médecin.", "options": ["parce que", "pour", "si", "quand"], "correctAnswer": "pour" }
+      ]
+    },
+    {
+      "id": "u10-ex3",
+      "type": "sentence-builder",
+      "title": "Упражнение 3 : Mes projets d'avenir",
+      "sentences": [
+        { "words": ["Dans", "dix", "ans", ",", "j'aurai", "un", "bon", "travail", "."], "ru": "Через десять лет у меня будет хорошая работа." },
+        { "words": ["J'apprends", "le", "français", "pour", "voyager", "en", "France", "."], "ru": "Я учу французский, чтобы путешествовать во Франции." },
+        { "words": ["Si", "je", "travaille", "bien", ",", "je", "réussirai", "."], "ru": "Если я буду хорошо работать, то добьюсь успеха." },
+        { "words": ["Elle", "veut", "habiter", "à", "l'étranger", "parce", "qu'elle", "aime", "voyager", "."], "ru": "Она хочет жить за рубежом, потому что любит путешествовать." }
+      ]
+    },
+    {
+      "id": "u10-audio1",
+      "type": "listening",
+      "title": "Аудирование : Mes projets",
+      "audioFile": "piste_090.mp3",
+      "source": "cahier",
+      "questions": [
+        { "question": "De quoi parle la personne ? (О чём говорит человек?)", "options": ["De ses projets", "De son passé", "De son travail actuel", "De sa famille"], "correctAnswer": "De ses projets" }
+      ]
+    },
+    {
+      "id": "u10-video1",
+      "type": "video",
+      "title": "Vidéo Unité 10 : Projets et avenir",
+      "videoFile": "U10_ST_720p.mp4",
+      "source": "sub",
+      "description": "Regardez la vidéo finale. Observez comment les personnages parlent de leurs rêves et projets."
+    },
+    {
+      "id": "u10-theory-3",
+      "type": "theory",
+      "title": "Le futur simple — formes irrégulières",
+      "content": "<p style='margin-bottom:1rem'>Нерегулярные глаголы имеют особые основы в futur simple. Окончания всегда одинаковые: -rai, -ras, -ra, -rons, -rez, -ront.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Инфинитив</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Основа</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Je...</th></tr><tr><td style='padding:0.5rem'>être</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>ser-</td><td style='padding:0.5rem'>je serai</td></tr><tr><td style='padding:0.5rem'>avoir</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>aur-</td><td style='padding:0.5rem'>j'aurai</td></tr><tr><td style='padding:0.5rem'>aller</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>ir-</td><td style='padding:0.5rem'>j'irai</td></tr><tr><td style='padding:0.5rem'>faire</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>fer-</td><td style='padding:0.5rem'>je ferai</td></tr><tr><td style='padding:0.5rem'>venir</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>viendr-</td><td style='padding:0.5rem'>je viendrai</td></tr><tr><td style='padding:0.5rem'>pouvoir</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>pourr-</td><td style='padding:0.5rem'>je pourrai</td></tr><tr><td style='padding:0.5rem'>vouloir</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>voudr-</td><td style='padding:0.5rem'>je voudrai</td></tr><tr><td style='padding:0.5rem'>savoir</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>saur-</td><td style='padding:0.5rem'>je saurai</td></tr></table><div style='padding:1rem;background:rgba(168,85,247,0.15);border-radius:8px;margin-top:0.5rem'><p><strong>Futur proche vs Futur simple :</strong></p><p>• <em>Je <strong>vais partir</strong> demain.</em> — ближайшее планируемое действие</p><p>• <em>Je <strong>partirai</strong> l'année prochaine.</em> — более отдалённое будущее</p></div>"
+    },
+    {
+      "id": "u10-theory-4",
+      "type": "theory",
+      "title": "Exprimer ses souhaits et ses rêves",
+      "content": "<p style='margin-bottom:1rem'>Для выражения желаний и мечт используются специальные конструкции.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Конструкция</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Значение</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>Je voudrais + inf.</td><td style='padding:0.5rem'>Я хотел(а) бы (вежливо)</td><td style='padding:0.5rem'>Je voudrais voyager au Japon.</td></tr><tr><td style='padding:0.5rem;color:#34d399;font-weight:bold'>J'aimerais + inf.</td><td style='padding:0.5rem'>Мне хотелось бы</td><td style='padding:0.5rem'>J'aimerais être médecin.</td></tr><tr><td style='padding:0.5rem;color:#c084fc;font-weight:bold'>Mon rêve est de + inf.</td><td style='padding:0.5rem'>Моя мечта — это...</td><td style='padding:0.5rem'>Mon rêve est de vivre à Paris.</td></tr><tr><td style='padding:0.5rem;color:#fb923c;font-weight:bold'>J'espère + inf.</td><td style='padding:0.5rem'>Я надеюсь (что)</td><td style='padding:0.5rem'>J'espère trouver un bon travail.</td></tr></table><div style='padding:1rem;background:rgba(52,211,153,0.15);border-radius:8px;margin-top:0.5rem'><p><strong>Примеры мечт на A1:</strong></p><p>• <em>Je voudrais apprendre plusieurs langues.</em></p><p>• <em>J'aimerais habiter à l'étranger.</em></p><p>• <em>Mon rêve est de voyager dans le monde entier.</em></p></div>"
+    },
+    {
+      "id": "u10-ex4",
+      "type": "grammar-quiz",
+      "title": "Упражнение 4 : Futur proche vs Futur simple",
+      "questions": [
+        { "question": "Je ___ partir en vacances demain. (futur proche)", "options": ["partirai", "vais partir", "suis parti", "partais"], "correctAnswer": "vais partir" },
+        { "question": "Dans cinq ans, j'___ un appartement à Paris. (futur simple, avoir)", "options": ["ai", "avais", "aurai", "aie"], "correctAnswer": "aurai" },
+        { "question": "Elle ___ médecin plus tard. (futur simple, être)", "options": ["est", "était", "sera", "soit"], "correctAnswer": "sera" },
+        { "question": "Nous ___ visiter Rome ce week-end. (futur proche)", "options": ["visiterons", "visitons", "allons visiter", "avons visité"], "correctAnswer": "allons visiter" },
+        { "question": "L'année prochaine, ils ___ le monde entier. (futur simple, voyager)", "options": ["voyagent", "voyagent", "voyageront", "ont voyagé"], "correctAnswer": "voyageront" },
+        { "question": "Si tu étudies bien, tu ___ réussir. (futur simple, pouvoir)", "options": ["peux", "pouvais", "pourras", "as pu"], "correctAnswer": "pourras" },
+        { "question": "Je ___ aller au cinéma ce soir. (futur proche)", "options": ["irai", "allais", "vais aller", "suis allé"], "correctAnswer": "vais aller" }
+      ]
+    },
+    {
+      "id": "u10-ex5",
+      "type": "grammar-quiz",
+      "title": "Упражнение 5 : Exprimer souhaits et projets",
+      "questions": [
+        { "question": "Je ___ voyager au Japon un jour. (хотел бы — форма conditonnel)", "options": ["veux", "voudrais", "vais", "voudrai"], "correctAnswer": "voudrais" },
+        { "question": "Mon ___ est de devenir architecte.", "options": ["travail", "rêve", "voyage", "ami"], "correctAnswer": "rêve" },
+        { "question": "J'___ habiter dans une grande ville. (мне хотелось бы)", "options": ["aime", "aimais", "aimerais", "aimerai"], "correctAnswer": "aimerais" },
+        { "question": "J'espère ___ un bon diplôme cette année.", "options": ["avoir", "ayant", "j'ai", "eu"], "correctAnswer": "avoir" },
+        { "question": "Elle voudrais ___ médecin plus tard.", "options": ["être", "est", "sera", "étant"], "correctAnswer": "être" },
+        { "question": "Nous aimerions ___ à l'étranger pour travailler.", "options": ["partir", "partons", "sommes partis", "partirons"], "correctAnswer": "partir" }
+      ]
+    },
+    {
+      "id": "u10-genre1",
+      "type": "gender-quiz",
+      "title": "Quel article ? — Révision générale",
+      "items": [
+        { "word": "appartement", "emoji": "🏠", "ru": "квартира", "article": "l'", "hint": "Мужской перед гласной: l'appartement (cet appartement)" },
+        { "word": "question", "emoji": "❓", "ru": "вопрос", "article": "la", "hint": "Женский: la question — оканчивается на -tion (жен.р.)" },
+        { "word": "voyage", "emoji": "✈️", "ru": "путешествие", "article": "le", "hint": "Мужской: le voyage — оканчивается на -age (муж.р.)" },
+        { "word": "nature", "emoji": "🌿", "ru": "природа", "article": "la", "hint": "Женский: la nature — оканчивается на -ure (жен.р.)" },
+        { "word": "musique", "emoji": "🎵", "ru": "музыка", "article": "la", "hint": "Женский: la musique — оканчивается на -ique (жен.р.)" },
+        { "word": "sport", "emoji": "⚽", "ru": "спорт", "article": "le", "hint": "Мужской: le sport — запомнить" },
+        { "word": "santé", "emoji": "🏥", "ru": "здоровье", "article": "la", "hint": "Женский: la santé — оканчивается на -é (жен.р.)" },
+        { "word": "famille", "emoji": "👨‍👩‍👧", "ru": "семья", "article": "la", "hint": "Женский: la famille — оканчивается на -ille (жен.р.)" },
+        { "word": "travail", "emoji": "💼", "ru": "работа", "article": "le", "hint": "Мужской: le travail — оканчивается на -ail (муж.р.)" },
+        { "word": "avenir", "emoji": "🔮", "ru": "будущее", "article": "l'", "hint": "Мужской перед гласной: l'avenir (запомнить)" }
+      ]
+    },
+    {
+      "id": "u10-dialogue1",
+      "type": "dialogue",
+      "title": "Dialogue : Les rêves d'Emma et Lucas",
+      "context": "Эмма и Лукас разговаривают о своих мечтах и планах на будущее.",
+      "exchanges": [
+        { "speaker": "Emma", "side": "left", "text": "Lucas, tu penses à ton avenir ?" },
+        { "speaker": "Lucas", "side": "right", "text": "Oui, souvent ! J'aimerais travailler dans la musique." },
+        { "speaker": "Emma", "side": "left", "text": "C'est super ! Et tu voudrais habiter où ?" },
+        { "speaker": "Lucas", "side": "right", "text": "___", "isBlank": true, "options": ["Mon rêve est de vivre à New York ou à Tokyo !", "Je préfère rester malade.", "J'ai mangé une pizza hier."], "correctAnswer": "Mon rêve est de vivre à New York ou à Tokyo !", "explanation": "Mon rêve est de + infinitif — конструкция для выражения мечты" },
+        { "speaker": "Emma", "side": "left", "text": "Moi aussi, j'aimerais voyager. Et toi, dans dix ans, tu te vois comment ?" },
+        { "speaker": "Lucas", "side": "right", "text": "Dans dix ans, je serai musicien professionnel et j'aurai mon propre studio !" },
+        { "speaker": "Emma", "side": "left", "text": "Et moi, j'espère devenir médecin. C'est mon grand rêve." },
+        { "speaker": "Lucas", "side": "right", "text": "___", "isBlank": true, "options": ["Super ! Si tu travailles bien, tu réussiras !", "Je n'aime pas les médecins.", "Ça coûte combien ?"], "correctAnswer": "Super ! Si tu travailles bien, tu réussiras !", "explanation": "Si + présent, futur simple — конструкция условного предложения. Правильно и ободряюще!" }
+      ]
+    },
+    {
+      "id": "u10-fill1",
+      "type": "fill-blank",
+      "title": "Complétez le texte : La lettre de Lucas à son futur soi-même",
+      "context": "Лукас пишет письмо самому себе в будущем. Вставьте подходящие слова.",
+      "text": "Cher futur Lucas ! Dans dix ans, tu ___ 28 ans. J'espère que tu ___ heureux et que tu ___ ton rêve. Tu ___ peut-être dans une grande ville. Mon rêve ___ de voyager dans le monde entier. J'aimerais ___ plusieurs langues. Si tu travailles bien maintenant, tu ___.",
+      "blanks": [
+        { "options": ["as", "auras", "avais", "ai"], "correctAnswer": "auras", "hint": "avoir → aur- (futur simple, tu)", "explanation": "tu auras — futur simple du verbe avoir (основа aur-)" },
+        { "options": ["es", "étais", "seras", "soit"], "correctAnswer": "seras", "hint": "être → ser- (futur simple, tu)", "explanation": "tu seras — futur simple du verbe être (основа ser-)" },
+        { "options": ["réalise", "réaliseras", "as réalisé", "réalises"], "correctAnswer": "réaliseras", "hint": "réaliser → futur simple, tu", "explanation": "tu réaliseras ton rêve — futur simple d'un verbe régulier -ER" },
+        { "options": ["vivre", "vivras", "vis", "vivais"], "correctAnswer": "vivras", "hint": "vivre → vivr- (futur simple, tu)", "explanation": "tu vivras — futur simple du verbe vivre (основа vivr-)" },
+        { "options": ["a", "est", "était", "sera"], "correctAnswer": "est", "hint": "Mon rêve est de + inf. — настоящее время", "explanation": "Mon rêve est de voyager — конструкция в настоящем времени" },
+        { "options": ["apprendre", "apprends", "apprendre à", "apprendras"], "correctAnswer": "apprendre", "hint": "j'aimerais + infinitif", "explanation": "J'aimerais apprendre — после aimerais следует инфинитив" },
+        { "options": ["réussiras", "réussis", "as réussi", "réussit"], "correctAnswer": "réussiras", "hint": "si + présent → futur simple", "explanation": "Si tu travailles bien, tu réussiras — классическая конструкция условного предложения" }
+      ]
+    },
+    {
+      "id": "u10-ex6",
+      "type": "sentence-builder",
+      "title": "Упражнение 6 : Mes projets d'avenir",
+      "sentences": [
+        { "words": ["Dans", "vingt", "ans", ",", "je", "serai", "professeur", "de", "français", "."], "ru": "Через двадцать лет я буду учителем французского." },
+        { "words": ["Mon", "rêve", "est", "de", "voyager", "dans", "le", "monde", "entier", "."], "ru": "Моя мечта — путешествовать по всему миру." },
+        { "words": ["J'aimerais", "apprendre", "le", "japonais", "et", "le", "chinois", "."], "ru": "Мне хотелось бы выучить японский и китайский." },
+        { "words": ["Si", "je", "travaille", "bien", ",", "je", "trouverai", "un", "bon", "travail", "."], "ru": "Если я буду хорошо работать, то найду хорошую работу." }
+      ]
+    }
+  ]
+}

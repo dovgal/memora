@@ -1,0 +1,193 @@
+{
+  "id": "unite-8",
+  "title": "Unité 8 : Voyages et transports",
+  "description": "Parler de voyages, réserver un billet. Le passé composé avec avoir, les prépositions de lieux (pays/villes), les moyens de transport.",
+  "vocabulary": [
+    { "fr": "l'avion", "ru": "самолёт", "type": "transport" },
+    { "fr": "le train", "ru": "поезд", "type": "transport" },
+    { "fr": "le bateau", "ru": "корабль / лодка", "type": "transport" },
+    { "fr": "la voiture", "ru": "автомобиль", "type": "transport" },
+    { "fr": "le bus / le car", "ru": "автобус", "type": "transport" },
+    { "fr": "le métro", "ru": "метро", "type": "transport" },
+    { "fr": "en avion", "ru": "на самолёте", "type": "preposition" },
+    { "fr": "en train", "ru": "на поезде", "type": "preposition" },
+    { "fr": "en voiture", "ru": "на машине", "type": "preposition" },
+    { "fr": "à vélo", "ru": "на велосипеде", "type": "preposition" },
+    { "fr": "à pied", "ru": "пешком", "type": "preposition" },
+    { "fr": "un billet", "ru": "билет", "type": "voyage" },
+    { "fr": "un passeport", "ru": "паспорт", "type": "voyage" },
+    { "fr": "une valise", "ru": "чемодан", "type": "voyage" },
+    { "fr": "réserver", "ru": "бронировать", "type": "verbe" },
+    { "fr": "partir", "ru": "уезжать / улетать", "type": "verbe" },
+    { "fr": "arriver", "ru": "прибывать", "type": "verbe" },
+    { "fr": "en France", "ru": "во Франции / во Францию", "type": "lieu" },
+    { "fr": "au Japon", "ru": "в Японии / в Японию", "type": "lieu" },
+    { "fr": "à New York", "ru": "в Нью-Йорке / в Нью-Йорк", "type": "lieu" }
+  ],
+  "exercises": [
+    {
+      "id": "u8-theory-1",
+      "type": "theory",
+      "title": "Le passé composé avec AVOIR",
+      "content": "<p style='margin-bottom:1rem'>Passé composé — основное прошедшее время для повествования. Образование: <strong>avoir (présent) + participe passé</strong></p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Инфинитив</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Participe passé</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Правило</th></tr><tr><td style='padding:0.5rem'>parler</td><td style='padding:0.5rem;color:#60a5fa'>parlé</td><td style='padding:0.5rem'>-ER → -é</td></tr><tr><td style='padding:0.5rem'>finir</td><td style='padding:0.5rem;color:#34d399'>fini</td><td style='padding:0.5rem'>-IR → -i</td></tr><tr><td style='padding:0.5rem'>avoir</td><td style='padding:0.5rem;color:#c084fc'>eu</td><td style='padding:0.5rem'>нерегулярный</td></tr><tr><td style='padding:0.5rem'>être</td><td style='padding:0.5rem;color:#c084fc'>été</td><td style='padding:0.5rem'>нерегулярный</td></tr><tr><td style='padding:0.5rem'>faire</td><td style='padding:0.5rem;color:#c084fc'>fait</td><td style='padding:0.5rem'>нерегулярный</td></tr><tr><td style='padding:0.5rem'>prendre</td><td style='padding:0.5rem;color:#c084fc'>pris</td><td style='padding:0.5rem'>нерегулярный</td></tr><tr><td style='padding:0.5rem'>voir</td><td style='padding:0.5rem;color:#c084fc'>vu</td><td style='padding:0.5rem'>нерегулярный</td></tr></table><div style='padding:1rem;background:rgba(59,130,246,0.15);border-radius:8px'>💡 <strong>Пример спряжения (parler):</strong><br>• j'ai parlé, tu as parlé, il/elle a parlé<br>• nous avons parlé, vous avez parlé, ils/elles ont parlé<br><br>⚠️ <strong>Отрицание:</strong> <em>Je <strong>n'ai pas</strong> parlé.</em></div>"
+    },
+    {
+      "id": "u8-theory-2",
+      "type": "theory",
+      "title": "Prépositions pour les pays et les villes",
+      "content": "<p style='margin-bottom:1rem'>Предлоги перед названиями стран и городов зависят от рода и формы:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Тип</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Предлог «в» (место/направление)</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>Жен. страны (France, Italie...)</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>en</td><td style='padding:0.5rem'>en France, en Italie</td></tr><tr><td style='padding:0.5rem'>Муж. страны (Portugal, Japon...)</td><td style='padding:0.5rem;color:#34d399;font-weight:bold'>au</td><td style='padding:0.5rem'>au Japon, au Portugal</td></tr><tr><td style='padding:0.5rem'>Мн.ч. страны (États-Unis...)</td><td style='padding:0.5rem;color:#c084fc;font-weight:bold'>aux</td><td style='padding:0.5rem'>aux États-Unis</td></tr><tr><td style='padding:0.5rem'>Города</td><td style='padding:0.5rem;color:#fb923c;font-weight:bold'>à</td><td style='padding:0.5rem'>à Paris, à Tokyo</td></tr></table><p style='padding:1rem;background:rgba(52,211,153,0.15);border-radius:8px'>💡 «Из» страны: <em>de France</em>, <em>du Japon</em>, <em>des États-Unis</em>, <em>de Paris</em></p>"
+    },
+    {
+      "id": "u8-ex1",
+      "type": "grammar-quiz",
+      "title": "Упражнение 1 : Passé composé — participe passé",
+      "questions": [
+        { "question": "Hier, j'___ visité Paris. (avoir)", "options": ["ai", "as", "a", "avons"], "correctAnswer": "ai" },
+        { "question": "Elle ___ pris le train. (avoir)", "options": ["ai", "as", "a", "ont"], "correctAnswer": "a" },
+        { "question": "Nous ___ mangé au restaurant. (avoir)", "options": ["avons", "avez", "ont", "ai"], "correctAnswer": "avons" },
+        { "question": "Participe passé de 'faire' ?", "options": ["faisé", "fait", "failli", "fais"], "correctAnswer": "fait" },
+        { "question": "Participe passé de 'voir' ?", "options": ["voyé", "vu", "voir", "vois"], "correctAnswer": "vu" },
+        { "question": "Je ___ ___ réserver un billet. (passé composé de réserver)", "options": ["ai réservé", "a réservé", "avons réservé", "ont réservé"], "correctAnswer": "ai réservé" }
+      ]
+    },
+    {
+      "id": "u8-ex2",
+      "type": "grammar-quiz",
+      "title": "Упражнение 2 : Prépositions de pays",
+      "questions": [
+        { "question": "Je vais ___ France. (жен. страна)", "options": ["en", "au", "aux", "à"], "correctAnswer": "en" },
+        { "question": "Il habite ___ Japon. (муж. страна)", "options": ["en", "au", "aux", "à"], "correctAnswer": "au" },
+        { "question": "Nous allons ___ États-Unis. (мн.ч.)", "options": ["en", "au", "aux", "à"], "correctAnswer": "aux" },
+        { "question": "Elle arrive ___ Madrid. (город)", "options": ["en", "au", "à", "aux"], "correctAnswer": "à" },
+        { "question": "Il vient ___ Portugal. (муж. страна = из)", "options": ["de", "du", "des", "d'"], "correctAnswer": "du" }
+      ]
+    },
+    {
+      "id": "u8-ex3",
+      "type": "sentence-builder",
+      "title": "Упражнение 3 : Mon voyage",
+      "sentences": [
+        { "words": ["L'année", "dernière", ",", "j'ai", "voyagé", "en", "Italie", "."], "ru": "В прошлом году я путешествовал(а) в Италии." },
+        { "words": ["Nous", "avons", "pris", "le", "train", "pour", "aller", "à", "Lyon", "."], "ru": "Мы поехали поездом в Лион." },
+        { "words": ["Elle", "a", "réservé", "un", "billet", "d'avion", "."], "ru": "Она забронировала авиабилет." },
+        { "words": ["Je", "n'ai", "pas", "vu", "la", "tour", "Eiffel", "."], "ru": "Я не видел(а) Эйфелеву башню." }
+      ]
+    },
+    {
+      "id": "u8-audio1",
+      "type": "listening",
+      "title": "Аудирование : Un voyage à Paris",
+      "audioFile": "piste_070.mp3",
+      "source": "cahier",
+      "questions": [
+        { "question": "Quel moyen de transport est utilisé ? (Какой вид транспорта использован?)", "options": ["Le train", "L'avion", "La voiture", "Le bus"], "correctAnswer": "Le train" }
+      ]
+    },
+    {
+      "id": "u8-video1",
+      "type": "video",
+      "title": "Vidéo Unité 8 : Voyages et transports",
+      "videoFile": "U08_ST_720p.mp4",
+      "source": "sub",
+      "description": "Regardez la vidéo. Écoutez comment les personnages parlent de leurs voyages."
+    },
+    {
+      "id": "u8-theory-3",
+      "type": "theory",
+      "title": "Le passé composé avec ÊTRE — глаголы движения",
+      "content": "<p style='margin-bottom:1rem'>Ряд глаголов движения и состояния образует passé composé с вспомогательным глаголом <strong>ÊTRE</strong>. Причастие согласуется с подлежащим!</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Инфинитив</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Participe passé</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>partir</td><td style='padding:0.5rem;color:#60a5fa'>parti(e)</td><td style='padding:0.5rem'>Il est parti. / Elle est partie.</td></tr><tr><td style='padding:0.5rem'>arriver</td><td style='padding:0.5rem;color:#60a5fa'>arrivé(e)</td><td style='padding:0.5rem'>Il est arrivé. / Elle est arrivée.</td></tr><tr><td style='padding:0.5rem'>aller</td><td style='padding:0.5rem;color:#60a5fa'>allé(e)</td><td style='padding:0.5rem'>Il est allé. / Elle est allée.</td></tr><tr><td style='padding:0.5rem'>venir</td><td style='padding:0.5rem;color:#60a5fa'>venu(e)</td><td style='padding:0.5rem'>Il est venu. / Elle est venue.</td></tr><tr><td style='padding:0.5rem'>rentrer</td><td style='padding:0.5rem;color:#60a5fa'>rentré(e)</td><td style='padding:0.5rem'>Il est rentré. / Elle est rentrée.</td></tr></table><div style='padding:1rem;background:rgba(239,68,68,0.15);border-radius:8px;margin-top:0.5rem'><p><strong>Avoir vs Être :</strong></p><p>• J'<strong>ai</strong> mangé. (manger → avoir)</p><p>• Je <strong>suis</strong> parti(e). (partir → être)</p><p>• Отрицание: Je ne <strong>suis</strong> pas parti(e).</p></div>"
+    },
+    {
+      "id": "u8-theory-4",
+      "type": "theory",
+      "title": "Les moyens de transport — предлоги",
+      "content": "<p style='margin-bottom:1rem'>В французском языке предлоги перед видом транспорта зависят от способа передвижения.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Предлог</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Когда использовать</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Примеры</th></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>EN</td><td style='padding:0.5rem'>Транспортное средство (внутри)</td><td style='padding:0.5rem'>en avion, en train, en voiture, en bus, en métro, en taxi, en bateau</td></tr><tr><td style='padding:0.5rem;color:#34d399;font-weight:bold'>À</td><td style='padding:0.5rem'>Транспорт без мотора / своими силами</td><td style='padding:0.5rem'>à vélo, à pied, à moto, à cheval</td></tr></table><div style='padding:1rem;background:rgba(52,211,153,0.15);border-radius:8px;margin-top:0.5rem'><p><strong>Подсказка:</strong> En — когда ты <em>внутри</em> или в закрытом транспорте. À — когда на открытом / своими ногами или педалями.</p><p>• Je voyage <strong>en</strong> avion. — Я летаю самолётом.</p><p>• Je vais au bureau <strong>à</strong> vélo. — Я езжу на работу на велосипеде.</p></div>"
+    },
+    {
+      "id": "u8-ex4",
+      "type": "grammar-quiz",
+      "title": "Упражнение 4 : Passé composé — avoir ou être ?",
+      "questions": [
+        { "question": "Hier, j'___ voyagé en Italie. (voyager → avoir)", "options": ["suis", "ai", "es", "est"], "correctAnswer": "ai" },
+        { "question": "Elle ___ arrivée à Paris ce matin. (arriver → être)", "options": ["a", "est", "ont", "sont"], "correctAnswer": "est" },
+        { "question": "Nous ___ partis en vacances lundi. (partir → être)", "options": ["avons", "sommes", "êtes", "sont"], "correctAnswer": "sommes" },
+        { "question": "Ils ___ pris le taxi. (prendre → avoir)", "options": ["sont", "ont", "avons", "êtes"], "correctAnswer": "ont" },
+        { "question": "Tu ___ allé(e) à la gare ? (aller → être)", "options": ["as", "es", "a", "est"], "correctAnswer": "es" },
+        { "question": "J'___ réservé un hôtel à Lyon. (réserver → avoir)", "options": ["suis", "ai", "es", "est"], "correctAnswer": "ai" },
+        { "question": "Le train ___ parti à 9h. (partir → être, il)", "options": ["a", "est", "ont", "sont"], "correctAnswer": "est" }
+      ]
+    },
+    {
+      "id": "u8-ex5",
+      "type": "grammar-quiz",
+      "title": "Упражнение 5 : Transports et prépositions",
+      "questions": [
+        { "question": "Je vais à Paris ___ train. (внутри транспорта)", "options": ["à", "en", "par", "avec"], "correctAnswer": "en" },
+        { "question": "Elle préfère aller au travail ___ vélo. (без мотора)", "options": ["en", "à", "par", "dans"], "correctAnswer": "à" },
+        { "question": "Nous avons voyagé ___ avion. (внутри)", "options": ["à", "en", "par", "avec"], "correctAnswer": "en" },
+        { "question": "Il rentre chez lui ___ pied. (пешком)", "options": ["en", "à", "par", "de"], "correctAnswer": "à" },
+        { "question": "Ils sont venus ___ voiture. (машина)", "options": ["à", "en", "par", "dans"], "correctAnswer": "en" },
+        { "question": "Le matin, je prends le métro ___ aller au bureau. (чтобы)", "options": ["pour", "parce que", "si", "mais"], "correctAnswer": "pour" }
+      ]
+    },
+    {
+      "id": "u8-genre1",
+      "type": "gender-quiz",
+      "title": "Quel article ? — Les transports et les lieux de voyage",
+      "items": [
+        { "word": "avion", "emoji": "✈️", "ru": "самолёт", "article": "l'", "hint": "Мужской перед гласной: l'avion (en avion)" },
+        { "word": "train", "emoji": "🚂", "ru": "поезд", "article": "le", "hint": "Мужской: le train — запомнить" },
+        { "word": "voiture", "emoji": "🚗", "ru": "автомобиль", "article": "la", "hint": "Женский: la voiture — оканчивается на -ure (жен.р.)" },
+        { "word": "bus", "emoji": "🚌", "ru": "автобус", "article": "le", "hint": "Мужской: le bus — короткое слово" },
+        { "word": "métro", "emoji": "🚇", "ru": "метро", "article": "le", "hint": "Мужской: le métro — запомнить" },
+        { "word": "taxi", "emoji": "🚕", "ru": "такси", "article": "le", "hint": "Мужской: le taxi — иностранное слово, муж.р." },
+        { "word": "bateau", "emoji": "🚢", "ru": "корабль/лодка", "article": "le", "hint": "Мужской: le bateau — оканчивается на -eau (муж.р.)" },
+        { "word": "vélo", "emoji": "🚴", "ru": "велосипед", "article": "le", "hint": "Мужской: le vélo — запомнить" },
+        { "word": "gare", "emoji": "🏛️", "ru": "вокзал", "article": "la", "hint": "Женский: la gare — оканчивается на -e (жен.р.)" },
+        { "word": "aéroport", "emoji": "🛫", "ru": "аэропорт", "article": "l'", "hint": "Мужской перед гласной: l'aéroport" }
+      ]
+    },
+    {
+      "id": "u8-dialogue1",
+      "type": "dialogue",
+      "title": "Dialogue : À l'aéroport",
+      "context": "Lucas улетает в отпуск. Emma провожает его в аэропорту.",
+      "exchanges": [
+        { "speaker": "Emma", "side": "left", "text": "Tu es prêt pour ton voyage ?" },
+        { "speaker": "Lucas", "side": "right", "text": "Oui ! J'ai mon passeport et ma valise." },
+        { "speaker": "Emma", "side": "left", "text": "Super ! Et tu vas où exactement ?" },
+        { "speaker": "Lucas", "side": "right", "text": "___", "isBlank": true, "options": ["Je vais en Espagne, à Barcelone !", "Je reste à la maison.", "J'ai déjà mangé, merci."], "correctAnswer": "Je vais en Espagne, à Barcelone !", "explanation": "Правильно: en + жен. страна (Espagne), à + город (Barcelone)" },
+        { "speaker": "Emma", "side": "left", "text": "Fantastique ! Tu voyages en avion ?" },
+        { "speaker": "Lucas", "side": "right", "text": "Oui, le vol part à 14h. J'ai réservé le billet en ligne." },
+        { "speaker": "Emma", "side": "left", "text": "Et tu es déjà allé en Espagne avant ?" },
+        { "speaker": "Lucas", "side": "right", "text": "___", "isBlank": true, "options": ["Non, c'est ma première fois ! Je suis très content.", "Oui, je mange souvent du pain.", "Je préfère le train."], "correctAnswer": "Non, c'est ma première fois ! Je suis très content.", "explanation": "Логичный ответ: говорим о первом визите и выражаем радость" }
+      ]
+    },
+    {
+      "id": "u8-fill1",
+      "type": "fill-blank",
+      "title": "Complétez le texte : Le voyage de Marie à Paris",
+      "context": "Мари рассказывает о своей поездке в Париж. Вставьте подходящие слова.",
+      "text": "Le mois dernier, Marie ___ allée à Paris. Elle ___ le train depuis Lyon. Elle ___ arrivée à la Gare de Lyon à midi. Ensuite, elle ___ pris le métro pour aller à l'hôtel. Elle ___ visité la tour Eiffel et le Louvre. Le soir, elle ___ mangé dans un bon restaurant.",
+      "blanks": [
+        { "options": ["a", "est", "ont", "sont"], "correctAnswer": "est", "hint": "aller → être; Marie est allée", "explanation": "aller se conjugue avec ÊTRE au passé composé; allée — согласование с Marie (жен.р.)" },
+        { "options": ["est", "a", "sont", "ont"], "correctAnswer": "a", "hint": "prendre → avoir; elle a pris", "explanation": "prendre se conjugue avec AVOIR au passé composé" },
+        { "options": ["a", "est", "ont", "sont"], "correctAnswer": "est", "hint": "arriver → être; elle est arrivée", "explanation": "arriver se conjugue avec ÊTRE au passé composé" },
+        { "options": ["est", "a", "sont", "ont"], "correctAnswer": "a", "hint": "prendre → avoir; elle a pris", "explanation": "prendre utilise AVOIR comme auxiliaire" },
+        { "options": ["est", "a", "sont", "ont"], "correctAnswer": "a", "hint": "visiter → avoir; elle a visité", "explanation": "visiter est un verbe régulier -ER qui utilise AVOIR" },
+        { "options": ["est", "a", "sont", "ont"], "correctAnswer": "a", "hint": "manger → avoir; elle a mangé", "explanation": "manger utilise AVOIR au passé composé" }
+      ]
+    },
+    {
+      "id": "u8-ex6",
+      "type": "sentence-builder",
+      "title": "Упражнение 6 : Voyages et transports",
+      "sentences": [
+        { "words": ["L'été", "dernier", ",", "il", "est", "parti", "en", "vacances", "en", "Italie", "."], "ru": "Прошлым летом он уехал в отпуск в Италию." },
+        { "words": ["Je", "préfère", "voyager", "en", "train", "parce", "que", "c'est", "confortable", "."], "ru": "Я предпочитаю ездить на поезде, потому что это удобно." },
+        { "words": ["Elle", "est", "arrivée", "à", "l'aéroport", "avec", "sa", "valise", "."], "ru": "Она прибыла в аэропорт со своим чемоданом." },
+        { "words": ["Nous", "allons", "au", "travail", "à", "vélo", "chaque", "matin", "."], "ru": "Каждое утро мы ездим на работу на велосипеде." }
+      ]
+    }
+  ]
+}

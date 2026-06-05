@@ -1,0 +1,196 @@
+{
+  "id": "unite-4",
+  "title": "Unité 4 : À table !",
+  "description": "Commander au restaurant, parler de la nourriture. Les articles partitifs, les verbes vouloir et pouvoir, les quantités.",
+  "vocabulary": [
+    { "fr": "le pain", "ru": "хлеб", "type": "nourriture" },
+    { "fr": "le beurre", "ru": "масло (сливочное)", "type": "nourriture" },
+    { "fr": "le fromage", "ru": "сыр", "type": "nourriture" },
+    { "fr": "la viande", "ru": "мясо", "type": "nourriture" },
+    { "fr": "le poisson", "ru": "рыба", "type": "nourriture" },
+    { "fr": "les légumes", "ru": "овощи", "type": "nourriture" },
+    { "fr": "les fruits", "ru": "фрукты", "type": "nourriture" },
+    { "fr": "l'eau", "ru": "вода", "type": "boisson" },
+    { "fr": "le café", "ru": "кофе", "type": "boisson" },
+    { "fr": "le thé", "ru": "чай", "type": "boisson" },
+    { "fr": "le vin", "ru": "вино", "type": "boisson" },
+    { "fr": "la bière", "ru": "пиво", "type": "boisson" },
+    { "fr": "le jus d'orange", "ru": "апельсиновый сок", "type": "boisson" },
+    { "fr": "Je voudrais...", "ru": "Я бы хотел(а)...", "type": "phrase" },
+    { "fr": "L'addition, s'il vous plaît.", "ru": "Счёт, пожалуйста.", "type": "phrase" },
+    { "fr": "C'est délicieux !", "ru": "Это восхитительно!", "type": "phrase" },
+    { "fr": "un kilo de", "ru": "один килограмм", "type": "quantité" },
+    { "fr": "un litre de", "ru": "один литр", "type": "quantité" },
+    { "fr": "un morceau de", "ru": "кусочек", "type": "quantité" },
+    { "fr": "une bouteille de", "ru": "бутылка", "type": "quantité" },
+    { "fr": "beaucoup de", "ru": "много", "type": "quantité" },
+    { "fr": "un peu de", "ru": "немного", "type": "quantité" }
+  ],
+  "exercises": [
+    {
+      "id": "u4-theory-1",
+      "type": "theory",
+      "title": "Les articles partitifs (частичные артикли) — du, de la, de l', des",
+      "content": "<p style='margin-bottom:1rem'>Частичные артикли используются для обозначения <strong>неопределённого количества</strong> неисчисляемых предметов.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Род/Число</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Артикль</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>Муж.р.</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>du</td><td style='padding:0.5rem'><em>du pain</em> — (немного) хлеба</td></tr><tr><td style='padding:0.5rem'>Жен.р.</td><td style='padding:0.5rem;color:#34d399;font-weight:bold'>de la</td><td style='padding:0.5rem'><em>de la viande</em> — (немного) мяса</td></tr><tr><td style='padding:0.5rem'>Перед гласной</td><td style='padding:0.5rem;color:#fb923c;font-weight:bold'>de l'</td><td style='padding:0.5rem'><em>de l'eau</em> — (немного) воды</td></tr><tr><td style='padding:0.5rem'>Мн.число</td><td style='padding:0.5rem;color:#c084fc;font-weight:bold'>des</td><td style='padding:0.5rem'><em>des légumes</em> — (немного) овощей</td></tr></table><div style='padding:1rem;background:rgba(239,68,68,0.15);border-radius:8px'>⚠️ <strong>В отрицании</strong> все частичные/неопределённые артикли → <strong>de / d'</strong>:<br>• <em>Je mange du pain.</em> → <em>Je ne mange <strong>pas de</strong> pain.</em><br>• <em>Il boit de la bière.</em> → <em>Il ne boit <strong>pas d'</strong>alcool.</em></div>"
+    },
+    {
+      "id": "u4-theory-2",
+      "type": "theory",
+      "title": "Les verbes VOULOIR et POUVOIR",
+      "content": "<div style='display:grid;grid-template-columns:1fr 1fr;gap:1rem'><div><h4 style='color:#60a5fa;margin-bottom:0.5rem'>VOULOIR (хотеть)</h4><table style='width:100%;border-collapse:collapse'><tr><td style='padding:0.3rem'>je</td><td style='padding:0.3rem;color:#60a5fa;font-weight:bold'>veux</td></tr><tr><td style='padding:0.3rem'>tu</td><td style='padding:0.3rem;color:#60a5fa;font-weight:bold'>veux</td></tr><tr><td style='padding:0.3rem'>il/elle</td><td style='padding:0.3rem;color:#60a5fa;font-weight:bold'>veut</td></tr><tr><td style='padding:0.3rem'>nous</td><td style='padding:0.3rem;color:#60a5fa;font-weight:bold'>voulons</td></tr><tr><td style='padding:0.3rem'>vous</td><td style='padding:0.3rem;color:#60a5fa;font-weight:bold'>voulez</td></tr><tr><td style='padding:0.3rem'>ils</td><td style='padding:0.3rem;color:#60a5fa;font-weight:bold'>veulent</td></tr></table></div><div><h4 style='color:#34d399;margin-bottom:0.5rem'>POUVOIR (мочь)</h4><table style='width:100%;border-collapse:collapse'><tr><td style='padding:0.3rem'>je</td><td style='padding:0.3rem;color:#34d399;font-weight:bold'>peux</td></tr><tr><td style='padding:0.3rem'>tu</td><td style='padding:0.3rem;color:#34d399;font-weight:bold'>peux</td></tr><tr><td style='padding:0.3rem'>il/elle</td><td style='padding:0.3rem;color:#34d399;font-weight:bold'>peut</td></tr><tr><td style='padding:0.3rem'>nous</td><td style='padding:0.3rem;color:#34d399;font-weight:bold'>pouvons</td></tr><tr><td style='padding:0.3rem'>vous</td><td style='padding:0.3rem;color:#34d399;font-weight:bold'>pouvez</td></tr><tr><td style='padding:0.3rem'>ils</td><td style='padding:0.3rem;color:#34d399;font-weight:bold'>peuvent</td></tr></table></div></div><p style='margin-top:1rem;padding:1rem;background:rgba(59,130,246,0.15);border-radius:8px'>💡 <strong>Конструкция vouloir/pouvoir + инфинитив:</strong><br>• <em>Je <strong>veux</strong> manger.</em> — Я хочу есть.<br>• <em>Tu <strong>peux</strong> aider ?</em> — Ты можешь помочь?<br>• <em>Je <strong>voudrais</strong> un café.</em> — Я бы хотел(а) кофе. (вежл.)</p>"
+    },
+    {
+      "id": "u4-ex1",
+      "type": "grammar-quiz",
+      "title": "Упражнение 1 : Articles partitifs",
+      "questions": [
+        { "question": "Je mange ___ pain. (муж.р.)", "options": ["du", "de la", "de l'", "des"], "correctAnswer": "du" },
+        { "question": "Elle boit ___ eau. (перед гласной)", "options": ["du", "de la", "de l'", "des"], "correctAnswer": "de l'" },
+        { "question": "Nous mangeons ___ légumes. (мн.ч.)", "options": ["du", "de la", "de l'", "des"], "correctAnswer": "des" },
+        { "question": "Il mange ___ viande. (жен.р.)", "options": ["du", "de la", "de l'", "des"], "correctAnswer": "de la" },
+        { "question": "Je ne mange pas ___ fromage. (отрицание!)", "options": ["du", "de", "de la", "des"], "correctAnswer": "de" },
+        { "question": "Tu veux ___ café ou ___ thé ?", "options": ["du / du", "du / du", "de la / du", "des / des"], "correctAnswer": "du / du" }
+      ]
+    },
+    {
+      "id": "u4-ex2",
+      "type": "grammar-quiz",
+      "title": "Упражнение 2 : Vouloir et Pouvoir",
+      "questions": [
+        { "question": "Je ___ un verre d'eau. (vouloir)", "options": ["veux", "veut", "voulez", "veulent"], "correctAnswer": "veux" },
+        { "question": "Tu ___ manger avec nous ? (pouvoir)", "options": ["peux", "peut", "pouvez", "peuvent"], "correctAnswer": "peux" },
+        { "question": "Elle ___ aller au restaurant. (vouloir)", "options": ["veux", "veut", "voulez", "veulent"], "correctAnswer": "veut" },
+        { "question": "Nous ___ vous aider. (pouvoir)", "options": ["peux", "pouvons", "pouvez", "peuvent"], "correctAnswer": "pouvons" },
+        { "question": "Je ___ (вежл.) une table pour deux. (vouloir — conditionnel)", "options": ["veux", "voudrais", "veut", "voulons"], "correctAnswer": "voudrais" }
+      ]
+    },
+    {
+      "id": "u4-ex3",
+      "type": "sentence-builder",
+      "title": "Упражнение 3 : Au restaurant",
+      "sentences": [
+        { "words": ["Je", "voudrais", "du", "pain", ",", "s'il", "vous", "plaît", "."], "ru": "Я бы хотел(а) хлеба, пожалуйста." },
+        { "words": ["Elle", "ne", "mange", "pas", "de", "viande", "."], "ru": "Она не ест мяса." },
+        { "words": ["Vous", "voulez", "du", "café", "ou", "du", "thé", "?"], "ru": "Вы хотите кофе или чай?" },
+        { "words": ["L'addition", ",", "s'il", "vous", "plaît", "!"], "ru": "Счёт, пожалуйста!" }
+      ]
+    },
+    {
+      "id": "u4-theory-3",
+      "type": "theory",
+      "title": "Articles partitifs vs définis vs indéfinis — comparaison",
+      "content": "<p style='margin-bottom:1rem'>Три типа артиклей с едой и напитками:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Тип</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Артикль</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Когда использовать</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.4rem'>Неопределённый</td><td style='padding:0.4rem;color:#c084fc'>un / une / des</td><td style='padding:0.4rem'>Исчисляемые предметы (один/одна)</td><td style='padding:0.4rem'><em>un café, une bière</em></td></tr><tr><td style='padding:0.4rem'>Определённый</td><td style='padding:0.4rem;color:#fb923c'>le / la / l' / les</td><td style='padding:0.4rem'>Конкретная вещь или предмет в целом</td><td style='padding:0.4rem'><em>J'aime le café.</em></td></tr><tr><td style='padding:0.4rem'>Частичный</td><td style='padding:0.4rem;color:#60a5fa'>du / de la / de l'</td><td style='padding:0.4rem'>Неисчисляемое количество</td><td style='padding:0.4rem'><em>Je bois du café.</em></td></tr></table><div style='padding:1rem;background:rgba(59,130,246,0.15);border-radius:8px'>💡 <strong>Сравнение:</strong><br>• <em>J'aime <strong>le</strong> fromage.</em> — Я люблю сыр (вообще).<br>• <em>Je mange <strong>du</strong> fromage.</em> — Я ем сыра (немного).<br>• <em>Je voudrais <strong>un</strong> fromage.</em> — Мне (один) сыр (исчисляемый кусок).</div>"
+    },
+    {
+      "id": "u4-theory-4",
+      "type": "theory",
+      "title": "Les quantités (Количества) — expressions utiles",
+      "content": "<p style='margin-bottom:1rem'>Выражения количества используются с предлогом <strong>de / d'</strong> (без артикля).</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Выражение</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th><th style='padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.4rem;color:#60a5fa'>un kilo de</td><td style='padding:0.4rem'>один килограмм</td><td style='padding:0.4rem'><em>un kilo de pommes</em></td></tr><tr><td style='padding:0.4rem;color:#60a5fa'>une bouteille de</td><td style='padding:0.4rem'>одна бутылка</td><td style='padding:0.4rem'><em>une bouteille d'eau</em></td></tr><tr><td style='padding:0.4rem;color:#60a5fa'>un verre de</td><td style='padding:0.4rem'>один стакан</td><td style='padding:0.4rem'><em>un verre de vin</em></td></tr><tr><td style='padding:0.4rem;color:#60a5fa'>une tranche de</td><td style='padding:0.4rem'>один ломтик</td><td style='padding:0.4rem'><em>une tranche de pain</em></td></tr><tr><td style='padding:0.4rem;color:#60a5fa'>beaucoup de</td><td style='padding:0.4rem'>много</td><td style='padding:0.4rem'><em>beaucoup de légumes</em></td></tr><tr><td style='padding:0.4rem;color:#60a5fa'>un peu de</td><td style='padding:0.4rem'>немного</td><td style='padding:0.4rem'><em>un peu de sel</em></td></tr><tr><td style='padding:0.4rem;color:#60a5fa'>assez de</td><td style='padding:0.4rem'>достаточно</td><td style='padding:0.4rem'><em>assez de pain</em></td></tr></table><p style='padding:1rem;background:rgba(239,68,68,0.15);border-radius:8px'>⚠️ После выражений количества артикль <strong>не ставится</strong>:<br>• <em>un kilo <strong>de</strong> fromage</em> (не: de le fromage)<br>• <em>une bouteille <strong>d'</strong>eau</em> (перед гласной)</p>"
+    },
+    {
+      "id": "u4-ex4",
+      "type": "grammar-quiz",
+      "title": "Упражнение 4 : Articles partitifs vs définis/indéfinis",
+      "questions": [
+        { "question": "J'aime ___ chocolat. (люблю шоколад вообще)", "options": ["du", "le", "un", "de la"], "correctAnswer": "le" },
+        { "question": "Je mange ___ chocolat. (ем немного шоколада)", "options": ["le", "un", "du", "des"], "correctAnswer": "du" },
+        { "question": "Elle boit ___ eau gazeuse. (пьёт воду)", "options": ["la", "une", "de l'", "du"], "correctAnswer": "de l'" },
+        { "question": "Vous voulez ___ café ou ___ thé ?", "options": ["du / du", "le / le", "un / un", "de la / du"], "correctAnswer": "du / du" },
+        { "question": "Je n'aime pas ___ bière. (общее отрицание)", "options": ["de la", "la", "du", "une"], "correctAnswer": "la" },
+        { "question": "Il commande ___ salade et ___ verre d'eau.", "options": ["une / un", "la / le", "de la / du", "une / de l'"], "correctAnswer": "une / un" },
+        { "question": "Nous n'avons pas ___ pain. (отрицание с артиклем)", "options": ["du", "de", "le", "un"], "correctAnswer": "de" },
+        { "question": "Tu veux ___ dessert ? (предложить один)", "options": ["du", "de la", "un", "le"], "correctAnswer": "un" }
+      ]
+    },
+    {
+      "id": "u4-ex5",
+      "type": "grammar-quiz",
+      "title": "Упражнение 5 : Commander au restaurant",
+      "questions": [
+        { "question": "Вежливый способ попросить кофе:", "options": ["Je veux un café !", "Je voudrais un café, s'il vous plaît.", "Donne-moi un café.", "Un café, vite !"], "correctAnswer": "Je voudrais un café, s'il vous plaît." },
+        { "question": "Как спросить есть ли у них суп:", "options": ["Vous avez de la soupe ?", "Il y a soupe ?", "Je veux savoir soupe.", "Où est la soupe ?"], "correctAnswer": "Vous avez de la soupe ?" },
+        { "question": "Как попросить счёт:", "options": ["Combien ça coûte ?", "L'addition, s'il vous plaît.", "Payez maintenant.", "Je veux payer."], "correctAnswer": "L'addition, s'il vous plaît." },
+        { "question": "Официант говорит 'Et comme boisson ?' — что это значит?", "options": ["Что будете на десерт?", "Что будете пить?", "Хотите ещё?", "Всё вкусно?"], "correctAnswer": "Что будете пить?" },
+        { "question": "Как сказать 'это вкусно' на французском:", "options": ["C'est magnifique !", "C'est délicieux !", "C'est sympa !", "C'est beau !"], "correctAnswer": "C'est délicieux !" },
+        { "question": "Как узнать у официанта, что сегодня в меню:", "options": ["Qu'est-ce que vous avez comme plat du jour ?", "Donnez-moi le menu.", "Je veux tout.", "Qu'est-ce que vous mangez ?"], "correctAnswer": "Qu'est-ce que vous avez comme plat du jour ?" }
+      ]
+    },
+    {
+      "id": "u4-genre1",
+      "type": "gender-quiz",
+      "title": "Quel article ? — Nourriture et boissons",
+      "items": [
+        { "word": "café", "emoji": "☕", "ru": "кофе", "article": "le", "hint": "Мужской род: le café" },
+        { "word": "eau", "emoji": "💧", "ru": "вода", "article": "l'", "hint": "Женский род, начинается с гласной: l'eau" },
+        { "word": "lait", "emoji": "🥛", "ru": "молоко", "article": "le", "hint": "Мужской род: le lait" },
+        { "word": "vin", "emoji": "🍷", "ru": "вино", "article": "le", "hint": "Мужской род: le vin" },
+        { "word": "bière", "emoji": "🍺", "ru": "пиво", "article": "la", "hint": "Женский род: la bière" },
+        { "word": "pain", "emoji": "🍞", "ru": "хлеб", "article": "le", "hint": "Мужской род: le pain" },
+        { "word": "fromage", "emoji": "🧀", "ru": "сыр", "article": "le", "hint": "Мужской род: le fromage" },
+        { "word": "salade", "emoji": "🥗", "ru": "салат", "article": "la", "hint": "Женский род: la salade" },
+        { "word": "soupe", "emoji": "🍲", "ru": "суп", "article": "la", "hint": "Женский род: la soupe" },
+        { "word": "gâteau", "emoji": "🎂", "ru": "торт / пирожное", "article": "le", "hint": "Мужской род: le gâteau" }
+      ]
+    },
+    {
+      "id": "u4-dialogue1",
+      "type": "dialogue",
+      "title": "Dialogue : Au restaurant — Emma et Lucas commandent",
+      "context": "Эмма и Лукас в ресторане. Официант принимает заказ.",
+      "exchanges": [
+        { "speaker": "Serveur", "side": "left", "text": "Bonsoir ! Vous avez choisi ?" },
+        { "speaker": "Lucas", "side": "right", "text": "___", "isBlank": true, "options": ["Je voudrais une salade et du poulet, s'il vous plaît.", "Je veux tout !", "Donnez-moi de la nourriture.", "L'addition, s'il vous plaît."], "correctAnswer": "Je voudrais une salade et du poulet, s'il vous plaît.", "explanation": "Je voudrais — вежливая форма заказа в ресторане. Используем неопределённый артикль для блюд и частичный для неисчисляемых." },
+        { "speaker": "Serveur", "side": "left", "text": "Et pour vous, Mademoiselle ?" },
+        { "speaker": "Emma", "side": "right", "text": "Pour moi, une soupe à l'oignon et du fromage, s'il vous plaît." },
+        { "speaker": "Serveur", "side": "left", "text": "Et comme boisson ?" },
+        { "speaker": "Emma", "side": "right", "text": "___", "isBlank": true, "options": ["Une bouteille d'eau, s'il vous plaît.", "Je ne veux rien boire.", "Donnez-moi de l'alcool.", "J'ai soif !"], "correctAnswer": "Une bouteille d'eau, s'il vous plaît.", "explanation": "Заказывая напиток, используем une bouteille de (бутылка) + d' (перед гласной eau). Вежливое добавление: s'il vous plaît." },
+        { "speaker": "Serveur", "side": "left", "text": "Très bien. Bon appétit !" },
+        { "speaker": "Lucas", "side": "right", "text": "Merci !" }
+      ]
+    },
+    {
+      "id": "u4-fill1",
+      "type": "fill-blank",
+      "title": "Complétez le texte : La recette de la quiche",
+      "context": "Простой рецепт французского киша. Заполните пропуски правильными артиклями и словами.",
+      "text": "Pour faire une quiche, il faut ___ œufs, ___ crème fraîche et ___ fromage. On prend aussi ___ lardons et un peu ___ sel. On mélange tous les ingrédients. On ne met pas ___ sucre dans une quiche. C'est un plat salé !",
+      "blanks": [
+        { "options": ["des", "les", "du", "de la"], "correctAnswer": "des", "hint": "Яйца — множественное число, неопределённый артикль", "explanation": "des œufs — яйца (неопределённый артикль, мн.ч.)" },
+        { "options": ["de la", "du", "des", "la"], "correctAnswer": "de la", "hint": "Crème fraîche — женский род, частичный артикль", "explanation": "de la crème fraîche — немного сливок (женский род)" },
+        { "options": ["du", "de la", "des", "le"], "correctAnswer": "du", "hint": "Fromage — мужской род, частичный артикль", "explanation": "du fromage — немного сыра (мужской род)" },
+        { "options": ["des", "les", "de la", "du"], "correctAnswer": "des", "hint": "Lardons — множественное число", "explanation": "des lardons — немного бекона (мн.ч.)" },
+        { "options": ["de", "du", "des", "d'"], "correctAnswer": "de", "hint": "После 'un peu' артикль заменяется на de", "explanation": "un peu de sel — немного соли (после выражений количества — de)" },
+        { "options": ["du", "de", "des", "le"], "correctAnswer": "de", "hint": "В отрицании ne met pas — артикль заменяется на de", "explanation": "on ne met pas de sucre — мы не кладём сахар (отрицание → de)" }
+      ]
+    },
+    {
+      "id": "u4-ex6",
+      "type": "sentence-builder",
+      "title": "Упражнение 6 : Commander et parler de la nourriture",
+      "sentences": [
+        { "words": ["Je", "voudrais", "une", "table", "pour", "deux", "personnes", "."], "ru": "Я бы хотел(а) столик на двоих." },
+        { "words": ["Elle", "ne", "mange", "pas", "de", "viande", ",", "elle", "est", "végétarienne", "."], "ru": "Она не ест мяса, она вегетарианка." },
+        { "words": ["Vous", "avez", "du", "poisson", "frais", "aujourd'hui", "?"], "ru": "У вас есть свежая рыба сегодня?" },
+        { "words": ["L'addition", ",", "s'il", "vous", "plaît", "!", "C'était", "délicieux", "!"], "ru": "Счёт, пожалуйста! Было очень вкусно!" }
+      ]
+    },
+    {
+      "id": "u4-audio1",
+      "type": "listening",
+      "title": "Аудирование : Au restaurant",
+      "audioFile": "piste_030.mp3",
+      "source": "cahier",
+      "questions": [
+        { "question": "Où est la scène ? (Где происходит сцена?)", "options": ["Au restaurant", "À la maison", "Au marché", "À l'école"], "correctAnswer": "Au restaurant" }
+      ]
+    },
+    {
+      "id": "u4-video1",
+      "type": "video",
+      "title": "Vidéo Unité 4 : À table !",
+      "videoFile": "U04_ST_720p.mp4",
+      "source": "sub",
+      "description": "Regardez la vidéo. Observez comment on commande au restaurant en France."
+    }
+  ]
+}

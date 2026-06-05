@@ -1,0 +1,190 @@
+{
+  "id": "unite-9",
+  "title": "Unité 9 : Santé et bien-être",
+  "description": "Parler de sa santé, décrire des symptômes, chez le médecin. Le passé composé avec être, les verbes pronominaux, le corps humain.",
+  "vocabulary": [
+    { "fr": "la tête", "ru": "голова", "type": "corps" },
+    { "fr": "le bras", "ru": "рука (от плеча)", "type": "corps" },
+    { "fr": "la main", "ru": "рука (кисть)", "type": "corps" },
+    { "fr": "la jambe", "ru": "нога", "type": "corps" },
+    { "fr": "le pied", "ru": "стопа / нога", "type": "corps" },
+    { "fr": "le dos", "ru": "спина", "type": "corps" },
+    { "fr": "le ventre", "ru": "живот", "type": "corps" },
+    { "fr": "la gorge", "ru": "горло", "type": "corps" },
+    { "fr": "J'ai mal à la tête.", "ru": "У меня болит голова.", "type": "phrase" },
+    { "fr": "J'ai mal au ventre.", "ru": "У меня болит живот.", "type": "phrase" },
+    { "fr": "J'ai de la fièvre.", "ru": "У меня температура.", "type": "phrase" },
+    { "fr": "Je suis fatigué(e).", "ru": "Я устал(а).", "type": "phrase" },
+    { "fr": "un médecin", "ru": "врач", "type": "sante" },
+    { "fr": "une pharmacie", "ru": "аптека", "type": "sante" },
+    { "fr": "un médicament", "ru": "лекарство", "type": "sante" },
+    { "fr": "une ordonnance", "ru": "рецепт", "type": "sante" },
+    { "fr": "se sentir bien", "ru": "чувствовать себя хорошо", "type": "verbe" },
+    { "fr": "se reposer", "ru": "отдыхать", "type": "verbe" },
+    { "fr": "tomber malade", "ru": "заболеть", "type": "verbe" }
+  ],
+  "exercises": [
+    {
+      "id": "u9-theory-1",
+      "type": "theory",
+      "title": "Le passé composé avec ÊTRE",
+      "content": "<p style='margin-bottom:1rem'>Некоторые глаголы движения и состояния образуют passé composé со вспомогательным глаголом <strong>ÊTRE</strong>.</p><p style='margin-bottom:1rem'>⚠️ При этом причастие согласуется с подлежащим!</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Инфинитив</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Participe passé</th></tr><tr><td style='padding:0.5rem'>aller</td><td style='padding:0.5rem;color:#60a5fa'>allé / allée</td></tr><tr><td style='padding:0.5rem'>venir</td><td style='padding:0.5rem;color:#60a5fa'>venu / venue</td></tr><tr><td style='padding:0.5rem'>partir</td><td style='padding:0.5rem;color:#60a5fa'>parti / partie</td></tr><tr><td style='padding:0.5rem'>arriver</td><td style='padding:0.5rem;color:#60a5fa'>arrivé / arrivée</td></tr><tr><td style='padding:0.5rem'>rester</td><td style='padding:0.5rem;color:#60a5fa'>resté / restée</td></tr><tr><td style='padding:0.5rem'>tomber</td><td style='padding:0.5rem;color:#60a5fa'>tombé / tombée</td></tr><tr><td style='padding:0.5rem'>naître</td><td style='padding:0.5rem;color:#60a5fa'>né / née</td></tr><tr><td style='padding:0.5rem'>mourir</td><td style='padding:0.5rem;color:#60a5fa'>mort / morte</td></tr></table><div style='padding:1rem;background:rgba(59,130,246,0.15);border-radius:8px'>💡 <strong>Примеры согласования:</strong><br>• <em>Il est arrivé.</em> — Он приехал.<br>• <em>Elle est arrivée.</em> — Она приехала. (+e)<br>• <em>Ils sont arrivés.</em> — Они приехали. (+s)<br>• <em>Elles sont arrivées.</em> — Они (жен.) приехали. (+es)</div>"
+    },
+    {
+      "id": "u9-theory-2",
+      "type": "theory",
+      "title": "Les verbes pronominaux au présent",
+      "content": "<p style='margin-bottom:1rem'>Возвратные глаголы сопровождаются возвратными местоимениями: <strong>me, te, se, nous, vous, se</strong></p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Лицо</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>se lever</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>se sentir</th></tr><tr><td style='padding:0.5rem'>je</td><td style='padding:0.5rem;color:#60a5fa'>me lève</td><td style='padding:0.5rem;color:#60a5fa'>me sens</td></tr><tr><td style='padding:0.5rem'>tu</td><td style='padding:0.5rem;color:#60a5fa'>te lèves</td><td style='padding:0.5rem;color:#60a5fa'>te sens</td></tr><tr><td style='padding:0.5rem'>il/elle</td><td style='padding:0.5rem;color:#60a5fa'>se lève</td><td style='padding:0.5rem;color:#60a5fa'>se sent</td></tr><tr><td style='padding:0.5rem'>nous</td><td style='padding:0.5rem;color:#60a5fa'>nous levons</td><td style='padding:0.5rem;color:#60a5fa'>nous sentons</td></tr><tr><td style='padding:0.5rem'>vous</td><td style='padding:0.5rem;color:#60a5fa'>vous levez</td><td style='padding:0.5rem;color:#60a5fa'>vous sentez</td></tr><tr><td style='padding:0.5rem'>ils</td><td style='padding:0.5rem;color:#60a5fa'>se lèvent</td><td style='padding:0.5rem;color:#60a5fa'>se sentent</td></tr></table>"
+    },
+    {
+      "id": "u9-ex1",
+      "type": "grammar-quiz",
+      "title": "Упражнение 1 : Passé composé avec ÊTRE",
+      "questions": [
+        { "question": "Elle ___ arrivée à l'hôpital. (arriver)", "options": ["est", "a", "ont", "avez"], "correctAnswer": "est" },
+        { "question": "Ils ___ partis tôt ce matin. (partir)", "options": ["sont", "ont", "est", "a"], "correctAnswer": "sont" },
+        { "question": "Je ___ tombé malade. (tomber)", "options": ["suis", "ai", "est", "as"], "correctAnswer": "suis" },
+        { "question": "Marie est allée chez le médecin. La forme correcte est :", "options": ["allé", "allées", "allée", "allés"], "correctAnswer": "allée" },
+        { "question": "Nous ___ restés à la maison. (rester)", "options": ["avons", "sommes", "êtes", "sont"], "correctAnswer": "sommes" }
+      ]
+    },
+    {
+      "id": "u9-ex2",
+      "type": "grammar-quiz",
+      "title": "Упражнение 2 : Verbes pronominaux",
+      "questions": [
+        { "question": "Je ___ lève à 7h. (se lever)", "options": ["me", "te", "se", "nous"], "correctAnswer": "me" },
+        { "question": "Il ___ couche tard. (se coucher)", "options": ["me", "te", "se", "vous"], "correctAnswer": "se" },
+        { "question": "Nous ___ reposons le week-end. (se reposer)", "options": ["me", "te", "nous", "vous"], "correctAnswer": "nous" },
+        { "question": "Comment vous ___ sentez ? (se sentir)", "options": ["me", "te", "se", "vous"], "correctAnswer": "vous" }
+      ]
+    },
+    {
+      "id": "u9-ex3",
+      "type": "sentence-builder",
+      "title": "Упражнение 3 : Chez le médecin",
+      "sentences": [
+        { "words": ["J'ai", "mal", "à", "la", "gorge", "et", "j'ai", "de", "la", "fièvre", "."], "ru": "У меня болит горло и у меня температура." },
+        { "words": ["Elle", "est", "tombée", "malade", "hier", "."], "ru": "Вчера она заболела." },
+        { "words": ["Il", "faut", "vous", "reposer", "et", "boire", "beaucoup", "d'eau", "."], "ru": "Вам нужно отдыхать и пить много воды." },
+        { "words": ["Je", "me", "sens", "très", "fatigué(e)", "."], "ru": "Я чувствую себя очень уставшим(ей)." }
+      ]
+    },
+    {
+      "id": "u9-audio1",
+      "type": "listening",
+      "title": "Аудирование : Chez le médecin",
+      "audioFile": "piste_080.mp3",
+      "source": "cahier",
+      "questions": [
+        { "question": "Quel est le problème du patient ? (В чём проблема пациента?)", "options": ["Il a mal à la tête", "Il a de la fièvre", "Il a mal au dos", "Il est fatigué"], "correctAnswer": "Il a de la fièvre" }
+      ]
+    },
+    {
+      "id": "u9-video1",
+      "type": "video",
+      "title": "Vidéo Unité 9 : Santé et bien-être",
+      "videoFile": "U09_ST_720p.mp4",
+      "source": "sub",
+      "description": "Regardez la vidéo. Notez les expressions pour parler de la santé."
+    },
+    {
+      "id": "u9-theory-3",
+      "type": "theory",
+      "title": "Les parties du corps — Части тела",
+      "content": "<p style='margin-bottom:1rem'>Знание частей тела необходимо для разговора о самочувствии и здоровье.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Часть тела</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Род</th></tr><tr><td style='padding:0.5rem;color:#60a5fa'>la tête</td><td style='padding:0.5rem'>голова</td><td style='padding:0.5rem'>жен.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa'>le bras</td><td style='padding:0.5rem'>рука (от плеча)</td><td style='padding:0.5rem'>муж.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa'>la main</td><td style='padding:0.5rem'>рука (кисть)</td><td style='padding:0.5rem'>жен.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa'>la jambe</td><td style='padding:0.5rem'>нога</td><td style='padding:0.5rem'>жен.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa'>le pied</td><td style='padding:0.5rem'>стопа</td><td style='padding:0.5rem'>муж.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa'>le dos</td><td style='padding:0.5rem'>спина</td><td style='padding:0.5rem'>муж.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa'>le ventre</td><td style='padding:0.5rem'>живот</td><td style='padding:0.5rem'>муж.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa'>la gorge</td><td style='padding:0.5rem'>горло</td><td style='padding:0.5rem'>жен.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa'>l'œil (les yeux)</td><td style='padding:0.5rem'>глаз (глаза)</td><td style='padding:0.5rem'>муж.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa'>la dent</td><td style='padding:0.5rem'>зуб</td><td style='padding:0.5rem'>жен.</td></tr></table>"
+    },
+    {
+      "id": "u9-theory-4",
+      "type": "theory",
+      "title": "Exprimer la douleur — Как сказать, что болит",
+      "content": "<p style='margin-bottom:1rem'>Для выражения боли используется конструкция <strong>avoir mal à</strong> + часть тела.</p><div style='padding:1rem;background:rgba(59,130,246,0.15);border-radius:8px;margin-bottom:1rem'><p><strong>À + артикль (контракция):</strong></p><p>• à + le = <strong>au</strong> : J'ai mal <strong>au</strong> dos, <strong>au</strong> ventre, <strong>au</strong> pied</p><p>• à + la = <strong>à la</strong> : J'ai mal <strong>à la</strong> tête, <strong>à la</strong> gorge, <strong>à la</strong> main</p><p>• à + les = <strong>aux</strong> : J'ai mal <strong>aux</strong> dents, <strong>aux</strong> yeux</p><p>• à + l' = <strong>à l'</strong> : J'ai mal <strong>à l'</strong>œil, <strong>à l'</strong>oreille</p></div><div style='padding:1rem;background:rgba(52,211,153,0.15);border-radius:8px'><p><strong>Советы врача — Il faut + infinitif :</strong></p><p>• Il faut <strong>se reposer</strong>. — Нужно отдыхать.</p><p>• Il faut <strong>boire</strong> beaucoup d'eau. — Нужно пить много воды.</p><p>• Il faut <strong>prendre</strong> ce médicament. — Нужно принять это лекарство.</p><p>• Vous devez <strong>rester</strong> au lit. — Вы должны оставаться в постели.</p></div>"
+    },
+    {
+      "id": "u9-ex4",
+      "type": "grammar-quiz",
+      "title": "Упражнение 4 : Avoir mal à — contraction",
+      "questions": [
+        { "question": "J'ai mal ___ tête. (la tête, жен.р.)", "options": ["au", "à la", "aux", "à l'"], "correctAnswer": "à la" },
+        { "question": "Il a mal ___ dos. (le dos, муж.р.)", "options": ["à la", "aux", "au", "à l'"], "correctAnswer": "au" },
+        { "question": "Elle a mal ___ dents. (les dents, мн.ч.)", "options": ["au", "à la", "aux", "à l'"], "correctAnswer": "aux" },
+        { "question": "J'ai mal ___ gorge. (la gorge, жен.р.)", "options": ["au", "aux", "à l'", "à la"], "correctAnswer": "à la" },
+        { "question": "Tu as mal ___ ventre ? (le ventre, муж.р.)", "options": ["à la", "à l'", "aux", "au"], "correctAnswer": "au" },
+        { "question": "J'ai mal ___ yeux. (les yeux, мн.ч.)", "options": ["au", "à la", "aux", "à l'"], "correctAnswer": "aux" },
+        { "question": "Elle a mal ___ oreille. (l'oreille, перед гласн.)", "options": ["au", "à la", "aux", "à l'"], "correctAnswer": "à l'" }
+      ]
+    },
+    {
+      "id": "u9-ex5",
+      "type": "grammar-quiz",
+      "title": "Упражнение 5 : Chez le médecin — conseils",
+      "questions": [
+        { "question": "Il faut ___ beaucoup d'eau. (совет)", "options": ["manger", "boire", "dormir", "travailler"], "correctAnswer": "boire" },
+        { "question": "Vous devez ___ au lit pendant trois jours. (предписание)", "options": ["travailler", "rester", "partir", "manger"], "correctAnswer": "rester" },
+        { "question": "Il faut ___ ce médicament trois fois par jour.", "options": ["acheter", "vendre", "prendre", "oublier"], "correctAnswer": "prendre" },
+        { "question": "Il faut ___ du sport régulièrement pour être en bonne santé.", "options": ["éviter", "faire", "refuser", "oublier"], "correctAnswer": "faire" },
+        { "question": "Vous avez de la fièvre. Il ne faut pas ___ dehors.", "options": ["rester", "aller", "manger", "dormir"], "correctAnswer": "aller" },
+        { "question": "Il faut ___ chez le médecin si tu te sens mal.", "options": ["travailler", "aller", "rester", "manger"], "correctAnswer": "aller" }
+      ]
+    },
+    {
+      "id": "u9-genre1",
+      "type": "gender-quiz",
+      "title": "Quel article ? — Les parties du corps",
+      "items": [
+        { "word": "tête", "emoji": "🧠", "ru": "голова", "article": "la", "hint": "Женский: la tête — оканчивается на -e (жен.р.)" },
+        { "word": "bras", "emoji": "💪", "ru": "рука (от плеча)", "article": "le", "hint": "Мужской: le bras — запомнить" },
+        { "word": "jambe", "emoji": "🦵", "ru": "нога", "article": "la", "hint": "Женский: la jambe — оканчивается на -e (жен.р.)" },
+        { "word": "pied", "emoji": "🦶", "ru": "стопа", "article": "le", "hint": "Мужской: le pied — оканчивается на согласную (муж.р.)" },
+        { "word": "main", "emoji": "🖐️", "ru": "рука (кисть)", "article": "la", "hint": "Женский: la main — запомнить исключение!" },
+        { "word": "dos", "emoji": "🔙", "ru": "спина", "article": "le", "hint": "Мужской: le dos — запомнить" },
+        { "word": "ventre", "emoji": "🫃", "ru": "живот", "article": "le", "hint": "Мужской: le ventre — оканчивается на -re (муж.р.)" },
+        { "word": "gorge", "emoji": "🎤", "ru": "горло", "article": "la", "hint": "Женский: la gorge — оканчивается на -e (жен.р.)" },
+        { "word": "œil", "emoji": "👁️", "ru": "глаз", "article": "l'", "hint": "Мужской перед гласной: l'œil (les yeux во мн.ч.)" },
+        { "word": "dent", "emoji": "🦷", "ru": "зуб", "article": "la", "hint": "Женский: la dent — запомнить" }
+      ]
+    },
+    {
+      "id": "u9-dialogue1",
+      "type": "dialogue",
+      "title": "Dialogue : Chez le médecin",
+      "context": "У Эммы грипп. Она пришла к врачу, который осматривает её и даёт советы.",
+      "exchanges": [
+        { "speaker": "Médecin", "side": "left", "text": "Bonjour Emma. Qu'est-ce qui ne va pas ?" },
+        { "speaker": "Emma", "side": "right", "text": "Bonjour docteur. Je ne me sens pas bien du tout." },
+        { "speaker": "Médecin", "side": "left", "text": "Où avez-vous mal ?" },
+        { "speaker": "Emma", "side": "right", "text": "___", "isBlank": true, "options": ["J'ai mal à la tête et à la gorge. J'ai aussi de la fièvre.", "Je préfère le football.", "Je suis allée au cinéma hier."], "correctAnswer": "J'ai mal à la tête et à la gorge. J'ai aussi de la fièvre.", "explanation": "Правильно: J'ai mal à la tête (à + la), J'ai mal à la gorge, J'ai de la fièvre" },
+        { "speaker": "Médecin", "side": "left", "text": "Je vois. Vous avez la grippe. Il faut vous reposer et boire beaucoup d'eau." },
+        { "speaker": "Emma", "side": "right", "text": "Est-ce que je peux aller travailler ?" },
+        { "speaker": "Médecin", "side": "left", "text": "Non, vous devez rester au lit pendant deux jours. Je vous donne une ordonnance." },
+        { "speaker": "Emma", "side": "right", "text": "___", "isBlank": true, "options": ["Merci, docteur. Je vais suivre vos conseils.", "C'est très cher !", "Je n'aime pas les médicaments."], "correctAnswer": "Merci, docteur. Je vais suivre vos conseils.", "explanation": "Вежливый и логичный ответ: поблагодарить врача и пообещать следовать его советам" }
+      ]
+    },
+    {
+      "id": "u9-fill1",
+      "type": "fill-blank",
+      "title": "Complétez le texte : Lucas est malade",
+      "context": "Лукас плохо себя чувствует. Вставьте подходящие слова.",
+      "text": "Lucas ne se sent pas bien. Il ___ mal au ventre et ___ la tête aussi. Il a ___ la fièvre depuis hier. Il ___ tombé malade après le week-end. Le médecin dit : « Il faut ___ beaucoup d'eau et ___ au lit ! »",
+      "blanks": [
+        { "options": ["est", "a", "fait", "va"], "correctAnswer": "a", "hint": "avoir mal au ventre", "explanation": "Il a mal au ventre — конструкция avoir mal + au (муж.р.)" },
+        { "options": ["à", "de", "au", "à la"], "correctAnswer": "à la", "hint": "avoir mal à la tête (жен.р.)", "explanation": "à la tête — à + la (жен.р., ед.ч.)" },
+        { "options": ["du", "de", "de la", "d'"], "correctAnswer": "de la", "hint": "avoir de la fièvre", "explanation": "avoir de la fièvre — устойчивое выражение с частичным артиклем" },
+        { "options": ["a", "est", "ont", "sont"], "correctAnswer": "est", "hint": "tomber → être au passé composé", "explanation": "tomber malade se conjugue avec ÊTRE au passé composé" },
+        { "options": ["manger", "boire", "dormir", "travailler"], "correctAnswer": "boire", "hint": "il faut boire de l'eau", "explanation": "Il faut boire beaucoup d'eau — совет при болезни" },
+        { "options": ["aller", "rester", "partir", "sortir"], "correctAnswer": "rester", "hint": "rester au lit = оставаться в постели", "explanation": "Il faut rester au lit — совет врача оставаться в постели" }
+      ]
+    },
+    {
+      "id": "u9-ex6",
+      "type": "sentence-builder",
+      "title": "Упражнение 6 : Santé et bien-être",
+      "sentences": [
+        { "words": ["J'ai", "mal", "à", "la", "gorge", "et", "je", "tousse", "beaucoup", "."], "ru": "У меня болит горло и я много кашляю." },
+        { "words": ["Il", "faut", "prendre", "ce", "médicament", "deux", "fois", "par", "jour", "."], "ru": "Нужно принимать это лекарство два раза в день." },
+        { "words": ["Je", "me", "sens", "mieux", "après", "une", "bonne", "nuit", "de", "sommeil", "."], "ru": "Я чувствую себя лучше после хорошего ночного сна." },
+        { "words": ["Elle", "est", "allée", "à", "la", "pharmacie", "acheter", "des", "médicaments", "."], "ru": "Она пошла в аптеку купить лекарства." }
+      ]
+    }
+  ]
+}

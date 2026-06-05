@@ -1,0 +1,217 @@
+{
+  "id": "unite-genre",
+  "title": "Le Genre des Noms — Мужской и женский род",
+  "description": "Специальный модуль: как определить мужской или женский род существительного. Правила по окончаниям, исключения, 200+ слов для тренировки.",
+  "vocabulary": [],
+  "exercises": [
+    {
+      "id": "genre-theory-1",
+      "type": "theory",
+      "title": "Почему род так важен? — L'article, c'est la clé !",
+      "content": "<p style='margin-bottom:1rem'>Во французском языке <strong>каждое существительное имеет род</strong>: мужской (<em>masculin</em>) или женский (<em>féminin</em>). Это влияет на артикль, прилагательное и местоимение.</p><div style='display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0'><div style='padding:1rem;background:rgba(59,130,246,0.15);border-radius:8px;border-left:4px solid #3b82f6'><h4 style='color:#60a5fa;margin-bottom:0.5rem'>Masculin (м.р.)</h4><p style='color:#94a3b8;font-size:0.9rem'>le, un, mon, ce...</p><p style='margin-top:0.5rem'><em>le café</em>, <em>un livre</em></p><p><em>mon ami</em>, <em>ce soir</em></p></div><div style='padding:1rem;background:rgba(236,72,153,0.15);border-radius:8px;border-left:4px solid #ec4899'><h4 style='color:#f472b6;margin-bottom:0.5rem'>Féminin (ж.р.)</h4><p style='color:#94a3b8;font-size:0.9rem'>la, une, ma, cette...</p><p style='margin-top:0.5rem'><em>la table</em>, <em>une maison</em></p><p><em>ma sœur</em>, <em>cette rue</em></p></div></div><p style='padding:1rem;background:rgba(251,191,36,0.1);border-radius:8px;border-left:4px solid #fbbf24'>⚠️ <strong>Главное правило для новичка:</strong> Всегда учите слово ВМЕСТЕ с артиклем:<br>не просто «кофе = café», а «кофе = <em>le café</em>»</p>"
+    },
+    {
+      "id": "genre-theory-2",
+      "type": "theory",
+      "title": "Мужской род — типичные окончания",
+      "content": "<p style='margin-bottom:1rem'>Эти окончания — <strong>почти всегда мужской род</strong>. Запомните их!</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr style='background:rgba(59,130,246,0.15)'><th style='padding:0.6rem;text-align:left;border-bottom:1px solid rgba(255,255,255,0.1)'>Окончание</th><th style='padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.1)'>Примеры</th><th style='padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.1)'>Перевод</th></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>-eau</td><td style='padding:0.5rem'><em>le gâteau, le chapeau, le tableau</em></td><td style='padding:0.5rem;color:#94a3b8'>торт, шляпа, картина</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>-age</td><td style='padding:0.5rem'><em>le village, le voyage, le fromage</em></td><td style='padding:0.5rem;color:#94a3b8'>деревня, путешествие, сыр</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>-ment</td><td style='padding:0.5rem'><em>le moment, l'appartement</em></td><td style='padding:0.5rem;color:#94a3b8'>момент, квартира</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>-eur (профессии м.р.)</td><td style='padding:0.5rem'><em>le serveur, le directeur</em></td><td style='padding:0.5rem;color:#94a3b8'>официант, директор</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>-in / -ain</td><td style='padding:0.5rem'><em>le matin, le pain, le train</em></td><td style='padding:0.5rem;color:#94a3b8'>утро, хлеб, поезд</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>-isme</td><td style='padding:0.5rem'><em>le tourisme, le sport</em></td><td style='padding:0.5rem;color:#94a3b8'>туризм</td></tr></table><p style='padding:0.75rem 1rem;background:rgba(59,130,246,0.1);border-radius:8px;font-size:0.9rem'>📅 <strong>Всегда мужской:</strong> дни недели (<em>le lundi, le mardi...</em>), месяцы (<em>janvier, février...</em>), языки (<em>le français, le russe</em>), цвета (<em>le rouge, le bleu</em>)</p>"
+    },
+    {
+      "id": "genre-theory-3",
+      "type": "theory",
+      "title": "Женский род — типичные окончания",
+      "content": "<p style='margin-bottom:1rem'>Эти окончания — <strong>почти всегда женский род</strong>.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr style='background:rgba(236,72,153,0.15)'><th style='padding:0.6rem;text-align:left;border-bottom:1px solid rgba(255,255,255,0.1)'>Окончание</th><th style='padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.1)'>Примеры</th><th style='padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.1)'>Перевод</th></tr><tr><td style='padding:0.5rem;color:#f472b6;font-weight:bold'>-tion / -sion</td><td style='padding:0.5rem'><em>la nation, la télévision, la question</em></td><td style='padding:0.5rem;color:#94a3b8'>нация, телевидение, вопрос</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.5rem;color:#f472b6;font-weight:bold'>-ure</td><td style='padding:0.5rem'><em>la voiture, la nature, la culture</em></td><td style='padding:0.5rem;color:#94a3b8'>машина, природа, культура</td></tr><tr><td style='padding:0.5rem;color:#f472b6;font-weight:bold'>-ette</td><td style='padding:0.5rem'><em>la baguette, la cassette, la serviette</em></td><td style='padding:0.5rem;color:#94a3b8'>багет, кассета, салфетка</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.5rem;color:#f472b6;font-weight:bold'>-ité</td><td style='padding:0.5rem'><em>la université, la identité, la qualité</em></td><td style='padding:0.5rem;color:#94a3b8'>университет, личность, качество</td></tr><tr><td style='padding:0.5rem;color:#f472b6;font-weight:bold'>-ance / -ence</td><td style='padding:0.5rem'><em>la chance, la prudence, la science</em></td><td style='padding:0.5rem;color:#94a3b8'>удача, осторожность, наука</td></tr><tr style='background:rgba(255,255,255,0.03)'><td style='padding:0.5rem;color:#f472b6;font-weight:bold'>-euse (профессии ж.р.)</td><td style='padding:0.5rem'><em>la chanteuse, la coiffeuse</em></td><td style='padding:0.5rem;color:#94a3b8'>певица, парикмахерша</td></tr><tr><td style='padding:0.5rem;color:#f472b6;font-weight:bold'>-esse</td><td style='padding:0.5rem'><em>la jeunesse, la princesse</em></td><td style='padding:0.5rem;color:#94a3b8'>молодость, принцесса</td></tr></table><p style='padding:0.75rem 1rem;background:rgba(236,72,153,0.1);border-radius:8px;font-size:0.9rem'>🌍 <strong>Всегда женский:</strong> страны на -e (<em>la France, la Russie, la Chine</em>), науки (<em>la physique, la chimie, la biologie</em>)</p>"
+    },
+    {
+      "id": "genre-theory-4",
+      "type": "theory",
+      "title": "Ловушки и исключения — Pièges !",
+      "content": "<p style='margin-bottom:1rem'>Некоторые слова нарушают правила. Их нужно просто выучить наизусть!</p><div style='display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0'><div style='padding:1rem;background:rgba(239,68,68,0.1);border-radius:8px'><h4 style='color:#f87171;margin-bottom:0.75rem'>Мужской (хотя кажется женским)</h4><ul style='list-style:none;padding:0'><li style='margin-bottom:0.4rem'><em style='color:#60a5fa'>le</em> silence</li><li style='margin-bottom:0.4rem'><em style='color:#60a5fa'>le</em> musée</li><li style='margin-bottom:0.4rem'><em style='color:#60a5fa'>le</em> lycée</li><li style='margin-bottom:0.4rem'><em style='color:#60a5fa'>le</em> groupe</li><li style='margin-bottom:0.4rem'><em style='color:#60a5fa'>le</em> problème</li><li style='margin-bottom:0.4rem'><em style='color:#60a5fa'>le</em> programme</li></ul></div><div style='padding:1rem;background:rgba(239,68,68,0.1);border-radius:8px'><h4 style='color:#f87171;margin-bottom:0.75rem'>Женский (хотя кажется мужским)</h4><ul style='list-style:none;padding:0'><li style='margin-bottom:0.4rem'><em style='color:#f472b6'>la</em> mer (море)</li><li style='margin-bottom:0.4rem'><em style='color:#f472b6'>la</em> tour (башня)</li><li style='margin-bottom:0.4rem'><em style='color:#f472b6'>la</em> fleur (цветок)</li><li style='margin-bottom:0.4rem'><em style='color:#f472b6'>la</em> dent (зуб)</li><li style='margin-bottom:0.4rem'><em style='color:#f472b6'>la</em> forêt (лес)</li><li style='margin-bottom:0.4rem'><em style='color:#f472b6'>la</em> nuit (ночь)</li></ul></div></div><p style='padding:0.75rem 1rem;background:rgba(251,191,36,0.1);border-radius:8px'>🎯 <strong>Стратегия:</strong> Когда сомневаетесь — посмотрите на прилагательное рядом или на контекст. Слышите <em>«beau/bel/bon»</em> — мужской; <em>«belle/bonne»</em> — женский.</p>"
+    },
+    {
+      "id": "genre-quiz-1",
+      "type": "gender-quiz",
+      "title": "Тренировка 1 : Предметы быта и еда",
+      "items": [
+        { "word": "café", "emoji": "☕", "ru": "кофе", "article": "le", "hint": "Мужской: -é в конце часто мужской" },
+        { "word": "table", "emoji": "🪑", "ru": "стол", "article": "la", "hint": "Женский: запомнить — la table" },
+        { "word": "livre", "emoji": "📚", "ru": "книга", "article": "le", "hint": "Мужской: исключение, -re не даёт подсказки" },
+        { "word": "pomme", "emoji": "🍎", "ru": "яблоко", "article": "la", "hint": "Женский: la pomme — фрукты часто женского рода" },
+        { "word": "pain", "emoji": "🍞", "ru": "хлеб", "article": "le", "hint": "Мужской: окончание -ain → мужской" },
+        { "word": "eau", "emoji": "💧", "ru": "вода", "article": "l'", "hint": "Женский: l'eau (la eau) — перед гласной l'" },
+        { "word": "fromage", "emoji": "🧀", "ru": "сыр", "article": "le", "hint": "Мужской: окончание -age → мужской" },
+        { "word": "baguette", "emoji": "🥖", "ru": "багет", "article": "la", "hint": "Женский: окончание -ette → женский" },
+        { "word": "vin", "emoji": "🍷", "ru": "вино", "article": "le", "hint": "Мужской: запомнить — le vin" },
+        { "word": "orange", "emoji": "🍊", "ru": "апельсин", "article": "l'", "hint": "Женский: l'orange (la orange) — перед гласной l'" }
+      ]
+    },
+    {
+      "id": "genre-quiz-2",
+      "type": "gender-quiz",
+      "title": "Тренировка 2 : Город и места",
+      "items": [
+        { "word": "rue", "emoji": "🛣️", "ru": "улица", "article": "la", "hint": "Женский: запомнить — la rue" },
+        { "word": "musée", "emoji": "🏛️", "ru": "музей", "article": "le", "hint": "Мужской: -ée обычно женский, но musée — исключение!" },
+        { "word": "gare", "emoji": "🚉", "ru": "вокзал", "article": "la", "hint": "Женский: запомнить — la gare" },
+        { "word": "hôpital", "emoji": "🏥", "ru": "больница", "article": "l'", "hint": "Мужской: l'hôpital (le hôpital) — перед h aspiré нет элизии" },
+        { "word": "pharmacie", "emoji": "💊", "ru": "аптека", "article": "la", "hint": "Женский: -ie → женский" },
+        { "word": "restaurant", "emoji": "🍽️", "ru": "ресторан", "article": "le", "hint": "Мужской: запомнить — le restaurant" },
+        { "word": "université", "emoji": "🎓", "ru": "университет", "article": "l'", "hint": "Женский: -ité → женский" },
+        { "word": "maison", "emoji": "🏠", "ru": "дом/жильё", "article": "la", "hint": "Женский: запомнить — la maison" },
+        { "word": "appartement", "emoji": "🏢", "ru": "квартира", "article": "l'", "hint": "Мужской: -ment → мужской" },
+        { "word": "banque", "emoji": "🏦", "ru": "банк", "article": "la", "hint": "Женский: запомнить — la banque" }
+      ]
+    },
+    {
+      "id": "genre-quiz-3",
+      "type": "gender-quiz",
+      "title": "Тренировка 3 : Профессии и люди",
+      "items": [
+        { "word": "professeur", "emoji": "👩‍🏫", "ru": "учитель/преподаватель", "article": "le", "hint": "Внимание! Le professeur — для м. и ж. рода в официальном языке" },
+        { "word": "médecin", "emoji": "👨‍⚕️", "ru": "врач", "article": "le", "hint": "Мужской: le médecin — для обоих полов" },
+        { "word": "chanteuse", "emoji": "🎤", "ru": "певица", "article": "la", "hint": "Женский: -euse → женский" },
+        { "word": "directeur", "emoji": "👔", "ru": "директор (м.р.)", "article": "le", "hint": "Мужской: -eur (профессии) → мужской" },
+        { "word": "directrice", "emoji": "👩‍💼", "ru": "директор (ж.р.)", "article": "la", "hint": "Женский: -trice → женский" },
+        { "word": "étudiant", "emoji": "🧑‍🎓", "ru": "студент", "article": "l'", "hint": "Мужской: l'étudiant — перед гласной" },
+        { "word": "étudiante", "emoji": "👩‍🎓", "ru": "студентка", "article": "l'", "hint": "Женский: l'étudiante — перед гласной" },
+        { "word": "serveur", "emoji": "🧑‍🍳", "ru": "официант", "article": "le", "hint": "Мужской: -eur (профессии) → мужской" },
+        { "word": "serveuse", "emoji": "👩‍🍳", "ru": "официантка", "article": "la", "hint": "Женский: -euse → женский" },
+        { "word": "enfant", "emoji": "🧒", "ru": "ребёнок", "article": "l'", "hint": "Может быть м. и ж.: l'enfant — перед гласной" }
+      ]
+    },
+    {
+      "id": "genre-quiz-4",
+      "type": "gender-quiz",
+      "title": "Тренировка 4 : Абстрактные слова и понятия",
+      "items": [
+        { "word": "voyage", "emoji": "✈️", "ru": "путешествие", "article": "le", "hint": "Мужской: -age → мужской" },
+        { "word": "question", "emoji": "❓", "ru": "вопрос", "article": "la", "hint": "Женский: -tion → женский" },
+        { "word": "télévision", "emoji": "📺", "ru": "телевизор", "article": "la", "hint": "Женский: -sion → женский" },
+        { "word": "moment", "emoji": "⏰", "ru": "момент", "article": "le", "hint": "Мужской: -ment → мужской" },
+        { "word": "nature", "emoji": "🌿", "ru": "природа", "article": "la", "hint": "Женский: -ure → женский" },
+        { "word": "chance", "emoji": "🍀", "ru": "удача", "article": "la", "hint": "Женский: -ance → женский" },
+        { "word": "problème", "emoji": "⚠️", "ru": "проблема", "article": "le", "hint": "Мужской: -ème → мужской (исключение из правила!)" },
+        { "word": "musique", "emoji": "🎵", "ru": "музыка", "article": "la", "hint": "Женский: запомнить — la musique" },
+        { "word": "sport", "emoji": "⚽", "ru": "спорт", "article": "le", "hint": "Мужской: запомнить — le sport" },
+        { "word": "culture", "emoji": "🎭", "ru": "культура", "article": "la", "hint": "Женский: -ure → женский" }
+      ]
+    },
+    {
+      "id": "genre-fill-1",
+      "type": "fill-blank",
+      "title": "Текст 1 : Emma se présente",
+      "context": "Emma пишет о себе в анкете для языкового обмена.",
+      "text": "Je m'appelle Emma. Je suis ___ étudiante à ___ université de Lyon. J'habite dans ___ appartement avec ___ amie. J'aime ___ musique et ___ voyage.",
+      "blanks": [
+        { "options": ["un", "une", "le", "la"], "correctAnswer": "une", "hint": "étudiante — женского рода → une", "explanation": "une étudiante — существительное женского рода, неопределённый артикль" },
+        { "options": ["un", "une", "le", "l'"], "correctAnswer": "l'", "hint": "université начинается с гласной → l'", "explanation": "l'université = la université → элизия перед гласной" },
+        { "options": ["un", "une", "le", "l'"], "correctAnswer": "un", "hint": "appartement — мужской (-ment) → un", "explanation": "un appartement — мужской род" },
+        { "options": ["un", "une", "mon", "ma"], "correctAnswer": "une", "hint": "amie — женский, неопределённый", "explanation": "une amie — подруга, женский род" },
+        { "options": ["le", "la", "un", "une"], "correctAnswer": "la", "hint": "musique — женский, определённый", "explanation": "la musique — женский род, определённый артикль при общем значении" },
+        { "options": ["le", "la", "un", "une"], "correctAnswer": "le", "hint": "voyage — мужской (-age)", "explanation": "le voyage — мужской род: -age → мужской" }
+      ]
+    },
+    {
+      "id": "genre-fill-2",
+      "type": "fill-blank",
+      "title": "Текст 2 : Dans la ville",
+      "context": "Lucas описывает свой район в Париже.",
+      "text": "Dans mon quartier, il y a ___ boulangerie, ___ supermarché et ___ pharmacie. ___ gare est loin, mais ___ musée est juste à côté. J'aime ___ rue principale : elle est très animée !",
+      "blanks": [
+        { "options": ["un", "une", "le", "la"], "correctAnswer": "une", "hint": "boulangerie — женский", "explanation": "une boulangerie — ж.р., неопр. артикль" },
+        { "options": ["un", "une", "le", "la"], "correctAnswer": "un", "hint": "supermarché — мужской (-é)", "explanation": "un supermarché — м.р., неопр. артикль" },
+        { "options": ["un", "une", "le", "la"], "correctAnswer": "une", "hint": "pharmacie — женский (-ie)", "explanation": "une pharmacie — ж.р., -ie → женский" },
+        { "options": ["Un", "Une", "Le", "La"], "correctAnswer": "La", "hint": "gare — женский, определённый", "explanation": "La gare — ж.р., определённый артикль (конкретная гара)" },
+        { "options": ["un", "une", "le", "l'"], "correctAnswer": "le", "hint": "musée — мужской (исключение!)", "explanation": "le musée — мужской, несмотря на -ée" },
+        { "options": ["un", "une", "le", "la"], "correctAnswer": "la", "hint": "rue — женский, определённый", "explanation": "la rue — ж.р., определённый артикль" }
+      ]
+    },
+    {
+      "id": "genre-quiz-grammar-1",
+      "type": "grammar-quiz",
+      "title": "Тест 1 : Выберите правильный артикль",
+      "questions": [
+        { "question": "___ voyage en France est magnifique !", "options": ["Le", "La", "Un", "Une"], "correctAnswer": "Le", "explanation": "voyage — мужской: -age → le" },
+        { "question": "___ question est difficile.", "options": ["Le", "La", "Un", "Une"], "correctAnswer": "La", "explanation": "question — женский: -tion → la" },
+        { "question": "C'est ___ belle maison !", "options": ["un", "une", "le", "la"], "correctAnswer": "une", "explanation": "maison — женский → une + belle (ж.р.)" },
+        { "question": "Il lit ___ journal tous les matins.", "options": ["un", "une", "le", "la"], "correctAnswer": "le", "explanation": "journal — мужской → le (определённый: конкретная газета)" },
+        { "question": "J'achète ___ baguette à la boulangerie.", "options": ["un", "une", "le", "la"], "correctAnswer": "une", "explanation": "baguette — женский: -ette → une" },
+        { "question": "___ appartement de Lucas est grand.", "options": ["Le", "La", "Un", "Une"], "correctAnswer": "L'", "explanation": "appartement начинается с гласной → l' (le)" },
+        { "question": "Je vois ___ musée depuis ma fenêtre.", "options": ["un", "une", "le", "la"], "correctAnswer": "le", "explanation": "musée — мужской (исключение!): -ée но мужской" },
+        { "question": "Elle a ___ voiture rouge.", "options": ["un", "une", "le", "la"], "correctAnswer": "une", "explanation": "voiture — женский: -ure → une" }
+      ]
+    },
+    {
+      "id": "genre-quiz-grammar-2",
+      "type": "grammar-quiz",
+      "title": "Тест 2 : Мужской или женский? (определите по слову)",
+      "questions": [
+        { "question": "«tourisme» — какой это род?", "options": ["Мужской (le tourisme)", "Женский (la tourisme)", "Оба варианта", "Неизвестно"], "correctAnswer": "Мужской (le tourisme)" },
+        { "question": "«nature» — какой это род?", "options": ["Мужской (le nature)", "Женский (la nature)", "Оба варианта", "Зависит от контекста"], "correctAnswer": "Женский (la nature)" },
+        { "question": "«pharmacie» — ваш выбор:", "options": ["le pharmacie", "la pharmacie", "un pharmacie", "Не знаю"], "correctAnswer": "la pharmacie" },
+        { "question": "«moment» — ваш выбор:", "options": ["le moment", "la moment", "un moment (оба верны)", "les moment"], "correctAnswer": "le moment" },
+        { "question": "«télévision» — ваш выбор:", "options": ["le télévision", "la télévision", "un télévision", "une télévision"], "correctAnswer": "la télévision" },
+        { "question": "«fromage» — ваш выбор:", "options": ["le fromage", "la fromage", "une fromage", "Любой"], "correctAnswer": "le fromage" }
+      ]
+    },
+    {
+      "id": "genre-dialogue-1",
+      "type": "dialogue",
+      "title": "Dialogue : Au café — Рассуждаем о роде",
+      "context": "Emma и Lucas в кафе обсуждают французский язык.",
+      "exchanges": [
+        { "speaker": "Emma", "side": "left", "text": "Lucas, tu sais... en français, j'oublie toujours le genre des mots. C'est compliqué !" },
+        { "speaker": "Lucas", "side": "right", "text": "Moi aussi ! Mais j'ai une astuce : j'apprends toujours le mot avec l'article.", "isBlank": false },
+        { "speaker": "Emma", "side": "left", "text": "Ah oui ? Par exemple, comment tu dis « вокзал » ?", "isBlank": false },
+        { "speaker": "Lucas", "side": "right", "text": "___", "isBlank": true, "options": ["Le gare, je pense.", "La gare ! C'est féminin.", "Un gare, non ?"], "correctAnswer": "La gare ! C'est féminin.", "explanation": "la gare — женский род. Lucas правильно помнит артикль вместе со словом." },
+        { "speaker": "Emma", "side": "left", "text": "Et « appartement » ?" },
+        { "speaker": "Lucas", "side": "right", "text": "___", "isBlank": true, "options": ["La appartement, je crois.", "Le appartement... non, l'appartement !", "Un appartement — masculin !"], "correctAnswer": "Un appartement — masculin !", "explanation": "appartement — мужской, -ment → masculin. Un appartement." },
+        { "speaker": "Emma", "side": "left", "text": "Super ! Je vais mémoriser les articles maintenant. Merci, Lucas !" }
+      ]
+    },
+    {
+      "id": "genre-quiz-5",
+      "type": "gender-quiz",
+      "title": "Тренировка 5 : Природа и мир вокруг",
+      "items": [
+        { "word": "soleil", "emoji": "☀️", "ru": "солнце", "article": "le", "hint": "Мужской: запомнить — le soleil" },
+        { "word": "mer", "emoji": "🌊", "ru": "море", "article": "la", "hint": "Женский: -er часто мужской, но mer — исключение!" },
+        { "word": "forêt", "emoji": "🌲", "ru": "лес", "article": "la", "hint": "Женский: запомнить — la forêt" },
+        { "word": "jardin", "emoji": "🌷", "ru": "сад", "article": "le", "hint": "Мужской: -in → мужской" },
+        { "word": "fleur", "emoji": "🌸", "ru": "цветок", "article": "la", "hint": "Женский: -eur для цветков/предметов → женский (но -eur для профессий → мужской)" },
+        { "word": "arbre", "emoji": "🌳", "ru": "дерево", "article": "l'", "hint": "Мужской: l'arbre — перед гласной" },
+        { "word": "nuit", "emoji": "🌙", "ru": "ночь", "article": "la", "hint": "Женский: запомнить — la nuit" },
+        { "word": "matin", "emoji": "🌅", "ru": "утро", "article": "le", "hint": "Мужской: -in → мужской" },
+        { "word": "saison", "emoji": "🍂", "ru": "сезон/время года", "article": "la", "hint": "Женский: запомнить — la saison" },
+        { "word": "temps", "emoji": "⛅", "ru": "погода/время", "article": "le", "hint": "Мужской: запомнить — le temps" }
+      ]
+    },
+    {
+      "id": "genre-sentence-builder-1",
+      "type": "sentence-builder",
+      "title": "Составьте фразы с правильным артиклем",
+      "sentences": [
+        { "words": ["La", "voiture", "de", "Marie", "est", "rouge", "."], "ru": "Машина Мари красная." },
+        { "words": ["Le", "musée", "est", "fermé", "le", "lundi", "."], "ru": "Музей закрыт в понедельник." },
+        { "words": ["J'habite", "dans", "un", "appartement", "moderne", "."], "ru": "Я живу в современной квартире." },
+        { "words": ["La", "boulangerie", "ouvre", "à", "sept", "heures", "."], "ru": "Булочная открывается в семь часов." },
+        { "words": ["Le", "voyage", "en", "train", "est", "confortable", "."], "ru": "Путешествие на поезде комфортно." }
+      ]
+    },
+    {
+      "id": "genre-quiz-grammar-3",
+      "type": "grammar-quiz",
+      "title": "Финальный тест : Смешанные слова",
+      "questions": [
+        { "question": "Choisissez l'article correct : ___ télévision est allumée.", "options": ["Le", "La", "Un", "Une"], "correctAnswer": "La" },
+        { "question": "___ pain est délicieux dans cette boulangerie.", "options": ["Le", "La", "Un", "L'"], "correctAnswer": "Le" },
+        { "question": "Vous avez ___ chance incroyable !", "options": ["un", "une", "le", "la"], "correctAnswer": "une" },
+        { "question": "___ nature est belle en automne.", "options": ["Le", "La", "Un", "L'"], "correctAnswer": "La" },
+        { "question": "C'est ___ problème difficile.", "options": ["un", "une", "le", "la"], "correctAnswer": "un" },
+        { "question": "J'aime ___ sport.", "options": ["le", "la", "un", "une"], "correctAnswer": "le" },
+        { "question": "___ musique classique me détend.", "options": ["Le", "La", "Un", "L'"], "correctAnswer": "La" },
+        { "question": "Il y a ___ question importante.", "options": ["un", "une", "le", "la"], "correctAnswer": "une" }
+      ]
+    }
+  ]
+}
