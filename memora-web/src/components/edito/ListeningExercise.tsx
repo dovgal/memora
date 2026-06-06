@@ -4,8 +4,7 @@ import { Play, Pause, Headphones, CheckCircle2 } from 'lucide-react';
 import { EditoExercise } from '@/lib/courses/edito-a1';
 import { GrammarQuiz } from './GrammarQuiz';
 
-const BASE_URL = process.env.NEXT_PUBLIC_MEDIA_BASE_URL || '';
-const LIVRE_URL = process.env.NEXT_PUBLIC_LIVRE_AUDIO_BASE_URL || '';
+const AUDIO_BASE_URL = process.env.NEXT_PUBLIC_AUDIO_BASE_URL || '';
 
 export function ListeningExercise({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: () => void }) {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -16,9 +15,7 @@ export function ListeningExercise({ exercise, onComplete }: { exercise: EditoExe
   const [quizDone, setQuizDone] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
 
-  const src = exercise.source === 'livre' && LIVRE_URL
-    ? `${LIVRE_URL}/${exercise.audioFile}`
-    : `${BASE_URL}/${exercise.source}/${exercise.audioFile}`;
+  const src = `${AUDIO_BASE_URL}/${exercise.audioFile}`;
   const hasQuestions = (exercise.questions?.length ?? 0) > 0;
 
   const togglePlay = () => {
@@ -66,9 +63,9 @@ export function ListeningExercise({ exercise, onComplete }: { exercise: EditoExe
         <h4 className="text-foreground font-semibold text-sm">{exercise.title}</h4>
       </div>
 
-      {!BASE_URL ? (
+      {!AUDIO_BASE_URL ? (
         <div className="bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30 rounded-xl px-4 py-3 text-sm text-amber-700 dark:text-amber-300">
-          Аудио недоступно: не настроена переменная NEXT_PUBLIC_MEDIA_BASE_URL
+          Аудио недоступно: не настроена переменная NEXT_PUBLIC_AUDIO_BASE_URL
         </div>
       ) : (
         <>

@@ -3,13 +3,13 @@ import { useRef, useState } from 'react';
 import { CheckCircle2, VideoIcon } from 'lucide-react';
 import { EditoExercise } from '@/lib/courses/edito-a1';
 
-const BASE_URL = process.env.NEXT_PUBLIC_MEDIA_BASE_URL || '';
+const VIDEO_BASE_URL = process.env.NEXT_PUBLIC_VIDEO_BASE_URL || '';
 
 export function VideoExercise({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: () => void }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [watched, setWatched] = useState(false);
 
-  const src = `${BASE_URL}/video/${exercise.source}/${exercise.videoFile}`;
+  const src = `${VIDEO_BASE_URL}/${exercise.videoFile}`;
 
   const handleEnded = () => {
     setWatched(true);
@@ -30,9 +30,9 @@ export function VideoExercise({ exercise, onComplete }: { exercise: EditoExercis
         </div>
       </div>
 
-      {!BASE_URL ? (
+      {!VIDEO_BASE_URL ? (
         <div className="bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30 rounded-xl px-4 py-3 text-sm text-amber-700 dark:text-amber-300">
-          Видео недоступно: не настроена переменная NEXT_PUBLIC_MEDIA_BASE_URL
+          Видео недоступно: не настроена переменная NEXT_PUBLIC_VIDEO_BASE_URL
         </div>
       ) : (
         <div className="rounded-xl overflow-hidden bg-black aspect-video">
