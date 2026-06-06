@@ -15,7 +15,7 @@ export function FillBlank({ exercise, onComplete }: { exercise: EditoExercise; o
   const [finished, setFinished] = useState(false);
 
   const isCorrect = useMemo(() => {
-    const expected = (blanks[current]?.answer || '').toLowerCase().trim();
+    const expected = (blanks[current]?.correctAnswer || blanks[current]?.answer || '').toLowerCase().trim();
     return input.toLowerCase().trim() === expected;
   }, [input, current]);
 
@@ -23,7 +23,7 @@ export function FillBlank({ exercise, onComplete }: { exercise: EditoExercise; o
     if (!input.trim()) return;
     setChecked(true);
     setResults(prev => [...prev, {
-      answer: blanks[current].answer,
+      answer: blanks[current].correctAnswer || blanks[current].answer || '',
       correct: isCorrect,
       given: input.trim(),
     }]);
@@ -94,13 +94,13 @@ export function FillBlank({ exercise, onComplete }: { exercise: EditoExercise; o
             {i < blanks.length && (
               i < current ? (
                 <span className={`inline-flex items-center gap-1 mx-1 px-2 py-0.5 rounded font-semibold text-xs ${results[i]?.correct ? 'dark:bg-emerald-500/20 bg-emerald-100 dark:text-emerald-300 text-emerald-700' : 'dark:bg-red-500/20 bg-red-100 dark:text-red-300 text-red-600'}`}>
-                  {results[i]?.correct ? results[i].answer : blanks[i].answer}
-                  <AudioButton text={blanks[i].answer} />
+                  {results[i]?.correct ? results[i].answer : (blanks[i].correctAnswer || blanks[i].answer || '')}
+                  <AudioButton text={blanks[i].correctAnswer || blanks[i].answer || ''} />
                 </span>
               ) : i === current ? (
                 <span className="inline-block mx-1 px-3 py-0.5 rounded border-2 border-[#4255ff] bg-[#4255ff]/10 text-[#4255ff] font-semibold text-sm min-w-[60px] text-center">
                   {checked ? (
-                    <span className={isCorrect ? 'text-emerald-400' : 'text-red-400'}>{blank.answer}</span>
+                    <span className={isCorrect ? 'text-emerald-400' : 'text-red-400'}>{blank.correctAnswer || blank.answer}</span>
                   ) : '?'}
                 </span>
               ) : (
@@ -135,8 +135,8 @@ export function FillBlank({ exercise, onComplete }: { exercise: EditoExercise; o
         <div className="space-y-3">
           <div className={`flex gap-2 items-center p-3 rounded-xl text-sm ${isCorrect ? 'dark:bg-emerald-500/10 bg-emerald-50' : 'dark:bg-red-500/10 bg-red-50'}`}>
             {isCorrect
-              ? <><CheckCircle2 className="w-4 h-4 text-emerald-400" /><span className="dark:text-emerald-300 text-emerald-700 font-semibold">Правильно!</span><AudioButton text={blank.answer} /></>
-              : <><XCircle className="w-4 h-4 text-red-400" /><span className="dark:text-qz-text-muted text-foreground">Правильно: <strong className="dark:text-white text-foreground">{blank.answer}</strong></span><AudioButton text={blank.answer} /></>
+              ? <><CheckCircle2 className="w-4 h-4 text-emerald-400" /><span className="dark:text-emerald-300 text-emerald-700 font-semibold">Правильно!</span><AudioButton text={blank.correctAnswer || blank.answer || ''} /></>
+              : <><XCircle className="w-4 h-4 text-red-400" /><span className="dark:text-qz-text-muted text-foreground">Правильно: <strong className="dark:text-white text-foreground">{blank.correctAnswer || blank.answer}</strong></span><AudioButton text={blank.correctAnswer || blank.answer || ''} /></>
             }
           </div>
           <div className="flex justify-end">

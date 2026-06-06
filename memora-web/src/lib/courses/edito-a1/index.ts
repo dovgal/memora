@@ -93,8 +93,11 @@ export interface DialogueExchange {
 }
 
 export interface BlankItem {
-  answer: string;
+  correctAnswer: string;
+  answer?: string; // legacy alias
+  options?: string[];
   hint?: string;
+  explanation?: string;
 }
 
 export interface EditoUnit {
