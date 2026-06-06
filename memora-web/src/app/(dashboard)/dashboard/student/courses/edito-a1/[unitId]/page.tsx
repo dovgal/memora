@@ -22,7 +22,7 @@ export default function EditoUnitPage({ params }: { params: Promise<{ unitId: st
   }
 
   const completedCount = Object.keys(completed).length;
-  const totalInteractive = unit.exercises.filter(e => e.type !== 'theory').length;
+  const totalInteractive = unit.exercises.filter(e => !['theory'].includes(e.type)).length;
   const pct = totalInteractive > 0 ? Math.round((completedCount / totalInteractive) * 100) : 100;
 
   return (

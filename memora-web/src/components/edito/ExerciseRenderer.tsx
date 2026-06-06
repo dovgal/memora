@@ -7,6 +7,8 @@ import { NumberQuiz } from './NumberQuiz';
 import { FillBlank } from './FillBlank';
 import { DialogueExercise } from './DialogueExercise';
 import { SentenceBuilder } from './SentenceBuilder';
+import { ListeningExercise } from './ListeningExercise';
+import { VideoExercise } from './VideoExercise';
 
 interface ExerciseRendererProps {
   exercise: EditoExercise;
@@ -31,6 +33,10 @@ export function ExerciseRenderer({ exercise, onComplete }: ExerciseRendererProps
       return <DialogueExercise exercise={exercise} onComplete={handleComplete} />;
     case 'sentence-builder':
       return <SentenceBuilder exercise={exercise} onComplete={handleComplete} />;
+    case 'listening':
+      return <ListeningExercise exercise={exercise} onComplete={handleComplete} />;
+    case 'video':
+      return <VideoExercise exercise={exercise} onComplete={handleComplete} />;
     default:
       return null;
   }

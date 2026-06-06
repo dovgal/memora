@@ -31,7 +31,7 @@ export const SPECIAL_MODULES = ['genre', 'numeros'];
 
 export interface EditoExercise {
   id: string;
-  type: 'theory' | 'grammar-quiz' | 'sentence-builder' | 'gender-quiz' | 'dialogue' | 'fill-blank' | 'number-quiz';
+  type: 'theory' | 'grammar-quiz' | 'sentence-builder' | 'gender-quiz' | 'dialogue' | 'fill-blank' | 'number-quiz' | 'listening' | 'video';
   title: string;
   // theory
   content?: string;
@@ -50,6 +50,12 @@ export interface EditoExercise {
   blanks?: BlankItem[];
   // number-quiz
   mode?: 'digit-to-word' | 'word-to-digit';
+  // listening
+  audioFile?: string;
+  source?: string;
+  // video
+  videoFile?: string;
+  description?: string;
 }
 
 export interface GrammarQuestion {
