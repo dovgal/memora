@@ -5,6 +5,7 @@ import { EditoExercise } from '@/lib/courses/edito-a1';
 import { GrammarQuiz } from './GrammarQuiz';
 
 const BASE_URL = process.env.NEXT_PUBLIC_MEDIA_BASE_URL || '';
+const LIVRE_URL = process.env.NEXT_PUBLIC_LIVRE_AUDIO_BASE_URL || '';
 
 export function ListeningExercise({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: () => void }) {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -15,7 +16,9 @@ export function ListeningExercise({ exercise, onComplete }: { exercise: EditoExe
   const [quizDone, setQuizDone] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
 
-  const src = `${BASE_URL}/${exercise.source}/${exercise.audioFile}`;
+  const src = exercise.source === 'livre' && LIVRE_URL
+    ? `${LIVRE_URL}/${exercise.audioFile}`
+    : `${BASE_URL}/${exercise.source}/${exercise.audioFile}`;
   const hasQuestions = (exercise.questions?.length ?? 0) > 0;
 
   const togglePlay = () => {
