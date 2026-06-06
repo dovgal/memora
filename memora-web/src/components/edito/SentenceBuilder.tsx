@@ -13,14 +13,11 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-export function SentenceBuilder({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: () => void }) {
-  const correct = (exercise.sentence || '').trim();
-  const words = useMemo(() => shuffle(exercise.words || correct.split(' ')), []);
-
+function SentenceItem({ words, ru, onDone }: { words: string[]; ru: string; onDone: () => void }) {
+  const correct = words.join(' ');
+  const shuffled = useMemo(() => shuffle(words.map((w, i) => ({ word: w, id: i }))), []);
   const [selected, setSelected] = useState<string[]>([]);
-  const [available, setAvailable] = useState<Array<{ word: string; id: number }>>(
-    () => words.map((w, i) => ({ word: w, id: i }))
-  );
+  const [available, setAvailable] = useState(shuffled);
   const [checked, setChecked] = useState(false);
 
   const built = selected.join(' ');
@@ -35,31 +32,20 @@ export function SentenceBuilder({ exercise, onComplete }: { exercise: EditoExerc
   const removeWord = (idx: number) => {
     if (checked) return;
     const word = selected[idx];
-    const removed = words.map((w, i) => ({ word: w, id: i })).find(w => w.word === word && !available.some(a => a.id === w.id));
+    const removed = shuffled.find(w => w.word === word && !available.some(a => a.id === w.id));
     if (removed) setAvailable(a => [...a, removed].sort((x, y) => x.id - y.id));
     setSelected(s => s.filter((_, i) => i !== idx));
   };
 
-  const handleCheck = () => {
-    if (!selected.length) return;
-    setChecked(true);
-    if (isCorrect) onComplete?.();
-  };
-
   const handleReset = () => {
     setSelected([]);
-    setAvailable(words.map((w, i) => ({ word: w, id: i })));
+    setAvailable(shuffled);
     setChecked(false);
   };
 
   return (
-    <div className="bg-qz-card border border-border rounded-2xl p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h4 className="text-foreground font-semibold text-sm">{exercise.title}</h4>
-        <AudioButton text={correct} size="md" />
-      </div>
-
-      <p className="text-qz-text-muted text-xs mb-4">Составьте предложение из слов ниже</p>
+    <div>
+      <p className="text-qz-text-muted text-sm mb-3 italic">{ru}</p>
 
       {/* Drop zone */}
       <div className={`min-h-[56px] bg-muted border-2 rounded-xl px-4 py-3 mb-4 flex flex-wrap gap-2 items-center transition-colors ${
@@ -93,32 +79,82 @@ export function SentenceBuilder({ exercise, onComplete }: { exercise: EditoExerc
             className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-muted text-foreground text-sm hover:bg-muted transition-colors disabled:opacity-40">
             <RotateCcw className="w-3.5 h-3.5" /> Сброс
           </button>
-          <button onClick={handleCheck} disabled={!selected.length}
+          <button onClick={() => setChecked(true)} disabled={!selected.length}
             className="px-5 py-2 rounded-xl bg-[#4255ff] text-white text-sm font-semibold hover:bg-[#3144e0] transition-colors disabled:opacity-50">
             Проверить
           </button>
         </div>
       ) : (
         <div className={`flex gap-2 items-start p-3 rounded-xl text-sm ${isCorrect ? 'dark:bg-emerald-500/10 bg-emerald-50' : 'dark:bg-red-500/10 bg-red-50'}`}>
-          {isCorrect
-            ? <><CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" /><span className="dark:text-emerald-300 text-emerald-700 font-semibold">Отлично! <AudioButton text={correct} /></span></>
-            : (
-              <div className="w-full">
-                <div className="flex gap-2 items-center mb-2">
-                  <XCircle className="w-4 h-4 text-red-400 shrink-0" />
-                  <span className="dark:text-qz-text-muted text-foreground">Правильный вариант:</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-foreground font-medium">{correct}</span>
-                  <AudioButton text={correct} />
-                </div>
-                <button onClick={handleReset} className="mt-3 inline-flex items-center gap-1.5 text-xs text-qz-text-muted hover:text-foreground transition-colors">
+          {isCorrect ? (
+            <div className="flex items-center gap-2 w-full justify-between">
+              <div className="flex gap-2 items-center">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span className="dark:text-emerald-300 text-emerald-700 font-semibold">Отлично!</span>
+                <AudioButton text={correct} size="md" />
+              </div>
+              <button onClick={onDone}
+                className="px-4 py-1.5 rounded-xl bg-[#4255ff] text-white text-sm font-semibold hover:bg-[#3144e0] transition-colors">
+                Далее →
+              </button>
+            </div>
+          ) : (
+            <div className="w-full">
+              <div className="flex gap-2 items-center mb-2">
+                <XCircle className="w-4 h-4 text-red-400 shrink-0" />
+                <span className="dark:text-qz-text-muted text-foreground">Правильный вариант:</span>
+              </div>
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-foreground font-medium">{correct}</span>
+                <AudioButton text={correct} size="md" />
+              </div>
+              <div className="flex gap-3 items-center">
+                <button onClick={handleReset} className="inline-flex items-center gap-1.5 text-xs text-qz-text-muted hover:text-foreground transition-colors">
                   <RotateCcw className="w-3 h-3" /> Попробовать ещё раз
                 </button>
+                <button onClick={onDone} className="ml-auto text-xs text-qz-text-muted hover:text-foreground transition-colors">
+                  Пропустить →
+                </button>
               </div>
-            )
-          }
+            </div>
+          )}
         </div>
+      )}
+    </div>
+  );
+}
+
+export function SentenceBuilder({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: () => void }) {
+  const sentences = exercise.sentences ?? [];
+  const [current, setCurrent] = useState(0);
+
+  const handleDone = () => {
+    if (current + 1 >= sentences.length) {
+      onComplete?.();
+    } else {
+      setCurrent(i => i + 1);
+    }
+  };
+
+  return (
+    <div className="bg-qz-card border border-border rounded-2xl p-6">
+      <div className="flex items-center justify-between mb-1">
+        <h4 className="text-foreground font-semibold text-sm">{exercise.title}</h4>
+        {sentences.length > 1 && (
+          <span className="text-qz-text-muted text-xs">{current + 1} / {sentences.length}</span>
+        )}
+      </div>
+      <p className="text-qz-text-muted text-xs mb-4">Составьте предложение из слов ниже</p>
+
+      {sentences.length > 0 ? (
+        <SentenceItem
+          key={current}
+          words={sentences[current].words}
+          ru={sentences[current].ru}
+          onDone={handleDone}
+        />
+      ) : (
+        <p className="text-qz-text-muted text-sm">Нет данных для упражнения.</p>
       )}
     </div>
   );

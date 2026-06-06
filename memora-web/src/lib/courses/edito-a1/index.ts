@@ -40,6 +40,7 @@ export interface EditoExercise {
   // sentence-builder
   sentence?: string;
   words?: string[];
+  sentences?: Array<{ words: string[]; ru: string }>;
   // gender-quiz
   items?: GenderItem[] | NumberItem[];
   // dialogue
