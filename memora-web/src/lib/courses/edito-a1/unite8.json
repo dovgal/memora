@@ -3,26 +3,106 @@
   "title": "Unité 8 : Voyages et transports",
   "description": "Parler de voyages, réserver un billet. Le passé composé avec avoir, les prépositions de lieux (pays/villes), les moyens de transport.",
   "vocabulary": [
-    { "fr": "l'avion", "ru": "самолёт", "type": "transport" },
-    { "fr": "le train", "ru": "поезд", "type": "transport" },
-    { "fr": "le bateau", "ru": "корабль / лодка", "type": "transport" },
-    { "fr": "la voiture", "ru": "автомобиль", "type": "transport" },
-    { "fr": "le bus / le car", "ru": "автобус", "type": "transport" },
-    { "fr": "le métro", "ru": "метро", "type": "transport" },
-    { "fr": "en avion", "ru": "на самолёте", "type": "preposition" },
-    { "fr": "en train", "ru": "на поезде", "type": "preposition" },
-    { "fr": "en voiture", "ru": "на машине", "type": "preposition" },
-    { "fr": "à vélo", "ru": "на велосипеде", "type": "preposition" },
-    { "fr": "à pied", "ru": "пешком", "type": "preposition" },
-    { "fr": "un billet", "ru": "билет", "type": "voyage" },
-    { "fr": "un passeport", "ru": "паспорт", "type": "voyage" },
-    { "fr": "une valise", "ru": "чемодан", "type": "voyage" },
-    { "fr": "réserver", "ru": "бронировать", "type": "verbe" },
-    { "fr": "partir", "ru": "уезжать / улетать", "type": "verbe" },
-    { "fr": "arriver", "ru": "прибывать", "type": "verbe" },
-    { "fr": "en France", "ru": "во Франции / во Францию", "type": "lieu" },
-    { "fr": "au Japon", "ru": "в Японии / в Японию", "type": "lieu" },
-    { "fr": "à New York", "ru": "в Нью-Йорке / в Нью-Йорк", "type": "lieu" }
+    {
+      "fr": "l'avion",
+      "ru": "самолёт",
+      "type": "transport"
+    },
+    {
+      "fr": "le train",
+      "ru": "поезд",
+      "type": "transport"
+    },
+    {
+      "fr": "le bateau",
+      "ru": "корабль / лодка",
+      "type": "transport"
+    },
+    {
+      "fr": "la voiture",
+      "ru": "автомобиль",
+      "type": "transport"
+    },
+    {
+      "fr": "le bus / le car",
+      "ru": "автобус",
+      "type": "transport"
+    },
+    {
+      "fr": "le métro",
+      "ru": "метро",
+      "type": "transport"
+    },
+    {
+      "fr": "en avion",
+      "ru": "на самолёте",
+      "type": "preposition"
+    },
+    {
+      "fr": "en train",
+      "ru": "на поезде",
+      "type": "preposition"
+    },
+    {
+      "fr": "en voiture",
+      "ru": "на машине",
+      "type": "preposition"
+    },
+    {
+      "fr": "à vélo",
+      "ru": "на велосипеде",
+      "type": "preposition"
+    },
+    {
+      "fr": "à pied",
+      "ru": "пешком",
+      "type": "preposition"
+    },
+    {
+      "fr": "un billet",
+      "ru": "билет",
+      "type": "voyage"
+    },
+    {
+      "fr": "un passeport",
+      "ru": "паспорт",
+      "type": "voyage"
+    },
+    {
+      "fr": "une valise",
+      "ru": "чемодан",
+      "type": "voyage"
+    },
+    {
+      "fr": "réserver",
+      "ru": "бронировать",
+      "type": "verbe"
+    },
+    {
+      "fr": "partir",
+      "ru": "уезжать / улетать",
+      "type": "verbe"
+    },
+    {
+      "fr": "arriver",
+      "ru": "прибывать",
+      "type": "verbe"
+    },
+    {
+      "fr": "en France",
+      "ru": "во Франции / во Францию",
+      "type": "lieu"
+    },
+    {
+      "fr": "au Japon",
+      "ru": "в Японии / в Японию",
+      "type": "lieu"
+    },
+    {
+      "fr": "à New York",
+      "ru": "в Нью-Йорке / в Нью-Йорк",
+      "type": "lieu"
+    }
   ],
   "exercises": [
     {
@@ -42,12 +122,66 @@
       "type": "grammar-quiz",
       "title": "Упражнение 1 : Passé composé — participe passé",
       "questions": [
-        { "question": "Hier, j'___ visité Paris. (avoir)", "options": ["ai", "as", "a", "avons"], "correctAnswer": "ai" },
-        { "question": "Elle ___ pris le train. (avoir)", "options": ["ai", "as", "a", "ont"], "correctAnswer": "a" },
-        { "question": "Nous ___ mangé au restaurant. (avoir)", "options": ["avons", "avez", "ont", "ai"], "correctAnswer": "avons" },
-        { "question": "Participe passé de 'faire' ?", "options": ["faisé", "fait", "failli", "fais"], "correctAnswer": "fait" },
-        { "question": "Participe passé de 'voir' ?", "options": ["voyé", "vu", "voir", "vois"], "correctAnswer": "vu" },
-        { "question": "Je ___ ___ réserver un billet. (passé composé de réserver)", "options": ["ai réservé", "a réservé", "avons réservé", "ont réservé"], "correctAnswer": "ai réservé" }
+        {
+          "question": "Hier, j'___ visité Paris. (avoir)",
+          "options": [
+            "ai",
+            "as",
+            "a",
+            "avons"
+          ],
+          "correctAnswer": "ai"
+        },
+        {
+          "question": "Elle ___ pris le train. (avoir)",
+          "options": [
+            "ai",
+            "as",
+            "a",
+            "ont"
+          ],
+          "correctAnswer": "a"
+        },
+        {
+          "question": "Nous ___ mangé au restaurant. (avoir)",
+          "options": [
+            "avons",
+            "avez",
+            "ont",
+            "ai"
+          ],
+          "correctAnswer": "avons"
+        },
+        {
+          "question": "Participe passé de 'faire' ?",
+          "options": [
+            "faisé",
+            "fait",
+            "failli",
+            "fais"
+          ],
+          "correctAnswer": "fait"
+        },
+        {
+          "question": "Participe passé de 'voir' ?",
+          "options": [
+            "voyé",
+            "vu",
+            "voir",
+            "vois"
+          ],
+          "correctAnswer": "vu"
+        },
+        {
+          "question": "Je ___ ___ réserver un billet. (passé composé de réserver)",
+          "options": [
+            "ai réservé",
+            "a réservé",
+            "avons réservé",
+            "ont réservé"
+          ],
+          "correctAnswer": "ai réservé"
+        }
       ]
     },
     {
@@ -55,11 +189,56 @@
       "type": "grammar-quiz",
       "title": "Упражнение 2 : Prépositions de pays",
       "questions": [
-        { "question": "Je vais ___ France. (жен. страна)", "options": ["en", "au", "aux", "à"], "correctAnswer": "en" },
-        { "question": "Il habite ___ Japon. (муж. страна)", "options": ["en", "au", "aux", "à"], "correctAnswer": "au" },
-        { "question": "Nous allons ___ États-Unis. (мн.ч.)", "options": ["en", "au", "aux", "à"], "correctAnswer": "aux" },
-        { "question": "Elle arrive ___ Madrid. (город)", "options": ["en", "au", "à", "aux"], "correctAnswer": "à" },
-        { "question": "Il vient ___ Portugal. (муж. страна = из)", "options": ["de", "du", "des", "d'"], "correctAnswer": "du" }
+        {
+          "question": "Je vais ___ France. (жен. страна)",
+          "options": [
+            "en",
+            "au",
+            "aux",
+            "à"
+          ],
+          "correctAnswer": "en"
+        },
+        {
+          "question": "Il habite ___ Japon. (муж. страна)",
+          "options": [
+            "en",
+            "au",
+            "aux",
+            "à"
+          ],
+          "correctAnswer": "au"
+        },
+        {
+          "question": "Nous allons ___ États-Unis. (мн.ч.)",
+          "options": [
+            "en",
+            "au",
+            "aux",
+            "à"
+          ],
+          "correctAnswer": "aux"
+        },
+        {
+          "question": "Elle arrive ___ Madrid. (город)",
+          "options": [
+            "en",
+            "au",
+            "à",
+            "aux"
+          ],
+          "correctAnswer": "à"
+        },
+        {
+          "question": "Il vient ___ Portugal. (муж. страна = из)",
+          "options": [
+            "de",
+            "du",
+            "des",
+            "d'"
+          ],
+          "correctAnswer": "du"
+        }
       ]
     },
     {
@@ -67,10 +246,59 @@
       "type": "sentence-builder",
       "title": "Упражнение 3 : Mon voyage",
       "sentences": [
-        { "words": ["L'année", "dernière", ",", "j'ai", "voyagé", "en", "Italie", "."], "ru": "В прошлом году я путешествовал(а) в Италии." },
-        { "words": ["Nous", "avons", "pris", "le", "train", "pour", "aller", "à", "Lyon", "."], "ru": "Мы поехали поездом в Лион." },
-        { "words": ["Elle", "a", "réservé", "un", "billet", "d'avion", "."], "ru": "Она забронировала авиабилет." },
-        { "words": ["Je", "n'ai", "pas", "vu", "la", "tour", "Eiffel", "."], "ru": "Я не видел(а) Эйфелеву башню." }
+        {
+          "words": [
+            "L'année",
+            "dernière",
+            ",",
+            "j'ai",
+            "voyagé",
+            "en",
+            "Italie",
+            "."
+          ],
+          "ru": "В прошлом году я путешествовал(а) в Италии."
+        },
+        {
+          "words": [
+            "Nous",
+            "avons",
+            "pris",
+            "le",
+            "train",
+            "pour",
+            "aller",
+            "à",
+            "Lyon",
+            "."
+          ],
+          "ru": "Мы поехали поездом в Лион."
+        },
+        {
+          "words": [
+            "Elle",
+            "a",
+            "réservé",
+            "un",
+            "billet",
+            "d'avion",
+            "."
+          ],
+          "ru": "Она забронировала авиабилет."
+        },
+        {
+          "words": [
+            "Je",
+            "n'ai",
+            "pas",
+            "vu",
+            "la",
+            "tour",
+            "Eiffel",
+            "."
+          ],
+          "ru": "Я не видел(а) Эйфелеву башню."
+        }
       ]
     },
     {
@@ -80,7 +308,58 @@
       "audioFile": "piste_070.mp3",
       "source": "cahier",
       "questions": [
-        { "question": "Quel moyen de transport est utilisé ? (Какой вид транспорта использован?)", "options": ["Le train", "L'avion", "La voiture", "Le bus"], "correctAnswer": "Le train" }
+        {
+          "question": "Quel moyen de transport est utilisé ? (Какой вид транспорта использован?)",
+          "options": [
+            "Le train",
+            "L'avion",
+            "La voiture",
+            "Le bus"
+          ],
+          "correctAnswer": "Le train"
+        }
+      ]
+    },
+    {
+      "id": "u8-livre-audio1",
+      "type": "listening",
+      "title": "Document B : Bonjour docteure ! (Livre, piste ~106)",
+      "audioFile": "106_Edito_A1_Livre.mp3",
+      "source": "livre",
+      "transcript": "Dialogue 1\nLe patient : Bonjour docteure.\nLa docteure : Bonjour, monsieur ! Qu'est-ce qui vous arrive ?\nLe patient : Eh bien… J'ai un rhume, j'ai mal à la gorge et à la tête. Ça a commencé hier.\nLa docteure : Et vous avez passé une bonne nuit ?\nLe patient : Ben, j'ai dormi dix heures ! J'ai eu de la fièvre cette nuit…\nLa docteure : Et vous avez encore de la fièvre ce matin ?\nLe patient : Oui, j'ai 39.\nLa docteure : Est-ce que vous avez mal aux oreilles ?\nLe patient : Non.\nLa docteure : Vous toussez ?\nLe patient : Un peu.\nLa docteure : Vous allez prendre du paracétamol, du sirop pour la toux et un médicament pour le rhume. Buvez 1,5 litre par jour minimum.\n\nDialogue 2\nLa patiente : Bonjour, docteure !\nLa docteure : Bonjour, madame. Qu'est-ce qui vous arrive ?\nLa patiente : J'ai fait un footing il y a deux jours et j'ai eu mal au genou.\nLa docteure : Et vous vous sentez comment aujourd'hui ?\nLa patiente : J'ai encore mal et je suis inquiète.\nLa docteure : Vous pesez combien ?\nLa patiente : Je pèse 60 kg.\nLa docteure : Bon, vous allez passer une radio du genou.",
+      "questions": [
+        {
+          "question": "Qu'est-ce que le premier patient a comme problème ? (Что не так с первым пациентом?)",
+          "options": [
+            "Il a mal au genou",
+            "Il a un rhume et de la fièvre",
+            "Il a mal aux oreilles",
+            "Il est fatigué"
+          ],
+          "correctAnswer": "Il a un rhume et de la fièvre",
+          "explanation": "Le patient dit : « J'ai un rhume, j'ai mal à la gorge et à la tête. J'ai eu de la fièvre cette nuit. »"
+        }
+      ]
+    },
+    {
+      "id": "u8-livre-essentiel",
+      "type": "listening",
+      "title": "L'essentiel : Alicia et son père (Livre, piste ~112)",
+      "audioFile": "112_Edito_A1_Livre.mp3",
+      "source": "livre",
+      "transcript": "Alicia : Bon… Merci papa pour le café, mais je ne peux pas rester, je vais chez le dentiste. J'ai rendez-vous à 15 h 30.\nSon père : Ah… Tu as mal aux dents ?\nAlicia : Non, c'est pour un contrôle. J'y vais une fois par an !\nSon père : Et tu y vas comment ? Tu es à pied ou à vélo ?\nAlicia : J'y vais en bus, j'ai mal au genou.\nSon père : Mais qu'est-ce que tu as fait ?\nAlicia : Ben, j'ai voulu faire du ski avec Luc et…\nSon père : Avec ton frère ? Mais enfin Alicia, il a un très bon niveau ! Et tu as pris rendez-vous chez le médecin ?\nAlicia : Oui… J'y vais demain. J'ai rendez-vous avec un médecin spécialiste du sport. Je suis un peu inquiète, mais c'est un bon médecin.\nSon père : Oh là là ! Skier avec ton frère, mais quelle idée ! Tiens, prends du paracétamol.\nAlicia : Merci. Ah, au fait, j'ai une bonne nouvelle. Justine a eu son examen. Elle est infirmière.\nSon père : Super ! Je suis content pour elle.",
+      "questions": [
+        {
+          "question": "Pourquoi Alicia va-t-elle chez le dentiste ? (Почему Алисия идёт к стоматологу?)",
+          "options": [
+            "Elle a mal aux dents",
+            "C'est pour un contrôle annuel",
+            "Elle a eu un accident",
+            "Son père l'a conseillé"
+          ],
+          "correctAnswer": "C'est pour un contrôle annuel",
+          "explanation": "Alicia dit : « Non, c'est pour un contrôle. J'y vais une fois par an ! »"
+        }
       ]
     },
     {
@@ -108,13 +387,76 @@
       "type": "grammar-quiz",
       "title": "Упражнение 4 : Passé composé — avoir ou être ?",
       "questions": [
-        { "question": "Hier, j'___ voyagé en Italie. (voyager → avoir)", "options": ["suis", "ai", "es", "est"], "correctAnswer": "ai" },
-        { "question": "Elle ___ arrivée à Paris ce matin. (arriver → être)", "options": ["a", "est", "ont", "sont"], "correctAnswer": "est" },
-        { "question": "Nous ___ partis en vacances lundi. (partir → être)", "options": ["avons", "sommes", "êtes", "sont"], "correctAnswer": "sommes" },
-        { "question": "Ils ___ pris le taxi. (prendre → avoir)", "options": ["sont", "ont", "avons", "êtes"], "correctAnswer": "ont" },
-        { "question": "Tu ___ allé(e) à la gare ? (aller → être)", "options": ["as", "es", "a", "est"], "correctAnswer": "es" },
-        { "question": "J'___ réservé un hôtel à Lyon. (réserver → avoir)", "options": ["suis", "ai", "es", "est"], "correctAnswer": "ai" },
-        { "question": "Le train ___ parti à 9h. (partir → être, il)", "options": ["a", "est", "ont", "sont"], "correctAnswer": "est" }
+        {
+          "question": "Hier, j'___ voyagé en Italie. (voyager → avoir)",
+          "options": [
+            "suis",
+            "ai",
+            "es",
+            "est"
+          ],
+          "correctAnswer": "ai"
+        },
+        {
+          "question": "Elle ___ arrivée à Paris ce matin. (arriver → être)",
+          "options": [
+            "a",
+            "est",
+            "ont",
+            "sont"
+          ],
+          "correctAnswer": "est"
+        },
+        {
+          "question": "Nous ___ partis en vacances lundi. (partir → être)",
+          "options": [
+            "avons",
+            "sommes",
+            "êtes",
+            "sont"
+          ],
+          "correctAnswer": "sommes"
+        },
+        {
+          "question": "Ils ___ pris le taxi. (prendre → avoir)",
+          "options": [
+            "sont",
+            "ont",
+            "avons",
+            "êtes"
+          ],
+          "correctAnswer": "ont"
+        },
+        {
+          "question": "Tu ___ allé(e) à la gare ? (aller → être)",
+          "options": [
+            "as",
+            "es",
+            "a",
+            "est"
+          ],
+          "correctAnswer": "es"
+        },
+        {
+          "question": "J'___ réservé un hôtel à Lyon. (réserver → avoir)",
+          "options": [
+            "suis",
+            "ai",
+            "es",
+            "est"
+          ],
+          "correctAnswer": "ai"
+        },
+        {
+          "question": "Le train ___ parti à 9h. (partir → être, il)",
+          "options": [
+            "a",
+            "est",
+            "ont",
+            "sont"
+          ],
+          "correctAnswer": "est"
+        }
       ]
     },
     {
@@ -122,12 +464,66 @@
       "type": "grammar-quiz",
       "title": "Упражнение 5 : Transports et prépositions",
       "questions": [
-        { "question": "Je vais à Paris ___ train. (внутри транспорта)", "options": ["à", "en", "par", "avec"], "correctAnswer": "en" },
-        { "question": "Elle préfère aller au travail ___ vélo. (без мотора)", "options": ["en", "à", "par", "dans"], "correctAnswer": "à" },
-        { "question": "Nous avons voyagé ___ avion. (внутри)", "options": ["à", "en", "par", "avec"], "correctAnswer": "en" },
-        { "question": "Il rentre chez lui ___ pied. (пешком)", "options": ["en", "à", "par", "de"], "correctAnswer": "à" },
-        { "question": "Ils sont venus ___ voiture. (машина)", "options": ["à", "en", "par", "dans"], "correctAnswer": "en" },
-        { "question": "Le matin, je prends le métro ___ aller au bureau. (чтобы)", "options": ["pour", "parce que", "si", "mais"], "correctAnswer": "pour" }
+        {
+          "question": "Je vais à Paris ___ train. (внутри транспорта)",
+          "options": [
+            "à",
+            "en",
+            "par",
+            "avec"
+          ],
+          "correctAnswer": "en"
+        },
+        {
+          "question": "Elle préfère aller au travail ___ vélo. (без мотора)",
+          "options": [
+            "en",
+            "à",
+            "par",
+            "dans"
+          ],
+          "correctAnswer": "à"
+        },
+        {
+          "question": "Nous avons voyagé ___ avion. (внутри)",
+          "options": [
+            "à",
+            "en",
+            "par",
+            "avec"
+          ],
+          "correctAnswer": "en"
+        },
+        {
+          "question": "Il rentre chez lui ___ pied. (пешком)",
+          "options": [
+            "en",
+            "à",
+            "par",
+            "de"
+          ],
+          "correctAnswer": "à"
+        },
+        {
+          "question": "Ils sont venus ___ voiture. (машина)",
+          "options": [
+            "à",
+            "en",
+            "par",
+            "dans"
+          ],
+          "correctAnswer": "en"
+        },
+        {
+          "question": "Le matin, je prends le métro ___ aller au bureau. (чтобы)",
+          "options": [
+            "pour",
+            "parce que",
+            "si",
+            "mais"
+          ],
+          "correctAnswer": "pour"
+        }
       ]
     },
     {
@@ -135,16 +531,76 @@
       "type": "gender-quiz",
       "title": "Quel article ? — Les transports et les lieux de voyage",
       "items": [
-        { "word": "avion", "emoji": "✈️", "ru": "самолёт", "article": "l'", "hint": "Мужской перед гласной: l'avion (en avion)" },
-        { "word": "train", "emoji": "🚂", "ru": "поезд", "article": "le", "hint": "Мужской: le train — запомнить" },
-        { "word": "voiture", "emoji": "🚗", "ru": "автомобиль", "article": "la", "hint": "Женский: la voiture — оканчивается на -ure (жен.р.)" },
-        { "word": "bus", "emoji": "🚌", "ru": "автобус", "article": "le", "hint": "Мужской: le bus — короткое слово" },
-        { "word": "métro", "emoji": "🚇", "ru": "метро", "article": "le", "hint": "Мужской: le métro — запомнить" },
-        { "word": "taxi", "emoji": "🚕", "ru": "такси", "article": "le", "hint": "Мужской: le taxi — иностранное слово, муж.р." },
-        { "word": "bateau", "emoji": "🚢", "ru": "корабль/лодка", "article": "le", "hint": "Мужской: le bateau — оканчивается на -eau (муж.р.)" },
-        { "word": "vélo", "emoji": "🚴", "ru": "велосипед", "article": "le", "hint": "Мужской: le vélo — запомнить" },
-        { "word": "gare", "emoji": "🏛️", "ru": "вокзал", "article": "la", "hint": "Женский: la gare — оканчивается на -e (жен.р.)" },
-        { "word": "aéroport", "emoji": "🛫", "ru": "аэропорт", "article": "l'", "hint": "Мужской перед гласной: l'aéroport" }
+        {
+          "word": "avion",
+          "emoji": "✈️",
+          "ru": "самолёт",
+          "article": "l'",
+          "hint": "Мужской перед гласной: l'avion (en avion)"
+        },
+        {
+          "word": "train",
+          "emoji": "🚂",
+          "ru": "поезд",
+          "article": "le",
+          "hint": "Мужской: le train — запомнить"
+        },
+        {
+          "word": "voiture",
+          "emoji": "🚗",
+          "ru": "автомобиль",
+          "article": "la",
+          "hint": "Женский: la voiture — оканчивается на -ure (жен.р.)"
+        },
+        {
+          "word": "bus",
+          "emoji": "🚌",
+          "ru": "автобус",
+          "article": "le",
+          "hint": "Мужской: le bus — короткое слово"
+        },
+        {
+          "word": "métro",
+          "emoji": "🚇",
+          "ru": "метро",
+          "article": "le",
+          "hint": "Мужской: le métro — запомнить"
+        },
+        {
+          "word": "taxi",
+          "emoji": "🚕",
+          "ru": "такси",
+          "article": "le",
+          "hint": "Мужской: le taxi — иностранное слово, муж.р."
+        },
+        {
+          "word": "bateau",
+          "emoji": "🚢",
+          "ru": "корабль/лодка",
+          "article": "le",
+          "hint": "Мужской: le bateau — оканчивается на -eau (муж.р.)"
+        },
+        {
+          "word": "vélo",
+          "emoji": "🚴",
+          "ru": "велосипед",
+          "article": "le",
+          "hint": "Мужской: le vélo — запомнить"
+        },
+        {
+          "word": "gare",
+          "emoji": "🏛️",
+          "ru": "вокзал",
+          "article": "la",
+          "hint": "Женский: la gare — оканчивается на -e (жен.р.)"
+        },
+        {
+          "word": "aéroport",
+          "emoji": "🛫",
+          "ru": "аэропорт",
+          "article": "l'",
+          "hint": "Мужской перед гласной: l'aéroport"
+        }
       ]
     },
     {
@@ -153,14 +609,62 @@
       "title": "Dialogue : À l'aéroport",
       "context": "Lucas улетает в отпуск. Emma провожает его в аэропорту.",
       "exchanges": [
-        { "speaker": "Emma", "side": "left", "text": "Tu es prêt pour ton voyage ?" },
-        { "speaker": "Lucas", "side": "right", "text": "Oui ! J'ai mon passeport et ma valise." },
-        { "speaker": "Emma", "side": "left", "text": "Super ! Et tu vas où exactement ?" },
-        { "speaker": "Lucas", "side": "right", "text": "___", "isBlank": true, "options": ["Je vais en Espagne, à Barcelone !", "Je reste à la maison.", "J'ai déjà mangé, merci."], "correctAnswer": "Je vais en Espagne, à Barcelone !", "explanation": "Правильно: en + жен. страна (Espagne), à + город (Barcelone)" },
-        { "speaker": "Emma", "side": "left", "text": "Fantastique ! Tu voyages en avion ?" },
-        { "speaker": "Lucas", "side": "right", "text": "Oui, le vol part à 14h. J'ai réservé le billet en ligne." },
-        { "speaker": "Emma", "side": "left", "text": "Et tu es déjà allé en Espagne avant ?" },
-        { "speaker": "Lucas", "side": "right", "text": "___", "isBlank": true, "options": ["Non, c'est ma première fois ! Je suis très content.", "Oui, je mange souvent du pain.", "Je préfère le train."], "correctAnswer": "Non, c'est ma première fois ! Je suis très content.", "explanation": "Логичный ответ: говорим о первом визите и выражаем радость" }
+        {
+          "speaker": "Emma",
+          "side": "left",
+          "text": "Tu es prêt pour ton voyage ?"
+        },
+        {
+          "speaker": "Lucas",
+          "side": "right",
+          "text": "Oui ! J'ai mon passeport et ma valise."
+        },
+        {
+          "speaker": "Emma",
+          "side": "left",
+          "text": "Super ! Et tu vas où exactement ?"
+        },
+        {
+          "speaker": "Lucas",
+          "side": "right",
+          "text": "___",
+          "isBlank": true,
+          "options": [
+            "Je vais en Espagne, à Barcelone !",
+            "Je reste à la maison.",
+            "J'ai déjà mangé, merci."
+          ],
+          "correctAnswer": "Je vais en Espagne, à Barcelone !",
+          "explanation": "Правильно: en + жен. страна (Espagne), à + город (Barcelone)"
+        },
+        {
+          "speaker": "Emma",
+          "side": "left",
+          "text": "Fantastique ! Tu voyages en avion ?"
+        },
+        {
+          "speaker": "Lucas",
+          "side": "right",
+          "text": "Oui, le vol part à 14h. J'ai réservé le billet en ligne."
+        },
+        {
+          "speaker": "Emma",
+          "side": "left",
+          "text": "Et tu es déjà allé en Espagne avant ?"
+        },
+        {
+          "speaker": "Lucas",
+          "side": "right",
+          "text": "___",
+          "isBlank": true,
+          "options": [
+            "Non, c'est ma première fois ! Je suis très content.",
+            "Oui, je mange souvent du pain.",
+            "Je préfère le train."
+          ],
+          "correctAnswer": "Non, c'est ma première fois ! Je suis très content.",
+          "explanation": "Логичный ответ: говорим о первом визите и выражаем радость"
+        }
       ]
     },
     {
@@ -170,12 +674,72 @@
       "context": "Мари рассказывает о своей поездке в Париж. Вставьте подходящие слова.",
       "text": "Le mois dernier, Marie ___ allée à Paris. Elle ___ le train depuis Lyon. Elle ___ arrivée à la Gare de Lyon à midi. Ensuite, elle ___ pris le métro pour aller à l'hôtel. Elle ___ visité la tour Eiffel et le Louvre. Le soir, elle ___ mangé dans un bon restaurant.",
       "blanks": [
-        { "options": ["a", "est", "ont", "sont"], "correctAnswer": "est", "hint": "aller → être; Marie est allée", "explanation": "aller se conjugue avec ÊTRE au passé composé; allée — согласование с Marie (жен.р.)" },
-        { "options": ["est", "a", "sont", "ont"], "correctAnswer": "a", "hint": "prendre → avoir; elle a pris", "explanation": "prendre se conjugue avec AVOIR au passé composé" },
-        { "options": ["a", "est", "ont", "sont"], "correctAnswer": "est", "hint": "arriver → être; elle est arrivée", "explanation": "arriver se conjugue avec ÊTRE au passé composé" },
-        { "options": ["est", "a", "sont", "ont"], "correctAnswer": "a", "hint": "prendre → avoir; elle a pris", "explanation": "prendre utilise AVOIR comme auxiliaire" },
-        { "options": ["est", "a", "sont", "ont"], "correctAnswer": "a", "hint": "visiter → avoir; elle a visité", "explanation": "visiter est un verbe régulier -ER qui utilise AVOIR" },
-        { "options": ["est", "a", "sont", "ont"], "correctAnswer": "a", "hint": "manger → avoir; elle a mangé", "explanation": "manger utilise AVOIR au passé composé" }
+        {
+          "options": [
+            "a",
+            "est",
+            "ont",
+            "sont"
+          ],
+          "correctAnswer": "est",
+          "hint": "aller → être; Marie est allée",
+          "explanation": "aller se conjugue avec ÊTRE au passé composé; allée — согласование с Marie (жен.р.)"
+        },
+        {
+          "options": [
+            "est",
+            "a",
+            "sont",
+            "ont"
+          ],
+          "correctAnswer": "a",
+          "hint": "prendre → avoir; elle a pris",
+          "explanation": "prendre se conjugue avec AVOIR au passé composé"
+        },
+        {
+          "options": [
+            "a",
+            "est",
+            "ont",
+            "sont"
+          ],
+          "correctAnswer": "est",
+          "hint": "arriver → être; elle est arrivée",
+          "explanation": "arriver se conjugue avec ÊTRE au passé composé"
+        },
+        {
+          "options": [
+            "est",
+            "a",
+            "sont",
+            "ont"
+          ],
+          "correctAnswer": "a",
+          "hint": "prendre → avoir; elle a pris",
+          "explanation": "prendre utilise AVOIR comme auxiliaire"
+        },
+        {
+          "options": [
+            "est",
+            "a",
+            "sont",
+            "ont"
+          ],
+          "correctAnswer": "a",
+          "hint": "visiter → avoir; elle a visité",
+          "explanation": "visiter est un verbe régulier -ER qui utilise AVOIR"
+        },
+        {
+          "options": [
+            "est",
+            "a",
+            "sont",
+            "ont"
+          ],
+          "correctAnswer": "a",
+          "hint": "manger → avoir; elle a mangé",
+          "explanation": "manger utilise AVOIR au passé composé"
+        }
       ]
     },
     {
@@ -183,10 +747,65 @@
       "type": "sentence-builder",
       "title": "Упражнение 6 : Voyages et transports",
       "sentences": [
-        { "words": ["L'été", "dernier", ",", "il", "est", "parti", "en", "vacances", "en", "Italie", "."], "ru": "Прошлым летом он уехал в отпуск в Италию." },
-        { "words": ["Je", "préfère", "voyager", "en", "train", "parce", "que", "c'est", "confortable", "."], "ru": "Я предпочитаю ездить на поезде, потому что это удобно." },
-        { "words": ["Elle", "est", "arrivée", "à", "l'aéroport", "avec", "sa", "valise", "."], "ru": "Она прибыла в аэропорт со своим чемоданом." },
-        { "words": ["Nous", "allons", "au", "travail", "à", "vélo", "chaque", "matin", "."], "ru": "Каждое утро мы ездим на работу на велосипеде." }
+        {
+          "words": [
+            "L'été",
+            "dernier",
+            ",",
+            "il",
+            "est",
+            "parti",
+            "en",
+            "vacances",
+            "en",
+            "Italie",
+            "."
+          ],
+          "ru": "Прошлым летом он уехал в отпуск в Италию."
+        },
+        {
+          "words": [
+            "Je",
+            "préfère",
+            "voyager",
+            "en",
+            "train",
+            "parce",
+            "que",
+            "c'est",
+            "confortable",
+            "."
+          ],
+          "ru": "Я предпочитаю ездить на поезде, потому что это удобно."
+        },
+        {
+          "words": [
+            "Elle",
+            "est",
+            "arrivée",
+            "à",
+            "l'aéroport",
+            "avec",
+            "sa",
+            "valise",
+            "."
+          ],
+          "ru": "Она прибыла в аэропорт со своим чемоданом."
+        },
+        {
+          "words": [
+            "Nous",
+            "allons",
+            "au",
+            "travail",
+            "à",
+            "vélo",
+            "chaque",
+            "matin",
+            "."
+          ],
+          "ru": "Каждое утро мы ездим на работу на велосипеде."
+        }
       ]
     }
   ]

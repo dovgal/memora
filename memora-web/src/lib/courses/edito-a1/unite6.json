@@ -3,27 +3,111 @@
   "title": "Unité 6 : Les loisirs",
   "description": "Parler de ses loisirs et passions. Le verbe faire, les sports et activités, le futur proche, exprimer ses goûts.",
   "vocabulary": [
-    { "fr": "le sport", "ru": "спорт", "type": "loisir" },
-    { "fr": "le football", "ru": "футбол", "type": "sport" },
-    { "fr": "le tennis", "ru": "теннис", "type": "sport" },
-    { "fr": "la natation", "ru": "плавание", "type": "sport" },
-    { "fr": "le vélo", "ru": "велосипед / велоспорт", "type": "sport" },
-    { "fr": "la danse", "ru": "танцы", "type": "loisir" },
-    { "fr": "la musique", "ru": "музыка", "type": "loisir" },
-    { "fr": "la lecture", "ru": "чтение", "type": "loisir" },
-    { "fr": "le cinéma", "ru": "кино", "type": "loisir" },
-    { "fr": "le théâtre", "ru": "театр", "type": "loisir" },
-    { "fr": "les voyages", "ru": "путешествия", "type": "loisir" },
-    { "fr": "la cuisine", "ru": "кулинария / кухня", "type": "loisir" },
-    { "fr": "J'aime (beaucoup)...", "ru": "Мне (очень) нравится...", "type": "expression" },
-    { "fr": "J'adore...", "ru": "Я обожаю...", "type": "expression" },
-    { "fr": "Je n'aime pas...", "ru": "Мне не нравится...", "type": "expression" },
-    { "fr": "Je déteste...", "ru": "Я ненавижу...", "type": "expression" },
-    { "fr": "faire du sport", "ru": "заниматься спортом", "type": "expression" },
-    { "fr": "faire du vélo", "ru": "кататься на велосипеде", "type": "expression" },
-    { "fr": "faire la cuisine", "ru": "готовить", "type": "expression" },
-    { "fr": "jouer au football", "ru": "играть в футбол", "type": "expression" },
-    { "fr": "jouer de la guitare", "ru": "играть на гитаре", "type": "expression" }
+    {
+      "fr": "le sport",
+      "ru": "спорт",
+      "type": "loisir"
+    },
+    {
+      "fr": "le football",
+      "ru": "футбол",
+      "type": "sport"
+    },
+    {
+      "fr": "le tennis",
+      "ru": "теннис",
+      "type": "sport"
+    },
+    {
+      "fr": "la natation",
+      "ru": "плавание",
+      "type": "sport"
+    },
+    {
+      "fr": "le vélo",
+      "ru": "велосипед / велоспорт",
+      "type": "sport"
+    },
+    {
+      "fr": "la danse",
+      "ru": "танцы",
+      "type": "loisir"
+    },
+    {
+      "fr": "la musique",
+      "ru": "музыка",
+      "type": "loisir"
+    },
+    {
+      "fr": "la lecture",
+      "ru": "чтение",
+      "type": "loisir"
+    },
+    {
+      "fr": "le cinéma",
+      "ru": "кино",
+      "type": "loisir"
+    },
+    {
+      "fr": "le théâtre",
+      "ru": "театр",
+      "type": "loisir"
+    },
+    {
+      "fr": "les voyages",
+      "ru": "путешествия",
+      "type": "loisir"
+    },
+    {
+      "fr": "la cuisine",
+      "ru": "кулинария / кухня",
+      "type": "loisir"
+    },
+    {
+      "fr": "J'aime (beaucoup)...",
+      "ru": "Мне (очень) нравится...",
+      "type": "expression"
+    },
+    {
+      "fr": "J'adore...",
+      "ru": "Я обожаю...",
+      "type": "expression"
+    },
+    {
+      "fr": "Je n'aime pas...",
+      "ru": "Мне не нравится...",
+      "type": "expression"
+    },
+    {
+      "fr": "Je déteste...",
+      "ru": "Я ненавижу...",
+      "type": "expression"
+    },
+    {
+      "fr": "faire du sport",
+      "ru": "заниматься спортом",
+      "type": "expression"
+    },
+    {
+      "fr": "faire du vélo",
+      "ru": "кататься на велосипеде",
+      "type": "expression"
+    },
+    {
+      "fr": "faire la cuisine",
+      "ru": "готовить",
+      "type": "expression"
+    },
+    {
+      "fr": "jouer au football",
+      "ru": "играть в футбол",
+      "type": "expression"
+    },
+    {
+      "fr": "jouer de la guitare",
+      "ru": "играть на гитаре",
+      "type": "expression"
+    }
   ],
   "exercises": [
     {
@@ -43,11 +127,56 @@
       "type": "grammar-quiz",
       "title": "Упражнение 1 : Le verbe faire",
       "questions": [
-        { "question": "Je ___ du sport le matin. (faire)", "options": ["fais", "fait", "faites", "font"], "correctAnswer": "fais" },
-        { "question": "Tu ___ de la danse ? (faire)", "options": ["fais", "fait", "faisons", "font"], "correctAnswer": "fais" },
-        { "question": "Elle ___ du vélo chaque jour. (faire)", "options": ["fais", "fais", "fait", "faites"], "correctAnswer": "fait" },
-        { "question": "Nous ___ du tennis. (faire)", "options": ["fait", "faites", "faisons", "font"], "correctAnswer": "faisons" },
-        { "question": "Vous ___ quoi ce week-end ? (faire)", "options": ["fais", "fait", "faisons", "faites"], "correctAnswer": "faites" }
+        {
+          "question": "Je ___ du sport le matin. (faire)",
+          "options": [
+            "fais",
+            "fait",
+            "faites",
+            "font"
+          ],
+          "correctAnswer": "fais"
+        },
+        {
+          "question": "Tu ___ de la danse ? (faire)",
+          "options": [
+            "fais",
+            "fait",
+            "faisons",
+            "font"
+          ],
+          "correctAnswer": "fais"
+        },
+        {
+          "question": "Elle ___ du vélo chaque jour. (faire)",
+          "options": [
+            "fais",
+            "fais",
+            "fait",
+            "faites"
+          ],
+          "correctAnswer": "fait"
+        },
+        {
+          "question": "Nous ___ du tennis. (faire)",
+          "options": [
+            "fait",
+            "faites",
+            "faisons",
+            "font"
+          ],
+          "correctAnswer": "faisons"
+        },
+        {
+          "question": "Vous ___ quoi ce week-end ? (faire)",
+          "options": [
+            "fais",
+            "fait",
+            "faisons",
+            "faites"
+          ],
+          "correctAnswer": "faites"
+        }
       ]
     },
     {
@@ -55,11 +184,56 @@
       "type": "grammar-quiz",
       "title": "Упражнение 2 : Faire du/de la — Jouer au/de la",
       "questions": [
-        { "question": "Il fait ___ natation. (sport, жен.р.)", "options": ["du", "de la", "de l'", "au"], "correctAnswer": "de la" },
-        { "question": "Je joue ___ football. (sport + jouer)", "options": ["du", "de la", "au", "à la"], "correctAnswer": "au" },
-        { "question": "Elle joue ___ piano. (инструмент, муж.р.)", "options": ["au", "à la", "du", "de la"], "correctAnswer": "du" },
-        { "question": "Tu fais ___ équitation ? (верховая езда, перед гласной)", "options": ["du", "de la", "de l'", "au"], "correctAnswer": "de l'" },
-        { "question": "Nous faisons ___ vélo. (муж.р.)", "options": ["du", "de la", "de l'", "au"], "correctAnswer": "du" }
+        {
+          "question": "Il fait ___ natation. (sport, жен.р.)",
+          "options": [
+            "du",
+            "de la",
+            "de l'",
+            "au"
+          ],
+          "correctAnswer": "de la"
+        },
+        {
+          "question": "Je joue ___ football. (sport + jouer)",
+          "options": [
+            "du",
+            "de la",
+            "au",
+            "à la"
+          ],
+          "correctAnswer": "au"
+        },
+        {
+          "question": "Elle joue ___ piano. (инструмент, муж.р.)",
+          "options": [
+            "au",
+            "à la",
+            "du",
+            "de la"
+          ],
+          "correctAnswer": "du"
+        },
+        {
+          "question": "Tu fais ___ équitation ? (верховая езда, перед гласной)",
+          "options": [
+            "du",
+            "de la",
+            "de l'",
+            "au"
+          ],
+          "correctAnswer": "de l'"
+        },
+        {
+          "question": "Nous faisons ___ vélo. (муж.р.)",
+          "options": [
+            "du",
+            "de la",
+            "de l'",
+            "au"
+          ],
+          "correctAnswer": "du"
+        }
       ]
     },
     {
@@ -67,10 +241,46 @@
       "type": "grammar-quiz",
       "title": "Упражнение 3 : Futur proche",
       "questions": [
-        { "question": "Je ___ aller au cinéma. (futur proche)", "options": ["vais", "vas", "va", "vont"], "correctAnswer": "vais" },
-        { "question": "Elle ___ faire du sport demain.", "options": ["vais", "vas", "va", "vont"], "correctAnswer": "va" },
-        { "question": "Nous ___ regarder un film ce soir.", "options": ["allons", "allez", "vont", "va"], "correctAnswer": "allons" },
-        { "question": "Je ne ___ pas travailler ce week-end. (futur proche négatif)", "options": ["vais", "vas", "va", "vont"], "correctAnswer": "vais" }
+        {
+          "question": "Je ___ aller au cinéma. (futur proche)",
+          "options": [
+            "vais",
+            "vas",
+            "va",
+            "vont"
+          ],
+          "correctAnswer": "vais"
+        },
+        {
+          "question": "Elle ___ faire du sport demain.",
+          "options": [
+            "vais",
+            "vas",
+            "va",
+            "vont"
+          ],
+          "correctAnswer": "va"
+        },
+        {
+          "question": "Nous ___ regarder un film ce soir.",
+          "options": [
+            "allons",
+            "allez",
+            "vont",
+            "va"
+          ],
+          "correctAnswer": "allons"
+        },
+        {
+          "question": "Je ne ___ pas travailler ce week-end. (futur proche négatif)",
+          "options": [
+            "vais",
+            "vas",
+            "va",
+            "vont"
+          ],
+          "correctAnswer": "vais"
+        }
       ]
     },
     {
@@ -78,10 +288,56 @@
       "type": "sentence-builder",
       "title": "Упражнение 4 : Mes loisirs",
       "sentences": [
-        { "words": ["J'adore", "faire", "du", "vélo", "le", "week-end", "."], "ru": "Я обожаю кататься на велосипеде по выходным." },
-        { "words": ["Elle", "va", "jouer", "au", "tennis", "demain", "."], "ru": "Она завтра собирается играть в теннис." },
-        { "words": ["Je", "n'aime", "pas", "regarder", "la", "télé", "."], "ru": "Мне не нравится смотреть телевизор." },
-        { "words": ["Nous", "allons", "faire", "de", "la", "cuisine", "ce", "soir", "."], "ru": "Сегодня вечером мы собираемся готовить." }
+        {
+          "words": [
+            "J'adore",
+            "faire",
+            "du",
+            "vélo",
+            "le",
+            "week-end",
+            "."
+          ],
+          "ru": "Я обожаю кататься на велосипеде по выходным."
+        },
+        {
+          "words": [
+            "Elle",
+            "va",
+            "jouer",
+            "au",
+            "tennis",
+            "demain",
+            "."
+          ],
+          "ru": "Она завтра собирается играть в теннис."
+        },
+        {
+          "words": [
+            "Je",
+            "n'aime",
+            "pas",
+            "regarder",
+            "la",
+            "télé",
+            "."
+          ],
+          "ru": "Мне не нравится смотреть телевизор."
+        },
+        {
+          "words": [
+            "Nous",
+            "allons",
+            "faire",
+            "de",
+            "la",
+            "cuisine",
+            "ce",
+            "soir",
+            "."
+          ],
+          "ru": "Сегодня вечером мы собираемся готовить."
+        }
       ]
     },
     {
@@ -91,7 +347,58 @@
       "audioFile": "piste_050.mp3",
       "source": "cahier",
       "questions": [
-        { "question": "Quel loisir est mentionné en premier ? (Какое занятие упоминается первым?)", "options": ["La musique", "Le sport", "Le cinéma", "La lecture"], "correctAnswer": "Le sport" }
+        {
+          "question": "Quel loisir est mentionné en premier ? (Какое занятие упоминается первым?)",
+          "options": [
+            "La musique",
+            "Le sport",
+            "Le cinéma",
+            "La lecture"
+          ],
+          "correctAnswer": "Le sport"
+        }
+      ]
+    },
+    {
+      "id": "u6-livre-audio1",
+      "type": "listening",
+      "title": "Document B : Quel programme ! (Livre, piste ~78)",
+      "audioFile": "78_Edito_A1_Livre.mp3",
+      "source": "livre",
+      "transcript": "Dialogue 1\nRomain : Nina, tu es où ?\nNina : Dans la cuisine, je fais une lessive.\nRomain : Qu'est-ce qu'on fait à manger à midi, pour Jacques et Mathilde ? Un barbecue ?\nNina : Oui, bonne idée ! Il fait beau aujourd'hui… Tu vas faire les courses ?\nRomain : Oui ! Quelle heure il est ?\nNina : Il est neuf heures cinq.\nRomain : C'est bon, le supermarché ouvre à neuf heures. Tu t'occupes des enfants ? Cette semaine, c'est le cours de dessin ?\nNina : Oui, ils ont un cours de dessin à dix heures et demie.\nRomain : À quelle heure vous rentrez ?\nNina : À midi moins dix.\nRomain : Très bien. À tout à l'heure !\n\nDialogue 2\nNina : Super, ce barbecue !\nRomain : Oui, très bien !\nNina : Bon, il est seize heures vingt ! Et c'est à quelle heure le match de basket ce soir ?\nRomain : À dix-huit heures quarante-cinq.\nNina : Ok, on a le temps ! Je vais jardiner.",
+      "questions": [
+        {
+          "question": "À quelle heure est le cours de dessin des enfants ? (Во сколько урок рисования у детей?)",
+          "options": [
+            "À neuf heures",
+            "À dix heures et demie",
+            "À midi moins dix",
+            "À seize heures"
+          ],
+          "correctAnswer": "À dix heures et demie",
+          "explanation": "Nina dit : « ils ont un cours de dessin à dix heures et demie. »"
+        }
+      ]
+    },
+    {
+      "id": "u6-livre-essentiel",
+      "type": "listening",
+      "title": "L'essentiel : Interview sur les activités (Livre, piste ~86)",
+      "audioFile": "86_Edito_A1_Livre.mp3",
+      "source": "livre",
+      "transcript": "La journaliste : Bonjour, monsieur, je suis journaliste. Je fais une émission sur les activités des Français. Vous voulez bien répondre à mes questions ?\nL'homme : D'accord.\nLa journaliste : À quelle heure vous vous levez ?\nL'homme : Je me lève tous les jours à sept heures moins le quart.\nLa journaliste : Qu'est-ce que vous faites le matin ?\nL'homme : Je prends mon petit déjeuner, je me douche, je m'habille et je vais travailler.\nLa journaliste : Le soir, vous rentrez à quelle heure ?\nL'homme : J'arrête de travailler à dix-huit heures. Je suis à la maison à dix-huit heures vingt.\nLa journaliste : À la maison, vous faites quoi ?\nL'homme : Je m'occupe des enfants, je fais la cuisine, la vaisselle et parfois le ménage.\nLa journaliste : Et le soir, qu'est-ce que vous faites ?\nL'homme : J'aime beaucoup lire et jouer à des jeux vidéo.\nLa journaliste : Le week-end, vous faites des sorties ?\nL'homme : Oui, avec ma femme et mes enfants nous allons souvent au cinéma et au musée.\nLa journaliste : Merci beaucoup, monsieur, bonne journée !\nL'homme : À vous aussi !",
+      "questions": [
+        {
+          "question": "À quelle heure cet homme se lève-t-il ? (Во сколько встаёт этот мужчина?)",
+          "options": [
+            "À six heures et demie",
+            "À six heures quarante-cinq",
+            "À sept heures moins le quart",
+            "À sept heures"
+          ],
+          "correctAnswer": "À sept heures moins le quart",
+          "explanation": "L'homme dit : « Je me lève tous les jours à sept heures moins le quart. »"
+        }
       ]
     },
     {
@@ -119,13 +426,76 @@
       "type": "grammar-quiz",
       "title": "Упражнение 5 : Faire vs Jouer",
       "questions": [
-        { "question": "Je ___ du vélo le week-end. (занятие, не игра)", "options": ["joue", "fais", "vais", "aime"], "correctAnswer": "fais" },
-        { "question": "Il ___ au basket avec ses amis. (спортивная игра)", "options": ["fait", "joue", "aime", "va"], "correctAnswer": "joue" },
-        { "question": "Elle ___ de la natation chaque matin. (плавание)", "options": ["joue", "fait", "aime", "prend"], "correctAnswer": "fait" },
-        { "question": "Tu ___ au tennis ou au foot ? (игра с мячом)", "options": ["fais", "joues", "vas", "aimes"], "correctAnswer": "joues" },
-        { "question": "Nous ___ de la guitare ensemble. (инструмент)", "options": ["faisons", "jouons", "allons", "aimons"], "correctAnswer": "jouons" },
-        { "question": "Ils ___ du yoga le mardi. (индивидуальное занятие)", "options": ["jouent", "font", "vont", "aiment"], "correctAnswer": "font" },
-        { "question": "Je ___ du piano depuis 5 ans. (инструмент)", "options": ["fais", "joue", "vais", "prends"], "correctAnswer": "joue" }
+        {
+          "question": "Je ___ du vélo le week-end. (занятие, не игра)",
+          "options": [
+            "joue",
+            "fais",
+            "vais",
+            "aime"
+          ],
+          "correctAnswer": "fais"
+        },
+        {
+          "question": "Il ___ au basket avec ses amis. (спортивная игра)",
+          "options": [
+            "fait",
+            "joue",
+            "aime",
+            "va"
+          ],
+          "correctAnswer": "joue"
+        },
+        {
+          "question": "Elle ___ de la natation chaque matin. (плавание)",
+          "options": [
+            "joue",
+            "fait",
+            "aime",
+            "prend"
+          ],
+          "correctAnswer": "fait"
+        },
+        {
+          "question": "Tu ___ au tennis ou au foot ? (игра с мячом)",
+          "options": [
+            "fais",
+            "joues",
+            "vas",
+            "aimes"
+          ],
+          "correctAnswer": "joues"
+        },
+        {
+          "question": "Nous ___ de la guitare ensemble. (инструмент)",
+          "options": [
+            "faisons",
+            "jouons",
+            "allons",
+            "aimons"
+          ],
+          "correctAnswer": "jouons"
+        },
+        {
+          "question": "Ils ___ du yoga le mardi. (индивидуальное занятие)",
+          "options": [
+            "jouent",
+            "font",
+            "vont",
+            "aiment"
+          ],
+          "correctAnswer": "font"
+        },
+        {
+          "question": "Je ___ du piano depuis 5 ans. (инструмент)",
+          "options": [
+            "fais",
+            "joue",
+            "vais",
+            "prends"
+          ],
+          "correctAnswer": "joue"
+        }
       ]
     },
     {
@@ -133,14 +503,86 @@
       "type": "grammar-quiz",
       "title": "Упражнение 6 : La météo et les saisons",
       "questions": [
-        { "question": "En été, il ___ chaud. (погода)", "options": ["pleut", "fait", "neige", "y a"], "correctAnswer": "fait" },
-        { "question": "En hiver, il ___ souvent. (снег)", "options": ["fait beau", "pleut", "neige", "fait chaud"], "correctAnswer": "neige" },
-        { "question": "Aujourd'hui il ___ mauvais. Je reste à la maison.", "options": ["fait", "pleut", "neige", "y a"], "correctAnswer": "fait" },
-        { "question": "Il y a ___ vent ce matin. (ветрено)", "options": ["un", "du", "de la", "des"], "correctAnswer": "du" },
-        { "question": "Au printemps, il ___ souvent à Paris. (дождь)", "options": ["neige", "fait froid", "pleut", "fait chaud"], "correctAnswer": "pleut" },
-        { "question": "___ automne, je fais du vélo. (осенью)", "options": ["Au", "En", "À", "De"], "correctAnswer": "En" },
-        { "question": "Quel temps fait-il ? — Il ___ du soleil ! (солнечно)", "options": ["fait", "y a", "pleut", "neige"], "correctAnswer": "y a" },
-        { "question": "___ hiver, il fait très froid en Russie. (зимой)", "options": ["Au", "À", "En", "De"], "correctAnswer": "En" }
+        {
+          "question": "En été, il ___ chaud. (погода)",
+          "options": [
+            "pleut",
+            "fait",
+            "neige",
+            "y a"
+          ],
+          "correctAnswer": "fait"
+        },
+        {
+          "question": "En hiver, il ___ souvent. (снег)",
+          "options": [
+            "fait beau",
+            "pleut",
+            "neige",
+            "fait chaud"
+          ],
+          "correctAnswer": "neige"
+        },
+        {
+          "question": "Aujourd'hui il ___ mauvais. Je reste à la maison.",
+          "options": [
+            "fait",
+            "pleut",
+            "neige",
+            "y a"
+          ],
+          "correctAnswer": "fait"
+        },
+        {
+          "question": "Il y a ___ vent ce matin. (ветрено)",
+          "options": [
+            "un",
+            "du",
+            "de la",
+            "des"
+          ],
+          "correctAnswer": "du"
+        },
+        {
+          "question": "Au printemps, il ___ souvent à Paris. (дождь)",
+          "options": [
+            "neige",
+            "fait froid",
+            "pleut",
+            "fait chaud"
+          ],
+          "correctAnswer": "pleut"
+        },
+        {
+          "question": "___ automne, je fais du vélo. (осенью)",
+          "options": [
+            "Au",
+            "En",
+            "À",
+            "De"
+          ],
+          "correctAnswer": "En"
+        },
+        {
+          "question": "Quel temps fait-il ? — Il ___ du soleil ! (солнечно)",
+          "options": [
+            "fait",
+            "y a",
+            "pleut",
+            "neige"
+          ],
+          "correctAnswer": "y a"
+        },
+        {
+          "question": "___ hiver, il fait très froid en Russie. (зимой)",
+          "options": [
+            "Au",
+            "À",
+            "En",
+            "De"
+          ],
+          "correctAnswer": "En"
+        }
       ]
     },
     {
@@ -148,16 +590,76 @@
       "type": "gender-quiz",
       "title": "Quel article ? — Sports et loisirs",
       "items": [
-        { "word": "football", "emoji": "⚽", "ru": "футбол", "article": "le", "hint": "Мужской: le football — все виды спорта на -ball мужского рода" },
-        { "word": "tennis", "emoji": "🎾", "ru": "теннис", "article": "le", "hint": "Мужской: le tennis — запомнить" },
-        { "word": "natation", "emoji": "🏊", "ru": "плавание", "article": "la", "hint": "Женский: la natation — оканчивается на -tion (всегда жен.р.)" },
-        { "word": "vélo", "emoji": "🚴", "ru": "велосипед/велоспорт", "article": "le", "hint": "Мужской: le vélo — запомнить" },
-        { "word": "yoga", "emoji": "🧘", "ru": "йога", "article": "le", "hint": "Мужской: le yoga — иностранные слова обычно мужского рода" },
-        { "word": "musique", "emoji": "🎵", "ru": "музыка", "article": "la", "hint": "Женский: la musique — оканчивается на -que (жен.р.)" },
-        { "word": "peinture", "emoji": "🎨", "ru": "живопись/рисование", "article": "la", "hint": "Женский: la peinture — оканчивается на -ure (жен.р.)" },
-        { "word": "cinéma", "emoji": "🎬", "ru": "кино", "article": "le", "hint": "Мужской: le cinéma — запомнить" },
-        { "word": "théâtre", "emoji": "🎭", "ru": "театр", "article": "le", "hint": "Мужской: le théâtre — запомнить" },
-        { "word": "lecture", "emoji": "📚", "ru": "чтение", "article": "la", "hint": "Женский: la lecture — оканчивается на -ure (жен.р.)" }
+        {
+          "word": "football",
+          "emoji": "⚽",
+          "ru": "футбол",
+          "article": "le",
+          "hint": "Мужской: le football — все виды спорта на -ball мужского рода"
+        },
+        {
+          "word": "tennis",
+          "emoji": "🎾",
+          "ru": "теннис",
+          "article": "le",
+          "hint": "Мужской: le tennis — запомнить"
+        },
+        {
+          "word": "natation",
+          "emoji": "🏊",
+          "ru": "плавание",
+          "article": "la",
+          "hint": "Женский: la natation — оканчивается на -tion (всегда жен.р.)"
+        },
+        {
+          "word": "vélo",
+          "emoji": "🚴",
+          "ru": "велосипед/велоспорт",
+          "article": "le",
+          "hint": "Мужской: le vélo — запомнить"
+        },
+        {
+          "word": "yoga",
+          "emoji": "🧘",
+          "ru": "йога",
+          "article": "le",
+          "hint": "Мужской: le yoga — иностранные слова обычно мужского рода"
+        },
+        {
+          "word": "musique",
+          "emoji": "🎵",
+          "ru": "музыка",
+          "article": "la",
+          "hint": "Женский: la musique — оканчивается на -que (жен.р.)"
+        },
+        {
+          "word": "peinture",
+          "emoji": "🎨",
+          "ru": "живопись/рисование",
+          "article": "la",
+          "hint": "Женский: la peinture — оканчивается на -ure (жен.р.)"
+        },
+        {
+          "word": "cinéma",
+          "emoji": "🎬",
+          "ru": "кино",
+          "article": "le",
+          "hint": "Мужской: le cinéma — запомнить"
+        },
+        {
+          "word": "théâtre",
+          "emoji": "🎭",
+          "ru": "театр",
+          "article": "le",
+          "hint": "Мужской: le théâtre — запомнить"
+        },
+        {
+          "word": "lecture",
+          "emoji": "📚",
+          "ru": "чтение",
+          "article": "la",
+          "hint": "Женский: la lecture — оканчивается на -ure (жен.р.)"
+        }
       ]
     },
     {
@@ -166,14 +668,62 @@
       "title": "Dialogue : Planifier le week-end",
       "context": "Emma и Lucas обсуждают планы на выходные и погоду.",
       "exchanges": [
-        { "speaker": "Emma", "side": "left", "text": "Salut Lucas ! Tu es libre ce week-end ?" },
-        { "speaker": "Lucas", "side": "right", "text": "Oui, je suis libre samedi. Pourquoi ?" },
-        { "speaker": "Emma", "side": "left", "text": "Il fait beau ce week-end. Tu veux faire quelque chose dehors ?" },
-        { "speaker": "Lucas", "side": "right", "text": "___", "isBlank": true, "options": ["Oui, je voudrais faire du vélo !", "Non, il fait trop froid.", "Je préfère rester à la maison."], "correctAnswer": "Oui, je voudrais faire du vélo !", "explanation": "Логичный ответ: на хорошую погоду предлагаем активный отдых на улице" },
-        { "speaker": "Emma", "side": "left", "text": "Super idée ! Et après, on peut jouer au tennis dans le parc." },
-        { "speaker": "Lucas", "side": "right", "text": "Parfait ! Et s'il pleut, qu'est-ce qu'on fait ?" },
-        { "speaker": "Emma", "side": "left", "text": "S'il pleut..." },
-        { "speaker": "Lucas", "side": "right", "text": "___", "isBlank": true, "options": ["On peut aller au cinéma !", "Il fait très chaud aujourd'hui.", "Je joue du piano."], "correctAnswer": "On peut aller au cinéma !", "explanation": "Если дождь — логично предложить занятие в помещении, например кино" }
+        {
+          "speaker": "Emma",
+          "side": "left",
+          "text": "Salut Lucas ! Tu es libre ce week-end ?"
+        },
+        {
+          "speaker": "Lucas",
+          "side": "right",
+          "text": "Oui, je suis libre samedi. Pourquoi ?"
+        },
+        {
+          "speaker": "Emma",
+          "side": "left",
+          "text": "Il fait beau ce week-end. Tu veux faire quelque chose dehors ?"
+        },
+        {
+          "speaker": "Lucas",
+          "side": "right",
+          "text": "___",
+          "isBlank": true,
+          "options": [
+            "Oui, je voudrais faire du vélo !",
+            "Non, il fait trop froid.",
+            "Je préfère rester à la maison."
+          ],
+          "correctAnswer": "Oui, je voudrais faire du vélo !",
+          "explanation": "Логичный ответ: на хорошую погоду предлагаем активный отдых на улице"
+        },
+        {
+          "speaker": "Emma",
+          "side": "left",
+          "text": "Super idée ! Et après, on peut jouer au tennis dans le parc."
+        },
+        {
+          "speaker": "Lucas",
+          "side": "right",
+          "text": "Parfait ! Et s'il pleut, qu'est-ce qu'on fait ?"
+        },
+        {
+          "speaker": "Emma",
+          "side": "left",
+          "text": "S'il pleut..."
+        },
+        {
+          "speaker": "Lucas",
+          "side": "right",
+          "text": "___",
+          "isBlank": true,
+          "options": [
+            "On peut aller au cinéma !",
+            "Il fait très chaud aujourd'hui.",
+            "Je joue du piano."
+          ],
+          "correctAnswer": "On peut aller au cinéma !",
+          "explanation": "Если дождь — логично предложить занятие в помещении, например кино"
+        }
       ]
     },
     {
@@ -183,12 +733,72 @@
       "context": "Мари рассказывает о своих выходных. Вставьте подходящие слова.",
       "text": "Le week-end, Marie ___ du vélo quand il ___ beau. Elle ___ aussi au tennis avec ses amis. Quand il ___, elle préfère rester à la maison et ___ de la guitare. En hiver, elle ___ du ski à la montagne.",
       "blanks": [
-        { "options": ["joue", "fait", "aime", "va"], "correctAnswer": "fait", "hint": "faire du vélo", "explanation": "faire + DU + vélo (индивидуальный вид спорта)" },
-        { "options": ["pleut", "fait", "neige", "y a"], "correctAnswer": "fait", "hint": "il fait beau — хорошая погода", "explanation": "Il fait beau — безличная конструкция для погоды" },
-        { "options": ["joue", "fait", "aime", "prend"], "correctAnswer": "joue", "hint": "jouer au tennis", "explanation": "jouer + AU + tennis (игра с мячом/ракеткой)" },
-        { "options": ["fait beau", "pleut", "fait chaud", "neige"], "correctAnswer": "pleut", "hint": "il pleut — дождь", "explanation": "Il pleut — безличный глагол, обозначает дождь" },
-        { "options": ["faire", "jouer", "aller", "aimer"], "correctAnswer": "jouer", "hint": "jouer de la guitare", "explanation": "jouer + DE LA + guitare (музыкальный инструмент)" },
-        { "options": ["joue", "fait", "aime", "prend"], "correctAnswer": "fait", "hint": "faire du ski", "explanation": "faire + DU + ski (индивидуальный вид спорта)" }
+        {
+          "options": [
+            "joue",
+            "fait",
+            "aime",
+            "va"
+          ],
+          "correctAnswer": "fait",
+          "hint": "faire du vélo",
+          "explanation": "faire + DU + vélo (индивидуальный вид спорта)"
+        },
+        {
+          "options": [
+            "pleut",
+            "fait",
+            "neige",
+            "y a"
+          ],
+          "correctAnswer": "fait",
+          "hint": "il fait beau — хорошая погода",
+          "explanation": "Il fait beau — безличная конструкция для погоды"
+        },
+        {
+          "options": [
+            "joue",
+            "fait",
+            "aime",
+            "prend"
+          ],
+          "correctAnswer": "joue",
+          "hint": "jouer au tennis",
+          "explanation": "jouer + AU + tennis (игра с мячом/ракеткой)"
+        },
+        {
+          "options": [
+            "fait beau",
+            "pleut",
+            "fait chaud",
+            "neige"
+          ],
+          "correctAnswer": "pleut",
+          "hint": "il pleut — дождь",
+          "explanation": "Il pleut — безличный глагол, обозначает дождь"
+        },
+        {
+          "options": [
+            "faire",
+            "jouer",
+            "aller",
+            "aimer"
+          ],
+          "correctAnswer": "jouer",
+          "hint": "jouer de la guitare",
+          "explanation": "jouer + DE LA + guitare (музыкальный инструмент)"
+        },
+        {
+          "options": [
+            "joue",
+            "fait",
+            "aime",
+            "prend"
+          ],
+          "correctAnswer": "fait",
+          "hint": "faire du ski",
+          "explanation": "faire + DU + ski (индивидуальный вид спорта)"
+        }
       ]
     },
     {
@@ -196,10 +806,69 @@
       "type": "sentence-builder",
       "title": "Упражнение 7 : Activités de loisir",
       "sentences": [
-        { "words": ["Il", "fait", "beau", ",", "alors", "je", "vais", "faire", "du", "jogging", "."], "ru": "Хорошая погода, поэтому я пойду на пробежку." },
-        { "words": ["En", "hiver", ",", "il", "fait", "froid", "et", "il", "neige", "souvent", "."], "ru": "Зимой холодно и часто идёт снег." },
-        { "words": ["Le", "samedi", ",", "elle", "joue", "au", "tennis", "avec", "son", "amie", "."], "ru": "По субботам она играет в теннис со своей подругой." },
-        { "words": ["Quand", "il", "pleut", ",", "nous", "faisons", "de", "la", "musique", "."], "ru": "Когда идёт дождь, мы занимаемся музыкой." }
+        {
+          "words": [
+            "Il",
+            "fait",
+            "beau",
+            ",",
+            "alors",
+            "je",
+            "vais",
+            "faire",
+            "du",
+            "jogging",
+            "."
+          ],
+          "ru": "Хорошая погода, поэтому я пойду на пробежку."
+        },
+        {
+          "words": [
+            "En",
+            "hiver",
+            ",",
+            "il",
+            "fait",
+            "froid",
+            "et",
+            "il",
+            "neige",
+            "souvent",
+            "."
+          ],
+          "ru": "Зимой холодно и часто идёт снег."
+        },
+        {
+          "words": [
+            "Le",
+            "samedi",
+            ",",
+            "elle",
+            "joue",
+            "au",
+            "tennis",
+            "avec",
+            "son",
+            "amie",
+            "."
+          ],
+          "ru": "По субботам она играет в теннис со своей подругой."
+        },
+        {
+          "words": [
+            "Quand",
+            "il",
+            "pleut",
+            ",",
+            "nous",
+            "faisons",
+            "de",
+            "la",
+            "musique",
+            "."
+          ],
+          "ru": "Когда идёт дождь, мы занимаемся музыкой."
+        }
       ]
     }
   ]

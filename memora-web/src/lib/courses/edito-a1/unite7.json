@@ -3,27 +3,111 @@
   "title": "Unité 7 : Mes achats",
   "description": "Faire des achats, parler des vêtements et des couleurs. Les adjectifs démonstratifs, les verbes acheter et préférer, les nombres ordinaux.",
   "vocabulary": [
-    { "fr": "les vêtements", "ru": "одежда", "type": "theme" },
-    { "fr": "un pantalon", "ru": "брюки", "type": "vetement" },
-    { "fr": "une robe", "ru": "платье", "type": "vetement" },
-    { "fr": "un manteau", "ru": "пальто", "type": "vetement" },
-    { "fr": "un pull", "ru": "свитер / пуловер", "type": "vetement" },
-    { "fr": "une veste", "ru": "пиджак / жакет", "type": "vetement" },
-    { "fr": "une chemise", "ru": "рубашка (муж.)", "type": "vetement" },
-    { "fr": "un t-shirt", "ru": "футболка", "type": "vetement" },
-    { "fr": "des chaussures", "ru": "обувь / туфли", "type": "vetement" },
-    { "fr": "rouge", "ru": "красный", "type": "couleur" },
-    { "fr": "bleu(e)", "ru": "синий / голубой", "type": "couleur" },
-    { "fr": "vert(e)", "ru": "зелёный", "type": "couleur" },
-    { "fr": "jaune", "ru": "жёлтый", "type": "couleur" },
-    { "fr": "noir(e)", "ru": "чёрный", "type": "couleur" },
-    { "fr": "blanc / blanche", "ru": "белый / белая", "type": "couleur" },
-    { "fr": "gris(e)", "ru": "серый", "type": "couleur" },
-    { "fr": "C'est combien ?", "ru": "Сколько это стоит?", "type": "phrase" },
-    { "fr": "Ça coûte...", "ru": "Это стоит...", "type": "phrase" },
-    { "fr": "Je prends celui-ci.", "ru": "Я беру вот это.", "type": "phrase" },
-    { "fr": "une taille", "ru": "размер (одежды)", "type": "nom" },
-    { "fr": "un rayon", "ru": "отдел (в магазине)", "type": "nom" }
+    {
+      "fr": "les vêtements",
+      "ru": "одежда",
+      "type": "theme"
+    },
+    {
+      "fr": "un pantalon",
+      "ru": "брюки",
+      "type": "vetement"
+    },
+    {
+      "fr": "une robe",
+      "ru": "платье",
+      "type": "vetement"
+    },
+    {
+      "fr": "un manteau",
+      "ru": "пальто",
+      "type": "vetement"
+    },
+    {
+      "fr": "un pull",
+      "ru": "свитер / пуловер",
+      "type": "vetement"
+    },
+    {
+      "fr": "une veste",
+      "ru": "пиджак / жакет",
+      "type": "vetement"
+    },
+    {
+      "fr": "une chemise",
+      "ru": "рубашка (муж.)",
+      "type": "vetement"
+    },
+    {
+      "fr": "un t-shirt",
+      "ru": "футболка",
+      "type": "vetement"
+    },
+    {
+      "fr": "des chaussures",
+      "ru": "обувь / туфли",
+      "type": "vetement"
+    },
+    {
+      "fr": "rouge",
+      "ru": "красный",
+      "type": "couleur"
+    },
+    {
+      "fr": "bleu(e)",
+      "ru": "синий / голубой",
+      "type": "couleur"
+    },
+    {
+      "fr": "vert(e)",
+      "ru": "зелёный",
+      "type": "couleur"
+    },
+    {
+      "fr": "jaune",
+      "ru": "жёлтый",
+      "type": "couleur"
+    },
+    {
+      "fr": "noir(e)",
+      "ru": "чёрный",
+      "type": "couleur"
+    },
+    {
+      "fr": "blanc / blanche",
+      "ru": "белый / белая",
+      "type": "couleur"
+    },
+    {
+      "fr": "gris(e)",
+      "ru": "серый",
+      "type": "couleur"
+    },
+    {
+      "fr": "C'est combien ?",
+      "ru": "Сколько это стоит?",
+      "type": "phrase"
+    },
+    {
+      "fr": "Ça coûte...",
+      "ru": "Это стоит...",
+      "type": "phrase"
+    },
+    {
+      "fr": "Je prends celui-ci.",
+      "ru": "Я беру вот это.",
+      "type": "phrase"
+    },
+    {
+      "fr": "une taille",
+      "ru": "размер (одежды)",
+      "type": "nom"
+    },
+    {
+      "fr": "un rayon",
+      "ru": "отдел (в магазине)",
+      "type": "nom"
+    }
   ],
   "exercises": [
     {
@@ -43,11 +127,56 @@
       "type": "grammar-quiz",
       "title": "Упражнение 1 : Adjectifs démonstratifs",
       "questions": [
-        { "question": "___ pantalon est très beau. (муж.р., согл.)", "options": ["Ce", "Cet", "Cette", "Ces"], "correctAnswer": "Ce" },
-        { "question": "___ robe est magnifique. (жен.р.)", "options": ["Ce", "Cet", "Cette", "Ces"], "correctAnswer": "Cette" },
-        { "question": "___ chaussures sont confortables. (мн.ч.)", "options": ["Ce", "Cet", "Cette", "Ces"], "correctAnswer": "Ces" },
-        { "question": "___ homme est élégant. (муж.р., перед гласной)", "options": ["Ce", "Cet", "Cette", "Ces"], "correctAnswer": "Cet" },
-        { "question": "Je prends ___ manteau rouge. (муж.р., согл.)", "options": ["ce", "cet", "cette", "ces"], "correctAnswer": "ce" }
+        {
+          "question": "___ pantalon est très beau. (муж.р., согл.)",
+          "options": [
+            "Ce",
+            "Cet",
+            "Cette",
+            "Ces"
+          ],
+          "correctAnswer": "Ce"
+        },
+        {
+          "question": "___ robe est magnifique. (жен.р.)",
+          "options": [
+            "Ce",
+            "Cet",
+            "Cette",
+            "Ces"
+          ],
+          "correctAnswer": "Cette"
+        },
+        {
+          "question": "___ chaussures sont confortables. (мн.ч.)",
+          "options": [
+            "Ce",
+            "Cet",
+            "Cette",
+            "Ces"
+          ],
+          "correctAnswer": "Ces"
+        },
+        {
+          "question": "___ homme est élégant. (муж.р., перед гласной)",
+          "options": [
+            "Ce",
+            "Cet",
+            "Cette",
+            "Ces"
+          ],
+          "correctAnswer": "Cet"
+        },
+        {
+          "question": "Je prends ___ manteau rouge. (муж.р., согл.)",
+          "options": [
+            "ce",
+            "cet",
+            "cette",
+            "ces"
+          ],
+          "correctAnswer": "ce"
+        }
       ]
     },
     {
@@ -55,10 +184,46 @@
       "type": "grammar-quiz",
       "title": "Упражнение 2 : Acheter et Préférer",
       "questions": [
-        { "question": "J'___ une nouvelle robe. (acheter)", "options": ["achète", "achètes", "achetons", "achetez"], "correctAnswer": "achète" },
-        { "question": "Tu ___ quoi comme couleur ? (préférer)", "options": ["préfère", "préfères", "préférons", "préférez"], "correctAnswer": "préfères" },
-        { "question": "Elle ___ toujours en soldes. (acheter)", "options": ["achète", "achètes", "achetez", "achètent"], "correctAnswer": "achète" },
-        { "question": "Nous ___ le bleu au rouge. (préférer)", "options": ["préfère", "préférons", "préférez", "préfèrent"], "correctAnswer": "préférons" }
+        {
+          "question": "J'___ une nouvelle robe. (acheter)",
+          "options": [
+            "achète",
+            "achètes",
+            "achetons",
+            "achetez"
+          ],
+          "correctAnswer": "achète"
+        },
+        {
+          "question": "Tu ___ quoi comme couleur ? (préférer)",
+          "options": [
+            "préfère",
+            "préfères",
+            "préférons",
+            "préférez"
+          ],
+          "correctAnswer": "préfères"
+        },
+        {
+          "question": "Elle ___ toujours en soldes. (acheter)",
+          "options": [
+            "achète",
+            "achètes",
+            "achetez",
+            "achètent"
+          ],
+          "correctAnswer": "achète"
+        },
+        {
+          "question": "Nous ___ le bleu au rouge. (préférer)",
+          "options": [
+            "préfère",
+            "préférons",
+            "préférez",
+            "préfèrent"
+          ],
+          "correctAnswer": "préférons"
+        }
       ]
     },
     {
@@ -66,10 +231,51 @@
       "type": "sentence-builder",
       "title": "Упражнение 3 : Dans le magasin",
       "sentences": [
-        { "words": ["Ce", "pull", "rouge", "est", "combien", "?"], "ru": "Сколько стоит этот красный свитер?" },
-        { "words": ["Je", "préfère", "cette", "robe", "bleue", "."], "ru": "Я предпочитаю это синее платье." },
-        { "words": ["Ces", "chaussures", "sont", "très", "confortables", "."], "ru": "Эта обувь очень удобная." },
-        { "words": ["Je", "vais", "acheter", "ce", "manteau", "noir", "."], "ru": "Я куплю это чёрное пальто." }
+        {
+          "words": [
+            "Ce",
+            "pull",
+            "rouge",
+            "est",
+            "combien",
+            "?"
+          ],
+          "ru": "Сколько стоит этот красный свитер?"
+        },
+        {
+          "words": [
+            "Je",
+            "préfère",
+            "cette",
+            "robe",
+            "bleue",
+            "."
+          ],
+          "ru": "Я предпочитаю это синее платье."
+        },
+        {
+          "words": [
+            "Ces",
+            "chaussures",
+            "sont",
+            "très",
+            "confortables",
+            "."
+          ],
+          "ru": "Эта обувь очень удобная."
+        },
+        {
+          "words": [
+            "Je",
+            "vais",
+            "acheter",
+            "ce",
+            "manteau",
+            "noir",
+            "."
+          ],
+          "ru": "Я куплю это чёрное пальто."
+        }
       ]
     },
     {
@@ -79,7 +285,58 @@
       "audioFile": "piste_060.mp3",
       "source": "cahier",
       "questions": [
-        { "question": "Qu'est-ce que la cliente veut acheter ? (Что хочет купить покупательница?)", "options": ["Une robe", "Un manteau", "Des chaussures", "Un pull"], "correctAnswer": "Une robe" }
+        {
+          "question": "Qu'est-ce que la cliente veut acheter ? (Что хочет купить покупательница?)",
+          "options": [
+            "Une robe",
+            "Un manteau",
+            "Des chaussures",
+            "Un pull"
+          ],
+          "correctAnswer": "Une robe"
+        }
+      ]
+    },
+    {
+      "id": "u7-livre-audio1",
+      "type": "listening",
+      "title": "Document A : Un nouveau logement (Livre, piste ~93)",
+      "audioFile": "93_Edito_A1_Livre.mp3",
+      "source": "livre",
+      "transcript": "Marco : Allô, David, c'est Marco !\nDavid : Ah, salut Marco, ça va ?\nMarco : Je suis fatigué, mais j'ai une grande nouvelle. Nous avons acheté une maison à 30 kilomètres de Paris.\nDavid : Pour une nouvelle, c'est une nouvelle ! Et vous avez déménagé ?\nMarco : Oui, on a déménagé il y a dix jours.\nDavid : Génial ! Vous avez cherché longtemps ?\nMarco : Oui, un an. Et on a trouvé la maison de nos rêves.\nDavid : Les enfants sont contents ?\nMarco : Elsa et Maxime sont très contents. Ils ont décoré leur chambre la semaine dernière.\nDavid : Et quelle est la surface ?\nMarco : La maison fait 150 mètres carrés.\nDavid : Il y a un jardin ?\nMarco : Oui, il y a un petit jardin et une jolie terrasse.\nDavid : Il y a combien de pièces ?\nMarco : Au rez-de-chaussée, il y a le salon, la salle à manger et la cuisine. Et à l'étage, il y a trois chambres : notre chambre et les chambres des enfants. Il y a aussi la salle de bains et les toilettes.\nDavid : Et pour la cuisine, vous avez acheté beaucoup d'électroménager ?\nMarco : Non, on a gardé notre frigo et notre lave-linge. On va acheter une cuisinière et un four à micro-ondes, c'est tout.",
+      "questions": [
+        {
+          "question": "Quelle est la surface de la maison de Marco ? (Какова площадь дома Марко?)",
+          "options": [
+            "100 mètres carrés",
+            "120 mètres carrés",
+            "150 mètres carrés",
+            "200 mètres carrés"
+          ],
+          "correctAnswer": "150 mètres carrés",
+          "explanation": "Marco dit : « La maison fait 150 mètres carrés. »"
+        }
+      ]
+    },
+    {
+      "id": "u7-livre-essentiel",
+      "type": "listening",
+      "title": "L'essentiel : Visite de l'appartement (Livre, piste ~98)",
+      "audioFile": "98_Edito_A1_Livre.mp3",
+      "source": "livre",
+      "transcript": "Camille : Salut Charlotte !\nCharlotte : Salut Camille ! Mais tu téléphones en visio maintenant ?\nCamille : Ben oui, c'est sympa de se parler mais c'est bien de se voir aussi !\nCharlotte : C'est vrai.\nCamille : Mais… Tu as déménagé ?\nCharlotte : Oui, la semaine dernière.\nCamille : Super ! Comment il est cet appartement ? Il y a combien de pièces ?\nCharlotte : Il y a un salon, une chambre, une cuisine, une salle de bains et des toilettes.\nCamille : Et il est grand ? Quelle est la surface ?\nCharlotte : 60 m².\nCamille : C'est bien ! Je peux visiter ?\nCharlotte : Oui bien sûr ! Alors… Ici, c'est l'entrée, à gauche, il y a ma chambre et à droite, il y a la cuisine et le salon.\nCamille : C'est sympa !\nCharlotte : Oui, j'adore cet appartement. Alors, là, je vais sur le balcon ! Tu vois, devant l'immeuble, il y a un petit parc et derrière, un petit supermarché. Le métro est juste à côté.\nCamille : Pas mal ! Et il n'y a pas d'immeuble en face.\nCharlotte : C'est vrai, ça aussi c'est super…",
+      "questions": [
+        {
+          "question": "Quelle est la surface de l'appartement de Charlotte ? (Какова площадь квартиры Шарлотты?)",
+          "options": [
+            "45 m²",
+            "60 m²",
+            "75 m²",
+            "90 m²"
+          ],
+          "correctAnswer": "60 m²",
+          "explanation": "Charlotte dit : « 60 m². »"
+        }
       ]
     },
     {
@@ -107,13 +364,76 @@
       "type": "grammar-quiz",
       "title": "Упражнение 4 : Adjectifs démonstratifs — ce/cet/cette/ces",
       "questions": [
-        { "question": "___ manteau est très élégant. (муж.р., согл.)", "options": ["Ce", "Cet", "Cette", "Ces"], "correctAnswer": "Ce" },
-        { "question": "___ robe rouge est magnifique ! (жен.р.)", "options": ["Ce", "Cet", "Cette", "Ces"], "correctAnswer": "Cette" },
-        { "question": "___ imperméable est pratique. (муж.р., гласн.)", "options": ["Ce", "Cet", "Cette", "Ces"], "correctAnswer": "Cet" },
-        { "question": "___ chaussures sont confortables. (мн.ч.)", "options": ["Ce", "Cet", "Cette", "Ces"], "correctAnswer": "Ces" },
-        { "question": "J'aime ___ pull bleu. (муж.р., согл.)", "options": ["ce", "cet", "cette", "ces"], "correctAnswer": "ce" },
-        { "question": "Je préfère ___ jupe noire. (жен.р.)", "options": ["ce", "cet", "cette", "ces"], "correctAnswer": "cette" },
-        { "question": "___ pulls sont en soldes ! (мн.ч.)", "options": ["Ce", "Cet", "Cette", "Ces"], "correctAnswer": "Ces" }
+        {
+          "question": "___ manteau est très élégant. (муж.р., согл.)",
+          "options": [
+            "Ce",
+            "Cet",
+            "Cette",
+            "Ces"
+          ],
+          "correctAnswer": "Ce"
+        },
+        {
+          "question": "___ robe rouge est magnifique ! (жен.р.)",
+          "options": [
+            "Ce",
+            "Cet",
+            "Cette",
+            "Ces"
+          ],
+          "correctAnswer": "Cette"
+        },
+        {
+          "question": "___ imperméable est pratique. (муж.р., гласн.)",
+          "options": [
+            "Ce",
+            "Cet",
+            "Cette",
+            "Ces"
+          ],
+          "correctAnswer": "Cet"
+        },
+        {
+          "question": "___ chaussures sont confortables. (мн.ч.)",
+          "options": [
+            "Ce",
+            "Cet",
+            "Cette",
+            "Ces"
+          ],
+          "correctAnswer": "Ces"
+        },
+        {
+          "question": "J'aime ___ pull bleu. (муж.р., согл.)",
+          "options": [
+            "ce",
+            "cet",
+            "cette",
+            "ces"
+          ],
+          "correctAnswer": "ce"
+        },
+        {
+          "question": "Je préfère ___ jupe noire. (жен.р.)",
+          "options": [
+            "ce",
+            "cet",
+            "cette",
+            "ces"
+          ],
+          "correctAnswer": "cette"
+        },
+        {
+          "question": "___ pulls sont en soldes ! (мн.ч.)",
+          "options": [
+            "Ce",
+            "Cet",
+            "Cette",
+            "Ces"
+          ],
+          "correctAnswer": "Ces"
+        }
       ]
     },
     {
@@ -121,12 +441,66 @@
       "type": "grammar-quiz",
       "title": "Упражнение 5 : Prix et achats",
       "questions": [
-        { "question": "___ coûte combien, ce pull ? (Сколько стоит?)", "options": ["Il", "Ça", "Ce", "Elle"], "correctAnswer": "Ça" },
-        { "question": "C'est ___ euros. (цена)", "options": ["à", "de", "—", "en"], "correctAnswer": "—" },
-        { "question": "Cette robe est très ___. (дорогая)", "options": ["gratuite", "chère", "petite", "grande"], "correctAnswer": "chère" },
-        { "question": "Ces chaussures ne sont pas ___. (недорогие)", "options": ["chères", "gratuites", "grandes", "petites"], "correctAnswer": "chères" },
-        { "question": "Je ___ ce manteau. Il me plaît ! (покупаю)", "options": ["prends", "fais", "vais", "mets"], "correctAnswer": "prends" },
-        { "question": "Vous avez ___ 40 ? (размер)", "options": ["une taille", "un prix", "une couleur", "un rayon"], "correctAnswer": "une taille" }
+        {
+          "question": "___ coûte combien, ce pull ? (Сколько стоит?)",
+          "options": [
+            "Il",
+            "Ça",
+            "Ce",
+            "Elle"
+          ],
+          "correctAnswer": "Ça"
+        },
+        {
+          "question": "C'est ___ euros. (цена)",
+          "options": [
+            "à",
+            "de",
+            "—",
+            "en"
+          ],
+          "correctAnswer": "—"
+        },
+        {
+          "question": "Cette robe est très ___. (дорогая)",
+          "options": [
+            "gratuite",
+            "chère",
+            "petite",
+            "grande"
+          ],
+          "correctAnswer": "chère"
+        },
+        {
+          "question": "Ces chaussures ne sont pas ___. (недорогие)",
+          "options": [
+            "chères",
+            "gratuites",
+            "grandes",
+            "petites"
+          ],
+          "correctAnswer": "chères"
+        },
+        {
+          "question": "Je ___ ce manteau. Il me plaît ! (покупаю)",
+          "options": [
+            "prends",
+            "fais",
+            "vais",
+            "mets"
+          ],
+          "correctAnswer": "prends"
+        },
+        {
+          "question": "Vous avez ___ 40 ? (размер)",
+          "options": [
+            "une taille",
+            "un prix",
+            "une couleur",
+            "un rayon"
+          ],
+          "correctAnswer": "une taille"
+        }
       ]
     },
     {
@@ -134,16 +508,76 @@
       "type": "gender-quiz",
       "title": "Quel article ? — Les vêtements",
       "items": [
-        { "word": "manteau", "emoji": "🧥", "ru": "пальто", "article": "le", "hint": "Мужской: le manteau — запомнить" },
-        { "word": "robe", "emoji": "👗", "ru": "платье", "article": "la", "hint": "Женский: la robe — оканчивается на -e (жен.р.)" },
-        { "word": "chaussures", "emoji": "👟", "ru": "обувь/туфли", "article": "les", "hint": "Множественное число: les chaussures — всегда во мн.ч." },
-        { "word": "pantalon", "emoji": "👖", "ru": "брюки", "article": "le", "hint": "Мужской: le pantalon — оканчивается на -on (муж.р.)" },
-        { "word": "veste", "emoji": "🧣", "ru": "пиджак/жакет", "article": "la", "hint": "Женский: la veste — оканчивается на -e (жен.р.)" },
-        { "word": "pull", "emoji": "🧶", "ru": "свитер/пуловер", "article": "le", "hint": "Мужской: le pull — короткое слово, муж.р." },
-        { "word": "chemise", "emoji": "👔", "ru": "рубашка", "article": "la", "hint": "Женский: la chemise — оканчивается на -e (жен.р.)" },
-        { "word": "jean", "emoji": "🩳", "ru": "джинсы", "article": "le", "hint": "Мужской: le jean — заимствование, муж.р." },
-        { "word": "jupe", "emoji": "👘", "ru": "юбка", "article": "la", "hint": "Женский: la jupe — оканчивается на -e (жен.р.)" },
-        { "word": "imperméable", "emoji": "🌂", "ru": "плащ/дождевик", "article": "l'", "hint": "Мужской перед гласной: l'imperméable (cet imperméable)" }
+        {
+          "word": "manteau",
+          "emoji": "🧥",
+          "ru": "пальто",
+          "article": "le",
+          "hint": "Мужской: le manteau — запомнить"
+        },
+        {
+          "word": "robe",
+          "emoji": "👗",
+          "ru": "платье",
+          "article": "la",
+          "hint": "Женский: la robe — оканчивается на -e (жен.р.)"
+        },
+        {
+          "word": "chaussures",
+          "emoji": "👟",
+          "ru": "обувь/туфли",
+          "article": "les",
+          "hint": "Множественное число: les chaussures — всегда во мн.ч."
+        },
+        {
+          "word": "pantalon",
+          "emoji": "👖",
+          "ru": "брюки",
+          "article": "le",
+          "hint": "Мужской: le pantalon — оканчивается на -on (муж.р.)"
+        },
+        {
+          "word": "veste",
+          "emoji": "🧣",
+          "ru": "пиджак/жакет",
+          "article": "la",
+          "hint": "Женский: la veste — оканчивается на -e (жен.р.)"
+        },
+        {
+          "word": "pull",
+          "emoji": "🧶",
+          "ru": "свитер/пуловер",
+          "article": "le",
+          "hint": "Мужской: le pull — короткое слово, муж.р."
+        },
+        {
+          "word": "chemise",
+          "emoji": "👔",
+          "ru": "рубашка",
+          "article": "la",
+          "hint": "Женский: la chemise — оканчивается на -e (жен.р.)"
+        },
+        {
+          "word": "jean",
+          "emoji": "🩳",
+          "ru": "джинсы",
+          "article": "le",
+          "hint": "Мужской: le jean — заимствование, муж.р."
+        },
+        {
+          "word": "jupe",
+          "emoji": "👘",
+          "ru": "юбка",
+          "article": "la",
+          "hint": "Женский: la jupe — оканчивается на -e (жен.р.)"
+        },
+        {
+          "word": "imperméable",
+          "emoji": "🌂",
+          "ru": "плащ/дождевик",
+          "article": "l'",
+          "hint": "Мужской перед гласной: l'imperméable (cet imperméable)"
+        }
       ]
     },
     {
@@ -152,14 +586,62 @@
       "title": "Dialogue : Dans une boutique",
       "context": "Emma заходит в магазин одежды и хочет купить платье. Продавец помогает ей.",
       "exchanges": [
-        { "speaker": "Vendeur", "side": "left", "text": "Bonjour madame ! Je peux vous aider ?" },
-        { "speaker": "Emma", "side": "right", "text": "Oui, je cherche une robe pour une soirée." },
-        { "speaker": "Vendeur", "side": "left", "text": "Bien sûr ! Vous avez une couleur préférée ?" },
-        { "speaker": "Emma", "side": "right", "text": "___", "isBlank": true, "options": ["Je préfère le bleu ou le noir.", "J'aime faire du sport.", "Je voudrais un café, s'il vous plaît."], "correctAnswer": "Je préfère le bleu ou le noir.", "explanation": "Естественный ответ при выборе одежды — указать предпочтение в цвете" },
-        { "speaker": "Vendeur", "side": "left", "text": "Voilà ! Cette robe bleue est très élégante. C'est votre taille ?" },
-        { "speaker": "Emma", "side": "right", "text": "Oui, je fais du 38. C'est combien ?" },
-        { "speaker": "Vendeur", "side": "left", "text": "Elle coûte 65 euros. Vous la prenez ?" },
-        { "speaker": "Emma", "side": "right", "text": "___", "isBlank": true, "options": ["Oui, je la prends ! Elle est parfaite.", "Non, je déteste les robes.", "Je ne sais pas nager."], "correctAnswer": "Oui, je la prends ! Elle est parfaite.", "explanation": "Логичное завершение разговора о покупке — согласиться купить понравившийся товар" }
+        {
+          "speaker": "Vendeur",
+          "side": "left",
+          "text": "Bonjour madame ! Je peux vous aider ?"
+        },
+        {
+          "speaker": "Emma",
+          "side": "right",
+          "text": "Oui, je cherche une robe pour une soirée."
+        },
+        {
+          "speaker": "Vendeur",
+          "side": "left",
+          "text": "Bien sûr ! Vous avez une couleur préférée ?"
+        },
+        {
+          "speaker": "Emma",
+          "side": "right",
+          "text": "___",
+          "isBlank": true,
+          "options": [
+            "Je préfère le bleu ou le noir.",
+            "J'aime faire du sport.",
+            "Je voudrais un café, s'il vous plaît."
+          ],
+          "correctAnswer": "Je préfère le bleu ou le noir.",
+          "explanation": "Естественный ответ при выборе одежды — указать предпочтение в цвете"
+        },
+        {
+          "speaker": "Vendeur",
+          "side": "left",
+          "text": "Voilà ! Cette robe bleue est très élégante. C'est votre taille ?"
+        },
+        {
+          "speaker": "Emma",
+          "side": "right",
+          "text": "Oui, je fais du 38. C'est combien ?"
+        },
+        {
+          "speaker": "Vendeur",
+          "side": "left",
+          "text": "Elle coûte 65 euros. Vous la prenez ?"
+        },
+        {
+          "speaker": "Emma",
+          "side": "right",
+          "text": "___",
+          "isBlank": true,
+          "options": [
+            "Oui, je la prends ! Elle est parfaite.",
+            "Non, je déteste les robes.",
+            "Je ne sais pas nager."
+          ],
+          "correctAnswer": "Oui, je la prends ! Elle est parfaite.",
+          "explanation": "Логичное завершение разговора о покупке — согласиться купить понравившийся товар"
+        }
       ]
     },
     {
@@ -169,12 +651,72 @@
       "context": "Эмма идёт за покупками. Вставьте подходящие слова.",
       "text": "Emma entre dans un magasin. Elle voit ___ robe rouge magnifique. Elle demande : « ___ coûte combien ? » — « 45 euros, madame. » Emma ___ la robe et elle va dans la cabine. La robe est belle mais ___ chaussures noires sont parfaites avec ! Elle ___ aussi ces chaussures. C'est cher, mais Emma ___ les vêtements élégants.",
       "blanks": [
-        { "options": ["ce", "cet", "cette", "ces"], "correctAnswer": "cette", "hint": "robe — жен.р.", "explanation": "cette robe — указательное прилагательное жен.р." },
-        { "options": ["Il", "Ça", "Elle", "Ce"], "correctAnswer": "Ça", "hint": "Ça coûte combien ? — Сколько стоит?", "explanation": "Ça coûte combien ? — стандартный вопрос о цене" },
-        { "options": ["achète", "prend", "fait", "aime"], "correctAnswer": "prend", "hint": "prendre la robe — взять платье", "explanation": "prendre = взять/примерить; Emma prend la robe" },
-        { "options": ["ce", "cet", "cette", "ces"], "correctAnswer": "ces", "hint": "chaussures — мн.ч.", "explanation": "ces chaussures — указательное прилагательное мн.ч." },
-        { "options": ["achète", "prend", "fait", "aime"], "correctAnswer": "achète", "hint": "acheter = покупать", "explanation": "achète — форма глагола acheter для elle" },
-        { "options": ["déteste", "préfère", "achète", "vend"], "correctAnswer": "préfère", "hint": "préférer = предпочитать", "explanation": "Emma préfère les vêtements élégants — она предпочитает стильную одежду" }
+        {
+          "options": [
+            "ce",
+            "cet",
+            "cette",
+            "ces"
+          ],
+          "correctAnswer": "cette",
+          "hint": "robe — жен.р.",
+          "explanation": "cette robe — указательное прилагательное жен.р."
+        },
+        {
+          "options": [
+            "Il",
+            "Ça",
+            "Elle",
+            "Ce"
+          ],
+          "correctAnswer": "Ça",
+          "hint": "Ça coûte combien ? — Сколько стоит?",
+          "explanation": "Ça coûte combien ? — стандартный вопрос о цене"
+        },
+        {
+          "options": [
+            "achète",
+            "prend",
+            "fait",
+            "aime"
+          ],
+          "correctAnswer": "prend",
+          "hint": "prendre la robe — взять платье",
+          "explanation": "prendre = взять/примерить; Emma prend la robe"
+        },
+        {
+          "options": [
+            "ce",
+            "cet",
+            "cette",
+            "ces"
+          ],
+          "correctAnswer": "ces",
+          "hint": "chaussures — мн.ч.",
+          "explanation": "ces chaussures — указательное прилагательное мн.ч."
+        },
+        {
+          "options": [
+            "achète",
+            "prend",
+            "fait",
+            "aime"
+          ],
+          "correctAnswer": "achète",
+          "hint": "acheter = покупать",
+          "explanation": "achète — форма глагола acheter для elle"
+        },
+        {
+          "options": [
+            "déteste",
+            "préfère",
+            "achète",
+            "vend"
+          ],
+          "correctAnswer": "préfère",
+          "hint": "préférer = предпочитать",
+          "explanation": "Emma préfère les vêtements élégants — она предпочитает стильную одежду"
+        }
       ]
     },
     {
@@ -182,10 +724,61 @@
       "type": "sentence-builder",
       "title": "Упражнение 6 : Dans le magasin",
       "sentences": [
-        { "words": ["Je", "cherche", "une", "veste", "bleue", "pour", "le", "travail", "."], "ru": "Я ищу синий жакет для работы." },
-        { "words": ["Cet", "imperméable", "est", "pratique", "et", "pas", "cher", "."], "ru": "Этот плащ практичный и недорогой." },
-        { "words": ["Ces", "chaussures", "noires", "vont", "bien", "avec", "cette", "robe", "."], "ru": "Эта чёрная обувь хорошо подходит к этому платью." },
-        { "words": ["Je", "préfère", "ce", "pull", "rouge", "au", "pull", "gris", "."], "ru": "Я предпочитаю этот красный свитер серому." }
+        {
+          "words": [
+            "Je",
+            "cherche",
+            "une",
+            "veste",
+            "bleue",
+            "pour",
+            "le",
+            "travail",
+            "."
+          ],
+          "ru": "Я ищу синий жакет для работы."
+        },
+        {
+          "words": [
+            "Cet",
+            "imperméable",
+            "est",
+            "pratique",
+            "et",
+            "pas",
+            "cher",
+            "."
+          ],
+          "ru": "Этот плащ практичный и недорогой."
+        },
+        {
+          "words": [
+            "Ces",
+            "chaussures",
+            "noires",
+            "vont",
+            "bien",
+            "avec",
+            "cette",
+            "robe",
+            "."
+          ],
+          "ru": "Эта чёрная обувь хорошо подходит к этому платью."
+        },
+        {
+          "words": [
+            "Je",
+            "préfère",
+            "ce",
+            "pull",
+            "rouge",
+            "au",
+            "pull",
+            "gris",
+            "."
+          ],
+          "ru": "Я предпочитаю этот красный свитер серому."
+        }
       ]
     }
   ]

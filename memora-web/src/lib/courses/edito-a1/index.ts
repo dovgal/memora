@@ -53,6 +53,7 @@ export interface EditoExercise {
   // listening
   audioFile?: string;
   source?: string;
+  transcript?: string;
   // video
   videoFile?: string;
   description?: string;

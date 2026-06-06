@@ -3,29 +3,121 @@
   "title": "Unité 5 : En ville",
   "description": "S'orienter dans la ville, demander et indiquer le chemin. Les prépositions de lieu, l'impératif, les verbes aller et venir.",
   "vocabulary": [
-    { "fr": "la rue", "ru": "улица", "type": "ville" },
-    { "fr": "l'avenue", "ru": "проспект", "type": "ville" },
-    { "fr": "le boulevard", "ru": "бульвар", "type": "ville" },
-    { "fr": "la place", "ru": "площадь", "type": "ville" },
-    { "fr": "la mairie", "ru": "мэрия / городская администрация", "type": "ville" },
-    { "fr": "la gare", "ru": "вокзал", "type": "ville" },
-    { "fr": "l'hôpital", "ru": "больница", "type": "ville" },
-    { "fr": "la pharmacie", "ru": "аптека", "type": "ville" },
-    { "fr": "la boulangerie", "ru": "булочная", "type": "ville" },
-    { "fr": "le supermarché", "ru": "супермаркет", "type": "ville" },
-    { "fr": "la banque", "ru": "банк", "type": "ville" },
-    { "fr": "le musée", "ru": "музей", "type": "ville" },
-    { "fr": "à gauche", "ru": "налево / слева", "type": "direction" },
-    { "fr": "à droite", "ru": "направо / справа", "type": "direction" },
-    { "fr": "tout droit", "ru": "прямо", "type": "direction" },
-    { "fr": "au bout de", "ru": "в конце", "type": "direction" },
-    { "fr": "en face de", "ru": "напротив", "type": "preposition" },
-    { "fr": "à côté de", "ru": "рядом с", "type": "preposition" },
-    { "fr": "près de", "ru": "вблизи от / рядом", "type": "preposition" },
-    { "fr": "loin de", "ru": "далеко от", "type": "preposition" },
-    { "fr": "Excusez-moi, où est... ?", "ru": "Извините, где находится...?", "type": "phrase" },
-    { "fr": "Prenez la rue...", "ru": "Пройдите по улице...", "type": "phrase" },
-    { "fr": "Tournez à gauche / à droite.", "ru": "Поверните налево / направо.", "type": "phrase" }
+    {
+      "fr": "la rue",
+      "ru": "улица",
+      "type": "ville"
+    },
+    {
+      "fr": "l'avenue",
+      "ru": "проспект",
+      "type": "ville"
+    },
+    {
+      "fr": "le boulevard",
+      "ru": "бульвар",
+      "type": "ville"
+    },
+    {
+      "fr": "la place",
+      "ru": "площадь",
+      "type": "ville"
+    },
+    {
+      "fr": "la mairie",
+      "ru": "мэрия / городская администрация",
+      "type": "ville"
+    },
+    {
+      "fr": "la gare",
+      "ru": "вокзал",
+      "type": "ville"
+    },
+    {
+      "fr": "l'hôpital",
+      "ru": "больница",
+      "type": "ville"
+    },
+    {
+      "fr": "la pharmacie",
+      "ru": "аптека",
+      "type": "ville"
+    },
+    {
+      "fr": "la boulangerie",
+      "ru": "булочная",
+      "type": "ville"
+    },
+    {
+      "fr": "le supermarché",
+      "ru": "супермаркет",
+      "type": "ville"
+    },
+    {
+      "fr": "la banque",
+      "ru": "банк",
+      "type": "ville"
+    },
+    {
+      "fr": "le musée",
+      "ru": "музей",
+      "type": "ville"
+    },
+    {
+      "fr": "à gauche",
+      "ru": "налево / слева",
+      "type": "direction"
+    },
+    {
+      "fr": "à droite",
+      "ru": "направо / справа",
+      "type": "direction"
+    },
+    {
+      "fr": "tout droit",
+      "ru": "прямо",
+      "type": "direction"
+    },
+    {
+      "fr": "au bout de",
+      "ru": "в конце",
+      "type": "direction"
+    },
+    {
+      "fr": "en face de",
+      "ru": "напротив",
+      "type": "preposition"
+    },
+    {
+      "fr": "à côté de",
+      "ru": "рядом с",
+      "type": "preposition"
+    },
+    {
+      "fr": "près de",
+      "ru": "вблизи от / рядом",
+      "type": "preposition"
+    },
+    {
+      "fr": "loin de",
+      "ru": "далеко от",
+      "type": "preposition"
+    },
+    {
+      "fr": "Excusez-moi, où est... ?",
+      "ru": "Извините, где находится...?",
+      "type": "phrase"
+    },
+    {
+      "fr": "Prenez la rue...",
+      "ru": "Пройдите по улице...",
+      "type": "phrase"
+    },
+    {
+      "fr": "Tournez à gauche / à droite.",
+      "ru": "Поверните налево / направо.",
+      "type": "phrase"
+    }
   ],
   "exercises": [
     {
@@ -45,12 +137,66 @@
       "type": "grammar-quiz",
       "title": "Упражнение 1 : Aller et Venir",
       "questions": [
-        { "question": "Je ___ à la gare. (aller)", "options": ["vais", "vas", "va", "vont"], "correctAnswer": "vais" },
-        { "question": "Tu ___ d'où ? (venir)", "options": ["viens", "vient", "venez", "viennent"], "correctAnswer": "viens" },
-        { "question": "Elle ___ au musée demain. (aller)", "options": ["vais", "vas", "va", "vont"], "correctAnswer": "va" },
-        { "question": "Nous ___ chez des amis. (aller)", "options": ["vais", "allez", "allons", "vont"], "correctAnswer": "allons" },
-        { "question": "Vous ___ à Paris pour les vacances ? (venir)", "options": ["viens", "vient", "venez", "viennent"], "correctAnswer": "venez" },
-        { "question": "Ils ___ manger bientôt. (aller = futur proche)", "options": ["vais", "vas", "va", "vont"], "correctAnswer": "vont" }
+        {
+          "question": "Je ___ à la gare. (aller)",
+          "options": [
+            "vais",
+            "vas",
+            "va",
+            "vont"
+          ],
+          "correctAnswer": "vais"
+        },
+        {
+          "question": "Tu ___ d'où ? (venir)",
+          "options": [
+            "viens",
+            "vient",
+            "venez",
+            "viennent"
+          ],
+          "correctAnswer": "viens"
+        },
+        {
+          "question": "Elle ___ au musée demain. (aller)",
+          "options": [
+            "vais",
+            "vas",
+            "va",
+            "vont"
+          ],
+          "correctAnswer": "va"
+        },
+        {
+          "question": "Nous ___ chez des amis. (aller)",
+          "options": [
+            "vais",
+            "allez",
+            "allons",
+            "vont"
+          ],
+          "correctAnswer": "allons"
+        },
+        {
+          "question": "Vous ___ à Paris pour les vacances ? (venir)",
+          "options": [
+            "viens",
+            "vient",
+            "venez",
+            "viennent"
+          ],
+          "correctAnswer": "venez"
+        },
+        {
+          "question": "Ils ___ manger bientôt. (aller = futur proche)",
+          "options": [
+            "vais",
+            "vas",
+            "va",
+            "vont"
+          ],
+          "correctAnswer": "vont"
+        }
       ]
     },
     {
@@ -58,11 +204,56 @@
       "type": "grammar-quiz",
       "title": "Упражнение 2 : Prépositions de lieu",
       "questions": [
-        { "question": "La pharmacie est ___ de la boulangerie.", "options": ["à côté", "loin", "au bout", "à gauche"], "correctAnswer": "à côté" },
-        { "question": "Le musée est ___ de la gare (очень далеко).", "options": ["près", "loin", "en face", "à droite"], "correctAnswer": "loin" },
-        { "question": "L'hôtel est ___ de l'hôpital (напротив).", "options": ["près", "loin", "en face", "à côté"], "correctAnswer": "en face" },
-        { "question": "Tournez ___ au feu rouge. (направо)", "options": ["à gauche", "à droite", "tout droit", "au bout"], "correctAnswer": "à droite" },
-        { "question": "Continuez ___. (прямо)", "options": ["à gauche", "à droite", "tout droit", "en face"], "correctAnswer": "tout droit" }
+        {
+          "question": "La pharmacie est ___ de la boulangerie.",
+          "options": [
+            "à côté",
+            "loin",
+            "au bout",
+            "à gauche"
+          ],
+          "correctAnswer": "à côté"
+        },
+        {
+          "question": "Le musée est ___ de la gare (очень далеко).",
+          "options": [
+            "près",
+            "loin",
+            "en face",
+            "à droite"
+          ],
+          "correctAnswer": "loin"
+        },
+        {
+          "question": "L'hôtel est ___ de l'hôpital (напротив).",
+          "options": [
+            "près",
+            "loin",
+            "en face",
+            "à côté"
+          ],
+          "correctAnswer": "en face"
+        },
+        {
+          "question": "Tournez ___ au feu rouge. (направо)",
+          "options": [
+            "à gauche",
+            "à droite",
+            "tout droit",
+            "au bout"
+          ],
+          "correctAnswer": "à droite"
+        },
+        {
+          "question": "Continuez ___. (прямо)",
+          "options": [
+            "à gauche",
+            "à droite",
+            "tout droit",
+            "en face"
+          ],
+          "correctAnswer": "tout droit"
+        }
       ]
     },
     {
@@ -70,10 +261,55 @@
       "type": "sentence-builder",
       "title": "Упражнение 3 : Demander le chemin",
       "sentences": [
-        { "words": ["Excusez-moi", ",", "où", "est", "la", "gare", "?"], "ru": "Извините, где находится вокзал?" },
-        { "words": ["Tournez", "à", "gauche", "au", "feu", "rouge", "."], "ru": "Поверните налево на светофоре." },
-        { "words": ["La", "pharmacie", "est", "en", "face", "de", "la", "banque", "."], "ru": "Аптека находится напротив банка." },
-        { "words": ["Je", "vais", "au", "musée", "demain", "."], "ru": "Я иду в музей завтра." }
+        {
+          "words": [
+            "Excusez-moi",
+            ",",
+            "où",
+            "est",
+            "la",
+            "gare",
+            "?"
+          ],
+          "ru": "Извините, где находится вокзал?"
+        },
+        {
+          "words": [
+            "Tournez",
+            "à",
+            "gauche",
+            "au",
+            "feu",
+            "rouge",
+            "."
+          ],
+          "ru": "Поверните налево на светофоре."
+        },
+        {
+          "words": [
+            "La",
+            "pharmacie",
+            "est",
+            "en",
+            "face",
+            "de",
+            "la",
+            "banque",
+            "."
+          ],
+          "ru": "Аптека находится напротив банка."
+        },
+        {
+          "words": [
+            "Je",
+            "vais",
+            "au",
+            "musée",
+            "demain",
+            "."
+          ],
+          "ru": "Я иду в музей завтра."
+        }
       ]
     },
     {
@@ -93,14 +329,86 @@
       "type": "grammar-quiz",
       "title": "Упражнение 4 : Contractions au/du",
       "questions": [
-        { "question": "Je vais ___ cinéma. (à + le)", "options": ["à le", "au", "aux", "à la"], "correctAnswer": "au" },
-        { "question": "Elle vient ___ supermarché. (de + le)", "options": ["de le", "du", "des", "de la"], "correctAnswer": "du" },
-        { "question": "Nous allons ___ musées. (à + les)", "options": ["à les", "au", "aux", "à la"], "correctAnswer": "aux" },
-        { "question": "Il revient ___ gare. (de + la)", "options": ["du", "des", "de la", "de l'"], "correctAnswer": "de la" },
-        { "question": "Tu vas ___ hôpital ? (à + l')", "options": ["au", "à l'", "à la", "aux"], "correctAnswer": "à l'" },
-        { "question": "Je viens ___ boulangerie. (de + la)", "options": ["du", "des", "de l'", "de la"], "correctAnswer": "de la" },
-        { "question": "Ils vont ___ restaurants du quartier. (à + les)", "options": ["au", "aux", "à les", "à la"], "correctAnswer": "aux" },
-        { "question": "On vient ___ marché. (de + le)", "options": ["du", "de la", "de l'", "des"], "correctAnswer": "du" }
+        {
+          "question": "Je vais ___ cinéma. (à + le)",
+          "options": [
+            "à le",
+            "au",
+            "aux",
+            "à la"
+          ],
+          "correctAnswer": "au"
+        },
+        {
+          "question": "Elle vient ___ supermarché. (de + le)",
+          "options": [
+            "de le",
+            "du",
+            "des",
+            "de la"
+          ],
+          "correctAnswer": "du"
+        },
+        {
+          "question": "Nous allons ___ musées. (à + les)",
+          "options": [
+            "à les",
+            "au",
+            "aux",
+            "à la"
+          ],
+          "correctAnswer": "aux"
+        },
+        {
+          "question": "Il revient ___ gare. (de + la)",
+          "options": [
+            "du",
+            "des",
+            "de la",
+            "de l'"
+          ],
+          "correctAnswer": "de la"
+        },
+        {
+          "question": "Tu vas ___ hôpital ? (à + l')",
+          "options": [
+            "au",
+            "à l'",
+            "à la",
+            "aux"
+          ],
+          "correctAnswer": "à l'"
+        },
+        {
+          "question": "Je viens ___ boulangerie. (de + la)",
+          "options": [
+            "du",
+            "des",
+            "de l'",
+            "de la"
+          ],
+          "correctAnswer": "de la"
+        },
+        {
+          "question": "Ils vont ___ restaurants du quartier. (à + les)",
+          "options": [
+            "au",
+            "aux",
+            "à les",
+            "à la"
+          ],
+          "correctAnswer": "aux"
+        },
+        {
+          "question": "On vient ___ marché. (de + le)",
+          "options": [
+            "du",
+            "de la",
+            "de l'",
+            "des"
+          ],
+          "correctAnswer": "du"
+        }
       ]
     },
     {
@@ -108,12 +416,66 @@
       "type": "grammar-quiz",
       "title": "Упражнение 5 : Le futur proche et les directions",
       "questions": [
-        { "question": "Nous ___ visiter le musée demain. (futur proche)", "options": ["allons", "vais", "vas", "vont"], "correctAnswer": "allons" },
-        { "question": "Elle ___ prendre le bus. (futur proche)", "options": ["vais", "vas", "va", "vont"], "correctAnswer": "va" },
-        { "question": "Vous ___ tourner à droite après la pharmacie.", "options": ["allez", "allons", "vont", "vas"], "correctAnswer": "allez" },
-        { "question": "Ils ___ arriver à la gare dans cinq minutes.", "options": ["vais", "vas", "va", "vont"], "correctAnswer": "vont" },
-        { "question": "Continuez ___ droit jusqu'au feu rouge.", "options": ["à gauche", "à droite", "tout", "au bout"], "correctAnswer": "tout" },
-        { "question": "La gare est ___ au bout de la rue, à droite.", "options": ["loin", "juste", "très", "toujours"], "correctAnswer": "juste" }
+        {
+          "question": "Nous ___ visiter le musée demain. (futur proche)",
+          "options": [
+            "allons",
+            "vais",
+            "vas",
+            "vont"
+          ],
+          "correctAnswer": "allons"
+        },
+        {
+          "question": "Elle ___ prendre le bus. (futur proche)",
+          "options": [
+            "vais",
+            "vas",
+            "va",
+            "vont"
+          ],
+          "correctAnswer": "va"
+        },
+        {
+          "question": "Vous ___ tourner à droite après la pharmacie.",
+          "options": [
+            "allez",
+            "allons",
+            "vont",
+            "vas"
+          ],
+          "correctAnswer": "allez"
+        },
+        {
+          "question": "Ils ___ arriver à la gare dans cinq minutes.",
+          "options": [
+            "vais",
+            "vas",
+            "va",
+            "vont"
+          ],
+          "correctAnswer": "vont"
+        },
+        {
+          "question": "Continuez ___ droit jusqu'au feu rouge.",
+          "options": [
+            "à gauche",
+            "à droite",
+            "tout",
+            "au bout"
+          ],
+          "correctAnswer": "tout"
+        },
+        {
+          "question": "La gare est ___ au bout de la rue, à droite.",
+          "options": [
+            "loin",
+            "juste",
+            "très",
+            "toujours"
+          ],
+          "correctAnswer": "juste"
+        }
       ]
     },
     {
@@ -121,16 +483,76 @@
       "type": "gender-quiz",
       "title": "Quel article ? — Lieux de la ville",
       "items": [
-        { "word": "rue", "emoji": "🛣️", "ru": "улица", "article": "la", "hint": "Женский род: la rue" },
-        { "word": "avenue", "emoji": "🌳", "ru": "проспект", "article": "l'", "hint": "Женский род, начинается с гласной: l'avenue" },
-        { "word": "boulevard", "emoji": "🏙️", "ru": "бульвар", "article": "le", "hint": "Мужской род: le boulevard" },
-        { "word": "place", "emoji": "🏛️", "ru": "площадь", "article": "la", "hint": "Женский род: la place" },
-        { "word": "gare", "emoji": "🚉", "ru": "вокзал", "article": "la", "hint": "Женский род: la gare" },
-        { "word": "musée", "emoji": "🖼️", "ru": "музей", "article": "le", "hint": "Мужской род: le musée" },
-        { "word": "hôpital", "emoji": "🏥", "ru": "больница", "article": "l'", "hint": "Мужской род, начинается с гласной (h немое): l'hôpital" },
-        { "word": "pharmacie", "emoji": "💊", "ru": "аптека", "article": "la", "hint": "Женский род: la pharmacie" },
-        { "word": "boulangerie", "emoji": "🥐", "ru": "булочная", "article": "la", "hint": "Женский род: la boulangerie" },
-        { "word": "supermarché", "emoji": "🛒", "ru": "супермаркет", "article": "le", "hint": "Мужской род: le supermarché" }
+        {
+          "word": "rue",
+          "emoji": "🛣️",
+          "ru": "улица",
+          "article": "la",
+          "hint": "Женский род: la rue"
+        },
+        {
+          "word": "avenue",
+          "emoji": "🌳",
+          "ru": "проспект",
+          "article": "l'",
+          "hint": "Женский род, начинается с гласной: l'avenue"
+        },
+        {
+          "word": "boulevard",
+          "emoji": "🏙️",
+          "ru": "бульвар",
+          "article": "le",
+          "hint": "Мужской род: le boulevard"
+        },
+        {
+          "word": "place",
+          "emoji": "🏛️",
+          "ru": "площадь",
+          "article": "la",
+          "hint": "Женский род: la place"
+        },
+        {
+          "word": "gare",
+          "emoji": "🚉",
+          "ru": "вокзал",
+          "article": "la",
+          "hint": "Женский род: la gare"
+        },
+        {
+          "word": "musée",
+          "emoji": "🖼️",
+          "ru": "музей",
+          "article": "le",
+          "hint": "Мужской род: le musée"
+        },
+        {
+          "word": "hôpital",
+          "emoji": "🏥",
+          "ru": "больница",
+          "article": "l'",
+          "hint": "Мужской род, начинается с гласной (h немое): l'hôpital"
+        },
+        {
+          "word": "pharmacie",
+          "emoji": "💊",
+          "ru": "аптека",
+          "article": "la",
+          "hint": "Женский род: la pharmacie"
+        },
+        {
+          "word": "boulangerie",
+          "emoji": "🥐",
+          "ru": "булочная",
+          "article": "la",
+          "hint": "Женский род: la boulangerie"
+        },
+        {
+          "word": "supermarché",
+          "emoji": "🛒",
+          "ru": "супермаркет",
+          "article": "le",
+          "hint": "Мужской род: le supermarché"
+        }
       ]
     },
     {
@@ -139,14 +561,64 @@
       "title": "Dialogue : Emma demande son chemin pour aller à la gare",
       "context": "Эмма опаздывает на поезд и просит прохожего объяснить дорогу до вокзала.",
       "exchanges": [
-        { "speaker": "Emma", "side": "left", "text": "___", "isBlank": true, "options": ["Excusez-moi, monsieur, où est la gare, s'il vous plaît ?", "Salut ! Tu sais où est la gare ?", "La gare, c'est loin d'ici ?", "Je cherche le bus pour la gare."], "correctAnswer": "Excusez-moi, monsieur, où est la gare, s'il vous plaît ?", "explanation": "Вежливое обращение к незнакомцу: Excusez-moi + monsieur/madame + вопрос. Всегда используйте 'vous' с незнакомыми людьми." },
-        { "speaker": "Passant", "side": "right", "text": "Oui, bien sûr ! Vous allez tout droit jusqu'au feu rouge." },
-        { "speaker": "Emma", "side": "left", "text": "D'accord. Et ensuite ?" },
-        { "speaker": "Passant", "side": "right", "text": "Ensuite, vous tournez à gauche dans l'avenue de la République." },
-        { "speaker": "Emma", "side": "left", "text": "C'est loin ?" },
-        { "speaker": "Passant", "side": "right", "text": "___", "isBlank": true, "options": ["Non, c'est à cinq minutes à pied, juste en face du musée.", "Oui, c'est très loin, prenez un taxi.", "Je ne sais pas exactement.", "La gare est fermée aujourd'hui."], "correctAnswer": "Non, c'est à cinq minutes à pied, juste en face du musée.", "explanation": "Пешее расстояние: c'est à X minutes à pied. Ориентир: juste en face de (прямо напротив)." },
-        { "speaker": "Emma", "side": "left", "text": "Merci beaucoup, monsieur !" },
-        { "speaker": "Passant", "side": "right", "text": "De rien. Bon voyage !" }
+        {
+          "speaker": "Emma",
+          "side": "left",
+          "text": "___",
+          "isBlank": true,
+          "options": [
+            "Excusez-moi, monsieur, où est la gare, s'il vous plaît ?",
+            "Salut ! Tu sais où est la gare ?",
+            "La gare, c'est loin d'ici ?",
+            "Je cherche le bus pour la gare."
+          ],
+          "correctAnswer": "Excusez-moi, monsieur, où est la gare, s'il vous plaît ?",
+          "explanation": "Вежливое обращение к незнакомцу: Excusez-moi + monsieur/madame + вопрос. Всегда используйте 'vous' с незнакомыми людьми."
+        },
+        {
+          "speaker": "Passant",
+          "side": "right",
+          "text": "Oui, bien sûr ! Vous allez tout droit jusqu'au feu rouge."
+        },
+        {
+          "speaker": "Emma",
+          "side": "left",
+          "text": "D'accord. Et ensuite ?"
+        },
+        {
+          "speaker": "Passant",
+          "side": "right",
+          "text": "Ensuite, vous tournez à gauche dans l'avenue de la République."
+        },
+        {
+          "speaker": "Emma",
+          "side": "left",
+          "text": "C'est loin ?"
+        },
+        {
+          "speaker": "Passant",
+          "side": "right",
+          "text": "___",
+          "isBlank": true,
+          "options": [
+            "Non, c'est à cinq minutes à pied, juste en face du musée.",
+            "Oui, c'est très loin, prenez un taxi.",
+            "Je ne sais pas exactement.",
+            "La gare est fermée aujourd'hui."
+          ],
+          "correctAnswer": "Non, c'est à cinq minutes à pied, juste en face du musée.",
+          "explanation": "Пешее расстояние: c'est à X minutes à pied. Ориентир: juste en face de (прямо напротив)."
+        },
+        {
+          "speaker": "Emma",
+          "side": "left",
+          "text": "Merci beaucoup, monsieur !"
+        },
+        {
+          "speaker": "Passant",
+          "side": "right",
+          "text": "De rien. Bon voyage !"
+        }
       ]
     },
     {
@@ -156,12 +628,72 @@
       "context": "Лукас объясняет маршрут своему другу. Заполните пропуски словами направления и сокращёнными артиклями.",
       "text": "Pour aller ___ gare, prends ___ rue Victor Hugo. Tu vas tout ___ jusqu'au feu rouge. Après le feu, tourne ___ gauche. Continue jusqu'à la place. La gare est ___ face de la banque, à côté ___ pharmacie.",
       "blanks": [
-        { "options": ["à la", "au", "aux", "à l'"], "correctAnswer": "à la", "hint": "Gare — женский род, предлог à без слияния", "explanation": "à la gare — на вокзал (la gare — женский род, à + la = à la)" },
-        { "options": ["la", "le", "l'", "les"], "correctAnswer": "la", "hint": "Rue — женский род, определённый артикль", "explanation": "la rue Victor Hugo — улица Виктора Гюго (женский род)" },
-        { "options": ["droit", "gauche", "droite", "bout"], "correctAnswer": "droit", "hint": "Tout droit = прямо", "explanation": "tout droit — прямо (идти прямо до светофора)" },
-        { "options": ["à", "de", "en", "sur"], "correctAnswer": "à", "hint": "Tourner à gauche / à droite", "explanation": "tourner à gauche — повернуть налево (предлог à)" },
-        { "options": ["en", "à", "de", "sur"], "correctAnswer": "en", "hint": "En face de = напротив", "explanation": "en face de — напротив (устойчивое выражение)" },
-        { "options": ["de la", "du", "de l'", "des"], "correctAnswer": "de la", "hint": "Pharmacie — женский род, de + la", "explanation": "à côté de la pharmacie — рядом с аптекой (женский род)" }
+        {
+          "options": [
+            "à la",
+            "au",
+            "aux",
+            "à l'"
+          ],
+          "correctAnswer": "à la",
+          "hint": "Gare — женский род, предлог à без слияния",
+          "explanation": "à la gare — на вокзал (la gare — женский род, à + la = à la)"
+        },
+        {
+          "options": [
+            "la",
+            "le",
+            "l'",
+            "les"
+          ],
+          "correctAnswer": "la",
+          "hint": "Rue — женский род, определённый артикль",
+          "explanation": "la rue Victor Hugo — улица Виктора Гюго (женский род)"
+        },
+        {
+          "options": [
+            "droit",
+            "gauche",
+            "droite",
+            "bout"
+          ],
+          "correctAnswer": "droit",
+          "hint": "Tout droit = прямо",
+          "explanation": "tout droit — прямо (идти прямо до светофора)"
+        },
+        {
+          "options": [
+            "à",
+            "de",
+            "en",
+            "sur"
+          ],
+          "correctAnswer": "à",
+          "hint": "Tourner à gauche / à droite",
+          "explanation": "tourner à gauche — повернуть налево (предлог à)"
+        },
+        {
+          "options": [
+            "en",
+            "à",
+            "de",
+            "sur"
+          ],
+          "correctAnswer": "en",
+          "hint": "En face de = напротив",
+          "explanation": "en face de — напротив (устойчивое выражение)"
+        },
+        {
+          "options": [
+            "de la",
+            "du",
+            "de l'",
+            "des"
+          ],
+          "correctAnswer": "de la",
+          "hint": "Pharmacie — женский род, de + la",
+          "explanation": "à côté de la pharmacie — рядом с аптекой (женский род)"
+        }
       ]
     },
     {
@@ -169,10 +701,60 @@
       "type": "sentence-builder",
       "title": "Упражнение 6 : Se repérer en ville",
       "sentences": [
-        { "words": ["Je", "vais", "aller", "au", "musée", "demain", "matin", "."], "ru": "Я собираюсь пойти в музей завтра утром." },
-        { "words": ["Tournez", "à", "droite", "et", "continuez", "tout", "droit", "."], "ru": "Поверните направо и продолжайте прямо." },
-        { "words": ["La", "pharmacie", "est", "à", "côté", "de", "la", "boulangerie", "."], "ru": "Аптека находится рядом с булочной." },
-        { "words": ["Excusez-moi", ",", "c'est", "loin", "d'ici", ",", "la", "gare", "?"], "ru": "Извините, вокзал далеко отсюда?" }
+        {
+          "words": [
+            "Je",
+            "vais",
+            "aller",
+            "au",
+            "musée",
+            "demain",
+            "matin",
+            "."
+          ],
+          "ru": "Я собираюсь пойти в музей завтра утром."
+        },
+        {
+          "words": [
+            "Tournez",
+            "à",
+            "droite",
+            "et",
+            "continuez",
+            "tout",
+            "droit",
+            "."
+          ],
+          "ru": "Поверните направо и продолжайте прямо."
+        },
+        {
+          "words": [
+            "La",
+            "pharmacie",
+            "est",
+            "à",
+            "côté",
+            "de",
+            "la",
+            "boulangerie",
+            "."
+          ],
+          "ru": "Аптека находится рядом с булочной."
+        },
+        {
+          "words": [
+            "Excusez-moi",
+            ",",
+            "c'est",
+            "loin",
+            "d'ici",
+            ",",
+            "la",
+            "gare",
+            "?"
+          ],
+          "ru": "Извините, вокзал далеко отсюда?"
+        }
       ]
     },
     {
@@ -182,7 +764,58 @@
       "audioFile": "piste_040.mp3",
       "source": "cahier",
       "questions": [
-        { "question": "Où est-ce que la personne veut aller ? (Куда хочет попасть человек?)", "options": ["À la gare", "Au musée", "À la pharmacie", "À la banque"], "correctAnswer": "À la gare" }
+        {
+          "question": "Où est-ce que la personne veut aller ? (Куда хочет попасть человек?)",
+          "options": [
+            "À la gare",
+            "Au musée",
+            "À la pharmacie",
+            "À la banque"
+          ],
+          "correctAnswer": "À la gare"
+        }
+      ]
+    },
+    {
+      "id": "u5-livre-audio1",
+      "type": "listening",
+      "title": "Document B : Un styliste personnel (Livre, piste ~66)",
+      "audioFile": "66_Edito_A1_Livre.mp3",
+      "source": "livre",
+      "transcript": "Zoé : Oh, mais qu'est-ce que c'est, Flore ?\nFlore : C'est ma box de vêtements !\nZoé : Pardon ?\nFlore : Ma box de « La Malle française » !\nZoé : Mais, qu'est-ce que c'est ?\nFlore : C'est un service de shopping en ligne avec un styliste !\nZoé : Et comment ça marche ?\nFlore : Sur le site, tu choisis ta taille, tes styles préférés, et tu parles 10 minutes au téléphone avec un styliste.\nZoé : Mais qui choisit les articles ?\nFlore : Ben… Le ou la styliste ! Tu aimes, tu achètes, tu n'aimes pas, tu n'achètes pas !\nZoé : Intéressant !\nFlore : Regarde dans ma box, il y a une robe longue, une veste courte en jean, des bottes et un chapeau. Et il y a aussi un jean avec un gilet court en laine et un manteau long.\nZoé : Le manteau gris ?\nFlore : Oui, j'adore le manteau, mais je n'aime pas le pull, il ne me plaît pas.\nZoé : Tu fais quelle taille ?\nFlore : Je fais du 38, pourquoi ?\nZoé : Parce qu'il me plaît le pull et je fais aussi du 38.\nFlore : Et tu aimes les chaussures grises ? Je déteste la couleur. Quelle horreur !\nZoé : Ah oui ? Moi je trouve ça joli, et le gris, c'est à la mode !\nFlore : Tu chausses du combien ?\nZoé : Je chausse du 39.",
+      "questions": [
+        {
+          "question": "Qu'est-ce que Flore n'aime pas dans sa box ? (Что Флор не нравится в её боксе?)",
+          "options": [
+            "La robe longue",
+            "Les bottes",
+            "Le pull",
+            "Le manteau"
+          ],
+          "correctAnswer": "Le pull",
+          "explanation": "Flore dit : « je n'aime pas le pull, il ne me plaît pas. »"
+        }
+      ]
+    },
+    {
+      "id": "u5-livre-essentiel",
+      "type": "listening",
+      "title": "L'essentiel : Dans un magasin (Livre, piste ~71)",
+      "audioFile": "71_Edito_A1_Livre.mp3",
+      "source": "livre",
+      "transcript": "Le vendeur : Bonjour, messieurs-dames.\nLa cliente : Bonjour, monsieur. Mon mari et moi, nous cherchons des vêtements pour un mariage. Notre neveu va se marier début juin.\nLe vendeur : Des vêtements élégants alors… un costume pour monsieur et pour vous, madame, vous préférez une robe longue ou un pantalon avec une veste ?\nLa cliente : Les robes longues, je trouve ça joli et c'est à la mode. Et à Nice, début juin, il va faire chaud, alors je préfère une robe.\nLe vendeur : Et vous, monsieur, vous préférez un costume gris, bleu ou beige ?\nLe client : Au printemps, je n'aime pas porter des vêtements gris. Alors, un costume beige ou bleu, s'il vous plaît.\nLe vendeur : D'accord. Vous faites quelle taille ?\nLe client : Moi, je fais du 44.\nLa cliente : Et moi, je fais du 40.\nLe vendeur : Très bien. Ah ! Monsieur, nous vendons aussi des chaussures avec les costumes.\nLe client : Parfait ! Des chaussures noires, s'il vous plaît.\nLe vendeur : Vous chaussez du combien ?\nLe client : Je chausse du 45.\nLa cliente : Il te va bien !\nLe client : Oui, c'est vrai… Avec ta robe et mon costume, on va être élégants au mariage !",
+      "questions": [
+        {
+          "question": "Quelle couleur de costume le client ne veut pas ? (Какой цвет костюма клиент не хочет?)",
+          "options": [
+            "Bleu",
+            "Beige",
+            "Gris",
+            "Noir"
+          ],
+          "correctAnswer": "Gris",
+          "explanation": "Le client dit : « Au printemps, je n'aime pas porter des vêtements gris. »"
+        }
       ]
     },
     {

@@ -13,6 +13,7 @@ export function ListeningExercise({ exercise, onComplete }: { exercise: EditoExe
   const [duration, setDuration] = useState(0);
   const [listened, setListened] = useState(false);
   const [quizDone, setQuizDone] = useState(false);
+  const [showTranscript, setShowTranscript] = useState(false);
 
   const src = `${BASE_URL}/${exercise.source}/${exercise.audioFile}`;
   const hasQuestions = (exercise.questions?.length ?? 0) > 0;
@@ -119,6 +120,23 @@ export function ListeningExercise({ exercise, onComplete }: { exercise: EditoExe
             </div>
           )}
         </>
+      )}
+
+      {exercise.transcript && (
+        <div className="border-t border-border pt-4">
+          <button
+            onClick={() => setShowTranscript(s => !s)}
+            className="inline-flex items-center gap-1.5 text-sm text-qz-text-muted hover:text-foreground transition-colors"
+          >
+            <span>{showTranscript ? '▲' : '▼'}</span>
+            {showTranscript ? 'Скрыть транскрипт' : 'Показать транскрипт'}
+          </button>
+          {showTranscript && (
+            <div className="mt-3 p-4 bg-muted/50 rounded-xl text-sm leading-relaxed whitespace-pre-wrap border-l-2 border-[#4255ff]/40 text-foreground">
+              {exercise.transcript}
+            </div>
+          )}
+        </div>
       )}
 
       {hasQuestions && (
