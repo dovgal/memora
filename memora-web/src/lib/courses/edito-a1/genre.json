@@ -594,7 +594,8 @@
             "Оба варианта",
             "Неизвестно"
           ],
-          "correctAnswer": "Мужской (le tourisme)"
+          "correctAnswer": "Мужской (le tourisme)",
+          "explanation": "tourisme — мужской: -isme → всегда мужской (le tourisme, le capitalisme...). Артикль: le."
         },
         {
           "question": "«nature» — какой это род?",
@@ -604,7 +605,8 @@
             "Оба варианта",
             "Зависит от контекста"
           ],
-          "correctAnswer": "Женский (la nature)"
+          "correctAnswer": "Женский (la nature)",
+          "explanation": "nature — женский: -ure → женский (la nature, la culture, la lecture...). Артикль: la."
         },
         {
           "question": "«pharmacie» — ваш выбор:",
@@ -614,7 +616,8 @@
             "un pharmacie",
             "Не знаю"
           ],
-          "correctAnswer": "la pharmacie"
+          "correctAnswer": "la pharmacie",
+          "explanation": "pharmacie — женский: -ie → женский (la pharmacie, la boulangerie, la librairie...). Артикль: la."
         },
         {
           "question": "«moment» — ваш выбор:",
@@ -624,7 +627,8 @@
             "un moment (оба верны)",
             "les moment"
           ],
-          "correctAnswer": "le moment"
+          "correctAnswer": "le moment",
+          "explanation": "moment — мужской: -ment → мужской (le moment, l'appartement, le gouvernement...). Артикль: le."
         },
         {
           "question": "«télévision» — ваш выбор:",
@@ -634,7 +638,8 @@
             "un télévision",
             "une télévision"
           ],
-          "correctAnswer": "la télévision"
+          "correctAnswer": "la télévision",
+          "explanation": "télévision — женский: -ion → всегда женский (la télévision, la nation, la question...). Артикль: la."
         },
         {
           "question": "«fromage» — ваш выбор:",
@@ -644,7 +649,8 @@
             "une fromage",
             "Любой"
           ],
-          "correctAnswer": "le fromage"
+          "correctAnswer": "le fromage",
+          "explanation": "fromage — мужской: -age → мужской (le fromage, le voyage, le village...). Артикль: le."
         }
       ]
     },
@@ -865,7 +871,8 @@
             "Un",
             "Une"
           ],
-          "correctAnswer": "La"
+          "correctAnswer": "La",
+          "explanation": "télévision — женский: -ion → всегда женский род (la nation, la question...). Определённый артикль = la."
         },
         {
           "question": "___ pain est délicieux dans cette boulangerie.",
@@ -875,7 +882,8 @@
             "Un",
             "L'"
           ],
-          "correctAnswer": "Le"
+          "correctAnswer": "Le",
+          "explanation": "pain — мужской: -ain → мужской. Определённый артикль = le."
         },
         {
           "question": "Vous avez ___ chance incroyable !",
@@ -885,7 +893,8 @@
             "le",
             "la"
           ],
-          "correctAnswer": "une"
+          "correctAnswer": "une",
+          "explanation": "chance — женский: -ance → женский род (la chance, la danse...). Неопределённый артикль = une."
         },
         {
           "question": "___ nature est belle en automne.",
@@ -895,7 +904,8 @@
             "Un",
             "L'"
           ],
-          "correctAnswer": "La"
+          "correctAnswer": "La",
+          "explanation": "nature — женский: -ure → женский (la nature, la culture...). Определённый артикль = la."
         },
         {
           "question": "C'est ___ problème difficile.",
@@ -905,7 +915,8 @@
             "le",
             "la"
           ],
-          "correctAnswer": "un"
+          "correctAnswer": "un",
+          "explanation": "problème — мужской: -ème → мужской (le problème, le système...). Неопределённый артикль = un."
         },
         {
           "question": "J'aime ___ sport.",
@@ -915,7 +926,8 @@
             "un",
             "une"
           ],
-          "correctAnswer": "le"
+          "correctAnswer": "le",
+          "explanation": "sport — мужской: простое короткое слово германского происхождения. При общем значении → определённый артикль le."
         },
         {
           "question": "___ musique classique me détend.",
@@ -925,7 +937,8 @@
             "Un",
             "L'"
           ],
-          "correctAnswer": "La"
+          "correctAnswer": "La",
+          "explanation": "musique — женский: -ique → чаще женский (la musique, la pratique...). При общем значении → la."
         },
         {
           "question": "Il y a ___ question importante.",
@@ -935,7 +948,8 @@
             "le",
             "la"
           ],
-          "correctAnswer": "une"
+          "correctAnswer": "une",
+          "explanation": "question — женский: -tion → всегда женский (la question, la solution...). il y a + неопр. артикль → une."
         }
       ]
     }
