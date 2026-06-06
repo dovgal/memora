@@ -324,7 +324,7 @@
       "id": "u8-livre-audio1",
       "type": "listening",
       "title": "Document B : Bonjour docteure ! (Livre, piste ~106)",
-      "audioFile": "106_Edito_A1_Livre.mp3",
+      "audioFile": "117_Edito_A1_Livre.mp3",
       "source": "livre",
       "transcript": "Dialogue 1\nLe patient : Bonjour docteure.\nLa docteure : Bonjour, monsieur ! Qu'est-ce qui vous arrive ?\nLe patient : Eh bien… J'ai un rhume, j'ai mal à la gorge et à la tête. Ça a commencé hier.\nLa docteure : Et vous avez passé une bonne nuit ?\nLe patient : Ben, j'ai dormi dix heures ! J'ai eu de la fièvre cette nuit…\nLa docteure : Et vous avez encore de la fièvre ce matin ?\nLe patient : Oui, j'ai 39.\nLa docteure : Est-ce que vous avez mal aux oreilles ?\nLe patient : Non.\nLa docteure : Vous toussez ?\nLe patient : Un peu.\nLa docteure : Vous allez prendre du paracétamol, du sirop pour la toux et un médicament pour le rhume. Buvez 1,5 litre par jour minimum.\n\nDialogue 2\nLa patiente : Bonjour, docteure !\nLa docteure : Bonjour, madame. Qu'est-ce qui vous arrive ?\nLa patiente : J'ai fait un footing il y a deux jours et j'ai eu mal au genou.\nLa docteure : Et vous vous sentez comment aujourd'hui ?\nLa patiente : J'ai encore mal et je suis inquiète.\nLa docteure : Vous pesez combien ?\nLa patiente : Je pèse 60 kg.\nLa docteure : Bon, vous allez passer une radio du genou.",
       "questions": [
@@ -345,7 +345,7 @@
       "id": "u8-livre-essentiel",
       "type": "listening",
       "title": "L'essentiel : Alicia et son père (Livre, piste ~112)",
-      "audioFile": "112_Edito_A1_Livre.mp3",
+      "audioFile": "123_Edito_A1_Livre.mp3",
       "source": "livre",
       "transcript": "Alicia : Bon… Merci papa pour le café, mais je ne peux pas rester, je vais chez le dentiste. J'ai rendez-vous à 15 h 30.\nSon père : Ah… Tu as mal aux dents ?\nAlicia : Non, c'est pour un contrôle. J'y vais une fois par an !\nSon père : Et tu y vas comment ? Tu es à pied ou à vélo ?\nAlicia : J'y vais en bus, j'ai mal au genou.\nSon père : Mais qu'est-ce que tu as fait ?\nAlicia : Ben, j'ai voulu faire du ski avec Luc et…\nSon père : Avec ton frère ? Mais enfin Alicia, il a un très bon niveau ! Et tu as pris rendez-vous chez le médecin ?\nAlicia : Oui… J'y vais demain. J'ai rendez-vous avec un médecin spécialiste du sport. Je suis un peu inquiète, mais c'est un bon médecin.\nSon père : Oh là là ! Skier avec ton frère, mais quelle idée ! Tiens, prends du paracétamol.\nAlicia : Merci. Ah, au fait, j'ai une bonne nouvelle. Justine a eu son examen. Elle est infirmière.\nSon père : Super ! Je suis content pour elle.",
       "questions": [

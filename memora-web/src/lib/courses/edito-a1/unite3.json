@@ -764,7 +764,7 @@
       "id": "u3-livre-audio1",
       "type": "listening",
       "title": "Document B : À l'épicerie bio (Livre, piste ~42)",
-      "audioFile": "42_Edito_A1_Livre.mp3",
+      "audioFile": "45_Edito_A1_Livre.mp3",
       "source": "livre",
       "transcript": "L'épicier : C'est à qui ?\nLa cliente : C'est à moi ! Bonjour !\nL'épicier : Bonjour, madame. Alors, 2 bouteilles de jus de pomme, 1 paquet de riz, 1 paquet de pâtes, 1 kg de farine et 1 bouteille d'huile d'olive.\nLa cliente : La bouteille d'huile d'olive coûte 12 euros ? C'est ça ?\nL'épicier : Oui, c'est ça. Ce sera tout ?\nLa cliente : Oui, merci.\nL'épicier : Vous payez comment ? Par carte ou en espèces ?\nLa cliente : Par carte, s'il vous plaît.\nMalo : Papa, on achète des biscuits ? Combien ça coûte ?\nLe client : Ça coûte 2 euros le paquet, Malo.\nMalo : Et ça, ça coûte combien ?\nLe client : Les yaourts ? Ils coûtent 1,50 euro.\nL'épicier : À nous ! Monsieur Peltier, bonjour ! Et bonjour, Malo !\nLe client : Bonjour !\nL'épicier : Alors, 2 paquets de biscuits, 4 yaourts, 1 boîte de thon et 1 pot de crème. Ce sera tout ?\nLe client : Et je voudrais aussi 2 pains, s'il vous plaît.\nL'épicier : Vous payez comment ?\nLe client : En espèces.",
       "questions": [
@@ -785,7 +785,7 @@
       "id": "u3-livre-essentiel",
       "type": "listening",
       "title": "L'essentiel : Sonia et Arnaud (Livre, piste ~47)",
-      "audioFile": "47_Edito_A1_Livre.mp3",
+      "audioFile": "51_Edito_A1_Livre.mp3",
       "source": "livre",
       "transcript": "Sonia : Ah, salut Arnaud, ça va ?\nArnaud : Salut Sonia ! Oui, ça va !\nSonia : Ah, tu as un panier ?\nArnaud : Oui, j'achète mes fruits et légumes en ligne et le vendredi je vais chercher mon panier chez le boucher.\nSonia : Et tu payes en ligne aussi ?\nArnaud : Oui ! Et toi, tu vas où pour faire tes courses ?\nSonia : Pour les fruits, les légumes, la viande et le poisson, je vais au marché. Pour le fromage, je vais chez le fromager et pour le pain, je vais à la boulangerie. Mais pour les céréales, le lait, les paquets de biscuits, je vais au supermarché. Mais c'est bien les paniers ! Quels fruits et légumes tu as cette semaine ?\nArnaud : Ce sont des fruits et des légumes de saison : 1 salade, des pêches, des tomates, des poivrons. Et j'ai aussi 6 œufs et 1 fromage de chèvre.",
       "questions": [

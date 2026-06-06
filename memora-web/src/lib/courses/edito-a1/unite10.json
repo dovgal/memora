@@ -306,7 +306,7 @@
       "id": "u10-livre-audio1",
       "type": "listening",
       "title": "Document B : Visite de l'université (Livre, piste ~131)",
-      "audioFile": "131_Edito_A1_Livre.mp3",
+      "audioFile": "144_Edito_A1_Livre.mp3",
       "source": "livre",
       "transcript": "Karim : Oui ? Bonjour !\nMila : Bonjour ! Tu es bien Karim, étudiant ambassadeur ?\nKarim : Oui, entre. Tu es Sarah, étudiante en économie ?\nMila : Non, moi c'est Mila. Je viens parce que je vais m'inscrire dans cette université pour commencer mes études en septembre. Le droit m'intéresse mais j'hésite… C'est compliqué !\nKarim : Ah bah, je te comprends. C'est pas facile. J'ai hésité moi aussi entre les langues, les lettres et le droit. Finalement, j'ai choisi le droit. Je vais essayer de répondre à tes questions.\nMila : Ah super, tu étudies le droit ! Tu es en quelle année ?\nKarim : Je suis en quatrième année. J'ai eu ma licence l'année dernière et maintenant je suis en master.\nMila : Comment sont les cours ? Ils sont intéressants ? Et les enseignants ?\nKarim : Oui ! Les cours et les profs sont excellents. On apprend de nouvelles choses tous les jours.\nMila : Il y a beaucoup de travail à faire à la maison ?\nKarim : Oui. Deux ou trois heures par jour. C'est important pour avoir de bonnes notes.\nMila : Et comment est l'université ?\nKarim : Elle est agréable. J'organise une visite de l'université à 16 heures. On se retrouve ici et on va visiter les salles de cours, les amphis, la bibliothèque. On va aussi passer devant le restaurant universitaire.",
       "questions": [
@@ -327,7 +327,7 @@
       "id": "u10-livre-essentiel",
       "type": "listening",
       "title": "L'essentiel : Luc et sa mère (Livre, piste ~137)",
-      "audioFile": "137_Edito_A1_Livre.mp3",
+      "audioFile": "151_Edito_A1_Livre.mp3",
       "source": "livre",
       "transcript": "La mère : Allô, Luc ? C'est maman.\nLuc : Bonsoir, maman !\nSa mère : Je t'appelle pour avoir des nouvelles. Comment se passent tes premiers jours à l'université ?\nLuc : Très bien !\nSa mère : Tu as commencé les cours ? Tu es content de tes professeurs ?\nLuc : Oui. J'ai commencé les cours ce matin. J'ai eu un cours de droit dans un amphithéâtre pendant deux heures. C'était très bien. Le prof est intéressant. Et cet après-midi, j'ai étudié à la bibliothèque pendant une heure !\nSa mère : Ah, très bien. Et tu as mangé où ce soir ?\nLuc : Je suis allé au Resto U avec deux copains, Gaspard et Louis. Ils sont en première année avec moi.\nSa mère : Et c'était bon ?\nLuc : Pas mal. Mais maman, on peut se rappeler plus tard ?\nSa mère : Ah… Tu es toujours avec tes amis ?\nLuc : Oui. Gaspard nous invite chez lui pour regarder un film.\nSa mère : Je te laisse avec tes amis, alors. Tu m'appelles demain ?\nLuc : D'accord, bonne soirée !\nSa mère : Bonne soirée, mon chéri ! Ton père et moi, on t'embrasse.\nLuc : Moi aussi ! À bientôt maman !",
       "questions": [

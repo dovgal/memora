@@ -780,7 +780,7 @@
       "id": "u5-livre-audio1",
       "type": "listening",
       "title": "Document B : Un styliste personnel (Livre, piste ~66)",
-      "audioFile": "66_Edito_A1_Livre.mp3",
+      "audioFile": "73_Edito_A1_Livre.mp3",
       "source": "livre",
       "transcript": "Zoé : Oh, mais qu'est-ce que c'est, Flore ?\nFlore : C'est ma box de vêtements !\nZoé : Pardon ?\nFlore : Ma box de « La Malle française » !\nZoé : Mais, qu'est-ce que c'est ?\nFlore : C'est un service de shopping en ligne avec un styliste !\nZoé : Et comment ça marche ?\nFlore : Sur le site, tu choisis ta taille, tes styles préférés, et tu parles 10 minutes au téléphone avec un styliste.\nZoé : Mais qui choisit les articles ?\nFlore : Ben… Le ou la styliste ! Tu aimes, tu achètes, tu n'aimes pas, tu n'achètes pas !\nZoé : Intéressant !\nFlore : Regarde dans ma box, il y a une robe longue, une veste courte en jean, des bottes et un chapeau. Et il y a aussi un jean avec un gilet court en laine et un manteau long.\nZoé : Le manteau gris ?\nFlore : Oui, j'adore le manteau, mais je n'aime pas le pull, il ne me plaît pas.\nZoé : Tu fais quelle taille ?\nFlore : Je fais du 38, pourquoi ?\nZoé : Parce qu'il me plaît le pull et je fais aussi du 38.\nFlore : Et tu aimes les chaussures grises ? Je déteste la couleur. Quelle horreur !\nZoé : Ah oui ? Moi je trouve ça joli, et le gris, c'est à la mode !\nFlore : Tu chausses du combien ?\nZoé : Je chausse du 39.",
       "questions": [
@@ -801,7 +801,7 @@
       "id": "u5-livre-essentiel",
       "type": "listening",
       "title": "L'essentiel : Dans un magasin (Livre, piste ~71)",
-      "audioFile": "71_Edito_A1_Livre.mp3",
+      "audioFile": "79_Edito_A1_Livre.mp3",
       "source": "livre",
       "transcript": "Le vendeur : Bonjour, messieurs-dames.\nLa cliente : Bonjour, monsieur. Mon mari et moi, nous cherchons des vêtements pour un mariage. Notre neveu va se marier début juin.\nLe vendeur : Des vêtements élégants alors… un costume pour monsieur et pour vous, madame, vous préférez une robe longue ou un pantalon avec une veste ?\nLa cliente : Les robes longues, je trouve ça joli et c'est à la mode. Et à Nice, début juin, il va faire chaud, alors je préfère une robe.\nLe vendeur : Et vous, monsieur, vous préférez un costume gris, bleu ou beige ?\nLe client : Au printemps, je n'aime pas porter des vêtements gris. Alors, un costume beige ou bleu, s'il vous plaît.\nLe vendeur : D'accord. Vous faites quelle taille ?\nLe client : Moi, je fais du 44.\nLa cliente : Et moi, je fais du 40.\nLe vendeur : Très bien. Ah ! Monsieur, nous vendons aussi des chaussures avec les costumes.\nLe client : Parfait ! Des chaussures noires, s'il vous plaît.\nLe vendeur : Vous chaussez du combien ?\nLe client : Je chausse du 45.\nLa cliente : Il te va bien !\nLe client : Oui, c'est vrai… Avec ta robe et mon costume, on va être élégants au mariage !",
       "questions": [

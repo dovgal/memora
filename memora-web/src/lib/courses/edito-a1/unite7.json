@@ -301,7 +301,7 @@
       "id": "u7-livre-audio1",
       "type": "listening",
       "title": "Document A : Un nouveau logement (Livre, piste ~93)",
-      "audioFile": "93_Edito_A1_Livre.mp3",
+      "audioFile": "102_Edito_A1_Livre.mp3",
       "source": "livre",
       "transcript": "Marco : Allô, David, c'est Marco !\nDavid : Ah, salut Marco, ça va ?\nMarco : Je suis fatigué, mais j'ai une grande nouvelle. Nous avons acheté une maison à 30 kilomètres de Paris.\nDavid : Pour une nouvelle, c'est une nouvelle ! Et vous avez déménagé ?\nMarco : Oui, on a déménagé il y a dix jours.\nDavid : Génial ! Vous avez cherché longtemps ?\nMarco : Oui, un an. Et on a trouvé la maison de nos rêves.\nDavid : Les enfants sont contents ?\nMarco : Elsa et Maxime sont très contents. Ils ont décoré leur chambre la semaine dernière.\nDavid : Et quelle est la surface ?\nMarco : La maison fait 150 mètres carrés.\nDavid : Il y a un jardin ?\nMarco : Oui, il y a un petit jardin et une jolie terrasse.\nDavid : Il y a combien de pièces ?\nMarco : Au rez-de-chaussée, il y a le salon, la salle à manger et la cuisine. Et à l'étage, il y a trois chambres : notre chambre et les chambres des enfants. Il y a aussi la salle de bains et les toilettes.\nDavid : Et pour la cuisine, vous avez acheté beaucoup d'électroménager ?\nMarco : Non, on a gardé notre frigo et notre lave-linge. On va acheter une cuisinière et un four à micro-ondes, c'est tout.",
       "questions": [
@@ -322,7 +322,7 @@
       "id": "u7-livre-essentiel",
       "type": "listening",
       "title": "L'essentiel : Visite de l'appartement (Livre, piste ~98)",
-      "audioFile": "98_Edito_A1_Livre.mp3",
+      "audioFile": "108_Edito_A1_Livre.mp3",
       "source": "livre",
       "transcript": "Camille : Salut Charlotte !\nCharlotte : Salut Camille ! Mais tu téléphones en visio maintenant ?\nCamille : Ben oui, c'est sympa de se parler mais c'est bien de se voir aussi !\nCharlotte : C'est vrai.\nCamille : Mais… Tu as déménagé ?\nCharlotte : Oui, la semaine dernière.\nCamille : Super ! Comment il est cet appartement ? Il y a combien de pièces ?\nCharlotte : Il y a un salon, une chambre, une cuisine, une salle de bains et des toilettes.\nCamille : Et il est grand ? Quelle est la surface ?\nCharlotte : 60 m².\nCamille : C'est bien ! Je peux visiter ?\nCharlotte : Oui bien sûr ! Alors… Ici, c'est l'entrée, à gauche, il y a ma chambre et à droite, il y a la cuisine et le salon.\nCamille : C'est sympa !\nCharlotte : Oui, j'adore cet appartement. Alors, là, je vais sur le balcon ! Tu vois, devant l'immeuble, il y a un petit parc et derrière, un petit supermarché. Le métro est juste à côté.\nCamille : Pas mal ! Et il n'y a pas d'immeuble en face.\nCharlotte : C'est vrai, ça aussi c'est super…",
       "questions": [
