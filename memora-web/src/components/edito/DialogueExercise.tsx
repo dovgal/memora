@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CheckCircle2, XCircle, ChevronRight } from 'lucide-react';
 import { EditoExercise, DialogueExchange } from '@/lib/courses/edito-a1';
 import { AudioButton } from './AudioButton';
@@ -32,6 +32,16 @@ export function DialogueExercise({ exercise, onComplete }: { exercise: EditoExer
   const [answers, setAnswers] = useState<Record<number, { given: string; correct: boolean }>>({});
   const [activeBlankIdx, setActiveBlankIdx] = useState(0);
   const [finished, setFinished] = useState(false);
+  const [optionsLocked, setOptionsLocked] = useState(false);
+
+  // Guard against a fast double-click on "Далее" landing on the next
+  // blank's options grid, which renders in the same screen position and
+  // would otherwise auto-submit an answer the user never chose.
+  useEffect(() => {
+    setOptionsLocked(true);
+    const t = setTimeout(() => setOptionsLocked(false), 350);
+    return () => clearTimeout(t);
+  }, [activeBlankIdx]);
 
   const currentBlankExchangeIdx = (() => {
     let blankCount = -1;
@@ -47,12 +57,14 @@ export function DialogueExercise({ exercise, onComplete }: { exercise: EditoExer
   const activeExchange = blanks[activeBlankIdx];
 
   const handleChoice = (opt: string) => {
-    if (answers[activeBlankIdx]) return;
+    if (optionsLocked || answers[activeBlankIdx]) return;
     const correct = opt === activeExchange.correctAnswer;
     setAnswers(prev => ({ ...prev, [activeBlankIdx]: { given: opt, correct } }));
   };
 
   const handleNext = () => {
+    if (optionsLocked) return;
+    setOptionsLocked(true);
     if (activeBlankIdx < blanks.length - 1) {
       setActiveBlankIdx(i => i + 1);
     } else {
