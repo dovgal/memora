@@ -140,7 +140,8 @@
             "de l'",
             "des"
           ],
-          "correctAnswer": "du"
+          "correctAnswer": "du",
+          "explanation": "pain — существительное мужского рода, частичный артикль (немного чего-то) → du."
         },
         {
           "question": "Elle boit ___ eau. (перед гласной)",
@@ -150,7 +151,8 @@
             "de l'",
             "des"
           ],
-          "correctAnswer": "de l'"
+          "correctAnswer": "de l'",
+          "explanation": "eau начинается с гласной → частичный артикль для женского рода de la сокращается до de l' (élision)."
         },
         {
           "question": "Nous mangeons ___ légumes. (мн.ч.)",
@@ -160,7 +162,8 @@
             "de l'",
             "des"
           ],
-          "correctAnswer": "des"
+          "correctAnswer": "des",
+          "explanation": "légumes — множественное число → частичный артикль для мн.ч. des."
         },
         {
           "question": "Il mange ___ viande. (жен.р.)",
@@ -170,7 +173,8 @@
             "de l'",
             "des"
           ],
-          "correctAnswer": "de la"
+          "correctAnswer": "de la",
+          "explanation": "viande — существительное женского рода → частичный артикль de la."
         },
         {
           "question": "Je ne mange pas ___ fromage. (отрицание!)",
@@ -180,7 +184,8 @@
             "de la",
             "des"
           ],
-          "correctAnswer": "de"
+          "correctAnswer": "de",
+          "explanation": "После отрицания (ne...pas) частичный артикль du/de la/des заменяется на простое de: je ne mange pas de fromage."
         },
         {
           "question": "Tu veux ___ café ou ___ thé ?",
@@ -190,7 +195,8 @@
             "de la / du",
             "des / des"
           ],
-          "correctAnswer": "du / du"
+          "correctAnswer": "du / du",
+          "explanation": "café и thé — оба мужского рода → частичный артикль du перед каждым: du café / du thé."
         }
       ]
     },
@@ -207,7 +213,8 @@
             "voulez",
             "veulent"
           ],
-          "correctAnswer": "veux"
+          "correctAnswer": "veux",
+          "explanation": "vouloir в 1-м л. ед.ч. (je) → veux: je veux. Запомните: je veux, tu veux, il veut, nous voulons, vous voulez, ils veulent."
         },
         {
           "question": "Tu ___ manger avec nous ? (pouvoir)",
@@ -217,7 +224,8 @@
             "pouvez",
             "peuvent"
           ],
-          "correctAnswer": "peux"
+          "correctAnswer": "peux",
+          "explanation": "pouvoir во 2-м л. ед.ч. (tu) → peux: tu peux. Спряжение: je peux, tu peux, il peut, nous pouvons, vous pouvez, ils peuvent."
         },
         {
           "question": "Elle ___ aller au restaurant. (vouloir)",
@@ -227,7 +235,8 @@
             "voulez",
             "veulent"
           ],
-          "correctAnswer": "veut"
+          "correctAnswer": "veut",
+          "explanation": "vouloir в 3-м л. ед.ч. (elle) → veut."
         },
         {
           "question": "Nous ___ vous aider. (pouvoir)",
@@ -237,7 +246,8 @@
             "pouvez",
             "peuvent"
           ],
-          "correctAnswer": "pouvons"
+          "correctAnswer": "pouvons",
+          "explanation": "pouvoir в 1-м л. мн.ч. (nous) → pouvons."
         },
         {
           "question": "Je ___ (вежл.) une table pour deux. (vouloir — conditionnel)",
@@ -247,7 +257,8 @@
             "veut",
             "voulons"
           ],
-          "correctAnswer": "voudrais"
+          "correctAnswer": "voudrais",
+          "explanation": "Вежливая просьба выражается формой conditionnel от vouloir: je voudrais (= я хотел(а) бы) — мягче, чем je veux."
         }
       ]
     },
@@ -333,7 +344,8 @@
             "un",
             "de la"
           ],
-          "correctAnswer": "le"
+          "correctAnswer": "le",
+          "explanation": "Когда речь о вещи в общем смысле (нравится шоколад как явление) — используется определённый артикль le: j'aime le chocolat."
         },
         {
           "question": "Je mange ___ chocolat. (ем немного шоколада)",
@@ -343,7 +355,8 @@
             "du",
             "des"
           ],
-          "correctAnswer": "du"
+          "correctAnswer": "du",
+          "explanation": "Когда речь о части/количестве (ем немного шоколада) — используется частичный артикль du: je mange du chocolat."
         },
         {
           "question": "Elle boit ___ eau gazeuse. (пьёт воду)",
@@ -353,7 +366,8 @@
             "de l'",
             "du"
           ],
-          "correctAnswer": "de l'"
+          "correctAnswer": "de l'",
+          "explanation": "eau gazeuse — женский род, начинается с гласной → частичный артикль женского рода de la сокращается до de l'."
         },
         {
           "question": "Vous voulez ___ café ou ___ thé ?",
@@ -363,7 +377,8 @@
             "un / un",
             "de la / du"
           ],
-          "correctAnswer": "du / du"
+          "correctAnswer": "du / du",
+          "explanation": "café и thé — мужской род → частичный артикль du перед каждым (предложение части напитка)."
         },
         {
           "question": "Je n'aime pas ___ bière. (общее отрицание)",
@@ -373,7 +388,8 @@
             "du",
             "une"
           ],
-          "correctAnswer": "la"
+          "correctAnswer": "la",
+          "explanation": "Общая нелюбовь к виду продукта (а не к конкретной порции) выражается определённым артиклем: je n'aime pas la bière (отрицание не меняет определённый артикль, в отличие от неопределённого/частичного)."
         },
         {
           "question": "Il commande ___ salade et ___ verre d'eau.",
@@ -383,7 +399,8 @@
             "de la / du",
             "une / de l'"
           ],
-          "correctAnswer": "une / un"
+          "correctAnswer": "une / un",
+          "explanation": "salade — женский род → une (порция/целая штука), verre — мужской род → un (целый стакан): неопределённые артикли, т.к. говорим о конкретных, отдельных предметах заказа."
         },
         {
           "question": "Nous n'avons pas ___ pain. (отрицание с артиклем)",
@@ -393,7 +410,8 @@
             "le",
             "un"
           ],
-          "correctAnswer": "de"
+          "correctAnswer": "de",
+          "explanation": "После отрицания неопределённый/частичный артикль заменяется на de: nous n'avons pas de pain."
         },
         {
           "question": "Tu veux ___ dessert ? (предложить один)",
@@ -403,7 +421,8 @@
             "un",
             "le"
           ],
-          "correctAnswer": "un"
+          "correctAnswer": "un",
+          "explanation": "dessert — здесь предлагают один десерт (целую порцию) → неопределённый артикль un."
         }
       ]
     },
@@ -420,7 +439,8 @@
             "Donne-moi un café.",
             "Un café, vite !"
           ],
-          "correctAnswer": "Je voudrais un café, s'il vous plaît."
+          "correctAnswer": "Je voudrais un café, s'il vous plaît.",
+          "explanation": "Вежливая просьба строится через conditionnel: Je voudrais..., s'il vous plaît — стандартная вежливая формула в ресторане."
         },
         {
           "question": "Как спросить есть ли у них суп:",
@@ -430,7 +450,8 @@
             "Je veux savoir soupe.",
             "Où est la soupe ?"
           ],
-          "correctAnswer": "Vous avez de la soupe ?"
+          "correctAnswer": "Vous avez de la soupe ?",
+          "explanation": "Чтобы спросить, есть ли что-то в наличии, используют Vous avez... ? (= у вас есть...?)."
         },
         {
           "question": "Как попросить счёт:",
@@ -440,7 +461,8 @@
             "Payez maintenant.",
             "Je veux payer."
           ],
-          "correctAnswer": "L'addition, s'il vous plaît."
+          "correctAnswer": "L'addition, s'il vous plaît.",
+          "explanation": "Чтобы попросить счёт в ресторане, говорят: L'addition, s'il vous plaît."
         },
         {
           "question": "Официант говорит 'Et comme boisson ?' — что это значит?",
@@ -450,7 +472,8 @@
             "Хотите ещё?",
             "Всё вкусно?"
           ],
-          "correctAnswer": "Что будете пить?"
+          "correctAnswer": "Что будете пить?",
+          "explanation": "Comme boisson — «в качестве напитка»: вопрос официанта о том, что вы будете пить."
         },
         {
           "question": "Как сказать 'это вкусно' на французском:",
@@ -460,7 +483,8 @@
             "C'est sympa !",
             "C'est beau !"
           ],
-          "correctAnswer": "C'est délicieux !"
+          "correctAnswer": "C'est délicieux !",
+          "explanation": "C'est délicieux ! — стандартное выражение «это вкусно!» о еде (délicieux = вкусный, восхитительный на вкус)."
         },
         {
           "question": "Как узнать у официанта, что сегодня в меню:",
@@ -470,7 +494,8 @@
             "Je veux tout.",
             "Qu'est-ce que vous mangez ?"
           ],
-          "correctAnswer": "Qu'est-ce que vous avez comme plat du jour ?"
+          "correctAnswer": "Qu'est-ce que vous avez comme plat du jour ?",
+          "explanation": "Чтобы узнать о специальном блюде дня, спрашивают: Qu'est-ce que vous avez comme plat du jour ?"
         }
       ]
     },

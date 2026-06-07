@@ -135,7 +135,8 @@
             "Cette",
             "Ces"
           ],
-          "correctAnswer": "Ce"
+          "correctAnswer": "Ce",
+          "explanation": "Указательное прилагательное ce употребляется перед существительными мужского рода, начинающимися с согласной: ce pantalon."
         },
         {
           "question": "___ robe est magnifique. (жен.р.)",
@@ -145,7 +146,8 @@
             "Cette",
             "Ces"
           ],
-          "correctAnswer": "Cette"
+          "correctAnswer": "Cette",
+          "explanation": "Указательное прилагательное cette употребляется перед существительными женского рода: cette robe."
         },
         {
           "question": "___ chaussures sont confortables. (мн.ч.)",
@@ -155,7 +157,8 @@
             "Cette",
             "Ces"
           ],
-          "correctAnswer": "Ces"
+          "correctAnswer": "Ces",
+          "explanation": "Указательное прилагательное ces употребляется перед существительными во множественном числе (любого рода): ces chaussures."
         },
         {
           "question": "___ homme est élégant. (муж.р., перед гласной)",
@@ -165,7 +168,8 @@
             "Cette",
             "Ces"
           ],
-          "correctAnswer": "Cet"
+          "correctAnswer": "Cet",
+          "explanation": "Перед существительными мужского рода, начинающимися с гласной или немого h, употребляется форма cet (вместо ce): cet homme."
         },
         {
           "question": "Je prends ___ manteau rouge. (муж.р., согл.)",
@@ -175,7 +179,8 @@
             "cette",
             "ces"
           ],
-          "correctAnswer": "ce"
+          "correctAnswer": "ce",
+          "explanation": "Перед manteau (муж.р., начинается с согласной) употребляется ce: ce manteau."
         }
       ]
     },
@@ -192,7 +197,8 @@
             "achetons",
             "achetez"
           ],
-          "correctAnswer": "achète"
+          "correctAnswer": "achète",
+          "explanation": "Глагол acheter в 1-м лице ед. числа меняет e на è перед немым окончанием: j'achète."
         },
         {
           "question": "Tu ___ quoi comme couleur ? (préférer)",
@@ -202,7 +208,8 @@
             "préférons",
             "préférez"
           ],
-          "correctAnswer": "préfères"
+          "correctAnswer": "préfères",
+          "explanation": "Глагол préférer во 2-м лице ед. числа: tu préfères (é перед немым окончанием меняется на è)."
         },
         {
           "question": "Elle ___ toujours en soldes. (acheter)",
@@ -212,7 +219,8 @@
             "achetez",
             "achètent"
           ],
-          "correctAnswer": "achète"
+          "correctAnswer": "achète",
+          "explanation": "Глагол acheter в 3-м лице ед. числа: elle achète."
         },
         {
           "question": "Nous ___ le bleu au rouge. (préférer)",
@@ -222,7 +230,8 @@
             "préférez",
             "préfèrent"
           ],
-          "correctAnswer": "préférons"
+          "correctAnswer": "préférons",
+          "explanation": "Глагол préférer в 1-м лице мн. числа сохраняет é, так как окончание -ons произносится: nous préférons."
         }
       ]
     },
@@ -372,7 +381,8 @@
             "Cette",
             "Ces"
           ],
-          "correctAnswer": "Ce"
+          "correctAnswer": "Ce",
+          "explanation": "Указательное прилагательное ce употребляется перед существительными мужского рода на согласную: ce manteau."
         },
         {
           "question": "___ robe rouge est magnifique ! (жен.р.)",
@@ -382,7 +392,8 @@
             "Cette",
             "Ces"
           ],
-          "correctAnswer": "Cette"
+          "correctAnswer": "Cette",
+          "explanation": "Указательное прилагательное cette употребляется перед существительными женского рода: cette robe."
         },
         {
           "question": "___ imperméable est pratique. (муж.р., гласн.)",
@@ -392,7 +403,8 @@
             "Cette",
             "Ces"
           ],
-          "correctAnswer": "Cet"
+          "correctAnswer": "Cet",
+          "explanation": "Перед словом imperméable (муж.р., начинается с гласной) используется форма cet: cet imperméable."
         },
         {
           "question": "___ chaussures sont confortables. (мн.ч.)",
@@ -402,7 +414,8 @@
             "Cette",
             "Ces"
           ],
-          "correctAnswer": "Ces"
+          "correctAnswer": "Ces",
+          "explanation": "Указательное прилагательное ces употребляется во множественном числе: ces chaussures."
         },
         {
           "question": "J'aime ___ pull bleu. (муж.р., согл.)",
@@ -412,7 +425,8 @@
             "cette",
             "ces"
           ],
-          "correctAnswer": "ce"
+          "correctAnswer": "ce",
+          "explanation": "Перед pull (муж.р., согласная) употребляется ce: ce pull."
         },
         {
           "question": "Je préfère ___ jupe noire. (жен.р.)",
@@ -422,7 +436,8 @@
             "cette",
             "ces"
           ],
-          "correctAnswer": "cette"
+          "correctAnswer": "cette",
+          "explanation": "Перед jupe (жен.р.) употребляется cette: cette jupe."
         },
         {
           "question": "___ pulls sont en soldes ! (мн.ч.)",
@@ -432,7 +447,8 @@
             "Cette",
             "Ces"
           ],
-          "correctAnswer": "Ces"
+          "correctAnswer": "Ces",
+          "explanation": "Перед существительными во множественном числе всегда употребляется ces: ces pulls."
         }
       ]
     },
@@ -449,7 +465,8 @@
             "Ce",
             "Elle"
           ],
-          "correctAnswer": "Ça"
+          "correctAnswer": "Ça",
+          "explanation": "Безличный оборот «Ça coûte combien ?» — разговорный способ спросить цену (буквально «это сколько стоит»)."
         },
         {
           "question": "C'est ___ euros. (цена)",
@@ -459,7 +476,8 @@
             "—",
             "en"
           ],
-          "correctAnswer": "—"
+          "correctAnswer": "—",
+          "explanation": "При указании цены в евро между числом и словом euros не ставится предлог: c'est dix euros (тире обозначает отсутствие предлога)."
         },
         {
           "question": "Cette robe est très ___. (дорогая)",
@@ -469,7 +487,8 @@
             "petite",
             "grande"
           ],
-          "correctAnswer": "chère"
+          "correctAnswer": "chère",
+          "explanation": "Прилагательное chère (форма ж.р. от cher) означает «дорогая»: cette robe est chère."
         },
         {
           "question": "Ces chaussures ne sont pas ___. (недорогие)",
@@ -479,7 +498,8 @@
             "grandes",
             "petites"
           ],
-          "correctAnswer": "chères"
+          "correctAnswer": "chères",
+          "explanation": "Прилагательное chères (мн.ч., ж.р.) согласуется с ces chaussures: elles ne sont pas chères."
         },
         {
           "question": "Je ___ ce manteau. Il me plaît ! (покупаю)",
@@ -489,7 +509,8 @@
             "vais",
             "mets"
           ],
-          "correctAnswer": "prends"
+          "correctAnswer": "prends",
+          "explanation": "Глагол prendre в значении «брать/покупать» в 1-м лице ед. числа: je prends."
         },
         {
           "question": "Vous avez ___ 40 ? (размер)",
@@ -499,7 +520,8 @@
             "une couleur",
             "un rayon"
           ],
-          "correctAnswer": "une taille"
+          "correctAnswer": "une taille",
+          "explanation": "Существительное une taille означает «размер» (одежды), в отличие от un prix (цена) или une couleur (цвет)."
         }
       ]
     },

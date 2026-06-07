@@ -131,7 +131,8 @@
             "est",
             "sommes"
           ],
-          "correctAnswer": "suis"
+          "correctAnswer": "suis",
+          "explanation": "être в 1-м л. ед.ч. (je) → suis. Запомните: je suis, tu es, il/elle est, nous sommes, vous êtes, ils/elles sont."
         },
         {
           "question": "Tu ___ français(e) ?",
@@ -141,7 +142,8 @@
             "est",
             "êtes"
           ],
-          "correctAnswer": "es"
+          "correctAnswer": "es",
+          "explanation": "être во 2-м л. ед.ч. (tu) → es."
         },
         {
           "question": "Elle ___ professeure.",
@@ -151,7 +153,8 @@
             "est",
             "sont"
           ],
-          "correctAnswer": "est"
+          "correctAnswer": "est",
+          "explanation": "être в 3-м л. ед.ч. (il/elle/on) → est."
         },
         {
           "question": "Nous ___ amis.",
@@ -161,7 +164,8 @@
             "êtes",
             "suis"
           ],
-          "correctAnswer": "sommes"
+          "correctAnswer": "sommes",
+          "explanation": "être в 1-м л. мн.ч. (nous) → sommes."
         },
         {
           "question": "Vous ___ de Paris ?",
@@ -171,7 +175,8 @@
             "sommes",
             "sont"
           ],
-          "correctAnswer": "êtes"
+          "correctAnswer": "êtes",
+          "explanation": "être во 2-м л. мн.ч. / вежливая форма (vous) → êtes."
         },
         {
           "question": "Ils ___ étudiants.",
@@ -181,7 +186,8 @@
             "sommes",
             "êtes"
           ],
-          "correctAnswer": "sont"
+          "correctAnswer": "sont",
+          "explanation": "être в 3-м л. мн.ч. (ils/elles) → sont."
         }
       ]
     },
@@ -198,7 +204,8 @@
             "a",
             "avons"
           ],
-          "correctAnswer": "ai"
+          "correctAnswer": "ai",
+          "explanation": "avoir в 1-м л. ед.ч. (je) → ai (j'ai перед гласной). Запомните: j'ai, tu as, il/elle a, nous avons, vous avez, ils/elles ont."
         },
         {
           "question": "Tu ___ une amie ?",
@@ -208,7 +215,8 @@
             "a",
             "avez"
           ],
-          "correctAnswer": "as"
+          "correctAnswer": "as",
+          "explanation": "avoir во 2-м л. ед.ч. (tu) → as."
         },
         {
           "question": "Il ___ vingt ans.",
@@ -218,7 +226,8 @@
             "a",
             "ont"
           ],
-          "correctAnswer": "a"
+          "correctAnswer": "a",
+          "explanation": "avoir в 3-м л. ед.ч. (il/elle/on) → a."
         },
         {
           "question": "Nous ___ un appartement.",
@@ -228,7 +237,8 @@
             "ont",
             "ai"
           ],
-          "correctAnswer": "avons"
+          "correctAnswer": "avons",
+          "explanation": "avoir в 1-м л. мн.ч. (nous) → avons."
         },
         {
           "question": "Vous ___ des enfants ?",
@@ -238,7 +248,8 @@
             "avez",
             "ai"
           ],
-          "correctAnswer": "avez"
+          "correctAnswer": "avez",
+          "explanation": "avoir во 2-м л. мн.ч. / вежливая форма (vous) → avez."
         },
         {
           "question": "Elles ___ un chat.",
@@ -248,7 +259,8 @@
             "a",
             "ont"
           ],
-          "correctAnswer": "ont"
+          "correctAnswer": "ont",
+          "explanation": "avoir в 3-м л. мн.ч. (ils/elles) → ont."
         }
       ]
     },
@@ -265,7 +277,8 @@
             "Le",
             "La"
           ],
-          "correctAnswer": "Un"
+          "correctAnswer": "Un",
+          "explanation": "étudiant — существительное мужского рода, неопределённый артикль ед.ч. → un."
         },
         {
           "question": "Je cherche ___ amie.",
@@ -275,7 +288,8 @@
             "le",
             "la"
           ],
-          "correctAnswer": "une"
+          "correctAnswer": "une",
+          "explanation": "amie — существительное женского рода, неопределённый артикль ед.ч. → une."
         },
         {
           "question": "___ professeur est sympa.",
@@ -285,7 +299,8 @@
             "Le",
             "La"
           ],
-          "correctAnswer": "Le"
+          "correctAnswer": "Le",
+          "explanation": "professeur — здесь говорят об определённом, конкретном преподавателе → определённый артикль мужского рода le."
         },
         {
           "question": "C'est ___ université.",
@@ -295,7 +310,8 @@
             "le",
             "l'"
           ],
-          "correctAnswer": "l'"
+          "correctAnswer": "l'",
+          "explanation": "université начинается с гласной → артикль сокращается до l' (élision): l'université."
         },
         {
           "question": "Voici ___ ami de Marie.",
@@ -305,7 +321,8 @@
             "le",
             "l'"
           ],
-          "correctAnswer": "l'"
+          "correctAnswer": "l'",
+          "explanation": "ami начинается с гласной → l' (élision): l'ami."
         },
         {
           "question": "J'ai ___ passeport français.",
@@ -315,7 +332,8 @@
             "le",
             "la"
           ],
-          "correctAnswer": "un"
+          "correctAnswer": "un",
+          "explanation": "passeport — существительное мужского рода, неопределённый артикль ед.ч. → un."
         }
       ]
     },
@@ -389,7 +407,8 @@
             "espagnol",
             "russe"
           ],
-          "correctAnswer": "français"
+          "correctAnswer": "français",
+          "explanation": "français — мужская (базовая, словарная) форма прилагательного национальности."
         },
         {
           "question": "Maria est de Russie. Elle est ___.",
@@ -399,7 +418,8 @@
             "française",
             "espagnole"
           ],
-          "correctAnswer": "russe"
+          "correctAnswer": "russe",
+          "explanation": "russe — прилагательное, оканчивающееся на -e, не меняется в женском роде: un homme russe / une femme russe."
         },
         {
           "question": "Pedro est d'Espagne. Il est ___.",
@@ -409,7 +429,8 @@
             "italien",
             "anglais"
           ],
-          "correctAnswer": "espagnol"
+          "correctAnswer": "espagnol",
+          "explanation": "espagnol — мужская форма прилагательного национальности (Pedro — мужчина → il est espagnol)."
         },
         {
           "question": "Anna est d'Italie. Elle est ___.",
@@ -419,7 +440,8 @@
             "française",
             "espagnole"
           ],
-          "correctAnswer": "italienne"
+          "correctAnswer": "italienne",
+          "explanation": "italienne — женская форма: italien удваивает согласную и добавляет -e (italien → italienne), т.к. Anna — женщина."
         },
         {
           "question": "Tom est d'Angleterre. Il est ___.",
@@ -429,7 +451,8 @@
             "américain",
             "irlandais"
           ],
-          "correctAnswer": "anglais"
+          "correctAnswer": "anglais",
+          "explanation": "anglais — мужская форма прилагательного национальности (Tom — мужчина → il est anglais)."
         },
         {
           "question": "Sophie est de Belgique. Elle est ___.",
@@ -439,7 +462,8 @@
             "suisse",
             "française"
           ],
-          "correctAnswer": "belge"
+          "correctAnswer": "belge",
+          "explanation": "belge — прилагательное на -e не меняется по родам: un homme belge / une femme belge."
         },
         {
           "question": "Carlos est du Mexique. Il est ___.",
@@ -449,7 +473,8 @@
             "brésilien",
             "argentin"
           ],
-          "correctAnswer": "mexicain"
+          "correctAnswer": "mexicain",
+          "explanation": "mexicain — мужская форма (Carlos — мужчина → il est mexicain)."
         },
         {
           "question": "Yuki est du Japon. Elle est ___.",
@@ -459,7 +484,8 @@
             "chinoise",
             "coréenne"
           ],
-          "correctAnswer": "japonaise"
+          "correctAnswer": "japonaise",
+          "explanation": "japonaise — женская форма: добавляем -e к мужской форме japonais → japonaise (Yuki — женщина)."
         }
       ]
     },
@@ -476,7 +502,8 @@
             "Tu t'appelles comment ?",
             "Vous êtes qui ?"
           ],
-          "correctAnswer": "Comment vous appelez-vous ?"
+          "correctAnswer": "Comment vous appelez-vous ?",
+          "explanation": "Вежливая форма с «vous»: Comment vous appelez-vous ? — буквально «как вы себя называете?»."
         },
         {
           "question": "Форма «tu» для вопроса «Как тебя зовут?»:",
@@ -486,7 +513,8 @@
             "Vous appelez-vous comment ?",
             "Comment il s'appelle ?"
           ],
-          "correctAnswer": "Comment tu t'appelles ?"
+          "correctAnswer": "Comment tu t'appelles ?",
+          "explanation": "Неформальная форма с «tu»: Comment tu t'appelles ? — для друзей, ровесников, близких."
         },
         {
           "question": "Форма «vous» для «Откуда вы?»:",
@@ -496,7 +524,8 @@
             "D'où tu viens ?",
             "Il vient d'où ?"
           ],
-          "correctAnswer": "Vous venez d'où ?"
+          "correctAnswer": "Vous venez d'où ?",
+          "explanation": "Вежливая форма с «vous»: Vous venez d'où ? — d'où = откуда, venir de = приходить откуда-то."
         },
         {
           "question": "Форма «tu» для «Ты студент?»:",
@@ -506,7 +535,8 @@
             "Il est étudiant ?",
             "Êtes-vous étudiant ?"
           ],
-          "correctAnswer": "Tu es étudiant ?"
+          "correctAnswer": "Tu es étudiant ?",
+          "explanation": "Неформальная форма с «tu»: Tu es étudiant ? — простой вопрос с интонацией, без инверсии."
         },
         {
           "question": "Вежливое приветствие при встрече незнакомца:",
@@ -516,7 +546,8 @@
             "Coucou !",
             "Hé !"
           ],
-          "correctAnswer": "Bonjour !"
+          "correctAnswer": "Bonjour !",
+          "explanation": "Bonjour ! — нейтральное вежливое приветствие, уместное в любое время дня с незнакомыми людьми."
         },
         {
           "question": "Неформальное прощание с другом:",
@@ -526,7 +557,8 @@
             "Salut !",
             "À bientôt, Madame."
           ],
-          "correctAnswer": "Salut !"
+          "correctAnswer": "Salut !",
+          "explanation": "Salut ! — неформальное «привет/пока» между друзьями и сверстниками."
         },
         {
           "question": "Как по-французски «Очень приятно познакомиться»?",
@@ -536,7 +568,8 @@
             "Enchanté(e).",
             "Pardon."
           ],
-          "correctAnswer": "Enchanté(e)."
+          "correctAnswer": "Enchanté(e).",
+          "explanation": "Enchanté(e). — стандартная фраза при знакомстве, аналог «очень приятно». Форма меняется по роду говорящего: enchanté (м.) / enchantée (ж.)."
         }
       ]
     },

@@ -125,7 +125,8 @@
             "ont",
             "avez"
           ],
-          "correctAnswer": "est"
+          "correctAnswer": "est",
+          "explanation": "Глагол arriver спрягается с être в passé composé; причастие согласуется с подлежащим женского рода: elle est arrivée."
         },
         {
           "question": "Ils ___ partis tôt ce matin. (partir)",
@@ -135,7 +136,8 @@
             "est",
             "a"
           ],
-          "correctAnswer": "sont"
+          "correctAnswer": "sont",
+          "explanation": "Глагол partir спрягается с être; во множественном числе причастие получает -s: ils sont partis."
         },
         {
           "question": "Je ___ tombé malade. (tomber)",
@@ -145,7 +147,8 @@
             "est",
             "as"
           ],
-          "correctAnswer": "suis"
+          "correctAnswer": "suis",
+          "explanation": "Глагол tomber спрягается с être в passé composé: je suis tombé."
         },
         {
           "question": "Marie est allée chez le médecin. La forme correcte est :",
@@ -155,7 +158,8 @@
             "allée",
             "allés"
           ],
-          "correctAnswer": "allée"
+          "correctAnswer": "allée",
+          "explanation": "Поскольку подлежащее Marie женского рода ед. числа, причастие allé согласуется и получает окончание -e: allée."
         },
         {
           "question": "Nous ___ restés à la maison. (rester)",
@@ -165,7 +169,8 @@
             "êtes",
             "sont"
           ],
-          "correctAnswer": "sommes"
+          "correctAnswer": "sommes",
+          "explanation": "Глагол rester спрягается с être; с nous используется sommes, причастие получает окончание мн. числа: nous sommes restés."
         }
       ]
     },
@@ -182,7 +187,8 @@
             "se",
             "nous"
           ],
-          "correctAnswer": "me"
+          "correctAnswer": "me",
+          "explanation": "Возвратное местоимение для 1-го лица ед. числа: je me lève."
         },
         {
           "question": "Il ___ couche tard. (se coucher)",
@@ -192,7 +198,8 @@
             "se",
             "vous"
           ],
-          "correctAnswer": "se"
+          "correctAnswer": "se",
+          "explanation": "Возвратное местоимение для 3-го лица ед. числа: il se couche."
         },
         {
           "question": "Nous ___ reposons le week-end. (se reposer)",
@@ -202,7 +209,8 @@
             "nous",
             "vous"
           ],
-          "correctAnswer": "nous"
+          "correctAnswer": "nous",
+          "explanation": "Возвратное местоимение для 1-го лица мн. числа: nous nous reposons."
         },
         {
           "question": "Comment vous ___ sentez ? (se sentir)",
@@ -212,7 +220,8 @@
             "se",
             "vous"
           ],
-          "correctAnswer": "vous"
+          "correctAnswer": "vous",
+          "explanation": "Возвратное местоимение для 2-го лица мн. числа (вежливая форма): vous vous sentez."
         }
       ]
     },
@@ -369,7 +378,8 @@
             "aux",
             "à l'"
           ],
-          "correctAnswer": "à la"
+          "correctAnswer": "à la",
+          "explanation": "Перед существительным женского рода la tête предлог à сливается в à la: avoir mal à la tête."
         },
         {
           "question": "Il a mal ___ dos. (le dos, муж.р.)",
@@ -379,7 +389,8 @@
             "au",
             "à l'"
           ],
-          "correctAnswer": "au"
+          "correctAnswer": "au",
+          "explanation": "Перед существительным мужского рода le dos предлог à сливается с артиклем le в au: avoir mal au dos."
         },
         {
           "question": "Elle a mal ___ dents. (les dents, мн.ч.)",
@@ -389,7 +400,8 @@
             "aux",
             "à l'"
           ],
-          "correctAnswer": "aux"
+          "correctAnswer": "aux",
+          "explanation": "Перед существительным во множественном числе les dents предлог à сливается в aux: avoir mal aux dents."
         },
         {
           "question": "J'ai mal ___ gorge. (la gorge, жен.р.)",
@@ -399,7 +411,8 @@
             "à l'",
             "à la"
           ],
-          "correctAnswer": "à la"
+          "correctAnswer": "à la",
+          "explanation": "Перед существительным женского рода la gorge: avoir mal à la gorge."
         },
         {
           "question": "Tu as mal ___ ventre ? (le ventre, муж.р.)",
@@ -409,7 +422,8 @@
             "aux",
             "au"
           ],
-          "correctAnswer": "au"
+          "correctAnswer": "au",
+          "explanation": "Перед существительным мужского рода le ventre предлог à сливается в au: avoir mal au ventre."
         },
         {
           "question": "J'ai mal ___ yeux. (les yeux, мн.ч.)",
@@ -419,7 +433,8 @@
             "aux",
             "à l'"
           ],
-          "correctAnswer": "aux"
+          "correctAnswer": "aux",
+          "explanation": "Перед существительным во множественном числе les yeux предлог à сливается в aux: avoir mal aux yeux."
         },
         {
           "question": "Elle a mal ___ oreille. (l'oreille, перед гласн.)",
@@ -429,7 +444,8 @@
             "aux",
             "à l'"
           ],
-          "correctAnswer": "à l'"
+          "correctAnswer": "à l'",
+          "explanation": "Перед существительным, начинающимся с гласной (l'oreille), используется форма à l': avoir mal à l'oreille."
         }
       ]
     },
@@ -446,7 +462,8 @@
             "dormir",
             "travailler"
           ],
-          "correctAnswer": "boire"
+          "correctAnswer": "boire",
+          "explanation": "Глагол boire (пить) сочетается с beaucoup d'eau — устойчивый совет о здоровье: il faut boire de l'eau."
         },
         {
           "question": "Vous devez ___ au lit pendant trois jours. (предписание)",
@@ -456,7 +473,8 @@
             "partir",
             "manger"
           ],
-          "correctAnswer": "rester"
+          "correctAnswer": "rester",
+          "explanation": "Глагол rester (оставаться) употребляется в значении «соблюдать постельный режим»: rester au lit."
         },
         {
           "question": "Il faut ___ ce médicament trois fois par jour.",
@@ -466,7 +484,8 @@
             "prendre",
             "oublier"
           ],
-          "correctAnswer": "prendre"
+          "correctAnswer": "prendre",
+          "explanation": "Глагол prendre употребляется со значением «принимать лекарство»: prendre un médicament."
         },
         {
           "question": "Il faut ___ du sport régulièrement pour être en bonne santé.",
@@ -476,7 +495,8 @@
             "refuser",
             "oublier"
           ],
-          "correctAnswer": "faire"
+          "correctAnswer": "faire",
+          "explanation": "Глагол faire употребляется в устойчивом сочетании faire du sport — заниматься спортом."
         },
         {
           "question": "Vous avez de la fièvre. Il ne faut pas ___ dehors.",
@@ -486,7 +506,8 @@
             "manger",
             "dormir"
           ],
-          "correctAnswer": "aller"
+          "correctAnswer": "aller",
+          "explanation": "При лихорадке врач советует не выходить на улицу — устойчивое выражение aller dehors."
         },
         {
           "question": "Il faut ___ chez le médecin si tu te sens mal.",
@@ -496,7 +517,8 @@
             "rester",
             "manger"
           ],
-          "correctAnswer": "aller"
+          "correctAnswer": "aller",
+          "explanation": "Глагол aller употребляется в значении «обращаться/идти к врачу»: aller chez le médecin."
         }
       ]
     },

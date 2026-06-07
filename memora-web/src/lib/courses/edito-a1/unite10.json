@@ -120,7 +120,8 @@
             "ira",
             "iront"
           ],
-          "correctAnswer": "irai"
+          "correctAnswer": "irai",
+          "explanation": "Futur simple глагола aller образуется от особой основы ir-: je irai → j'irai."
         },
         {
           "question": "L'année prochaine, elle ___ en France. (habiter)",
@@ -130,7 +131,8 @@
             "habitait",
             "habitons"
           ],
-          "correctAnswer": "habitera"
+          "correctAnswer": "habitera",
+          "explanation": "Futur simple правильных глаголов на -er образуется от инфинитива + окончание -a: elle habitera."
         },
         {
           "question": "Nous ___ un diplôme dans deux ans. (avoir → aur-)",
@@ -140,7 +142,8 @@
             "aurez",
             "ont"
           ],
-          "correctAnswer": "aurons"
+          "correctAnswer": "aurons",
+          "explanation": "Futur simple глагола avoir образуется от особой основы aur-: nous aurons."
         },
         {
           "question": "Tu ___ médecin plus tard ? (être → ser-)",
@@ -150,7 +153,8 @@
             "seras",
             "serons"
           ],
-          "correctAnswer": "seras"
+          "correctAnswer": "seras",
+          "explanation": "Futur simple глагола être образуется от особой основы ser-: tu seras."
         },
         {
           "question": "Ils ___ du bénévolat. (faire → fer-)",
@@ -160,7 +164,8 @@
             "faisaient",
             "ferez"
           ],
-          "correctAnswer": "feront"
+          "correctAnswer": "feront",
+          "explanation": "Futur simple глагола faire образуется от особой основы fer-: ils feront."
         },
         {
           "question": "Si tu travailles bien, tu ___ réussir. (pouvoir → pourr-)",
@@ -170,7 +175,8 @@
             "pouvais",
             "pouvez"
           ],
-          "correctAnswer": "pourras"
+          "correctAnswer": "pourras",
+          "explanation": "Futur simple глагола pouvoir образуется от особой основы pourr-: tu pourras."
         }
       ]
     },
@@ -187,7 +193,8 @@
             "si",
             "mais"
           ],
-          "correctAnswer": "pour"
+          "correctAnswer": "pour",
+          "explanation": "Предлог pour + инфинитив выражает цель действия — «чтобы»: pour travailler."
         },
         {
           "question": "Je voyage beaucoup ___ j'aime découvrir de nouvelles cultures.",
@@ -197,7 +204,8 @@
             "parce que",
             "mais"
           ],
-          "correctAnswer": "parce que"
+          "correctAnswer": "parce que",
+          "explanation": "Союз parce que вводит причину и отвечает на вопрос «почему»: parce que j'aime découvrir."
         },
         {
           "question": "___ tu viens avec moi, ce sera parfait !",
@@ -207,7 +215,8 @@
             "Si",
             "Mais"
           ],
-          "correctAnswer": "Si"
+          "correctAnswer": "Si",
+          "explanation": "Союз si вводит условие («если»): si tu viens avec moi."
         },
         {
           "question": "Elle étudie la médecine ___ devenir médecin.",
@@ -217,7 +226,8 @@
             "si",
             "quand"
           ],
-          "correctAnswer": "pour"
+          "correctAnswer": "pour",
+          "explanation": "Предлог pour + инфинитив выражает цель: pour devenir médecin."
         }
       ]
     },
@@ -377,7 +387,8 @@
             "suis parti",
             "partais"
           ],
-          "correctAnswer": "vais partir"
+          "correctAnswer": "vais partir",
+          "explanation": "Futur proche образуется по схеме aller (в настоящем времени) + инфинитив: je vais partir."
         },
         {
           "question": "Dans cinq ans, j'___ un appartement à Paris. (futur simple, avoir)",
@@ -387,7 +398,8 @@
             "aurai",
             "aie"
           ],
-          "correctAnswer": "aurai"
+          "correctAnswer": "aurai",
+          "explanation": "Futur simple используется для отдалённых планов; глагол avoir имеет особую основу aur-: j'aurai."
         },
         {
           "question": "Elle ___ médecin plus tard. (futur simple, être)",
@@ -397,7 +409,8 @@
             "sera",
             "soit"
           ],
-          "correctAnswer": "sera"
+          "correctAnswer": "sera",
+          "explanation": "Futur simple глагола être образуется от особой основы ser-: elle sera."
         },
         {
           "question": "Nous ___ visiter Rome ce week-end. (futur proche)",
@@ -407,7 +420,8 @@
             "allons visiter",
             "avons visité"
           ],
-          "correctAnswer": "allons visiter"
+          "correctAnswer": "allons visiter",
+          "explanation": "Futur proche для ближайших планов: nous allons visiter."
         },
         {
           "question": "L'année prochaine, ils ___ le monde entier. (futur simple, voyager)",
@@ -417,7 +431,8 @@
             "voyageront",
             "ont voyagé"
           ],
-          "correctAnswer": "voyageront"
+          "correctAnswer": "voyageront",
+          "explanation": "Futur simple правильных глаголов на -er образуется от инфинитива: ils voyageront."
         },
         {
           "question": "Si tu étudies bien, tu ___ réussir. (futur simple, pouvoir)",
@@ -427,7 +442,8 @@
             "pourras",
             "as pu"
           ],
-          "correctAnswer": "pourras"
+          "correctAnswer": "pourras",
+          "explanation": "Futur simple глагола pouvoir образуется от особой основы pourr-: tu pourras."
         },
         {
           "question": "Je ___ aller au cinéma ce soir. (futur proche)",
@@ -437,7 +453,8 @@
             "vais aller",
             "suis allé"
           ],
-          "correctAnswer": "vais aller"
+          "correctAnswer": "vais aller",
+          "explanation": "Futur proche для близкого по времени намерения: je vais aller."
         }
       ]
     },
@@ -454,7 +471,8 @@
             "vais",
             "voudrai"
           ],
-          "correctAnswer": "voudrais"
+          "correctAnswer": "voudrais",
+          "explanation": "Conditionnel глагола vouloir выражает вежливое пожелание «хотел бы»: je voudrais."
         },
         {
           "question": "Mon ___ est de devenir architecte.",
@@ -464,7 +482,8 @@
             "voyage",
             "ami"
           ],
-          "correctAnswer": "rêve"
+          "correctAnswer": "rêve",
+          "explanation": "Существительное le rêve означает «мечта», что подходит по смыслу — «моя мечта стать архитектором»."
         },
         {
           "question": "J'___ habiter dans une grande ville. (мне хотелось бы)",
@@ -474,7 +493,8 @@
             "aimerais",
             "aimerai"
           ],
-          "correctAnswer": "aimerais"
+          "correctAnswer": "aimerais",
+          "explanation": "Conditionnel глагола aimer выражает мягкое пожелание «мне бы хотелось»: j'aimerais."
         },
         {
           "question": "J'espère ___ un bon diplôme cette année.",
@@ -484,7 +504,8 @@
             "j'ai",
             "eu"
           ],
-          "correctAnswer": "avoir"
+          "correctAnswer": "avoir",
+          "explanation": "После espérer (надеяться) с тем же субъектом употребляется инфинитив: j'espère avoir."
         },
         {
           "question": "Elle voudrais ___ médecin plus tard.",
@@ -494,7 +515,8 @@
             "sera",
             "étant"
           ],
-          "correctAnswer": "être"
+          "correctAnswer": "être",
+          "explanation": "После voudrais (форма conditionnel от vouloir) употребляется инфинитив: voudrais être."
         },
         {
           "question": "Nous aimerions ___ à l'étranger pour travailler.",
@@ -504,7 +526,8 @@
             "sommes partis",
             "partirons"
           ],
-          "correctAnswer": "partir"
+          "correctAnswer": "partir",
+          "explanation": "После aimerions (conditionnel от aimer) употребляется инфинитив: nous aimerions partir."
         }
       ]
     },

@@ -145,7 +145,8 @@
             "va",
             "vont"
           ],
-          "correctAnswer": "vais"
+          "correctAnswer": "vais",
+          "explanation": "Глагол aller (идти/ехать) в 1-м лице ед. числа: je vais."
         },
         {
           "question": "Tu ___ d'où ? (venir)",
@@ -155,7 +156,8 @@
             "venez",
             "viennent"
           ],
-          "correctAnswer": "viens"
+          "correctAnswer": "viens",
+          "explanation": "Глагол venir (приходить) во 2-м лице ед. числа: tu viens."
         },
         {
           "question": "Elle ___ au musée demain. (aller)",
@@ -165,7 +167,8 @@
             "va",
             "vont"
           ],
-          "correctAnswer": "va"
+          "correctAnswer": "va",
+          "explanation": "Глагол aller в 3-м лице ед. числа (elle/il/on): elle va."
         },
         {
           "question": "Nous ___ chez des amis. (aller)",
@@ -175,7 +178,8 @@
             "allons",
             "vont"
           ],
-          "correctAnswer": "allons"
+          "correctAnswer": "allons",
+          "explanation": "Глагол aller в 1-м лице мн. числа: nous allons."
         },
         {
           "question": "Vous ___ à Paris pour les vacances ? (venir)",
@@ -185,7 +189,8 @@
             "venez",
             "viennent"
           ],
-          "correctAnswer": "venez"
+          "correctAnswer": "venez",
+          "explanation": "Глагол venir во 2-м лице мн. числа (вежливое или мн. число): vous venez."
         },
         {
           "question": "Ils ___ manger bientôt. (aller = futur proche)",
@@ -195,7 +200,8 @@
             "va",
             "vont"
           ],
-          "correctAnswer": "vont"
+          "correctAnswer": "vont",
+          "explanation": "Конструкция futur proche (ближайшее будущее) = aller в настоящем + инфинитив; ils/elles vont manger."
         }
       ]
     },
@@ -212,7 +218,8 @@
             "au bout",
             "à gauche"
           ],
-          "correctAnswer": "à côté"
+          "correctAnswer": "à côté",
+          "explanation": "«À côté de» — рядом с (указывает на близкое соседство)."
         },
         {
           "question": "Le musée est ___ de la gare (очень далеко).",
@@ -222,7 +229,8 @@
             "en face",
             "à droite"
           ],
-          "correctAnswer": "loin"
+          "correctAnswer": "loin",
+          "explanation": "«Loin de» — далеко от (противоположность «près de»)."
         },
         {
           "question": "L'hôtel est ___ de l'hôpital (напротив).",
@@ -232,7 +240,8 @@
             "en face",
             "à côté"
           ],
-          "correctAnswer": "en face"
+          "correctAnswer": "en face",
+          "explanation": "«En face de» — напротив (расположение друг напротив друга)."
         },
         {
           "question": "Tournez ___ au feu rouge. (направо)",
@@ -242,7 +251,8 @@
             "tout droit",
             "au bout"
           ],
-          "correctAnswer": "à droite"
+          "correctAnswer": "à droite",
+          "explanation": "«À droite» — направо, используется при указании направления поворота."
         },
         {
           "question": "Continuez ___. (прямо)",
@@ -252,7 +262,8 @@
             "tout droit",
             "en face"
           ],
-          "correctAnswer": "tout droit"
+          "correctAnswer": "tout droit",
+          "explanation": "«Tout droit» — прямо (устойчивое выражение для движения вперёд без поворотов)."
         }
       ]
     },
@@ -337,7 +348,8 @@
             "aux",
             "à la"
           ],
-          "correctAnswer": "au"
+          "correctAnswer": "au",
+          "explanation": "Слияние предлога à с определённым артиклем мужского рода le даёт au: à + le cinéma → au cinéma."
         },
         {
           "question": "Elle vient ___ supermarché. (de + le)",
@@ -347,7 +359,8 @@
             "des",
             "de la"
           ],
-          "correctAnswer": "du"
+          "correctAnswer": "du",
+          "explanation": "Слияние предлога de с артиклем le даёт du: de + le supermarché → du supermarché."
         },
         {
           "question": "Nous allons ___ musées. (à + les)",
@@ -357,7 +370,8 @@
             "aux",
             "à la"
           ],
-          "correctAnswer": "aux"
+          "correctAnswer": "aux",
+          "explanation": "Слияние предлога à с артиклем множественного числа les даёт aux: à + les musées → aux musées."
         },
         {
           "question": "Il revient ___ gare. (de + la)",
@@ -367,7 +381,8 @@
             "de la",
             "de l'"
           ],
-          "correctAnswer": "de la"
+          "correctAnswer": "de la",
+          "explanation": "Предлог de с артиклем женского рода la НЕ сливается и остаётся de la: de + la gare → de la gare."
         },
         {
           "question": "Tu vas ___ hôpital ? (à + l')",
@@ -377,7 +392,8 @@
             "à la",
             "aux"
           ],
-          "correctAnswer": "à l'"
+          "correctAnswer": "à l'",
+          "explanation": "Перед словом, начинающимся с гласной (или немого h), артикль l' сливается с à в à l': à + l'hôpital → à l'hôpital."
         },
         {
           "question": "Je viens ___ boulangerie. (de + la)",
@@ -387,7 +403,8 @@
             "de l'",
             "de la"
           ],
-          "correctAnswer": "de la"
+          "correctAnswer": "de la",
+          "explanation": "Предлог de с артиклем la перед словом женского рода не сливается: de + la boulangerie → de la boulangerie."
         },
         {
           "question": "Ils vont ___ restaurants du quartier. (à + les)",
@@ -397,7 +414,8 @@
             "à les",
             "à la"
           ],
-          "correctAnswer": "aux"
+          "correctAnswer": "aux",
+          "explanation": "Слияние предлога à с артиклем les во множественном числе всегда даёт aux, независимо от рода: à + les restaurants → aux restaurants."
         },
         {
           "question": "On vient ___ marché. (de + le)",
@@ -407,7 +425,8 @@
             "de l'",
             "des"
           ],
-          "correctAnswer": "du"
+          "correctAnswer": "du",
+          "explanation": "Слияние предлога de с артиклем мужского рода le даёт du: de + le marché → du marché."
         }
       ]
     },
@@ -424,7 +443,8 @@
             "vas",
             "vont"
           ],
-          "correctAnswer": "allons"
+          "correctAnswer": "allons",
+          "explanation": "Futur proche образуется по схеме aller (в нужном лице) + инфинитив; nous allons visiter."
         },
         {
           "question": "Elle ___ prendre le bus. (futur proche)",
@@ -434,7 +454,8 @@
             "va",
             "vont"
           ],
-          "correctAnswer": "va"
+          "correctAnswer": "va",
+          "explanation": "Futur proche: elle va + инфинитив (prendre)."
         },
         {
           "question": "Vous ___ tourner à droite après la pharmacie.",
@@ -444,7 +465,8 @@
             "vont",
             "vas"
           ],
-          "correctAnswer": "allez"
+          "correctAnswer": "allez",
+          "explanation": "Futur proche: vous allez + инфинитив (tourner)."
         },
         {
           "question": "Ils ___ arriver à la gare dans cinq minutes.",
@@ -454,7 +476,8 @@
             "va",
             "vont"
           ],
-          "correctAnswer": "vont"
+          "correctAnswer": "vont",
+          "explanation": "Futur proche: ils vont + инфинитив (arriver)."
         },
         {
           "question": "Continuez ___ droit jusqu'au feu rouge.",
@@ -464,7 +487,8 @@
             "tout",
             "au bout"
           ],
-          "correctAnswer": "tout"
+          "correctAnswer": "tout",
+          "explanation": "«Tout droit» — устойчивое выражение, означающее «прямо», часто используется при описании маршрута."
         },
         {
           "question": "La gare est ___ au bout de la rue, à droite.",
@@ -474,7 +498,8 @@
             "très",
             "toujours"
           ],
-          "correctAnswer": "juste"
+          "correctAnswer": "juste",
+          "explanation": "«Juste au bout» — «как раз/прямо в конце» — слово juste усиливает точность местоположения."
         }
       ]
     },

@@ -135,7 +135,8 @@
             "faites",
             "font"
           ],
-          "correctAnswer": "fais"
+          "correctAnswer": "fais",
+          "explanation": "Глагол faire (делать) в 1-м лице ед. числа: je fais."
         },
         {
           "question": "Tu ___ de la danse ? (faire)",
@@ -145,7 +146,8 @@
             "faisons",
             "font"
           ],
-          "correctAnswer": "fais"
+          "correctAnswer": "fais",
+          "explanation": "Глагол faire во 2-м лице ед. числа: tu fais."
         },
         {
           "question": "Elle ___ du vélo chaque jour. (faire)",
@@ -155,7 +157,8 @@
             "fait",
             "faites"
           ],
-          "correctAnswer": "fait"
+          "correctAnswer": "fait",
+          "explanation": "Глагол faire в 3-м лице ед. числа: elle/il/on fait."
         },
         {
           "question": "Nous ___ du tennis. (faire)",
@@ -165,7 +168,8 @@
             "faisons",
             "font"
           ],
-          "correctAnswer": "faisons"
+          "correctAnswer": "faisons",
+          "explanation": "Глагол faire в 1-м лице мн. числа: nous faisons."
         },
         {
           "question": "Vous ___ quoi ce week-end ? (faire)",
@@ -175,7 +179,8 @@
             "faisons",
             "faites"
           ],
-          "correctAnswer": "faites"
+          "correctAnswer": "faites",
+          "explanation": "Глагол faire во 2-м лице мн. числа: vous faites (исключение из общего правила спряжения)."
         }
       ]
     },
@@ -192,7 +197,8 @@
             "de l'",
             "au"
           ],
-          "correctAnswer": "de la"
+          "correctAnswer": "de la",
+          "explanation": "С видами спорта женского рода используется faire de la: faire de la natation."
         },
         {
           "question": "Je joue ___ football. (sport + jouer)",
@@ -202,7 +208,8 @@
             "au",
             "à la"
           ],
-          "correctAnswer": "au"
+          "correctAnswer": "au",
+          "explanation": "С названиями игр в jouer используется предлог au (à + le): jouer au football."
         },
         {
           "question": "Elle joue ___ piano. (инструмент, муж.р.)",
@@ -212,7 +219,8 @@
             "du",
             "de la"
           ],
-          "correctAnswer": "du"
+          "correctAnswer": "du",
+          "explanation": "С музыкальными инструментами мужского рода в jouer используется du (de + le): jouer du piano."
         },
         {
           "question": "Tu fais ___ équitation ? (верховая езда, перед гласной)",
@@ -222,7 +230,8 @@
             "de l'",
             "au"
           ],
-          "correctAnswer": "de l'"
+          "correctAnswer": "de l'",
+          "explanation": "Перед словом, начинающимся с гласной, de la сокращается до de l': faire de l'équitation."
         },
         {
           "question": "Nous faisons ___ vélo. (муж.р.)",
@@ -232,7 +241,8 @@
             "de l'",
             "au"
           ],
-          "correctAnswer": "du"
+          "correctAnswer": "du",
+          "explanation": "С видами спорта мужского рода используется faire du: faire du vélo."
         }
       ]
     },
@@ -249,7 +259,8 @@
             "va",
             "vont"
           ],
-          "correctAnswer": "vais"
+          "correctAnswer": "vais",
+          "explanation": "Futur proche: je vais + инфинитив (aller)."
         },
         {
           "question": "Elle ___ faire du sport demain.",
@@ -259,7 +270,8 @@
             "va",
             "vont"
           ],
-          "correctAnswer": "va"
+          "correctAnswer": "va",
+          "explanation": "Futur proche: elle va + инфинитив (faire)."
         },
         {
           "question": "Nous ___ regarder un film ce soir.",
@@ -269,7 +281,8 @@
             "vont",
             "va"
           ],
-          "correctAnswer": "allons"
+          "correctAnswer": "allons",
+          "explanation": "Futur proche: nous allons + инфинитив (regarder)."
         },
         {
           "question": "Je ne ___ pas travailler ce week-end. (futur proche négatif)",
@@ -279,7 +292,8 @@
             "va",
             "vont"
           ],
-          "correctAnswer": "vais"
+          "correctAnswer": "vais",
+          "explanation": "В отрицании futur proche частицы ne...pas окружают спрягаемый глагол aller: je ne vais pas travailler."
         }
       ]
     },
@@ -434,7 +448,8 @@
             "vais",
             "aime"
           ],
-          "correctAnswer": "fais"
+          "correctAnswer": "fais",
+          "explanation": "Faire используется для индивидуальных занятий и видов спорта без соперника: faire du vélo."
         },
         {
           "question": "Il ___ au basket avec ses amis. (спортивная игра)",
@@ -444,7 +459,8 @@
             "aime",
             "va"
           ],
-          "correctAnswer": "joue"
+          "correctAnswer": "joue",
+          "explanation": "Jouer используется для командных/соревновательных игр с мячом: jouer au basket."
         },
         {
           "question": "Elle ___ de la natation chaque matin. (плавание)",
@@ -454,7 +470,8 @@
             "aime",
             "prend"
           ],
-          "correctAnswer": "fait"
+          "correctAnswer": "fait",
+          "explanation": "Faire используется для занятий вроде плавания: faire de la natation."
         },
         {
           "question": "Tu ___ au tennis ou au foot ? (игра с мячом)",
@@ -464,7 +481,8 @@
             "vas",
             "aimes"
           ],
-          "correctAnswer": "joues"
+          "correctAnswer": "joues",
+          "explanation": "Jouer + au/à la — для спортивных игр: jouer au tennis ou au foot."
         },
         {
           "question": "Nous ___ de la guitare ensemble. (инструмент)",
@@ -474,7 +492,8 @@
             "allons",
             "aimons"
           ],
-          "correctAnswer": "jouons"
+          "correctAnswer": "jouons",
+          "explanation": "Jouer + de — для музыкальных инструментов: jouer de la guitare."
         },
         {
           "question": "Ils ___ du yoga le mardi. (индивидуальное занятие)",
@@ -484,7 +503,8 @@
             "vont",
             "aiment"
           ],
-          "correctAnswer": "font"
+          "correctAnswer": "font",
+          "explanation": "Faire используется для индивидуальных занятий типа йоги: faire du yoga."
         },
         {
           "question": "Je ___ du piano depuis 5 ans. (инструмент)",
@@ -494,7 +514,8 @@
             "vais",
             "prends"
           ],
-          "correctAnswer": "joue"
+          "correctAnswer": "joue",
+          "explanation": "Jouer + de — для музыкальных инструментов: jouer du piano (исключение в этом контексте — глагол jouer, а не faire)."
         }
       ]
     },
@@ -511,7 +532,8 @@
             "neige",
             "y a"
           ],
-          "correctAnswer": "fait"
+          "correctAnswer": "fait",
+          "explanation": "Безличный оборот il fait + прилагательное описывает погоду: il fait chaud."
         },
         {
           "question": "En hiver, il ___ souvent. (снег)",
@@ -521,7 +543,8 @@
             "neige",
             "fait chaud"
           ],
-          "correctAnswer": "neige"
+          "correctAnswer": "neige",
+          "explanation": "Глагол neiger (идти, о снеге) употребляется безлично: il neige."
         },
         {
           "question": "Aujourd'hui il ___ mauvais. Je reste à la maison.",
@@ -531,7 +554,8 @@
             "neige",
             "y a"
           ],
-          "correctAnswer": "fait"
+          "correctAnswer": "fait",
+          "explanation": "Безличный оборот il fait + прилагательное: il fait mauvais."
         },
         {
           "question": "Il y a ___ vent ce matin. (ветрено)",
@@ -541,7 +565,8 @@
             "de la",
             "des"
           ],
-          "correctAnswer": "du"
+          "correctAnswer": "du",
+          "explanation": "Перед неисчисляемым существительным мужского рода используется частичный артикль du: il y a du vent."
         },
         {
           "question": "Au printemps, il ___ souvent à Paris. (дождь)",
@@ -551,7 +576,8 @@
             "pleut",
             "fait chaud"
           ],
-          "correctAnswer": "pleut"
+          "correctAnswer": "pleut",
+          "explanation": "Глагол pleuvoir (идти, о дожде) употребляется безлично: il pleut."
         },
         {
           "question": "___ automne, je fais du vélo. (осенью)",
@@ -561,7 +587,8 @@
             "À",
             "De"
           ],
-          "correctAnswer": "En"
+          "correctAnswer": "En",
+          "explanation": "Перед названиями времён года, начинающимися с гласной, употребляется предлог en: en automne."
         },
         {
           "question": "Quel temps fait-il ? — Il ___ du soleil ! (солнечно)",
@@ -571,7 +598,8 @@
             "pleut",
             "neige"
           ],
-          "correctAnswer": "y a"
+          "correctAnswer": "y a",
+          "explanation": "Оборот il y a используется для описания наличия явления природы: il y a du soleil."
         },
         {
           "question": "___ hiver, il fait très froid en Russie. (зимой)",
@@ -581,7 +609,8 @@
             "En",
             "De"
           ],
-          "correctAnswer": "En"
+          "correctAnswer": "En",
+          "explanation": "Перед словом hiver (начинается с гласного звука) употребляется предлог en: en hiver."
         }
       ]
     },

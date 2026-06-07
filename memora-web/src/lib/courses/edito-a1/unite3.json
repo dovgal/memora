@@ -146,7 +146,8 @@
             "parlez",
             "parlent"
           ],
-          "correctAnswer": "parle"
+          "correctAnswer": "parle",
+          "explanation": "Глаголы на -ER в 1-м л. ед.ч. (je) теряют -er и добавляют -e: parler → je parle."
         },
         {
           "question": "Tu ___ dans un café ? (travailler)",
@@ -156,7 +157,8 @@
             "travaillez",
             "travaillent"
           ],
-          "correctAnswer": "travailles"
+          "correctAnswer": "travailles",
+          "explanation": "Глаголы на -ER во 2-м л. ед.ч. (tu) → окончание -es: travailler → tu travailles."
         },
         {
           "question": "Elle ___ de la musique. (écouter)",
@@ -166,7 +168,8 @@
             "écoutez",
             "écoutent"
           ],
-          "correctAnswer": "écoute"
+          "correctAnswer": "écoute",
+          "explanation": "Глаголы на -ER в 3-м л. ед.ч. (il/elle) → окончание -e: écouter → elle écoute."
         },
         {
           "question": "Nous ___ à 7 heures. (manger)",
@@ -176,7 +179,8 @@
             "mangez",
             "mangent"
           ],
-          "correctAnswer": "mangeons"
+          "correctAnswer": "mangeons",
+          "explanation": "Глагол manger получает дополнительную -e перед -ons (mangeons), чтобы сохранить мягкое произношение [ʒ] — особенность глаголов на -ger."
         },
         {
           "question": "Vous ___ la télé ? (regarder)",
@@ -186,7 +190,8 @@
             "regardez",
             "regardent"
           ],
-          "correctAnswer": "regardez"
+          "correctAnswer": "regardez",
+          "explanation": "Глаголы на -ER во 2-м л. мн.ч./вежливая форма (vous) → окончание -ez: regarder → vous regardez."
         },
         {
           "question": "Ils ___ beaucoup. (travailler)",
@@ -196,7 +201,8 @@
             "travaillez",
             "travaillent"
           ],
-          "correctAnswer": "travaillent"
+          "correctAnswer": "travaillent",
+          "explanation": "Глаголы на -ER в 3-м л. мн.ч. (ils/elles) → окончание -ent (не произносится): travailler → ils travaillent."
         }
       ]
     },
@@ -213,7 +219,8 @@
             "Je travaille ne pas.",
             "Je n'pas travaille."
           ],
-          "correctAnswer": "Je ne travaille pas."
+          "correctAnswer": "Je ne travaille pas.",
+          "explanation": "Отрицание строится по схеме ne + глагол + pas: Je ne travaille pas."
         },
         {
           "question": "Elle mange le matin. (отрицание)",
@@ -223,7 +230,8 @@
             "Elle ne pas mange.",
             "Elle pas mange."
           ],
-          "correctAnswer": "Elle ne mange pas le matin."
+          "correctAnswer": "Elle ne mange pas le matin.",
+          "explanation": "Отрицательная рамка ne...pas окружает спрягаемый глагол, остальная часть фразы остаётся на месте: Elle ne mange pas le matin."
         },
         {
           "question": "Tu aimes le café. (отрицание — ne → n' перед гласной)",
@@ -233,7 +241,8 @@
             "Tu pas aimes.",
             "Tu aimes n'pas."
           ],
-          "correctAnswer": "Tu n'aimes pas."
+          "correctAnswer": "Tu n'aimes pas.",
+          "explanation": "Перед глаголом, начинающимся с гласной, ne сокращается до n' (élision): Tu n'aimes pas."
         },
         {
           "question": "Nous regardons la télé. (отрицание)",
@@ -243,7 +252,8 @@
             "Nous pas regardons.",
             "Nous n'regardons pas."
           ],
-          "correctAnswer": "Nous ne regardons pas."
+          "correctAnswer": "Nous ne regardons pas.",
+          "explanation": "Отрицание: ne ставится перед глаголом, pas — после: Nous ne regardons pas."
         }
       ]
     },
@@ -328,7 +338,8 @@
             "se lève",
             "nous levons"
           ],
-          "correctAnswer": "me lève"
+          "correctAnswer": "me lève",
+          "explanation": "Возвратный глагол se lever спрягается с возвратным местоимением, соответствующим подлежащему: je → me: je me lève."
         },
         {
           "question": "Tu ___ à minuit ? (se coucher)",
@@ -338,7 +349,8 @@
             "se couche",
             "vous couchez"
           ],
-          "correctAnswer": "te couches"
+          "correctAnswer": "te couches",
+          "explanation": "se coucher для tu → местоимение te: tu te couches."
         },
         {
           "question": "Elle ___ tous les matins. (se laver)",
@@ -348,7 +360,8 @@
             "se lave",
             "nous lavons"
           ],
-          "correctAnswer": "se lave"
+          "correctAnswer": "se lave",
+          "explanation": "se laver для elle/il → местоимение se: elle se lave."
         },
         {
           "question": "Nous ___ à huit heures. (se lever)",
@@ -358,7 +371,8 @@
             "se lève",
             "nous levons"
           ],
-          "correctAnswer": "nous levons"
+          "correctAnswer": "nous levons",
+          "explanation": "se lever для nous → местоимение nous: nous nous levons."
         },
         {
           "question": "Vous ___ à quelle heure ? (se coucher)",
@@ -368,7 +382,8 @@
             "se couche",
             "vous couchez"
           ],
-          "correctAnswer": "vous couchez"
+          "correctAnswer": "vous couchez",
+          "explanation": "se coucher для vous → местоимение vous: vous vous couchez."
         },
         {
           "question": "Ils ___ devant la télé. (s'endormir — ils...)",
@@ -378,7 +393,8 @@
             "s'endorment",
             "nous endormons"
           ],
-          "correctAnswer": "s'endorment"
+          "correctAnswer": "s'endorment",
+          "explanation": "s'endormir для ils/elles → местоимение se, перед гласной сокращается до s': ils s'endorment."
         },
         {
           "question": "Il ___ vite le matin. (s'habiller)",
@@ -388,7 +404,8 @@
             "s'habille",
             "nous habillons"
           ],
-          "correctAnswer": "s'habille"
+          "correctAnswer": "s'habille",
+          "explanation": "s'habiller для il → местоимение se, перед гласной сокращается до s': il s'habille."
         }
       ]
     },
@@ -405,7 +422,8 @@
             "Il est sept heures et demie.",
             "Il est huit heures."
           ],
-          "correctAnswer": "Il est sept heures."
+          "correctAnswer": "Il est sept heures.",
+          "explanation": "Время называют конструкцией «Il est + число + heure(s)»: 7h00 = Il est sept heures."
         },
         {
           "question": "Il est 9h30 — comment dit-on ?",
@@ -415,7 +433,8 @@
             "Il est dix heures moins le quart.",
             "Il est neuf heures."
           ],
-          "correctAnswer": "Il est neuf heures et demie."
+          "correctAnswer": "Il est neuf heures et demie.",
+          "explanation": "Половина часа добавляется через «et demie»: 9h30 = Il est neuf heures et demie."
         },
         {
           "question": "Il est 10h15 — comment dit-on ?",
@@ -425,7 +444,8 @@
             "Il est dix heures moins le quart.",
             "Il est onze heures moins le quart."
           ],
-          "correctAnswer": "Il est dix heures et quart."
+          "correctAnswer": "Il est dix heures et quart.",
+          "explanation": "Четверть часа после целого часа — «et quart»: 10h15 = Il est dix heures et quart."
         },
         {
           "question": "Il est 11h45 — comment dit-on ?",
@@ -435,7 +455,8 @@
             "Il est midi moins le quart.",
             "Il est midi et quart."
           ],
-          "correctAnswer": "Il est midi moins le quart."
+          "correctAnswer": "Il est midi moins le quart.",
+          "explanation": "За 15 минут до часа время называют как «следующий час moins le quart»: 11h45 = Il est midi moins le quart (без четверти полдень)."
         },
         {
           "question": "Quelle heure est-il à midi ?",
@@ -445,7 +466,8 @@
             "Il est minuit.",
             "Il est onze heures."
           ],
-          "correctAnswer": "Il est midi."
+          "correctAnswer": "Il est midi.",
+          "explanation": "Полдень по-французски — особое слово midi (а не douze heures): Il est midi."
         },
         {
           "question": "Lucas ___ à sept heures du matin. (se lever)",
@@ -455,7 +477,8 @@
             "te lèves",
             "nous levons"
           ],
-          "correctAnswer": "se lève"
+          "correctAnswer": "se lève",
+          "explanation": "Возвратный глагол se lever для il (Lucas) → местоимение se: il se lève."
         }
       ]
     },

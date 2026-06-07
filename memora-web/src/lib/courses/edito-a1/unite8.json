@@ -130,7 +130,8 @@
             "a",
             "avons"
           ],
-          "correctAnswer": "ai"
+          "correctAnswer": "ai",
+          "explanation": "Passé composé глагола visiter образуется с avoir; в 1-м лице ед. числа: j'ai visité."
         },
         {
           "question": "Elle ___ pris le train. (avoir)",
@@ -140,7 +141,8 @@
             "a",
             "ont"
           ],
-          "correctAnswer": "a"
+          "correctAnswer": "a",
+          "explanation": "Passé composé глагола prendre образуется с avoir; в 3-м лице ед. числа: elle a pris."
         },
         {
           "question": "Nous ___ mangé au restaurant. (avoir)",
@@ -150,7 +152,8 @@
             "ont",
             "ai"
           ],
-          "correctAnswer": "avons"
+          "correctAnswer": "avons",
+          "explanation": "Passé composé глагола manger образуется с avoir; в 1-м лице мн. числа: nous avons mangé."
         },
         {
           "question": "Participe passé de 'faire' ?",
@@ -160,7 +163,8 @@
             "failli",
             "fais"
           ],
-          "correctAnswer": "fait"
+          "correctAnswer": "fait",
+          "explanation": "Глагол faire имеет неправильное причастие прошедшего времени: fait."
         },
         {
           "question": "Participe passé de 'voir' ?",
@@ -170,7 +174,8 @@
             "voir",
             "vois"
           ],
-          "correctAnswer": "vu"
+          "correctAnswer": "vu",
+          "explanation": "Глагол voir имеет неправильное причастие прошедшего времени: vu."
         },
         {
           "question": "Je ___ ___ réserver un billet. (passé composé de réserver)",
@@ -180,7 +185,8 @@
             "avons réservé",
             "ont réservé"
           ],
-          "correctAnswer": "ai réservé"
+          "correctAnswer": "ai réservé",
+          "explanation": "Passé composé = вспомогательный глагол avoir в нужном лице + причастие прошедшего времени: j'ai réservé."
         }
       ]
     },
@@ -197,7 +203,8 @@
             "aux",
             "à"
           ],
-          "correctAnswer": "en"
+          "correctAnswer": "en",
+          "explanation": "Перед названиями стран женского рода (France) употребляется предлог en: en France."
         },
         {
           "question": "Il habite ___ Japon. (муж. страна)",
@@ -207,7 +214,8 @@
             "aux",
             "à"
           ],
-          "correctAnswer": "au"
+          "correctAnswer": "au",
+          "explanation": "Перед названиями стран мужского рода, начинающимися с согласной (Japon), употребляется предлог au: au Japon."
         },
         {
           "question": "Nous allons ___ États-Unis. (мн.ч.)",
@@ -217,7 +225,8 @@
             "aux",
             "à"
           ],
-          "correctAnswer": "aux"
+          "correctAnswer": "aux",
+          "explanation": "Перед названиями стран во множественном числе (États-Unis) употребляется предлог aux: aux États-Unis."
         },
         {
           "question": "Elle arrive ___ Madrid. (город)",
@@ -227,7 +236,8 @@
             "à",
             "aux"
           ],
-          "correctAnswer": "à"
+          "correctAnswer": "à",
+          "explanation": "Перед названиями городов употребляется предлог à: à Madrid."
         },
         {
           "question": "Il vient ___ Portugal. (муж. страна = из)",
@@ -237,7 +247,8 @@
             "des",
             "d'"
           ],
-          "correctAnswer": "du"
+          "correctAnswer": "du",
+          "explanation": "Со значением «откуда, из» перед названием страны мужского рода употребляется предлог du (de + le): du Portugal."
         }
       ]
     },
@@ -395,7 +406,8 @@
             "es",
             "est"
           ],
-          "correctAnswer": "ai"
+          "correctAnswer": "ai",
+          "explanation": "Глагол voyager — обычный глагол движения, образующий passé composé с avoir: j'ai voyagé."
         },
         {
           "question": "Elle ___ arrivée à Paris ce matin. (arriver → être)",
@@ -405,7 +417,8 @@
             "ont",
             "sont"
           ],
-          "correctAnswer": "est"
+          "correctAnswer": "est",
+          "explanation": "Глагол arriver относится к глаголам движения, спрягающимся с être; причастие согласуется в роде и числе с подлежащим: elle est arrivée."
         },
         {
           "question": "Nous ___ partis en vacances lundi. (partir → être)",
@@ -415,7 +428,8 @@
             "êtes",
             "sont"
           ],
-          "correctAnswer": "sommes"
+          "correctAnswer": "sommes",
+          "explanation": "Глагол partir спрягается с être в passé composé; с nous используется sommes, причастие partis согласуется во множественном числе: nous sommes partis."
         },
         {
           "question": "Ils ___ pris le taxi. (prendre → avoir)",
@@ -425,7 +439,8 @@
             "avons",
             "êtes"
           ],
-          "correctAnswer": "ont"
+          "correctAnswer": "ont",
+          "explanation": "Глагол prendre — переходный глагол, образующий passé composé с avoir: ils ont pris."
         },
         {
           "question": "Tu ___ allé(e) à la gare ? (aller → être)",
@@ -435,7 +450,8 @@
             "a",
             "est"
           ],
-          "correctAnswer": "es"
+          "correctAnswer": "es",
+          "explanation": "Глагол aller относится к глаголам движения, спрягающимся с être: tu es allé(e)."
         },
         {
           "question": "J'___ réservé un hôtel à Lyon. (réserver → avoir)",
@@ -445,7 +461,8 @@
             "es",
             "est"
           ],
-          "correctAnswer": "ai"
+          "correctAnswer": "ai",
+          "explanation": "Глагол réserver — обычный переходный глагол, образующий passé composé с avoir: j'ai réservé."
         },
         {
           "question": "Le train ___ parti à 9h. (partir → être, il)",
@@ -455,7 +472,8 @@
             "ont",
             "sont"
           ],
-          "correctAnswer": "est"
+          "correctAnswer": "est",
+          "explanation": "Глагол partir спрягается с être; с подлежащим le train (он, ед.ч.) используется est: le train est parti."
         }
       ]
     },
@@ -472,7 +490,8 @@
             "par",
             "avec"
           ],
-          "correctAnswer": "en"
+          "correctAnswer": "en",
+          "explanation": "Предлог en употребляется с видами транспорта, в которые садятся («внутри»): en train."
         },
         {
           "question": "Elle préfère aller au travail ___ vélo. (без мотора)",
@@ -482,7 +501,8 @@
             "par",
             "dans"
           ],
-          "correctAnswer": "à"
+          "correctAnswer": "à",
+          "explanation": "Предлог à употребляется с видами транспорта без мотора, на которых едут «верхом»: à vélo."
         },
         {
           "question": "Nous avons voyagé ___ avion. (внутри)",
@@ -492,7 +512,8 @@
             "par",
             "avec"
           ],
-          "correctAnswer": "en"
+          "correctAnswer": "en",
+          "explanation": "Предлог en употребляется с видами транспорта, в которые садятся: en avion."
         },
         {
           "question": "Il rentre chez lui ___ pied. (пешком)",
@@ -502,7 +523,8 @@
             "par",
             "de"
           ],
-          "correctAnswer": "à"
+          "correctAnswer": "à",
+          "explanation": "Устойчивое выражение «à pied» означает «пешком»."
         },
         {
           "question": "Ils sont venus ___ voiture. (машина)",
@@ -512,7 +534,8 @@
             "par",
             "dans"
           ],
-          "correctAnswer": "en"
+          "correctAnswer": "en",
+          "explanation": "Предлог en употребляется с видами транспорта закрытого типа: en voiture."
         },
         {
           "question": "Le matin, je prends le métro ___ aller au bureau. (чтобы)",
@@ -522,7 +545,8 @@
             "si",
             "mais"
           ],
-          "correctAnswer": "pour"
+          "correctAnswer": "pour",
+          "explanation": "Предлог pour перед инфинитивом выражает цель действия — «чтобы»: pour aller au bureau."
         }
       ]
     },

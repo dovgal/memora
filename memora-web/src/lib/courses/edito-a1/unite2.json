@@ -150,7 +150,8 @@
             "mes",
             "son"
           ],
-          "correctAnswer": "mon"
+          "correctAnswer": "mon",
+          "explanation": "père — мужской род в ед.ч., перед мужским/гласным существительным «мой» = mon: mon père."
         },
         {
           "question": "C'est ___ mère. (ton / ta / tes)",
@@ -160,7 +161,8 @@
             "tes",
             "ma"
           ],
-          "correctAnswer": "ta"
+          "correctAnswer": "ta",
+          "explanation": "mère — женский род, «твоя» = ta (форма ton используется только перед гласной/h немым)."
         },
         {
           "question": "C'est ___ sœur. (son / sa / ses)",
@@ -170,7 +172,8 @@
             "ses",
             "ma"
           ],
-          "correctAnswer": "sa"
+          "correctAnswer": "sa",
+          "explanation": "sœur — женский род, «его/её» = sa (son — перед гласной/мужским словом)."
         },
         {
           "question": "Ce sont ___ enfants. (notre / nos)",
@@ -180,7 +183,8 @@
             "leurs",
             "ses"
           ],
-          "correctAnswer": "nos"
+          "correctAnswer": "nos",
+          "explanation": "enfants — мн.ч., «наши» = nos (notre — форма для ед.ч.)."
         },
         {
           "question": "C'est ___ famille. (votre / vos)",
@@ -190,7 +194,8 @@
             "notre",
             "leur"
           ],
-          "correctAnswer": "votre"
+          "correctAnswer": "votre",
+          "explanation": "famille — ед.ч., вежливое/мн.ч. «ваша» = votre (vos — для мн.ч. существительных)."
         },
         {
           "question": "Ce sont ___ parents. (leur / leurs)",
@@ -200,7 +205,8 @@
             "ses",
             "mes"
           ],
-          "correctAnswer": "leurs"
+          "correctAnswer": "leurs",
+          "explanation": "parents — мн.ч., «их» = leurs (leur — форма для ед.ч.)."
         },
         {
           "question": "C'est ___ ami. (mon / ma — перед гласной!)",
@@ -210,7 +216,8 @@
             "ton",
             "son"
           ],
-          "correctAnswer": "mon"
+          "correctAnswer": "mon",
+          "explanation": "ami начинается с гласной: перед гласной женский притяжательный ma меняется на mon (как у мужского рода) — mon ami(e), для благозвучия."
         }
       ]
     },
@@ -227,7 +234,8 @@
             "grands",
             "grandes"
           ],
-          "correctAnswer": "grande"
+          "correctAnswer": "grande",
+          "explanation": "sœur — женский род → прилагательное согласуется в женском роде: grande."
         },
         {
           "question": "Mon frère est ___. (petit)",
@@ -237,7 +245,8 @@
             "petits",
             "petites"
           ],
-          "correctAnswer": "petit"
+          "correctAnswer": "petit",
+          "explanation": "frère — мужской род ед.ч. → форма без изменений: petit."
         },
         {
           "question": "Mes parents sont ___. (sympa — invariable)",
@@ -247,7 +256,8 @@
             "sympa",
             "sympas"
           ],
-          "correctAnswer": "sympa"
+          "correctAnswer": "sympa",
+          "explanation": "sympa — неизменяемое разговорное прилагательное, не меняется ни по родам, ни по числам."
         },
         {
           "question": "C'est une ___ famille. (grand)",
@@ -257,7 +267,8 @@
             "beaux",
             "belles"
           ],
-          "correctAnswer": "grande"
+          "correctAnswer": "grande",
+          "explanation": "famille — женский род ед.ч. → grande (согласование в женском роде)."
         },
         {
           "question": "C'est un ___ père. (beau)",
@@ -267,7 +278,8 @@
             "beaux",
             "belles"
           ],
-          "correctAnswer": "beau"
+          "correctAnswer": "beau",
+          "explanation": "père — мужской род; перед гласным/h можно использовать особую форму, но перед согласным — beau: un beau père."
         }
       ]
     },
@@ -345,7 +357,8 @@
             "petite",
             "brun"
           ],
-          "correctAnswer": "grand"
+          "correctAnswer": "grand",
+          "explanation": "frère — мужской род → grand (форма мужского рода без -e)."
         },
         {
           "question": "Ma cousine est ___. (маленькая, жен.р.)",
@@ -355,7 +368,8 @@
             "grande",
             "blonde"
           ],
-          "correctAnswer": "petite"
+          "correctAnswer": "petite",
+          "explanation": "cousine — женский род → petite (добавляем -e к мужской форме petit)."
         },
         {
           "question": "Il a les cheveux ___. (тёмные — brunette desc.)",
@@ -365,7 +379,8 @@
             "bruns",
             "blancs"
           ],
-          "correctAnswer": "bruns"
+          "correctAnswer": "bruns",
+          "explanation": "cheveux (волосы, м.р. мн.ч.) → согласование в мужском роде мн.ч.: bruns (тёмные/каштановые)."
         },
         {
           "question": "Elle a les yeux ___. (голубые)",
@@ -375,7 +390,8 @@
             "bleus",
             "noirs"
           ],
-          "correctAnswer": "bleus"
+          "correctAnswer": "bleus",
+          "explanation": "yeux (глаза, м.р. мн.ч.) → bleus — согласование в мужском роде мн.ч."
         },
         {
           "question": "Mon grand-père est ___. (старый, муж.р.)",
@@ -385,7 +401,8 @@
             "jeune",
             "beau"
           ],
-          "correctAnswer": "vieux"
+          "correctAnswer": "vieux",
+          "explanation": "grand-père — мужской род → vieux (особая форма мужского рода перед согласным; vieil — перед гласной)."
         },
         {
           "question": "Ma grand-mère est très ___. (красивая, жен.р.)",
@@ -395,7 +412,8 @@
             "bel",
             "beaux"
           ],
-          "correctAnswer": "belle"
+          "correctAnswer": "belle",
+          "explanation": "grand-mère — женский род → belle (особая форма женского рода прилагательного beau)."
         },
         {
           "question": "Mes parents sont ___. (молодые, мн.ч.)",
@@ -405,7 +423,8 @@
             "jeunesses",
             "vieux"
           ],
-          "correctAnswer": "jeunes"
+          "correctAnswer": "jeunes",
+          "explanation": "parents — мужской род мн.ч. → jeunes (просто добавляем -s к jeune, форма одинакова для обоих родов)."
         },
         {
           "question": "Elle est ___. (рыжеволосая, жен.р.)",
@@ -415,7 +434,8 @@
             "blonde",
             "brune"
           ],
-          "correctAnswer": "rousse"
+          "correctAnswer": "rousse",
+          "explanation": "Elle — женский род → rousse (удвоение согласной + -e: roux → rousse — рыжая)."
         }
       ]
     },
@@ -432,7 +452,8 @@
             "a",
             "avons"
           ],
-          "correctAnswer": "a"
+          "correctAnswer": "a",
+          "explanation": "avoir в 3-м л. ед.ч. (il/elle = père) → a: «Mon père a 52 ans» — возраст по-французски выражается глаголом avoir."
         },
         {
           "question": "Tu ___ des frères et sœurs ?",
@@ -442,7 +463,8 @@
             "a",
             "avez"
           ],
-          "correctAnswer": "as"
+          "correctAnswer": "as",
+          "explanation": "avoir во 2-м л. ед.ч. (tu) → as."
         },
         {
           "question": "Mes grands-parents ___ soixante-dix ans.",
@@ -452,7 +474,8 @@
             "avez",
             "ont"
           ],
-          "correctAnswer": "ont"
+          "correctAnswer": "ont",
+          "explanation": "avoir в 3-м л. мн.ч. (ils/elles = grands-parents) → ont."
         },
         {
           "question": "Nous ___ deux enfants.",
@@ -462,7 +485,8 @@
             "a",
             "avons"
           ],
-          "correctAnswer": "avons"
+          "correctAnswer": "avons",
+          "explanation": "avoir в 1-м л. мн.ч. (nous) → avons."
         },
         {
           "question": "Je n'___ pas de sœur.",
@@ -472,7 +496,8 @@
             "a",
             "avons"
           ],
-          "correctAnswer": "ai"
+          "correctAnswer": "ai",
+          "explanation": "avoir в 1-м л. ед.ч. (je) перед гласной → ai, с отрицанием je n'ai pas."
         },
         {
           "question": "Elle n'a pas ___ frère. (отрицание!)",
@@ -482,7 +507,8 @@
             "de",
             "des"
           ],
-          "correctAnswer": "de"
+          "correctAnswer": "de",
+          "explanation": "После отрицания (ne... pas) неопределённый артикль un/une/des заменяется на de: Elle n'a pas de frère."
         },
         {
           "question": "Ils n'ont pas ___ enfants. (перед гласной!)",
@@ -492,7 +518,8 @@
             "des",
             "un"
           ],
-          "correctAnswer": "d'"
+          "correctAnswer": "d'",
+          "explanation": "После отрицания (ne... pas) перед гласной de сокращается до d': Ils n'ont pas d'enfants."
         }
       ]
     },
