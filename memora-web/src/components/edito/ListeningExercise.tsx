@@ -72,6 +72,7 @@ export function ListeningExercise({ exercise, onComplete }: { exercise: EditoExe
           <audio
             ref={audioRef}
             src={src}
+            preload="auto"
             onTimeUpdate={handleTimeUpdate}
             onLoadedMetadata={handleLoadedMetadata}
             onEnded={handleEnded}

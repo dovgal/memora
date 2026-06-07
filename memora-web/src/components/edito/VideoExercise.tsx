@@ -40,6 +40,8 @@ export function VideoExercise({ exercise, onComplete }: { exercise: EditoExercis
             ref={videoRef}
             src={src}
             controls
+            preload="metadata"
+            playsInline
             onEnded={handleEnded}
             className="w-full h-full object-contain"
           />
