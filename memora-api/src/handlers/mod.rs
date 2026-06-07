@@ -9,4 +9,5 @@ pub mod folders;
 pub mod errors;
 pub mod audio;
 pub mod classes;
+pub mod course_progress;
 
