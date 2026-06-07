@@ -124,6 +124,8 @@ async fn main() {
         .route("/api/a2/analytics/errors", get(handlers::classes::error_analytics))
         .route("/api/a2/teacher/classes/{class_id}/overview", get(handlers::classes::teacher_overview))
         .route("/api/a2/assignments", post(handlers::classes::create_assignment).get(handlers::classes::my_assignments))
+        // Generic course-trainer progress (Edito A1 and others)
+        .route("/api/courses/{course_id}/progress", get(handlers::course_progress::get_course_progress).post(handlers::course_progress::record_course_progress))
         // Diagnostics (Temporary)
         .route("/api/diag/db", get(|State(pool): State<sqlx::PgPool>| async move {
             let audio_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM flashcard_audio").fetch_one(&pool).await.unwrap_or((-1,));
