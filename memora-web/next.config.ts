@@ -17,6 +17,10 @@ const nextConfig: NextConfig = {
         destination: `${rustApiUrl}/api/a2/:path*`,
       },
       {
+        source: "/api/courses/:path*",
+        destination: `${rustApiUrl}/api/courses/:path*`,
+      },
+      {
         source: "/api/tts",
         destination: `${rustApiUrl}/api/tts`,
       },

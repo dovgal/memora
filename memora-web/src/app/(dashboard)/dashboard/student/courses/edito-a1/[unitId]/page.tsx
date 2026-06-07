@@ -1,14 +1,40 @@
 'use client';
-import { use, useState } from 'react';
+import { use, useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { ChevronLeft, CheckCircle2 } from 'lucide-react';
 import { EDITO_A1_UNITS } from '@/lib/courses/edito-a1';
 import { ExerciseRenderer } from '@/components/edito/ExerciseRenderer';
+import { getCourseProgress, recordExerciseProgress } from '@/lib/courses/editoProgressApi';
+import { syncVocabSet } from '@/lib/courses/editoVocabSync';
 
 export default function EditoUnitPage({ params }: { params: Promise<{ unitId: string }> }) {
   const { unitId } = use(params);
   const unit = EDITO_A1_UNITS[unitId];
+  const { data: session } = useSession();
+  const idToken = session?.id_token as string | undefined;
   const [completed, setCompleted] = useState<Record<string, boolean>>({});
+
+  // Загружаем сохранённый на сервере прогресс юнита при первом заходе
+  useEffect(() => {
+    if (!idToken) return;
+    let cancelled = false;
+    getCourseProgress(idToken).then(entries => {
+      if (cancelled) return;
+      const persisted: Record<string, boolean> = {};
+      for (const e of entries) if (e.unitId === unitId) persisted[e.exerciseId] = true;
+      setCompleted(prev => ({ ...persisted, ...prev }));
+    }).catch(() => {});
+    return () => { cancelled = true; };
+  }, [idToken, unitId]);
+
+  const handleExerciseComplete = useCallback((exerciseId: string) => {
+    setCompleted(prev => {
+      if (prev[exerciseId]) return prev;
+      return { ...prev, [exerciseId]: true };
+    });
+    recordExerciseProgress(unitId, exerciseId, idToken);
+  }, [unitId, idToken]);
 
   if (!unit) {
     return (
@@ -24,6 +50,13 @@ export default function EditoUnitPage({ params }: { params: Promise<{ unitId: st
   const completedCount = Object.keys(completed).length;
   const totalInteractive = unit.exercises.filter(e => !['theory'].includes(e.type)).length;
   const pct = totalInteractive > 0 ? Math.round((completedCount / totalInteractive) * 100) : 100;
+
+  // Когда юнит пройден полностью — добавляем его словарь и фразы в личный набор «Edito A1 — Словарь»
+  useEffect(() => {
+    if (pct === 100 && totalInteractive > 0 && idToken) {
+      syncVocabSet(idToken).catch(() => {});
+    }
+  }, [pct, totalInteractive, idToken]);
 
   return (
     <div className="min-h-screen bg-qz-card text-qz-text">
@@ -71,7 +104,7 @@ export default function EditoUnitPage({ params }: { params: Promise<{ unitId: st
               )}
               <ExerciseRenderer
                 exercise={ex}
-                onComplete={(id) => setCompleted(prev => ({ ...prev, [id]: true }))}
+                onComplete={handleExerciseComplete}
               />
             </div>
           ))}

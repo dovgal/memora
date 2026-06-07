@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { BookOpen, Layers, Hash, Sparkles } from 'lucide-react';
 import { EDITO_A1_UNITS, UNIT_ORDER, SPECIAL_MODULES } from '@/lib/courses/edito-a1';
+import { VocabSetCard } from '@/components/edito/VocabSetCard';
 
 export default function EditoA1CoursePage() {
   const regularUnits = UNIT_ORDER.map(id => ({ id, unit: EDITO_A1_UNITS[id] }));
@@ -60,6 +61,12 @@ export default function EditoA1CoursePage() {
               </div>
             </Link>
           </div>
+        </section>
+
+        {/* Personal vocabulary set */}
+        <section>
+          <h2 className="text-sm font-bold uppercase tracking-wider text-qz-text-muted mb-4">Мой словарь</h2>
+          <VocabSetCard />
         </section>
 
         {/* Units grid */}
