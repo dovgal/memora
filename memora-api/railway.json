@@ -5,11 +5,24 @@
         "nixpacksPlan": {
             "variables": {
                 "SQLX_OFFLINE": "true"
+            },
+            "phases": {
+                "build": {
+                    "dependsOn": ["setup"],
+                    "cmds": [
+                        "mkdir -p bin && cargo build --release --bin memora-api && cp target/release/memora-api bin/"
+                    ],
+                    "cacheDirectories": [
+                        "/root/.cargo/git",
+                        "/root/.cargo/registry",
+                        "target"
+                    ]
+                }
             }
         }
     },
     "deploy": {
-        "startCommand": "cargo run --release",
+        "startCommand": "./bin/memora-api",
         "numReplicas": 1
     }
 }
