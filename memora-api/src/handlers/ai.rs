@@ -25,6 +25,46 @@ fn get_ollama_url() -> String {
     env::var("OLLAMA_BASE_URL").unwrap_or_else(|_| "http://localhost:11434/api/chat".to_string())
 }
 
+/// Общая проверка rate limit для всех AI-эндпоинтов.
+fn check_rate_limit(
+    rate_limiter: &AppRateLimiter,
+    user_sub: &str,
+) -> Result<uuid::Uuid, (StatusCode, Json<AiGatewayError>)> {
+    let user_uuid = uuid::Uuid::parse_str(user_sub)
+        .map_err(|_| (StatusCode::UNAUTHORIZED, Json(AiGatewayError { error: "Invalid User UUID".to_string() })))?;
+    let limiter = rate_limiter.entry(user_uuid).or_insert_with(|| {
+        Arc::new(RateLimiter::direct(Quota::per_minute(NonZeroU32::new(5).unwrap())))
+    });
+    if limiter.check().is_err() {
+        return Err((
+            StatusCode::TOO_MANY_REQUESTS,
+            Json(AiGatewayError { error: "Rate limit exceeded. Try again in a minute.".to_string() }),
+        ));
+    }
+    Ok(user_uuid)
+}
+
+/// Проверяет, что набор существует и доступен пользователю (владелец или публичный).
+async fn ensure_set_access(
+    pool: &PgPool,
+    set_id: uuid::Uuid,
+    user_uuid: uuid::Uuid,
+) -> Result<(), (StatusCode, Json<AiGatewayError>)> {
+    let row: Option<(bool, uuid::Uuid)> = sqlx::query_as(
+        "SELECT is_public, creator_id FROM sets WHERE id = $1"
+    )
+    .bind(set_id)
+    .fetch_optional(pool)
+    .await
+    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Database Error: {}", e) })))?;
+
+    match row {
+        Some((is_public, creator_id)) if is_public || creator_id == user_uuid => Ok(()),
+        Some(_) => Err((StatusCode::FORBIDDEN, Json(AiGatewayError { error: "You do not have access to this set".to_string() }))),
+        None => Err((StatusCode::NOT_FOUND, Json(AiGatewayError { error: "Set not found".to_string() }))),
+    }
+}
+
 #[derive(Deserialize)]
 pub struct AiGenerateRequest {
     pub prompt: String,
@@ -85,21 +125,7 @@ pub async fn generate_flashcards_stream(
 ) -> Result<Sse<impl Stream<Item = Result<Event, Infallible>>>, (StatusCode, Json<AiGatewayError>)> {
     
     // 1. Enforce Rate Limits
-    let user_uuid = match uuid::Uuid::parse_str(&user.sub) {
-        Ok(uid) => uid,
-        Err(_) => return Err((StatusCode::UNAUTHORIZED, Json(AiGatewayError { error: "Invalid User UUID".to_string() })))
-    };
-
-    let user_limiter = rate_limiter.entry(user_uuid).or_insert_with(|| {
-        Arc::new(RateLimiter::direct(Quota::per_minute(NonZeroU32::new(5).unwrap())))
-    });
-
-    if user_limiter.check().is_err() {
-        return Err((
-            StatusCode::TOO_MANY_REQUESTS, 
-            Json(AiGatewayError { error: "Rate limit exceeded. Try again in a minute.".to_string() })
-        ));
-    }
+    check_rate_limit(&rate_limiter, &user.sub)?;
 
     // 2. Fetch API Key
     let api_key = match env::var("OLLAMA_API_KEY") {
@@ -161,17 +187,20 @@ pub async fn generate_flashcards_stream(
     let mut byte_stream = response.bytes_stream();
 
     let stream = async_stream::stream! {
+        // Буфер для неполных строк: чанк может разорвать JSON-строку посередине.
+        let mut line_buf = String::new();
         while let Some(chunk_result) = futures::StreamExt::next(&mut byte_stream).await {
             let result: Result<bytes::Bytes, reqwest::Error> = chunk_result;
             match result {
                 Ok(b) => {
-                    let chunk_str = String::from_utf8_lossy(&b);
-                    // Ollama sends one JSON object per line in stream mode
-                    let lines: Vec<&str> = chunk_str.split('\n').collect();
+                    line_buf.push_str(&String::from_utf8_lossy(&b));
+                    // Ollama sends one JSON object per line in stream mode.
+                    // Обрабатываем только завершённые строки, хвост остаётся в буфере.
+                    while let Some(pos) = line_buf.find('\n') {
+                        let line: String = line_buf.drain(..=pos).collect();
+                        let line = line.trim();
+                        if line.is_empty() { continue; }
 
-                    for line in lines {
-                        if line.trim().is_empty() { continue; }
-                        
                         if let Ok(parsed) = serde_json::from_str::<OllamaStreamChunk>(line) {
                             if let Some(msg) = parsed.message {
                                 if let Some(content) = msg.content {
@@ -205,26 +234,15 @@ pub async fn qchat_stream(
     Json(payload): Json<QChatRequest>,
 ) -> Result<Sse<impl Stream<Item = Result<Event, Infallible>>>, (StatusCode, Json<AiGatewayError>)> {
     
-    let user_uuid = match uuid::Uuid::parse_str(&user.sub) {
-        Ok(uid) => uid,
-        Err(_) => return Err((StatusCode::UNAUTHORIZED, Json(AiGatewayError { error: "Invalid User UUID".to_string() })))
-    };
-
-    let user_limiter = rate_limiter.entry(user_uuid).or_insert_with(|| {
-        Arc::new(RateLimiter::direct(Quota::per_minute(NonZeroU32::new(5).unwrap())))
-    });
-
-    if user_limiter.check().is_err() {
-        return Err((
-            StatusCode::TOO_MANY_REQUESTS, 
-            Json(AiGatewayError { error: "Rate limit exceeded. Try again in a minute.".to_string() })
-        ));
-    }
+    let user_uuid = check_rate_limit(&rate_limiter, &user.sub)?;
 
     let set_id = match uuid::Uuid::parse_str(&set_id_str) {
         Ok(id) => id,
         Err(_) => return Err((StatusCode::BAD_REQUEST, Json(AiGatewayError { error: "Invalid Set ID Format".to_string() })))
     };
+
+    // Доступ: владелец или публичный набор
+    ensure_set_access(&pool, set_id, user_uuid).await?;
 
     let flashcards = sqlx::query!(
         "SELECT term, definition FROM flashcards WHERE set_id = $1 ORDER BY order_index ASC",
@@ -301,15 +319,17 @@ pub async fn qchat_stream(
     let mut byte_stream = response.bytes_stream();
 
     let stream = async_stream::stream! {
+        // Буфер для неполных строк: чанк может разорвать JSON-строку посередине.
+        let mut line_buf = String::new();
         while let Some(chunk_result) = futures::StreamExt::next(&mut byte_stream).await {
             let result: Result<bytes::Bytes, reqwest::Error> = chunk_result;
             match result {
                 Ok(b) => {
-                    let chunk_str = String::from_utf8_lossy(&b);
-                    let lines: Vec<&str> = chunk_str.split('\n').collect();
-
-                    for line in lines {
-                        if line.trim().is_empty() { continue; }
+                    line_buf.push_str(&String::from_utf8_lossy(&b));
+                    while let Some(pos) = line_buf.find('\n') {
+                        let line: String = line_buf.drain(..=pos).collect();
+                        let line = line.trim();
+                        if line.is_empty() { continue; }
                         if let Ok(parsed) = serde_json::from_str::<OllamaStreamChunk>(line) {
                             if let Some(msg) = parsed.message {
                                 if let Some(content) = msg.content {
@@ -346,10 +366,15 @@ pub async fn generate_image(
 
 pub async fn generate_exercises(
     State(pool): State<PgPool>,
-    State(_rate_limiter): State<AppRateLimiter>,
-    AuthenticatedUser(_user): AuthenticatedUser,
+    State(rate_limiter): State<AppRateLimiter>,
+    AuthenticatedUser(user): AuthenticatedUser,
     Json(payload): Json<AIGenerateRequest>,
 ) -> Sse<BoxStream<'static, Result<Event, Infallible>>> {
+    let user_uuid = match check_rate_limit(&rate_limiter, &user.sub) {
+        Ok(u) => u,
+        Err((_, Json(e))) => return Sse::new(stream::once(async move { Ok(Event::default().data(format!("Error: {}", e.error))) }).boxed()),
+    };
+
     let api_key = match env::var("OLLAMA_API_KEY") {
         Ok(key) => key,
         Err(_) => return Sse::new(stream::once(async { Ok(Event::default().data("Error: API Key not set")) }).boxed()),
@@ -359,6 +384,10 @@ pub async fn generate_exercises(
         Ok(id) => id,
         Err(_) => return Sse::new(stream::once(async { Ok(Event::default().data("Error: Invalid Set ID")) }).boxed()),
     };
+
+    if let Err((_, Json(e))) = ensure_set_access(&pool, set_id, user_uuid).await {
+        return Sse::new(stream::once(async move { Ok(Event::default().data(format!("Error: {}", e.error))) }).boxed());
+    }
 
     let set_info = match sqlx::query!("SELECT title, fields_schema FROM sets WHERE id = $1", set_id)
         .fetch_one(&pool)
@@ -452,10 +481,11 @@ pub async fn generate_exercises(
 
 pub async fn grade_answer(
     State(_pool): State<PgPool>,
-    State(_rate_limiter): State<AppRateLimiter>,
-    AuthenticatedUser(_user): AuthenticatedUser,
+    State(rate_limiter): State<AppRateLimiter>,
+    AuthenticatedUser(user): AuthenticatedUser,
     Json(payload): Json<AIGradeRequest>,
 ) -> Result<Json<AIGradeResponse>, (StatusCode, Json<AiGatewayError>)> {
+    check_rate_limit(&rate_limiter, &user.sub)?;
     let api_key = env::var("OLLAMA_API_KEY")
         .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: "API Key not set".to_string() })))?;
 
@@ -503,10 +533,14 @@ pub async fn grade_answer(
 }
 
 pub async fn analyze_content(
-    State(_rate_limiter): State<AppRateLimiter>,
-    AuthenticatedUser(_user): AuthenticatedUser,
+    State(rate_limiter): State<AppRateLimiter>,
+    AuthenticatedUser(user): AuthenticatedUser,
     Json(payload): Json<AIAnalyzeRequest>,
 ) -> Sse<BoxStream<'static, Result<Event, Infallible>>> {
+    if let Err((_, Json(e))) = check_rate_limit(&rate_limiter, &user.sub) {
+        return Sse::new(stream::once(async move { Ok(Event::default().data(format!("Error: {}", e.error))) }).boxed());
+    }
+
     let api_key = match env::var("OLLAMA_API_KEY") {
         Ok(key) => key,
         Err(_) => return Sse::new(stream::once(async { Ok(Event::default().data("Error: API Key not set")) }).boxed()),
@@ -654,4 +688,106 @@ pub async fn generate_a2_questions(
         .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Parse Error: {} - Content: {}", e, content) })))?;
 
     Ok(Json(questions))
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GenerateUnitRequest {
+    /// Тема юнита, например «Приветствие и знакомство»
+    pub topic: String,
+    /// Необязательный исходный текст (учебник, статья), на основе которого строить юнит
+    pub source_text: Option<String>,
+    /// Изучаемый язык (по умолчанию французский)
+    pub language: Option<String>,
+    /// Уровень (A1, A2, B1...)
+    pub level: Option<String>,
+    /// Сколько упражнений сгенерировать (по умолчанию 6, максимум 12)
+    pub count: Option<u32>,
+}
+
+/// POST /api/ai/course/generate-unit
+/// Генерирует контент юнита (vocabulary + exercises) в формате EditoUnit
+/// для редактора пользовательских курсов.
+pub async fn generate_course_unit(
+    State(rate_limiter): State<AppRateLimiter>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Json(payload): Json<GenerateUnitRequest>,
+) -> Result<Json<serde_json::Value>, (StatusCode, Json<AiGatewayError>)> {
+    check_rate_limit(&rate_limiter, &user.sub)?;
+
+    let api_key = env::var("OLLAMA_API_KEY")
+        .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: "API Key not set".to_string() })))?;
+
+    let language = payload.language.unwrap_or_else(|| "французский".to_string());
+    let level = payload.level.unwrap_or_else(|| "A1".to_string());
+    let count = payload.count.unwrap_or(6).min(12);
+    let topic = payload.topic.trim().to_string();
+    if topic.is_empty() {
+        return Err((StatusCode::BAD_REQUEST, Json(AiGatewayError { error: "Topic is required".to_string() })));
+    }
+
+    let mut source_block = String::new();
+    if let Some(src) = payload.source_text {
+        let truncated: String = src.chars().take(8000).collect();
+        source_block = format!("\nИспользуй этот исходный материал как основу:\n---\n{}\n---", truncated);
+    }
+
+    let system_prompt = format!(
+        "Ты — методист образовательной платформы Memora. Создай учебный юнит по теме «{topic}» \
+         (язык: {language}, уровень: {level}).{source_block}\n\
+         Выведи ТОЛЬКО валидный JSON-объект без markdown, строго такой структуры:\n\
+         {{\n\
+           \"vocabulary\": [{{\"fr\": \"слово/фраза на изучаемом языке\", \"ru\": \"перевод\", \"type\": \"word\"|\"phrase\"}}],\n\
+           \"exercises\": [\n\
+             {{\"id\": \"ex-1\", \"type\": \"theory\", \"title\": \"...\", \"content\": \"объяснение по-русски, можно с **markdown**\"}},\n\
+             {{\"id\": \"ex-2\", \"type\": \"grammar-quiz\", \"title\": \"...\", \"questions\": [{{\"question\": \"...\", \"options\": [\"a\",\"b\",\"c\",\"d\"], \"correctAnswer\": \"a\", \"explanation\": \"...\"}}]}},\n\
+             {{\"id\": \"ex-3\", \"type\": \"fill-blank\", \"title\": \"...\", \"text\": \"Je ___ Paul.\", \"blanks\": [{{\"correctAnswer\": \"suis\", \"options\": [\"suis\",\"es\",\"est\"], \"explanation\": \"...\"}}]}},\n\
+             {{\"id\": \"ex-4\", \"type\": \"sentence-builder\", \"title\": \"...\", \"sentences\": [{{\"words\": [\"Je\",\"suis\",\"Paul\"], \"ru\": \"Я — Поль\"}}]}},\n\
+             {{\"id\": \"ex-5\", \"type\": \"dialogue\", \"title\": \"...\", \"context\": \"...\", \"exchanges\": [{{\"speaker\": \"A\", \"side\": \"left\", \"text\": \"Bonjour !\"}}, {{\"speaker\": \"B\", \"side\": \"right\", \"isBlank\": true, \"options\": [\"Salut !\",\"Au revoir !\"], \"correctAnswer\": \"Salut !\", \"explanation\": \"...\"}}]}}\n\
+           ]\n\
+         }}\n\
+         Сгенерируй 10-20 словарных единиц и ровно {count} упражнений: первое — theory с понятным объяснением темы, \
+         остальные — разнообразные интерактивные (grammar-quiz, fill-blank, sentence-builder, dialogue). \
+         Все объяснения и заголовки — по-русски, учебный контент — на изучаемом языке. \
+         id упражнений уникальны (ex-1, ex-2, ...). Никакого текста вне JSON."
+    );
+
+    let client = Client::new();
+    let response = client.post(&get_ollama_url())
+        .header("Authorization", format!("Bearer {}", api_key))
+        .json(&OllamaRequest {
+            model: OLLAMA_MODEL.to_string(),
+            messages: vec![
+                OllamaMessage { role: "system".to_string(), content: system_prompt, images: None },
+                OllamaMessage { role: "user".to_string(), content: "Сгенерируй юнит сейчас.".to_string(), images: None },
+            ],
+            stream: false,
+            options: Some(OllamaOptions { num_predict: 8192 }),
+        })
+        .send()
+        .await
+        .map_err(|e| (StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: e.to_string() })))?;
+
+    let body = response.text().await.unwrap_or_default();
+
+    #[derive(Deserialize)]
+    struct OllamaResponse { message: OllamaDelta }
+    let parsed: OllamaResponse = serde_json::from_str(&body)
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Ollama JSON Error: {}", e) })))?;
+    let content = parsed.message.content.unwrap_or_default();
+
+    // Модель может обернуть ответ в ```json ... ``` — вырежем объект по первой { и последней }.
+    let trimmed = {
+        let start = content.find('{');
+        let end = content.rfind('}');
+        match (start, end) {
+            (Some(s), Some(e)) if e > s => &content[s..=e],
+            _ => content.as_str(),
+        }
+    };
+
+    let unit: serde_json::Value = serde_json::from_str(trimmed)
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Parse Error: {} - Content: {}", e, content) })))?;
+
+    Ok(Json(unit))
 }

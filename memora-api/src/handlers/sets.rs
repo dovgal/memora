@@ -461,12 +461,13 @@ pub async fn update_set(
         sqlx::query(
             "INSERT INTO flashcards (id, set_id, term, definition, image_url, order_index, fields_data) 
              VALUES ($1, $2, $3, $4, $5, $6, $7)
-             ON CONFLICT (id) DO UPDATE SET 
-                term = EXCLUDED.term, 
-                definition = EXCLUDED.definition, 
-                image_url = EXCLUDED.image_url, 
-                order_index = EXCLUDED.order_index, 
-                fields_data = EXCLUDED.fields_data"
+             ON CONFLICT (id) DO UPDATE SET
+                term = EXCLUDED.term,
+                definition = EXCLUDED.definition,
+                image_url = EXCLUDED.image_url,
+                order_index = EXCLUDED.order_index,
+                fields_data = EXCLUDED.fields_data
+             WHERE flashcards.set_id = EXCLUDED.set_id"
         )
         .bind(fc_id)
         .bind(set_id)

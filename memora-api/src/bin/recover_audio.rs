@@ -24,8 +24,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     .await?;
 
     let client = Client::new();
+    // SECURITY: ключ только из окружения, никаких fallback в коде.
     let auth_header = env::var("INWORLD_AUTH")
-        .unwrap_or_else(|_| "Basic SDFtYWl4VHFNVm9xclZhcUw0enB2TnhoYlhmRDJlU3k6VHRSa05maWZhS1lvUEtkWWp3Tk43RG5keldtVDlNc1k1Y2hJZlVUYUFLcXRCNzdmR0FRUzFPNFFZUFphdFJ3NQ==".to_string());
+        .expect("INWORLD_AUTH must be set");
 
     for (id, term, definition, data_str, schema_str) in rows {
         let fields_data: Value = serde_json::from_str(&data_str)?;

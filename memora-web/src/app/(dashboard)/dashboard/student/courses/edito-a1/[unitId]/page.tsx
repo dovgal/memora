@@ -36,6 +36,18 @@ export default function EditoUnitPage({ params }: { params: Promise<{ unitId: st
     recordExerciseProgress(unitId, exerciseId, idToken);
   }, [unitId, idToken]);
 
+  const completedCount = Object.keys(completed).length;
+  const totalInteractive = unit ? unit.exercises.filter(e => !['theory'].includes(e.type)).length : 0;
+  const pct = totalInteractive > 0 ? Math.round((completedCount / totalInteractive) * 100) : 100;
+
+  // Когда юнит пройден полностью — добавляем его словарь и фразы в личный набор «Edito A1 — Словарь»
+  // ВАЖНО: все хуки должны вызываться до любого раннего return (правило hooks).
+  useEffect(() => {
+    if (pct === 100 && totalInteractive > 0 && idToken) {
+      syncVocabSet(idToken).catch(() => {});
+    }
+  }, [pct, totalInteractive, idToken]);
+
   if (!unit) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-qz-card text-foreground">
@@ -46,17 +58,6 @@ export default function EditoUnitPage({ params }: { params: Promise<{ unitId: st
       </div>
     );
   }
-
-  const completedCount = Object.keys(completed).length;
-  const totalInteractive = unit.exercises.filter(e => !['theory'].includes(e.type)).length;
-  const pct = totalInteractive > 0 ? Math.round((completedCount / totalInteractive) * 100) : 100;
-
-  // Когда юнит пройден полностью — добавляем его словарь и фразы в личный набор «Edito A1 — Словарь»
-  useEffect(() => {
-    if (pct === 100 && totalInteractive > 0 && idToken) {
-      syncVocabSet(idToken).catch(() => {});
-    }
-  }, [pct, totalInteractive, idToken]);
 
   return (
     <div className="min-h-screen bg-qz-card text-qz-text">

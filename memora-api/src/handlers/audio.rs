@@ -13,6 +13,7 @@ use base64::{Engine as _, engine::general_purpose};
 
 pub async fn get_flashcard_audio(
     State(pool): State<PgPool>,
+    optional_user: crate::middleware::auth::OptionalAuthenticatedUser,
     Path((flashcard_id_str, field_id)): Path<(String, String)>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
     
@@ -39,7 +40,8 @@ pub async fn get_flashcard_audio(
         },
         None => {
             // AGGRESSIVE RECOVERY: If audio is missing but ends in _audio, it's TTS. Generate it!
-            if field_id.ends_with("_audio") {
+            // On-the-fly generation costs money (Inworld API), so it requires authentication.
+            if field_id.ends_with("_audio") && optional_user.0.is_some() {
                 // 1. Fetch the flashcard text and set schema to know WHAT to speak and with WHICH VOICE
                 let combined_record = sqlx::query(
                     r#"
@@ -110,13 +112,9 @@ pub async fn get_flashcard_audio(
                         flashcard_uuid, field_id, voice_id, text_to_speak);
                     
                     let client = Client::new();
-                    let auth_raw = std::env::var("INWORLD_AUTH").ok();
-                    
-                    if auth_raw.is_none() {
-                        eprintln!("CRITICAL: INWORLD_AUTH is not set! Using fallback.");
-                    }
-
-                    let auth_header = auth_raw.unwrap_or_else(|| "Basic SDFtYWl4VHFNVm9xclZhcUw0enB2TnhoYlhmRDJlU3k6VHRSa05maWZhS1lvUEtkWWp3Tk43RG5keldtVDlNc1k1Y2hJZlVUYUFLcXRCNzdmR0FRUzFPNFFZUFphdFJ3NQ==".to_string());
+                    // SECURITY: never hardcode credentials. INWORLD_AUTH must come from the environment.
+                    let auth_header = std::env::var("INWORLD_AUTH")
+                        .map_err(|_| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, "INWORLD_AUTH not configured"))?;
                     
                     let res = client.post("https://api.inworld.ai/tts/v1/voice")
                         .header("Authorization", auth_header)
@@ -180,8 +178,10 @@ pub struct SynthesizeParams {
 /// GET /api/tts?text=...&voice=Alain
 /// Озвучивание ПРОИЗВОЛЬНОГО текста ТОЛЬКО через Inworld.ai (с кэшем в БД).
 /// Используется тестами/упражнениями курса, где нет карточки в БД.
+/// Требует авторизации: Inworld — платный API, нельзя оставлять открытым.
 pub async fn synthesize_tts(
     State(pool): State<PgPool>,
+    _user: crate::middleware::auth::AuthenticatedUser,
     Query(params): Query<SynthesizeParams>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
     let text = params.text.trim().to_string();

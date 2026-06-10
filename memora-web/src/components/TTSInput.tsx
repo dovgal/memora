@@ -1,7 +1,17 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { getSession } from "next-auth/react";
 import { Volume2, Play, Square, Trash2, Sparkles, Loader2, Type } from "lucide-react";
+
+// Соответствие языка голосу Inworld (как на бэкенде).
+const VOICE_BY_LANG: Record<string, string> = {
+  ru: "Tatiana",
+  fr: "Alain",
+  de: "Josef",
+  es: "Carmen",
+  en: "Clive",
+};
 
 interface Props {
     value: { text?: string; audioData?: string | null } | null;
@@ -22,16 +32,25 @@ export default function TTSInput({ value, onChange, lang = "en" }: Props) {
 
         setIsGenerating(true);
         try {
-            const res = await fetch("/api/tts", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ text: currentText, lang }),
+            // Бэкенд /api/tts принимает GET с query-параметрами и отдаёт audio/mpeg.
+            const session = await getSession();
+            const token = (session as { id_token?: string } | null)?.id_token;
+            const voice = VOICE_BY_LANG[lang] ?? VOICE_BY_LANG.en;
+            const url = `/api/tts?text=${encodeURIComponent(currentText)}&voice=${encodeURIComponent(voice)}`;
+            const res = await fetch(url, {
+                headers: token ? { Authorization: `Bearer ${token}` } : {},
             });
 
             if (!res.ok) throw new Error("Failed to generate audio");
 
-            const data = await res.json();
-            onChange({ text: currentText, audioData: data.audioData });
+            const blob = await res.blob();
+            const audioData = await new Promise<string>((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result as string);
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            });
+            onChange({ text: currentText, audioData });
         } catch (err) {
             console.error(err);
             alert("Ошибка генерации озвучки. Попробуйте еще раз.");

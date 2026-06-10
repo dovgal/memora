@@ -1,7 +1,28 @@
 // Единая озвучка курсов — ТОЛЬКО через Inworld.ai (бэкенд /api/tts с кэшем).
 // Браузерный SpeechSynthesis намеренно НЕ используется (низкое качество).
+// /api/tts защищён авторизацией — передаём JWT из next-auth сессии.
+
+import { getSession } from "next-auth/react";
 
 let currentAudio: HTMLAudioElement | null = null;
+
+// Кэшируем токен на минуту, чтобы не дёргать getSession() на каждый клик.
+let cachedToken: string | null = null;
+let cachedAt = 0;
+
+async function getAuthHeaders(): Promise<Record<string, string>> {
+  const now = Date.now();
+  if (!cachedToken || now - cachedAt > 60_000) {
+    try {
+      const session = await getSession();
+      cachedToken = (session as { id_token?: string } | null)?.id_token ?? null;
+      cachedAt = now;
+    } catch {
+      cachedToken = null;
+    }
+  }
+  return cachedToken ? { Authorization: `Bearer ${cachedToken}` } : {};
+}
 
 /**
  * Озвучить произвольный французский текст через Inworld.
@@ -15,7 +36,8 @@ export async function speakInworld(text: string, voice = "Alain"): Promise<void>
     // остановим предыдущее воспроизведение
     if (currentAudio) { currentAudio.pause(); currentAudio = null; }
     const url = `/api/tts?text=${encodeURIComponent(clean)}&voice=${encodeURIComponent(voice)}`;
-    const res = await fetch(url, { cache: "force-cache" });
+    const headers = await getAuthHeaders();
+    const res = await fetch(url, { cache: "force-cache", headers });
     if (!res.ok) {
       console.warn("Inworld TTS unavailable:", res.status);
       return; // тихо выходим — браузерный синтез не используем
@@ -34,7 +56,8 @@ export async function speakInworld(text: string, voice = "Alain"): Promise<void>
 export async function speakCardInworld(cardUuid: string, text: string, voice = "Alain"): Promise<void> {
   try {
     if (currentAudio) { currentAudio.pause(); currentAudio = null; }
-    const res = await fetch(`/api/audio/${cardUuid}/term_audio`, { cache: "force-cache" });
+    const headers = await getAuthHeaders();
+    const res = await fetch(`/api/audio/${cardUuid}/term_audio`, { cache: "force-cache", headers });
     if (res.ok) {
       const blob = await res.blob();
       if (blob.size > 0) { const a = new Audio(URL.createObjectURL(blob)); currentAudio = a; await a.play(); return; }

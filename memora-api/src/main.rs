@@ -126,8 +126,28 @@ async fn main() {
         .route("/api/a2/assignments", post(handlers::classes::create_assignment).get(handlers::classes::my_assignments))
         // Generic course-trainer progress (Edito A1 and others)
         .route("/api/courses/{course_id}/progress", get(handlers::course_progress::get_course_progress).post(handlers::course_progress::record_course_progress))
-        // Diagnostics (Temporary)
-        .route("/api/diag/db", get(|State(pool): State<sqlx::PgPool>| async move {
+        // Пользовательские курсы: создание и редактирование (любой пользователь)
+        .route("/api/courses", get(handlers::courses::list_courses).post(handlers::courses::create_course))
+        .route(
+            "/api/courses/{course_id}",
+            get(handlers::courses::get_course)
+                .put(handlers::courses::update_course)
+                .delete(handlers::courses::delete_course)
+        )
+        .route("/api/courses/{course_id}/units", post(handlers::courses::create_unit))
+        .route(
+            "/api/courses/{course_id}/units/{unit_id}",
+            get(handlers::courses::get_unit)
+                .put(handlers::courses::update_unit)
+                .delete(handlers::courses::delete_unit)
+        )
+        // Коуч-режим: интервальное повторение упражнений курса (FSRS)
+        .route("/api/courses/{course_id}/coach/reviews", get(handlers::coach::get_coach_reviews))
+        .route("/api/courses/{course_id}/coach/review", post(handlers::coach::record_coach_review))
+        // ИИ-генерация юнита для редактора курсов
+        .route("/api/ai/course/generate-unit", post(handlers::ai::generate_course_unit))
+        // Diagnostics (Temporary). Только для авторизованных пользователей.
+        .route("/api/diag/db", get(|_user: middleware::auth::AuthenticatedUser, State(pool): State<sqlx::PgPool>| async move {
             let audio_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM flashcard_audio").fetch_one(&pool).await.unwrap_or((-1,));
             let card_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM flashcards").fetch_one(&pool).await.unwrap_or((-1,));
             let legacy_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM flashcards WHERE fields_data::text LIKE '%audio/mpeg;base64%'").fetch_one(&pool).await.unwrap_or((-1,));
