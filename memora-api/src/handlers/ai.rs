@@ -19,7 +19,12 @@ use crate::domain::dtos::{
 };
 use sqlx::PgPool;
 
-const OLLAMA_MODEL: &str = "qwen3.5";
+/// Модель Ollama настраивается переменной OLLAMA_MODEL.
+/// По умолчанию gpt-oss:120b — доступна на бесплатном тарифе Ollama Cloud
+/// (qwen3.5 и deepseek требуют платной подписки).
+fn get_ollama_model() -> String {
+    env::var("OLLAMA_MODEL").unwrap_or_else(|_| "gpt-oss:120b".to_string())
+}
 
 fn get_ollama_url() -> String {
     env::var("OLLAMA_BASE_URL").unwrap_or_else(|_| "http://localhost:11434/api/chat".to_string())
@@ -161,7 +166,7 @@ pub async fn generate_flashcards_stream(
 
     let client = Client::new();
     let ollama_body = OllamaRequest {
-        model: OLLAMA_MODEL.to_string(),
+        model: get_ollama_model(),
         messages,
         stream: true,
         options: Some(OllamaOptions { num_predict: 1500 }),
@@ -294,7 +299,7 @@ pub async fn qchat_stream(
 
     let client = Client::new();
     let ollama_body = OllamaRequest {
-        model: OLLAMA_MODEL.to_string(),
+        model: get_ollama_model(),
         messages: ollama_messages,
         stream: true,
         options: Some(OllamaOptions { num_predict: 1000 }),
@@ -444,7 +449,7 @@ pub async fn generate_exercises(
     let response = match client.post(&get_ollama_url())
         .header("Authorization", format!("Bearer {}", api_key))
         .json(&OllamaRequest {
-            model: OLLAMA_MODEL.to_string(),
+            model: get_ollama_model(),
             messages: vec![OllamaMessage {
                 role: "system".to_string(),
                 content: system_prompt,
@@ -503,7 +508,7 @@ pub async fn grade_answer(
     let response = client.post(&get_ollama_url())
         .header("Authorization", format!("Bearer {}", api_key))
         .json(&OllamaRequest {
-            model: OLLAMA_MODEL.to_string(),
+            model: get_ollama_model(),
             messages: vec![
                 OllamaMessage { role: "system".to_string(), content: system_prompt.to_string(), images: None },
                 OllamaMessage { role: "user".to_string(), content: user_prompt, images: None }
@@ -557,7 +562,7 @@ pub async fn analyze_content(
     let response = match client.post(&get_ollama_url())
         .header("Authorization", format!("Bearer {}", api_key))
         .json(&OllamaRequest {
-            model: OLLAMA_MODEL.to_string(),
+            model: get_ollama_model(),
             messages: vec![
                 OllamaMessage { role: "system".to_string(), content: system_prompt.replace("{}", &payload.user_objective), images: None },
                 OllamaMessage { role: "user".to_string(), content: payload.content, images: None }
@@ -654,7 +659,7 @@ pub async fn generate_a2_questions(
     let response = client.post(&get_ollama_url())
         .header("Authorization", format!("Bearer {}", api_key))
         .json(&OllamaRequest {
-            model: OLLAMA_MODEL.to_string(),
+            model: get_ollama_model(),
             messages: vec![
                 OllamaMessage { role: "system".to_string(), content: system_prompt, images: None },
                 OllamaMessage { role: "user".to_string(), content: "Сгенерируй задания сейчас.".to_string(), images: None },
@@ -702,7 +707,7 @@ async fn ollama_chat(
     let response = client.post(&get_ollama_url())
         .header("Authorization", format!("Bearer {}", api_key))
         .json(&OllamaRequest {
-            model: OLLAMA_MODEL.to_string(),
+            model: get_ollama_model(),
             messages,
             stream: false,
             options: Some(OllamaOptions { num_predict }),
@@ -712,6 +717,13 @@ async fn ollama_chat(
         .map_err(|e| (StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: e.to_string() })))?;
 
     let body = response.text().await.unwrap_or_default();
+
+    // Ollama может вернуть {"error": "..."} (например, модель требует подписки) — показываем как есть.
+    #[derive(Deserialize)]
+    struct OllamaErr { error: String }
+    if let Ok(err) = serde_json::from_str::<OllamaErr>(&body) {
+        return Err((StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: format!("Ollama: {}", err.error) })));
+    }
 
     #[derive(Deserialize)]
     struct OllamaResp { message: OllamaDelta }
@@ -1022,7 +1034,7 @@ pub async fn generate_course_unit(
     let response = client.post(&get_ollama_url())
         .header("Authorization", format!("Bearer {}", api_key))
         .json(&OllamaRequest {
-            model: OLLAMA_MODEL.to_string(),
+            model: get_ollama_model(),
             messages: vec![
                 OllamaMessage { role: "system".to_string(), content: system_prompt, images: None },
                 OllamaMessage { role: "user".to_string(), content: "Сгенерируй юнит сейчас.".to_string(), images: None },
