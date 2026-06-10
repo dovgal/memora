@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { BookOpen, Layers, Hash, Sparkles } from 'lucide-react';
+import { BookOpen, Layers, Hash, Sparkles, Brain } from 'lucide-react';
 import { EDITO_A1_UNITS, UNIT_ORDER, SPECIAL_MODULES } from '@/lib/courses/edito-a1';
 import { VocabSetCard } from '@/components/edito/VocabSetCard';
 
@@ -19,10 +19,16 @@ export default function EditoA1CoursePage() {
             <span className="text-xs font-bold uppercase tracking-wider text-[#ffcd1f]">Уровень A1 · Édito A1</span>
           </div>
           <h1 className="text-3xl font-bold text-foreground mb-2">Тренажер Édito A1</h1>
-          <p className="text-qz-text-muted max-w-xl">
+          <p className="text-qz-text-muted max-w-xl mb-4">
             10 юнитов с теорией и упражнениями по материалам учебника Édito A1. Грамматика, диалоги,
             роды существительных, числа и лексика — с озвучкой на французском.
           </p>
+          <Link
+            href="/dashboard/student/courses/edito-a1/coach"
+            className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
+          >
+            <Brain className="w-4 h-4" /> Коуч-режим: тренировка и повторение
+          </Link>
         </div>
 
         {/* Special modules */}

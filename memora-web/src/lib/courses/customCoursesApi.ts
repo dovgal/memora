@@ -1,0 +1,207 @@
+// Клиент API пользовательских курсов (создание/редактирование/прохождение)
+// и коуч-режима (интервальное повторение FSRS).
+
+import type { EditoExercise, VocabularyItem } from '@/lib/courses/edito-a1';
+
+function headers(idToken?: string): Record<string, string> {
+  const h: Record<string, string> = { 'Content-Type': 'application/json' };
+  if (idToken) h['Authorization'] = `Bearer ${idToken}`;
+  return h;
+}
+
+async function ok<T>(r: Response): Promise<T> {
+  if (!r.ok) {
+    let message = `HTTP ${r.status}`;
+    try {
+      const body = await r.json();
+      if (body?.error) message = body.error;
+    } catch { /* нет тела */ }
+    throw new Error(message);
+  }
+  return r.status === 204 ? (undefined as T) : r.json();
+}
+
+// ---------- Типы ----------
+
+export interface CourseSummary {
+  id: string;
+  title: string;
+  description: string;
+  language: string;
+  level: string;
+  isPublished: boolean;
+  isOwner: boolean;
+  unitCount: number;
+  updatedAt: string;
+}
+
+export interface UnitSummary {
+  id: string;
+  position: number;
+  title: string;
+  description: string;
+  exerciseCount: number;
+}
+
+export interface CourseDetail {
+  id: string;
+  title: string;
+  description: string;
+  language: string;
+  level: string;
+  isPublished: boolean;
+  isOwner: boolean;
+  units: UnitSummary[];
+}
+
+export interface UnitDetail {
+  id: string;
+  courseId: string;
+  position: number;
+  title: string;
+  description: string;
+  vocabulary: VocabularyItem[];
+  exercises: EditoExercise[];
+}
+
+export interface UpsertCoursePayload {
+  title: string;
+  description?: string;
+  language?: string;
+  level?: string;
+  isPublished?: boolean;
+}
+
+export interface UpsertUnitPayload {
+  title: string;
+  description?: string;
+  position?: number;
+  vocabulary: VocabularyItem[];
+  exercises: EditoExercise[];
+}
+
+// ---------- Курсы ----------
+
+export async function listCourses(idToken?: string): Promise<CourseSummary[]> {
+  return ok(await fetch('/api/courses', { headers: headers(idToken) }));
+}
+
+export async function createCourse(payload: UpsertCoursePayload, idToken?: string): Promise<{ id: string }> {
+  return ok(await fetch('/api/courses', {
+    method: 'POST', headers: headers(idToken), body: JSON.stringify(payload),
+  }));
+}
+
+export async function getCourse(courseId: string, idToken?: string): Promise<CourseDetail> {
+  return ok(await fetch(`/api/courses/${courseId}`, { headers: headers(idToken) }));
+}
+
+export async function updateCourse(courseId: string, payload: UpsertCoursePayload, idToken?: string): Promise<void> {
+  return ok(await fetch(`/api/courses/${courseId}`, {
+    method: 'PUT', headers: headers(idToken), body: JSON.stringify(payload),
+  }));
+}
+
+export async function deleteCourse(courseId: string, idToken?: string): Promise<void> {
+  return ok(await fetch(`/api/courses/${courseId}`, { method: 'DELETE', headers: headers(idToken) }));
+}
+
+// ---------- Юниты ----------
+
+export async function createUnit(courseId: string, payload: UpsertUnitPayload, idToken?: string): Promise<{ id: string }> {
+  return ok(await fetch(`/api/courses/${courseId}/units`, {
+    method: 'POST', headers: headers(idToken), body: JSON.stringify(payload),
+  }));
+}
+
+export async function getUnit(courseId: string, unitId: string, idToken?: string): Promise<UnitDetail> {
+  return ok(await fetch(`/api/courses/${courseId}/units/${unitId}`, { headers: headers(idToken) }));
+}
+
+export async function updateUnit(courseId: string, unitId: string, payload: UpsertUnitPayload, idToken?: string): Promise<void> {
+  return ok(await fetch(`/api/courses/${courseId}/units/${unitId}`, {
+    method: 'PUT', headers: headers(idToken), body: JSON.stringify(payload),
+  }));
+}
+
+export async function deleteUnit(courseId: string, unitId: string, idToken?: string): Promise<void> {
+  return ok(await fetch(`/api/courses/${courseId}/units/${unitId}`, { method: 'DELETE', headers: headers(idToken) }));
+}
+
+// ---------- Прогресс (универсальный, как у Édito A1) ----------
+
+export interface ProgressEntry {
+  unitId: string;
+  exerciseId: string;
+  completedAt: string;
+}
+
+export async function getCourseProgress(courseId: string, idToken?: string): Promise<ProgressEntry[]> {
+  const data = await ok<{ exercises: Array<{ unit_id: string; exercise_id: string; completed_at: string }> }>(
+    await fetch(`/api/courses/${courseId}/progress`, { headers: headers(idToken) })
+  );
+  return data.exercises.map(e => ({ unitId: e.unit_id, exerciseId: e.exercise_id, completedAt: e.completed_at }));
+}
+
+export async function recordExerciseProgress(courseId: string, unitId: string, exerciseId: string, idToken?: string): Promise<void> {
+  try {
+    await fetch(`/api/courses/${courseId}/progress`, {
+      method: 'POST',
+      headers: headers(idToken),
+      body: JSON.stringify({ unit_id: unitId, exercise_id: exerciseId }),
+    });
+  } catch { /* офлайн — игнор */ }
+}
+
+// ---------- Коуч-режим (FSRS) ----------
+
+export interface CoachReviewEntry {
+  unitId: string;
+  exerciseId: string;
+  state: number; // 0=New, 1=Learning, 2=Review, 3=Relearning
+  due: string;
+  reps: number;
+  lapses: number;
+}
+
+export async function getCoachReviews(courseId: string, idToken?: string): Promise<CoachReviewEntry[]> {
+  const data = await ok<{ reviews: CoachReviewEntry[] }>(
+    await fetch(`/api/courses/${courseId}/coach/reviews`, { headers: headers(idToken) })
+  );
+  return data.reviews;
+}
+
+export interface CoachReviewResult {
+  state: number;
+  due: string;
+  scheduledDays: number;
+}
+
+/** rating: 1=Снова, 2=Трудно, 3=Хорошо, 4=Легко */
+export async function recordCoachReview(
+  courseId: string, unitId: string, exerciseId: string, rating: 1 | 2 | 3 | 4, idToken?: string,
+): Promise<CoachReviewResult> {
+  return ok(await fetch(`/api/courses/${courseId}/coach/review`, {
+    method: 'POST',
+    headers: headers(idToken),
+    body: JSON.stringify({ unitId, exerciseId, rating }),
+  }));
+}
+
+// ---------- ИИ-генерация юнита ----------
+
+export interface GeneratedUnitContent {
+  vocabulary?: VocabularyItem[];
+  exercises?: EditoExercise[];
+}
+
+export async function generateUnitWithAI(
+  params: { topic: string; sourceText?: string; language?: string; level?: string; count?: number },
+  idToken?: string,
+): Promise<GeneratedUnitContent> {
+  return ok(await fetch('/api/ai/course/generate-unit', {
+    method: 'POST',
+    headers: headers(idToken),
+    body: JSON.stringify(params),
+  }));
+}

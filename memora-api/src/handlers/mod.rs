@@ -10,4 +10,6 @@ pub mod errors;
 pub mod audio;
 pub mod classes;
 pub mod course_progress;
+pub mod courses;
+pub mod coach;
 

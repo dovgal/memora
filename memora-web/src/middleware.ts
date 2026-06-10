@@ -52,7 +52,7 @@ export default withAuth(
         callbacks: {
             authorized: ({ req, token }) => {
                 const pathname = req.nextUrl.pathname;
-                if (pathname.startsWith('/dashboard') || pathname.startsWith('/onboarding') || pathname.startsWith('/role-selection')) {
+                if (pathname.startsWith('/dashboard') || pathname.startsWith('/courses') || pathname.startsWith('/onboarding') || pathname.startsWith('/role-selection')) {
                     return !!token;
                 }
                 return true;
@@ -62,5 +62,5 @@ export default withAuth(
 )
 
 export const config = {
-    matcher: ['/dashboard/:path*', '/onboarding', '/role-selection', '/login'],
+    matcher: ['/dashboard/:path*', '/courses', '/courses/:path*', '/onboarding', '/role-selection', '/login'],
 }

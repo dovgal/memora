@@ -39,7 +39,12 @@ export default async function StudentDashboard() {
 
                 {/* Featured Courses: French A1 / A2 */}
                 <section>
-                    <h2 className="text-xl font-bold mb-6 text-qz-text tracking-wide">Курсы французского</h2>
+                    <div className="flex items-center justify-between mb-6">
+                        <h2 className="text-xl font-bold text-qz-text tracking-wide">Курсы французского</h2>
+                        <Link href="/courses" className="text-sm font-semibold text-[#4255ff] hover:underline">
+                            Все курсы и конструктор →
+                        </Link>
+                    </div>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {/* Édito A1 — new full trainer */}
                         <Link href="/dashboard/student/courses/edito-a1" className="block group">

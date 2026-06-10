@@ -1,0 +1,519 @@
+// Пользовательские курсы: создание, редактирование и публикация курсов
+// по образцу встроенных (Édito A1). Юниты хранят vocabulary/exercises как JSONB
+// в формате EditoUnit — фронтенд рендерит их существующим ExerciseRenderer.
+
+use axum::{
+    extract::{Path, State},
+    http::StatusCode,
+    response::IntoResponse,
+    Json,
+};
+use serde::{Deserialize, Serialize};
+use sqlx::{PgPool, Row};
+use uuid::Uuid;
+
+use crate::middleware::auth::AuthenticatedUser;
+use super::errors::ApiError;
+
+type ApiResult<T> = Result<T, (StatusCode, Json<ApiError>)>;
+
+fn uid(sub: &str) -> ApiResult<Uuid> {
+    Uuid::parse_str(sub).map_err(|_| ApiError::response(StatusCode::UNAUTHORIZED, "Invalid user token"))
+}
+
+fn parse_id(s: &str) -> ApiResult<Uuid> {
+    Uuid::parse_str(s).map_err(|_| ApiError::response(StatusCode::BAD_REQUEST, "Invalid ID format"))
+}
+
+fn db_err(e: sqlx::Error) -> (StatusCode, Json<ApiError>) {
+    ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {}", e))
+}
+
+const ALLOWED_EXERCISE_TYPES: &[&str] = &[
+    "theory", "grammar-quiz", "sentence-builder", "gender-quiz",
+    "dialogue", "fill-blank", "number-quiz", "listening", "video",
+];
+
+/// Лёгкая валидация формата упражнений: массив объектов с id/type/title,
+/// type — из списка поддерживаемых рендерером.
+fn validate_exercises(exercises: &serde_json::Value) -> ApiResult<()> {
+    let arr = exercises.as_array()
+        .ok_or_else(|| ApiError::response(StatusCode::BAD_REQUEST, "exercises must be a JSON array"))?;
+    if arr.len() > 200 {
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "Too many exercises in one unit (max 200)"));
+    }
+    for (i, ex) in arr.iter().enumerate() {
+        let obj = ex.as_object()
+            .ok_or_else(|| ApiError::response(StatusCode::BAD_REQUEST, format!("exercises[{}] must be an object", i)))?;
+        let id = obj.get("id").and_then(|v| v.as_str()).unwrap_or("");
+        let ex_type = obj.get("type").and_then(|v| v.as_str()).unwrap_or("");
+        if id.is_empty() {
+            return Err(ApiError::response(StatusCode::BAD_REQUEST, format!("exercises[{}] is missing 'id'", i)));
+        }
+        if !ALLOWED_EXERCISE_TYPES.contains(&ex_type) {
+            return Err(ApiError::response(StatusCode::BAD_REQUEST, format!("exercises[{}] has unsupported type '{}'", i, ex_type)));
+        }
+    }
+    Ok(())
+}
+
+fn validate_vocabulary(vocabulary: &serde_json::Value) -> ApiResult<()> {
+    let arr = vocabulary.as_array()
+        .ok_or_else(|| ApiError::response(StatusCode::BAD_REQUEST, "vocabulary must be a JSON array"))?;
+    if arr.len() > 1000 {
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "Too many vocabulary items (max 1000)"));
+    }
+    Ok(())
+}
+
+/// Проверяет, что курс существует и принадлежит пользователю.
+async fn ensure_owner(pool: &PgPool, course_id: Uuid, user_id: Uuid) -> ApiResult<()> {
+    let row = sqlx::query("SELECT owner_id FROM custom_courses WHERE id = $1")
+        .bind(course_id)
+        .fetch_optional(pool)
+        .await
+        .map_err(db_err)?;
+    match row {
+        Some(r) => {
+            let owner: Uuid = r.get("owner_id");
+            if owner == user_id { Ok(()) } else {
+                Err(ApiError::response(StatusCode::FORBIDDEN, "You are not the owner of this course"))
+            }
+        }
+        None => Err(ApiError::response(StatusCode::NOT_FOUND, "Course not found")),
+    }
+}
+
+// ---------- DTOs ----------
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UpsertCourseRequest {
+    pub title: String,
+    #[serde(default)]
+    pub description: String,
+    #[serde(default = "default_language")]
+    pub language: String,
+    #[serde(default)]
+    pub level: String,
+    #[serde(default)]
+    pub is_published: bool,
+}
+
+fn default_language() -> String { "fr".to_string() }
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CourseSummary {
+    pub id: String,
+    pub title: String,
+    pub description: String,
+    pub language: String,
+    pub level: String,
+    pub is_published: bool,
+    pub is_owner: bool,
+    pub unit_count: i64,
+    pub updated_at: String,
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UnitSummary {
+    pub id: String,
+    pub position: i32,
+    pub title: String,
+    pub description: String,
+    pub exercise_count: i64,
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CourseDetail {
+    pub id: String,
+    pub title: String,
+    pub description: String,
+    pub language: String,
+    pub level: String,
+    pub is_published: bool,
+    pub is_owner: bool,
+    pub units: Vec<UnitSummary>,
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UnitDetail {
+    pub id: String,
+    pub course_id: String,
+    pub position: i32,
+    pub title: String,
+    pub description: String,
+    pub vocabulary: serde_json::Value,
+    pub exercises: serde_json::Value,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UpsertUnitRequest {
+    pub title: String,
+    #[serde(default)]
+    pub description: String,
+    #[serde(default)]
+    pub position: Option<i32>,
+    #[serde(default = "empty_array")]
+    pub vocabulary: serde_json::Value,
+    #[serde(default = "empty_array")]
+    pub exercises: serde_json::Value,
+}
+
+fn empty_array() -> serde_json::Value { serde_json::Value::Array(vec![]) }
+
+// ---------- Course CRUD ----------
+
+/// GET /api/courses — мои курсы + опубликованные курсы других пользователей.
+pub async fn list_courses(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+) -> ApiResult<impl IntoResponse> {
+    let user_id = uid(&user.sub)?;
+    let rows = sqlx::query(
+        r#"
+        SELECT c.id, c.title, c.description, c.language, c.level, c.is_published,
+               c.owner_id, c.updated_at, COUNT(u.id) AS unit_count
+        FROM custom_courses c
+        LEFT JOIN custom_course_units u ON u.course_id = c.id
+        WHERE c.owner_id = $1 OR c.is_published
+        GROUP BY c.id
+        ORDER BY (c.owner_id = $1) DESC, c.updated_at DESC
+        "#
+    )
+    .bind(user_id)
+    .fetch_all(&pool)
+    .await
+    .map_err(db_err)?;
+
+    let courses: Vec<CourseSummary> = rows.into_iter().map(|r| {
+        let owner: Uuid = r.get("owner_id");
+        let updated_at: chrono::DateTime<chrono::Utc> = r.get("updated_at");
+        CourseSummary {
+            id: r.get::<Uuid, _>("id").to_string(),
+            title: r.get("title"),
+            description: r.get("description"),
+            language: r.get("language"),
+            level: r.get("level"),
+            is_published: r.get("is_published"),
+            is_owner: owner == user_id,
+            unit_count: r.get("unit_count"),
+            updated_at: updated_at.to_rfc3339(),
+        }
+    }).collect();
+
+    Ok((StatusCode::OK, Json(courses)))
+}
+
+/// POST /api/courses — создать курс (любой авторизованный пользователь).
+pub async fn create_course(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Json(payload): Json<UpsertCourseRequest>,
+) -> ApiResult<impl IntoResponse> {
+    let user_id = uid(&user.sub)?;
+    let title = payload.title.trim();
+    if title.is_empty() {
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "Title is required"));
+    }
+
+    let row = sqlx::query(
+        "INSERT INTO custom_courses (owner_id, title, description, language, level, is_published)
+         VALUES ($1, $2, $3, $4, $5, $6) RETURNING id"
+    )
+    .bind(user_id)
+    .bind(title)
+    .bind(&payload.description)
+    .bind(&payload.language)
+    .bind(&payload.level)
+    .bind(payload.is_published)
+    .fetch_one(&pool)
+    .await
+    .map_err(db_err)?;
+
+    let id: Uuid = row.get("id");
+    Ok((StatusCode::CREATED, Json(serde_json::json!({ "id": id.to_string() }))))
+}
+
+/// GET /api/courses/{id} — курс с юнитами (владелец или опубликованный).
+pub async fn get_course(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Path(id): Path<String>,
+) -> ApiResult<impl IntoResponse> {
+    let user_id = uid(&user.sub)?;
+    let course_id = parse_id(&id)?;
+
+    let row = sqlx::query(
+        "SELECT id, owner_id, title, description, language, level, is_published
+         FROM custom_courses WHERE id = $1"
+    )
+    .bind(course_id)
+    .fetch_optional(&pool)
+    .await
+    .map_err(db_err)?
+    .ok_or_else(|| ApiError::response(StatusCode::NOT_FOUND, "Course not found"))?;
+
+    let owner: Uuid = row.get("owner_id");
+    let is_published: bool = row.get("is_published");
+    let is_owner = owner == user_id;
+    if !is_owner && !is_published {
+        return Err(ApiError::response(StatusCode::FORBIDDEN, "This course is not published"));
+    }
+
+    let unit_rows = sqlx::query(
+        r#"
+        SELECT id, position, title, description, jsonb_array_length(exercises) AS exercise_count
+        FROM custom_course_units WHERE course_id = $1 ORDER BY position ASC, created_at ASC
+        "#
+    )
+    .bind(course_id)
+    .fetch_all(&pool)
+    .await
+    .map_err(db_err)?;
+
+    let units = unit_rows.into_iter().map(|r| UnitSummary {
+        id: r.get::<Uuid, _>("id").to_string(),
+        position: r.get("position"),
+        title: r.get("title"),
+        description: r.get("description"),
+        exercise_count: r.get::<i32, _>("exercise_count") as i64,
+    }).collect();
+
+    let detail = CourseDetail {
+        id: course_id.to_string(),
+        title: row.get("title"),
+        description: row.get("description"),
+        language: row.get("language"),
+        level: row.get("level"),
+        is_published,
+        is_owner,
+        units,
+    };
+
+    Ok((StatusCode::OK, Json(detail)))
+}
+
+/// PUT /api/courses/{id} — обновить метаданные курса (только владелец).
+pub async fn update_course(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Path(id): Path<String>,
+    Json(payload): Json<UpsertCourseRequest>,
+) -> ApiResult<impl IntoResponse> {
+    let user_id = uid(&user.sub)?;
+    let course_id = parse_id(&id)?;
+    ensure_owner(&pool, course_id, user_id).await?;
+
+    let title = payload.title.trim();
+    if title.is_empty() {
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "Title is required"));
+    }
+
+    sqlx::query(
+        "UPDATE custom_courses SET title = $1, description = $2, language = $3, level = $4,
+         is_published = $5, updated_at = NOW() WHERE id = $6"
+    )
+    .bind(title)
+    .bind(&payload.description)
+    .bind(&payload.language)
+    .bind(&payload.level)
+    .bind(payload.is_published)
+    .bind(course_id)
+    .execute(&pool)
+    .await
+    .map_err(db_err)?;
+
+    Ok(StatusCode::NO_CONTENT)
+}
+
+/// DELETE /api/courses/{id} — удалить курс (только владелец).
+pub async fn delete_course(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Path(id): Path<String>,
+) -> ApiResult<impl IntoResponse> {
+    let user_id = uid(&user.sub)?;
+    let course_id = parse_id(&id)?;
+    ensure_owner(&pool, course_id, user_id).await?;
+
+    sqlx::query("DELETE FROM custom_courses WHERE id = $1")
+        .bind(course_id)
+        .execute(&pool)
+        .await
+        .map_err(db_err)?;
+
+    Ok(StatusCode::NO_CONTENT)
+}
+
+// ---------- Unit CRUD ----------
+
+/// POST /api/courses/{id}/units — добавить юнит.
+pub async fn create_unit(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Path(id): Path<String>,
+    Json(payload): Json<UpsertUnitRequest>,
+) -> ApiResult<impl IntoResponse> {
+    let user_id = uid(&user.sub)?;
+    let course_id = parse_id(&id)?;
+    ensure_owner(&pool, course_id, user_id).await?;
+    validate_vocabulary(&payload.vocabulary)?;
+    validate_exercises(&payload.exercises)?;
+
+    let title = payload.title.trim();
+    if title.is_empty() {
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "Title is required"));
+    }
+
+    // position: либо переданная, либо в конец
+    let position = match payload.position {
+        Some(p) => p,
+        None => {
+            let row = sqlx::query("SELECT COALESCE(MAX(position) + 1, 0) AS next FROM custom_course_units WHERE course_id = $1")
+                .bind(course_id)
+                .fetch_one(&pool)
+                .await
+                .map_err(db_err)?;
+            row.get::<i32, _>("next")
+        }
+    };
+
+    let row = sqlx::query(
+        "INSERT INTO custom_course_units (course_id, position, title, description, vocabulary, exercises)
+         VALUES ($1, $2, $3, $4, $5, $6) RETURNING id"
+    )
+    .bind(course_id)
+    .bind(position)
+    .bind(title)
+    .bind(&payload.description)
+    .bind(&payload.vocabulary)
+    .bind(&payload.exercises)
+    .fetch_one(&pool)
+    .await
+    .map_err(db_err)?;
+
+    sqlx::query("UPDATE custom_courses SET updated_at = NOW() WHERE id = $1")
+        .bind(course_id).execute(&pool).await.map_err(db_err)?;
+
+    let unit_id: Uuid = row.get("id");
+    Ok((StatusCode::CREATED, Json(serde_json::json!({ "id": unit_id.to_string() }))))
+}
+
+/// GET /api/courses/{id}/units/{unit_id} — юнит целиком (контент).
+pub async fn get_unit(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Path((id, unit_id)): Path<(String, String)>,
+) -> ApiResult<impl IntoResponse> {
+    let user_id = uid(&user.sub)?;
+    let course_id = parse_id(&id)?;
+    let unit_uuid = parse_id(&unit_id)?;
+
+    // Доступ: владелец или опубликованный курс
+    let course = sqlx::query("SELECT owner_id, is_published FROM custom_courses WHERE id = $1")
+        .bind(course_id)
+        .fetch_optional(&pool)
+        .await
+        .map_err(db_err)?
+        .ok_or_else(|| ApiError::response(StatusCode::NOT_FOUND, "Course not found"))?;
+    let owner: Uuid = course.get("owner_id");
+    let is_published: bool = course.get("is_published");
+    if owner != user_id && !is_published {
+        return Err(ApiError::response(StatusCode::FORBIDDEN, "This course is not published"));
+    }
+
+    let row = sqlx::query(
+        "SELECT id, course_id, position, title, description, vocabulary, exercises
+         FROM custom_course_units WHERE id = $1 AND course_id = $2"
+    )
+    .bind(unit_uuid)
+    .bind(course_id)
+    .fetch_optional(&pool)
+    .await
+    .map_err(db_err)?
+    .ok_or_else(|| ApiError::response(StatusCode::NOT_FOUND, "Unit not found"))?;
+
+    let detail = UnitDetail {
+        id: row.get::<Uuid, _>("id").to_string(),
+        course_id: row.get::<Uuid, _>("course_id").to_string(),
+        position: row.get("position"),
+        title: row.get("title"),
+        description: row.get("description"),
+        vocabulary: row.get("vocabulary"),
+        exercises: row.get("exercises"),
+    };
+
+    Ok((StatusCode::OK, Json(detail)))
+}
+
+/// PUT /api/courses/{id}/units/{unit_id} — обновить юнит (только владелец).
+pub async fn update_unit(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Path((id, unit_id)): Path<(String, String)>,
+    Json(payload): Json<UpsertUnitRequest>,
+) -> ApiResult<impl IntoResponse> {
+    let user_id = uid(&user.sub)?;
+    let course_id = parse_id(&id)?;
+    let unit_uuid = parse_id(&unit_id)?;
+    ensure_owner(&pool, course_id, user_id).await?;
+    validate_vocabulary(&payload.vocabulary)?;
+    validate_exercises(&payload.exercises)?;
+
+    let title = payload.title.trim();
+    if title.is_empty() {
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "Title is required"));
+    }
+
+    let result = sqlx::query(
+        "UPDATE custom_course_units SET title = $1, description = $2,
+         position = COALESCE($3, position), vocabulary = $4, exercises = $5, updated_at = NOW()
+         WHERE id = $6 AND course_id = $7"
+    )
+    .bind(title)
+    .bind(&payload.description)
+    .bind(payload.position)
+    .bind(&payload.vocabulary)
+    .bind(&payload.exercises)
+    .bind(unit_uuid)
+    .bind(course_id)
+    .execute(&pool)
+    .await
+    .map_err(db_err)?;
+
+    if result.rows_affected() == 0 {
+        return Err(ApiError::response(StatusCode::NOT_FOUND, "Unit not found"));
+    }
+
+    sqlx::query("UPDATE custom_courses SET updated_at = NOW() WHERE id = $1")
+        .bind(course_id).execute(&pool).await.map_err(db_err)?;
+
+    Ok(StatusCode::NO_CONTENT)
+}
+
+/// DELETE /api/courses/{id}/units/{unit_id} — удалить юнит (только владелец).
+pub async fn delete_unit(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Path((id, unit_id)): Path<(String, String)>,
+) -> ApiResult<impl IntoResponse> {
+    let user_id = uid(&user.sub)?;
+    let course_id = parse_id(&id)?;
+    let unit_uuid = parse_id(&unit_id)?;
+    ensure_owner(&pool, course_id, user_id).await?;
+
+    sqlx::query("DELETE FROM custom_course_units WHERE id = $1 AND course_id = $2")
+        .bind(unit_uuid)
+        .bind(course_id)
+        .execute(&pool)
+        .await
+        .map_err(db_err)?;
+
+    Ok(StatusCode::NO_CONTENT)
+}

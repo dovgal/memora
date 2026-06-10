@@ -100,8 +100,15 @@ export interface BlankItem {
   explanation?: string;
 }
 
+export interface VocabularyItem {
+  fr: string;
+  ru: string;
+  type?: string; // 'word' | 'phrase'
+}
+
 export interface EditoUnit {
   title: string;
   description: string;
+  vocabulary?: VocabularyItem[];
   exercises: EditoExercise[];
 }
