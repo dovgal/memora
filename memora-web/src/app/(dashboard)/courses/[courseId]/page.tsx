@@ -4,7 +4,7 @@
 import { use, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import { ChevronLeft, Pencil, Loader2, Brain, CheckCircle2 } from 'lucide-react';
+import { ChevronLeft, Pencil, Loader2, Brain, CheckCircle2, MessagesSquare, BookOpenText, BarChart3, GraduationCap } from 'lucide-react';
 import {
   getCourse, getCourseProgress,
   type CourseDetail, type ProgressEntry,
@@ -63,12 +63,30 @@ export default function CustomCoursePage({ params }: { params: Promise<{ courseI
                 <span className="text-xs bg-muted text-qz-text-muted px-2 py-0.5 rounded-full">{course.units.length} юнит(ов)</span>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <Link
                 href={`/courses/${courseId}/coach`}
                 className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
               >
                 <Brain className="w-4 h-4" /> Коуч-режим
+              </Link>
+              <Link
+                href={`/courses/${courseId}/talk`}
+                className="inline-flex items-center gap-2 border border-border hover:border-[#4255ff]/50 text-foreground font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
+              >
+                <MessagesSquare className="w-4 h-4" /> Разговор
+              </Link>
+              <Link
+                href={`/courses/${courseId}/reading`}
+                className="inline-flex items-center gap-2 border border-border hover:border-[#ffcd1f]/50 text-foreground font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
+              >
+                <BookOpenText className="w-4 h-4" /> Чтение
+              </Link>
+              <Link
+                href={`/courses/${courseId}/stats`}
+                className="inline-flex items-center gap-2 border border-border hover:border-[#4255ff]/50 text-foreground font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
+              >
+                <BarChart3 className="w-4 h-4" /> Прогресс
               </Link>
               {course.isOwner && (
                 <Link
@@ -114,6 +132,15 @@ export default function CustomCoursePage({ params }: { params: Promise<{ courseI
                             style={{ width: `${Math.min(100, Math.round((done / u.exerciseCount) * 100))}%` }}
                           />
                         </div>
+                      )}
+                      {u.exerciseCount > 0 && (
+                        <span
+                          role="link"
+                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.location.href = `/courses/${courseId}/exam/${u.id}`; }}
+                          className="mt-2.5 inline-flex items-center gap-1 text-[#ffcd1f] hover:underline text-xs font-semibold w-max"
+                        >
+                          <GraduationCap className="w-3.5 h-3.5" /> Экзамен юнита
+                        </span>
                       )}
                     </div>
                   </Link>

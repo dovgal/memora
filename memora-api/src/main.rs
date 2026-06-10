@@ -144,8 +144,14 @@ async fn main() {
         // Коуч-режим: интервальное повторение упражнений курса (FSRS)
         .route("/api/courses/{course_id}/coach/reviews", get(handlers::coach::get_coach_reviews))
         .route("/api/courses/{course_id}/coach/review", post(handlers::coach::record_coach_review))
-        // ИИ-генерация юнита для редактора курсов
+        .route("/api/courses/{course_id}/coach/stats", get(handlers::coach::get_coach_stats))
+        .route("/api/courses/{course_id}/coach/mark-known", post(handlers::coach::mark_known))
+        // ИИ-инструменты курсов: генерация юнита, тьютор, практика, разговор, истории
         .route("/api/ai/course/generate-unit", post(handlers::ai::generate_course_unit))
+        .route("/api/ai/course/explain", post(handlers::ai::explain_exercise))
+        .route("/api/ai/course/generate-practice", post(handlers::ai::generate_practice))
+        .route("/api/ai/course/converse", post(handlers::ai::converse))
+        .route("/api/ai/course/story", post(handlers::ai::generate_story))
         // Diagnostics (Temporary). Только для авторизованных пользователей.
         .route("/api/diag/db", get(|_user: middleware::auth::AuthenticatedUser, State(pool): State<sqlx::PgPool>| async move {
             let audio_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM flashcard_audio").fetch_one(&pool).await.unwrap_or((-1,));

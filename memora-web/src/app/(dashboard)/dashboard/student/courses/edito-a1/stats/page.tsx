@@ -1,12 +1,11 @@
 'use client';
-// Коуч-режим для встроенного курса Édito A1.
+// Прогресс по Édito A1.
 
 import { EDITO_A1_UNITS, UNIT_ORDER, SPECIAL_MODULES } from '@/lib/courses/edito-a1';
-import { CoachSession, type CoachUnit } from '@/components/courses/CoachSession';
+import type { CoachUnit } from '@/components/courses/CoachSession';
+import { CourseStats } from '@/components/courses/CourseStats';
 
-const COURSE_ID = 'edito-a1';
-
-export default function EditoCoachPage() {
+export default function EditoStatsPage() {
   const units: CoachUnit[] = [...UNIT_ORDER, ...SPECIAL_MODULES].map(id => ({
     id,
     title: EDITO_A1_UNITS[id].title,
@@ -15,13 +14,11 @@ export default function EditoCoachPage() {
   }));
 
   return (
-    <CoachSession
-      courseId={COURSE_ID}
+    <CourseStats
+      courseId="edito-a1"
       courseTitle="Édito A1"
       units={units}
       backHref="/dashboard/student/courses/edito-a1"
-      language="французский"
-      level="A1"
     />
   );
 }

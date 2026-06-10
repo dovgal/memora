@@ -100,6 +100,12 @@ export interface BlankItem {
   explanation?: string;
 }
 
+/** Результат выполнения упражнения: сколько ответов правильно с первой попытки. */
+export interface ExerciseResult {
+  correct: number;
+  total: number;
+}
+
 export interface VocabularyItem {
   fr: string;
   ru: string;

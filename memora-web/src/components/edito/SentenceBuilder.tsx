@@ -124,7 +124,7 @@ function SentenceItem({ words, ru, onDone }: { words: string[]; ru: string; onDo
   );
 }
 
-export function SentenceBuilder({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: () => void }) {
+export function SentenceBuilder({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: (result?: { correct: number; total: number }) => void }) {
   const sentences = exercise.sentences ?? [];
   const [current, setCurrent] = useState(0);
 

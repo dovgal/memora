@@ -6,7 +6,7 @@ import { GrammarQuiz } from './GrammarQuiz';
 
 const AUDIO_BASE_URL = process.env.NEXT_PUBLIC_AUDIO_BASE_URL || '';
 
-export function ListeningExercise({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: () => void }) {
+export function ListeningExercise({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: (result?: { correct: number; total: number }) => void }) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -144,7 +144,7 @@ export function ListeningExercise({ exercise, onComplete }: { exercise: EditoExe
         <div className="border-t border-border pt-4">
           <GrammarQuiz
             exercise={{ ...exercise, title: 'Ответьте на вопросы:' }}
-            onComplete={() => { setQuizDone(true); onComplete?.(); }}
+            onComplete={(result) => { setQuizDone(true); onComplete?.(result); }}
           />
         </div>
       )}

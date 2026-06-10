@@ -193,6 +193,19 @@ pub async fn record_coach_review(
     .await
     .map_err(db_err)?;
 
+    // Журнал повторений — для streak и аналитики.
+    let _ = sqlx::query(
+        "INSERT INTO course_review_logs (user_id, course_id, unit_id, exercise_id, rating)
+         VALUES ($1, $2, $3, $4, $5)"
+    )
+    .bind(user_id)
+    .bind(&course_id)
+    .bind(&payload.unit_id)
+    .bind(&payload.exercise_id)
+    .bind(payload.rating as i16)
+    .execute(&pool)
+    .await;
+
     // Успешная оценка (Good/Easy) также отмечает упражнение как выполненное в course_progress.
     if payload.rating >= 3 {
         let _ = sqlx::query(
@@ -213,4 +226,161 @@ pub async fn record_coach_review(
         due: next_due.to_rfc3339(),
         scheduled_days,
     })))
+}
+
+#[derive(Deserialize)]
+pub struct StatsQuery {
+    /// Смещение часового пояса клиента в минутах (как Date.getTimezoneOffset(), но со знаком "+восток").
+    pub tz_offset_min: Option<i32>,
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CoachStats {
+    pub streak_days: i64,
+    pub today_reviews: i64,
+    pub total_reviews: i64,
+    pub learned_count: i64,
+}
+
+/// GET /api/courses/{course_id}/coach/stats?tz_offset_min=180
+/// Серия дней занятий, повторения за сегодня, всего повторений, усвоено упражнений.
+pub async fn get_coach_stats(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Path(course_id): Path<String>,
+    axum::extract::Query(q): axum::extract::Query<StatsQuery>,
+) -> ApiResult<impl IntoResponse> {
+    let user_id = uid(&user.sub)?;
+    let offset_min = q.tz_offset_min.unwrap_or(0).clamp(-840, 840);
+
+    // Уникальные дни занятий (в часовом поясе клиента), от новых к старым.
+    let day_rows = sqlx::query(
+        "SELECT DISTINCT (review_time + ($3 || ' minutes')::interval)::date AS day
+         FROM course_review_logs
+         WHERE user_id = $1 AND course_id = $2
+         ORDER BY day DESC
+         LIMIT 400"
+    )
+    .bind(user_id)
+    .bind(&course_id)
+    .bind(offset_min.to_string())
+    .fetch_all(&pool)
+    .await
+    .map_err(db_err)?;
+
+    let days: Vec<chrono::NaiveDate> = day_rows.iter().map(|r| r.get::<chrono::NaiveDate, _>("day")).collect();
+    let today = (chrono::Utc::now() + chrono::Duration::minutes(offset_min as i64)).date_naive();
+
+    // Streak: подряд идущие дни, заканчивающиеся сегодня или вчера.
+    let mut streak: i64 = 0;
+    let mut expected = today;
+    for d in &days {
+        if *d == expected {
+            streak += 1;
+            expected = expected - chrono::Duration::days(1);
+        } else if streak == 0 && *d == today - chrono::Duration::days(1) {
+            // Сегодня ещё не занимался — серия продолжается со вчерашнего дня.
+            streak += 1;
+            expected = *d - chrono::Duration::days(1);
+        } else {
+            break;
+        }
+    }
+
+    let counts = sqlx::query(
+        "SELECT
+            COUNT(*) AS total,
+            COUNT(*) FILTER (WHERE (review_time + ($3 || ' minutes')::interval)::date = (NOW() + ($3 || ' minutes')::interval)::date) AS today
+         FROM course_review_logs
+         WHERE user_id = $1 AND course_id = $2"
+    )
+    .bind(user_id)
+    .bind(&course_id)
+    .bind(offset_min.to_string())
+    .fetch_one(&pool)
+    .await
+    .map_err(db_err)?;
+
+    let learned = sqlx::query(
+        "SELECT COUNT(*) AS learned FROM course_exercise_reviews
+         WHERE user_id = $1 AND course_id = $2 AND state = 2"
+    )
+    .bind(user_id)
+    .bind(&course_id)
+    .fetch_one(&pool)
+    .await
+    .map_err(db_err)?;
+
+    Ok((StatusCode::OK, Json(CoachStats {
+        streak_days: streak,
+        today_reviews: counts.get::<i64, _>("today"),
+        total_reviews: counts.get::<i64, _>("total"),
+        learned_count: learned.get::<i64, _>("learned"),
+    })))
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MarkKnownRequest {
+    pub unit_id: String,
+    pub exercise_ids: Vec<String>,
+}
+
+/// POST /api/courses/{course_id}/coach/mark-known
+/// «Я уже знаю это»: помечает упражнения юнита усвоенными (длинный интервал FSRS),
+/// чтобы коуч не тратил время учащегося на известный материал (быстрая диагностика).
+pub async fn mark_known(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Path(course_id): Path<String>,
+    Json(payload): Json<MarkKnownRequest>,
+) -> ApiResult<impl IntoResponse> {
+    let user_id = uid(&user.sub)?;
+    if payload.exercise_ids.len() > 500 {
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "Too many exercises"));
+    }
+
+    let now = chrono::Utc::now();
+    let due = now + chrono::Duration::days(21);
+
+    let mut tx = pool.begin().await.map_err(db_err)?;
+    for ex_id in &payload.exercise_ids {
+        sqlx::query(
+            r#"
+            INSERT INTO course_exercise_reviews (
+                user_id, course_id, unit_id, exercise_id,
+                state, due, stability, difficulty, reps, lapses, last_review
+            )
+            VALUES ($1, $2, $3, $4, 2, $5, 21.0, 5.0, 1, 0, $6)
+            ON CONFLICT (user_id, course_id, unit_id, exercise_id)
+            DO UPDATE SET state = 2, due = EXCLUDED.due, updated_at = NOW()
+            "#
+        )
+        .bind(user_id)
+        .bind(&course_id)
+        .bind(&payload.unit_id)
+        .bind(ex_id)
+        .bind(due)
+        .bind(now)
+        .execute(&mut *tx)
+        .await
+        .map_err(db_err)?;
+
+        // Отметить и как выполненное в прогрессе курса.
+        let _ = sqlx::query(
+            "INSERT INTO course_progress (user_id, course_id, unit_id, exercise_id)
+             VALUES ($1, $2, $3, $4)
+             ON CONFLICT (user_id, course_id, unit_id, exercise_id) DO NOTHING"
+        )
+        .bind(user_id)
+        .bind(&course_id)
+        .bind(&payload.unit_id)
+        .bind(ex_id)
+        .execute(&mut *tx)
+        .await;
+    }
+    tx.commit().await.map_err(db_err)?;
+
+    Ok(StatusCode::NO_CONTENT)
 }

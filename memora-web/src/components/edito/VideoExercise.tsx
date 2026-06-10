@@ -5,7 +5,7 @@ import { EditoExercise } from '@/lib/courses/edito-a1';
 
 const VIDEO_BASE_URL = process.env.NEXT_PUBLIC_VIDEO_BASE_URL || '';
 
-export function VideoExercise({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: () => void }) {
+export function VideoExercise({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: (result?: { correct: number; total: number }) => void }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [watched, setWatched] = useState(false);
 

@@ -13,7 +13,7 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-export function NumberQuiz({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: () => void }) {
+export function NumberQuiz({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: (result?: { correct: number; total: number }) => void }) {
   const mode = exercise.mode || 'digit-to-word';
   const allItems = exercise.items as NumberItem[] || [];
   const initialItems = useMemo(() => shuffle(allItems), []);
@@ -64,7 +64,7 @@ export function NumberQuiz({ exercise, onComplete }: { exercise: EditoExercise; 
       setIsCorrect(null);
     } else {
       setFinished(true);
-      onComplete?.();
+      onComplete?.({ correct: score, total: sessionItems.length });
     }
   };
 

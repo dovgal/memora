@@ -20,7 +20,7 @@ const LABELS: Record<string, string> = {
   "une": "ж.р. неопр.",
 };
 
-export function GenderQuiz({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: () => void }) {
+export function GenderQuiz({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: (result?: { correct: number; total: number }) => void }) {
   const items = (exercise.items || []) as GenderItem[];
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
@@ -42,7 +42,7 @@ export function GenderQuiz({ exercise, onComplete }: { exercise: EditoExercise; 
       setSelected(null);
     } else {
       setFinished(true);
-      onComplete?.();
+      onComplete?.({ correct: score, total: items.length });
     }
   };
 

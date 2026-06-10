@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { BookOpen, Layers, Hash, Sparkles, Brain } from 'lucide-react';
+import { BookOpen, Layers, Hash, Sparkles, Brain, MessagesSquare, BookOpenText, BarChart3 } from 'lucide-react';
 import { EDITO_A1_UNITS, UNIT_ORDER, SPECIAL_MODULES } from '@/lib/courses/edito-a1';
 import { VocabSetCard } from '@/components/edito/VocabSetCard';
 
@@ -23,12 +23,32 @@ export default function EditoA1CoursePage() {
             10 юнитов с теорией и упражнениями по материалам учебника Édito A1. Грамматика, диалоги,
             роды существительных, числа и лексика — с озвучкой на французском.
           </p>
-          <Link
-            href="/dashboard/student/courses/edito-a1/coach"
-            className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
-          >
-            <Brain className="w-4 h-4" /> Коуч-режим: тренировка и повторение
-          </Link>
+          <div className="flex items-center gap-2 flex-wrap">
+            <Link
+              href="/dashboard/student/courses/edito-a1/coach"
+              className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
+            >
+              <Brain className="w-4 h-4" /> Коуч-режим
+            </Link>
+            <Link
+              href="/dashboard/student/courses/edito-a1/talk"
+              className="inline-flex items-center gap-2 border border-border hover:border-[#4255ff]/50 text-foreground font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
+            >
+              <MessagesSquare className="w-4 h-4" /> Разговор
+            </Link>
+            <Link
+              href="/dashboard/student/courses/edito-a1/reading"
+              className="inline-flex items-center gap-2 border border-border hover:border-[#ffcd1f]/50 text-foreground font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
+            >
+              <BookOpenText className="w-4 h-4" /> Чтение
+            </Link>
+            <Link
+              href="/dashboard/student/courses/edito-a1/stats"
+              className="inline-flex items-center gap-2 border border-border hover:border-[#4255ff]/50 text-foreground font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
+            >
+              <BarChart3 className="w-4 h-4" /> Прогресс
+            </Link>
+          </div>
         </div>
 
         {/* Special modules */}

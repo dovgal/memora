@@ -14,6 +14,7 @@ export default function CustomCourseCoachPage({ params }: { params: Promise<{ co
   const idToken = session?.id_token as string | undefined;
 
   const [title, setTitle] = useState('Курс');
+  const [meta, setMeta] = useState<{ language?: string; level?: string }>({});
   const [units, setUnits] = useState<CoachUnit[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -28,7 +29,8 @@ export default function CustomCourseCoachPage({ params }: { params: Promise<{ co
         );
         if (cancelled) return;
         setTitle(course.title);
-        setUnits(full.map(u => ({ id: u.id, title: u.title, exercises: u.exercises })));
+        setMeta({ language: course.language, level: course.level });
+        setUnits(full.map(u => ({ id: u.id, title: u.title, exercises: u.exercises, vocabulary: u.vocabulary })));
       } catch (e) {
         if (!cancelled) setError(e instanceof Error ? e.message : 'Ошибка загрузки');
       }
@@ -60,6 +62,8 @@ export default function CustomCourseCoachPage({ params }: { params: Promise<{ co
       courseTitle={title}
       units={units}
       backHref={`/courses/${courseId}`}
+      language={meta.language}
+      level={meta.level}
     />
   );
 }

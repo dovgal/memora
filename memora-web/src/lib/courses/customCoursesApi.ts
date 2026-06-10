@@ -188,6 +188,76 @@ export async function recordCoachReview(
   }));
 }
 
+// ---------- Коуч v2: статистика, диагностика ----------
+
+export interface CoachStats {
+  streakDays: number;
+  todayReviews: number;
+  totalReviews: number;
+  learnedCount: number;
+}
+
+export async function getCoachStats(courseId: string, idToken?: string): Promise<CoachStats> {
+  const tz = -new Date().getTimezoneOffset(); // минуты к востоку от UTC
+  return ok(await fetch(`/api/courses/${courseId}/coach/stats?tz_offset_min=${tz}`, { headers: headers(idToken) }));
+}
+
+/** «Я уже знаю это» — пометить упражнения юнита усвоенными. */
+export async function markUnitKnown(courseId: string, unitId: string, exerciseIds: string[], idToken?: string): Promise<void> {
+  return ok(await fetch(`/api/courses/${courseId}/coach/mark-known`, {
+    method: 'POST',
+    headers: headers(idToken),
+    body: JSON.stringify({ unitId, exerciseIds }),
+  }));
+}
+
+// ---------- ИИ-тьютор и практика ----------
+
+export async function explainExercise(
+  exercise: unknown, userAnswer?: string, question?: string, idToken?: string,
+): Promise<{ explanation: string }> {
+  return ok(await fetch('/api/ai/course/explain', {
+    method: 'POST',
+    headers: headers(idToken),
+    body: JSON.stringify({ exercise, userAnswer, question }),
+  }));
+}
+
+export async function generatePractice(
+  weakExercises: unknown[], language?: string, level?: string, count?: number, idToken?: string,
+): Promise<{ exercises: EditoExercise[] }> {
+  return ok(await fetch('/api/ai/course/generate-practice', {
+    method: 'POST',
+    headers: headers(idToken),
+    body: JSON.stringify({ weakExercises, language, level, count }),
+  }));
+}
+
+export interface ConverseTurn { role: 'user' | 'assistant'; content: string }
+export interface ConverseReply { reply: string; translation: string; correction: string | null }
+
+export async function converse(
+  messages: ConverseTurn[], opts: { language?: string; level?: string; scenario?: string }, idToken?: string,
+): Promise<ConverseReply> {
+  return ok(await fetch('/api/ai/course/converse', {
+    method: 'POST',
+    headers: headers(idToken),
+    body: JSON.stringify({ messages, ...opts }),
+  }));
+}
+
+export interface GeneratedStory { title: string; story: string; translation: string }
+
+export async function generateStory(
+  vocabulary: VocabularyItem[], opts: { language?: string; level?: string; topic?: string }, idToken?: string,
+): Promise<GeneratedStory> {
+  return ok(await fetch('/api/ai/course/story', {
+    method: 'POST',
+    headers: headers(idToken),
+    body: JSON.stringify({ vocabulary, ...opts }),
+  }));
+}
+
 // ---------- ИИ-генерация юнита ----------
 
 export interface GeneratedUnitContent {

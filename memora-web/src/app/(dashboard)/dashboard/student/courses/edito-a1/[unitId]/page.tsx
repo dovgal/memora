@@ -2,10 +2,11 @@
 import { use, useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import { ChevronLeft, CheckCircle2 } from 'lucide-react';
+import { ChevronLeft, CheckCircle2, Loader2, SkipForward } from 'lucide-react';
 import { EDITO_A1_UNITS } from '@/lib/courses/edito-a1';
 import { ExerciseRenderer } from '@/components/edito/ExerciseRenderer';
 import { getCourseProgress, recordExerciseProgress } from '@/lib/courses/editoProgressApi';
+import { markUnitKnown } from '@/lib/courses/customCoursesApi';
 import { syncVocabSet } from '@/lib/courses/editoVocabSync';
 
 export default function EditoUnitPage({ params }: { params: Promise<{ unitId: string }> }) {
@@ -35,6 +36,24 @@ export default function EditoUnitPage({ params }: { params: Promise<{ unitId: st
     });
     recordExerciseProgress(unitId, exerciseId, idToken);
   }, [unitId, idToken]);
+
+  const [markingKnown, setMarkingKnown] = useState(false);
+  const handleMarkKnown = useCallback(async () => {
+    if (!unit || !idToken || markingKnown) return;
+    if (!confirm('Отметить весь юнит как уже известный? Коуч не будет тратить на него время и поставит длинный интервал повторения.')) return;
+    setMarkingKnown(true);
+    try {
+      const ids = [
+        ...unit.exercises.filter(e => e.type !== 'theory').map(e => e.id),
+        ...(unit.vocabulary ?? []).filter(v => v.fr).map(v => `vocab:${v.fr}`),
+      ];
+      await markUnitKnown('edito-a1', unitId, ids, idToken);
+      const all: Record<string, boolean> = {};
+      for (const e of unit.exercises) if (e.type !== 'theory') all[e.id] = true;
+      setCompleted(all);
+    } catch { /* ignore */ }
+    setMarkingKnown(false);
+  }, [unit, idToken, unitId, markingKnown]);
 
   const completedCount = Object.keys(completed).length;
   const totalInteractive = unit ? unit.exercises.filter(e => !['theory'].includes(e.type)).length : 0;
@@ -69,8 +88,21 @@ export default function EditoUnitPage({ params }: { params: Promise<{ unitId: st
             className="inline-flex items-center gap-1.5 text-qz-text-muted hover:text-white text-sm transition-colors mb-4">
             <ChevronLeft className="w-4 h-4" /> К списку юнитов
           </Link>
-          <h1 className="text-2xl font-bold text-foreground mb-1">{unit.title}</h1>
-          <p className="text-qz-text-muted text-sm">{unit.description}</p>
+          <div className="flex items-start justify-between gap-3 flex-wrap">
+            <div>
+              <h1 className="text-2xl font-bold text-foreground mb-1">{unit.title}</h1>
+              <p className="text-qz-text-muted text-sm">{unit.description}</p>
+            </div>
+            <button
+              onClick={handleMarkKnown}
+              disabled={markingKnown}
+              className="inline-flex items-center gap-1.5 border border-border hover:border-emerald-500/50 text-qz-text-muted hover:text-emerald-400 text-xs font-semibold px-3 py-2 rounded-xl transition-colors"
+              title="Коуч пометит материал юнита усвоенным"
+            >
+              {markingKnown ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <SkipForward className="w-3.5 h-3.5" />}
+              Я уже это знаю
+            </button>
+          </div>
         </div>
 
         {/* Progress bar */}
@@ -112,16 +144,22 @@ export default function EditoUnitPage({ params }: { params: Promise<{ unitId: st
         </div>
 
         {/* Footer nav */}
-        <div className="mt-8 pt-6 border-t border-border flex justify-between items-center">
+        <div className="mt-8 pt-6 border-t border-border flex justify-between items-center flex-wrap gap-3">
           <Link href="/dashboard/student/courses/edito-a1"
             className="inline-flex items-center gap-1.5 text-qz-text-muted hover:text-white text-sm transition-colors">
             <ChevronLeft className="w-4 h-4" /> Все юниты
           </Link>
-          {pct === 100 && (
-            <span className="text-emerald-400 text-sm font-semibold flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4" /> Юнит пройден!
-            </span>
-          )}
+          <div className="flex items-center gap-4">
+            <Link href={`/dashboard/student/courses/edito-a1/exam/${unitId}`}
+              className="text-[#ffcd1f] hover:underline text-sm font-semibold">
+              🎓 Экзамен юнита
+            </Link>
+            {pct === 100 && (
+              <span className="text-emerald-400 text-sm font-semibold flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4" /> Юнит пройден!
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </div>

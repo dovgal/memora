@@ -25,7 +25,7 @@ function Bubble({ exchange, revealed }: { exchange: DialogueExchange; revealed?:
   );
 }
 
-export function DialogueExercise({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: () => void }) {
+export function DialogueExercise({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: (result?: { correct: number; total: number }) => void }) {
   const exchanges: DialogueExchange[] = exercise.exchanges || [];
   const blanks = exchanges.filter(e => e.isBlank);
 
@@ -69,7 +69,7 @@ export function DialogueExercise({ exercise, onComplete }: { exercise: EditoExer
       setActiveBlankIdx(i => i + 1);
     } else {
       setFinished(true);
-      onComplete?.();
+      onComplete?.({ correct: Object.values(answers).filter(a => a.correct).length, total: blanks.length });
     }
   };
 

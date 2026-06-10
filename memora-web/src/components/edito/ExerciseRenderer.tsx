@@ -1,5 +1,5 @@
 'use client';
-import { EditoExercise } from '@/lib/courses/edito-a1';
+import { EditoExercise, ExerciseResult } from '@/lib/courses/edito-a1';
 import { Theory } from './Theory';
 import { GrammarQuiz } from './GrammarQuiz';
 import { GenderQuiz } from './GenderQuiz';
@@ -10,13 +10,16 @@ import { SentenceBuilder } from './SentenceBuilder';
 import { ListeningExercise } from './ListeningExercise';
 import { VideoExercise } from './VideoExercise';
 
+export type { ExerciseResult };
+
 interface ExerciseRendererProps {
   exercise: EditoExercise;
-  onComplete?: (id: string) => void;
+  /** result передаётся компонентами, которые считают ошибки (квизы, пропуски, диалоги). */
+  onComplete?: (id: string, result?: ExerciseResult) => void;
 }
 
 export function ExerciseRenderer({ exercise, onComplete }: ExerciseRendererProps) {
-  const handleComplete = () => onComplete?.(exercise.id);
+  const handleComplete = (result?: ExerciseResult) => onComplete?.(exercise.id, result);
 
   switch (exercise.type) {
     case 'theory':

@@ -4,7 +4,7 @@ import { CheckCircle2, XCircle, ChevronRight } from 'lucide-react';
 import { EditoExercise, BlankItem } from '@/lib/courses/edito-a1';
 import { AudioButton } from './AudioButton';
 
-export function FillBlank({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: () => void }) {
+export function FillBlank({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: (result?: { correct: number; total: number }) => void }) {
   const blanks: BlankItem[] = exercise.blanks || [];
   const parts = useMemo(() => (exercise.text || '').split('___'), [exercise.text]);
 
@@ -36,7 +36,7 @@ export function FillBlank({ exercise, onComplete }: { exercise: EditoExercise; o
       setChecked(false);
     } else {
       setFinished(true);
-      onComplete?.();
+      onComplete?.({ correct: results.filter(r => r.correct).length, total: blanks.length });
     }
   };
 

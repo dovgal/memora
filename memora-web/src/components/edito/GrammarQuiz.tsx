@@ -4,7 +4,7 @@ import { CheckCircle2, XCircle, ChevronRight, RotateCcw } from 'lucide-react';
 import { EditoExercise } from '@/lib/courses/edito-a1';
 import { AudioButton } from './AudioButton';
 
-export function GrammarQuiz({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: () => void }) {
+export function GrammarQuiz({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: (result?: { correct: number; total: number }) => void }) {
   const questions = exercise.questions || [];
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
@@ -26,7 +26,7 @@ export function GrammarQuiz({ exercise, onComplete }: { exercise: EditoExercise;
       setSelected(null);
     } else {
       setFinished(true);
-      onComplete?.();
+      onComplete?.({ correct: score, total: questions.length });
     }
   };
 

@@ -690,6 +690,272 @@ pub async fn generate_a2_questions(
     Ok(Json(questions))
 }
 
+/// Нестриминговый запрос к Ollama, возвращает текст ответа модели.
+async fn ollama_chat(
+    messages: Vec<OllamaMessage>,
+    num_predict: u32,
+) -> Result<String, (StatusCode, Json<AiGatewayError>)> {
+    let api_key = env::var("OLLAMA_API_KEY")
+        .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: "API Key not set".to_string() })))?;
+
+    let client = Client::new();
+    let response = client.post(&get_ollama_url())
+        .header("Authorization", format!("Bearer {}", api_key))
+        .json(&OllamaRequest {
+            model: OLLAMA_MODEL.to_string(),
+            messages,
+            stream: false,
+            options: Some(OllamaOptions { num_predict }),
+        })
+        .send()
+        .await
+        .map_err(|e| (StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: e.to_string() })))?;
+
+    let body = response.text().await.unwrap_or_default();
+
+    #[derive(Deserialize)]
+    struct OllamaResp { message: OllamaDelta }
+    let parsed: OllamaResp = serde_json::from_str(&body)
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Ollama JSON Error: {}", e) })))?;
+    Ok(parsed.message.content.unwrap_or_default())
+}
+
+/// Вырезает первый JSON-объект из ответа модели (модель может обернуть его текстом/markdown).
+fn extract_json_object(content: &str) -> &str {
+    match (content.find('{'), content.rfind('}')) {
+        (Some(s), Some(e)) if e > s => &content[s..=e],
+        _ => content,
+    }
+}
+
+fn extract_json_array(content: &str) -> &str {
+    match (content.find('['), content.rfind(']')) {
+        (Some(s), Some(e)) if e > s => &content[s..=e],
+        _ => content,
+    }
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ExplainRequest {
+    /// JSON упражнения (как в курсе)
+    pub exercise: serde_json::Value,
+    /// Что ответил учащийся (если есть)
+    pub user_answer: Option<String>,
+    /// Конкретный вопрос учащегося (если есть)
+    pub question: Option<String>,
+}
+
+#[derive(Serialize)]
+pub struct ExplainResponse {
+    pub explanation: String,
+}
+
+/// POST /api/ai/course/explain — ИИ-тьютор: объясняет тему/ошибку конкретного упражнения.
+pub async fn explain_exercise(
+    State(rate_limiter): State<AppRateLimiter>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Json(payload): Json<ExplainRequest>,
+) -> Result<Json<ExplainResponse>, (StatusCode, Json<AiGatewayError>)> {
+    check_rate_limit(&rate_limiter, &user.sub)?;
+
+    let exercise_json: String = serde_json::to_string(&payload.exercise).unwrap_or_default()
+        .chars().take(6000).collect();
+
+    let mut user_block = format!("Упражнение (JSON): {}", exercise_json);
+    if let Some(ans) = &payload.user_answer {
+        user_block.push_str(&format!("\nОтвет учащегося: {}", ans.chars().take(500).collect::<String>()));
+    }
+    if let Some(q) = &payload.question {
+        user_block.push_str(&format!("\nВопрос учащегося: {}", q.chars().take(500).collect::<String>()));
+    }
+
+    let system = "Ты — терпеливый репетитор образовательной платформы Memora. \
+        Учащемуся непонятно упражнение. Объясни тему упражнения просто и коротко, по-русски: \
+        правило, почему правильный ответ именно такой, 2-3 наглядных примера. \
+        Если есть ответ учащегося — разбери его ошибку доброжелательно. \
+        Не используй markdown-заголовки, пиши 1-3 абзаца обычным текстом.";
+
+    let content = ollama_chat(vec![
+        OllamaMessage { role: "system".to_string(), content: system.to_string(), images: None },
+        OllamaMessage { role: "user".to_string(), content: user_block, images: None },
+    ], 800).await?;
+
+    Ok(Json(ExplainResponse { explanation: content.trim().to_string() }))
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GeneratePracticeRequest {
+    /// Упражнения, в которых учащийся ошибается (JSON в формате курса)
+    pub weak_exercises: Vec<serde_json::Value>,
+    pub language: Option<String>,
+    pub level: Option<String>,
+    /// Сколько новых упражнений сгенерировать (по умолчанию 4, максимум 8)
+    pub count: Option<u32>,
+}
+
+/// POST /api/ai/course/generate-practice
+/// Бесконечная практика: новые упражнения по слабым местам учащегося.
+pub async fn generate_practice(
+    State(rate_limiter): State<AppRateLimiter>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Json(payload): Json<GeneratePracticeRequest>,
+) -> Result<Json<serde_json::Value>, (StatusCode, Json<AiGatewayError>)> {
+    check_rate_limit(&rate_limiter, &user.sub)?;
+
+    if payload.weak_exercises.is_empty() {
+        return Err((StatusCode::BAD_REQUEST, Json(AiGatewayError { error: "weak_exercises is empty".to_string() })));
+    }
+    let count = payload.count.unwrap_or(4).min(8);
+    let language = payload.language.unwrap_or_else(|| "французский".to_string());
+    let level = payload.level.unwrap_or_else(|| "A1".to_string());
+
+    let weak_json: String = serde_json::to_string(&payload.weak_exercises).unwrap_or_default()
+        .chars().take(12000).collect();
+
+    let system = format!(
+        "Ты — методист платформы Memora. Учащийся ({language}, уровень {level}) ошибается в этих упражнениях:\n{weak_json}\n\
+         Сгенерируй {count} НОВЫХ упражнений на ТЕ ЖЕ грамматические темы и лексику, но с другими примерами — для закрепления. \
+         Используй типы grammar-quiz и fill-blank (формат как во входных данных, с полями id, type, title, questions/text+blanks, \
+         у каждого вопроса options, correctAnswer и explanation по-русски). \
+         Выведи ТОЛЬКО валидный JSON-массив упражнений без markdown. id вида practice-1, practice-2..."
+    );
+
+    let content = ollama_chat(vec![
+        OllamaMessage { role: "system".to_string(), content: system, images: None },
+        OllamaMessage { role: "user".to_string(), content: "Сгенерируй упражнения сейчас.".to_string(), images: None },
+    ], 6000).await?;
+
+    let exercises: serde_json::Value = serde_json::from_str(extract_json_array(&content))
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Parse Error: {} - Content: {}", e, content) })))?;
+
+    Ok(Json(serde_json::json!({ "exercises": exercises })))
+}
+
+#[derive(Deserialize)]
+pub struct ConverseMessage {
+    pub role: String, // "user" | "assistant"
+    pub content: String,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ConverseRequest {
+    pub messages: Vec<ConverseMessage>,
+    pub language: Option<String>,
+    pub level: Option<String>,
+    /// Сценарий разговора, например «в кафе»
+    pub scenario: Option<String>,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ConverseResponse {
+    /// Реплика собеседника на изучаемом языке
+    pub reply: String,
+    /// Перевод реплики на русский
+    pub translation: String,
+    /// Разбор ошибок в последнем сообщении учащегося (по-русски), если есть
+    pub correction: Option<String>,
+}
+
+/// POST /api/ai/course/converse — разговорная практика с ИИ-собеседником.
+pub async fn converse(
+    State(rate_limiter): State<AppRateLimiter>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Json(payload): Json<ConverseRequest>,
+) -> Result<Json<ConverseResponse>, (StatusCode, Json<AiGatewayError>)> {
+    check_rate_limit(&rate_limiter, &user.sub)?;
+
+    let language = payload.language.unwrap_or_else(|| "французский".to_string());
+    let level = payload.level.unwrap_or_else(|| "A1".to_string());
+    let scenario = payload.scenario.unwrap_or_else(|| "свободная беседа о повседневной жизни".to_string());
+
+    let system = format!(
+        "Ты — дружелюбный собеседник для разговорной практики ({language}, уровень учащегося {level}). \
+         Сценарий: {scenario}. Веди живой диалог НА ИЗУЧАЕМОМ ЯЗЫКЕ короткими репликами, \
+         соответствующими уровню {level}. Задавай встречные вопросы, поддерживай разговор. \
+         Если в последнем сообщении учащегося есть ошибки — мягко разбери их по-русски в поле correction. \
+         Отвечай ТОЛЬКО валидным JSON-объектом без markdown: \
+         {{\"reply\": \"реплика на изучаемом языке\", \"translation\": \"перевод реплики на русский\", \
+         \"correction\": \"разбор ошибок по-русски\" | null}}"
+    );
+
+    let mut messages = vec![OllamaMessage { role: "system".to_string(), content: system, images: None }];
+    // Ограничим историю последними 16 сообщениями.
+    let recent = payload.messages.iter().rev().take(16).collect::<Vec<_>>().into_iter().rev();
+    for m in recent {
+        let role = if m.role == "assistant" { "assistant" } else { "user" };
+        messages.push(OllamaMessage {
+            role: role.to_string(),
+            content: m.content.chars().take(1000).collect(),
+            images: None,
+        });
+    }
+
+    let content = ollama_chat(messages, 700).await?;
+    let parsed: ConverseResponse = serde_json::from_str(extract_json_object(&content))
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Parse Error: {} - Content: {}", e, content) })))?;
+
+    Ok(Json(parsed))
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct StoryRequest {
+    /// Словарь курса/юнита: слова, которые надо вплести в текст
+    pub vocabulary: Vec<serde_json::Value>,
+    pub language: Option<String>,
+    pub level: Option<String>,
+    pub topic: Option<String>,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct StoryResponse {
+    pub title: String,
+    /// Текст истории на изучаемом языке
+    pub story: String,
+    /// Перевод истории на русский
+    pub translation: String,
+}
+
+/// POST /api/ai/course/story — короткая история из лексики курса для контекстного чтения.
+pub async fn generate_story(
+    State(rate_limiter): State<AppRateLimiter>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Json(payload): Json<StoryRequest>,
+) -> Result<Json<StoryResponse>, (StatusCode, Json<AiGatewayError>)> {
+    check_rate_limit(&rate_limiter, &user.sub)?;
+
+    let language = payload.language.unwrap_or_else(|| "французский".to_string());
+    let level = payload.level.unwrap_or_else(|| "A1".to_string());
+    let topic = payload.topic.unwrap_or_else(|| "повседневная жизнь".to_string());
+
+    let vocab_json: String = serde_json::to_string(&payload.vocabulary).unwrap_or_default()
+        .chars().take(6000).collect();
+
+    let system = format!(
+        "Ты — автор учебных текстов платформы Memora. Напиши КОРОТКУЮ историю (6-10 предложений) \
+         на языке: {language}, строго уровня {level}, тема: {topic}. \
+         Обязательно используй слова из словаря учащегося: {vocab_json}. \
+         Простые конструкции, живой сюжет. \
+         Выведи ТОЛЬКО валидный JSON без markdown: \
+         {{\"title\": \"заголовок на изучаемом языке\", \"story\": \"текст истории\", \"translation\": \"перевод на русский\"}}"
+    );
+
+    let content = ollama_chat(vec![
+        OllamaMessage { role: "system".to_string(), content: system, images: None },
+        OllamaMessage { role: "user".to_string(), content: "Напиши историю сейчас.".to_string(), images: None },
+    ], 2000).await?;
+
+    let parsed: StoryResponse = serde_json::from_str(extract_json_object(&content))
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Parse Error: {} - Content: {}", e, content) })))?;
+
+    Ok(Json(parsed))
+}
+
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GenerateUnitRequest {
