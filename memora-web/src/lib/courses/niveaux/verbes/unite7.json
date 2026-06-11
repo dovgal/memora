@@ -1,0 +1,330 @@
+{
+  "id": "unite7",
+  "title": "Unité 7 : sur, contre, en, pour, avec + общий зачёт",
+  "description": "Управления с другими предлогами (compter sur, lutter contre, croire en…) и финальное повторение всей системы.",
+  "vocabulary": [
+    {
+      "fr": "compter sur qn",
+      "ru": "рассчитывать на кого-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'appuyer sur qch",
+      "ru": "опираться на что-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "donner sur qch",
+      "ru": "выходить на (об окнах)",
+      "type": "phrase"
+    },
+    {
+      "fr": "lutter contre qch",
+      "ru": "бороться против чего-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se battre contre qn",
+      "ru": "сражаться с кем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "protéger contre/de qch",
+      "ru": "защищать от чего-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se fâcher contre qn",
+      "ru": "сердиться на кого-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "croire en qn/qch",
+      "ru": "верить в кого-л./что-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se transformer en qch",
+      "ru": "превратиться в  что-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se déguiser en qch",
+      "ru": "переодеться в (костюм)",
+      "type": "phrase"
+    },
+    {
+      "fr": "passer pour qn",
+      "ru": "слыть кем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se prendre pour qn",
+      "ru": "возомнить себя кем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "voter pour qn",
+      "ru": "голосовать за кого-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se marier avec qn",
+      "ru": "жениться на ком-л. / выйти замуж за",
+      "type": "phrase"
+    },
+    {
+      "fr": "se fiancer avec qn",
+      "ru": "обручиться с кем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "rompre avec qn",
+      "ru": "порвать с кем-л.",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "vb7-th1",
+      "type": "theory",
+      "title": "Прочие предлоги — короткие списки",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Предлог</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Глаголы</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>sur</td><td style='padding:0.5rem'>compter sur, s'appuyer sur, donner sur</td><td style='padding:0.5rem'>Je compte sur toi !</td></tr><tr><td style='padding:0.5rem'>contre</td><td style='padding:0.5rem'>lutter contre, se fâcher contre, protéger contre</td><td style='padding:0.5rem'>Il lutte contre l'injustice.</td></tr><tr><td style='padding:0.5rem'>en</td><td style='padding:0.5rem'>croire en, se transformer en, se déguiser en</td><td style='padding:0.5rem'>Elle s'est déguisée en pirate.</td></tr><tr><td style='padding:0.5rem'>pour</td><td style='padding:0.5rem'>voter pour, passer pour, se prendre pour</td><td style='padding:0.5rem'>Il se prend pour un génie !</td></tr><tr><td style='padding:0.5rem'>avec</td><td style='padding:0.5rem'>se marier avec, se fiancer avec, rompre avec</td><td style='padding:0.5rem'>Paul s'est marié avec Inès.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Русские кальки-ловушки: «жениться НА» → se marier AVEC; «сердиться НА» → se fâcher CONTRE; «рассчитывать НА» → compter SUR (тут повезло!).</p>"
+    },
+    {
+      "id": "vb7-qz1",
+      "type": "grammar-quiz",
+      "title": "Прочие предлоги — практика",
+      "questions": [
+        {
+          "question": "Tu peux compter ___ moi, je serai là.",
+          "options": [
+            "sur",
+            "à",
+            "avec",
+            "en"
+          ],
+          "correctAnswer": "sur",
+          "explanation": "Compter SUR qn — рассчитывать на."
+        },
+        {
+          "question": "Marie s'est mariée ___ un architecte.",
+          "options": [
+            "avec",
+            "à sur",
+            "contre",
+            "pour"
+          ],
+          "correctAnswer": "avec",
+          "explanation": "Se marier AVEC qn (не «sur»!)."
+        },
+        {
+          "question": "Ne te fâche pas ___ moi, c'était une erreur !",
+          "options": [
+            "contre",
+            "sur",
+            "avec",
+            "à"
+          ],
+          "correctAnswer": "contre",
+          "explanation": "Se fâcher CONTRE qn — сердиться на."
+        },
+        {
+          "question": "Ma chambre donne ___ la mer.",
+          "options": [
+            "sur",
+            "à",
+            "vers de",
+            "dans"
+          ],
+          "correctAnswer": "sur",
+          "explanation": "Donner SUR — выходить на (вид из окна)."
+        },
+        {
+          "question": "Avec ce costume, il passe ___ un vrai banquier.",
+          "options": [
+            "pour",
+            "comme",
+            "en",
+            "par"
+          ],
+          "correctAnswer": "pour",
+          "explanation": "Passer POUR — слыть, сойти за."
+        },
+        {
+          "question": "La citrouille s'est transformée ___ carrosse.",
+          "options": [
+            "en",
+            "dans",
+            "à",
+            "sur"
+          ],
+          "correctAnswer": "en",
+          "explanation": "Se transformer EN qch — превратиться в."
+        }
+      ]
+    },
+    {
+      "id": "vb7-qz2",
+      "type": "grammar-quiz",
+      "title": "Общий зачёт: вся система управлений",
+      "questions": [
+        {
+          "question": "J'attends ___ le résultat depuis une semaine.",
+          "options": [
+            "— (без предлога)",
+            "pour",
+            "à",
+            "de"
+          ],
+          "correctAnswer": "— (без предлога)",
+          "explanation": "Attendre qch — transitif direct, никакого pour!"
+        },
+        {
+          "question": "Elle a téléphoné ___ son avocat et a parlé ___ son divorce.",
+          "options": [
+            "à ... de",
+            "de ... à",
+            "à ... à",
+            "avec ... sur"
+          ],
+          "correctAnswer": "à ... de",
+          "explanation": "Téléphoner À qn; parler DE qch."
+        },
+        {
+          "question": "Il a oublié ___ prévenir, mais il a réussi ___ arriver à temps.",
+          "options": [
+            "de ... à",
+            "à ... de",
+            "de ... de",
+            "à ... à"
+          ],
+          "correctAnswer": "de ... à",
+          "explanation": "Oublier DE, réussir À — минимальная пара инфинитивов."
+        },
+        {
+          "question": "Ce cadeau ? Je l'ai acheté ___ un antiquaire de Lyon.",
+          "options": [
+            "à",
+            "de",
+            "pour",
+            "par"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Acheter qch À qn — купить У кого-л. (à = источник)."
+        },
+        {
+          "question": "Sa fille joue très bien ___ piano et rêve ___ devenir musicienne.",
+          "options": [
+            "du ... de",
+            "au ... à",
+            "du ... à",
+            "au ... de"
+          ],
+          "correctAnswer": "du ... de",
+          "explanation": "Jouer DU piano (инструмент), rêver DE + infinitif."
+        },
+        {
+          "question": "Tes conseils me ___ : j'en avais vraiment besoin !",
+          "options": [
+            "ont manqué",
+            "ont manqué de",
+            "sont manqués",
+            "manquaient à"
+          ],
+          "correctAnswer": "ont manqué",
+          "explanation": "Tes conseils me manquaient/ont manqué — «мне их не хватало»: объект-скучающий = me."
+        }
+      ]
+    },
+    {
+      "id": "vb7-fb1",
+      "type": "fill-blank",
+      "title": "Финальный текст — все управления",
+      "text": "Chers parents, ne vous fâchez pas ___ moi : j'ai décidé ___ rester un mois de plus à Paris ! Je me suis habituée ___ cette ville et je profite ___ chaque journée. Hier, j'ai assisté ___ un concert : une amie m'a invitée ___ l'accompagner. Vous me ___ beaucoup, mais je compte ___ vous pour comprendre. Je promets ___ vous appeler dimanche !",
+      "blanks": [
+        {
+          "correctAnswer": "contre",
+          "options": [
+            "contre",
+            "sur",
+            "avec"
+          ],
+          "explanation": "Se fâcher CONTRE qn."
+        },
+        {
+          "correctAnswer": "de",
+          "options": [
+            "de",
+            "à",
+            "pour"
+          ],
+          "explanation": "Décider DE faire."
+        },
+        {
+          "correctAnswer": "à",
+          "options": [
+            "à",
+            "de",
+            "dans"
+          ],
+          "explanation": "S'habituer À qch."
+        },
+        {
+          "correctAnswer": "de",
+          "options": [
+            "de",
+            "à",
+            "sur"
+          ],
+          "explanation": "Profiter DE qch."
+        },
+        {
+          "correctAnswer": "à",
+          "options": [
+            "à",
+            "de",
+            "pour"
+          ],
+          "explanation": "Assister À qch."
+        },
+        {
+          "correctAnswer": "à",
+          "options": [
+            "à",
+            "de",
+            "pour"
+          ],
+          "explanation": "Inviter qn À faire."
+        },
+        {
+          "correctAnswer": "manquez",
+          "options": [
+            "manquez",
+            "manque",
+            "ratez"
+          ],
+          "explanation": "«Я по вам скучаю» = vous me manquez (вы — подлежащее)."
+        },
+        {
+          "correctAnswer": "sur",
+          "options": [
+            "sur",
+            "à",
+            "en"
+          ],
+          "explanation": "Compter SUR qn."
+        },
+        {
+          "correctAnswer": "de",
+          "options": [
+            "de",
+            "à",
+            "pour"
+          ],
+          "explanation": "Promettre DE faire."
+        }
+      ]
+    }
+  ]
+}

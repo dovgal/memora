@@ -1,0 +1,291 @@
+{
+  "id": "unite2",
+  "title": "Unité 2 : Verbes + à",
+  "description": "Глаголы с предлогом à перед существительным: à qn (людям) и à qch (вещам/занятиям). Замена на lui/leur и y.",
+  "vocabulary": [
+    {
+      "fr": "penser à qn/qch",
+      "ru": "думать о ком-л./чём-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "réfléchir à qch",
+      "ru": "размышлять над чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'intéresser à qch",
+      "ru": "интересоваться чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "participer à qch",
+      "ru": "участвовать в чём-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "assister à qch",
+      "ru": "присутствовать на чём-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "réussir à qch",
+      "ru": "преуспеть в чём-л., сдать (экзамен)",
+      "type": "phrase"
+    },
+    {
+      "fr": "renoncer à qch",
+      "ru": "отказаться от чего-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "ressembler à qn",
+      "ru": "быть похожим на кого-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "plaire à qn",
+      "ru": "нравиться кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "obéir à qn",
+      "ru": "слушаться кого-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "répondre à qn/qch",
+      "ru": "отвечать кому-л./на что-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "appartenir à qn",
+      "ru": "принадлежать кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "faire confiance à qn",
+      "ru": "доверять кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'habituer à qch",
+      "ru": "привыкать к чему-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "jouer à + jeu/sport",
+      "ru": "играть в (игру, спорт)",
+      "type": "phrase"
+    },
+    {
+      "fr": "goûter à qch",
+      "ru": "попробовать (еду)",
+      "type": "phrase"
+    },
+    {
+      "fr": "tenir à qn/qch",
+      "ru": "дорожить кем-л./чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "échapper à qn/qch",
+      "ru": "ускользнуть от, избежать",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "vb2-th1",
+      "type": "theory",
+      "title": "Семья глаголов с à",
+      "content": "<p style='margin:0.75rem 0'>Предлог à обычно вводит адресата или точку приложения. Полезно учить группами:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Группа</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Глаголы</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>мысль</td><td style='padding:0.5rem'>penser à, réfléchir à, songer à</td><td style='padding:0.5rem'>Je pense à mes vacances.</td></tr><tr><td style='padding:0.5rem'>участие</td><td style='padding:0.5rem'>participer à, assister à, jouer à</td><td style='padding:0.5rem'>Elle participe au concours.</td></tr><tr><td style='padding:0.5rem'>отношение к людям</td><td style='padding:0.5rem'>plaire à, obéir à, ressembler à, faire confiance à</td><td style='padding:0.5rem'>Tu ressembles à ton père.</td></tr><tr><td style='padding:0.5rem'>достижение/отказ</td><td style='padding:0.5rem'>réussir à, parvenir à, renoncer à</td><td style='padding:0.5rem'>Il a réussi à l'examen.</td></tr><tr><td style='padding:0.5rem'>принадлежность</td><td style='padding:0.5rem'>appartenir à</td><td style='padding:0.5rem'>Ce livre appartient à Marie.</td></tr><tr><td style='padding:0.5rem'>привычка/привязанность</td><td style='padding:0.5rem'>s'habituer à, tenir à</td><td style='padding:0.5rem'>Je tiens à cette photo.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Замена местоимением: люди → <b>lui/leur</b> (je lui obéis), вещи/идеи → <b>y</b> (j'y pense). Но penser à + человек — ударная форма: je pense à LUI!</p>"
+    },
+    {
+      "id": "vb2-qz1",
+      "type": "grammar-quiz",
+      "title": "Verbes + à — практика",
+      "questions": [
+        {
+          "question": "Elle ___ beaucoup ___ son grand-père.",
+          "options": [
+            "ressemble ... à",
+            "ressemble ... de",
+            "ressemble ... avec",
+            "ressemble ... sur"
+          ],
+          "correctAnswer": "ressemble ... à",
+          "explanation": "Ressembler À qn — быть похожим НА (по-французски «к»)."
+        },
+        {
+          "question": "Tu as répondu ___ sa lettre ?",
+          "options": [
+            "à",
+            "de",
+            "sur",
+            "pour"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Répondre À qch — отвечать НА письмо."
+        },
+        {
+          "question": "Ce chien n'___ qu'à son maître.",
+          "options": [
+            "obéit",
+            "obéit que de",
+            "écoute à",
+            "entend à"
+          ],
+          "correctAnswer": "obéit",
+          "explanation": "Obéir à qn: n'obéit qu'à son maître — слушается только хозяина."
+        },
+        {
+          "question": "Nous avons assisté ___ un concert magnifique.",
+          "options": [
+            "à",
+            "de",
+            "dans",
+            "chez"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Assister À — присутствовать на."
+        },
+        {
+          "question": "Il a renoncé ___ son projet de tour du monde.",
+          "options": [
+            "à",
+            "de",
+            "pour",
+            "sur"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Renoncer À qch — отказаться от (внимание: по-русски «от», по-французски à!)."
+        },
+        {
+          "question": "Tes clés ? Je n'y ai pas touché ! — y заменяет…",
+          "options": [
+            "à tes clés",
+            "de tes clés",
+            "tes clés (COD)",
+            "chez toi"
+          ],
+          "correctAnswer": "à tes clés",
+          "explanation": "Toucher À qch → y: je n'y ai pas touché."
+        }
+      ]
+    },
+    {
+      "id": "vb2-qz2",
+      "type": "grammar-quiz",
+      "title": "Местоимения lui/leur/y",
+      "questions": [
+        {
+          "question": "Tu penses à ton examen ? — Oui, j'___ pense jour et nuit.",
+          "options": [
+            "y",
+            "lui",
+            "le",
+            "en"
+          ],
+          "correctAnswer": "y",
+          "explanation": "Penser à + вещь → y."
+        },
+        {
+          "question": "Tu fais confiance à tes collègues ? — Oui, je ___ fais confiance.",
+          "options": [
+            "leur",
+            "les",
+            "y",
+            "en"
+          ],
+          "correctAnswer": "leur",
+          "explanation": "Faire confiance à + люди → leur."
+        },
+        {
+          "question": "Ce style plaît ___ jeunes.",
+          "options": [
+            "aux",
+            "les",
+            "des",
+            "pour les"
+          ],
+          "correctAnswer": "aux",
+          "explanation": "Plaire à: à + les = aux jeunes."
+        },
+        {
+          "question": "Tu t'es habitué au climat ? — Oui, je m'___ suis habitué.",
+          "options": [
+            "y",
+            "le",
+            "lui",
+            "en"
+          ],
+          "correctAnswer": "y",
+          "explanation": "S'habituer à + вещь → y: je m'y suis habitué."
+        }
+      ]
+    },
+    {
+      "id": "vb2-fb1",
+      "type": "fill-blank",
+      "title": "Письмо студентки",
+      "text": "Chère mamie,\nJe me suis vite habituée ___ ma nouvelle vie. Je participe ___ un atelier de théâtre et je joue ___ volley le jeudi. Mon coloc ressemble ___ un acteur de cinéma ! Je pense souvent ___ toi. Réponds-moi vite : je tiens ___ tes lettres !",
+      "blanks": [
+        {
+          "correctAnswer": "à",
+          "options": [
+            "à",
+            "de",
+            "avec"
+          ],
+          "explanation": "S'habituer À qch."
+        },
+        {
+          "correctAnswer": "à",
+          "options": [
+            "à",
+            "de",
+            "dans"
+          ],
+          "explanation": "Participer À qch."
+        },
+        {
+          "correctAnswer": "au",
+          "options": [
+            "au",
+            "du",
+            "le"
+          ],
+          "explanation": "Jouer à + спорт: à + le volley = au volley."
+        },
+        {
+          "correctAnswer": "à",
+          "options": [
+            "à",
+            "de",
+            "comme"
+          ],
+          "explanation": "Ressembler À qn."
+        },
+        {
+          "correctAnswer": "à",
+          "options": [
+            "à",
+            "de",
+            "sur"
+          ],
+          "explanation": "Penser À qn."
+        },
+        {
+          "correctAnswer": "à",
+          "options": [
+            "à",
+            "de",
+            "pour"
+          ],
+          "explanation": "Tenir À qch — дорожить."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,292 @@
+{
+  "id": "unite6",
+  "title": "Unité 6 : Предлог меняет смысл",
+  "description": "Один глагол — два значения: jouer à/de, penser à/de, parler à/de, manquer à/de, tenir à/de, servir à/de, croire à/en…",
+  "vocabulary": [
+    {
+      "fr": "jouer à + jeu",
+      "ru": "играть в (игру/спорт)",
+      "type": "phrase"
+    },
+    {
+      "fr": "jouer de + instrument",
+      "ru": "играть на (инструменте)",
+      "type": "phrase"
+    },
+    {
+      "fr": "penser à qch",
+      "ru": "думать о чём-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "penser qch de qch",
+      "ru": "иметь мнение о чём-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "parler à qn",
+      "ru": "говорить с кем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "parler de qch",
+      "ru": "говорить о чём-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "manquer à qn",
+      "ru": "недоставать кому-л. (tu me manques!)",
+      "type": "phrase"
+    },
+    {
+      "fr": "manquer de qch",
+      "ru": "испытывать нехватку",
+      "type": "phrase"
+    },
+    {
+      "fr": "manquer qch",
+      "ru": "пропустить (поезд, урок)",
+      "type": "phrase"
+    },
+    {
+      "fr": "tenir à qch",
+      "ru": "дорожить чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "tenir de qn",
+      "ru": "пойти в кого-л. (характером)",
+      "type": "phrase"
+    },
+    {
+      "fr": "servir à qch",
+      "ru": "служить для чего-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "servir de qch",
+      "ru": "служить в качестве чего-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "croire qn/qch",
+      "ru": "верить кому-л./чему-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "croire à/en qch",
+      "ru": "верить в существование / в силу",
+      "type": "phrase"
+    },
+    {
+      "fr": "répondre de qn",
+      "ru": "ручаться за кого-л.",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "vb6-th1",
+      "type": "theory",
+      "title": "Минимальные пары — карта смыслов",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Глагол</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>+ à</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>+ de</th></tr><tr><td style='padding:0.5rem'>jouer</td><td style='padding:0.5rem'>au tennis (игра)</td><td style='padding:0.5rem'>du piano (инструмент)</td></tr><tr><td style='padding:0.5rem'>penser</td><td style='padding:0.5rem'>Je pense à toi. (думаю о)</td><td style='padding:0.5rem'>Qu'est-ce que tu penses de ce film ? (мнение)</td></tr><tr><td style='padding:0.5rem'>parler</td><td style='padding:0.5rem'>Je parle à Léa. (с кем)</td><td style='padding:0.5rem'>Je parle de Léa. (о ком)</td></tr><tr><td style='padding:0.5rem'>manquer</td><td style='padding:0.5rem'>Tu manques à ta mère. (она скучает!)</td><td style='padding:0.5rem'>Tu manques de patience. (не хватает)</td></tr><tr><td style='padding:0.5rem'>tenir</td><td style='padding:0.5rem'>Je tiens à ce collier. (дорожу)</td><td style='padding:0.5rem'>Elle tient de sa mère. (пошла в...)</td></tr><tr><td style='padding:0.5rem'>servir</td><td style='padding:0.5rem'>Ça sert à couper. (для чего)</td><td style='padding:0.5rem'>Le canapé sert de lit. (в качестве)</td></tr><tr><td style='padding:0.5rem'>croire</td><td style='padding:0.5rem'>croire aux fantômes (в существование)</td><td style='padding:0.5rem'>—  (croire EN soi — доверять силе)</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Manquer — перевёртыш! «Tu me manques» = я скучаю по тебе (буквально: ты отсутствуешь мне). Подлежащее и объект меняются местами по сравнению с русским.</p>"
+    },
+    {
+      "id": "vb6-qz1",
+      "type": "grammar-quiz",
+      "title": "Выберите предлог по смыслу",
+      "questions": [
+        {
+          "question": "Ma fille joue ___ violon depuis trois ans.",
+          "options": [
+            "du",
+            "au",
+            "le",
+            "avec le"
+          ],
+          "correctAnswer": "du",
+          "explanation": "Инструмент → jouer DE: de + le violon = du violon."
+        },
+        {
+          "question": "On joue ___ cartes ce soir ?",
+          "options": [
+            "aux",
+            "des",
+            "les",
+            "sur les"
+          ],
+          "correctAnswer": "aux",
+          "explanation": "Игра → jouer À: à + les cartes = aux cartes."
+        },
+        {
+          "question": "Qu'est-ce que tu penses ___ mon idée ?",
+          "options": [
+            "de",
+            "à",
+            "sur",
+            "pour"
+          ],
+          "correctAnswer": "de",
+          "explanation": "Мнение — penser DE. «Думать о» — penser à."
+        },
+        {
+          "question": "Mes amis me ___ : je veux rentrer !",
+          "options": [
+            "manquent",
+            "manquent de",
+            "manquent à",
+            "ratent"
+          ],
+          "correctAnswer": "manquent",
+          "explanation": "«Я скучаю по друзьям» = mes amis me manquent (друзья — подлежащее!)."
+        },
+        {
+          "question": "Ce grenier nous sert ___ atelier.",
+          "options": [
+            "d'",
+            "à",
+            "pour",
+            "comme de"
+          ],
+          "correctAnswer": "d'",
+          "explanation": "«В качестве» → servir DE: sert d'atelier."
+        },
+        {
+          "question": "Un tire-bouchon, ça sert ___ ouvrir les bouteilles.",
+          "options": [
+            "à",
+            "de",
+            "pour de",
+            "en"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Назначение → servir À + infinitif."
+        },
+        {
+          "question": "Il est têtu : il tient ___ son père !",
+          "options": [
+            "de",
+            "à",
+            "pour",
+            "contre"
+          ],
+          "correctAnswer": "de",
+          "explanation": "«Пошёл в отца» → tenir DE qn. Tenir À = дорожить."
+        }
+      ]
+    },
+    {
+      "id": "vb6-qz2",
+      "type": "grammar-quiz",
+      "title": "Переведите правильно",
+      "questions": [
+        {
+          "question": "«Ты мне очень не хватаешь» по-французски:",
+          "options": [
+            "Tu me manques beaucoup.",
+            "Je te manque beaucoup.",
+            "Tu manques de moi.",
+            "Je manque à toi de."
+          ],
+          "correctAnswer": "Tu me manques beaucoup.",
+          "explanation": "Скучающий — косвенный объект (me), отсутствующий — подлежащее (tu)."
+        },
+        {
+          "question": "«Я верю в себя»:",
+          "options": [
+            "Je crois en moi.",
+            "Je crois à moi.",
+            "Je me crois.",
+            "Je crois de moi."
+          ],
+          "correctAnswer": "Je crois en moi.",
+          "explanation": "Вера в силу/способности — croire EN."
+        },
+        {
+          "question": "«Поговори с врачом об этой боли»:",
+          "options": [
+            "Parle au médecin de cette douleur.",
+            "Parle du médecin à cette douleur.",
+            "Parle le médecin de la douleur.",
+            "Parle avec de médecin."
+          ],
+          "correctAnswer": "Parle au médecin de cette douleur.",
+          "explanation": "Parler À qn (собеседник) DE qch (тема)."
+        },
+        {
+          "question": "«Чему служит эта кнопка?»:",
+          "options": [
+            "À quoi sert ce bouton ?",
+            "De quoi sert ce bouton ?",
+            "Quoi sert ce bouton ?",
+            "Pour quoi ce bouton sert-il de ?"
+          ],
+          "correctAnswer": "À quoi sert ce bouton ?",
+          "explanation": "Назначение → servir à → вопрос: à quoi sert... ?"
+        }
+      ]
+    },
+    {
+      "id": "vb6-fb1",
+      "type": "fill-blank",
+      "title": "Семейный портрет",
+      "text": "Mon fils joue ___ guitare et ma fille joue ___ échecs. Léo tient ___ son grand-père : même humour ! Il tient beaucoup ___ sa vieille guitare, un cadeau de famille. Quand les enfants sont en colonie, ils nous ___ terriblement. Et cette grande table ? Elle nous sert ___ bureau, d'atelier et de terrain de jeux !",
+      "blanks": [
+        {
+          "correctAnswer": "de la",
+          "options": [
+            "de la",
+            "à la",
+            "la"
+          ],
+          "explanation": "Инструмент: jouer DE la guitare."
+        },
+        {
+          "correctAnswer": "aux",
+          "options": [
+            "aux",
+            "des",
+            "les"
+          ],
+          "explanation": "Игра: jouer AUX échecs."
+        },
+        {
+          "correctAnswer": "de",
+          "options": [
+            "de",
+            "à",
+            "pour"
+          ],
+          "explanation": "Пошёл в деда — tenir DE qn."
+        },
+        {
+          "correctAnswer": "à",
+          "options": [
+            "à",
+            "de",
+            "sur"
+          ],
+          "explanation": "Дорожит гитарой — tenir À qch."
+        },
+        {
+          "correctAnswer": "manquent",
+          "options": [
+            "manquent",
+            "manquons",
+            "ratent"
+          ],
+          "explanation": "Мы скучаем → ILS nous manquent (дети — подлежащее)."
+        },
+        {
+          "correctAnswer": "de",
+          "options": [
+            "de",
+            "à",
+            "comme"
+          ],
+          "explanation": "Sert DE bureau — в качестве."
+        }
+      ]
+    }
+  ]
+}

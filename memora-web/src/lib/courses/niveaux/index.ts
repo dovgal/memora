@@ -24,6 +24,10 @@ import ph1 from './phonetique/unite1.json'; import ph2 from './phonetique/unite2
 import c2u7 from './c2/unite7.json'; import c2u8 from './c2/unite8.json';
 import le1 from './lecture/unite1.json'; import le2 from './lecture/unite2.json';
 import le3 from './lecture/unite3.json'; import le4 from './lecture/unite4.json';
+import vb1 from './verbes/unite1.json'; import vb2 from './verbes/unite2.json';
+import vb3 from './verbes/unite3.json'; import vb4 from './verbes/unite4.json';
+import vb5 from './verbes/unite5.json'; import vb6 from './verbes/unite6.json';
+import vb7 from './verbes/unite7.json';
 
 const U = (m: unknown) => m as EditoUnit;
 
@@ -87,5 +91,12 @@ export const LEVELS: Record<string, LevelCourse> = {
     accent: 'orange',
     units: { '1': U(le1), '2': U(le2), '3': U(le3), '4': U(le4) },
     order: ['1','2','3','4'],
+  },
+  verbes: {
+    id: 'verbes', courseId: 'niveau-verbes', title: 'Les verbes et leurs prépositions', level: 'A2–B2',
+    description: 'Система глагольных управлений: transitif/intransitif, глаголы с à и de, двойные дополнения, à/de + infinitif, предлоги-смыслоразличители. Теория на русском, словари юнитов — в личные наборы.',
+    accent: 'lime',
+    units: { '1': U(vb1), '2': U(vb2), '3': U(vb3), '4': U(vb4), '5': U(vb5), '6': U(vb6), '7': U(vb7) },
+    order: ['1','2','3','4','5','6','7'],
   },
 };

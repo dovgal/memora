@@ -1,0 +1,236 @@
+{
+  "id": "unite4",
+  "title": "Unité 4 : Deux дополнения — qch à qn, qn de qch",
+  "description": "Глаголы с двумя дополнениями: дать ЧТО-ТО КОМУ-ТО (à qn), благодарить КОГО-ТО ЗА ЧТО-ТО (de qch), и порядок местоимений.",
+  "vocabulary": [
+    {
+      "fr": "donner qch à qn",
+      "ru": "давать что-л. кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "offrir qch à qn",
+      "ru": "дарить что-л. кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "prêter qch à qn",
+      "ru": "одалживать (давать) что-л. кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "emprunter qch à qn",
+      "ru": "одалживать (брать) у кого-л.!",
+      "type": "phrase"
+    },
+    {
+      "fr": "demander qch à qn",
+      "ru": "просить что-л. у кого-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "envoyer qch à qn",
+      "ru": "отправлять что-л. кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "promettre qch à qn",
+      "ru": "обещать что-л. кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "cacher qch à qn",
+      "ru": "скрывать что-л. от кого-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "voler qch à qn",
+      "ru": "украсть что-л. у кого-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "apprendre qch à qn",
+      "ru": "научить кого-л. чему-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "remercier qn de qch",
+      "ru": "благодарить кого-л. за что-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "féliciter qn de/pour qch",
+      "ru": "поздравлять кого-л. с чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "accuser qn de qch",
+      "ru": "обвинять кого-л. в чём-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "priver qn de qch",
+      "ru": "лишать кого-л. чего-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "informer qn de qch",
+      "ru": "информировать кого-л. о чём-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "convaincre qn de qch",
+      "ru": "убедить кого-л. в чём-л.",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "vb4-th1",
+      "type": "theory",
+      "title": "Схема «qch À qn» — вещь и адресат",
+      "content": "<p style='margin:0.75rem 0'>Большая семья глаголов передачи: прямое дополнение (вещь) + à + человек:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Глагол</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Внимание</th></tr><tr><td style='padding:0.5rem'>donner / offrir / prêter</td><td style='padding:0.5rem'>Je prête mon vélo à Paul.</td><td style='padding:0.5rem'>—</td></tr><tr><td style='padding:0.5rem'>demander</td><td style='padding:0.5rem'>Je demande l'addition au serveur.</td><td style='padding:0.5rem'>НЕ «demander à l'addition»!</td></tr><tr><td style='padding:0.5rem'>emprunter / voler / cacher / prendre</td><td style='padding:0.5rem'>Il a emprunté 100 € à son frère.</td><td style='padding:0.5rem'>à = У КОГО (источник!)</td></tr><tr><td style='padding:0.5rem'>apprendre / enseigner</td><td style='padding:0.5rem'>Elle apprend le russe aux enfants.</td><td style='padding:0.5rem'>научить кого-л. = à qn</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Сюрприз семьи: с emprunter/voler/cacher/acheter предлог à вводит не получателя, а ИСТОЧНИК: acheter une baguette AU boulanger — купить У булочника.</p>"
+    },
+    {
+      "id": "vb4-th2",
+      "type": "theory",
+      "title": "Схема «qn DE qch» — человек и причина",
+      "content": "<p style='margin:0.75rem 0'>Вторая семья: прямое дополнение — человек, а de вводит тему/причину:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Глагол</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>remercier qn de/pour qch</td><td style='padding:0.5rem'>Je vous remercie de votre aide.</td></tr><tr><td style='padding:0.5rem'>féliciter qn de/pour qch</td><td style='padding:0.5rem'>On l'a félicitée de son succès.</td></tr><tr><td style='padding:0.5rem'>accuser qn de qch</td><td style='padding:0.5rem'>On l'accuse de mensonge.</td></tr><tr><td style='padding:0.5rem'>informer / avertir qn de qch</td><td style='padding:0.5rem'>Informez-moi de votre décision.</td></tr><tr><td style='padding:0.5rem'>priver qn de qch</td><td style='padding:0.5rem'>Ne le prive pas de dessert !</td></tr><tr><td style='padding:0.5rem'>convaincre / persuader qn de qch</td><td style='padding:0.5rem'>Il m'a convaincu de son honnêteté.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Местоимения: вещь+адресат → le lui / la leur (Je le lui prête); человек+тема → l'en (On l'en a informé).</p>"
+    },
+    {
+      "id": "vb4-qz1",
+      "type": "grammar-quiz",
+      "title": "Двойное дополнение — практика",
+      "questions": [
+        {
+          "question": "J'ai emprunté ce livre ___ la bibliothécaire.",
+          "options": [
+            "à",
+            "de",
+            "chez",
+            "pour"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Emprunter qch À qn — взять У кого-л. (à = источник)."
+        },
+        {
+          "question": "Je vous remercie ___ votre patience.",
+          "options": [
+            "de",
+            "à",
+            "sur",
+            "avec"
+          ],
+          "correctAnswer": "de",
+          "explanation": "Remercier qn DE qch — благодарить за."
+        },
+        {
+          "question": "Elle a caché la vérité ___ ses parents.",
+          "options": [
+            "à",
+            "de",
+            "contre",
+            "devant"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Cacher qch À qn — скрыть ОТ кого-л. (фр. логика: «к»)."
+        },
+        {
+          "question": "On l'a accusé ___ avoir menti.",
+          "options": [
+            "d'",
+            "à",
+            "pour",
+            "en"
+          ],
+          "correctAnswer": "d'",
+          "explanation": "Accuser qn DE qch/de + inf: accusé d'avoir menti."
+        },
+        {
+          "question": "Qui a appris la nouvelle ___ ta sœur ?",
+          "options": [
+            "à",
+            "de",
+            "par",
+            "chez"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Apprendre qch À qn — сообщить/научить кому-л."
+        },
+        {
+          "question": "Tu rends les clés au gardien ? — Oui, je ___ rends ce soir.",
+          "options": [
+            "les lui",
+            "le lui",
+            "lui les",
+            "les leur"
+          ],
+          "correctAnswer": "les lui",
+          "explanation": "Les (clés) + lui (au gardien): je les lui rends."
+        }
+      ]
+    },
+    {
+      "id": "vb4-fb1",
+      "type": "fill-blank",
+      "title": "Детектив в офисе",
+      "text": "Quelqu'un a volé le projet secret ___ directeur ! On a d'abord accusé le stagiaire ___ l'avoir copié. Mais il a convaincu tout le monde ___ son innocence : ce jour-là, il empruntait une imprimante ___ service voisin. Finalement, on a promis une récompense ___ celui qui retrouverait le dossier — et on a privé le vrai coupable ___ sa prime !",
+      "blanks": [
+        {
+          "correctAnswer": "au",
+          "options": [
+            "au",
+            "du",
+            "le"
+          ],
+          "explanation": "Voler qch À qn: à + le directeur = au (украсть У директора)."
+        },
+        {
+          "correctAnswer": "d'",
+          "options": [
+            "d'",
+            "à",
+            "pour"
+          ],
+          "explanation": "Accuser qn DE + infinitif passé."
+        },
+        {
+          "correctAnswer": "de",
+          "options": [
+            "de",
+            "à",
+            "par"
+          ],
+          "explanation": "Convaincre qn DE qch."
+        },
+        {
+          "correctAnswer": "au",
+          "options": [
+            "au",
+            "du",
+            "dans le"
+          ],
+          "explanation": "Emprunter À — источник: au service voisin."
+        },
+        {
+          "correctAnswer": "à",
+          "options": [
+            "à",
+            "de",
+            "pour"
+          ],
+          "explanation": "Promettre qch À qn."
+        },
+        {
+          "correctAnswer": "de",
+          "options": [
+            "de",
+            "à",
+            "sur"
+          ],
+          "explanation": "Priver qn DE qch."
+        }
+      ]
+    }
+  ]
+}

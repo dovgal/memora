@@ -1,0 +1,311 @@
+{
+  "id": "unite5",
+  "title": "Unité 5 : à + infinitif ou de + infinitif ?",
+  "description": "Самый коварный выбор: commencer À faire, but finir DE faire. Семьи глаголов, глаголы без предлога и опорные списки.",
+  "vocabulary": [
+    {
+      "fr": "commencer à faire",
+      "ru": "начинать делать",
+      "type": "phrase"
+    },
+    {
+      "fr": "continuer à faire",
+      "ru": "продолжать делать",
+      "type": "phrase"
+    },
+    {
+      "fr": "apprendre à faire",
+      "ru": "учиться делать",
+      "type": "phrase"
+    },
+    {
+      "fr": "réussir à faire",
+      "ru": "суметь сделать",
+      "type": "phrase"
+    },
+    {
+      "fr": "hésiter à faire",
+      "ru": "не решаться сделать",
+      "type": "phrase"
+    },
+    {
+      "fr": "aider qn à faire",
+      "ru": "помогать кому-л. делать",
+      "type": "phrase"
+    },
+    {
+      "fr": "inviter qn à faire",
+      "ru": "приглашать кого-л. сделать",
+      "type": "phrase"
+    },
+    {
+      "fr": "arriver à faire",
+      "ru": "удаваться сделать",
+      "type": "phrase"
+    },
+    {
+      "fr": "finir de faire",
+      "ru": "заканчивать делать",
+      "type": "phrase"
+    },
+    {
+      "fr": "décider de faire",
+      "ru": "решить сделать",
+      "type": "phrase"
+    },
+    {
+      "fr": "essayer de faire",
+      "ru": "пытаться сделать",
+      "type": "phrase"
+    },
+    {
+      "fr": "oublier de faire",
+      "ru": "забыть сделать",
+      "type": "phrase"
+    },
+    {
+      "fr": "refuser de faire",
+      "ru": "отказаться делать",
+      "type": "phrase"
+    },
+    {
+      "fr": "éviter de faire",
+      "ru": "избегать делать",
+      "type": "phrase"
+    },
+    {
+      "fr": "promettre de faire",
+      "ru": "обещать сделать",
+      "type": "phrase"
+    },
+    {
+      "fr": "conseiller de faire",
+      "ru": "советовать сделать",
+      "type": "phrase"
+    },
+    {
+      "fr": "empêcher qn de faire",
+      "ru": "мешать кому-л. делать",
+      "type": "phrase"
+    },
+    {
+      "fr": "vouloir / pouvoir / devoir faire",
+      "ru": "хотеть / мочь / быть должным (БЕЗ предлога)",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "vb5-th1",
+      "type": "theory",
+      "title": "Три списка, которые решают всё",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>БЕЗ предлога</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>+ À + infinitif</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>+ DE + infinitif</th></tr><tr><td style='padding:0.5rem'>vouloir, pouvoir, devoir</td><td style='padding:0.5rem'>commencer à, continuer à</td><td style='padding:0.5rem'>finir de, arrêter de</td></tr><tr><td style='padding:0.5rem'>savoir, aimer, préférer</td><td style='padding:0.5rem'>apprendre à, réussir à, arriver à</td><td style='padding:0.5rem'>décider de, essayer de, choisir de</td></tr><tr><td style='padding:0.5rem'>aller, venir, espérer</td><td style='padding:0.5rem'>hésiter à, renoncer à</td><td style='padding:0.5rem'>oublier de, refuser de, éviter de</td></tr><tr><td style='padding:0.5rem'>faire, laisser, voir, entendre</td><td style='padding:0.5rem'>aider qn à, inviter qn à, encourager qn à</td><td style='padding:0.5rem'>promettre de, conseiller de, empêcher qn de</td></tr></table><p style='margin:0.75rem 0'>Закономерность-подсказка (не абсолютная): <b>à</b> часто у глаголов движения К цели и процесса (начать, учиться, стремиться), <b>de</b> — у глаголов завершения, решения и оценки (закончить, решить, забыть, отказаться).</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Минимальные пары: commencer À ≠ finir DE; continuer À (норма) — continuer DE (тоже верно, книжно); décider DE faire, но se décider À faire!</p>"
+    },
+    {
+      "id": "vb5-qz1",
+      "type": "grammar-quiz",
+      "title": "À, de или ничего?",
+      "questions": [
+        {
+          "question": "Il a enfin réussi ___ réparer la machine.",
+          "options": [
+            "à",
+            "de",
+            "—",
+            "pour"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Réussir À + infinitif — суметь."
+        },
+        {
+          "question": "N'oublie pas ___ fermer la porte !",
+          "options": [
+            "de",
+            "à",
+            "—",
+            "sur"
+          ],
+          "correctAnswer": "de",
+          "explanation": "Oublier DE + infinitif."
+        },
+        {
+          "question": "Elle sait ___ convaincre les clients.",
+          "options": [
+            "— (без предлога)",
+            "à",
+            "de",
+            "pour"
+          ],
+          "correctAnswer": "— (без предлога)",
+          "explanation": "Savoir + инфинитив напрямую: elle sait convaincre."
+        },
+        {
+          "question": "Nous hésitons ___ accepter cette offre.",
+          "options": [
+            "à",
+            "de",
+            "—",
+            "en"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Hésiter À + infinitif — колебаться."
+        },
+        {
+          "question": "Le bruit m'empêche ___ travailler.",
+          "options": [
+            "de",
+            "à",
+            "—",
+            "contre"
+          ],
+          "correctAnswer": "de",
+          "explanation": "Empêcher qn DE faire — мешать."
+        },
+        {
+          "question": "Tu m'aides ___ porter les cartons ?",
+          "options": [
+            "à",
+            "de",
+            "—",
+            "avec"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Aider qn À faire — помогать."
+        },
+        {
+          "question": "Évitez ___ sortir aux heures chaudes.",
+          "options": [
+            "de",
+            "à",
+            "—",
+            "pour"
+          ],
+          "correctAnswer": "de",
+          "explanation": "Éviter DE faire."
+        }
+      ]
+    },
+    {
+      "id": "vb5-qz2",
+      "type": "grammar-quiz",
+      "title": "Минимальные пары",
+      "questions": [
+        {
+          "question": "J'ai commencé ___ lire à 19h et j'ai fini ___ lire à minuit.",
+          "options": [
+            "à ... de",
+            "de ... à",
+            "à ... à",
+            "de ... de"
+          ],
+          "correctAnswer": "à ... de",
+          "explanation": "Commencer À, finir DE — главная пара темы."
+        },
+        {
+          "question": "Elle a décidé ___ partir, puis elle s'est décidée ___ acheter le billet.",
+          "options": [
+            "de ... à",
+            "à ... de",
+            "de ... de",
+            "à ... à"
+          ],
+          "correctAnswer": "de ... à",
+          "explanation": "Décider DE faire, но возвратное se décider À faire."
+        },
+        {
+          "question": "Il apprend ___ nager et il essaie ___ plonger.",
+          "options": [
+            "à ... de",
+            "de ... à",
+            "à ... à",
+            "de ... de"
+          ],
+          "correctAnswer": "à ... de",
+          "explanation": "Apprendre À, essayer DE."
+        },
+        {
+          "question": "Je t'invite ___ dîner, promets-moi ___ venir !",
+          "options": [
+            "à ... de",
+            "de ... à",
+            "à ... à",
+            "de ... de"
+          ],
+          "correctAnswer": "à ... de",
+          "explanation": "Inviter qn À faire, promettre DE faire."
+        }
+      ]
+    },
+    {
+      "id": "vb5-fb1",
+      "type": "fill-blank",
+      "title": "Новогодние обещания",
+      "text": "Cette année, j'ai décidé ___ changer de vie ! J'apprends ___ cuisiner, j'évite ___ manger des sucreries et j'ai arrêté ___ fumer. Mon frère m'encourage ___ courir avec lui le dimanche. J'hésite encore ___ m'inscrire au marathon... mais je refuse ___ abandonner mes bonnes résolutions !",
+      "blanks": [
+        {
+          "correctAnswer": "de",
+          "options": [
+            "de",
+            "à",
+            "—"
+          ],
+          "explanation": "Décider DE faire."
+        },
+        {
+          "correctAnswer": "à",
+          "options": [
+            "à",
+            "de",
+            "—"
+          ],
+          "explanation": "Apprendre À faire."
+        },
+        {
+          "correctAnswer": "de",
+          "options": [
+            "de",
+            "à",
+            "—"
+          ],
+          "explanation": "Éviter DE faire."
+        },
+        {
+          "correctAnswer": "de",
+          "options": [
+            "de",
+            "à",
+            "—"
+          ],
+          "explanation": "Arrêter DE faire."
+        },
+        {
+          "correctAnswer": "à",
+          "options": [
+            "à",
+            "de",
+            "—"
+          ],
+          "explanation": "Encourager qn À faire."
+        },
+        {
+          "correctAnswer": "à",
+          "options": [
+            "à",
+            "de",
+            "—"
+          ],
+          "explanation": "Hésiter À faire."
+        },
+        {
+          "correctAnswer": "d'",
+          "options": [
+            "d'",
+            "à",
+            "—"
+          ],
+          "explanation": "Refuser DE faire (élision перед abandonner)."
+        }
+      ]
+    }
+  ]
+}

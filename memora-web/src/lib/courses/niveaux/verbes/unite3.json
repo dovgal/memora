@@ -1,0 +1,291 @@
+{
+  "id": "unite3",
+  "title": "Unité 3 : Verbes + de",
+  "description": "Глаголы с предлогом de: источник, тема, отдаление, чувства. Замена на en.",
+  "vocabulary": [
+    {
+      "fr": "parler de qch",
+      "ru": "говорить о чём-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se souvenir de qch",
+      "ru": "помнить о чём-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se moquer de qn",
+      "ru": "насмехаться над кем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'occuper de qch/qn",
+      "ru": "заниматься чем-л./кем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "avoir besoin de qch",
+      "ru": "нуждаться в чём-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "avoir envie de qch",
+      "ru": "хотеть чего-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "avoir peur de qch",
+      "ru": "бояться чего-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se servir de qch",
+      "ru": "пользоваться чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se plaindre de qch",
+      "ru": "жаловаться на что-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "profiter de qch",
+      "ru": "воспользоваться чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "dépendre de qch",
+      "ru": "зависеть от чего-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "douter de qch",
+      "ru": "сомневаться в чём-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "manquer de qch",
+      "ru": "испытывать нехватку чего-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "rêver de qch",
+      "ru": "мечтать о чём-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'apercevoir de qch",
+      "ru": "заметить что-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se passer de qch",
+      "ru": "обходиться без чего-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "être fier / fière de",
+      "ru": "гордиться",
+      "type": "phrase"
+    },
+    {
+      "fr": "être responsable de",
+      "ru": "отвечать за",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "vb3-th1",
+      "type": "theory",
+      "title": "Семья глаголов с de",
+      "content": "<p style='margin:0.75rem 0'>De вводит источник, тему, причину чувства или то, от чего отдаляемся:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Группа</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Глаголы</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>речь и память</td><td style='padding:0.5rem'>parler de, se souvenir de, rêver de</td><td style='padding:0.5rem'>On parle de toi !</td></tr><tr><td style='padding:0.5rem'>чувства</td><td style='padding:0.5rem'>avoir peur/envie/besoin/honte de</td><td style='padding:0.5rem'>J'ai besoin de silence.</td></tr><tr><td style='padding:0.5rem'>забота и использование</td><td style='padding:0.5rem'>s'occuper de, se servir de, profiter de</td><td style='padding:0.5rem'>Qui s'occupe du dossier ?</td></tr><tr><td style='padding:0.5rem'>недовольство</td><td style='padding:0.5rem'>se plaindre de, se moquer de, douter de</td><td style='padding:0.5rem'>Il se plaint du bruit.</td></tr><tr><td style='padding:0.5rem'>зависимость и отказ</td><td style='padding:0.5rem'>dépendre de, se passer de, manquer de</td><td style='padding:0.5rem'>Tout dépend de toi.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Замена местоимением: de + вещь → <b>en</b> (j'en parle, j'en ai besoin). Люди — ударная форма: je m'occupe d'ELLE (но допустимо en для неодушевлённых ролей).</p>"
+    },
+    {
+      "id": "vb3-qz1",
+      "type": "grammar-quiz",
+      "title": "Verbes + de — практика",
+      "questions": [
+        {
+          "question": "Arrête de te ___ de ton petit frère !",
+          "options": [
+            "moquer",
+            "moquer à",
+            "rire sur",
+            "moquer avec"
+          ],
+          "correctAnswer": "moquer",
+          "explanation": "Se moquer DE qn — насмехаться над."
+        },
+        {
+          "question": "Je ne me ___ plus ___ son adresse.",
+          "options": [
+            "souviens ... de",
+            "souviens ... à",
+            "rappelle ... de moi",
+            "souviens ... sur"
+          ],
+          "correctAnswer": "souviens ... de",
+          "explanation": "Se souvenir DE qch (а вот se rappeler qch — без предлога!)."
+        },
+        {
+          "question": "Tu peux te ___ mon ordinateur si tu veux.",
+          "options": [
+            "servir de",
+            "servir à",
+            "user de à",
+            "utiliser de"
+          ],
+          "correctAnswer": "servir de",
+          "explanation": "Se servir DE qch — пользоваться."
+        },
+        {
+          "question": "Le succès ___ de votre préparation.",
+          "options": [
+            "dépend",
+            "dépend à",
+            "tient sur",
+            "compte de"
+          ],
+          "correctAnswer": "dépend",
+          "explanation": "Dépendre DE qch — зависеть от."
+        },
+        {
+          "question": "Cette équipe ___ d'expérience : tous des débutants.",
+          "options": [
+            "manque",
+            "manque à",
+            "a manque",
+            "manque sur"
+          ],
+          "correctAnswer": "manque",
+          "explanation": "Manquer DE qch — не хватать чего-л.: manquer d'expérience."
+        },
+        {
+          "question": "Profitez ___ vos vacances !",
+          "options": [
+            "de",
+            "à",
+            "sur",
+            "dans"
+          ],
+          "correctAnswer": "de",
+          "explanation": "Profiter DE qch — наслаждаться/пользоваться."
+        }
+      ]
+    },
+    {
+      "id": "vb3-qz2",
+      "type": "grammar-quiz",
+      "title": "Местоимение en",
+      "questions": [
+        {
+          "question": "Tu as besoin de mon aide ? — Oui, j'___ ai besoin.",
+          "options": [
+            "en",
+            "y",
+            "la",
+            "lui"
+          ],
+          "correctAnswer": "en",
+          "explanation": "Avoir besoin DE → en."
+        },
+        {
+          "question": "Vous parlez du nouveau projet ? — Oui, nous ___ parlons.",
+          "options": [
+            "en",
+            "y",
+            "le",
+            "lui"
+          ],
+          "correctAnswer": "en",
+          "explanation": "Parler DE qch → en."
+        },
+        {
+          "question": "Elle s'aperçoit de son erreur. → Elle s'___ aperçoit.",
+          "options": [
+            "en",
+            "y",
+            "l'",
+            "lui"
+          ],
+          "correctAnswer": "en",
+          "explanation": "S'apercevoir DE → en."
+        },
+        {
+          "question": "Je peux me passer de café. → Je peux m'___ passer.",
+          "options": [
+            "en",
+            "y",
+            "le",
+            "lui"
+          ],
+          "correctAnswer": "en",
+          "explanation": "Se passer DE qch → en: je peux m'en passer."
+        }
+      ]
+    },
+    {
+      "id": "vb3-fb1",
+      "type": "fill-blank",
+      "title": "Разговор соседей",
+      "text": "— Vous vous plaignez encore ___ bruit ?\n— Oui ! Et j'ai peur ___ ne plus dormir. Je rêve ___ une nuit calme !\n— Moi, je me sers ___ boules Quies, et je me passe très bien ___ silence absolu.\n— Vous avez de la chance... Tout dépend ___ l'immeuble, je crois.",
+      "blanks": [
+        {
+          "correctAnswer": "du",
+          "options": [
+            "du",
+            "au",
+            "le"
+          ],
+          "explanation": "Se plaindre de + le bruit = du bruit."
+        },
+        {
+          "correctAnswer": "de",
+          "options": [
+            "de",
+            "à",
+            "pour"
+          ],
+          "explanation": "Avoir peur DE + инфинитив."
+        },
+        {
+          "correctAnswer": "d'",
+          "options": [
+            "d'",
+            "à",
+            "en"
+          ],
+          "explanation": "Rêver DE: d'une nuit calme."
+        },
+        {
+          "correctAnswer": "de",
+          "options": [
+            "de",
+            "des",
+            "aux"
+          ],
+          "explanation": "Se servir DE + boules Quies (артикль опущен в обороте de boules)."
+        },
+        {
+          "correctAnswer": "du",
+          "options": [
+            "du",
+            "de la",
+            "au"
+          ],
+          "explanation": "Se passer DE + le silence = du silence."
+        },
+        {
+          "correctAnswer": "de",
+          "options": [
+            "de",
+            "à",
+            "sur"
+          ],
+          "explanation": "Dépendre DE qch."
+        }
+      ]
+    }
+  ]
+}

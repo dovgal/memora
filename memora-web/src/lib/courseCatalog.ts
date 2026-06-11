@@ -85,6 +85,12 @@ export const BUILTIN_COURSES: CatalogCourse[] = [
     description: 'Компаньон к адаптированным книгам: Lupin, Le Rouge et le Noir, Moby Dick, Monte-Cristo.',
     subject: 'Языки', topic: 'Французский', level: 'A2–B2', emoji: '📖',
   },
+  {
+    id: 'niveau-verbes', href: '/dashboard/student/courses/niveau/verbes',
+    title: 'Les verbes et leurs prépositions',
+    description: 'Глагольные управления: transitif/intransitif, à или de, двойные дополнения, инфинитивы.',
+    subject: 'Языки', topic: 'Французский', level: 'A2–B2', emoji: '🔗',
+  },
 ];
 
 /** Тема для пользовательского курса по коду языка. */

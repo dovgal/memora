@@ -1,0 +1,294 @@
+{
+  "id": "unite1",
+  "title": "Unité 1 : Transitif ou intransitif ?",
+  "description": "Фундамент темы: прямопереходные (T), косвеннопереходные (Ti) и непереходные (I) глаголы; глаголы-«хамелеоны», меняющие тип и даже вспомогательный глагол.",
+  "vocabulary": [
+    {
+      "fr": "regarder qch (T)",
+      "ru": "смотреть на что-л. (без предлога!)",
+      "type": "phrase"
+    },
+    {
+      "fr": "écouter qch (T)",
+      "ru": "слушать что-л. (без предлога!)",
+      "type": "phrase"
+    },
+    {
+      "fr": "attendre qn (T)",
+      "ru": "ждать кого-л. (без предлога!)",
+      "type": "phrase"
+    },
+    {
+      "fr": "chercher qch (T)",
+      "ru": "искать что-л. (без предлога!)",
+      "type": "phrase"
+    },
+    {
+      "fr": "payer qch (T)",
+      "ru": "платить за что-л. (без предлога!)",
+      "type": "phrase"
+    },
+    {
+      "fr": "demander qch (T)",
+      "ru": "просить что-л. (без предлога!)",
+      "type": "phrase"
+    },
+    {
+      "fr": "téléphoner à qn (Ti)",
+      "ru": "звонить кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "nuire à qn (Ti)",
+      "ru": "вредить кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "dormir (I)",
+      "ru": "спать",
+      "type": "phrase"
+    },
+    {
+      "fr": "rire (I)",
+      "ru": "смеяться",
+      "type": "phrase"
+    },
+    {
+      "fr": "monter (I/T)",
+      "ru": "подниматься / поднимать наверх",
+      "type": "phrase"
+    },
+    {
+      "fr": "descendre (I/T)",
+      "ru": "спускаться / спускать вниз",
+      "type": "phrase"
+    },
+    {
+      "fr": "sortir (I/T)",
+      "ru": "выходить / выносить",
+      "type": "phrase"
+    },
+    {
+      "fr": "passer (I/T)",
+      "ru": "проходить / проводить (время)",
+      "type": "phrase"
+    },
+    {
+      "fr": "respirer (I/T)",
+      "ru": "дышать / вдыхать что-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "vivre (I/T)",
+      "ru": "жить / переживать что-л.",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "vb1-th1",
+      "type": "theory",
+      "title": "Три типа глаголов — система координат",
+      "content": "<p style='margin:0.75rem 0'>Вся книга управлений строится на трёх типах:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Тип</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Определение</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Примеры</th></tr><tr><td style='padding:0.5rem'><b>T</b> — transitif direct</td><td style='padding:0.5rem'>дополнение БЕЗ предлога (кого? что?)</td><td style='padding:0.5rem'>regarder la mer, attendre le bus</td></tr><tr><td style='padding:0.5rem'><b>Ti</b> — transitif indirect</td><td style='padding:0.5rem'>дополнение ЧЕРЕЗ предлог (à/de...)</td><td style='padding:0.5rem'>téléphoner à Léa, parler de toi</td></tr><tr><td style='padding:0.5rem'><b>I</b> — intransitif</td><td style='padding:0.5rem'>дополнения нет вообще</td><td style='padding:0.5rem'>dormir, rire, tousser</td></tr></table><p style='margin:0.75rem 0'>Почему это важно: от типа зависят местоимения (le/la vs lui vs en/y), пассив (только T!) и согласование причастий.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Ловушка русскоязычных: regarder, écouter, attendre, chercher, payer, demander — БЕЗ предлога, хотя по-русски «смотреть НА», «ждать КОГО-ТО» и т.д. J'attends le bus (не «pour le bus»!).</p>"
+    },
+    {
+      "id": "vb1-th2",
+      "type": "theory",
+      "title": "Глаголы-«хамелеоны»: T и I одновременно",
+      "content": "<p style='margin:0.75rem 0'>Многие глаголы живут в двух типах — смысл меняется:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Глагол</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Intransitif (I)</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Transitif (T)</th></tr><tr><td style='padding:0.5rem'>monter</td><td style='padding:0.5rem'>Je suis monté au 3e étage. (поднялся)</td><td style='padding:0.5rem'>J'ai monté les valises. (поднял)</td></tr><tr><td style='padding:0.5rem'>descendre</td><td style='padding:0.5rem'>Elle est descendue du train.</td><td style='padding:0.5rem'>Elle a descendu la poubelle.</td></tr><tr><td style='padding:0.5rem'>sortir</td><td style='padding:0.5rem'>Il est sorti à midi.</td><td style='padding:0.5rem'>Il a sorti le chien.</td></tr><tr><td style='padding:0.5rem'>passer</td><td style='padding:0.5rem'>Le temps passe vite.</td><td style='padding:0.5rem'>J'ai passé une bonne soirée.</td></tr><tr><td style='padding:0.5rem'>respirer</td><td style='padding:0.5rem'>Respire ! (дыши)</td><td style='padding:0.5rem'>Respirer l'air pur. (вдыхать)</td></tr><tr><td style='padding:0.5rem'>vivre</td><td style='padding:0.5rem'>Il vit à Lyon.</td><td style='padding:0.5rem'>Il a vécu une aventure.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Следствие для passé composé: I-вариант движения идёт с <b>être</b>, T-вариант — всегда с <b>avoir</b>: elle EST descendue / elle A descendu la valise.</p>"
+    },
+    {
+      "id": "vb1-video1",
+      "type": "video",
+      "title": "Vidéo : Transitif ou intransitif ?",
+      "videoFile": "transitif-ou-intransitif.mp4",
+      "description": "Видеообъяснение темы на французском. Посмотрите после теории: услышите, как носитель формулирует разницу T/I, и проверьте себя — все примеры из видео должны быть вам понятны."
+    },
+    {
+      "id": "vb1-qz1",
+      "type": "grammar-quiz",
+      "title": "T, Ti или I? Определите тип",
+      "questions": [
+        {
+          "question": "«J'attends le train.» — глагол attendre здесь…",
+          "options": [
+            "transitif direct (T)",
+            "transitif indirect (Ti)",
+            "intransitif (I)",
+            "возвратный"
+          ],
+          "correctAnswer": "transitif direct (T)",
+          "explanation": "Дополнение без предлога (attendre qch) — прямопереходный. Никакого «pour»!"
+        },
+        {
+          "question": "«Elle téléphone à sa mère.» — téléphoner здесь…",
+          "options": [
+            "transitif indirect (Ti)",
+            "transitif direct (T)",
+            "intransitif (I)",
+            "безличный"
+          ],
+          "correctAnswer": "transitif indirect (Ti)",
+          "explanation": "Дополнение через à — косвеннопереходный: téléphoner À qn."
+        },
+        {
+          "question": "«Le bébé dort.» — dormir здесь…",
+          "options": [
+            "intransitif (I)",
+            "transitif direct (T)",
+            "transitif indirect (Ti)",
+            "пассивный"
+          ],
+          "correctAnswer": "intransitif (I)",
+          "explanation": "Дополнения нет — непереходный."
+        },
+        {
+          "question": "«Nous cherchons un appartement.» Правильно ли «cherchons POUR un appartement»?",
+          "options": [
+            "нет: chercher — T, без предлога",
+            "да, pour обязателен",
+            "да, разговорно",
+            "нужен предлог à"
+          ],
+          "correctAnswer": "нет: chercher — T, без предлога",
+          "explanation": "Chercher qch — прямое дополнение. Калька с английского look for — ошибка."
+        },
+        {
+          "question": "Какой глагол НЕ может образовать классический пассив?",
+          "options": [
+            "nuire (à qn)",
+            "construire",
+            "inviter",
+            "choisir"
+          ],
+          "correctAnswer": "nuire (à qn)",
+          "explanation": "Пассив возможен только у transitifs directs. Nuire à — косвенное управление: пассива нет."
+        }
+      ]
+    },
+    {
+      "id": "vb1-qz2",
+      "type": "grammar-quiz",
+      "title": "Хамелеоны и вспомогательный глагол",
+      "questions": [
+        {
+          "question": "Hier, elle ___ les courses au premier étage.",
+          "options": [
+            "a monté",
+            "est montée",
+            "a montée",
+            "est monté"
+          ],
+          "correctAnswer": "a monté",
+          "explanation": "Есть прямое дополнение (les courses) → T → avoir: elle a monté."
+        },
+        {
+          "question": "Hier, elle ___ au premier étage.",
+          "options": [
+            "est montée",
+            "a monté",
+            "a montée",
+            "est monter"
+          ],
+          "correctAnswer": "est montée",
+          "explanation": "Без дополнения — движение (I) → être + согласование: est montée."
+        },
+        {
+          "question": "Nous ___ trois jours à Rome.",
+          "options": [
+            "avons passé",
+            "sommes passés",
+            "avons passés",
+            "sommes passé"
+          ],
+          "correctAnswer": "avons passé",
+          "explanation": "Passer qch (время) — T → avoir: avons passé trois jours."
+        },
+        {
+          "question": "Ils ___ devant la boulangerie sans s'arrêter.",
+          "options": [
+            "sont passés",
+            "ont passé",
+            "ont passés",
+            "sont passé"
+          ],
+          "correctAnswer": "sont passés",
+          "explanation": "Passer (проходить мимо) — I → être: sont passés."
+        },
+        {
+          "question": "Tu ___ le chien ce matin ?",
+          "options": [
+            "as sorti",
+            "es sorti",
+            "as sortie",
+            "es sortis"
+          ],
+          "correctAnswer": "as sorti",
+          "explanation": "Sortir le chien — прямое дополнение → avoir."
+        }
+      ]
+    },
+    {
+      "id": "vb1-fb1",
+      "type": "fill-blank",
+      "title": "История одного утра (T/I в действии)",
+      "text": "Ce matin, je ___ descendu acheter du pain — la boulangère ___ déjà sorti les croissants chauds. J'ai ___ ma voisine devant la porte : elle ___ le facteur depuis dix minutes. « Il ne répond jamais quand on lui ___ ! » En rentrant, j'ai ___ l'escalier quatre à quatre.",
+      "blanks": [
+        {
+          "correctAnswer": "suis",
+          "options": [
+            "suis",
+            "ai",
+            "étais avoir"
+          ],
+          "explanation": "Descendre без прямого дополнения (движение) → être: je suis descendu."
+        },
+        {
+          "correctAnswer": "avait",
+          "options": [
+            "avait",
+            "était",
+            "a être"
+          ],
+          "explanation": "Sortir les croissants — прямое дополнение → avoir: avait sorti."
+        },
+        {
+          "correctAnswer": "regardé",
+          "options": [
+            "regardé",
+            "regardé à",
+            "regardé sur"
+          ],
+          "explanation": "Regarder qn — без предлога: j'ai regardé ma voisine."
+        },
+        {
+          "correctAnswer": "attendait",
+          "options": [
+            "attendait",
+            "attendait pour",
+            "attendait à"
+          ],
+          "explanation": "Attendre qn — T, без предлога: elle attendait le facteur."
+        },
+        {
+          "correctAnswer": "téléphone",
+          "options": [
+            "téléphone",
+            "téléphone à",
+            "appelle à"
+          ],
+          "explanation": "Téléphoner À qn → lui уже выражает à: on lui téléphone."
+        },
+        {
+          "correctAnswer": "monté",
+          "options": [
+            "monté",
+            "montée",
+            "monter"
+          ],
+          "explanation": "Monter l'escalier — прямое дополнение → avoir + причастие без согласования: j'ai monté."
+        }
+      ]
+    }
+  ]
+}
