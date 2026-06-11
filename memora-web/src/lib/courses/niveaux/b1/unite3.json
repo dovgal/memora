@@ -1,0 +1,247 @@
+{
+  "id": "unite3",
+  "title": "Unité 3 : Conditionnel, hypothèse, cause et conséquence",
+  "description": "Conditionnel présent, гипотезы с si + imparfait, выражение причины и следствия.",
+  "vocabulary": [
+    {
+      "fr": "à ta place",
+      "ru": "на твоём месте",
+      "type": "phrase"
+    },
+    {
+      "fr": "au cas où",
+      "ru": "на случай, если",
+      "type": "phrase"
+    },
+    {
+      "fr": "grâce à",
+      "ru": "благодаря",
+      "type": "phrase"
+    },
+    {
+      "fr": "à cause de",
+      "ru": "из-за",
+      "type": "phrase"
+    },
+    {
+      "fr": "puisque",
+      "ru": "раз уж, поскольку",
+      "type": "phrase"
+    },
+    {
+      "fr": "comme",
+      "ru": "так как (в начале фразы)",
+      "type": "phrase"
+    },
+    {
+      "fr": "c'est pourquoi",
+      "ru": "вот почему",
+      "type": "phrase"
+    },
+    {
+      "fr": "du coup",
+      "ru": "в результате (разг.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "par conséquent",
+      "ru": "следовательно",
+      "type": "phrase"
+    },
+    {
+      "fr": "entraîner",
+      "ru": "влечь за собой",
+      "type": "phrase"
+    },
+    {
+      "fr": "provoquer",
+      "ru": "вызывать",
+      "type": "phrase"
+    },
+    {
+      "fr": "si j'étais toi",
+      "ru": "будь я на твоём месте",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "b1u3-th1",
+      "type": "theory",
+      "title": "Si + imparfait → conditionnel — воображаемое",
+      "content": "<p style='margin:0.75rem 0'>Гипотеза о нереальном настоящем: <b>si + imparfait, conditionnel présent</b>:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Условие</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Результат</th></tr><tr><td style='padding:0.5rem'>Si j'avais plus de temps,</td><td style='padding:0.5rem'>je ferais du sport.</td></tr><tr><td style='padding:0.5rem'>Si tu venais avec nous,</td><td style='padding:0.5rem'>ce serait génial !</td></tr><tr><td style='padding:0.5rem'>S'il ne pleuvait pas,</td><td style='padding:0.5rem'>on pourrait sortir.</td></tr></table><p style='margin:0.75rem 0'>Сравните: <i>Si tu viens (реально, présent) → tu verras (futur)</i> и <i>Si tu venais (вряд ли, imparfait) → tu verrais (conditionnel)</i>.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 После si НИКОГДА не ставится conditionnel или futur — только présent/imparfait: «si j'aurais» — грубая ошибка!</p>"
+    },
+    {
+      "id": "b1u3-qz1",
+      "type": "grammar-quiz",
+      "title": "Гипотезы — практика",
+      "questions": [
+        {
+          "question": "Si j'étais riche, je ___ le tour du monde.",
+          "options": [
+            "ferais",
+            "ferai",
+            "fais",
+            "faisais"
+          ],
+          "correctAnswer": "ferais",
+          "explanation": "Si + imparfait → conditionnel: je ferais."
+        },
+        {
+          "question": "Si tu ___ moins de café, tu dormirais mieux.",
+          "options": [
+            "buvais",
+            "bois",
+            "boiras",
+            "boirais"
+          ],
+          "correctAnswer": "buvais",
+          "explanation": "После si — imparfait: si tu buvais."
+        },
+        {
+          "question": "À ta place, je ___ la vérité.",
+          "options": [
+            "dirais",
+            "dirai",
+            "dis",
+            "disais"
+          ],
+          "correctAnswer": "dirais",
+          "explanation": "Совет «на твоём месте» — conditionnel: je dirais."
+        },
+        {
+          "question": "S'il faisait beau demain, nous ___ pique-niquer.",
+          "options": [
+            "pourrions",
+            "pouvons",
+            "pourrons",
+            "pouvions"
+          ],
+          "correctAnswer": "pourrions",
+          "explanation": "Маловероятная гипотеза: si + imparfait → conditionnel pourrions."
+        }
+      ]
+    },
+    {
+      "id": "b1u3-th2",
+      "type": "theory",
+      "title": "Cause et conséquence — причина и следствие",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Причина</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>parce que (ответ на pourquoi)</td><td style='padding:0.5rem'>Je reste parce que je suis fatigué.</td></tr><tr><td style='padding:0.5rem'>comme (в начале фразы)</td><td style='padding:0.5rem'>Comme il pleuvait, on est restés.</td></tr><tr><td style='padding:0.5rem'>puisque (очевидная причина)</td><td style='padding:0.5rem'>Puisque tu es là, aide-moi !</td></tr><tr><td style='padding:0.5rem'>grâce à (позитив)</td><td style='padding:0.5rem'>J'ai réussi grâce à tes conseils.</td></tr><tr><td style='padding:0.5rem'>à cause de (негатив)</td><td style='padding:0.5rem'>Le match est annulé à cause de l'orage.</td></tr></table><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Следствие</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>donc</td><td style='padding:0.5rem'>Il est tard, donc je rentre.</td></tr><tr><td style='padding:0.5rem'>alors</td><td style='padding:0.5rem'>Je m'ennuyais, alors je suis parti.</td></tr><tr><td style='padding:0.5rem'>c'est pourquoi</td><td style='padding:0.5rem'>Il neige, c'est pourquoi le bus est en retard.</td></tr><tr><td style='padding:0.5rem'>si bien que</td><td style='padding:0.5rem'>Il a plu si bien que la rue est inondée.</td></tr><tr><td style='padding:0.5rem'>tellement... que</td><td style='padding:0.5rem'>Il parle tellement vite qu'on ne comprend rien.</td></tr></table>"
+    },
+    {
+      "id": "b1u3-qz2",
+      "type": "grammar-quiz",
+      "title": "Причина или следствие?",
+      "questions": [
+        {
+          "question": "J'ai réussi mon examen ___ ton aide.",
+          "options": [
+            "grâce à",
+            "à cause de",
+            "puisque",
+            "donc"
+          ],
+          "correctAnswer": "grâce à",
+          "explanation": "Позитивная причина — grâce à. À cause de — для негатива."
+        },
+        {
+          "question": "___ tu connais la ville, montre-nous le chemin !",
+          "options": [
+            "Puisque",
+            "Parce que",
+            "Donc",
+            "Si bien que"
+          ],
+          "correctAnswer": "Puisque",
+          "explanation": "Очевидная для обоих причина — puisque (раз уж)."
+        },
+        {
+          "question": "Le concert est annulé ___ la grève.",
+          "options": [
+            "à cause de",
+            "grâce à",
+            "si bien que",
+            "alors"
+          ],
+          "correctAnswer": "à cause de",
+          "explanation": "Негативная причина — à cause de."
+        },
+        {
+          "question": "Il parle ___ vite ___ personne ne le comprend.",
+          "options": [
+            "tellement ... que",
+            "si bien ... que",
+            "autant ... de",
+            "grâce ... à"
+          ],
+          "correctAnswer": "tellement ... que",
+          "explanation": "Интенсивность + следствие: tellement vite que..."
+        },
+        {
+          "question": "___ il neigeait, l'école était fermée.",
+          "options": [
+            "Comme",
+            "Puisque donc",
+            "Alors",
+            "C'est pourquoi"
+          ],
+          "correctAnswer": "Comme",
+          "explanation": "Причина В НАЧАЛЕ фразы — comme."
+        }
+      ]
+    },
+    {
+      "id": "b1u3-fb1",
+      "type": "fill-blank",
+      "title": "Если бы я выиграл в лотерею…",
+      "text": "Si je ___ au loto, ma vie changerait complètement. D'abord, j'___ une maison au bord de la mer. ___ j'adore voyager, je partirais six mois par an. Mes amis me manqueraient, ___ je les inviterais tous ! Et toi, qu'est-ce que tu ___ à ma place ?",
+      "blanks": [
+        {
+          "correctAnswer": "gagnais",
+          "options": [
+            "gagnais",
+            "gagnerais",
+            "gagne"
+          ],
+          "explanation": "Si + imparfait: si je gagnais."
+        },
+        {
+          "correctAnswer": "achèterais",
+          "options": [
+            "achèterais",
+            "achèterai",
+            "achetais"
+          ],
+          "explanation": "Результат гипотезы — conditionnel: j'achèterais."
+        },
+        {
+          "correctAnswer": "Comme",
+          "options": [
+            "Comme",
+            "Parce que",
+            "Donc"
+          ],
+          "explanation": "Причина в начале фразы — comme."
+        },
+        {
+          "correctAnswer": "donc",
+          "options": [
+            "donc",
+            "parce que",
+            "puisque"
+          ],
+          "explanation": "Следствие: скучал бы, ПОЭТОМУ пригласил бы — donc."
+        },
+        {
+          "correctAnswer": "ferais",
+          "options": [
+            "ferais",
+            "feras",
+            "fais"
+          ],
+          "explanation": "«Что бы ты сделал» — conditionnel: tu ferais."
+        }
+      ]
+    }
+  ]
+}

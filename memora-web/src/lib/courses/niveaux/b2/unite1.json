@@ -1,0 +1,236 @@
+{
+  "id": "unite1",
+  "title": "Unité 1 : Les temps du passé — maîtrise complète",
+  "description": "Все прошедшие времена вместе, passé simple (узнавание), временные придаточные (avant que, après que, dès que).",
+  "vocabulary": [
+    {
+      "fr": "jadis",
+      "ru": "некогда, давным-давно",
+      "type": "phrase"
+    },
+    {
+      "fr": "aussitôt que",
+      "ru": "как только",
+      "type": "phrase"
+    },
+    {
+      "fr": "tandis que",
+      "ru": "в то время как",
+      "type": "phrase"
+    },
+    {
+      "fr": "avant que",
+      "ru": "прежде чем",
+      "type": "phrase"
+    },
+    {
+      "fr": "après que",
+      "ru": "после того как",
+      "type": "phrase"
+    },
+    {
+      "fr": "une fois que",
+      "ru": "как только, когда уже",
+      "type": "phrase"
+    },
+    {
+      "fr": "en attendant que",
+      "ru": "в ожидании, пока",
+      "type": "phrase"
+    },
+    {
+      "fr": "surgir",
+      "ru": "внезапно появляться",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'écouler",
+      "ru": "протекать (о времени)",
+      "type": "phrase"
+    },
+    {
+      "fr": "un récit",
+      "ru": "повествование",
+      "type": "phrase"
+    },
+    {
+      "fr": "un témoignage",
+      "ru": "свидетельство",
+      "type": "phrase"
+    },
+    {
+      "fr": "au fur et à mesure",
+      "ru": "по мере того как",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "b2u1-th1",
+      "type": "theory",
+      "title": "Passé simple — время романов",
+      "content": "<p style='margin:0.75rem 0'>Passé simple заменяет passé composé в литературе и исторических текстах. Его нужно <b>узнавать</b> при чтении:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Глагол</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Passé simple (il/ils)</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>être</td><td style='padding:0.5rem'>fut / furent</td><td style='padding:0.5rem'>Ce fut une époque difficile.</td></tr><tr><td style='padding:0.5rem'>avoir</td><td style='padding:0.5rem'>eut / eurent</td><td style='padding:0.5rem'>Elle eut une idée.</td></tr><tr><td style='padding:0.5rem'>faire</td><td style='padding:0.5rem'>fit / firent</td><td style='padding:0.5rem'>Il fit un pas.</td></tr><tr><td style='padding:0.5rem'>aller</td><td style='padding:0.5rem'>alla / allèrent</td><td style='padding:0.5rem'>Elle alla vers la porte.</td></tr><tr><td style='padding:0.5rem'>venir</td><td style='padding:0.5rem'>vint / vinrent</td><td style='padding:0.5rem'>Il vint la voir.</td></tr><tr><td style='padding:0.5rem'>prendre</td><td style='padding:0.5rem'>prit / prirent</td><td style='padding:0.5rem'>Elle prit sa décision.</td></tr><tr><td style='padding:0.5rem'>voir</td><td style='padding:0.5rem'>vit / virent</td><td style='padding:0.5rem'>Ils virent la mer.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 В разговоре passé simple не используют — только читают. «Il prit» в романе = «il a pris» в речи.</p>"
+    },
+    {
+      "id": "b2u1-qz1",
+      "type": "grammar-quiz",
+      "title": "Узнайте passé simple",
+      "questions": [
+        {
+          "question": "« Elle ___ la porte et sortit. » Какая форма пропущена?",
+          "options": [
+            "ouvrit",
+            "ouvrait",
+            "a ouvert",
+            "ouvre"
+          ],
+          "correctAnswer": "ouvrit",
+          "explanation": "Литературный рассказ: passé simple ouvrit (+ sortit рядом — тоже p.s.)."
+        },
+        {
+          "question": "« Ce ___ un grand homme. » (passé simple от être)",
+          "options": [
+            "fut",
+            "était",
+            "a été",
+            "est"
+          ],
+          "correctAnswer": "fut",
+          "explanation": "Être в passé simple: ce fut."
+        },
+        {
+          "question": "«Ils ___ tous les documents.» — passé simple от prendre:",
+          "options": [
+            "prirent",
+            "prenaient",
+            "ont pris",
+            "prendront"
+          ],
+          "correctAnswer": "prirent",
+          "explanation": "Prendre → ils prirent."
+        },
+        {
+          "question": "Passé simple «il vint» соответствует разговорному…",
+          "options": [
+            "il est venu",
+            "il venait",
+            "il viendra",
+            "il viendrait"
+          ],
+          "correctAnswer": "il est venu",
+          "explanation": "Passé simple = passé composé речи: il vint = il est venu."
+        }
+      ]
+    },
+    {
+      "id": "b2u1-th2",
+      "type": "theory",
+      "title": "Propositions temporelles — до, после, пока",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Союз</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Режим</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>avant que + subjonctif</td><td style='padding:0.5rem'>до того как</td><td style='padding:0.5rem'>Pars avant qu'il (ne) pleuve.</td></tr><tr><td style='padding:0.5rem'>jusqu'à ce que + subj.</td><td style='padding:0.5rem'>до тех пор пока</td><td style='padding:0.5rem'>Reste jusqu'à ce que je revienne.</td></tr><tr><td style='padding:0.5rem'>en attendant que + subj.</td><td style='padding:0.5rem'>пока (в ожидании)</td><td style='padding:0.5rem'>Lisez en attendant que ce soit prêt.</td></tr><tr><td style='padding:0.5rem'>après que + indicatif</td><td style='padding:0.5rem'>после того как</td><td style='padding:0.5rem'>Après qu'il est parti, tout a changé.</td></tr><tr><td style='padding:0.5rem'>dès que / aussitôt que</td><td style='padding:0.5rem'>как только</td><td style='padding:0.5rem'>Dès qu'elle arrivera, on commence.</td></tr><tr><td style='padding:0.5rem'>pendant que / tandis que</td><td style='padding:0.5rem'>в то время как</td><td style='padding:0.5rem'>Il lit tandis qu'elle travaille.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Avant que — субжонктив (ещё не случилось), après que — индикатив (уже факт). Ne после avant que — «вежливое» ne, не отрицание.</p>"
+    },
+    {
+      "id": "b2u1-qz2",
+      "type": "grammar-quiz",
+      "title": "Временные союзы — практика",
+      "questions": [
+        {
+          "question": "Finis ton rapport avant que le directeur ne ___ .",
+          "options": [
+            "revienne",
+            "revient",
+            "reviendra",
+            "revenu"
+          ],
+          "correctAnswer": "revienne",
+          "explanation": "Avant que + субжонктив: revienne."
+        },
+        {
+          "question": "Après qu'il ___ , nous avons continué sans lui.",
+          "options": [
+            "est parti",
+            "soit parti",
+            "parte",
+            "partirait"
+          ],
+          "correctAnswer": "est parti",
+          "explanation": "Après que + индикатив (свершившийся факт): est parti."
+        },
+        {
+          "question": "Restez ici jusqu'à ce que je vous ___ .",
+          "options": [
+            "appelle",
+            "appellerai",
+            "appelais",
+            "appelé"
+          ],
+          "correctAnswer": "appelle",
+          "explanation": "Jusqu'à ce que + субжонктив: appelle."
+        },
+        {
+          "question": "___ que je travaillais, il regardait la télé.",
+          "options": [
+            "Pendant",
+            "Avant",
+            "Après",
+            "Dès"
+          ],
+          "correctAnswer": "Pendant",
+          "explanation": "Одновременность — pendant que."
+        }
+      ]
+    },
+    {
+      "id": "b2u1-fb1",
+      "type": "fill-blank",
+      "title": "Из биографии (литературный стиль)",
+      "text": "Marie Curie ___ en Pologne en 1867. Elle ___ à Paris en 1891 pour étudier, alors que peu de femmes ___ à l'université. Elle ___ deux prix Nobel avant que la science ne ___ vraiment ouverte aux femmes.",
+      "blanks": [
+        {
+          "correctAnswer": "naquit",
+          "options": [
+            "naquit",
+            "naissait",
+            "est né"
+          ],
+          "explanation": "Биография в литературном стиле — passé simple: naquit (naître)."
+        },
+        {
+          "correctAnswer": "arriva",
+          "options": [
+            "arriva",
+            "arrivait",
+            "arrive"
+          ],
+          "explanation": "Событие — passé simple: arriva."
+        },
+        {
+          "correctAnswer": "étudiaient",
+          "options": [
+            "étudiaient",
+            "étudièrent",
+            "étudient"
+          ],
+          "explanation": "Фон эпохи — imparfait: peu de femmes étudiaient."
+        },
+        {
+          "correctAnswer": "reçut",
+          "options": [
+            "reçut",
+            "recevait",
+            "reçoit"
+          ],
+          "explanation": "Событие — passé simple: reçut (recevoir)."
+        },
+        {
+          "correctAnswer": "soit",
+          "options": [
+            "soit",
+            "est",
+            "fût"
+          ],
+          "explanation": "Avant que + субжонктив: ne soit ouverte."
+        }
+      ]
+    }
+  ]
+}

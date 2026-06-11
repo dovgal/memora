@@ -1,0 +1,236 @@
+{
+  "id": "unite6",
+  "title": "Unité 6 : Discours rapporté et futur",
+  "description": "Косвенная речь в прошедшем (согласование времён), выражение будущего, указатели времени в косвенной речи.",
+  "vocabulary": [
+    {
+      "fr": "affirmer",
+      "ru": "утверждать",
+      "type": "phrase"
+    },
+    {
+      "fr": "avouer",
+      "ru": "признаваться",
+      "type": "phrase"
+    },
+    {
+      "fr": "annoncer",
+      "ru": "объявлять",
+      "type": "phrase"
+    },
+    {
+      "fr": "prévenir",
+      "ru": "предупреждать",
+      "type": "phrase"
+    },
+    {
+      "fr": "promettre",
+      "ru": "обещать",
+      "type": "phrase"
+    },
+    {
+      "fr": "la veille",
+      "ru": "накануне",
+      "type": "phrase"
+    },
+    {
+      "fr": "le lendemain",
+      "ru": "на следующий день",
+      "type": "phrase"
+    },
+    {
+      "fr": "ce jour-là",
+      "ru": "в тот день",
+      "type": "phrase"
+    },
+    {
+      "fr": "une promesse",
+      "ru": "обещание",
+      "type": "phrase"
+    },
+    {
+      "fr": "d'ici 2030",
+      "ru": "к 2030 году",
+      "type": "phrase"
+    },
+    {
+      "fr": "être sur le point de",
+      "ru": "вот-вот сделать",
+      "type": "phrase"
+    },
+    {
+      "fr": "Il a promis de venir.",
+      "ru": "Он обещал прийти.",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "b1u6-th1",
+      "type": "theory",
+      "title": "Discours rapporté au passé — согласование времён",
+      "content": "<p style='margin:0.75rem 0'>Если вводящий глагол в прошедшем (il a dit que...), времена сдвигаются:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Прямая речь</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Косвенная (после il a dit que...)</th></tr><tr><td style='padding:0.5rem'>« Je suis fatigué. » (présent)</td><td style='padding:0.5rem'>qu'il était fatigué (imparfait)</td></tr><tr><td style='padding:0.5rem'>« J'ai fini. » (passé composé)</td><td style='padding:0.5rem'>qu'il avait fini (plus-que-parfait)</td></tr><tr><td style='padding:0.5rem'>« Je viendrai. » (futur)</td><td style='padding:0.5rem'>qu'il viendrait (conditionnel)</td></tr><tr><td style='padding:0.5rem'>« Viens demain ! »</td><td style='padding:0.5rem'>de venir le lendemain</td></tr></table><p style='margin:0.75rem 0'>Указатели тоже меняются: aujourd'hui → ce jour-là, demain → le lendemain, hier → la veille.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Imparfait и conditionnel в косвенной речи НЕ меняются: « Je voulais... » → qu'il voulait.</p>"
+    },
+    {
+      "id": "b1u6-qz1",
+      "type": "grammar-quiz",
+      "title": "Косвенная речь в прошедшем",
+      "questions": [
+        {
+          "question": "Il a dit : « Je suis en retard. » → Il a dit qu'il ___ en retard.",
+          "options": [
+            "était",
+            "est",
+            "serait",
+            "a été"
+          ],
+          "correctAnswer": "était",
+          "explanation": "Présent → imparfait: qu'il était en retard."
+        },
+        {
+          "question": "Elle a annoncé : « Je partirai lundi. » → Elle a annoncé qu'elle ___ lundi.",
+          "options": [
+            "partirait",
+            "partira",
+            "est partie",
+            "partait"
+          ],
+          "correctAnswer": "partirait",
+          "explanation": "Futur → conditionnel: qu'elle partirait."
+        },
+        {
+          "question": "Il m'a demandé : « Tu as vu le film ? » → Il m'a demandé si j'___ le film.",
+          "options": [
+            "avais vu",
+            "ai vu",
+            "verrais",
+            "voyais"
+          ],
+          "correctAnswer": "avais vu",
+          "explanation": "Passé composé → plus-que-parfait: si j'avais vu."
+        },
+        {
+          "question": "« Reviens demain ! » → Elle lui a dit de revenir ___ .",
+          "options": [
+            "le lendemain",
+            "demain",
+            "la veille",
+            "ce jour"
+          ],
+          "correctAnswer": "le lendemain",
+          "explanation": "Demain в косвенной речи прошедшего → le lendemain."
+        }
+      ]
+    },
+    {
+      "id": "b1u6-th2",
+      "type": "theory",
+      "title": "Exprimer le futur — три способа",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Форма</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Когда</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>futur proche (aller + inf)</td><td style='padding:0.5rem'>скоро, решено</td><td style='padding:0.5rem'>Je vais signer le contrat.</td></tr><tr><td style='padding:0.5rem'>futur simple</td><td style='padding:0.5rem'>планы, прогнозы</td><td style='padding:0.5rem'>En 2035, on vivra autrement.</td></tr><tr><td style='padding:0.5rem'>futur antérieur</td><td style='padding:0.5rem'>будет сделано ДО</td><td style='padding:0.5rem'>Quand tu arriveras, j'aurai fini.</td></tr></table><p style='margin:0.75rem 0'><b>Futur antérieur</b> = avoir/être в futur + причастие: j'aurai terminé, elle sera partie. После quand/dès que — для действия, которое завершится раньше.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Dès que tu auras lu le rapport, appelle-moi ! — сначала дочитаешь (futur antérieur), потом позвонишь.</p>"
+    },
+    {
+      "id": "b1u6-qz2",
+      "type": "grammar-quiz",
+      "title": "Будущее — практика",
+      "questions": [
+        {
+          "question": "Quand vous ___ , envoyez-moi le document.",
+          "options": [
+            "aurez terminé",
+            "terminerez",
+            "avez terminé",
+            "terminiez"
+          ],
+          "correctAnswer": "aurez terminé",
+          "explanation": "Завершится ДО отправки — futur antérieur: aurez terminé."
+        },
+        {
+          "question": "Attention, tu ___ tomber !",
+          "options": [
+            "vas",
+            "iras",
+            "va",
+            "aller"
+          ],
+          "correctAnswer": "vas",
+          "explanation": "Вот-вот случится — futur proche: tu vas tomber."
+        },
+        {
+          "question": "Dans vingt ans, les voitures ___ toutes électriques.",
+          "options": [
+            "seront",
+            "vont être demain",
+            "sont",
+            "seraient"
+          ],
+          "correctAnswer": "seront",
+          "explanation": "Прогноз — futur simple: seront."
+        },
+        {
+          "question": "Dès qu'elle ___ , nous commencerons.",
+          "options": [
+            "sera arrivée",
+            "arrivera puis",
+            "est arrivée",
+            "arriverait"
+          ],
+          "correctAnswer": "sera arrivée",
+          "explanation": "Сначала приедет (futur antérieur с être): sera arrivée."
+        }
+      ]
+    },
+    {
+      "id": "b1u6-fb1",
+      "type": "fill-blank",
+      "title": "Интервью кандидата — пересказ",
+      "text": "Hier, le candidat a donné une interview. Il a affirmé que la situation ___ difficile, mais il a promis que les choses ___ . Il a avoué qu'il ___ des erreurs l'année précédente. Il a annoncé que, dès qu'il ___ élu, il baisserait les impôts. Les journalistes ___ le lendemain pour vérifier ses promesses.",
+      "blanks": [
+        {
+          "correctAnswer": "était",
+          "options": [
+            "était",
+            "est",
+            "serait"
+          ],
+          "explanation": "Présent → imparfait: la situation était difficile."
+        },
+        {
+          "correctAnswer": "changeraient",
+          "options": [
+            "changeraient",
+            "changeront",
+            "ont changé"
+          ],
+          "explanation": "Futur → conditionnel: les choses changeraient."
+        },
+        {
+          "correctAnswer": "avait fait",
+          "options": [
+            "avait fait",
+            "a fait",
+            "ferait"
+          ],
+          "explanation": "Passé composé → plus-que-parfait: il avait fait des erreurs."
+        },
+        {
+          "correctAnswer": "serait",
+          "options": [
+            "serait",
+            "sera",
+            "était"
+          ],
+          "explanation": "Futur (sera élu) → conditionnel: dès qu'il serait élu."
+        },
+        {
+          "correctAnswer": "reviendraient",
+          "options": [
+            "reviendraient",
+            "reviendront",
+            "revenaient"
+          ],
+          "explanation": "Будущее в плане прошлого → conditionnel: reviendraient."
+        }
+      ]
+    }
+  ]
+}

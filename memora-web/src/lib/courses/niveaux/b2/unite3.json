@@ -1,0 +1,229 @@
+{
+  "id": "unite3",
+  "title": "Unité 3 : Hypothèses et regrets",
+  "description": "Si + plus-que-parfait → conditionnel passé, сожаления, упрёки, гипотезы всех типов.",
+  "vocabulary": [
+    {
+      "fr": "regretter",
+      "ru": "сожалеть",
+      "type": "phrase"
+    },
+    {
+      "fr": "reprocher",
+      "ru": "упрекать",
+      "type": "phrase"
+    },
+    {
+      "fr": "j'aurais dû",
+      "ru": "мне следовало бы (но я не)",
+      "type": "phrase"
+    },
+    {
+      "fr": "tu aurais pu",
+      "ru": "ты мог бы (упрёк)",
+      "type": "phrase"
+    },
+    {
+      "fr": "à supposer que",
+      "ru": "предположим, что",
+      "type": "phrase"
+    },
+    {
+      "fr": "au cas où",
+      "ru": "на случай, если",
+      "type": "phrase"
+    },
+    {
+      "fr": "sinon",
+      "ru": "иначе",
+      "type": "phrase"
+    },
+    {
+      "fr": "faute de",
+      "ru": "за неимением",
+      "type": "phrase"
+    },
+    {
+      "fr": "rater une occasion",
+      "ru": "упустить возможность",
+      "type": "phrase"
+    },
+    {
+      "fr": "si seulement",
+      "ru": "если бы только",
+      "type": "phrase"
+    },
+    {
+      "fr": "en cas de",
+      "ru": "в случае",
+      "type": "phrase"
+    },
+    {
+      "fr": "avec des si...",
+      "ru": "если бы да кабы…",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "b2u3-th1",
+      "type": "theory",
+      "title": "Conditionnel passé — сожаления и упрёки",
+      "content": "<p style='margin:0.75rem 0'><b>Conditionnel passé</b> = avoir/être в conditionnel + причастие. Главные употребления:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Употребление</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th></tr><tr><td style='padding:0.5rem'>сожаление</td><td style='padding:0.5rem'>J'aurais aimé être là.</td><td style='padding:0.5rem'>Я хотел бы там быть (но не был)</td></tr><tr><td style='padding:0.5rem'>упрёк</td><td style='padding:0.5rem'>Tu aurais pu prévenir !</td><td style='padding:0.5rem'>Мог бы предупредить!</td></tr><tr><td style='padding:0.5rem'>долженствование</td><td style='padding:0.5rem'>Nous aurions dû partir plus tôt.</td><td style='padding:0.5rem'>Нам следовало уйти раньше</td></tr><tr><td style='padding:0.5rem'>неподтверждённый факт</td><td style='padding:0.5rem'>L'accident aurait fait trois victimes.</td><td style='padding:0.5rem'>По предварительным данным…</td></tr></table>"
+    },
+    {
+      "id": "b2u3-th2",
+      "type": "theory",
+      "title": "Три типа гипотез — сводная таблица",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Тип</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Схема</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>реальная (будущее)</td><td style='padding:0.5rem'>si + présent → futur</td><td style='padding:0.5rem'>Si tu viens, on ira au ciné.</td></tr><tr><td style='padding:0.5rem'>нереальная (настоящее)</td><td style='padding:0.5rem'>si + imparfait → cond. présent</td><td style='padding:0.5rem'>Si j'avais le temps, je viendrais.</td></tr><tr><td style='padding:0.5rem'>упущенная (прошлое)</td><td style='padding:0.5rem'>si + plus-que-parfait → cond. passé</td><td style='padding:0.5rem'>Si tu m'avais prévenu, je serais venu.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Смешанный тип: Si j'avais étudié (тогда), j'aurais un meilleur poste (сейчас) — pqp → conditionnel présent.</p>"
+    },
+    {
+      "id": "b2u3-qz1",
+      "type": "grammar-quiz",
+      "title": "Гипотезы о прошлом",
+      "questions": [
+        {
+          "question": "Si tu m'avais écouté, tu ___ cette erreur.",
+          "options": [
+            "n'aurais pas fait",
+            "ne ferais pas",
+            "n'as pas fait",
+            "ne feras pas"
+          ],
+          "correctAnswer": "n'aurais pas fait",
+          "explanation": "Si + pqp → conditionnel passé: tu n'aurais pas fait."
+        },
+        {
+          "question": "Si elle ___ plus tôt, elle aurait eu le train.",
+          "options": [
+            "était partie",
+            "partait",
+            "est partie",
+            "partirait"
+          ],
+          "correctAnswer": "était partie",
+          "explanation": "После si — plus-que-parfait: si elle était partie."
+        },
+        {
+          "question": "Tu ___ me téléphoner ! J'étais inquiet.",
+          "options": [
+            "aurais pu",
+            "pouvais",
+            "as pu",
+            "pourras"
+          ],
+          "correctAnswer": "aurais pu",
+          "explanation": "Упрёк — conditionnel passé: tu aurais pu."
+        },
+        {
+          "question": "Nous ___ réserver : le restaurant est complet.",
+          "options": [
+            "aurions dû",
+            "devions",
+            "avons dû",
+            "devrons"
+          ],
+          "correctAnswer": "aurions dû",
+          "explanation": "«Следовало бы» (но не сделали) — aurions dû."
+        },
+        {
+          "question": "Si j'avais appris le piano enfant, je ___ bien aujourd'hui.",
+          "options": [
+            "jouerais",
+            "aurais joué",
+            "jouais",
+            "jouerai"
+          ],
+          "correctAnswer": "jouerais",
+          "explanation": "Смешанная гипотеза: прошлое условие → настоящий результат (cond. présent)."
+        }
+      ]
+    },
+    {
+      "id": "b2u3-fb1",
+      "type": "fill-blank",
+      "title": "Сожаления после собеседования",
+      "text": "Quel désastre, cet entretien ! Si j'___ mieux préparé mes réponses, j'aurais fait bonne impression. J'___ dû me coucher plus tôt la veille. Et si seulement je n'___ pas oublié mon CV ! Le recruteur ___ sûrement été plus convaincu. Bon, au cas où ils me ___ , je garde mon téléphone allumé.",
+      "blanks": [
+        {
+          "correctAnswer": "avais",
+          "options": [
+            "avais",
+            "aurais",
+            "ai"
+          ],
+          "explanation": "Si + plus-que-parfait: si j'avais préparé."
+        },
+        {
+          "correctAnswer": "aurais",
+          "options": [
+            "aurais",
+            "avais",
+            "ai"
+          ],
+          "explanation": "Сожаление: j'aurais dû me coucher."
+        },
+        {
+          "correctAnswer": "avais",
+          "options": [
+            "avais",
+            "aurais",
+            "ai"
+          ],
+          "explanation": "Si seulement + pqp: je n'avais pas oublié."
+        },
+        {
+          "correctAnswer": "aurait",
+          "options": [
+            "aurait",
+            "avait",
+            "aura"
+          ],
+          "explanation": "Результат гипотезы — conditionnel passé: aurait été."
+        },
+        {
+          "correctAnswer": "rappelleraient",
+          "options": [
+            "rappelleraient",
+            "rappelleront",
+            "rappellent"
+          ],
+          "explanation": "Au cas où + conditionnel: ils me rappelleraient."
+        }
+      ]
+    },
+    {
+      "id": "b2u3-sb1",
+      "type": "sentence-builder",
+      "title": "Соберите сожаления",
+      "sentences": [
+        {
+          "words": [
+            "Si",
+            "j'avais",
+            "su,",
+            "je",
+            "ne",
+            "serais",
+            "pas",
+            "venu"
+          ],
+          "ru": "Если бы я знал, я бы не пришёл"
+        },
+        {
+          "words": [
+            "Tu",
+            "aurais",
+            "dû",
+            "me",
+            "le",
+            "dire",
+            "plus",
+            "tôt"
+          ],
+          "ru": "Тебе следовало сказать мне это раньше"
+        }
+      ]
+    }
+  ]
+}

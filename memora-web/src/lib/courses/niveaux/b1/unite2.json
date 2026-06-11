@@ -1,0 +1,249 @@
+{
+  "id": "unite2",
+  "title": "Unité 2 : Donner son opinion — субжонктив",
+  "description": "Выражение мнения, чувств и необходимости. Subjonctif présent: употребление и формы, indicatif vs subjonctif.",
+  "vocabulary": [
+    {
+      "fr": "à mon avis",
+      "ru": "по моему мнению",
+      "type": "phrase"
+    },
+    {
+      "fr": "il me semble que",
+      "ru": "мне кажется, что",
+      "type": "phrase"
+    },
+    {
+      "fr": "je suis convaincu(e) que",
+      "ru": "я убеждён, что",
+      "type": "phrase"
+    },
+    {
+      "fr": "douter",
+      "ru": "сомневаться",
+      "type": "phrase"
+    },
+    {
+      "fr": "craindre",
+      "ru": "опасаться",
+      "type": "phrase"
+    },
+    {
+      "fr": "exiger",
+      "ru": "требовать",
+      "type": "phrase"
+    },
+    {
+      "fr": "il est indispensable",
+      "ru": "совершенно необходимо",
+      "type": "phrase"
+    },
+    {
+      "fr": "souhaiter",
+      "ru": "желать",
+      "type": "phrase"
+    },
+    {
+      "fr": "regretter",
+      "ru": "сожалеть",
+      "type": "phrase"
+    },
+    {
+      "fr": "être ravi(e) que",
+      "ru": "быть в восторге, что",
+      "type": "phrase"
+    },
+    {
+      "fr": "avoir peur que",
+      "ru": "бояться, что",
+      "type": "phrase"
+    },
+    {
+      "fr": "partager un point de vue",
+      "ru": "разделять точку зрения",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "b1u2-th1",
+      "type": "theory",
+      "title": "Subjonctif — когда он обязателен",
+      "content": "<p style='margin:0.75rem 0'>Субжонктив выражает субъективное: волю, чувство, сомнение, необходимость. Сравните:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Indicatif (факт)</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Subjonctif (отношение)</th></tr><tr><td style='padding:0.5rem'>Je pense qu'il a raison.</td><td style='padding:0.5rem'>Je ne pense pas qu'il ait raison.</td></tr><tr><td style='padding:0.5rem'>Je sais que tu viens.</td><td style='padding:0.5rem'>Je veux que tu viennes.</td></tr><tr><td style='padding:0.5rem'>Il est certain qu'elle part.</td><td style='padding:0.5rem'>Il faut qu'elle parte.</td></tr><tr><td style='padding:0.5rem'>J'espère que tu vas bien.</td><td style='padding:0.5rem'>Je suis content que tu ailles bien.</td></tr></table><p style='margin:0.75rem 0'>Запускают субжонктив: il faut que, vouloir/souhaiter que, чувства (être content/triste/ravi que, avoir peur que, regretter que), сомнение (douter que, ne pas penser que), il est important/nécessaire/possible que.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 <b>Espérer que</b> — исключение: всегда индикатив! J'espère que tu viendras.</p>"
+    },
+    {
+      "id": "b1u2-th2",
+      "type": "theory",
+      "title": "Формы субжонктива",
+      "content": "<p style='margin:0.75rem 0'>База: основа ils настоящего + -e, -es, -e, -ions, -iez, -ent. Неправильные — выучить:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Глагол</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>que je...</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>que nous...</th></tr><tr><td style='padding:0.5rem'>être</td><td style='padding:0.5rem'>sois</td><td style='padding:0.5rem'>soyons</td></tr><tr><td style='padding:0.5rem'>avoir</td><td style='padding:0.5rem'>aie</td><td style='padding:0.5rem'>ayons</td></tr><tr><td style='padding:0.5rem'>faire</td><td style='padding:0.5rem'>fasse</td><td style='padding:0.5rem'>fassions</td></tr><tr><td style='padding:0.5rem'>aller</td><td style='padding:0.5rem'>aille</td><td style='padding:0.5rem'>allions</td></tr><tr><td style='padding:0.5rem'>pouvoir</td><td style='padding:0.5rem'>puisse</td><td style='padding:0.5rem'>puissions</td></tr><tr><td style='padding:0.5rem'>savoir</td><td style='padding:0.5rem'>sache</td><td style='padding:0.5rem'>sachions</td></tr><tr><td style='padding:0.5rem'>venir</td><td style='padding:0.5rem'>vienne</td><td style='padding:0.5rem'>venions</td></tr><tr><td style='padding:0.5rem'>prendre</td><td style='padding:0.5rem'>prenne</td><td style='padding:0.5rem'>prenions</td></tr></table>"
+    },
+    {
+      "id": "b1u2-qz1",
+      "type": "grammar-quiz",
+      "title": "Indicatif или subjonctif?",
+      "questions": [
+        {
+          "question": "Je veux que tu ___ à la réunion.",
+          "options": [
+            "viennes",
+            "viens",
+            "viendras",
+            "venir"
+          ],
+          "correctAnswer": "viennes",
+          "explanation": "Vouloir que + субжонктив: viennes."
+        },
+        {
+          "question": "Je pense qu'il ___ raison.",
+          "options": [
+            "a",
+            "ait",
+            "aurait",
+            "avoir"
+          ],
+          "correctAnswer": "a",
+          "explanation": "Penser que (утвердительно) — индикатив: il a raison."
+        },
+        {
+          "question": "Il faut que nous ___ une décision.",
+          "options": [
+            "prenions",
+            "prenons",
+            "prendrons",
+            "prendre"
+          ],
+          "correctAnswer": "prenions",
+          "explanation": "Il faut que + субжонктив: prenions."
+        },
+        {
+          "question": "Je doute qu'elle ___ venir ce soir.",
+          "options": [
+            "puisse",
+            "peut",
+            "pourra",
+            "pouvait"
+          ],
+          "correctAnswer": "puisse",
+          "explanation": "Douter que + субжонктив: puisse."
+        },
+        {
+          "question": "J'espère que vous ___ bien.",
+          "options": [
+            "allez",
+            "alliez",
+            "irez tous",
+            "aller"
+          ],
+          "correctAnswer": "allez",
+          "explanation": "Espérer que — индикатив (исключение!): vous allez bien."
+        },
+        {
+          "question": "Je suis ravie que tu ___ là !",
+          "options": [
+            "sois",
+            "es",
+            "seras",
+            "être"
+          ],
+          "correctAnswer": "sois",
+          "explanation": "Чувство (être ravi que) + субжонктив: sois."
+        }
+      ]
+    },
+    {
+      "id": "b1u2-fb1",
+      "type": "fill-blank",
+      "title": "Дискуссия о телевидении",
+      "text": "— À mon avis, la téléréalité est inutile. Il faut que les chaînes ___ des programmes plus intelligents.\n— Je ne pense pas que ce ___ si simple : il est possible que le public ___ justement ces émissions.\n— Peut-être, mais je regrette que la qualité ___ moins importante que l'audience.",
+      "blanks": [
+        {
+          "correctAnswer": "proposent",
+          "options": [
+            "proposent",
+            "proposeront",
+            "proposaient"
+          ],
+          "explanation": "Il faut que + субжонктив: proposent."
+        },
+        {
+          "correctAnswer": "soit",
+          "options": [
+            "soit",
+            "est",
+            "sera"
+          ],
+          "explanation": "Ne pas penser que + субжонктив: soit."
+        },
+        {
+          "correctAnswer": "préfère",
+          "options": [
+            "préfère",
+            "préférera",
+            "a préféré"
+          ],
+          "explanation": "Il est possible que + субжонктив: préfère."
+        },
+        {
+          "correctAnswer": "soit",
+          "options": [
+            "soit",
+            "est",
+            "était"
+          ],
+          "explanation": "Regretter que + субжонктив: soit."
+        }
+      ]
+    },
+    {
+      "id": "b1u2-qz2",
+      "type": "grammar-quiz",
+      "title": "Формы субжонктива — финал",
+      "questions": [
+        {
+          "question": "Il est important que vous ___ la vérité.",
+          "options": [
+            "sachiez",
+            "savez",
+            "saurez",
+            "savoir"
+          ],
+          "correctAnswer": "sachiez",
+          "explanation": "Savoir → sach-: que vous sachiez."
+        },
+        {
+          "question": "Elle souhaite que nous ___ chez elle.",
+          "options": [
+            "allions",
+            "allons",
+            "irons",
+            "aller"
+          ],
+          "correctAnswer": "allions",
+          "explanation": "Aller → que nous allions."
+        },
+        {
+          "question": "J'ai peur qu'il ne ___ pas le faire.",
+          "options": [
+            "puisse",
+            "peut",
+            "pourra",
+            "put"
+          ],
+          "correctAnswer": "puisse",
+          "explanation": "Avoir peur que + субжонктив: puisse."
+        },
+        {
+          "question": "Il faut que tu ___ tes devoirs avant de sortir.",
+          "options": [
+            "fasses",
+            "fais",
+            "feras",
+            "faire"
+          ],
+          "correctAnswer": "fasses",
+          "explanation": "Faire → fass-: que tu fasses."
+        }
+      ]
+    }
+  ]
+}

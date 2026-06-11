@@ -1,0 +1,234 @@
+{
+  "id": "unite5",
+  "title": "Unité 5 : Participes et formes en -ant",
+  "description": "Participe présent, gérondif, adjectif verbal, participe composé — различия и употребление.",
+  "vocabulary": [
+    {
+      "fr": "étant donné que",
+      "ru": "учитывая, что",
+      "type": "phrase"
+    },
+    {
+      "fr": "ayant terminé",
+      "ru": "закончив",
+      "type": "phrase"
+    },
+    {
+      "fr": "en travaillant",
+      "ru": "работая",
+      "type": "phrase"
+    },
+    {
+      "fr": "exigeant(e)",
+      "ru": "требовательный",
+      "type": "phrase"
+    },
+    {
+      "fr": "convaincant(e)",
+      "ru": "убедительный",
+      "type": "phrase"
+    },
+    {
+      "fr": "précédent(e)",
+      "ru": "предыдущий",
+      "type": "phrase"
+    },
+    {
+      "fr": "fatigant(e)",
+      "ru": "утомительный",
+      "type": "phrase"
+    },
+    {
+      "fr": "influent(e)",
+      "ru": "влиятельный",
+      "type": "phrase"
+    },
+    {
+      "fr": "négligent(e)",
+      "ru": "небрежный",
+      "type": "phrase"
+    },
+    {
+      "fr": "tout en + -ant",
+      "ru": "продолжая при этом",
+      "type": "phrase"
+    },
+    {
+      "fr": "faute de temps",
+      "ru": "из-за нехватки времени",
+      "type": "phrase"
+    },
+    {
+      "fr": "une démarche",
+      "ru": "шаг, действие, подход",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "b2u5-th1",
+      "type": "theory",
+      "title": "Quatre formes en -ant — кто есть кто",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Форма</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Роль</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>participe présent</td><td style='padding:0.5rem'>причина/описание (неизм.)</td><td style='padding:0.5rem'>Cherchant un emploi, elle consulte les annonces.</td></tr><tr><td style='padding:0.5rem'>gérondif (en + -ant)</td><td style='padding:0.5rem'>как/когда (одновременно)</td><td style='padding:0.5rem'>Elle lit en mangeant.</td></tr><tr><td style='padding:0.5rem'>adjectif verbal</td><td style='padding:0.5rem'>прилагательное (согласуется!)</td><td style='padding:0.5rem'>une réunion fatigante</td></tr><tr><td style='padding:0.5rem'>participe composé</td><td style='padding:0.5rem'>завершённое действие</td><td style='padding:0.5rem'>Ayant fini son travail, il est parti.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Ловушка орфографии: причастие и прилагательное иногда пишутся по-разному: provoquant (прич.) / provocant (прил.), fatiguant (прич.) / fatigant (прил.).</p>"
+    },
+    {
+      "id": "b2u5-qz1",
+      "type": "grammar-quiz",
+      "title": "Формы на -ant — практика",
+      "questions": [
+        {
+          "question": "___ ses études, elle a déménagé à Paris.",
+          "options": [
+            "Ayant terminé",
+            "En terminant",
+            "Terminant que",
+            "Terminé"
+          ],
+          "correctAnswer": "Ayant terminé",
+          "explanation": "Завершённое действие до переезда — participe composé: ayant terminé."
+        },
+        {
+          "question": "Cette randonnée était vraiment ___ .",
+          "options": [
+            "fatigante",
+            "fatiguante",
+            "fatiguant",
+            "fatigant"
+          ],
+          "correctAnswer": "fatigante",
+          "explanation": "Прилагательное (согласуется, без u): fatigante."
+        },
+        {
+          "question": "Il s'est blessé ___ du ski.",
+          "options": [
+            "en faisant",
+            "faisant",
+            "ayant fait",
+            "fait"
+          ],
+          "correctAnswer": "en faisant",
+          "explanation": "«Катаясь» (одновременность) — gérondif: en faisant."
+        },
+        {
+          "question": "___ malade, elle est restée chez elle.",
+          "options": [
+            "Étant",
+            "En étant",
+            "Été",
+            "Ayant"
+          ],
+          "correctAnswer": "Étant",
+          "explanation": "Причина — participe présent: étant malade."
+        },
+        {
+          "question": "Ses arguments sont très ___ .",
+          "options": [
+            "convaincants",
+            "convainquants",
+            "convainquant",
+            "convaincant que"
+          ],
+          "correctAnswer": "convaincants",
+          "explanation": "Прилагательное: convaincants (c, не qu)."
+        },
+        {
+          "question": "Elle travaille ___ écoutant de la musique.",
+          "options": [
+            "tout en",
+            "tout",
+            "ayant",
+            "étant"
+          ],
+          "correctAnswer": "tout en",
+          "explanation": "«Продолжая при этом» — tout en + participe."
+        }
+      ]
+    },
+    {
+      "id": "b2u5-fb1",
+      "type": "fill-blank",
+      "title": "Портрет коллеги",
+      "text": "___ donné son expérience, Karim gère les dossiers les plus complexes. C'est un collègue ___ : il trouve toujours les mots justes. ___ rejoint l'équipe il y a dix ans, il connaît tous les clients. Il réussit à former les nouveaux ___ restant disponible pour ses propres projets — une énergie vraiment ___ !",
+      "blanks": [
+        {
+          "correctAnswer": "Étant",
+          "options": [
+            "Étant",
+            "Ayant",
+            "En"
+          ],
+          "explanation": "Étant donné que/donné + nom — «учитывая»."
+        },
+        {
+          "correctAnswer": "convaincant",
+          "options": [
+            "convaincant",
+            "convainquant",
+            "convaincu que"
+          ],
+          "explanation": "Прилагательное «убедительный»: convaincant."
+        },
+        {
+          "correctAnswer": "Ayant",
+          "options": [
+            "Ayant",
+            "Étant",
+            "En ayant"
+          ],
+          "explanation": "Participe composé: ayant rejoint — «придя в команду (раньше)»."
+        },
+        {
+          "correctAnswer": "tout en",
+          "options": [
+            "tout en",
+            "en tout",
+            "ayant"
+          ],
+          "explanation": "Tout en + -ant: продолжая при этом."
+        },
+        {
+          "correctAnswer": "étonnante",
+          "options": [
+            "étonnante",
+            "étonnant",
+            "étonnants"
+          ],
+          "explanation": "Une énergie (ж.р.) étonnante — прилагательное согласуется."
+        }
+      ]
+    },
+    {
+      "id": "b2u5-sb1",
+      "type": "sentence-builder",
+      "title": "Соберите фразы",
+      "sentences": [
+        {
+          "words": [
+            "En",
+            "lisant",
+            "ce",
+            "livre,",
+            "j'ai",
+            "beaucoup",
+            "appris"
+          ],
+          "ru": "Читая эту книгу, я многому научился"
+        },
+        {
+          "words": [
+            "Ayant",
+            "raté",
+            "le",
+            "bus,",
+            "il",
+            "est",
+            "arrivé",
+            "en",
+            "retard"
+          ],
+          "ru": "Опоздав на автобус, он пришёл с опозданием"
+        }
+      ]
+    }
+  ]
+}

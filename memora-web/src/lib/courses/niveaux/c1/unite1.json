@@ -1,0 +1,190 @@
+{
+  "id": "unite1",
+  "title": "Unité 1 : Moduler son discours",
+  "description": "Модализация: смягчение, дистанцирование, усиление. Условное наклонение прессы, безличные обороты, наречия-модализаторы.",
+  "vocabulary": [
+    {
+      "fr": "vraisemblablement",
+      "ru": "по всей вероятности",
+      "type": "phrase"
+    },
+    {
+      "fr": "indéniablement",
+      "ru": "бесспорно",
+      "type": "phrase"
+    },
+    {
+      "fr": "en quelque sorte",
+      "ru": "в некотором роде",
+      "type": "phrase"
+    },
+    {
+      "fr": "pour ainsi dire",
+      "ru": "так сказать",
+      "type": "phrase"
+    },
+    {
+      "fr": "force est de constater",
+      "ru": "нельзя не констатировать",
+      "type": "phrase"
+    },
+    {
+      "fr": "il n'en demeure pas moins que",
+      "ru": "тем не менее остаётся фактом, что",
+      "type": "phrase"
+    },
+    {
+      "fr": "d'aucuns",
+      "ru": "некоторые (книжн.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "prétendre",
+      "ru": "утверждать (без доказательств)",
+      "type": "phrase"
+    },
+    {
+      "fr": "laisser entendre",
+      "ru": "давать понять",
+      "type": "phrase"
+    },
+    {
+      "fr": "nuancer",
+      "ru": "вносить нюансы",
+      "type": "phrase"
+    },
+    {
+      "fr": "tempérer",
+      "ru": "умерять, смягчать",
+      "type": "phrase"
+    },
+    {
+      "fr": "sous toutes réserves",
+      "ru": "без гарантий достоверности",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "c1u1-th1",
+      "type": "theory",
+      "title": "La modalisation — управлять степенью уверенности",
+      "content": "<p style='margin:0.75rem 0'>На C1 важно показывать СВОЁ отношение к информации: уверенность, осторожность, дистанцию.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Приём</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Инструменты</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>уверенность</td><td style='padding:0.5rem'>indéniablement, à l'évidence, force est de constater</td><td style='padding:0.5rem'>Force est de constater que le projet a échoué.</td></tr><tr><td style='padding:0.5rem'>осторожность</td><td style='padding:0.5rem'>il semblerait que, vraisemblablement, sans doute</td><td style='padding:0.5rem'>Il semblerait que des erreurs aient été commises.</td></tr><tr><td style='padding:0.5rem'>дистанция (чужие слова)</td><td style='padding:0.5rem'>conditionnel прессы, prétendre, selon</td><td style='padding:0.5rem'>Le suspect se serait enfui à l'étranger.</td></tr><tr><td style='padding:0.5rem'>смягчение</td><td style='padding:0.5rem'>quelque peu, pour ainsi dire, en quelque sorte</td><td style='padding:0.5rem'>Sa réaction était quelque peu excessive.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Conditionnel в прессе = «по неподтверждённым данным»: Le bilan s'élèverait à dix victimes — журналист не ручается.</p>"
+    },
+    {
+      "id": "c1u1-qz1",
+      "type": "grammar-quiz",
+      "title": "Модализация — практика",
+      "questions": [
+        {
+          "question": "Le ministre ___ démissionner demain, selon nos sources.",
+          "options": [
+            "devrait",
+            "doit",
+            "devra",
+            "a dû"
+          ],
+          "correctAnswer": "devrait",
+          "explanation": "Неподтверждённая информация — conditionnel прессы: devrait."
+        },
+        {
+          "question": "Il semblerait que la réunion ___ reportée.",
+          "options": [
+            "ait été",
+            "a été",
+            "sera",
+            "serait"
+          ],
+          "correctAnswer": "ait été",
+          "explanation": "Il semblerait que + subjonctif (passé): ait été reportée."
+        },
+        {
+          "question": "___ est de constater que les résultats sont décevants.",
+          "options": [
+            "Force",
+            "Fort",
+            "Forcé",
+            "La force"
+          ],
+          "correctAnswer": "Force",
+          "explanation": "Устойчивый оборот: force est de constater que."
+        },
+        {
+          "question": "L'entreprise ___ avoir respecté toutes les normes — l'enquête le dira.",
+          "options": [
+            "prétend",
+            "sait",
+            "confirme",
+            "prouve"
+          ],
+          "correctAnswer": "prétend",
+          "explanation": "Утверждение без доказательств, с дистанцией — prétendre."
+        },
+        {
+          "question": "___ , ce film restera dans l'histoire du cinéma.",
+          "options": [
+            "Indéniablement",
+            "Vraisemblablement peut-être",
+            "Sous toutes réserves",
+            "En quelque sorte"
+          ],
+          "correctAnswer": "Indéniablement",
+          "explanation": "Полная уверенность — indéniablement (бесспорно)."
+        }
+      ]
+    },
+    {
+      "id": "c1u1-fb1",
+      "type": "fill-blank",
+      "title": "Заметка с осторожными формулировками",
+      "text": "Selon des sources concordantes, le groupe ___ racheter son concurrent. Il ___ que les négociations aient commencé cet été. Les syndicats, ___ inquiets, demandent des garanties. ___ est de constater que la direction reste silencieuse — un silence qui, ___ dire, en dit long.",
+      "blanks": [
+        {
+          "correctAnswer": "s'apprêterait à",
+          "options": [
+            "s'apprêterait à",
+            "s'apprête à",
+            "s'apprêtera à"
+          ],
+          "explanation": "Дистанция прессы — conditionnel: s'apprêterait à."
+        },
+        {
+          "correctAnswer": "semblerait",
+          "options": [
+            "semblerait",
+            "semble certain",
+            "paraîtra"
+          ],
+          "explanation": "Осторожность: il semblerait que + subjonctif."
+        },
+        {
+          "correctAnswer": "quelque peu",
+          "options": [
+            "quelque peu",
+            "fortement très",
+            "indéniablement"
+          ],
+          "explanation": "Смягчение: quelque peu inquiets."
+        },
+        {
+          "correctAnswer": "Force",
+          "options": [
+            "Force",
+            "Fort",
+            "Faute"
+          ],
+          "explanation": "Force est de constater que..."
+        },
+        {
+          "correctAnswer": "pour ainsi",
+          "options": [
+            "pour ainsi",
+            "par exemple",
+            "autant"
+          ],
+          "explanation": "Pour ainsi dire — «так сказать»."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,289 @@
+{
+  "id": "unite1",
+  "title": "Unité 1 : Raconter au passé",
+  "description": "Рассказ о событиях: passé composé / imparfait / plus-que-parfait, указатели времени.",
+  "vocabulary": [
+    {
+      "fr": "se dérouler",
+      "ru": "происходить, разворачиваться",
+      "type": "phrase"
+    },
+    {
+      "fr": "auparavant",
+      "ru": "прежде, до этого",
+      "type": "phrase"
+    },
+    {
+      "fr": "à l'époque",
+      "ru": "в то время",
+      "type": "phrase"
+    },
+    {
+      "fr": "au moment où",
+      "ru": "в тот момент, когда",
+      "type": "phrase"
+    },
+    {
+      "fr": "dès que",
+      "ru": "как только",
+      "type": "phrase"
+    },
+    {
+      "fr": "autrefois",
+      "ru": "когда-то, в былые времена",
+      "type": "phrase"
+    },
+    {
+      "fr": "un événement marquant",
+      "ru": "знаковое событие",
+      "type": "phrase"
+    },
+    {
+      "fr": "un souvenir d'enfance",
+      "ru": "детское воспоминание",
+      "type": "phrase"
+    },
+    {
+      "fr": "une rencontre",
+      "ru": "встреча",
+      "type": "phrase"
+    },
+    {
+      "fr": "bouleverser",
+      "ru": "потрясти, перевернуть",
+      "type": "phrase"
+    },
+    {
+      "fr": "déménager",
+      "ru": "переезжать",
+      "type": "phrase"
+    },
+    {
+      "fr": "Ça m'a marqué(e).",
+      "ru": "Это меня впечатлило.",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "b1u1-th1",
+      "type": "theory",
+      "title": "Plus-que-parfait — «прошлое до прошлого»",
+      "content": "<p style='margin:0.75rem 0'>Plus-que-parfait описывает действие, случившееся РАНЬШЕ другого прошедшего. Образование: avoir/être в imparfait + причастие:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Разбор</th></tr><tr><td style='padding:0.5rem'>Quand je suis arrivé, le film avait commencé.</td><td style='padding:0.5rem'>фильм начался ДО моего прихода</td></tr><tr><td style='padding:0.5rem'>Elle était fatiguée parce qu'elle avait mal dormi.</td><td style='padding:0.5rem'>плохо спала раньше → устала потом</td></tr><tr><td style='padding:0.5rem'>Nous avions déjà mangé quand ils sont venus.</td><td style='padding:0.5rem'>сначала поели, потом пришли гости</td></tr></table><p style='margin:0.75rem 0'>Три времени рассказа: <b>imparfait</b> — фон (il pleuvait), <b>passé composé</b> — события (je suis sorti), <b>plus-que-parfait</b> — предыстория (j'avais oublié mon parapluie).</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Подсказка-маркер: déjà, auparavant, avant — часто сигналят plus-que-parfait.</p>"
+    },
+    {
+      "id": "b1u1-qz1",
+      "type": "grammar-quiz",
+      "title": "Три прошедших времени — практика",
+      "questions": [
+        {
+          "question": "Je n'ai pas reconnu Paul : il ___ beaucoup.",
+          "options": [
+            "avait changé",
+            "a changé",
+            "changeait",
+            "change"
+          ],
+          "correctAnswer": "avait changé",
+          "explanation": "Изменился ДО момента встречи — plus-que-parfait: il avait changé."
+        },
+        {
+          "question": "Quand nous ___ enfants, nous passions l'été chez nos grands-parents.",
+          "options": [
+            "étions",
+            "avons été",
+            "avions été",
+            "sommes"
+          ],
+          "correctAnswer": "étions",
+          "explanation": "Фон/состояние в прошлом — imparfait: nous étions enfants."
+        },
+        {
+          "question": "Elle a raté le train parce qu'elle ___ son réveil.",
+          "options": [
+            "avait oublié",
+            "a oublié",
+            "oubliait",
+            "oublie"
+          ],
+          "correctAnswer": "avait oublié",
+          "explanation": "Будильник забыла ДО опоздания — предыстория: plus-que-parfait."
+        },
+        {
+          "question": "Soudain, quelqu'un ___ à la porte.",
+          "options": [
+            "a frappé",
+            "frappait",
+            "avait frappé",
+            "frappe"
+          ],
+          "correctAnswer": "a frappé",
+          "explanation": "Внезапное событие (soudain) — passé composé."
+        },
+        {
+          "question": "Il m'a rendu le livre que je lui ___ l'année dernière.",
+          "options": [
+            "avais prêté",
+            "ai prêté",
+            "prêtais",
+            "prête"
+          ],
+          "correctAnswer": "avais prêté",
+          "explanation": "Одолжил книгу ДО того, как он её вернул — plus-que-parfait."
+        }
+      ]
+    },
+    {
+      "id": "b1u1-th2",
+      "type": "theory",
+      "title": "Les indicateurs de temps — указатели времени",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Указатель</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Значение</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>il y a</td><td style='padding:0.5rem'>тому назад</td><td style='padding:0.5rem'>Il y a cinq ans, j'ai déménagé.</td></tr><tr><td style='padding:0.5rem'>depuis</td><td style='padding:0.5rem'>с тех пор, уже</td><td style='padding:0.5rem'>Je joue du piano depuis l'enfance.</td></tr><tr><td style='padding:0.5rem'>pendant</td><td style='padding:0.5rem'>в течение</td><td style='padding:0.5rem'>Il a vécu pendant deux ans au Maroc.</td></tr><tr><td style='padding:0.5rem'>en</td><td style='padding:0.5rem'>за (срок выполнения)</td><td style='padding:0.5rem'>Elle a lu ce roman en trois jours.</td></tr><tr><td style='padding:0.5rem'>dès que</td><td style='padding:0.5rem'>как только</td><td style='padding:0.5rem'>Dès que je l'ai vu, j'ai compris.</td></tr><tr><td style='padding:0.5rem'>au moment où</td><td style='padding:0.5rem'>в тот момент, когда</td><td style='padding:0.5rem'>Au moment où je sortais, il a appelé.</td></tr><tr><td style='padding:0.5rem'>à l'époque</td><td style='padding:0.5rem'>в то время</td><td style='padding:0.5rem'>À l'époque, on n'avait pas Internet.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 <b>Pendant</b> — сколько длилось; <b>en</b> — за какое время успели: Il a couru pendant une heure / Il a couru 10 km en une heure.</p>"
+    },
+    {
+      "id": "b1u1-qz2",
+      "type": "grammar-quiz",
+      "title": "Указатели времени — практика",
+      "questions": [
+        {
+          "question": "J'ai préparé ce gâteau ___ vingt minutes seulement !",
+          "options": [
+            "en",
+            "pendant",
+            "depuis",
+            "il y a"
+          ],
+          "correctAnswer": "en",
+          "explanation": "«За двадцать минут» (успел за срок) — en."
+        },
+        {
+          "question": "___ , les gens écrivaient des lettres.",
+          "options": [
+            "À l'époque",
+            "En",
+            "Dès que",
+            "Au bout"
+          ],
+          "correctAnswer": "À l'époque",
+          "explanation": "«В то время» (фон прошлого) — à l'époque + imparfait."
+        },
+        {
+          "question": "Nous nous connaissons ___ dix ans.",
+          "options": [
+            "depuis",
+            "pendant",
+            "il y a",
+            "en"
+          ],
+          "correctAnswer": "depuis",
+          "explanation": "Знакомы и сейчас — depuis dix ans + настоящее время."
+        },
+        {
+          "question": "___ elle est entrée, tout le monde s'est tu.",
+          "options": [
+            "Dès qu'",
+            "Pendant qu'",
+            "Depuis qu'",
+            "En"
+          ],
+          "correctAnswer": "Dès qu'",
+          "explanation": "«Как только она вошла» — dès que (+ elle → dès qu'elle)."
+        }
+      ]
+    },
+    {
+      "id": "b1u1-fb1",
+      "type": "fill-blank",
+      "title": "Рассказ о переезде",
+      "text": "En 2020, ma vie a changé. ___ , j'habitais à Toulouse, où j'___ toute mon enfance. Un jour, on m'a proposé un poste à Lyon : je n'___ jamais ___ à quitter ma ville ! J'ai accepté, et ___ trois mois, je déménageais. Aujourd'hui, je vis à Lyon ___ cinq ans et je ne regrette rien.",
+      "blanks": [
+        {
+          "correctAnswer": "À l'époque",
+          "options": [
+            "À l'époque",
+            "Dès que",
+            "En"
+          ],
+          "explanation": "Фон прошлого — à l'époque."
+        },
+        {
+          "correctAnswer": "avais passé",
+          "options": [
+            "avais passé",
+            "ai passé",
+            "passais"
+          ],
+          "explanation": "Детство прошло ДО 2020 года — plus-que-parfait."
+        },
+        {
+          "correctAnswer": "avais",
+          "options": [
+            "avais",
+            "ai",
+            "aurais"
+          ],
+          "explanation": "Plus-que-parfait в отрицании: je n'avais jamais pensé."
+        },
+        {
+          "correctAnswer": "pensé",
+          "options": [
+            "pensé",
+            "penser",
+            "pensais"
+          ],
+          "explanation": "Причастие после avais: pensé (penser à...)."
+        },
+        {
+          "correctAnswer": "au bout de",
+          "options": [
+            "au bout de",
+            "depuis",
+            "pendant que"
+          ],
+          "explanation": "«Спустя/через три месяца» в прошлом — au bout de trois mois."
+        },
+        {
+          "correctAnswer": "depuis",
+          "options": [
+            "depuis",
+            "pendant",
+            "il y a"
+          ],
+          "explanation": "Живу до сих пор — depuis cinq ans."
+        }
+      ]
+    },
+    {
+      "id": "b1u1-sb1",
+      "type": "sentence-builder",
+      "title": "Соберите рассказ",
+      "sentences": [
+        {
+          "words": [
+            "Quand",
+            "je",
+            "suis",
+            "arrivé,",
+            "la",
+            "réunion",
+            "avait",
+            "déjà",
+            "commencé"
+          ],
+          "ru": "Когда я пришёл, собрание уже началось"
+        },
+        {
+          "words": [
+            "À",
+            "l'époque,",
+            "nous",
+            "habitions",
+            "à",
+            "la",
+            "campagne"
+          ],
+          "ru": "В то время мы жили в деревне"
+        }
+      ]
+    }
+  ]
+}

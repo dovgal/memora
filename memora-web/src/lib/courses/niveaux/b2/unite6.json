@@ -1,0 +1,207 @@
+{
+  "id": "unite6",
+  "title": "Unité 6 : Mise en relief et style",
+  "description": "Выделительные конструкции (c'est... qui/que, ce qui... c'est), сложные относительные (lequel, auquel, duquel), номинализация в прессе.",
+  "vocabulary": [
+    {
+      "fr": "mettre l'accent sur",
+      "ru": "делать акцент на",
+      "type": "phrase"
+    },
+    {
+      "fr": "ce qui me frappe",
+      "ru": "что меня поражает",
+      "type": "phrase"
+    },
+    {
+      "fr": "souligner",
+      "ru": "подчёркивать",
+      "type": "phrase"
+    },
+    {
+      "fr": "il s'agit de",
+      "ru": "речь идёт о",
+      "type": "phrase"
+    },
+    {
+      "fr": "auprès de",
+      "ru": "при, у, среди",
+      "type": "phrase"
+    },
+    {
+      "fr": "selon",
+      "ru": "согласно",
+      "type": "phrase"
+    },
+    {
+      "fr": "d'après",
+      "ru": "по мнению",
+      "type": "phrase"
+    },
+    {
+      "fr": "quant à",
+      "ru": "что касается",
+      "type": "phrase"
+    },
+    {
+      "fr": "en ce qui concerne",
+      "ru": "что касается",
+      "type": "phrase"
+    },
+    {
+      "fr": "un enjeu",
+      "ru": "ставка, вызов, важный вопрос",
+      "type": "phrase"
+    },
+    {
+      "fr": "une polémique",
+      "ru": "полемика",
+      "type": "phrase"
+    },
+    {
+      "fr": "susciter le débat",
+      "ru": "вызывать дискуссию",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "b2u6-th1",
+      "type": "theory",
+      "title": "La mise en relief — выделяем главное",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Конструкция</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Что выделяем</th></tr><tr><td style='padding:0.5rem'>C'est... qui</td><td style='padding:0.5rem'>C'est Léa qui a trouvé la solution.</td><td style='padding:0.5rem'>подлежащее</td></tr><tr><td style='padding:0.5rem'>C'est... que</td><td style='padding:0.5rem'>C'est ce film que je veux voir.</td><td style='padding:0.5rem'>дополнение</td></tr><tr><td style='padding:0.5rem'>Ce qui..., c'est...</td><td style='padding:0.5rem'>Ce qui compte, c'est la santé.</td><td style='padding:0.5rem'>идею-подлежащее</td></tr><tr><td style='padding:0.5rem'>Ce que..., c'est...</td><td style='padding:0.5rem'>Ce que j'aime ici, c'est le calme.</td><td style='padding:0.5rem'>идею-дополнение</td></tr><tr><td style='padding:0.5rem'>Ce dont..., c'est...</td><td style='padding:0.5rem'>Ce dont j'ai besoin, c'est de repos.</td><td style='padding:0.5rem'>дополнение с de</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Ce qui / ce que / ce dont — тот же выбор, что qui/que/dont: дальше глагол → qui, подлежащее → que, было de → dont.</p>"
+    },
+    {
+      "id": "b2u6-th2",
+      "type": "theory",
+      "title": "Les relatifs composés — lequel и компания",
+      "content": "<p style='margin:0.75rem 0'>После предлогов используем <b>lequel / laquelle / lesquels / lesquelles</b>:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Предлог</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>avec</td><td style='padding:0.5rem'>le stylo avec lequel j'écris</td></tr><tr><td style='padding:0.5rem'>sur</td><td style='padding:0.5rem'>la chaise sur laquelle il est assis</td></tr><tr><td style='padding:0.5rem'>à (слияние!)</td><td style='padding:0.5rem'>le projet auquel je participe (à + lequel)</td></tr><tr><td style='padding:0.5rem'>de (слияние!)</td><td style='padding:0.5rem'>l'immeuble en face duquel j'habite</td></tr><tr><td style='padding:0.5rem'>для людей</td><td style='padding:0.5rem'>la collègue avec qui / avec laquelle je travaille</td></tr></table>"
+    },
+    {
+      "id": "b2u6-qz1",
+      "type": "grammar-quiz",
+      "title": "Mise en relief / relatifs — практика",
+      "questions": [
+        {
+          "question": "___ me dérange, c'est le bruit constant.",
+          "options": [
+            "Ce qui",
+            "Ce que",
+            "Ce dont",
+            "C'est"
+          ],
+          "correctAnswer": "Ce qui",
+          "explanation": "Дальше глагол (dérange) → ce qui."
+        },
+        {
+          "question": "___ j'ai besoin, c'est d'un peu de silence.",
+          "options": [
+            "Ce dont",
+            "Ce que",
+            "Ce qui",
+            "Dont"
+          ],
+          "correctAnswer": "Ce dont",
+          "explanation": "Avoir besoin DE → ce dont."
+        },
+        {
+          "question": "C'est le projet ___ je pense depuis des mois.",
+          "options": [
+            "auquel",
+            "lequel",
+            "dont",
+            "à qui"
+          ],
+          "correctAnswer": "auquel",
+          "explanation": "Penser À + lequel → auquel (le projet — м.р.)."
+        },
+        {
+          "question": "La réunion pendant ___ il a dormi était importante.",
+          "options": [
+            "laquelle",
+            "lequel",
+            "laquelle que",
+            "qui"
+          ],
+          "correctAnswer": "laquelle",
+          "explanation": "Pendant + la réunion (ж.р.) → pendant laquelle."
+        },
+        {
+          "question": "C'est en forgeant ___ devient forgeron.",
+          "options": [
+            "qu'on",
+            "qui on",
+            "dont on",
+            "quand on"
+          ],
+          "correctAnswer": "qu'on",
+          "explanation": "C'est... que: c'est en forgeant qu'on devient forgeron."
+        },
+        {
+          "question": "Les amis sur ___ je peux compter sont rares.",
+          "options": [
+            "lesquels",
+            "lequel",
+            "qui sur",
+            "dont"
+          ],
+          "correctAnswer": "lesquels",
+          "explanation": "Compter SUR + les amis (мн.ч.) → sur lesquels."
+        }
+      ]
+    },
+    {
+      "id": "b2u6-fb1",
+      "type": "fill-blank",
+      "title": "Колонка журналиста",
+      "text": "___ frappe dans ce dossier, c'est le silence des autorités. Le rapport ___ les experts font référence n'a jamais été publié. C'est la transparence ___ les citoyens réclament. Quant ___ la ministre, elle promet une enquête — une promesse à ___ plus personne ne croit.",
+      "blanks": [
+        {
+          "correctAnswer": "Ce qui",
+          "options": [
+            "Ce qui",
+            "Ce que",
+            "Ce dont"
+          ],
+          "explanation": "Дальше глагол frappe → ce qui."
+        },
+        {
+          "correctAnswer": "auquel",
+          "options": [
+            "auquel",
+            "dont",
+            "lequel"
+          ],
+          "explanation": "Faire référence À → auquel (le rapport)."
+        },
+        {
+          "correctAnswer": "que",
+          "options": [
+            "que",
+            "qui",
+            "dont"
+          ],
+          "explanation": "Réclamer qch — прямое дополнение → c'est... que."
+        },
+        {
+          "correctAnswer": "à",
+          "options": [
+            "à",
+            "de",
+            "pour"
+          ],
+          "explanation": "Quant À — «что касается»."
+        },
+        {
+          "correctAnswer": "laquelle",
+          "options": [
+            "laquelle",
+            "lequel",
+            "qui"
+          ],
+          "explanation": "Croire À + une promesse (ж.р.) → à laquelle."
+        }
+      ]
+    }
+  ]
+}

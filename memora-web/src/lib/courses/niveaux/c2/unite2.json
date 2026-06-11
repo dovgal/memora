@@ -1,0 +1,201 @@
+{
+  "id": "unite2",
+  "title": "Unité 2 : Figures de style et rhétorique",
+  "description": "Métaphore, litote, euphémisme, ironie, hyperbole — распознавание и использование в аргументации.",
+  "vocabulary": [
+    {
+      "fr": "une métaphore",
+      "ru": "метафора",
+      "type": "phrase"
+    },
+    {
+      "fr": "une litote",
+      "ru": "литота (сказать меньше, чтобы сказать больше)",
+      "type": "phrase"
+    },
+    {
+      "fr": "un euphémisme",
+      "ru": "эвфемизм",
+      "type": "phrase"
+    },
+    {
+      "fr": "une hyperbole",
+      "ru": "гипербола",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'ironie (f)",
+      "ru": "ирония",
+      "type": "phrase"
+    },
+    {
+      "fr": "une antithèse",
+      "ru": "антитеза",
+      "type": "phrase"
+    },
+    {
+      "fr": "une périphrase",
+      "ru": "перифраза",
+      "type": "phrase"
+    },
+    {
+      "fr": "filer la métaphore",
+      "ru": "развивать метафору",
+      "type": "phrase"
+    },
+    {
+      "fr": "au sens figuré",
+      "ru": "в переносном смысле",
+      "type": "phrase"
+    },
+    {
+      "fr": "grinçant(e)",
+      "ru": "язвительный",
+      "type": "phrase"
+    },
+    {
+      "fr": "percutant(e)",
+      "ru": "хлёсткий, бьющий в цель",
+      "type": "phrase"
+    },
+    {
+      "fr": "désamorcer",
+      "ru": "разрядить (напряжение)",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "c2u2-th1",
+      "type": "theory",
+      "title": "Фигуры речи — узнать и применить",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Фигура</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Суть</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>métaphore</td><td style='padding:0.5rem'>скрытое сравнение</td><td style='padding:0.5rem'>Cette réforme est un séisme social.</td></tr><tr><td style='padding:0.5rem'>litote</td><td style='padding:0.5rem'>меньше = больше</td><td style='padding:0.5rem'>Ce n'est pas idiot. (= это умно!)</td></tr><tr><td style='padding:0.5rem'>euphémisme</td><td style='padding:0.5rem'>смягчение</td><td style='padding:0.5rem'>Il nous a quittés. (= он умер)</td></tr><tr><td style='padding:0.5rem'>hyperbole</td><td style='padding:0.5rem'>преувеличение</td><td style='padding:0.5rem'>Je te l'ai dit mille fois !</td></tr><tr><td style='padding:0.5rem'>ironie</td><td style='padding:0.5rem'>обратный смысл</td><td style='padding:0.5rem'>Quelle organisation remarquable ! (про хаос)</td></tr><tr><td style='padding:0.5rem'>antithèse</td><td style='padding:0.5rem'>контраст</td><td style='padding:0.5rem'>Paris brûle, la province dort.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Litote — фирменный приём французской вежливости: «Ce n'est pas faux» = «вы правы».</p>"
+    },
+    {
+      "id": "c2u2-qz1",
+      "type": "grammar-quiz",
+      "title": "Определите фигуру",
+      "questions": [
+        {
+          "question": "«Va, je ne te hais point» (= je t'aime) — это…",
+          "options": [
+            "une litote",
+            "une hyperbole",
+            "un euphémisme",
+            "une métaphore"
+          ],
+          "correctAnswer": "une litote",
+          "explanation": "Отрицание противоположного, чтобы сказать сильнее — классическая литота."
+        },
+        {
+          "question": "«Les demandeurs d'emploi» вместо «les chômeurs» — это…",
+          "options": [
+            "un euphémisme",
+            "une ironie",
+            "une antithèse",
+            "une hyperbole"
+          ],
+          "correctAnswer": "un euphémisme",
+          "explanation": "Смягчающая замена — эвфемизм."
+        },
+        {
+          "question": "«Cette ville est une jungle» — это…",
+          "options": [
+            "une métaphore",
+            "une litote",
+            "une périphrase",
+            "un euphémisme"
+          ],
+          "correctAnswer": "une métaphore",
+          "explanation": "Прямое отождествление без comme — метафора."
+        },
+        {
+          "question": "«Bravo, encore une réunion qui ne sert à rien !» — тон…",
+          "options": [
+            "ironique",
+            "neutre",
+            "euphémique",
+            "métaphorique"
+          ],
+          "correctAnswer": "ironique",
+          "explanation": "Похвала с обратным смыслом — ирония."
+        },
+        {
+          "question": "«La langue de Molière» вместо «le français» — это…",
+          "options": [
+            "une périphrase",
+            "une litote",
+            "une hyperbole",
+            "une antithèse"
+          ],
+          "correctAnswer": "une périphrase",
+          "explanation": "Описательная замена названия — перифраза."
+        },
+        {
+          "question": "«Je meurs de faim» — это…",
+          "options": [
+            "une hyperbole",
+            "une litote",
+            "une ironie",
+            "un euphémisme"
+          ],
+          "correctAnswer": "une hyperbole",
+          "explanation": "Преувеличение — гипербола."
+        }
+      ]
+    },
+    {
+      "id": "c2u2-fb1",
+      "type": "fill-blank",
+      "title": "Колонка-памфлет (распознайте приёмы)",
+      "text": "Notre ville « modernise » ses bibliothèques : comprenez qu'elle en ferme la moitié — joli ___ . Les élus, ces ___ du bien public, promettent monts et merveilles. Le résultat n'est pas brillant — et c'est une ___ . La culture agonise pendant que les budgets de communication explosent : belle ___ . On nous l'a répété cent fois — ___ à peine exagérée — que tout allait bien.",
+      "blanks": [
+        {
+          "correctAnswer": "euphémisme",
+          "options": [
+            "euphémisme",
+            "hyperbole",
+            "antithèse"
+          ],
+          "explanation": "«Модернизирует» вместо «закрывает» — смягчение, эвфемизм."
+        },
+        {
+          "correctAnswer": "gardiens",
+          "options": [
+            "gardiens",
+            "jungles",
+            "séismes"
+          ],
+          "explanation": "Ироническая перифраза: ces gardiens du bien public."
+        },
+        {
+          "correctAnswer": "litote",
+          "options": [
+            "litote",
+            "métaphore",
+            "périphrase"
+          ],
+          "explanation": "«Не блестяще» = «провально» — литота."
+        },
+        {
+          "correctAnswer": "antithèse",
+          "options": [
+            "antithèse",
+            "litote",
+            "euphémisme"
+          ],
+          "explanation": "Контраст agonise/explosent — антитеза."
+        },
+        {
+          "correctAnswer": "hyperbole",
+          "options": [
+            "hyperbole",
+            "ironie",
+            "métaphore"
+          ],
+          "explanation": "«Сто раз» — преувеличение, гипербола."
+        }
+      ]
+    }
+  ]
+}

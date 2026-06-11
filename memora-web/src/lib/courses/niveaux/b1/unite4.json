@@ -1,0 +1,247 @@
+{
+  "id": "unite4",
+  "title": "Unité 4 : Les pronoms — relatifs et compléments",
+  "description": "Относительные qui, que, dont, où; местоимения y/en; двойные местоимения.",
+  "vocabulary": [
+    {
+      "fr": "dont",
+      "ru": "о котором / чей",
+      "type": "phrase"
+    },
+    {
+      "fr": "se servir de",
+      "ru": "пользоваться",
+      "type": "phrase"
+    },
+    {
+      "fr": "avoir besoin de",
+      "ru": "нуждаться в",
+      "type": "phrase"
+    },
+    {
+      "fr": "être fier / fière de",
+      "ru": "гордиться",
+      "type": "phrase"
+    },
+    {
+      "fr": "parler de",
+      "ru": "говорить о",
+      "type": "phrase"
+    },
+    {
+      "fr": "rêver de",
+      "ru": "мечтать о",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'occuper de",
+      "ru": "заниматься (чем-л.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "se souvenir de",
+      "ru": "помнить о",
+      "type": "phrase"
+    },
+    {
+      "fr": "offrir",
+      "ru": "дарить",
+      "type": "phrase"
+    },
+    {
+      "fr": "rendre",
+      "ru": "возвращать",
+      "type": "phrase"
+    },
+    {
+      "fr": "emprunter",
+      "ru": "брать взаймы",
+      "type": "phrase"
+    },
+    {
+      "fr": "Je m'en occupe.",
+      "ru": "Я этим займусь.",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "b1u4-th1",
+      "type": "theory",
+      "title": "DONT — недостающее звено",
+      "content": "<p style='margin:0.75rem 0'><b>Dont</b> заменяет дополнение с <b>de</b>: говорим о ком/чём, чей, из которых:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Полные фразы</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>С dont</th></tr><tr><td style='padding:0.5rem'>Voici le livre. Je t'ai parlé de ce livre.</td><td style='padding:0.5rem'>Voici le livre dont je t'ai parlé.</td></tr><tr><td style='padding:0.5rem'>C'est un outil. J'ai besoin de cet outil.</td><td style='padding:0.5rem'>C'est l'outil dont j'ai besoin.</td></tr><tr><td style='padding:0.5rem'>Une amie. Son frère est médecin.</td><td style='padding:0.5rem'>une amie dont le frère est médecin (чей брат)</td></tr><tr><td style='padding:0.5rem'>Des photos. Je suis fier de ces photos.</td><td style='padding:0.5rem'>les photos dont je suis fier</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Проверка: если глагол/выражение требует DE (parler de, avoir besoin de, être fier de) — нужен dont, а не que!</p>"
+    },
+    {
+      "id": "b1u4-qz1",
+      "type": "grammar-quiz",
+      "title": "Qui / que / dont / où",
+      "questions": [
+        {
+          "question": "C'est le film ___ tout le monde parle.",
+          "options": [
+            "dont",
+            "que",
+            "qui",
+            "où"
+          ],
+          "correctAnswer": "dont",
+          "explanation": "Parler DE qch → dont: le film dont on parle."
+        },
+        {
+          "question": "J'ai un collègue ___ la femme est avocate.",
+          "options": [
+            "dont",
+            "que",
+            "qui",
+            "où"
+          ],
+          "correctAnswer": "dont",
+          "explanation": "«Чья жена» — принадлежность через de → dont."
+        },
+        {
+          "question": "Le quartier ___ j'ai grandi a changé.",
+          "options": [
+            "où",
+            "dont",
+            "que",
+            "qui"
+          ],
+          "correctAnswer": "où",
+          "explanation": "Место («где я вырос») — où."
+        },
+        {
+          "question": "Les outils ___ je me sers sont vieux.",
+          "options": [
+            "dont",
+            "que",
+            "qui",
+            "où"
+          ],
+          "correctAnswer": "dont",
+          "explanation": "Se servir DE → dont: les outils dont je me sers."
+        },
+        {
+          "question": "C'est une décision ___ je ne regrette pas.",
+          "options": [
+            "que",
+            "dont",
+            "qui",
+            "où"
+          ],
+          "correctAnswer": "que",
+          "explanation": "Regretter qch (без de!) — прямое дополнение → que."
+        }
+      ]
+    },
+    {
+      "id": "b1u4-th2",
+      "type": "theory",
+      "title": "Двойные местоимения — порядок",
+      "content": "<p style='margin:0.75rem 0'>Когда местоимений два, порядок фиксированный: <b>me/te/nous/vous</b> → <b>le/la/les</b> → <b>lui/leur</b> → <b>y</b> → <b>en</b>:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Фраза</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>С местоимениями</th></tr><tr><td style='padding:0.5rem'>Il me prête sa voiture.</td><td style='padding:0.5rem'>Il me la prête.</td></tr><tr><td style='padding:0.5rem'>Je donne les clés à Léa.</td><td style='padding:0.5rem'>Je les lui donne.</td></tr><tr><td style='padding:0.5rem'>Elle offre des fleurs à ses amis.</td><td style='padding:0.5rem'>Elle leur en offre.</td></tr><tr><td style='padding:0.5rem'>Tu m'emmènes à la gare ?</td><td style='padding:0.5rem'>Tu m'y emmènes ?</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 le/la/les стоят ПЕРЕД lui/leur: je les lui donne (не «je lui les donne»).</p>"
+    },
+    {
+      "id": "b1u4-qz2",
+      "type": "grammar-quiz",
+      "title": "Двойные местоимения — практика",
+      "questions": [
+        {
+          "question": "Tu rends le livre à Paul ? — Oui, je ___ rends demain.",
+          "options": [
+            "le lui",
+            "lui le",
+            "le leur",
+            "lui en"
+          ],
+          "correctAnswer": "le lui",
+          "explanation": "le (livre) перед lui (à Paul): je le lui rends."
+        },
+        {
+          "question": "Elle vous a montré ses photos ? — Oui, elle ___ a montrées.",
+          "options": [
+            "nous les",
+            "les nous",
+            "nous en",
+            "nous leur"
+          ],
+          "correctAnswer": "nous les",
+          "explanation": "me/te/nous/vous идут первыми: elle nous les a montrées."
+        },
+        {
+          "question": "Il reste du gâteau ? Donne-___ !",
+          "options": [
+            "m'en",
+            "moi-le",
+            "m'y",
+            "le-moi en"
+          ],
+          "correctAnswer": "m'en",
+          "explanation": "Du gâteau → en; в императиве: donne-m'en."
+        },
+        {
+          "question": "Tu as parlé du projet à tes collègues ? — Oui, je ___ ai parlé.",
+          "options": [
+            "leur en",
+            "les en",
+            "leur y",
+            "en leur"
+          ],
+          "correctAnswer": "leur en",
+          "explanation": "Parler DE qch À qn: leur (им) + en (о нём) → je leur en ai parlé."
+        }
+      ]
+    },
+    {
+      "id": "b1u4-fb1",
+      "type": "fill-blank",
+      "title": "Разговор о работе",
+      "text": "Le poste ___ je rêve demande de l'expérience. L'entreprise ___ propose ce travail est à Bordeaux, une ville ___ il fait bon vivre. Mon CV ? Je ___ ai envoyé hier. Les résultats, on me ___ communiquera lundi.",
+      "blanks": [
+        {
+          "correctAnswer": "dont",
+          "options": [
+            "dont",
+            "que",
+            "qui"
+          ],
+          "explanation": "Rêver DE → dont: le poste dont je rêve."
+        },
+        {
+          "correctAnswer": "qui",
+          "options": [
+            "qui",
+            "que",
+            "dont"
+          ],
+          "explanation": "Дальше глагол propose — qui."
+        },
+        {
+          "correctAnswer": "où",
+          "options": [
+            "où",
+            "dont",
+            "que"
+          ],
+          "explanation": "Город, ГДЕ хорошо живётся — où."
+        },
+        {
+          "correctAnswer": "le leur",
+          "options": [
+            "le leur",
+            "leur le",
+            "le lui"
+          ],
+          "explanation": "Le (CV) + leur (им, в компанию): je le leur ai envoyé."
+        },
+        {
+          "correctAnswer": "les",
+          "options": [
+            "les",
+            "leur",
+            "en"
+          ],
+          "explanation": "Les résultats — COD: on me les communiquera."
+        }
+      ]
+    }
+  ]
+}

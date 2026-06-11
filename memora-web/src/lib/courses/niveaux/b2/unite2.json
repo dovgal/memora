@@ -1,0 +1,258 @@
+{
+  "id": "unite2",
+  "title": "Unité 2 : Indicatif, subjonctif ou infinitif ?",
+  "description": "Тонкий выбор режима: мнение/сомнение/чувство, le subjonctif passé, инфинитивные конструкции.",
+  "vocabulary": [
+    {
+      "fr": "nier",
+      "ru": "отрицать",
+      "type": "phrase"
+    },
+    {
+      "fr": "admettre",
+      "ru": "допускать",
+      "type": "phrase"
+    },
+    {
+      "fr": "il est évident que",
+      "ru": "очевидно, что",
+      "type": "phrase"
+    },
+    {
+      "fr": "il semble que",
+      "ru": "похоже, что",
+      "type": "phrase"
+    },
+    {
+      "fr": "il me semble que",
+      "ru": "мне кажется, что",
+      "type": "phrase"
+    },
+    {
+      "fr": "se réjouir que",
+      "ru": "радоваться, что",
+      "type": "phrase"
+    },
+    {
+      "fr": "déplorer",
+      "ru": "сожалеть, осуждать",
+      "type": "phrase"
+    },
+    {
+      "fr": "pourvu que",
+      "ru": "лишь бы",
+      "type": "phrase"
+    },
+    {
+      "fr": "bien que",
+      "ru": "хотя",
+      "type": "phrase"
+    },
+    {
+      "fr": "à condition que",
+      "ru": "при условии, что",
+      "type": "phrase"
+    },
+    {
+      "fr": "sans que",
+      "ru": "без того, чтобы",
+      "type": "phrase"
+    },
+    {
+      "fr": "quoi qu'il arrive",
+      "ru": "что бы ни случилось",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "b2u2-th1",
+      "type": "theory",
+      "title": "Три режима — карта выбора",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Выражение</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Режим</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>il est certain/évident que</td><td style='padding:0.5rem'>indicatif</td><td style='padding:0.5rem'>Il est évident qu'elle a raison.</td></tr><tr><td style='padding:0.5rem'>il semble que</td><td style='padding:0.5rem'>subjonctif</td><td style='padding:0.5rem'>Il semble qu'il soit malade.</td></tr><tr><td style='padding:0.5rem'>il ME semble que</td><td style='padding:0.5rem'>indicatif !</td><td style='padding:0.5rem'>Il me semble qu'il est malade.</td></tr><tr><td style='padding:0.5rem'>bien que, quoique</td><td style='padding:0.5rem'>subjonctif</td><td style='padding:0.5rem'>Bien qu'il soit tard, je reste.</td></tr><tr><td style='padding:0.5rem'>à condition que, pourvu que</td><td style='padding:0.5rem'>subjonctif</td><td style='padding:0.5rem'>Je viens à condition que tu sois là.</td></tr><tr><td style='padding:0.5rem'>один субъект → инфинитив</td><td style='padding:0.5rem'>infinitif</td><td style='padding:0.5rem'>Je suis content de venir. (не «que je vienne»)</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Если субъект один и тот же — инфинитив обязателен: Je veux partir (не «je veux que je parte»).</p>"
+    },
+    {
+      "id": "b2u2-th2",
+      "type": "theory",
+      "title": "Le subjonctif passé",
+      "content": "<p style='margin:0.75rem 0'>Для завершённого действия: <b>que + avoir/être в субжонктиве + причастие</b>:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Смысл</th></tr><tr><td style='padding:0.5rem'>Je suis content que tu sois venu.</td><td style='padding:0.5rem'>рад, что ты ПРИШЁЛ (уже)</td></tr><tr><td style='padding:0.5rem'>Je doute qu'ils aient fini.</td><td style='padding:0.5rem'>сомневаюсь, что они ЗАКОНЧИЛИ</td></tr><tr><td style='padding:0.5rem'>C'est dommage qu'elle soit partie.</td><td style='padding:0.5rem'>жаль, что она УШЛА</td></tr></table>"
+    },
+    {
+      "id": "b2u2-qz1",
+      "type": "grammar-quiz",
+      "title": "Выберите режим",
+      "questions": [
+        {
+          "question": "Il est évident que ce projet ___ ambitieux.",
+          "options": [
+            "est",
+            "soit",
+            "être",
+            "serait"
+          ],
+          "correctAnswer": "est",
+          "explanation": "Il est évident que — уверенность → индикатив: est."
+        },
+        {
+          "question": "Bien qu'il ___ fatigué, il a continué.",
+          "options": [
+            "soit",
+            "est",
+            "était",
+            "serait"
+          ],
+          "correctAnswer": "soit",
+          "explanation": "Bien que + субжонктив: soit."
+        },
+        {
+          "question": "Je suis fier d'___ ce diplôme.",
+          "options": [
+            "avoir obtenu",
+            "que j'aie obtenu",
+            "avoir obtenir",
+            "obtenu"
+          ],
+          "correctAnswer": "avoir obtenu",
+          "explanation": "Один субъект → инфинитив прошедший: d'avoir obtenu."
+        },
+        {
+          "question": "Il semble que la situation ___ grave.",
+          "options": [
+            "soit",
+            "est",
+            "sera",
+            "étant"
+          ],
+          "correctAnswer": "soit",
+          "explanation": "Il semble que (без me!) + субжонктив: soit."
+        },
+        {
+          "question": "Je regrette que vous n'___ pas pu venir hier.",
+          "options": [
+            "ayez",
+            "avez",
+            "auriez",
+            "aviez"
+          ],
+          "correctAnswer": "ayez",
+          "explanation": "Сожаление о прошлом — subjonctif passé: que vous n'ayez pas pu."
+        },
+        {
+          "question": "Tu peux sortir à condition que tu ___ tes devoirs.",
+          "options": [
+            "aies fini",
+            "as fini",
+            "finiras",
+            "finissais"
+          ],
+          "correctAnswer": "aies fini",
+          "explanation": "À condition que + субжонктив (прошедший — дело сделано): aies fini."
+        }
+      ]
+    },
+    {
+      "id": "b2u2-fb1",
+      "type": "fill-blank",
+      "title": "Письмо о волонтёрском проекте",
+      "text": "Je me réjouis que notre association ___ gagné l'appel à projets ! Bien que le budget ___ limité, nous pourrons agir. Il est certain que les bénévoles ___ motivés. Pourvu que la mairie nous ___ les locaux à temps ! Je suis heureuse de ___ partie de cette équipe.",
+      "blanks": [
+        {
+          "correctAnswer": "ait",
+          "options": [
+            "ait",
+            "a",
+            "aurait"
+          ],
+          "explanation": "Se réjouir que + subjonctif passé: ait gagné."
+        },
+        {
+          "correctAnswer": "soit",
+          "options": [
+            "soit",
+            "est",
+            "sera"
+          ],
+          "explanation": "Bien que + субжонктив: soit limité."
+        },
+        {
+          "correctAnswer": "sont",
+          "options": [
+            "sont",
+            "soient",
+            "seraient"
+          ],
+          "explanation": "Il est certain que → индикатив: sont."
+        },
+        {
+          "correctAnswer": "prête",
+          "options": [
+            "prête",
+            "prêtera",
+            "prêtait"
+          ],
+          "explanation": "Pourvu que + субжонктив: prête."
+        },
+        {
+          "correctAnswer": "faire",
+          "options": [
+            "faire",
+            "que je fasse",
+            "faite"
+          ],
+          "explanation": "Один субъект → инфинитив: heureuse de faire partie."
+        }
+      ]
+    },
+    {
+      "id": "b2u2-qz2",
+      "type": "grammar-quiz",
+      "title": "Финальная проверка режимов",
+      "questions": [
+        {
+          "question": "Quoi que tu ___ , je te soutiendrai.",
+          "options": [
+            "fasses",
+            "fais",
+            "feras",
+            "ferais"
+          ],
+          "correctAnswer": "fasses",
+          "explanation": "Quoi que + субжонктив: fasses («что бы ты ни делал»)."
+        },
+        {
+          "question": "Elle est partie sans que personne ne la ___ .",
+          "options": [
+            "voie",
+            "voit",
+            "verra",
+            "vue"
+          ],
+          "correctAnswer": "voie",
+          "explanation": "Sans que + субжонктив: voie."
+        },
+        {
+          "question": "Je ne nie pas que ce ___ difficile.",
+          "options": [
+            "soit",
+            "est",
+            "sera",
+            "serait"
+          ],
+          "correctAnswer": "soit",
+          "explanation": "Nier (даже в отрицании) тянет субжонктив: que ce soit difficile."
+        },
+        {
+          "question": "Il espère ___ le poste.",
+          "options": [
+            "obtenir",
+            "qu'il obtienne",
+            "obtenant",
+            "d'obtenu"
+          ],
+          "correctAnswer": "obtenir",
+          "explanation": "Один субъект → инфинитив: il espère obtenir."
+        }
+      ]
+    }
+  ]
+}

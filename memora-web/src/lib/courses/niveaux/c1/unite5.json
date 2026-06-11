@@ -1,0 +1,190 @@
+{
+  "id": "unite5",
+  "title": "Unité 5 : Syntaxe avancée",
+  "description": "Инверсия после наречий, причастные и инфинитивные обороты, ne explétif, сложная пунктуация смысла.",
+  "vocabulary": [
+    {
+      "fr": "à peine... que",
+      "ru": "едва… как",
+      "type": "phrase"
+    },
+    {
+      "fr": "aussi (в начале = поэтому)",
+      "ru": "поэтому (книжн.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "non sans",
+      "ru": "не без",
+      "type": "phrase"
+    },
+    {
+      "fr": "faute de quoi",
+      "ru": "в противном случае",
+      "type": "phrase"
+    },
+    {
+      "fr": "le cas échéant",
+      "ru": "при необходимости",
+      "type": "phrase"
+    },
+    {
+      "fr": "sous peine de",
+      "ru": "под угрозой",
+      "type": "phrase"
+    },
+    {
+      "fr": "à défaut de",
+      "ru": "за неимением",
+      "type": "phrase"
+    },
+    {
+      "fr": "moyennant",
+      "ru": "посредством, за",
+      "type": "phrase"
+    },
+    {
+      "fr": "nonobstant",
+      "ru": "невзирая на (юр.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "redouter que",
+      "ru": "опасаться, что",
+      "type": "phrase"
+    },
+    {
+      "fr": "à moins que",
+      "ru": "если только не",
+      "type": "phrase"
+    },
+    {
+      "fr": "avant qu'il ne soit trop tard",
+      "ru": "пока не поздно",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "c1u5-th1",
+      "type": "theory",
+      "title": "Инверсия и ne explétif",
+      "content": "<p style='margin:0.75rem 0'><b>Инверсия после наречий</b> в начале фразы (книжный стиль): à peine, sans doute, peut-être, aussi (=поэтому), encore:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th></tr><tr><td style='padding:0.5rem'>À peine était-il sorti qu'il se mit à pleuvoir.</td><td style='padding:0.5rem'>Едва он вышел, как пошёл дождь.</td></tr><tr><td style='padding:0.5rem'>Peut-être a-t-elle raison.</td><td style='padding:0.5rem'>Возможно, она права.</td></tr><tr><td style='padding:0.5rem'>Aussi avons-nous décidé d'agir.</td><td style='padding:0.5rem'>Поэтому мы решили действовать.</td></tr></table><p style='margin:0.75rem 0'><b>Ne explétif</b> — «пустое» ne без отрицательного смысла после: avant que, à moins que, craindre/redouter que, de peur que, plus/moins... que:</p><p style='margin:0.75rem 0'><i>Je crains qu'il ne soit trop tard.</i> = Боюсь, что уже поздно (НЕ «не поздно»!)</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Ne explétif факультативно, но на C1/C2 его наличие — маркер владения языком.</p>"
+    },
+    {
+      "id": "c1u5-qz1",
+      "type": "grammar-quiz",
+      "title": "Синтаксис — практика",
+      "questions": [
+        {
+          "question": "À peine ___ commencé que le public applaudissait déjà.",
+          "options": [
+            "le concert avait-il",
+            "le concert avait",
+            "avait le concert",
+            "il y a"
+          ],
+          "correctAnswer": "le concert avait-il",
+          "explanation": "À peine в начале → инверсия: à peine le concert avait-il commencé."
+        },
+        {
+          "question": "Je crains qu'il ___ trop tard pour réserver.",
+          "options": [
+            "ne soit",
+            "soit ne",
+            "n'est",
+            "ne sera"
+          ],
+          "correctAnswer": "ne soit",
+          "explanation": "Craindre que + ne explétif + субжонктив: qu'il ne soit."
+        },
+        {
+          "question": "Partez maintenant, à moins que vous ne ___ attendre la fin.",
+          "options": [
+            "préfériez",
+            "préférez",
+            "préférerez",
+            "préféreriez"
+          ],
+          "correctAnswer": "préfériez",
+          "explanation": "À moins que + ne explétif + субжонктив: préfériez."
+        },
+        {
+          "question": "Les résultats étaient excellents ; ___ la direction a-t-elle félicité l'équipe.",
+          "options": [
+            "aussi",
+            "ainsi que",
+            "alors comme",
+            "pourtant"
+          ],
+          "correctAnswer": "aussi",
+          "explanation": "Aussi в начале фразы = «поэтому» + инверсия."
+        },
+        {
+          "question": "Remettez le dossier vendredi, ___ quoi votre candidature sera rejetée.",
+          "options": [
+            "faute de",
+            "à défaut",
+            "sous peine",
+            "moyennant"
+          ],
+          "correctAnswer": "faute de",
+          "explanation": "Faute de quoi — «в противном случае»."
+        }
+      ]
+    },
+    {
+      "id": "c1u5-fb1",
+      "type": "fill-blank",
+      "title": "Официальное уведомление",
+      "text": "Les candidats devront déposer leur dossier avant le 15 mars, ___ de quoi leur demande ne sera pas examinée. À peine la date ___ -elle passée que les listes seront publiées. Nous redoutons que le nombre de places ne ___ insuffisant ; ___ avons-nous prévu une session complémentaire, le cas ___ .",
+      "blanks": [
+        {
+          "correctAnswer": "faute",
+          "options": [
+            "faute",
+            "défaut",
+            "peine"
+          ],
+          "explanation": "Faute de quoi — иначе."
+        },
+        {
+          "correctAnswer": "sera",
+          "options": [
+            "sera",
+            "est",
+            "soit"
+          ],
+          "explanation": "Инверсия после à peine: la date sera-t-elle passée."
+        },
+        {
+          "correctAnswer": "soit",
+          "options": [
+            "soit",
+            "sera",
+            "est"
+          ],
+          "explanation": "Redouter que + ne explétif + субжонктив: ne soit."
+        },
+        {
+          "correctAnswer": "aussi",
+          "options": [
+            "aussi",
+            "pourtant",
+            "encore"
+          ],
+          "explanation": "Aussi (= поэтому) + инверсия: aussi avons-nous prévu."
+        },
+        {
+          "correctAnswer": "échéant",
+          "options": [
+            "échéant",
+            "échouant",
+            "échéance"
+          ],
+          "explanation": "Le cas échéant — «при необходимости»."
+        }
+      ]
+    }
+  ]
+}

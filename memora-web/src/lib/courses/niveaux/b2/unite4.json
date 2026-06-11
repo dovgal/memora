@@ -1,0 +1,207 @@
+{
+  "id": "unite4",
+  "title": "Unité 4 : Concession et opposition",
+  "description": "Уступка и противопоставление: bien que, malgré, pourtant, alors que, avoir beau, quitte à.",
+  "vocabulary": [
+    {
+      "fr": "malgré",
+      "ru": "несмотря на",
+      "type": "phrase"
+    },
+    {
+      "fr": "pourtant",
+      "ru": "однако, тем не менее",
+      "type": "phrase"
+    },
+    {
+      "fr": "cependant",
+      "ru": "однако (книжн.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "néanmoins",
+      "ru": "тем не менее",
+      "type": "phrase"
+    },
+    {
+      "fr": "en revanche",
+      "ru": "зато, напротив",
+      "type": "phrase"
+    },
+    {
+      "fr": "alors que",
+      "ru": "тогда как",
+      "type": "phrase"
+    },
+    {
+      "fr": "avoir beau + inf",
+      "ru": "сколько ни…",
+      "type": "phrase"
+    },
+    {
+      "fr": "quand même",
+      "ru": "всё-таки",
+      "type": "phrase"
+    },
+    {
+      "fr": "toutefois",
+      "ru": "однако, всё же",
+      "type": "phrase"
+    },
+    {
+      "fr": "contrairement à",
+      "ru": "в отличие от",
+      "type": "phrase"
+    },
+    {
+      "fr": "certes... mais",
+      "ru": "конечно… но",
+      "type": "phrase"
+    },
+    {
+      "fr": "Il n'empêche que...",
+      "ru": "И всё же…",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "b2u4-th1",
+      "type": "theory",
+      "title": "Уступка — «хотя, несмотря на»",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Конструкция</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Режим</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>bien que / quoique</td><td style='padding:0.5rem'>+ subjonctif</td><td style='padding:0.5rem'>Bien qu'il pleuve, on sort.</td></tr><tr><td style='padding:0.5rem'>malgré</td><td style='padding:0.5rem'>+ существительное</td><td style='padding:0.5rem'>Malgré la pluie, on sort.</td></tr><tr><td style='padding:0.5rem'>avoir beau</td><td style='padding:0.5rem'>+ инфинитив</td><td style='padding:0.5rem'>Il a beau crier, personne n'écoute.</td></tr><tr><td style='padding:0.5rem'>même si</td><td style='padding:0.5rem'>+ indicatif</td><td style='padding:0.5rem'>Même s'il pleut, on sortira.</td></tr><tr><td style='padding:0.5rem'>quand même</td><td style='padding:0.5rem'>в конце/середине</td><td style='padding:0.5rem'>Il pleut, on sort quand même.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Malgré + СУЩЕСТВИТЕЛЬНОЕ (malgré le froid), bien que + ГЛАГОЛ в субжонктиве (bien qu'il fasse froid). «Malgré que» — разговорная ошибка.</p>"
+    },
+    {
+      "id": "b2u4-th2",
+      "type": "theory",
+      "title": "Противопоставление — «зато, тогда как»",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Конструкция</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Оттенок</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>alors que / tandis que</td><td style='padding:0.5rem'>контраст фактов</td><td style='padding:0.5rem'>Il aime la mer, alors qu'elle préfère la montagne.</td></tr><tr><td style='padding:0.5rem'>en revanche / par contre</td><td style='padding:0.5rem'>компенсация</td><td style='padding:0.5rem'>Le service est lent ; en revanche, c'est délicieux.</td></tr><tr><td style='padding:0.5rem'>pourtant / cependant</td><td style='padding:0.5rem'>вопреки ожиданию</td><td style='padding:0.5rem'>C'est simple, pourtant personne n'y avait pensé.</td></tr><tr><td style='padding:0.5rem'>contrairement à</td><td style='padding:0.5rem'>в отличие от</td><td style='padding:0.5rem'>Contrairement à son frère, elle est calme.</td></tr></table>"
+    },
+    {
+      "id": "b2u4-qz1",
+      "type": "grammar-quiz",
+      "title": "Уступка/противопоставление — практика",
+      "questions": [
+        {
+          "question": "___ ses efforts, il a échoué.",
+          "options": [
+            "Malgré",
+            "Bien que",
+            "Pourtant",
+            "Alors que"
+          ],
+          "correctAnswer": "Malgré",
+          "explanation": "Перед существительным (ses efforts) — malgré."
+        },
+        {
+          "question": "Bien qu'elle ___ jeune, elle a beaucoup d'expérience.",
+          "options": [
+            "soit",
+            "est",
+            "sera",
+            "était"
+          ],
+          "correctAnswer": "soit",
+          "explanation": "Bien que + субжонктив: soit."
+        },
+        {
+          "question": "Il ___ beau s'excuser, elle ne répond plus.",
+          "options": [
+            "a",
+            "est",
+            "fait",
+            "va"
+          ],
+          "correctAnswer": "a",
+          "explanation": "Идиома avoir beau + инфинитив: il a beau s'excuser — «сколько ни извиняется»."
+        },
+        {
+          "question": "Ce restaurant est cher ; ___ , la cuisine est exceptionnelle.",
+          "options": [
+            "en revanche",
+            "malgré",
+            "bien que",
+            "quitte à"
+          ],
+          "correctAnswer": "en revanche",
+          "explanation": "Компенсация «зато» — en revanche."
+        },
+        {
+          "question": "Il dit qu'il est débordé, ___ il trouve le temps de jouer en ligne !",
+          "options": [
+            "pourtant",
+            "malgré",
+            "bien que",
+            "afin que"
+          ],
+          "correctAnswer": "pourtant",
+          "explanation": "Вопреки ожиданию — pourtant."
+        },
+        {
+          "question": "Mon frère adore débattre, ___ que moi, je déteste les conflits.",
+          "options": [
+            "alors",
+            "bien",
+            "malgré",
+            "quand"
+          ],
+          "correctAnswer": "alors",
+          "explanation": "Контраст двух фактов — alors que."
+        }
+      ]
+    },
+    {
+      "id": "b2u4-fb1",
+      "type": "fill-blank",
+      "title": "Эссе: телетравай — за и против",
+      "text": "Le télétravail séduit, ___ tout le monde n'y trouve pas son compte. ___ qu'il offre une vraie liberté, il isole certains salariés. ___ les économies de transport, beaucoup regrettent le bureau. Les uns gagnent en concentration, ___ que les autres perdent la frontière entre vie privée et travail. On ___ beau multiplier les visioconférences, rien ne remplace un café entre collègues.",
+      "blanks": [
+        {
+          "correctAnswer": "pourtant",
+          "options": [
+            "pourtant",
+            "grâce à",
+            "afin que"
+          ],
+          "explanation": "Вопреки ожиданию — pourtant."
+        },
+        {
+          "correctAnswer": "Bien",
+          "options": [
+            "Bien",
+            "Malgré",
+            "Alors"
+          ],
+          "explanation": "Bien que + субжонктив: il offre (для offrir форма субжонктива совпадает с индикативом)."
+        },
+        {
+          "correctAnswer": "Malgré",
+          "options": [
+            "Malgré",
+            "Bien que",
+            "Pourtant"
+          ],
+          "explanation": "Перед существительным (les économies) — malgré."
+        },
+        {
+          "correctAnswer": "tandis",
+          "options": [
+            "tandis",
+            "pourtant",
+            "malgré"
+          ],
+          "explanation": "Контраст — tandis que."
+        },
+        {
+          "correctAnswer": "a",
+          "options": [
+            "a",
+            "est",
+            "fait"
+          ],
+          "explanation": "Avoir beau: on a beau multiplier..."
+        }
+      ]
+    }
+  ]
+}

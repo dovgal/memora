@@ -1,0 +1,190 @@
+{
+  "id": "unite2",
+  "title": "Unité 2 : Les temps littéraires",
+  "description": "Passé simple и passé antérieur активно, subjonctif imparfait (узнавание), стилистика повествования.",
+  "vocabulary": [
+    {
+      "fr": "dès lors",
+      "ru": "с этого момента",
+      "type": "phrase"
+    },
+    {
+      "fr": "sur-le-champ",
+      "ru": "немедленно, тотчас",
+      "type": "phrase"
+    },
+    {
+      "fr": "en l'espace de",
+      "ru": "в течение, за",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'ensuivre",
+      "ru": "следовать, проистекать",
+      "type": "phrase"
+    },
+    {
+      "fr": "advenir",
+      "ru": "происходить, случаться",
+      "type": "phrase"
+    },
+    {
+      "fr": "quiconque",
+      "ru": "всякий, кто бы ни",
+      "type": "phrase"
+    },
+    {
+      "fr": "jadis",
+      "ru": "некогда",
+      "type": "phrase"
+    },
+    {
+      "fr": "naguère",
+      "ru": "недавно (книжн.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "d'antan",
+      "ru": "былых времён",
+      "type": "phrase"
+    },
+    {
+      "fr": "un dénouement",
+      "ru": "развязка",
+      "type": "phrase"
+    },
+    {
+      "fr": "une intrigue",
+      "ru": "интрига, сюжет",
+      "type": "phrase"
+    },
+    {
+      "fr": "au demeurant",
+      "ru": "впрочем, между прочим",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "c1u2-th1",
+      "type": "theory",
+      "title": "Passé simple actif + passé antérieur",
+      "content": "<p style='margin:0.75rem 0'>На C1 passé simple нужно не только узнавать, но и образовывать. Окончания:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Группа</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>je</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>il</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>ils</th></tr><tr><td style='padding:0.5rem'>-er → -ai/-a/-èrent</td><td style='padding:0.5rem'>je parlai</td><td style='padding:0.5rem'>il parla</td><td style='padding:0.5rem'>ils parlèrent</td></tr><tr><td style='padding:0.5rem'>-ir/-re → -is/-it/-irent</td><td style='padding:0.5rem'>je finis</td><td style='padding:0.5rem'>il finit</td><td style='padding:0.5rem'>ils finirent</td></tr><tr><td style='padding:0.5rem'>-oir (часто -us)</td><td style='padding:0.5rem'>je voulus</td><td style='padding:0.5rem'>il voulut</td><td style='padding:0.5rem'>ils voulurent</td></tr><tr><td style='padding:0.5rem'>venir/tenir</td><td style='padding:0.5rem'>je vins</td><td style='padding:0.5rem'>il vint</td><td style='padding:0.5rem'>ils vinrent</td></tr></table><p style='margin:0.75rem 0'><b>Passé antérieur</b> (avoir/être в passé simple + причастие) — действие непосредственно перед другим: <i>Dès qu'il eut terminé, il sortit.</i></p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Узнавайте subjonctif imparfait в классике: qu'il fût, qu'il eût, qu'il parlât — в современной речи заменяется обычным субжонктивом.</p>"
+    },
+    {
+      "id": "c1u2-qz1",
+      "type": "grammar-quiz",
+      "title": "Литературные времена — практика",
+      "questions": [
+        {
+          "question": "Quand elle ___ la lettre, elle pâlit.",
+          "options": [
+            "eut lu",
+            "a lu",
+            "avait lu",
+            "lut avoir"
+          ],
+          "correctAnswer": "eut lu",
+          "explanation": "Действие сразу ПЕРЕД pâlit (p.s.) — passé antérieur: eut lu."
+        },
+        {
+          "question": "Ils ___ au village à la tombée de la nuit. (venir, p.s.)",
+          "options": [
+            "vinrent",
+            "venaient",
+            "vintrent",
+            "sont venus"
+          ],
+          "correctAnswer": "vinrent",
+          "explanation": "Venir в passé simple: ils vinrent."
+        },
+        {
+          "question": "« Il fallait qu'il ___ courageux pour oser cela. » — узнайте форму:",
+          "options": [
+            "fût",
+            "fut",
+            "soit été",
+            "était"
+          ],
+          "correctAnswer": "fût",
+          "explanation": "Subjonctif imparfait от être: qu'il fût (с акцентом ^). Fut без акцента — passé simple."
+        },
+        {
+          "question": "Elle ___ longtemps avant de répondre. (réfléchir, p.s.)",
+          "options": [
+            "réfléchit",
+            "réfléchissait",
+            "a réfléchi",
+            "réfléchira"
+          ],
+          "correctAnswer": "réfléchit",
+          "explanation": "Réfléchir в p.s. 3-го лица: réfléchit (форма совпадает с présent — контекст решает)."
+        },
+        {
+          "question": "Dès qu'ils ___ partis, la fête reprit.",
+          "options": [
+            "furent",
+            "ont été",
+            "étaient",
+            "seraient"
+          ],
+          "correctAnswer": "furent",
+          "explanation": "Passé antérieur с être: dès qu'ils furent partis."
+        }
+      ]
+    },
+    {
+      "id": "c1u2-fb1",
+      "type": "fill-blank",
+      "title": "Начало новеллы (ваш текст в литературном стиле)",
+      "text": "Cette année-là, l'hiver ___ rude. Margaux ___ la maison de son enfance un matin de décembre. Dès qu'elle ___ poussé la grille, les souvenirs l'assaillirent. Elle ___ longtemps immobile devant le perron. Quiconque l'___ vue à cet instant aurait compris qu'elle ne reviendrait plus.",
+      "blanks": [
+        {
+          "correctAnswer": "fut",
+          "options": [
+            "fut",
+            "était",
+            "fût"
+          ],
+          "explanation": "Констатация-событие в литературном зачине — passé simple: fut."
+        },
+        {
+          "correctAnswer": "quitta",
+          "options": [
+            "quitta",
+            "quittait",
+            "a quitté"
+          ],
+          "explanation": "Событие повествования — p.s.: quitta."
+        },
+        {
+          "correctAnswer": "eut",
+          "options": [
+            "eut",
+            "avait",
+            "a"
+          ],
+          "explanation": "Passé antérieur после dès que: eut poussé."
+        },
+        {
+          "correctAnswer": "resta",
+          "options": [
+            "resta",
+            "restait",
+            "est restée"
+          ],
+          "explanation": "Событие — p.s.: resta."
+        },
+        {
+          "correctAnswer": "aurait",
+          "options": [
+            "aurait",
+            "avait",
+            "eût"
+          ],
+          "explanation": "Гипотеза в прошлом — conditionnel passé: aurait vue (допустима и литературная форма eût vue)."
+        }
+      ]
+    }
+  ]
+}

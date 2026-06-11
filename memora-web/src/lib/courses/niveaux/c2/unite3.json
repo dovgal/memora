@@ -1,0 +1,201 @@
+{
+  "id": "unite3",
+  "title": "Unité 3 : Idiomatique soutenu",
+  "description": "Идиомы высокого регистра, латинизмы прессы, выражения интеллектуального дискурса.",
+  "vocabulary": [
+    {
+      "fr": "faire fi de",
+      "ru": "пренебрегать",
+      "type": "phrase"
+    },
+    {
+      "fr": "battre en brèche",
+      "ru": "опровергать, атаковать (тезис)",
+      "type": "phrase"
+    },
+    {
+      "fr": "tirer à hue et à dia",
+      "ru": "тянуть в разные стороны",
+      "type": "phrase"
+    },
+    {
+      "fr": "vouer aux gémonies",
+      "ru": "предать позору",
+      "type": "phrase"
+    },
+    {
+      "fr": "faire long feu",
+      "ru": "провалиться, не удаться",
+      "type": "phrase"
+    },
+    {
+      "fr": "de facto",
+      "ru": "фактически",
+      "type": "phrase"
+    },
+    {
+      "fr": "a priori",
+      "ru": "априори, на первый взгляд",
+      "type": "phrase"
+    },
+    {
+      "fr": "grosso modo",
+      "ru": "в общих чертах",
+      "type": "phrase"
+    },
+    {
+      "fr": "in fine",
+      "ru": "в конечном счёте",
+      "type": "phrase"
+    },
+    {
+      "fr": "mutatis mutandis",
+      "ru": "с соответствующими поправками",
+      "type": "phrase"
+    },
+    {
+      "fr": "être à l'aune de",
+      "ru": "мериться меркой",
+      "type": "phrase"
+    },
+    {
+      "fr": "force détails",
+      "ru": "множество деталей (книжн.)",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "c2u3-th1",
+      "type": "theory",
+      "title": "Идиомы интеллектуального дискурса",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Выражение</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Смысл</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>faire fi de</td><td style='padding:0.5rem'>пренебречь</td><td style='padding:0.5rem'>Il a fait fi des avertissements.</td></tr><tr><td style='padding:0.5rem'>battre en brèche</td><td style='padding:0.5rem'>атаковать (идею)</td><td style='padding:0.5rem'>Cette étude bat en brèche le mythe du génie solitaire.</td></tr><tr><td style='padding:0.5rem'>faire long feu</td><td style='padding:0.5rem'>провалиться</td><td style='padding:0.5rem'>La réforme a fait long feu.</td></tr><tr><td style='padding:0.5rem'>tirer à hue et à dia</td><td style='padding:0.5rem'>в разные стороны</td><td style='padding:0.5rem'>Les ministères tirent à hue et à dia.</td></tr><tr><td style='padding:0.5rem'>in fine</td><td style='padding:0.5rem'>в итоге</td><td style='padding:0.5rem'>In fine, c'est le juge qui tranchera.</td></tr><tr><td style='padding:0.5rem'>de facto</td><td style='padding:0.5rem'>фактически</td><td style='padding:0.5rem'>Il dirige l'équipe de facto.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Латинизмы (a priori, in fine, de facto, grosso modo) пишутся без акцентов и часто курсивом в прессе.</p>"
+    },
+    {
+      "id": "c2u3-qz1",
+      "type": "grammar-quiz",
+      "title": "Идиомы — практика",
+      "questions": [
+        {
+          "question": "Le gouvernement a ___ des recommandations des experts.",
+          "options": [
+            "fait fi",
+            "battu en brèche",
+            "fait long feu",
+            "tiré à hue"
+          ],
+          "correctAnswer": "fait fi",
+          "explanation": "«Пренебречь» — faire fi de."
+        },
+        {
+          "question": "Ce documentaire ___ bien des idées reçues.",
+          "options": [
+            "bat en brèche",
+            "fait fi à",
+            "fait long feu",
+            "voue aux gémonies de"
+          ],
+          "correctAnswer": "bat en brèche",
+          "explanation": "«Опровергать, атаковать» устоявшиеся идеи — battre en brèche."
+        },
+        {
+          "question": "Sans financement, le projet a vite ___ .",
+          "options": [
+            "fait long feu",
+            "fait fi",
+            "battu en brèche",
+            "tiré in fine"
+          ],
+          "correctAnswer": "fait long feu",
+          "explanation": "«Провалиться, заглохнуть» — faire long feu."
+        },
+        {
+          "question": "___ , les deux approches reviennent au même.",
+          "options": [
+            "Grosso modo",
+            "Mutatis in fine",
+            "De facto que",
+            "A priori de"
+          ],
+          "correctAnswer": "Grosso modo",
+          "explanation": "«В общих чертах» — grosso modo."
+        },
+        {
+          "question": "Les associés ___ : impossible de définir une stratégie commune.",
+          "options": [
+            "tirent à hue et à dia",
+            "battent en brèche",
+            "font long feu",
+            "font fi"
+          ],
+          "correctAnswer": "tirent à hue et à dia",
+          "explanation": "«Тянут в разные стороны» — tirer à hue et à dia."
+        },
+        {
+          "question": "___ , cette clause s'applique aussi aux filiales, avec les adaptations nécessaires.",
+          "options": [
+            "Mutatis mutandis",
+            "Grosso modo",
+            "A contrario",
+            "Manu militari"
+          ],
+          "correctAnswer": "Mutatis mutandis",
+          "explanation": "«С соответствующими поправками» — mutatis mutandis."
+        }
+      ]
+    },
+    {
+      "id": "c2u3-fb1",
+      "type": "fill-blank",
+      "title": "Аналитическая заметка",
+      "text": "___ , l'accord semblait équilibré. Mais les négociateurs ont fait ___ des réserves des juristes, et le texte, attaqué de toutes parts, a été battu en ___ . Chaque partie tirait à hue et à ___ ; ___ , le projet a fait long feu.",
+      "blanks": [
+        {
+          "correctAnswer": "A priori",
+          "options": [
+            "A priori",
+            "In fine",
+            "De facto"
+          ],
+          "explanation": "«На первый взгляд» — a priori."
+        },
+        {
+          "correctAnswer": "fi",
+          "options": [
+            "fi",
+            "feu",
+            "face"
+          ],
+          "explanation": "Faire fi de — пренебречь."
+        },
+        {
+          "correctAnswer": "brèche",
+          "options": [
+            "brèche",
+            "feu",
+            "retraite"
+          ],
+          "explanation": "Battre en brèche — атаковать тезис."
+        },
+        {
+          "correctAnswer": "dia",
+          "options": [
+            "dia",
+            "là",
+            "bas"
+          ],
+          "explanation": "Tirer à hue et à dia."
+        },
+        {
+          "correctAnswer": "in fine",
+          "options": [
+            "in fine",
+            "a priori",
+            "grosso modo"
+          ],
+          "explanation": "«В конечном счёте» — in fine."
+        }
+      ]
+    }
+  ]
+}

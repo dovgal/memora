@@ -1,0 +1,190 @@
+{
+  "id": "unite4",
+  "title": "Unité 4 : Registres de langue",
+  "description": "Familier / courant / soutenu: переключение регистров, лексические ряды, типичные трансформации.",
+  "vocabulary": [
+    {
+      "fr": "s'avérer",
+      "ru": "оказываться",
+      "type": "phrase"
+    },
+    {
+      "fr": "requérir",
+      "ru": "требовать (книжн.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "œuvrer",
+      "ru": "трудиться (возвыш.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "dérober",
+      "ru": "похищать (книжн.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "demeurer",
+      "ru": "оставаться (книжн.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "songer à",
+      "ru": "помышлять о",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'entretenir avec",
+      "ru": "беседовать с",
+      "type": "phrase"
+    },
+    {
+      "fr": "convier",
+      "ru": "приглашать (офиц.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "quérir",
+      "ru": "разыскивать (устар.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "le boulot (fam.)",
+      "ru": "работа (разг.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "bosser (fam.)",
+      "ru": "вкалывать (разг.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "un bouquin (fam.)",
+      "ru": "книжка (разг.)",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "c1u4-th1",
+      "type": "theory",
+      "title": "Три регистра — один смысл",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Familier</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Courant</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Soutenu</th></tr><tr><td style='padding:0.5rem'>bosser</td><td style='padding:0.5rem'>travailler</td><td style='padding:0.5rem'>œuvrer / exercer</td></tr><tr><td style='padding:0.5rem'>un bouquin</td><td style='padding:0.5rem'>un livre</td><td style='padding:0.5rem'>un ouvrage</td></tr><tr><td style='padding:0.5rem'>une bagnole</td><td style='padding:0.5rem'>une voiture</td><td style='padding:0.5rem'>un véhicule</td></tr><tr><td style='padding:0.5rem'>se planter</td><td style='padding:0.5rem'>se tromper</td><td style='padding:0.5rem'>commettre une erreur</td></tr><tr><td style='padding:0.5rem'>engueuler</td><td style='padding:0.5rem'>gronder</td><td style='padding:0.5rem'>réprimander</td></tr><tr><td style='padding:0.5rem'>filer</td><td style='padding:0.5rem'>donner</td><td style='padding:0.5rem'>remettre</td></tr><tr><td style='padding:0.5rem'>C'est chouette !</td><td style='padding:0.5rem'>C'est bien !</td><td style='padding:0.5rem'>C'est fort appréciable.</td></tr></table><p style='margin:0.75rem 0'>Грамматические маркеры: familier опускает ne (j'sais pas) и использует интонационный вопрос; soutenu любит инверсию (Peut-être faut-il...), passé simple, безличные обороты.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 На DALF проверяют умение писать в soutenu и понимать familier — но не смешивать их в одном тексте!</p>"
+    },
+    {
+      "id": "c1u4-qz1",
+      "type": "grammar-quiz",
+      "title": "Регистры — практика",
+      "questions": [
+        {
+          "question": "«Il a piqué mon portable !» — в нейтральном регистре:",
+          "options": [
+            "Il a volé mon téléphone.",
+            "Il a dérobé mon appareil de téléphonie.",
+            "Il a quérir mon portable.",
+            "Il a chouré mon tel."
+          ],
+          "correctAnswer": "Il a volé mon téléphone.",
+          "explanation": "Piquer (fam.) → voler (courant). Dérober — уже soutenu."
+        },
+        {
+          "question": "Какая фраза в регистре soutenu?",
+          "options": [
+            "Nous vous saurions gré de bien vouloir répondre.",
+            "Tu peux répondre vite ?",
+            "Réponds-moi, quoi !",
+            "Vous répondez quand ?"
+          ],
+          "correctAnswer": "Nous vous saurions gré de bien vouloir répondre.",
+          "explanation": "Savoir gré + conditionnel + bien vouloir — формулы высокого регистра."
+        },
+        {
+          "question": "«Ce film est carrément nul» — слово-маркер какого регистра?",
+          "options": [
+            "familier",
+            "soutenu",
+            "courant",
+            "littéraire"
+          ],
+          "correctAnswer": "familier",
+          "explanation": "Carrément + nul — разговорные усилители."
+        },
+        {
+          "question": "Replacez en soutenu: «Il habite toujours là.»",
+          "options": [
+            "Il demeure en ces lieux.",
+            "Il crèche encore ici.",
+            "Il est toujours là, lui.",
+            "Il reste là, quoi."
+          ],
+          "correctAnswer": "Il demeure en ces lieux.",
+          "explanation": "Demeurer + en ces lieux — книжный регистр."
+        },
+        {
+          "question": "Инверсия «Sans doute viendra-t-il» характерна для…",
+          "options": [
+            "регистра soutenu",
+            "регистра familier",
+            "только вопросов",
+            "рекламы"
+          ],
+          "correctAnswer": "регистра soutenu",
+          "explanation": "После sans doute, peut-être, ainsi в книжном стиле — инверсия."
+        }
+      ]
+    },
+    {
+      "id": "c1u4-fb1",
+      "type": "fill-blank",
+      "title": "Перепишите записку в официальное письмо",
+      "text": "Записка коллеге: «Salut ! Le chef veut qu'on bosse sur le dossier X. File-moi tes notes, on se cale un créneau demain.»\n\nОфициально: Madame, Monsieur, notre directeur souhaite que nous ___ sur le dossier X. Je vous saurais ___ de bien vouloir me ___ vos notes. Pourrions-nous ___ un entretien demain ? Je vous prie d'agréer mes salutations ___ .",
+      "blanks": [
+        {
+          "correctAnswer": "travaillions",
+          "options": [
+            "travaillions",
+            "bossions",
+            "travaillons"
+          ],
+          "explanation": "Субжонктив от travailler (нейтральное вместо bosser): que nous travaillions."
+        },
+        {
+          "correctAnswer": "gré",
+          "options": [
+            "gré",
+            "grâce",
+            "merci"
+          ],
+          "explanation": "Формула: je vous saurais gré de..."
+        },
+        {
+          "correctAnswer": "transmettre",
+          "options": [
+            "transmettre",
+            "filer",
+            "donner vite"
+          ],
+          "explanation": "Filer (fam.) → transmettre (soutenu)."
+        },
+        {
+          "correctAnswer": "convenir d'",
+          "options": [
+            "convenir d'",
+            "se caler",
+            "prendre vite"
+          ],
+          "explanation": "Se caler un créneau (fam.) → convenir d'un entretien."
+        },
+        {
+          "correctAnswer": "distinguées",
+          "options": [
+            "distinguées",
+            "sympas",
+            "cordiales bises"
+          ],
+          "explanation": "Финальная формула: salutations distinguées."
+        }
+      ]
+    }
+  ]
+}

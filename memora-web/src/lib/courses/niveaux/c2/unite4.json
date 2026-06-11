@@ -1,0 +1,190 @@
+{
+  "id": "unite4",
+  "title": "Unité 4 : L'art de l'argumentation",
+  "description": "Структура эссе DALF C2: проблематика, план, концессивная аргументация,风 переходы и заключение.",
+  "vocabulary": [
+    {
+      "fr": "poser la problématique",
+      "ru": "сформулировать проблематику",
+      "type": "phrase"
+    },
+    {
+      "fr": "un plan dialectique",
+      "ru": "диалектический план (тезис-антитезис-синтез)",
+      "type": "phrase"
+    },
+    {
+      "fr": "certes..., mais...",
+      "ru": "конечно…, но…",
+      "type": "phrase"
+    },
+    {
+      "fr": "il convient de",
+      "ru": "следует, уместно",
+      "type": "phrase"
+    },
+    {
+      "fr": "on ne saurait nier que",
+      "ru": "нельзя отрицать, что",
+      "type": "phrase"
+    },
+    {
+      "fr": "loin s'en faut",
+      "ru": "далеко не так",
+      "type": "phrase"
+    },
+    {
+      "fr": "à l'inverse",
+      "ru": "напротив",
+      "type": "phrase"
+    },
+    {
+      "fr": "au terme de cette réflexion",
+      "ru": "в завершение размышления",
+      "type": "phrase"
+    },
+    {
+      "fr": "ouvrir des perspectives",
+      "ru": "открывать перспективы",
+      "type": "phrase"
+    },
+    {
+      "fr": "un garde-fou",
+      "ru": "предохранитель, ограничитель",
+      "type": "phrase"
+    },
+    {
+      "fr": "à double tranchant",
+      "ru": "обоюдоострый",
+      "type": "phrase"
+    },
+    {
+      "fr": "peser le pour et le contre",
+      "ru": "взвесить за и против",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "c2u4-th1",
+      "type": "theory",
+      "title": "Концессивная аргументация — высший пилотаж",
+      "content": "<p style='margin:0.75rem 0'>Структура «уступить, чтобы лучше возразить»:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Шаг</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Формула</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>1. уступка</td><td style='padding:0.5rem'>Certes / On ne saurait nier que / Il est indéniable que</td><td style='padding:0.5rem'>Certes, l'IA fait gagner du temps.</td></tr><tr><td style='padding:0.5rem'>2. разворот</td><td style='padding:0.5rem'>mais / il n'en demeure pas moins que / pour autant</td><td style='padding:0.5rem'>Pour autant, peut-on lui confier nos décisions ?</td></tr><tr><td style='padding:0.5rem'>3. свой тезис</td><td style='padding:0.5rem'>En réalité / Force est de constater</td><td style='padding:0.5rem'>En réalité, l'outil ne vaut que par son usage.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 «Pour autant» — изящнее, чем «mais»: уступка + сомнение в выводе оппонента.</p>"
+    },
+    {
+      "id": "c2u4-qz1",
+      "type": "grammar-quiz",
+      "title": "Аргументация — практика",
+      "questions": [
+        {
+          "question": "___ , les écrans informent ; pour autant, informent-ils bien ?",
+          "options": [
+            "Certes",
+            "Néanmoins",
+            "In fine",
+            "Or"
+          ],
+          "correctAnswer": "Certes",
+          "explanation": "Шаг уступки — certes."
+        },
+        {
+          "question": "On ne saurait ___ que des progrès ont été accomplis.",
+          "options": [
+            "nier",
+            "savoir",
+            "croire",
+            "penser"
+          ],
+          "correctAnswer": "nier",
+          "explanation": "Формула: on ne saurait nier que — «нельзя отрицать»."
+        },
+        {
+          "question": "Il ___ d'examiner d'abord les causes de cette crise.",
+          "options": [
+            "convient",
+            "faut de",
+            "s'agit que",
+            "doit"
+          ],
+          "correctAnswer": "convient",
+          "explanation": "Книжное «следует» — il convient de + инфинитив."
+        },
+        {
+          "question": "La technologie est une arme ___ : elle libère et asservit à la fois.",
+          "options": [
+            "à double tranchant",
+            "de double tranche",
+            "au double sens",
+            "à deux faces vives"
+          ],
+          "correctAnswer": "à double tranchant",
+          "explanation": "«Обоюдоострая» — à double tranchant."
+        },
+        {
+          "question": "___ de cette réflexion, une certitude demeure : rien ne se fera sans les citoyens.",
+          "options": [
+            "Au terme",
+            "À la suite que",
+            "En face",
+            "Au fil que"
+          ],
+          "correctAnswer": "Au terme",
+          "explanation": "Формула заключения: au terme de cette réflexion."
+        }
+      ]
+    },
+    {
+      "id": "c2u4-fb1",
+      "type": "fill-blank",
+      "title": "Абзац эссе по канону",
+      "text": "___ , la mondialisation a sorti des millions de personnes de la pauvreté ; on ne saurait le ___ . ___ , elle a creusé des inégalités criantes. Il ___ donc de penser des garde-fous. ___ s'en faut que la solution soit simple, mais l'inaction coûterait davantage.",
+      "blanks": [
+        {
+          "correctAnswer": "Certes",
+          "options": [
+            "Certes",
+            "Or",
+            "In fine"
+          ],
+          "explanation": "Уступка — certes."
+        },
+        {
+          "correctAnswer": "nier",
+          "options": [
+            "nier",
+            "dire",
+            "battre"
+          ],
+          "explanation": "On ne saurait nier."
+        },
+        {
+          "correctAnswer": "Pour autant",
+          "options": [
+            "Pour autant",
+            "De plus",
+            "Ainsi"
+          ],
+          "explanation": "Разворот после уступки — pour autant."
+        },
+        {
+          "correctAnswer": "convient",
+          "options": [
+            "convient",
+            "faut",
+            "s'agit"
+          ],
+          "explanation": "Il convient de + инфинитив."
+        },
+        {
+          "correctAnswer": "Loin",
+          "options": [
+            "Loin",
+            "Près",
+            "Tant"
+          ],
+          "explanation": "Loin s'en faut — «далеко не так»."
+        }
+      ]
+    }
+  ]
+}

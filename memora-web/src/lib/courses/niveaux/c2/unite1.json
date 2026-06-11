@@ -1,0 +1,179 @@
+{
+  "id": "unite1",
+  "title": "Unité 1 : Synthèse et reformulation",
+  "description": "Техника DALF C2: сжатие текста, переформулировка без искажения, объективная передача чужой позиции.",
+  "vocabulary": [
+    {
+      "fr": "synthétiser",
+      "ru": "синтезировать, обобщать",
+      "type": "phrase"
+    },
+    {
+      "fr": "dégager les idées maîtresses",
+      "ru": "выделить главные идеи",
+      "type": "phrase"
+    },
+    {
+      "fr": "confronter les points de vue",
+      "ru": "сопоставить точки зрения",
+      "type": "phrase"
+    },
+    {
+      "fr": "selon l'auteur",
+      "ru": "по мнению автора",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'auteur soutient que",
+      "ru": "автор утверждает, что",
+      "type": "phrase"
+    },
+    {
+      "fr": "il ressort de ce texte que",
+      "ru": "из текста следует, что",
+      "type": "phrase"
+    },
+    {
+      "fr": "en filigrane",
+      "ru": "между строк",
+      "type": "phrase"
+    },
+    {
+      "fr": "étayer",
+      "ru": "подкреплять (аргумент)",
+      "type": "phrase"
+    },
+    {
+      "fr": "réfuter",
+      "ru": "опровергать",
+      "type": "phrase"
+    },
+    {
+      "fr": "un constat",
+      "ru": "констатация",
+      "type": "phrase"
+    },
+    {
+      "fr": "une problématique",
+      "ru": "проблематика",
+      "type": "phrase"
+    },
+    {
+      "fr": "paraphraser",
+      "ru": "пересказывать своими словами",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "c2u1-th1",
+      "type": "theory",
+      "title": "Reformuler sans trahir — главный навык C2",
+      "content": "<p style='margin:0.75rem 0'>Синтез требует передать мысль СВОИМИ словами, сохранив смысл и не добавив своего мнения.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Приём</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Исходник</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Реформулировка</th></tr><tr><td style='padding:0.5rem'>номинализация</td><td style='padding:0.5rem'>On consomme plus depuis que les prix ont baissé.</td><td style='padding:0.5rem'>La baisse des prix a entraîné une hausse de la consommation.</td></tr><tr><td style='padding:0.5rem'>смена залога</td><td style='padding:0.5rem'>Les réseaux influencent les jeunes.</td><td style='padding:0.5rem'>Les jeunes sont influencés par les réseaux.</td></tr><tr><td style='padding:0.5rem'>синонимия структур</td><td style='padding:0.5rem'>bien que ce soit cher</td><td style='padding:0.5rem'>malgré son coût élevé</td></tr><tr><td style='padding:0.5rem'>обобщение</td><td style='padding:0.5rem'>les bus, les trams et les métros</td><td style='padding:0.5rem'>les transports en commun</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Запрещено в синтезе: копировать фразы источника, давать своё мнение, добавлять примеры извне.</p>"
+    },
+    {
+      "id": "c2u1-qz1",
+      "type": "grammar-quiz",
+      "title": "Реформулировка — выберите эквивалент",
+      "questions": [
+        {
+          "question": "«Faute de moyens, le projet a été abandonné.» Эквивалент:",
+          "options": [
+            "Le manque de ressources a conduit à l'abandon du projet.",
+            "Le projet a réussi grâce aux moyens.",
+            "On a abandonné les moyens du projet.",
+            "Le projet manquait d'ambition."
+          ],
+          "correctAnswer": "Le manque de ressources a conduit à l'abandon du projet.",
+          "explanation": "Faute de moyens = par manque de ressources; смысл «нет денег → проект закрыт» сохранён."
+        },
+        {
+          "question": "«Il n'est pas exclu que la loi soit modifiée.» Эквивалент:",
+          "options": [
+            "Une modification de la loi reste possible.",
+            "La loi ne sera jamais modifiée.",
+            "La loi a déjà été modifiée.",
+            "Il est exclu de modifier la loi."
+          ],
+          "correctAnswer": "Une modification de la loi reste possible.",
+          "explanation": "Il n'est pas exclu que = возможно; двойное отрицание → утверждение возможности."
+        },
+        {
+          "question": "«Les chercheurs s'accordent à dire que le climat se réchauffe.» Эквивалент:",
+          "options": [
+            "Il y a consensus scientifique sur le réchauffement.",
+            "Quelques chercheurs doutent du climat.",
+            "Les chercheurs se disputent sur le climat.",
+            "Le climat s'accorde aux chercheurs."
+          ],
+          "correctAnswer": "Il y a consensus scientifique sur le réchauffement.",
+          "explanation": "S'accorder à dire = быть единодушными → consensus."
+        },
+        {
+          "question": "Передать чужое мнение нейтрально:",
+          "options": [
+            "L'auteur estime que cette mesure est inefficace.",
+            "Cette mesure est évidemment inefficace.",
+            "Je pense que l'auteur a tort.",
+            "Cette mesure, hélas, ne marche pas."
+          ],
+          "correctAnswer": "L'auteur estime que cette mesure est inefficace.",
+          "explanation": "Нейтральная атрибуция: l'auteur estime/soutient/considère que. Остальные варианты вносят оценку."
+        }
+      ]
+    },
+    {
+      "id": "c2u1-fb1",
+      "type": "fill-blank",
+      "title": "Мини-синтез двух позиций",
+      "text": "Les deux documents traitent du télétravail. Le premier ___ que cette pratique accroît la productivité, tandis que le second ___ ce constat : selon son auteur, l'isolement ___ les bénéfices. Il ___ de cette confrontation que le télétravail exige un encadrement. En ___ , les deux textes laissent entendre que rien ne remplacera tout à fait le collectif.",
+      "blanks": [
+        {
+          "correctAnswer": "soutient",
+          "options": [
+            "soutient",
+            "nie",
+            "ignore"
+          ],
+          "explanation": "Атрибуция позиции: le premier soutient que."
+        },
+        {
+          "correctAnswer": "nuance",
+          "options": [
+            "nuance",
+            "confirme",
+            "copie"
+          ],
+          "explanation": "Второй текст вносит нюансы/возражает: nuance ce constat."
+        },
+        {
+          "correctAnswer": "compromettrait",
+          "options": [
+            "compromettrait",
+            "garantit",
+            "double"
+          ],
+          "explanation": "Осторожная передача чужого тезиса — conditionnel: compromettrait."
+        },
+        {
+          "correctAnswer": "ressort",
+          "options": [
+            "ressort",
+            "sort",
+            "revient"
+          ],
+          "explanation": "Il ressort de... que — «из этого следует»."
+        },
+        {
+          "correctAnswer": "filigrane",
+          "options": [
+            "filigrane",
+            "somme toute",
+            "conclusion de"
+          ],
+          "explanation": "En filigrane — «между строк»."
+        }
+      ]
+    }
+  ]
+}

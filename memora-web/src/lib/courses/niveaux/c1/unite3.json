@@ -1,0 +1,190 @@
+{
+  "id": "unite3",
+  "title": "Unité 3 : Articuler un discours complexe",
+  "description": "Продвинутые коннекторы: уступка, оговорка, переформулировка, иерархия аргументов.",
+  "vocabulary": [
+    {
+      "fr": "en l'occurrence",
+      "ru": "в данном случае",
+      "type": "phrase"
+    },
+    {
+      "fr": "à cet égard",
+      "ru": "в этом отношении",
+      "type": "phrase"
+    },
+    {
+      "fr": "par ailleurs",
+      "ru": "кроме того, впрочем",
+      "type": "phrase"
+    },
+    {
+      "fr": "en outre",
+      "ru": "сверх того",
+      "type": "phrase"
+    },
+    {
+      "fr": "du reste",
+      "ru": "впрочем",
+      "type": "phrase"
+    },
+    {
+      "fr": "qui plus est",
+      "ru": "более того",
+      "type": "phrase"
+    },
+    {
+      "fr": "encore que",
+      "ru": "хотя, впрочем",
+      "type": "phrase"
+    },
+    {
+      "fr": "si tant est que",
+      "ru": "если вообще",
+      "type": "phrase"
+    },
+    {
+      "fr": "pour peu que",
+      "ru": "стоит только",
+      "type": "phrase"
+    },
+    {
+      "fr": "autrement dit",
+      "ru": "иначе говоря",
+      "type": "phrase"
+    },
+    {
+      "fr": "en somme",
+      "ru": "в итоге, словом",
+      "type": "phrase"
+    },
+    {
+      "fr": "toujours est-il que",
+      "ru": "как бы то ни было",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "c1u3-th1",
+      "type": "theory",
+      "title": "Коннекторы C1 — тонкая настройка",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Связь</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Коннектор</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>добавление (книжн.)</td><td style='padding:0.5rem'>en outre, qui plus est, par ailleurs</td><td style='padding:0.5rem'>Le projet est coûteux ; qui plus est, il est risqué.</td></tr><tr><td style='padding:0.5rem'>оговорка</td><td style='padding:0.5rem'>encore que (+ subj.), si tant est que</td><td style='padding:0.5rem'>Le plan est bon, encore qu'il faille le préciser.</td></tr><tr><td style='padding:0.5rem'>условие-минимум</td><td style='padding:0.5rem'>pour peu que (+ subj.)</td><td style='padding:0.5rem'>Pour peu qu'on l'écoute, il parle des heures.</td></tr><tr><td style='padding:0.5rem'>переформулировка</td><td style='padding:0.5rem'>autrement dit, en d'autres termes</td><td style='padding:0.5rem'>Il est pragmatique, autrement dit, il ne rêve pas.</td></tr><tr><td style='padding:0.5rem'>возврат к главному</td><td style='padding:0.5rem'>toujours est-il que, en somme</td><td style='padding:0.5rem'>Toujours est-il que rien n'a changé.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Encore que и pour peu que требуют субжонктива: encore qu'il soit tard, pour peu qu'il fasse beau.</p>"
+    },
+    {
+      "id": "c1u3-qz1",
+      "type": "grammar-quiz",
+      "title": "Коннекторы — практика",
+      "questions": [
+        {
+          "question": "Le rapport est complet ; ___ , il propose des solutions concrètes.",
+          "options": [
+            "qui plus est",
+            "encore que",
+            "pour peu que",
+            "si tant est"
+          ],
+          "correctAnswer": "qui plus est",
+          "explanation": "Усиливающее добавление — qui plus est («более того»)."
+        },
+        {
+          "question": "Sa théorie est séduisante, ___ qu'elle ___ vérifiable.",
+          "options": [
+            "encore ... soit",
+            "parce ... est",
+            "pour peu ... sera",
+            "bien ... serait"
+          ],
+          "correctAnswer": "encore ... soit",
+          "explanation": "Оговорка: encore que + субжонктив (soit)."
+        },
+        {
+          "question": "___ qu'on le contrarie, il se met en colère.",
+          "options": [
+            "Pour peu",
+            "Qui plus est",
+            "En somme",
+            "Du reste"
+          ],
+          "correctAnswer": "Pour peu",
+          "explanation": "«Стоит только» — pour peu que + субжонктив."
+        },
+        {
+          "question": "Les avis divergent ; ___ que la décision est urgente.",
+          "options": [
+            "toujours est-il",
+            "autrement dit",
+            "en l'occurrence",
+            "à cet égard"
+          ],
+          "correctAnswer": "toujours est-il",
+          "explanation": "Возврат к сути — toujours est-il que."
+        },
+        {
+          "question": "Il faut un responsable, ___ le chef de projet.",
+          "options": [
+            "en l'occurrence",
+            "en somme",
+            "par ailleurs",
+            "encore que"
+          ],
+          "correctAnswer": "en l'occurrence",
+          "explanation": "«В данном случае (а именно)» — en l'occurrence."
+        }
+      ]
+    },
+    {
+      "id": "c1u3-fb1",
+      "type": "fill-blank",
+      "title": "Аргументированное эссе — фрагмент",
+      "text": "Le télétravail a transformé nos villes. ___ , les loyers des centres baissent ; ___ , les petites communes renaissent. Cette évolution est bénéfique, ___ qu'elle ne creuse de nouvelles inégalités : tous les métiers ne sont pas « télétravaillables ». ___ dit, la flexibilité reste un privilège. ___ est-il que le mouvement paraît irréversible.",
+      "blanks": [
+        {
+          "correctAnswer": "D'une part",
+          "options": [
+            "D'une part",
+            "Pour peu",
+            "Si tant est"
+          ],
+          "explanation": "Первый аргумент пары — d'une part."
+        },
+        {
+          "correctAnswer": "d'autre part",
+          "options": [
+            "d'autre part",
+            "du reste",
+            "encore"
+          ],
+          "explanation": "Второй аргумент — d'autre part."
+        },
+        {
+          "correctAnswer": "pour peu",
+          "options": [
+            "pour peu",
+            "encore",
+            "si bien"
+          ],
+          "explanation": "«Лишь бы не / стоит только» — pour peu que + субжонктив (творческая оговорка)."
+        },
+        {
+          "correctAnswer": "Autrement",
+          "options": [
+            "Autrement",
+            "Parfaitement",
+            "Également"
+          ],
+          "explanation": "Переформулировка — autrement dit."
+        },
+        {
+          "correctAnswer": "Toujours",
+          "options": [
+            "Toujours",
+            "Encore",
+            "Ainsi"
+          ],
+          "explanation": "Возврат к главному — toujours est-il que."
+        }
+      ]
+    }
+  ]
+}

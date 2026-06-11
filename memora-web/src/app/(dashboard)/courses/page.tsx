@@ -45,6 +45,34 @@ const BUILTIN_COURSES = [
     badge: 'Французский · A2–B1',
     emoji: '🗝️',
   },
+  {
+    href: '/dashboard/student/courses/niveau/b1',
+    title: 'Французский B1',
+    description: 'Рассказ о прошлом, субжонктив, гипотезы, местоимения, пассив, косвенная речь — 6 юнитов.',
+    badge: 'Французский · B1',
+    emoji: '🔵',
+  },
+  {
+    href: '/dashboard/student/courses/niveau/b2',
+    title: 'Французский B2',
+    description: 'Времена прошлого и passé simple, выбор режима, сожаления, уступка, причастия, mise en relief.',
+    badge: 'Французский · B2',
+    emoji: '🟣',
+  },
+  {
+    href: '/dashboard/student/courses/niveau/c1',
+    title: 'Французский C1',
+    description: 'Модализация, литературные времена, продвинутые коннекторы, регистры речи, книжный синтаксис.',
+    badge: 'Французский · C1',
+    emoji: '🟠',
+  },
+  {
+    href: '/dashboard/student/courses/niveau/c2',
+    title: 'Французский C2',
+    description: 'Синтез и реформулировка, фигуры речи, идиоматика soutenu, аргументация, тонкости грамматики.',
+    badge: 'Французский · C2',
+    emoji: '🔴',
+  },
 ];
 
 export default function CoursesCatalogPage() {

@@ -1,0 +1,236 @@
+{
+  "id": "unite5",
+  "title": "Unité 5 : Passif, nominalisation, but",
+  "description": "Страдательный залог, образование существительных от глаголов/прилагательных, выражение цели.",
+  "vocabulary": [
+    {
+      "fr": "être construit(e)",
+      "ru": "быть построенным",
+      "type": "phrase"
+    },
+    {
+      "fr": "être élu(e)",
+      "ru": "быть избранным",
+      "type": "phrase"
+    },
+    {
+      "fr": "inaugurer",
+      "ru": "торжественно открывать",
+      "type": "phrase"
+    },
+    {
+      "fr": "la construction",
+      "ru": "строительство",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'ouverture (f)",
+      "ru": "открытие",
+      "type": "phrase"
+    },
+    {
+      "fr": "la fermeture",
+      "ru": "закрытие",
+      "type": "phrase"
+    },
+    {
+      "fr": "la création",
+      "ru": "создание",
+      "type": "phrase"
+    },
+    {
+      "fr": "le développement",
+      "ru": "развитие",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'amélioration (f)",
+      "ru": "улучшение",
+      "type": "phrase"
+    },
+    {
+      "fr": "afin de",
+      "ru": "с целью, чтобы",
+      "type": "phrase"
+    },
+    {
+      "fr": "de peur que",
+      "ru": "из страха, что",
+      "type": "phrase"
+    },
+    {
+      "fr": "dans le but de",
+      "ru": "с целью",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "b1u5-th1",
+      "type": "theory",
+      "title": "Le passif — страдательный залог",
+      "content": "<p style='margin:0.75rem 0'>Пассив: <b>être (в нужном времени) + причастие</b>, причастие согласуется с подлежащим:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Актив</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пассив</th></tr><tr><td style='padding:0.5rem'>Gustave Eiffel a construit la tour.</td><td style='padding:0.5rem'>La tour a été construite par Gustave Eiffel.</td></tr><tr><td style='padding:0.5rem'>On rénove le musée.</td><td style='padding:0.5rem'>Le musée est rénové.</td></tr><tr><td style='padding:0.5rem'>La mairie organisera le festival.</td><td style='padding:0.5rem'>Le festival sera organisé par la mairie.</td></tr></table><p style='margin:0.75rem 0'>Деятель вводится через <b>par</b>: par la ville, par l'architecte. Если деятель неважен — его опускают.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Время пассива = время être: est construit (наст.) / a été construit (прош.) / sera construit (буд.).</p>"
+    },
+    {
+      "id": "b1u5-qz1",
+      "type": "grammar-quiz",
+      "title": "Passif — практика",
+      "questions": [
+        {
+          "question": "Ce pont ___ en 1900.",
+          "options": [
+            "a été construit",
+            "a construit",
+            "est construit par",
+            "construisait"
+          ],
+          "correctAnswer": "a été construit",
+          "explanation": "Прошедшее в пассиве: a été + construit."
+        },
+        {
+          "question": "La décision ___ par le conseil demain.",
+          "options": [
+            "sera prise",
+            "sera prendre",
+            "prendra",
+            "est pris"
+          ],
+          "correctAnswer": "sera prise",
+          "explanation": "Будущее в пассиве + согласование: la décision sera prise."
+        },
+        {
+          "question": "Ces maisons ___ rénovées l'année dernière.",
+          "options": [
+            "ont été",
+            "sont être",
+            "ont",
+            "étaient être"
+          ],
+          "correctAnswer": "ont été",
+          "explanation": "Passé composé пассива: ont été rénovées (ж.р. мн.ч.)."
+        },
+        {
+          "question": "Le gagnant ___ par le jury.",
+          "options": [
+            "est choisi",
+            "choisit",
+            "est choisir",
+            "a choisi"
+          ],
+          "correctAnswer": "est choisi",
+          "explanation": "Настоящее в пассиве: est choisi par le jury."
+        }
+      ]
+    },
+    {
+      "id": "b1u5-th2",
+      "type": "theory",
+      "title": "Nominalisation и le but",
+      "content": "<p style='margin:0.75rem 0'><b>Номинализация</b> — превращаем глагол/прилагательное в существительное (стиль прессы):</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Глагол/прил.</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Существительное</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Заголовок</th></tr><tr><td style='padding:0.5rem'>ouvrir</td><td style='padding:0.5rem'>l'ouverture</td><td style='padding:0.5rem'>Ouverture d'un nouveau musée</td></tr><tr><td style='padding:0.5rem'>fermer</td><td style='padding:0.5rem'>la fermeture</td><td style='padding:0.5rem'>Fermeture de l'usine</td></tr><tr><td style='padding:0.5rem'>construire</td><td style='padding:0.5rem'>la construction</td><td style='padding:0.5rem'>Construction d'un pont</td></tr><tr><td style='padding:0.5rem'>augmenter</td><td style='padding:0.5rem'>l'augmentation</td><td style='padding:0.5rem'>Augmentation des prix</td></tr><tr><td style='padding:0.5rem'>gratuit</td><td style='padding:0.5rem'>la gratuité</td><td style='padding:0.5rem'>Gratuité des transports</td></tr></table><p style='margin:0.75rem 0'><b>Цель</b>: pour/afin de + инфинитив (один субъект); pour que/afin que + субжонктив (разные); de peur de/que — «чтобы не».</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Суффиксы-помощники: -tion, -ture, -ment, -age, -té — почти все такие существительные предсказуемого рода (-tion/-ture/-té — ж.р., -ment/-age — м.р.).</p>"
+    },
+    {
+      "id": "b1u5-qz2",
+      "type": "grammar-quiz",
+      "title": "Nominalisation / but — практика",
+      "questions": [
+        {
+          "question": "Заголовок: « ___ du nouveau stade en juin »",
+          "options": [
+            "Inauguration",
+            "Inaugurer",
+            "Inauguré",
+            "Inaugurant"
+          ],
+          "correctAnswer": "Inauguration",
+          "explanation": "Заголовки прессы — номинализация: l'inauguration (от inaugurer)."
+        },
+        {
+          "question": "La ville installe des caméras ___ les habitants se sentent en sécurité.",
+          "options": [
+            "pour que",
+            "pour",
+            "afin de",
+            "de peur de"
+          ],
+          "correctAnswer": "pour que",
+          "explanation": "Разные субъекты (ville / habitants) — pour que + субжонктив."
+        },
+        {
+          "question": "Il parle doucement ___ réveiller le bébé.",
+          "options": [
+            "de peur de",
+            "pour que",
+            "afin que",
+            "puisque"
+          ],
+          "correctAnswer": "de peur de",
+          "explanation": "«Чтобы НЕ разбудить» — de peur de + инфинитив."
+        },
+        {
+          "question": "« ___ des salaires » est la revendication principale.",
+          "options": [
+            "L'augmentation",
+            "L'augmenter",
+            "L'augmenté",
+            "Augmentant"
+          ],
+          "correctAnswer": "L'augmentation",
+          "explanation": "Augmenter → l'augmentation (-tion, ж.р.)."
+        }
+      ]
+    },
+    {
+      "id": "b1u5-fb1",
+      "type": "fill-blank",
+      "title": "Новость городской газеты",
+      "text": "La nouvelle médiathèque ___ inaugurée samedi par la maire. Sa ___ a duré deux ans. Le bâtiment a été conçu ___ un cabinet d'architectes lyonnais. Des ateliers seront proposés ___ que les jeunes découvrent la lecture. L' ___ sera gratuite le premier mois.",
+      "blanks": [
+        {
+          "correctAnswer": "a été",
+          "options": [
+            "a été",
+            "est été",
+            "était être"
+          ],
+          "explanation": "Passé composé пассива: a été inaugurée."
+        },
+        {
+          "correctAnswer": "construction",
+          "options": [
+            "construction",
+            "construire",
+            "constructeur"
+          ],
+          "explanation": "Номинализация: la construction a duré deux ans."
+        },
+        {
+          "correctAnswer": "par",
+          "options": [
+            "par",
+            "pour",
+            "avec de"
+          ],
+          "explanation": "Деятель в пассиве — par."
+        },
+        {
+          "correctAnswer": "pour",
+          "options": [
+            "pour",
+            "afin",
+            "de peur"
+          ],
+          "explanation": "Pour que + субжонктив (цель, разные субъекты)."
+        },
+        {
+          "correctAnswer": "entrée",
+          "options": [
+            "entrée",
+            "entrer",
+            "entrance"
+          ],
+          "explanation": "Номинализация: l'entrée sera gratuite."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "id": "unite5",
+  "title": "Unité 5 : Subtilités grammaticales",
+  "description": "Тонкости уровня C2: согласования-ловушки, subjonctif plus-que-parfait, «tout» во всех ролях, придирки экзаменаторов.",
+  "vocabulary": [
+    {
+      "fr": "quelque... que (+ subj.)",
+      "ru": "какой бы ни",
+      "type": "phrase"
+    },
+    {
+      "fr": "tout(e)... que",
+      "ru": "какой бы… ни (с indicatif)",
+      "type": "phrase"
+    },
+    {
+      "fr": "d'ici à ce que",
+      "ru": "до тех пор, пока",
+      "type": "phrase"
+    },
+    {
+      "fr": "ne serait-ce que",
+      "ru": "хотя бы",
+      "type": "phrase"
+    },
+    {
+      "fr": "si ce n'est",
+      "ru": "если не считать",
+      "type": "phrase"
+    },
+    {
+      "fr": "encore eût-il fallu",
+      "ru": "ещё нужно было бы (лит.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'eût-il su",
+      "ru": "знай он это (лит. инверсия)",
+      "type": "phrase"
+    },
+    {
+      "fr": "des plus + adj",
+      "ru": "в высшей степени",
+      "type": "phrase"
+    },
+    {
+      "fr": "on ne peut plus",
+      "ru": "как нельзя более",
+      "type": "phrase"
+    },
+    {
+      "fr": "quoi qu'il en soit",
+      "ru": "как бы то ни было",
+      "type": "phrase"
+    },
+    {
+      "fr": "fût-ce",
+      "ru": "будь то даже",
+      "type": "phrase"
+    },
+    {
+      "fr": "vaille que vaille",
+      "ru": "кое-как, худо-бедно",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "c2u5-th1",
+      "type": "theory",
+      "title": "Ловушки согласования и «tout»",
+      "content": "<p style='margin:0.75rem 0'><b>Tout</b> — четыре роли:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Роль</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Правило</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>прилагательное</td><td style='padding:0.5rem'>согласуется</td><td style='padding:0.5rem'>toutes les idées, tous les jours</td></tr><tr><td style='padding:0.5rem'>местоимение</td><td style='padding:0.5rem'>tous [тус] произносится с s</td><td style='padding:0.5rem'>Ils sont tous venus.</td></tr><tr><td style='padding:0.5rem'>наречие (=très)</td><td style='padding:0.5rem'>неизменно… НО</td><td style='padding:0.5rem'>Elle est tout étonnée.</td></tr><tr><td style='padding:0.5rem'>наречие перед ж.р. на согласную/h aspiré</td><td style='padding:0.5rem'>согласуется!</td><td style='padding:0.5rem'>Elle est toute surprise / toute honteuse.</td></tr></table><p style='margin:0.75rem 0'>Другие ловушки: <b>quelque... que</b> + субжонктив (quelques efforts qu'il fasse), <b>des plus</b> + прилагательное во мн.ч. (une question des plus délicates), <b>ne serait-ce que</b> — «хотя бы».</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Subjonctif plus-que-parfait (eût su, fût venu) в литературе может заменять conditionnel passé: «Qui l'eût cru !» = Кто бы мог подумать!</p>"
+    },
+    {
+      "id": "c2u5-qz1",
+      "type": "grammar-quiz",
+      "title": "Тонкости — практика",
+      "questions": [
+        {
+          "question": "Elle était ___ heureuse de cette nouvelle.",
+          "options": [
+            "tout",
+            "toute",
+            "tous",
+            "toutes"
+          ],
+          "correctAnswer": "tout",
+          "explanation": "Tout-наречие перед гласной (heureuse начинается с немого h → гласный звук) не согласуется: tout heureuse."
+        },
+        {
+          "question": "Elle était ___ surprise par la question.",
+          "options": [
+            "toute",
+            "tout",
+            "tous",
+            "très tout"
+          ],
+          "correctAnswer": "toute",
+          "explanation": "Перед ж.р. на согласную (surprise) наречие tout согласуется: toute surprise."
+        },
+        {
+          "question": "___ efforts qu'il fasse, rien ne change.",
+          "options": [
+            "Quelques",
+            "Quelque",
+            "Tous",
+            "Si"
+          ],
+          "correctAnswer": "Quelques",
+          "explanation": "Quelques + сущ. мн.ч. + que + субжонктив: quelques efforts qu'il fasse."
+        },
+        {
+          "question": "« Qui l'___ cru ! » — литературная форма:",
+          "options": [
+            "eût",
+            "aurait",
+            "avait",
+            "ait"
+          ],
+          "correctAnswer": "eût",
+          "explanation": "Subjonctif plus-que-parfait вместо conditionnel passé: qui l'eût cru."
+        },
+        {
+          "question": "Cette affaire est ___ délicates.",
+          "options": [
+            "des plus",
+            "la plus",
+            "très",
+            "de plus"
+          ],
+          "correctAnswer": "des plus",
+          "explanation": "Des plus + прилагательное во множественном числе: des plus délicates."
+        },
+        {
+          "question": "Aide-moi, ___ que cinq minutes !",
+          "options": [
+            "ne serait-ce",
+            "si ce n'est",
+            "fût-ce pour",
+            "vaille que"
+          ],
+          "correctAnswer": "ne serait-ce",
+          "explanation": "«Хотя бы пять минут» — ne serait-ce que."
+        }
+      ]
+    },
+    {
+      "id": "c2u5-fb1",
+      "type": "fill-blank",
+      "title": "Финальный диктант-пропуски",
+      "text": "___ qu'il en soit, l'équipe a tenu bon, vaille que ___ . Toute ___ qu'elle était, la directrice n'a rien montré. Quelque ___ que soient ces résultats, ils restent fragiles. Et si le succès est venu, c'est qu'on y a cru — ne serait-ce ___ un instant.",
+      "blanks": [
+        {
+          "correctAnswer": "Quoi",
+          "options": [
+            "Quoi",
+            "Tout",
+            "Tant"
+          ],
+          "explanation": "Quoi qu'il en soit — «как бы то ни было» (+ субжонктив)."
+        },
+        {
+          "correctAnswer": "vaille",
+          "options": [
+            "vaille",
+            "faille",
+            "aille"
+          ],
+          "explanation": "Vaille que vaille — «худо-бедно»."
+        },
+        {
+          "correctAnswer": "inquiète",
+          "options": [
+            "inquiète",
+            "inquiet",
+            "inquiets"
+          ],
+          "explanation": "Toute + ж.р. на гласную? inquiète начинается с гласной... здесь tout(e) que + indicatif: toute inquiète qu'elle était — устойчиво согласуем с ж.р."
+        },
+        {
+          "correctAnswer": "brillants",
+          "options": [
+            "brillants",
+            "brillant",
+            "brillante"
+          ],
+          "explanation": "Quelque brillants que soient... — прилагательное согласуется, quelque-наречие нет."
+        },
+        {
+          "correctAnswer": "que",
+          "options": [
+            "que",
+            "pour",
+            "même"
+          ],
+          "explanation": "Ne serait-ce que — «хотя бы»."
+        }
+      ]
+    }
+  ]
+}
