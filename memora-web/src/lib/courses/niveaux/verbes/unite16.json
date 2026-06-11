@@ -1,0 +1,603 @@
+{
+  "id": "unite16",
+  "title": "Unité 16 : Lexique — глаголы P–V",
+  "description": "Словарный юнит: глаголы P–V без особого управления — для заучивания карточками. Пометки: T — переходный, I — непереходный, прон. — возвратный.",
+  "vocabulary": [
+    {
+      "fr": "précéder (T)",
+      "ru": "предшествовать",
+      "type": "word"
+    },
+    {
+      "fr": "prêcher (T/I)",
+      "ru": "проповедовать",
+      "type": "word"
+    },
+    {
+      "fr": "préciser (T)",
+      "ru": "уточнять",
+      "type": "word"
+    },
+    {
+      "fr": "prédire (T)",
+      "ru": "предсказывать",
+      "type": "word"
+    },
+    {
+      "fr": "privilégier (T)",
+      "ru": "отдавать предпочтение",
+      "type": "word"
+    },
+    {
+      "fr": "proclamer (T)",
+      "ru": "провозглашать",
+      "type": "word"
+    },
+    {
+      "fr": "prodiguer (T)",
+      "ru": "расточать (советы, заботу)",
+      "type": "word"
+    },
+    {
+      "fr": "prolonger (T)",
+      "ru": "продлевать",
+      "type": "word"
+    },
+    {
+      "fr": "promouvoir (T)",
+      "ru": "продвигать",
+      "type": "word"
+    },
+    {
+      "fr": "proscrire (T)",
+      "ru": "запрещать, изгонять",
+      "type": "word"
+    },
+    {
+      "fr": "protester (I)",
+      "ru": "протестовать",
+      "type": "word"
+    },
+    {
+      "fr": "prouver (T)",
+      "ru": "доказывать",
+      "type": "word"
+    },
+    {
+      "fr": "provoquer (T)",
+      "ru": "провоцировать",
+      "type": "word"
+    },
+    {
+      "fr": "puer (I/T)",
+      "ru": "вонять",
+      "type": "word"
+    },
+    {
+      "fr": "purger (T)",
+      "ru": "очищать; отбывать (срок)",
+      "type": "word"
+    },
+    {
+      "fr": "raconter (T)",
+      "ru": "рассказывать",
+      "type": "word"
+    },
+    {
+      "fr": "rafraîchir (T/I)",
+      "ru": "освежать",
+      "type": "word"
+    },
+    {
+      "fr": "rager (I)",
+      "ru": "злиться (разг.)",
+      "type": "word"
+    },
+    {
+      "fr": "ramener (T)",
+      "ru": "приводить обратно",
+      "type": "word"
+    },
+    {
+      "fr": "rassasier (T)",
+      "ru": "насыщать",
+      "type": "word"
+    },
+    {
+      "fr": "rassurer (T)",
+      "ru": "успокаивать",
+      "type": "word"
+    },
+    {
+      "fr": "rattacher (T)",
+      "ru": "привязывать; связывать",
+      "type": "word"
+    },
+    {
+      "fr": "rattraper (T)",
+      "ru": "догонять; навёрстывать",
+      "type": "word"
+    },
+    {
+      "fr": "ravir (T)",
+      "ru": "восхищать; похищать",
+      "type": "word"
+    },
+    {
+      "fr": "se rebiffer (прон.)",
+      "ru": "взбрыкнуть, огрызнуться (разг.)",
+      "type": "word"
+    },
+    {
+      "fr": "recaler (T)",
+      "ru": "провалить (на экзамене, разг.)",
+      "type": "word"
+    },
+    {
+      "fr": "récapituler (T)",
+      "ru": "подытоживать",
+      "type": "word"
+    },
+    {
+      "fr": "recouper (T)",
+      "ru": "перепроверять (данные); вновь резать",
+      "type": "word"
+    },
+    {
+      "fr": "récriminer (I)",
+      "ru": "сетовать, упрекать",
+      "type": "word"
+    },
+    {
+      "fr": "régaler (T)",
+      "ru": "угощать",
+      "type": "word"
+    },
+    {
+      "fr": "remeubler (T)",
+      "ru": "заново обставлять",
+      "type": "word"
+    },
+    {
+      "fr": "remonter (T/I)",
+      "ru": "вновь подниматься; заводить (часы); подбодрить",
+      "type": "word"
+    },
+    {
+      "fr": "remontrer (T)",
+      "ru": "вновь показывать",
+      "type": "word"
+    },
+    {
+      "fr": "renâcler (I)",
+      "ru": "артачиться, упираться (разг.)",
+      "type": "word"
+    },
+    {
+      "fr": "renchérir (I)",
+      "ru": "дорожать; добавить сверх",
+      "type": "word"
+    },
+    {
+      "fr": "répercuter (T)",
+      "ru": "отражать; передавать (последствия)",
+      "type": "word"
+    },
+    {
+      "fr": "reposer (T/I)",
+      "ru": "вновь класть; покоиться",
+      "type": "word"
+    },
+    {
+      "fr": "reprendre (T)",
+      "ru": "вновь брать; возобновлять; поправлять",
+      "type": "word"
+    },
+    {
+      "fr": "reprocher (T)",
+      "ru": "упрекать",
+      "type": "word"
+    },
+    {
+      "fr": "reproduire (T)",
+      "ru": "воспроизводить",
+      "type": "word"
+    },
+    {
+      "fr": "requérir (T)",
+      "ru": "требовать (книжн.)",
+      "type": "word"
+    },
+    {
+      "fr": "réserver (T)",
+      "ru": "резервировать; приберегать",
+      "type": "word"
+    },
+    {
+      "fr": "ressentir (T)",
+      "ru": "ощущать",
+      "type": "word"
+    },
+    {
+      "fr": "rester (I)",
+      "ru": "оставаться",
+      "type": "word"
+    },
+    {
+      "fr": "résumer (T)",
+      "ru": "резюмировать",
+      "type": "word"
+    },
+    {
+      "fr": "retenir (T)",
+      "ru": "удерживать; запоминать; бронировать",
+      "type": "word"
+    },
+    {
+      "fr": "retrancher (T)",
+      "ru": "вычитать, отсекать",
+      "type": "word"
+    },
+    {
+      "fr": "rétrocéder (T)",
+      "ru": "переуступать",
+      "type": "word"
+    },
+    {
+      "fr": "révéler (T)",
+      "ru": "раскрывать, обнаруживать",
+      "type": "word"
+    },
+    {
+      "fr": "revenir (I)",
+      "ru": "возвращаться",
+      "type": "word"
+    },
+    {
+      "fr": "revêtir (T)",
+      "ru": "облекать; надевать (торж.)",
+      "type": "word"
+    },
+    {
+      "fr": "ronger (T)",
+      "ru": "грызть",
+      "type": "word"
+    },
+    {
+      "fr": "ronronner (I)",
+      "ru": "мурлыкать",
+      "type": "word"
+    },
+    {
+      "fr": "ruiner (T)",
+      "ru": "разорять",
+      "type": "word"
+    },
+    {
+      "fr": "ruisseler (I)",
+      "ru": "струиться",
+      "type": "word"
+    },
+    {
+      "fr": "saigner (I/T)",
+      "ru": "кровоточить; пускать кровь",
+      "type": "word"
+    },
+    {
+      "fr": "sembler (I)",
+      "ru": "казаться",
+      "type": "word"
+    },
+    {
+      "fr": "semer (T)",
+      "ru": "сеять",
+      "type": "word"
+    },
+    {
+      "fr": "sentir (T/I)",
+      "ru": "чувствовать; пахнуть",
+      "type": "word"
+    },
+    {
+      "fr": "seriner (T)",
+      "ru": "твердить, зубрить кому-л. (разг.)",
+      "type": "word"
+    },
+    {
+      "fr": "signifier (T)",
+      "ru": "означать; объявлять",
+      "type": "word"
+    },
+    {
+      "fr": "simplifier (T)",
+      "ru": "упрощать",
+      "type": "word"
+    },
+    {
+      "fr": "solliciter (T)",
+      "ru": "ходатайствовать; обращаться с просьбой",
+      "type": "word"
+    },
+    {
+      "fr": "sommeiller (I)",
+      "ru": "дремать",
+      "type": "word"
+    },
+    {
+      "fr": "sonner (I/T)",
+      "ru": "звонить, звенеть",
+      "type": "word"
+    },
+    {
+      "fr": "souiller (T)",
+      "ru": "пачкать, осквернять (книжн.)",
+      "type": "word"
+    },
+    {
+      "fr": "soulever (T)",
+      "ru": "приподнимать; вызывать (вопрос)",
+      "type": "word"
+    },
+    {
+      "fr": "subroger (T)",
+      "ru": "замещать (юр.)",
+      "type": "word"
+    },
+    {
+      "fr": "supprimer (T)",
+      "ru": "упразднять, удалять",
+      "type": "word"
+    },
+    {
+      "fr": "surcharger (T)",
+      "ru": "перегружать",
+      "type": "word"
+    },
+    {
+      "fr": "surélever (T)",
+      "ru": "надстраивать",
+      "type": "word"
+    },
+    {
+      "fr": "surfer (I)",
+      "ru": "сёрфить",
+      "type": "word"
+    },
+    {
+      "fr": "surprendre (T)",
+      "ru": "заставать врасплох; удивлять",
+      "type": "word"
+    },
+    {
+      "fr": "sursauter (I)",
+      "ru": "вздрагивать",
+      "type": "word"
+    },
+    {
+      "fr": "survenir (I)",
+      "ru": "неожиданно случаться",
+      "type": "word"
+    },
+    {
+      "fr": "taire (T)",
+      "ru": "умалчивать (se taire — молчать)",
+      "type": "word"
+    },
+    {
+      "fr": "tambouriner (I/T)",
+      "ru": "барабанить",
+      "type": "word"
+    },
+    {
+      "fr": "tarir (T/I)",
+      "ru": "иссякать; осушать",
+      "type": "word"
+    },
+    {
+      "fr": "tâter (T)",
+      "ru": "ощупывать",
+      "type": "word"
+    },
+    {
+      "fr": "tempêter (I)",
+      "ru": "бушевать, ругаться",
+      "type": "word"
+    },
+    {
+      "fr": "terroriser (T)",
+      "ru": "терроризировать",
+      "type": "word"
+    },
+    {
+      "fr": "tolérer (T)",
+      "ru": "терпеть, допускать",
+      "type": "word"
+    },
+    {
+      "fr": "tonner (I)",
+      "ru": "греметь (о громе)",
+      "type": "word"
+    },
+    {
+      "fr": "toquer (I)",
+      "ru": "стукнуть (в дверь, разг.)",
+      "type": "word"
+    },
+    {
+      "fr": "tordre (T)",
+      "ru": "скручивать",
+      "type": "word"
+    },
+    {
+      "fr": "tracer (T)",
+      "ru": "чертить",
+      "type": "word"
+    },
+    {
+      "fr": "transiger (I)",
+      "ru": "идти на компромисс",
+      "type": "word"
+    },
+    {
+      "fr": "transparaître (I)",
+      "ru": "просвечивать, проступать",
+      "type": "word"
+    },
+    {
+      "fr": "transvaser (T)",
+      "ru": "переливать (из сосуда в сосуд)",
+      "type": "word"
+    },
+    {
+      "fr": "trépigner (I)",
+      "ru": "топать ногами",
+      "type": "word"
+    },
+    {
+      "fr": "tricoter (T/I)",
+      "ru": "вязать",
+      "type": "word"
+    },
+    {
+      "fr": "trier (T)",
+      "ru": "сортировать",
+      "type": "word"
+    },
+    {
+      "fr": "trinquer (I)",
+      "ru": "чокаться",
+      "type": "word"
+    },
+    {
+      "fr": "troubler (T)",
+      "ru": "мутить; смущать",
+      "type": "word"
+    },
+    {
+      "fr": "trouer (T)",
+      "ru": "продырявливать",
+      "type": "word"
+    },
+    {
+      "fr": "trouver (T)",
+      "ru": "находить",
+      "type": "word"
+    },
+    {
+      "fr": "unir (T)",
+      "ru": "объединять",
+      "type": "word"
+    },
+    {
+      "fr": "valoir (T/I)",
+      "ru": "стоить, иметь ценность",
+      "type": "word"
+    },
+    {
+      "fr": "vendre (T)",
+      "ru": "продавать",
+      "type": "word"
+    },
+    {
+      "fr": "verser (T)",
+      "ru": "наливать; платить; проливать",
+      "type": "word"
+    },
+    {
+      "fr": "vibrer (I)",
+      "ru": "вибрировать",
+      "type": "word"
+    },
+    {
+      "fr": "vieillir (I/T)",
+      "ru": "стареть; старить",
+      "type": "word"
+    },
+    {
+      "fr": "voir (T)",
+      "ru": "видеть",
+      "type": "word"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "vb16-th1",
+      "type": "theory",
+      "title": "Lexique P–V: как заучивать",
+      "content": "<p style='margin:0.75rem 0'>Это словарные юниты: оставшиеся глаголы справочника, у которых нет особого предложного управления. Их правило одно — система T/I из юнита 1: <b>T</b> — дополнение без предлога (кого? что?), <b>I</b> — без дополнения, <b>T/I</b> — употребляется обоими способами, «se…» — возвратный.</p><p style='margin:0.75rem 0'><b>Цикл:</b> «⭐ В личный набор» → карточки/заучивание → коуч повторяет по кривой забывания. Тест ниже — выборочная проверка переводов.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Заучивая, проговаривайте мини-пример: не «casser», а «casser un verre» — разбить стакан.</p>"
+    },
+    {
+      "id": "vb16-qz1",
+      "type": "grammar-quiz",
+      "title": "Выборочная проверка переводов (P–V)",
+      "questions": [
+        {
+          "question": "«reprocher» означает…",
+          "options": [
+            "упрекать",
+            "повторять",
+            "чинить",
+            "прятать"
+          ],
+          "correctAnswer": "упрекать",
+          "explanation": "Reprocher (T): on me reproche mon retard."
+        },
+        {
+          "question": "«заставать врасплох» — это…",
+          "options": [
+            "surprendre",
+            "survenir",
+            "sursauter",
+            "supprimer"
+          ],
+          "correctAnswer": "surprendre",
+          "explanation": "Surprendre (T): tu m'as surpris !"
+        },
+        {
+          "question": "«se taire» означает…",
+          "options": [
+            "молчать",
+            "стучать",
+            "терпеть",
+            "дрожать"
+          ],
+          "correctAnswer": "молчать",
+          "explanation": "Taire (T) — умалчивать; se taire — замолчать: tais-toi !"
+        },
+        {
+          "question": "«вздрагивать» — это…",
+          "options": [
+            "sursauter",
+            "ruisseler",
+            "trépigner",
+            "sommeiller"
+          ],
+          "correctAnswer": "sursauter",
+          "explanation": "Sursauter (I): j'ai sursauté au bruit."
+        },
+        {
+          "question": "«verser» означает…",
+          "options": [
+            "наливать; платить",
+            "проверять",
+            "зеленеть",
+            "отворачивать"
+          ],
+          "correctAnswer": "наливать; платить",
+          "explanation": "Verser (T): verser du thé; verser un salaire."
+        },
+        {
+          "question": "«иссякать» — это…",
+          "options": [
+            "tarir",
+            "trier",
+            "tordre",
+            "tonner"
+          ],
+          "correctAnswer": "tarir",
+          "explanation": "Tarir (I/T): la source a tari."
+        }
+      ]
+    }
+  ]
+}

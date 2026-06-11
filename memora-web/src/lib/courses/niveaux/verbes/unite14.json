@@ -1,0 +1,813 @@
+{
+  "id": "unite14",
+  "title": "Unité 14 : Lexique — глаголы A–D",
+  "description": "Словарный юнит: глаголы A–D без особого управления — для заучивания карточками. Пометки: T — переходный, I — непереходный, прон. — возвратный.",
+  "vocabulary": [
+    {
+      "fr": "abattre (T)",
+      "ru": "валить, сражать; забивать (скот)",
+      "type": "word"
+    },
+    {
+      "fr": "s'abonner (T)",
+      "ru": "подписывать (кого-л. на изд.)",
+      "type": "word"
+    },
+    {
+      "fr": "abriter (T)",
+      "ru": "укрывать, давать приют",
+      "type": "word"
+    },
+    {
+      "fr": "accepter (T)",
+      "ru": "принимать, соглашаться",
+      "type": "word"
+    },
+    {
+      "fr": "acclimater (T)",
+      "ru": "акклиматизировать",
+      "type": "word"
+    },
+    {
+      "fr": "accommoder (T)",
+      "ru": "приспосабливать; приготовлять (блюдо)",
+      "type": "word"
+    },
+    {
+      "fr": "accorder (T)",
+      "ru": "предоставлять; согласовывать; настраивать",
+      "type": "word"
+    },
+    {
+      "fr": "accourir (I)",
+      "ru": "прибегать, сбегаться",
+      "type": "word"
+    },
+    {
+      "fr": "accoutumer (T)",
+      "ru": "приучать",
+      "type": "word"
+    },
+    {
+      "fr": "accrocher (T)",
+      "ru": "вешать, цеплять",
+      "type": "word"
+    },
+    {
+      "fr": "s'acharner (прон.)",
+      "ru": "ожесточённо упорствовать",
+      "type": "word"
+    },
+    {
+      "fr": "s'acoquiner (прон.)",
+      "ru": "связаться (с дурной компанией)",
+      "type": "word"
+    },
+    {
+      "fr": "adapter (T)",
+      "ru": "адаптировать",
+      "type": "word"
+    },
+    {
+      "fr": "admettre (T)",
+      "ru": "допускать, признавать",
+      "type": "word"
+    },
+    {
+      "fr": "administrer (T)",
+      "ru": "управлять; вводить (лекарство)",
+      "type": "word"
+    },
+    {
+      "fr": "admirer (T)",
+      "ru": "восхищаться",
+      "type": "word"
+    },
+    {
+      "fr": "s'adosser (прон.)",
+      "ru": "прислоняться спиной",
+      "type": "word"
+    },
+    {
+      "fr": "afficher (T)",
+      "ru": "вывешивать, демонстрировать",
+      "type": "word"
+    },
+    {
+      "fr": "affilier (T)",
+      "ru": "присоединять (к организации)",
+      "type": "word"
+    },
+    {
+      "fr": "affliger (T)",
+      "ru": "удручать",
+      "type": "word"
+    },
+    {
+      "fr": "affoler (T)",
+      "ru": "приводить в панику",
+      "type": "word"
+    },
+    {
+      "fr": "affranchir (T)",
+      "ru": "освобождать; франкировать (письмо)",
+      "type": "word"
+    },
+    {
+      "fr": "agacer (T)",
+      "ru": "раздражать",
+      "type": "word"
+    },
+    {
+      "fr": "aiguiller (T)",
+      "ru": "направлять (на путь)",
+      "type": "word"
+    },
+    {
+      "fr": "aimer (T)",
+      "ru": "любить",
+      "type": "word"
+    },
+    {
+      "fr": "ajouter (T)",
+      "ru": "добавлять",
+      "type": "word"
+    },
+    {
+      "fr": "ajuster (T)",
+      "ru": "подгонять, прилаживать",
+      "type": "word"
+    },
+    {
+      "fr": "aligner (T)",
+      "ru": "выстраивать в ряд",
+      "type": "word"
+    },
+    {
+      "fr": "allonger (T)",
+      "ru": "удлинять; вытягивать",
+      "type": "word"
+    },
+    {
+      "fr": "alterner (I/T)",
+      "ru": "чередовать(ся)",
+      "type": "word"
+    },
+    {
+      "fr": "aménager (T)",
+      "ru": "обустраивать",
+      "type": "word"
+    },
+    {
+      "fr": "amputer (T)",
+      "ru": "ампутировать",
+      "type": "word"
+    },
+    {
+      "fr": "amuser (T)",
+      "ru": "развлекать",
+      "type": "word"
+    },
+    {
+      "fr": "angoisser (T)",
+      "ru": "вызывать тревогу",
+      "type": "word"
+    },
+    {
+      "fr": "anticiper (T/I)",
+      "ru": "предвосхищать",
+      "type": "word"
+    },
+    {
+      "fr": "apercevoir (T)",
+      "ru": "замечать, видеть",
+      "type": "word"
+    },
+    {
+      "fr": "appeler (T)",
+      "ru": "звать, называть; звонить",
+      "type": "word"
+    },
+    {
+      "fr": "arguer (T/I)",
+      "ru": "приводить довод",
+      "type": "word"
+    },
+    {
+      "fr": "arranger (T)",
+      "ru": "устраивать, улаживать",
+      "type": "word"
+    },
+    {
+      "fr": "s'arroger (прон.)",
+      "ru": "присваивать себе (право)",
+      "type": "word"
+    },
+    {
+      "fr": "asservir (T)",
+      "ru": "порабощать",
+      "type": "word"
+    },
+    {
+      "fr": "assigner (T)",
+      "ru": "назначать; вызывать в суд",
+      "type": "word"
+    },
+    {
+      "fr": "assujettir (T)",
+      "ru": "подчинять; закреплять",
+      "type": "word"
+    },
+    {
+      "fr": "assurer (T)",
+      "ru": "обеспечивать; страховать; уверять",
+      "type": "word"
+    },
+    {
+      "fr": "avancer (T/I)",
+      "ru": "продвигать(ся); выдвигать",
+      "type": "word"
+    },
+    {
+      "fr": "aviser (T/I)",
+      "ru": "уведомлять; замечать",
+      "type": "word"
+    },
+    {
+      "fr": "avouer (T)",
+      "ru": "признавать(ся)",
+      "type": "word"
+    },
+    {
+      "fr": "se baigner (прон.)",
+      "ru": "купаться",
+      "type": "word"
+    },
+    {
+      "fr": "bâiller (I)",
+      "ru": "зевать",
+      "type": "word"
+    },
+    {
+      "fr": "baisser (T/I)",
+      "ru": "опускать; снижаться",
+      "type": "word"
+    },
+    {
+      "fr": "barbouiller (T)",
+      "ru": "марать, пачкать",
+      "type": "word"
+    },
+    {
+      "fr": "basculer (I/T)",
+      "ru": "опрокидывать(ся)",
+      "type": "word"
+    },
+    {
+      "fr": "bassiner (T)",
+      "ru": "надоедать (разг.)",
+      "type": "word"
+    },
+    {
+      "fr": "batailler (I)",
+      "ru": "сражаться, биться",
+      "type": "word"
+    },
+    {
+      "fr": "bâtir (T)",
+      "ru": "строить",
+      "type": "word"
+    },
+    {
+      "fr": "blêmir (I)",
+      "ru": "бледнеть",
+      "type": "word"
+    },
+    {
+      "fr": "bouillonner (I)",
+      "ru": "бурлить",
+      "type": "word"
+    },
+    {
+      "fr": "bouleverser (T)",
+      "ru": "потрясать; переворачивать",
+      "type": "word"
+    },
+    {
+      "fr": "capituler (I)",
+      "ru": "капитулировать",
+      "type": "word"
+    },
+    {
+      "fr": "caresser (T)",
+      "ru": "гладить, ласкать",
+      "type": "word"
+    },
+    {
+      "fr": "caricaturer (T)",
+      "ru": "изображать карикатурно",
+      "type": "word"
+    },
+    {
+      "fr": "casser (T)",
+      "ru": "разбивать, ломать",
+      "type": "word"
+    },
+    {
+      "fr": "chanter (T/I)",
+      "ru": "петь",
+      "type": "word"
+    },
+    {
+      "fr": "chasser (T)",
+      "ru": "охотиться; прогонять",
+      "type": "word"
+    },
+    {
+      "fr": "chauffer (T/I)",
+      "ru": "греть(ся)",
+      "type": "word"
+    },
+    {
+      "fr": "choisir (T)",
+      "ru": "выбирать",
+      "type": "word"
+    },
+    {
+      "fr": "chuchoter (T/I)",
+      "ru": "шептать",
+      "type": "word"
+    },
+    {
+      "fr": "clamer (T)",
+      "ru": "провозглашать",
+      "type": "word"
+    },
+    {
+      "fr": "combattre (T/I)",
+      "ru": "сражаться (с)",
+      "type": "word"
+    },
+    {
+      "fr": "communiquer (T/I)",
+      "ru": "сообщать; сообщаться",
+      "type": "word"
+    },
+    {
+      "fr": "complimenter (T)",
+      "ru": "делать комплименты",
+      "type": "word"
+    },
+    {
+      "fr": "se confesser (прон.)",
+      "ru": "исповедоваться",
+      "type": "word"
+    },
+    {
+      "fr": "conforter (T)",
+      "ru": "укреплять (позицию)",
+      "type": "word"
+    },
+    {
+      "fr": "connaître (T)",
+      "ru": "знать, быть знакомым",
+      "type": "word"
+    },
+    {
+      "fr": "considérer (T)",
+      "ru": "рассматривать, считать",
+      "type": "word"
+    },
+    {
+      "fr": "consolider (T)",
+      "ru": "укреплять",
+      "type": "word"
+    },
+    {
+      "fr": "consterner (T)",
+      "ru": "приводить в смятение",
+      "type": "word"
+    },
+    {
+      "fr": "contester (T)",
+      "ru": "оспаривать",
+      "type": "word"
+    },
+    {
+      "fr": "contrarier (T)",
+      "ru": "досаждать; мешать",
+      "type": "word"
+    },
+    {
+      "fr": "contrôler (T)",
+      "ru": "контролировать",
+      "type": "word"
+    },
+    {
+      "fr": "converser (I)",
+      "ru": "беседовать",
+      "type": "word"
+    },
+    {
+      "fr": "convier (T)",
+      "ru": "приглашать (офиц.)",
+      "type": "word"
+    },
+    {
+      "fr": "coopérer (I)",
+      "ru": "сотрудничать",
+      "type": "word"
+    },
+    {
+      "fr": "copier (T)",
+      "ru": "копировать",
+      "type": "word"
+    },
+    {
+      "fr": "couper (T)",
+      "ru": "резать",
+      "type": "word"
+    },
+    {
+      "fr": "créditer (T)",
+      "ru": "кредитовать; приписывать",
+      "type": "word"
+    },
+    {
+      "fr": "créer (T)",
+      "ru": "создавать",
+      "type": "word"
+    },
+    {
+      "fr": "cuire (T/I)",
+      "ru": "варить(ся), печь(ся)",
+      "type": "word"
+    },
+    {
+      "fr": "cuisiner (T/I)",
+      "ru": "готовить (еду)",
+      "type": "word"
+    },
+    {
+      "fr": "daigner (T)",
+      "ru": "соизволить",
+      "type": "word"
+    },
+    {
+      "fr": "danser (T/I)",
+      "ru": "танцевать",
+      "type": "word"
+    },
+    {
+      "fr": "déballer (T)",
+      "ru": "распаковывать",
+      "type": "word"
+    },
+    {
+      "fr": "débarrasser (T)",
+      "ru": "освобождать (от лишнего)",
+      "type": "word"
+    },
+    {
+      "fr": "débiter (T)",
+      "ru": "сбывать; излагать; списывать (со счёта)",
+      "type": "word"
+    },
+    {
+      "fr": "déblatérer (I)",
+      "ru": "поносить, бранить (разг.)",
+      "type": "word"
+    },
+    {
+      "fr": "débuter (I)",
+      "ru": "дебютировать, начинать",
+      "type": "word"
+    },
+    {
+      "fr": "décamper (I)",
+      "ru": "удирать (разг.)",
+      "type": "word"
+    },
+    {
+      "fr": "décéder (I)",
+      "ru": "скончаться",
+      "type": "word"
+    },
+    {
+      "fr": "décerner (T)",
+      "ru": "присуждать (награду)",
+      "type": "word"
+    },
+    {
+      "fr": "décharger (T)",
+      "ru": "разгружать",
+      "type": "word"
+    },
+    {
+      "fr": "déchiffrer (T)",
+      "ru": "расшифровывать",
+      "type": "word"
+    },
+    {
+      "fr": "déchirer (T)",
+      "ru": "рвать",
+      "type": "word"
+    },
+    {
+      "fr": "décocher (T)",
+      "ru": "метнуть (стрелу, взгляд)",
+      "type": "word"
+    },
+    {
+      "fr": "décolorer (T)",
+      "ru": "обесцвечивать",
+      "type": "word"
+    },
+    {
+      "fr": "décomposer (T)",
+      "ru": "разлагать, разбирать",
+      "type": "word"
+    },
+    {
+      "fr": "déconcerter (T)",
+      "ru": "приводить в замешательство",
+      "type": "word"
+    },
+    {
+      "fr": "décorer (T)",
+      "ru": "украшать; награждать",
+      "type": "word"
+    },
+    {
+      "fr": "décréter (T)",
+      "ru": "постановлять",
+      "type": "word"
+    },
+    {
+      "fr": "décrire (T)",
+      "ru": "описывать",
+      "type": "word"
+    },
+    {
+      "fr": "dédicacer (T)",
+      "ru": "надписывать (книгу)",
+      "type": "word"
+    },
+    {
+      "fr": "se dédire (прон.)",
+      "ru": "отрекаться от своих слов",
+      "type": "word"
+    },
+    {
+      "fr": "dédommager (T)",
+      "ru": "возмещать ущерб",
+      "type": "word"
+    },
+    {
+      "fr": "déduire (T)",
+      "ru": "вычитать; делать вывод",
+      "type": "word"
+    },
+    {
+      "fr": "défaillir (I)",
+      "ru": "слабеть, лишаться чувств",
+      "type": "word"
+    },
+    {
+      "fr": "dégénérer (I)",
+      "ru": "вырождаться; перерастать (в худшее)",
+      "type": "word"
+    },
+    {
+      "fr": "dégoûter (T)",
+      "ru": "внушать отвращение",
+      "type": "word"
+    },
+    {
+      "fr": "démêler (T)",
+      "ru": "распутывать",
+      "type": "word"
+    },
+    {
+      "fr": "démunir (T)",
+      "ru": "лишать (средств)",
+      "type": "word"
+    },
+    {
+      "fr": "dépérir (I)",
+      "ru": "чахнуть",
+      "type": "word"
+    },
+    {
+      "fr": "se dépêtrer (прон.)",
+      "ru": "выпутаться",
+      "type": "word"
+    },
+    {
+      "fr": "déplorer (T)",
+      "ru": "сожалеть о, оплакивать",
+      "type": "word"
+    },
+    {
+      "fr": "déposer (T)",
+      "ru": "класть; подавать (жалобу); высаживать",
+      "type": "word"
+    },
+    {
+      "fr": "déranger (T)",
+      "ru": "беспокоить",
+      "type": "word"
+    },
+    {
+      "fr": "dérober (T)",
+      "ru": "похищать (книжн.)",
+      "type": "word"
+    },
+    {
+      "fr": "désapprouver (T)",
+      "ru": "не одобрять",
+      "type": "word"
+    },
+    {
+      "fr": "déshabiller (T)",
+      "ru": "раздевать",
+      "type": "word"
+    },
+    {
+      "fr": "déshabituer (T)",
+      "ru": "отучать",
+      "type": "word"
+    },
+    {
+      "fr": "désirer (T)",
+      "ru": "желать",
+      "type": "word"
+    },
+    {
+      "fr": "désoler (T)",
+      "ru": "огорчать",
+      "type": "word"
+    },
+    {
+      "fr": "se désolidariser (прон.)",
+      "ru": "отмежеваться",
+      "type": "word"
+    },
+    {
+      "fr": "dessécher (T)",
+      "ru": "иссушать",
+      "type": "word"
+    },
+    {
+      "fr": "déterminer (T)",
+      "ru": "определять",
+      "type": "word"
+    },
+    {
+      "fr": "dialoguer (I)",
+      "ru": "вести диалог",
+      "type": "word"
+    },
+    {
+      "fr": "dicter (T)",
+      "ru": "диктовать",
+      "type": "word"
+    },
+    {
+      "fr": "dîner (I)",
+      "ru": "ужинать",
+      "type": "word"
+    },
+    {
+      "fr": "dire (T)",
+      "ru": "говорить, сказать",
+      "type": "word"
+    },
+    {
+      "fr": "discerner (T)",
+      "ru": "различать",
+      "type": "word"
+    },
+    {
+      "fr": "discourir (I)",
+      "ru": "разглагольствовать",
+      "type": "word"
+    },
+    {
+      "fr": "discréditer (T)",
+      "ru": "дискредитировать",
+      "type": "word"
+    },
+    {
+      "fr": "disculper (T)",
+      "ru": "оправдывать (снять вину)",
+      "type": "word"
+    },
+    {
+      "fr": "disparaître (I)",
+      "ru": "исчезать",
+      "type": "word"
+    },
+    {
+      "fr": "dissoudre (T)",
+      "ru": "растворять; распускать (орган)",
+      "type": "word"
+    },
+    {
+      "fr": "doubler (T/I)",
+      "ru": "удваивать; обгонять; дублировать",
+      "type": "word"
+    },
+    {
+      "fr": "dresser (T)",
+      "ru": "воздвигать; составлять (список); дрессировать",
+      "type": "word"
+    },
+    {
+      "fr": "durer (I)",
+      "ru": "длиться",
+      "type": "word"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "vb14-th1",
+      "type": "theory",
+      "title": "Lexique A–D: как заучивать",
+      "content": "<p style='margin:0.75rem 0'>Это словарные юниты: оставшиеся глаголы справочника, у которых нет особого предложного управления. Их правило одно — система T/I из юнита 1: <b>T</b> — дополнение без предлога (кого? что?), <b>I</b> — без дополнения, <b>T/I</b> — употребляется обоими способами, «se…» — возвратный.</p><p style='margin:0.75rem 0'><b>Цикл:</b> «⭐ В личный набор» → карточки/заучивание → коуч повторяет по кривой забывания. Тест ниже — выборочная проверка переводов.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Заучивая, проговаривайте мини-пример: не «casser», а «casser un verre» — разбить стакан.</p>"
+    },
+    {
+      "id": "vb14-qz1",
+      "type": "grammar-quiz",
+      "title": "Выборочная проверка переводов (A–D)",
+      "questions": [
+        {
+          "question": "«avouer» означает…",
+          "options": [
+            "признавать(ся)",
+            "желать",
+            "украшать",
+            "зевать"
+          ],
+          "correctAnswer": "признавать(ся)",
+          "explanation": "Avouer (T) — признать: avouer une erreur."
+        },
+        {
+          "question": "«bâtir» означает…",
+          "options": [
+            "строить",
+            "бледнеть",
+            "драться",
+            "кашлять"
+          ],
+          "correctAnswer": "строить",
+          "explanation": "Bâtir (T): bâtir une maison."
+        },
+        {
+          "question": "«déranger» означает…",
+          "options": [
+            "беспокоить",
+            "украшать",
+            "разгружать",
+            "удваивать"
+          ],
+          "correctAnswer": "беспокоить",
+          "explanation": "Déranger (T): excusez-moi de vous déranger."
+        },
+        {
+          "question": "«разбивать, ломать» — это…",
+          "options": [
+            "casser",
+            "caresser",
+            "chasser",
+            "chauffer"
+          ],
+          "correctAnswer": "casser",
+          "explanation": "Casser (T): casser un verre."
+        },
+        {
+          "question": "«décéder» означает…",
+          "options": [
+            "скончаться",
+            "удирать",
+            "решать",
+            "убирать"
+          ],
+          "correctAnswer": "скончаться",
+          "explanation": "Décéder (I) — официальное «умереть»."
+        },
+        {
+          "question": "«огорчать» — это…",
+          "options": [
+            "désoler",
+            "désirer",
+            "dessiner",
+            "déduire"
+          ],
+          "correctAnswer": "désoler",
+          "explanation": "Désoler (T): ça me désole — меня это огорчает."
+        }
+      ]
+    }
+  ]
+}

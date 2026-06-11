@@ -1,0 +1,633 @@
+{
+  "id": "unite15",
+  "title": "Unité 15 : Lexique — глаголы E–P",
+  "description": "Словарный юнит: глаголы E–P без особого управления — для заучивания карточками. Пометки: T — переходный, I — непереходный, прон. — возвратный.",
+  "vocabulary": [
+    {
+      "fr": "s'échiner (прон.)",
+      "ru": "надрываться (разг.)",
+      "type": "word"
+    },
+    {
+      "fr": "échoir (I)",
+      "ru": "выпадать на долю; истекать (о сроке)",
+      "type": "word"
+    },
+    {
+      "fr": "s'écrier (прон.)",
+      "ru": "воскликнуть",
+      "type": "word"
+    },
+    {
+      "fr": "effacer (T)",
+      "ru": "стирать",
+      "type": "word"
+    },
+    {
+      "fr": "égaliser (T/I)",
+      "ru": "уравнивать; сравнять счёт",
+      "type": "word"
+    },
+    {
+      "fr": "égratigner (T)",
+      "ru": "царапать",
+      "type": "word"
+    },
+    {
+      "fr": "élever (T)",
+      "ru": "воспитывать; возводить; повышать",
+      "type": "word"
+    },
+    {
+      "fr": "élire (T)",
+      "ru": "избирать",
+      "type": "word"
+    },
+    {
+      "fr": "émailler (T)",
+      "ru": "усеивать, пересыпать (текст)",
+      "type": "word"
+    },
+    {
+      "fr": "emballer (T)",
+      "ru": "упаковывать; приводить в восторг (разг.)",
+      "type": "word"
+    },
+    {
+      "fr": "emboîter (T)",
+      "ru": "вставлять (одно в другое)",
+      "type": "word"
+    },
+    {
+      "fr": "s'embourber (прон.)",
+      "ru": "увязнуть",
+      "type": "word"
+    },
+    {
+      "fr": "embrouiller (T)",
+      "ru": "запутывать",
+      "type": "word"
+    },
+    {
+      "fr": "s'embuer (прон.)",
+      "ru": "запотевать",
+      "type": "word"
+    },
+    {
+      "fr": "émerveiller (T)",
+      "ru": "восхищать",
+      "type": "word"
+    },
+    {
+      "fr": "employer (T)",
+      "ru": "использовать; нанимать",
+      "type": "word"
+    },
+    {
+      "fr": "enchanter (T)",
+      "ru": "очаровывать",
+      "type": "word"
+    },
+    {
+      "fr": "encombrer (T)",
+      "ru": "загромождать",
+      "type": "word"
+    },
+    {
+      "fr": "encourager (T)",
+      "ru": "ободрять, поощрять",
+      "type": "word"
+    },
+    {
+      "fr": "enduire (T)",
+      "ru": "покрывать (слоем)",
+      "type": "word"
+    },
+    {
+      "fr": "engager (T)",
+      "ru": "нанимать; вовлекать; начинать",
+      "type": "word"
+    },
+    {
+      "fr": "ennuyer (T)",
+      "ru": "наскучивать; беспокоить",
+      "type": "word"
+    },
+    {
+      "fr": "s'entretenir (прон.)",
+      "ru": "беседовать; поддерживать себя",
+      "type": "word"
+    },
+    {
+      "fr": "énumérer (T)",
+      "ru": "перечислять",
+      "type": "word"
+    },
+    {
+      "fr": "envelopper (T)",
+      "ru": "заворачивать",
+      "type": "word"
+    },
+    {
+      "fr": "s'éreinter (прон.)",
+      "ru": "изматываться",
+      "type": "word"
+    },
+    {
+      "fr": "escamoter (T)",
+      "ru": "ловко скрыть; стащить",
+      "type": "word"
+    },
+    {
+      "fr": "esquisser (T)",
+      "ru": "набрасывать (эскиз)",
+      "type": "word"
+    },
+    {
+      "fr": "étendre (T)",
+      "ru": "расстилать; расширять",
+      "type": "word"
+    },
+    {
+      "fr": "étonner (T)",
+      "ru": "удивлять",
+      "type": "word"
+    },
+    {
+      "fr": "étrangler (T)",
+      "ru": "душить",
+      "type": "word"
+    },
+    {
+      "fr": "excuser (T)",
+      "ru": "извинять",
+      "type": "word"
+    },
+    {
+      "fr": "expliquer (T)",
+      "ru": "объяснять",
+      "type": "word"
+    },
+    {
+      "fr": "exploser (I)",
+      "ru": "взрываться",
+      "type": "word"
+    },
+    {
+      "fr": "extirper (T)",
+      "ru": "искоренять; вытаскивать",
+      "type": "word"
+    },
+    {
+      "fr": "falloir (безл.)",
+      "ru": "надлежать (il faut)",
+      "type": "word"
+    },
+    {
+      "fr": "fantasmer (I)",
+      "ru": "фантазировать",
+      "type": "word"
+    },
+    {
+      "fr": "faucher (T)",
+      "ru": "косить; сбивать; красть (разг.)",
+      "type": "word"
+    },
+    {
+      "fr": "fermer (T/I)",
+      "ru": "закрывать(ся)",
+      "type": "word"
+    },
+    {
+      "fr": "figurer (I/T)",
+      "ru": "фигурировать; изображать",
+      "type": "word"
+    },
+    {
+      "fr": "filer (I/T)",
+      "ru": "мчаться; следить за; прясть",
+      "type": "word"
+    },
+    {
+      "fr": "garder (T)",
+      "ru": "хранить, охранять",
+      "type": "word"
+    },
+    {
+      "fr": "gâter (T)",
+      "ru": "портить; баловать",
+      "type": "word"
+    },
+    {
+      "fr": "gémir (I)",
+      "ru": "стонать",
+      "type": "word"
+    },
+    {
+      "fr": "se gendarmer (прон.)",
+      "ru": "возмущаться, протестовать",
+      "type": "word"
+    },
+    {
+      "fr": "généraliser (T)",
+      "ru": "обобщать",
+      "type": "word"
+    },
+    {
+      "fr": "germer (I)",
+      "ru": "прорастать",
+      "type": "word"
+    },
+    {
+      "fr": "gicler (I)",
+      "ru": "брызгать",
+      "type": "word"
+    },
+    {
+      "fr": "glorifier (T)",
+      "ru": "прославлять",
+      "type": "word"
+    },
+    {
+      "fr": "se goinfrer (прон.)",
+      "ru": "объедаться (разг.)",
+      "type": "word"
+    },
+    {
+      "fr": "gonfler (T/I)",
+      "ru": "надувать(ся)",
+      "type": "word"
+    },
+    {
+      "fr": "gorger (T)",
+      "ru": "насыщать до отвала",
+      "type": "word"
+    },
+    {
+      "fr": "grandir (I/T)",
+      "ru": "расти; возвеличивать",
+      "type": "word"
+    },
+    {
+      "fr": "graviter (I)",
+      "ru": "вращаться (вокруг)",
+      "type": "word"
+    },
+    {
+      "fr": "greffer (T)",
+      "ru": "прививать; пересаживать (орган)",
+      "type": "word"
+    },
+    {
+      "fr": "grimacer (I)",
+      "ru": "гримасничать",
+      "type": "word"
+    },
+    {
+      "fr": "grouiller (I)",
+      "ru": "кишеть",
+      "type": "word"
+    },
+    {
+      "fr": "guerroyer (I)",
+      "ru": "воевать (устар.)",
+      "type": "word"
+    },
+    {
+      "fr": "habiller (T)",
+      "ru": "одевать",
+      "type": "word"
+    },
+    {
+      "fr": "honorer (T)",
+      "ru": "чтить, делать честь",
+      "type": "word"
+    },
+    {
+      "fr": "humilier (T)",
+      "ru": "унижать",
+      "type": "word"
+    },
+    {
+      "fr": "imaginer (T)",
+      "ru": "воображать",
+      "type": "word"
+    },
+    {
+      "fr": "imbiber (T)",
+      "ru": "пропитывать",
+      "type": "word"
+    },
+    {
+      "fr": "immoler (T)",
+      "ru": "приносить в жертву",
+      "type": "word"
+    },
+    {
+      "fr": "implanter (T)",
+      "ru": "внедрять",
+      "type": "word"
+    },
+    {
+      "fr": "inclure (T)",
+      "ru": "включать",
+      "type": "word"
+    },
+    {
+      "fr": "incorporer (T)",
+      "ru": "включать в состав",
+      "type": "word"
+    },
+    {
+      "fr": "s'incruster (прон.)",
+      "ru": "въедаться; засиживаться (разг.)",
+      "type": "word"
+    },
+    {
+      "fr": "s'infiltrer (прон.)",
+      "ru": "просачиваться",
+      "type": "word"
+    },
+    {
+      "fr": "initier (T)",
+      "ru": "посвящать (в основы)",
+      "type": "word"
+    },
+    {
+      "fr": "injecter (T)",
+      "ru": "впрыскивать",
+      "type": "word"
+    },
+    {
+      "fr": "innocenter (T)",
+      "ru": "оправдывать (признать невиновным)",
+      "type": "word"
+    },
+    {
+      "fr": "inoculer (T)",
+      "ru": "прививать (болезнь, идею)",
+      "type": "word"
+    },
+    {
+      "fr": "inscrire (T)",
+      "ru": "записывать, вносить",
+      "type": "word"
+    },
+    {
+      "fr": "s'insinuer (прон.)",
+      "ru": "вкрадываться",
+      "type": "word"
+    },
+    {
+      "fr": "s'insurger (прон.)",
+      "ru": "восставать",
+      "type": "word"
+    },
+    {
+      "fr": "interférer (I)",
+      "ru": "интерферировать; вмешиваться",
+      "type": "word"
+    },
+    {
+      "fr": "introduire (T)",
+      "ru": "вводить",
+      "type": "word"
+    },
+    {
+      "fr": "isoler (T)",
+      "ru": "изолировать",
+      "type": "word"
+    },
+    {
+      "fr": "jauger (T)",
+      "ru": "оценивать (на глаз)",
+      "type": "word"
+    },
+    {
+      "fr": "lâcher (T)",
+      "ru": "отпускать; бросать",
+      "type": "word"
+    },
+    {
+      "fr": "laisser (T)",
+      "ru": "оставлять; позволять",
+      "type": "word"
+    },
+    {
+      "fr": "laver (T)",
+      "ru": "мыть",
+      "type": "word"
+    },
+    {
+      "fr": "lever (T)",
+      "ru": "поднимать",
+      "type": "word"
+    },
+    {
+      "fr": "ligaturer (T)",
+      "ru": "перевязывать (мед.)",
+      "type": "word"
+    },
+    {
+      "fr": "lire (T)",
+      "ru": "читать",
+      "type": "word"
+    },
+    {
+      "fr": "maigrir (I)",
+      "ru": "худеть",
+      "type": "word"
+    },
+    {
+      "fr": "majorer (T)",
+      "ru": "повышать (цену)",
+      "type": "word"
+    },
+    {
+      "fr": "mélanger (T)",
+      "ru": "смешивать",
+      "type": "word"
+    },
+    {
+      "fr": "mendier (T/I)",
+      "ru": "попрошайничать",
+      "type": "word"
+    },
+    {
+      "fr": "mentionner (T)",
+      "ru": "упоминать",
+      "type": "word"
+    },
+    {
+      "fr": "se mirer (прон.)",
+      "ru": "любоваться собой (книжн.)",
+      "type": "word"
+    },
+    {
+      "fr": "montrer (T)",
+      "ru": "показывать",
+      "type": "word"
+    },
+    {
+      "fr": "muer (I)",
+      "ru": "линять; ломаться (о голосе)",
+      "type": "word"
+    },
+    {
+      "fr": "notifier (T)",
+      "ru": "официально уведомлять",
+      "type": "word"
+    },
+    {
+      "fr": "nouer (T)",
+      "ru": "завязывать",
+      "type": "word"
+    },
+    {
+      "fr": "occuper (T)",
+      "ru": "занимать",
+      "type": "word"
+    },
+    {
+      "fr": "opérer (T/I)",
+      "ru": "оперировать; действовать",
+      "type": "word"
+    },
+    {
+      "fr": "opiner (I)",
+      "ru": "выражать согласие (кивком)",
+      "type": "word"
+    },
+    {
+      "fr": "orner (T)",
+      "ru": "украшать",
+      "type": "word"
+    },
+    {
+      "fr": "pénaliser (T)",
+      "ru": "штрафовать, ставить в невыгодное положение",
+      "type": "word"
+    },
+    {
+      "fr": "perturber (T)",
+      "ru": "нарушать (порядок)",
+      "type": "word"
+    },
+    {
+      "fr": "pétrifier (T)",
+      "ru": "обращать в камень, ошеломлять",
+      "type": "word"
+    },
+    {
+      "fr": "piquer (T)",
+      "ru": "колоть, жалить",
+      "type": "word"
+    },
+    {
+      "fr": "plaisanter (I)",
+      "ru": "шутить",
+      "type": "word"
+    },
+    {
+      "fr": "planer (I)",
+      "ru": "парить; витать",
+      "type": "word"
+    },
+    {
+      "fr": "plaquer (T)",
+      "ru": "облицовывать; бросать (разг.)",
+      "type": "word"
+    },
+    {
+      "fr": "poser (T)",
+      "ru": "класть, ставить",
+      "type": "word"
+    },
+    {
+      "fr": "poudrer (T)",
+      "ru": "пудрить",
+      "type": "word"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "vb15-th1",
+      "type": "theory",
+      "title": "Lexique E–P: как заучивать",
+      "content": "<p style='margin:0.75rem 0'>Это словарные юниты: оставшиеся глаголы справочника, у которых нет особого предложного управления. Их правило одно — система T/I из юнита 1: <b>T</b> — дополнение без предлога (кого? что?), <b>I</b> — без дополнения, <b>T/I</b> — употребляется обоими способами, «se…» — возвратный.</p><p style='margin:0.75rem 0'><b>Цикл:</b> «⭐ В личный набор» → карточки/заучивание → коуч повторяет по кривой забывания. Тест ниже — выборочная проверка переводов.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Заучивая, проговаривайте мини-пример: не «casser», а «casser un verre» — разбить стакан.</p>"
+    },
+    {
+      "id": "vb15-qz1",
+      "type": "grammar-quiz",
+      "title": "Выборочная проверка переводов (E–P)",
+      "questions": [
+        {
+          "question": "«effacer» означает…",
+          "options": [
+            "стирать",
+            "взрываться",
+            "душить",
+            "шутить"
+          ],
+          "correctAnswer": "стирать",
+          "explanation": "Effacer (T): effacer le tableau."
+        },
+        {
+          "question": "«наскучивать, беспокоить» — это…",
+          "options": [
+            "ennuyer",
+            "énumérer",
+            "enduire",
+            "emballer"
+          ],
+          "correctAnswer": "ennuyer",
+          "explanation": "Ennuyer (T): ça m'ennuie."
+        },
+        {
+          "question": "«étonner» означает…",
+          "options": [
+            "удивлять",
+            "растягивать",
+            "гасить",
+            "узнавать"
+          ],
+          "correctAnswer": "удивлять",
+          "explanation": "Étonner (T): ça m'étonne !"
+        },
+        {
+          "question": "«худеть» — это…",
+          "options": [
+            "maigrir",
+            "grandir",
+            "grossir",
+            "mendier"
+          ],
+          "correctAnswer": "maigrir",
+          "explanation": "Maigrir (I): il a maigri de 5 kilos."
+        },
+        {
+          "question": "«lâcher» означает…",
+          "options": [
+            "отпускать",
+            "лизать",
+            "оставлять себе",
+            "связывать"
+          ],
+          "correctAnswer": "отпускать",
+          "explanation": "Lâcher (T): lâche-moi ! — отпусти!"
+        },
+        {
+          "question": "«занимать» (место, пост) — это…",
+          "options": [
+            "occuper",
+            "opérer",
+            "orner",
+            "opiner"
+          ],
+          "correctAnswer": "occuper",
+          "explanation": "Occuper (T): occuper un poste."
+        }
+      ]
+    }
+  ]
+}
