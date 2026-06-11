@@ -1,0 +1,258 @@
+{
+  "id": "unite8",
+  "title": "Unité 8 : Répertoire 1 — A à D",
+  "description": "Справочник управлений, часть 1: от s'abonner до se douter. Добавьте в карточки и закрепляйте тестом.",
+  "vocabulary": [
+    {
+      "fr": "s'abonner à qch",
+      "ru": "подписаться на что-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "aboutir à qch",
+      "ru": "привести к (результату)",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'accoutumer à qch",
+      "ru": "привыкнуть к чему-л. (книжн.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "accoucher de qch",
+      "ru": "родить; разродиться чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'acharner sur/contre qn",
+      "ru": "ожесточённо нападать на",
+      "type": "phrase"
+    },
+    {
+      "fr": "adhérer à qch",
+      "ru": "вступить в; примкнуть к",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'adosser à/contre qch",
+      "ru": "прислониться к",
+      "type": "phrase"
+    },
+    {
+      "fr": "agir sur qch",
+      "ru": "воздействовать на",
+      "type": "phrase"
+    },
+    {
+      "fr": "il s'agit de qch",
+      "ru": "речь идёт о",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'apitoyer sur qn",
+      "ru": "жалеть кого-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "aspirer à qch",
+      "ru": "стремиться к",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'attaquer à qch",
+      "ru": "взяться за; атаковать",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'attendre à qch",
+      "ru": "ожидать чего-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se borner à faire",
+      "ru": "ограничиться тем, что",
+      "type": "phrase"
+    },
+    {
+      "fr": "brancher qch sur qch",
+      "ru": "подключить к",
+      "type": "phrase"
+    },
+    {
+      "fr": "cesser de faire",
+      "ru": "перестать делать",
+      "type": "phrase"
+    },
+    {
+      "fr": "changer de qch",
+      "ru": "сменить что-л. (de train, d'avis)",
+      "type": "phrase"
+    },
+    {
+      "fr": "collaborer à/avec",
+      "ru": "сотрудничать в/с",
+      "type": "phrase"
+    },
+    {
+      "fr": "commencer par qch",
+      "ru": "начать с чего-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "comparer à/avec qch",
+      "ru": "сравнивать с",
+      "type": "phrase"
+    },
+    {
+      "fr": "consacrer qch à",
+      "ru": "посвятить что-л. чему-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "consister à faire / en qch",
+      "ru": "состоять в том, чтобы / из",
+      "type": "phrase"
+    },
+    {
+      "fr": "convenir à qn",
+      "ru": "подходить кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "convenir de qch",
+      "ru": "условиться о",
+      "type": "phrase"
+    },
+    {
+      "fr": "correspondre à qch",
+      "ru": "соответствовать чему-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se cramponner à qch",
+      "ru": "цепляться за",
+      "type": "phrase"
+    },
+    {
+      "fr": "dater de + époque",
+      "ru": "датироваться, восходить к",
+      "type": "phrase"
+    },
+    {
+      "fr": "déconseiller à qn de faire",
+      "ru": "отсоветовать кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "dédier qch à qn",
+      "ru": "посвятить (книгу и т.п.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "se dépêcher de faire",
+      "ru": "торопиться сделать",
+      "type": "phrase"
+    },
+    {
+      "fr": "dispenser qn de qch",
+      "ru": "освободить кого-л. от",
+      "type": "phrase"
+    },
+    {
+      "fr": "dissuader qn de faire",
+      "ru": "отговорить кого-л. от",
+      "type": "phrase"
+    },
+    {
+      "fr": "se documenter sur qch",
+      "ru": "собирать материал о",
+      "type": "phrase"
+    },
+    {
+      "fr": "se douter de qch",
+      "ru": "подозревать, догадываться о",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "vb8-th1",
+      "type": "theory",
+      "title": "Справочник A–D: как им пользоваться",
+      "content": "<p style='margin:0.75rem 0'>Это первая часть справочника управлений (s'abonner → se douter). Здесь нет новых правил — только конструкции для запоминания.</p><p style='margin:0.75rem 0'><b>Как работать:</b> 1) пробегите список, отметьте незнакомое; 2) нажмите «⭐ В личный набор» — слова уйдут в карточки; 3) пройдите тест на самые коварные конструкции; 4) дальше их будет подбрасывать коуч по кривой забывания.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Учите конструкцию целиком с примером-якорем: не «adhérer», а «adhérer À un club».</p><p style='margin:0.75rem 0'>Мини-акценты части 1:</p><p style='margin:0.75rem 0'>• <b>douter de</b> = сомневаться, но <b>se douter de</b> = догадываться — смысл почти противоположный!<br>• <b>changer de</b> + сущ. без артикля: changer de train, changer d'avis.<br>• <b>il s'agit de</b> — только безлично: в тексте «речь идёт о…», никогда «ce livre s'agit de»!<br>• <b>s'attendre à</b> ≠ attendre: j'attends le bus (жду), je m'attends à un refus (ожидаю/готовлюсь).</p>"
+    },
+    {
+      "id": "vb8-qz1",
+      "type": "grammar-quiz",
+      "title": "Répertoire A–D — коварные места",
+      "questions": [
+        {
+          "question": "Je ne ___ pas ___ sa réaction : quelle surprise !",
+          "options": [
+            "m'attendais ... à",
+            "attendais ... à",
+            "m'attendais ... de",
+            "attendais ... pour"
+          ],
+          "correctAnswer": "m'attendais ... à",
+          "explanation": "Ожидать/предвидеть — s'attendre À qch. Просто attendre = ждать."
+        },
+        {
+          "question": "Dans cet article, il ___ de la réforme des retraites.",
+          "options": [
+            "s'agit",
+            "agit",
+            "s'agit à propos",
+            "est agi"
+          ],
+          "correctAnswer": "s'agit",
+          "explanation": "Безличное il s'agit de — «речь идёт о». Подлежащее — только il!"
+        },
+        {
+          "question": "Elle ___ médecin : elle ne voulait pas qu'il parte si loin.",
+          "options": [
+            "a dissuadé son fils de devenir",
+            "a dissuadé son fils à devenir",
+            "a déconseillé son fils de",
+            "a dissuadé à son fils de"
+          ],
+          "correctAnswer": "a dissuadé son fils de devenir",
+          "explanation": "Dissuader qn DE faire (а déconseiller — à qn de faire)."
+        },
+        {
+          "question": "Tu savais pour leur divorce ? — Je m'en ___ un peu...",
+          "options": [
+            "doutais",
+            "doute pas",
+            "méfiais",
+            "attendais à"
+          ],
+          "correctAnswer": "doutais",
+          "explanation": "Se douter de = догадываться: je m'en doutais. Douter de = сомневаться!"
+        },
+        {
+          "question": "Pour aller à Lyon, vous devez changer ___ train à Dijon.",
+          "options": [
+            "de",
+            "le",
+            "du",
+            "votre"
+          ],
+          "correctAnswer": "de",
+          "explanation": "Changer DE + существительное без артикля: changer de train."
+        },
+        {
+          "question": "Son travail consiste ___ vérifier les comptes.",
+          "options": [
+            "à",
+            "de",
+            "en",
+            "dans"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Consister À + инфинитив (consister EN + существительное)."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,290 @@
+{
+  "id": "unite10",
+  "title": "Unité 10 : Répertoire 3 — P à V",
+  "description": "Справочник управлений, часть 3: от parvenir до vouer. Карточки + финальный тест.",
+  "vocabulary": [
+    {
+      "fr": "parvenir à qch/à faire",
+      "ru": "достичь; суметь",
+      "type": "phrase"
+    },
+    {
+      "fr": "pencher pour qch",
+      "ru": "склоняться к (варианту)",
+      "type": "phrase"
+    },
+    {
+      "fr": "persister à faire",
+      "ru": "упорно продолжать",
+      "type": "phrase"
+    },
+    {
+      "fr": "plonger dans qch",
+      "ru": "погрузиться в",
+      "type": "phrase"
+    },
+    {
+      "fr": "postuler à/pour un poste",
+      "ru": "претендовать на должность",
+      "type": "phrase"
+    },
+    {
+      "fr": "pousser qn à faire",
+      "ru": "подтолкнуть кого-л. к",
+      "type": "phrase"
+    },
+    {
+      "fr": "se préparer à qch",
+      "ru": "готовиться к",
+      "type": "phrase"
+    },
+    {
+      "fr": "préserver qn de qch",
+      "ru": "уберечь кого-л. от",
+      "type": "phrase"
+    },
+    {
+      "fr": "procéder à qch",
+      "ru": "приступить к (офиц.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "se précipiter sur/vers",
+      "ru": "броситься на/к",
+      "type": "phrase"
+    },
+    {
+      "fr": "se priver de qch",
+      "ru": "отказывать себе в",
+      "type": "phrase"
+    },
+    {
+      "fr": "rechigner à faire",
+      "ru": "делать нехотя, артачиться",
+      "type": "phrase"
+    },
+    {
+      "fr": "recommander à qn de faire",
+      "ru": "рекомендовать кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "redouter de faire",
+      "ru": "страшиться",
+      "type": "phrase"
+    },
+    {
+      "fr": "se réjouir de qch",
+      "ru": "радоваться чему-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "remédier à qch",
+      "ru": "исправить, помочь (проблеме)",
+      "type": "phrase"
+    },
+    {
+      "fr": "renoncer à qch",
+      "ru": "отказаться от",
+      "type": "phrase"
+    },
+    {
+      "fr": "se résigner à qch",
+      "ru": "смириться с",
+      "type": "phrase"
+    },
+    {
+      "fr": "résister à qch",
+      "ru": "сопротивляться чему-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se résoudre à faire",
+      "ru": "решиться на (нехотя)",
+      "type": "phrase"
+    },
+    {
+      "fr": "rêver à/de qch",
+      "ru": "мечтать о",
+      "type": "phrase"
+    },
+    {
+      "fr": "rire de qn/qch",
+      "ru": "смеяться над",
+      "type": "phrase"
+    },
+    {
+      "fr": "risquer de faire",
+      "ru": "рисковать (+инф.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "sacrifier qch à qch",
+      "ru": "пожертвовать чем-л. ради",
+      "type": "phrase"
+    },
+    {
+      "fr": "songer à qch",
+      "ru": "подумывать о",
+      "type": "phrase"
+    },
+    {
+      "fr": "souffrir de qch",
+      "ru": "страдать от",
+      "type": "phrase"
+    },
+    {
+      "fr": "soupçonner qn de qch",
+      "ru": "подозревать кого-л. в",
+      "type": "phrase"
+    },
+    {
+      "fr": "souscrire à qch",
+      "ru": "подписаться под; одобрить",
+      "type": "phrase"
+    },
+    {
+      "fr": "succéder à qn",
+      "ru": "сменить кого-л. (на посту)",
+      "type": "phrase"
+    },
+    {
+      "fr": "suffire à qn",
+      "ru": "быть достаточным кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "tendre à faire",
+      "ru": "иметь тенденцию к",
+      "type": "phrase"
+    },
+    {
+      "fr": "se tromper de qch",
+      "ru": "ошибиться (дверью, номером)",
+      "type": "phrase"
+    },
+    {
+      "fr": "troquer qch contre qch",
+      "ru": "обменять что-л. на",
+      "type": "phrase"
+    },
+    {
+      "fr": "veiller à qch / sur qn",
+      "ru": "следить за чем-л. / присматривать за кем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se venger de qn/qch",
+      "ru": "отомстить кому-л./за что-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "vouer qch à qn",
+      "ru": "питать (чувство) к; обрекать",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "vb10-th1",
+      "type": "theory",
+      "title": "Справочник P–V: как им пользоваться",
+      "content": "<p style='margin:0.75rem 0'>Это третья часть справочника управлений (parvenir → vouer). Здесь нет новых правил — только конструкции для запоминания.</p><p style='margin:0.75rem 0'><b>Как работать:</b> 1) пробегите список, отметьте незнакомое; 2) нажмите «⭐ В личный набор» — слова уйдут в карточки; 3) пройдите тест на самые коварные конструкции; 4) дальше их будет подбрасывать коуч по кривой забывания.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Учите конструкцию целиком с примером-якорем: не «adhérer», а «adhérer À un club».</p><p style='margin:0.75rem 0'>Мини-акценты части 3:</p><p style='margin:0.75rem 0'>• <b>se tromper de</b> + сущ. без артикля: se tromper de porte, de numéro — «ошибиться дверью/номером».<br>• <b>veiller à</b> qch (проследить, чтобы) ↔ <b>veiller sur</b> qn (присматривать за кем-то).<br>• <b>risquer de</b> + inf — «рискует случиться»: ça risque d'échouer.<br>• <b>se résoudre à</b> — решиться нехотя (ср. décider de — нейтрально).</p>"
+    },
+    {
+      "id": "vb10-qz1",
+      "type": "grammar-quiz",
+      "title": "Répertoire P–V — коварные места",
+      "questions": [
+        {
+          "question": "Excusez-moi, je me suis trompé ___ étage.",
+          "options": [
+            "d'",
+            "de l'",
+            "à l'",
+            "par"
+          ],
+          "correctAnswer": "d'",
+          "explanation": "Se tromper DE + сущ. без артикля: trompé d'étage."
+        },
+        {
+          "question": "La baby-sitter veille ___ les enfants.",
+          "options": [
+            "sur",
+            "à",
+            "de",
+            "pour"
+          ],
+          "correctAnswer": "sur",
+          "explanation": "Присматривать за кем-то — veiller SUR qn. Veiller À — проследить за чем-то."
+        },
+        {
+          "question": "Si on part maintenant, on risque ___ rater le début.",
+          "options": [
+            "de",
+            "à",
+            "—",
+            "pour"
+          ],
+          "correctAnswer": "de",
+          "explanation": "Risquer DE + инфинитив."
+        },
+        {
+          "question": "Après des mois d'hésitation, il s'est enfin résolu ___ démissionner.",
+          "options": [
+            "à",
+            "de",
+            "pour",
+            "en"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Se résoudre À faire — решиться (нехотя)."
+        },
+        {
+          "question": "Elle a fini par se résigner ___ cette situation.",
+          "options": [
+            "à",
+            "de",
+            "avec",
+            "sur"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Se résigner À qch — смириться с."
+        },
+        {
+          "question": "On le soupçonne ___ avoir caché des preuves.",
+          "options": [
+            "d'",
+            "à",
+            "pour",
+            "en"
+          ],
+          "correctAnswer": "d'",
+          "explanation": "Soupçonner qn DE qch/DE + inf."
+        },
+        {
+          "question": "Qui ___ au directeur quand il partira à la retraite ?",
+          "options": [
+            "succédera",
+            "succédera de",
+            "remplacera à",
+            "suivra à"
+          ],
+          "correctAnswer": "succédera",
+          "explanation": "Succéder À qn — сменить на посту: succédera au directeur."
+        },
+        {
+          "question": "Je veillerai ___ ce que tout soit prêt.",
+          "options": [
+            "à",
+            "sur",
+            "de",
+            "pour"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Veiller À (ce que + subj.) — проследить, чтобы."
+        }
+      ]
+    }
+  ]
+}

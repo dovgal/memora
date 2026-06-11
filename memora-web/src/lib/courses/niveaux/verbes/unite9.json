@@ -1,0 +1,269 @@
+{
+  "id": "unite9",
+  "title": "Unité 9 : Répertoire 2 — E à O",
+  "description": "Справочник управлений, часть 2: от s'efforcer до opter. Карточки + тест.",
+  "vocabulary": [
+    {
+      "fr": "s'efforcer de faire",
+      "ru": "стараться изо всех сил",
+      "type": "phrase"
+    },
+    {
+      "fr": "emprunter qch à qn",
+      "ru": "взять взаймы у кого-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "enquêter sur qch",
+      "ru": "расследовать что-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "enseigner qch à qn",
+      "ru": "преподавать что-л. кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'entretenir avec qn de qch",
+      "ru": "беседовать с кем-л. о чём-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "envier qch à qn",
+      "ru": "завидовать чьему-л. чему-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'excuser de qch",
+      "ru": "извиняться за",
+      "type": "phrase"
+    },
+    {
+      "fr": "exiger qch de qn",
+      "ru": "требовать что-л. от кого-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se familiariser avec qch",
+      "ru": "освоиться с",
+      "type": "phrase"
+    },
+    {
+      "fr": "féliciter qn de/pour qch",
+      "ru": "поздравить кого-л. с",
+      "type": "phrase"
+    },
+    {
+      "fr": "se fier à qn",
+      "ru": "доверять(ся) кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "hériter de qch",
+      "ru": "унаследовать что-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'habituer à qch",
+      "ru": "привыкнуть к",
+      "type": "phrase"
+    },
+    {
+      "fr": "influer sur qch",
+      "ru": "влиять на",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'initier à qch",
+      "ru": "приобщиться к, начать осваивать",
+      "type": "phrase"
+    },
+    {
+      "fr": "inciter qn à faire",
+      "ru": "побуждать кого-л. к",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'inscrire à qch",
+      "ru": "записаться на",
+      "type": "phrase"
+    },
+    {
+      "fr": "insister sur qch",
+      "ru": "настаивать на; подчёркивать",
+      "type": "phrase"
+    },
+    {
+      "fr": "interdire à qn de faire",
+      "ru": "запретить кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'intéresser à qch",
+      "ru": "интересоваться чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "intervenir dans qch",
+      "ru": "вмешаться в",
+      "type": "phrase"
+    },
+    {
+      "fr": "jongler avec qch",
+      "ru": "жонглировать чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se lancer dans qch",
+      "ru": "пуститься в, начать",
+      "type": "phrase"
+    },
+    {
+      "fr": "se lier avec qn",
+      "ru": "сблизиться с кем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "livrer qch à qn",
+      "ru": "доставить что-л. кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se livrer à qch",
+      "ru": "предаваться чему-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se méfier de qn",
+      "ru": "остерегаться кого-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "mêler qn à qch",
+      "ru": "впутать кого-л. в",
+      "type": "phrase"
+    },
+    {
+      "fr": "se mêler de qch",
+      "ru": "лезть не в своё дело",
+      "type": "phrase"
+    },
+    {
+      "fr": "miser sur qch",
+      "ru": "делать ставку на",
+      "type": "phrase"
+    },
+    {
+      "fr": "nuire à qn/qch",
+      "ru": "вредить кому-л./чему-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'obstiner à faire",
+      "ru": "упорствовать в",
+      "type": "phrase"
+    },
+    {
+      "fr": "opter pour qch",
+      "ru": "выбрать что-л. (вариант)",
+      "type": "phrase"
+    },
+    {
+      "fr": "orienter qn vers qch",
+      "ru": "направить кого-л. к",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "vb9-th1",
+      "type": "theory",
+      "title": "Справочник E–O: как им пользоваться",
+      "content": "<p style='margin:0.75rem 0'>Это вторая часть справочника управлений (s'efforcer → orienter). Здесь нет новых правил — только конструкции для запоминания.</p><p style='margin:0.75rem 0'><b>Как работать:</b> 1) пробегите список, отметьте незнакомое; 2) нажмите «⭐ В личный набор» — слова уйдут в карточки; 3) пройдите тест на самые коварные конструкции; 4) дальше их будет подбрасывать коуч по кривой забывания.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Учите конструкцию целиком с примером-якорем: не «adhérer», а «adhérer À un club».</p><p style='margin:0.75rem 0'>Мини-акценты части 2:</p><p style='margin:0.75rem 0'>• <b>se mêler de</b> — «лезть в чужие дела»: Mêle-toi de tes affaires ! (не путайте с mêler à — впутать).<br>• <b>hériter de</b>: hériter d'une maison — наследуют «от» вещи, предлог обязателен.<br>• <b>exiger de qn</b>: требуют ОТ кого-то (qch de qn), а не «à».<br>• <b>se fier à</b> ↔ <b>se méfier de</b> — антонимы с разными предлогами!</p>"
+    },
+    {
+      "id": "vb9-qz1",
+      "type": "grammar-quiz",
+      "title": "Répertoire E–O — коварные места",
+      "questions": [
+        {
+          "question": "Ne te ___ pas ___ mes affaires !",
+          "options": [
+            "mêle ... de",
+            "mêle ... à",
+            "mêles ... dans",
+            "mêle ... avec"
+          ],
+          "correctAnswer": "mêle ... de",
+          "explanation": "«Не лезь в мои дела» — se mêler DE qch."
+        },
+        {
+          "question": "On peut se ___ à lui : il tient toujours parole.",
+          "options": [
+            "fier",
+            "méfier",
+            "fier de",
+            "confier sur"
+          ],
+          "correctAnswer": "fier",
+          "explanation": "Доверять — se fier À qn. Se méfier DE — наоборот."
+        },
+        {
+          "question": "Elle a hérité ___ une fortune de sa tante.",
+          "options": [
+            "d'",
+            "—",
+            "à",
+            "sur"
+          ],
+          "correctAnswer": "d'",
+          "explanation": "Hériter DE qch: hérité d'une fortune."
+        },
+        {
+          "question": "Le professeur a insisté ___ ce point de grammaire.",
+          "options": [
+            "sur",
+            "à",
+            "de",
+            "dans"
+          ],
+          "correctAnswer": "sur",
+          "explanation": "Insister SUR qch — подчеркнуть, настоять (по-русски «на», тут совпало!)."
+        },
+        {
+          "question": "Ses parents lui ont interdit ___ sortir ce soir.",
+          "options": [
+            "de",
+            "à",
+            "—",
+            "pour"
+          ],
+          "correctAnswer": "de",
+          "explanation": "Interdire À qn DE faire: lui (à qn) + de sortir."
+        },
+        {
+          "question": "Qu'est-ce que tu ___ de moi exactement ?",
+          "options": [
+            "exiges",
+            "exiges à",
+            "demandes à",
+            "insistes"
+          ],
+          "correctAnswer": "exiges",
+          "explanation": "Exiger qch DE qn — требовать от: qu'exiges-tu de moi ?"
+        },
+        {
+          "question": "Après sa retraite, il s'est lancé ___ la peinture.",
+          "options": [
+            "dans",
+            "à",
+            "en",
+            "sur"
+          ],
+          "correctAnswer": "dans",
+          "explanation": "Se lancer DANS qch — пуститься в новое дело."
+        }
+      ]
+    }
+  ]
+}
