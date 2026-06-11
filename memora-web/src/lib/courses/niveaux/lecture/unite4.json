@@ -1,0 +1,289 @@
+{
+  "id": "unite4",
+  "title": "Livre 4 : Le Comte de Monte-Cristo (B1–B2)",
+  "description": "Александр Дюма, 1844. Эдмон Дантес: предательство, замок Иф, сокровище и возмездие. Словарь судьбы и мести.",
+  "vocabulary": [
+    {
+      "fr": "une trahison",
+      "ru": "предательство",
+      "type": "word"
+    },
+    {
+      "fr": "trahir",
+      "ru": "предавать",
+      "type": "word"
+    },
+    {
+      "fr": "un complot",
+      "ru": "заговор",
+      "type": "word"
+    },
+    {
+      "fr": "dénoncer",
+      "ru": "доносить (на кого-л.)",
+      "type": "word"
+    },
+    {
+      "fr": "une lettre anonyme",
+      "ru": "анонимное письмо",
+      "type": "phrase"
+    },
+    {
+      "fr": "emprisonner",
+      "ru": "заключать в тюрьму",
+      "type": "word"
+    },
+    {
+      "fr": "un cachot",
+      "ru": "темница, каземат",
+      "type": "word"
+    },
+    {
+      "fr": "un prisonnier",
+      "ru": "узник",
+      "type": "word"
+    },
+    {
+      "fr": "creuser un tunnel",
+      "ru": "рыть туннель",
+      "type": "phrase"
+    },
+    {
+      "fr": "un trésor",
+      "ru": "сокровище",
+      "type": "word"
+    },
+    {
+      "fr": "une île",
+      "ru": "остров",
+      "type": "word"
+    },
+    {
+      "fr": "une fortune",
+      "ru": "состояние, богатство",
+      "type": "word"
+    },
+    {
+      "fr": "récompenser",
+      "ru": "вознаграждать",
+      "type": "word"
+    },
+    {
+      "fr": "punir",
+      "ru": "наказывать",
+      "type": "word"
+    },
+    {
+      "fr": "la justice",
+      "ru": "справедливость, правосудие",
+      "type": "word"
+    },
+    {
+      "fr": "se déguiser en",
+      "ru": "переодеться в",
+      "type": "phrase"
+    },
+    {
+      "fr": "un armateur",
+      "ru": "судовладелец",
+      "type": "word"
+    },
+    {
+      "fr": "des fiançailles (f pl)",
+      "ru": "помолвка",
+      "type": "word"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "mon-th1",
+      "type": "theory",
+      "title": "Знакомство с романом",
+      "content": "<p style='margin:0.75rem 0'>«Le Comte de Monte-Cristo» (1844) Александра Дюма — великий роман о мести. Молодой моряк Эдмон Дантес накануне свадьбы и капитанства становится жертвой доноса завистников и без суда исчезает в замке Иф. Через четырнадцать лет он вернётся — богатым, неузнаваемым и безжалостно справедливым.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Вехи сюжета</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Ключевой вопрос</th></tr><tr><td style='padding:0.5rem'>Марсель: «Фараон», Мерседес, зависть</td><td style='padding:0.5rem'>кому выгодно убрать Дантеса?</td></tr><tr><td style='padding:0.5rem'>Донос и арест на помолвке</td><td style='padding:0.5rem'>почему прокурор хоронит дело?</td></tr><tr><td style='padding:0.5rem'>Замок Иф: аббат Фариа</td><td style='padding:0.5rem'>чему учит Дантеса узник-учёный?</td></tr><tr><td style='padding:0.5rem'>Побег и остров Монте-Кристо</td><td style='padding:0.5rem'>как сокровище меняет план героя?</td></tr><tr><td style='padding:0.5rem'>Париж: граф начинает игру</td><td style='padding:0.5rem'>месть или правосудие — где граница?</td></tr></table><p style='margin:0.75rem 0'><b>Как работать с книгой:</b> 1) прочитайте главу в вашем издании; 2) прослушайте её в аудио; 3) пройдите проверку понимания здесь; 4) добавьте словарь юнита в личный набор кнопкой над упражнениями и учите слова в коуче.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Сначала слушайте БЕЗ текста (общий смысл), затем читайте, затем слушайте ещё раз, следя по тексту. Три прохода = максимум пользы.</p>"
+    },
+    {
+      "id": "mon-qz1",
+      "type": "grammar-quiz",
+      "title": "Завязка — проверка понимания",
+      "questions": [
+        {
+          "question": "Кто такой Эдмон Дантес в начале романа?",
+          "options": [
+            "молодой моряк, будущий капитан «Фараона»",
+            "банкир",
+            "офицер армии",
+            "рыбак"
+          ],
+          "correctAnswer": "молодой моряк, будущий капитан «Фараона»",
+          "explanation": "Девятнадцатилетний помощник капитана возвращается в Марсель с отличными перспективами."
+        },
+        {
+          "question": "Кто составляет донос на Дантеса?",
+          "options": [
+            "завистники Данглар и Фернан",
+            "его отец",
+            "Мерседес",
+            "капитан корабля"
+          ],
+          "correctAnswer": "завистники Данглар и Фернан",
+          "explanation": "Данглар завидует должности, Фернан — любви Мерседес; письмо пишут анонимно."
+        },
+        {
+          "question": "В чём ложно обвиняют Дантеса?",
+          "options": [
+            "в бонапартистском заговоре",
+            "в краже груза",
+            "в убийстве",
+            "в дезертирстве"
+          ],
+          "correctAnswer": "в бонапартистском заговоре",
+          "explanation": "Письмо с Эльбы делает из него «агента узурпатора» — страшное обвинение эпохи."
+        },
+        {
+          "question": "Почему прокурор Вильфор прячет дело?",
+          "options": [
+            "письмо компрометирует его отца",
+            "за взятку",
+            "по приказу короля",
+            "из лени"
+          ],
+          "correctAnswer": "письмо компрометирует его отца",
+          "explanation": "Адресат письма — отец Вильфора, бонапартист: карьера дороже невиновного."
+        },
+        {
+          "question": "Кого Дантес встречает в замке Иф?",
+          "options": [
+            "аббата Фариа",
+            "Наполеона",
+            "Данглара",
+            "старого пирата"
+          ],
+          "correctAnswer": "аббата Фариа",
+          "explanation": "Учёный аббат, роющий туннель, становится учителем и открывает тайну сокровища."
+        }
+      ]
+    },
+    {
+      "id": "mon-fb1",
+      "type": "fill-blank",
+      "title": "Перескажите завязку",
+      "text": "Le jour de ses ___ , Edmond Dantès est arrêté : une lettre ___ l'accuse de complot. Victime d'une ___ , il est ___ au château d'If sans procès. Dans son ___ , il rencontre l'abbé Faria, qui ___ un tunnel depuis des années. L'abbé lui révèle l'emplacement d'un ___ caché sur l'île de Monte-Cristo.",
+      "blanks": [
+        {
+          "correctAnswer": "fiançailles",
+          "options": [
+            "fiançailles",
+            "funérailles",
+            "vacances"
+          ],
+          "explanation": "Арест в день помолвки — fiançailles."
+        },
+        {
+          "correctAnswer": "anonyme",
+          "options": [
+            "anonyme",
+            "officielle",
+            "amicale"
+          ],
+          "explanation": "Анонимное письмо-донос — une lettre anonyme."
+        },
+        {
+          "correctAnswer": "trahison",
+          "options": [
+            "trahison",
+            "tradition",
+            "traversée"
+          ],
+          "explanation": "Жертва предательства — une trahison."
+        },
+        {
+          "correctAnswer": "emprisonné",
+          "options": [
+            "emprisonné",
+            "récompensé",
+            "déguisé"
+          ],
+          "explanation": "Заключён без суда — emprisonné."
+        },
+        {
+          "correctAnswer": "cachot",
+          "options": [
+            "cachot",
+            "château neuf",
+            "cabinet"
+          ],
+          "explanation": "Темница — le cachot."
+        },
+        {
+          "correctAnswer": "creuse",
+          "options": [
+            "creuse",
+            "peint",
+            "vend"
+          ],
+          "explanation": "Роет туннель — creuser un tunnel."
+        },
+        {
+          "correctAnswer": "trésor",
+          "options": [
+            "trésor",
+            "bateau",
+            "procès"
+          ],
+          "explanation": "Сокровище острова — un trésor."
+        }
+      ]
+    },
+    {
+      "id": "mon-qz2",
+      "type": "grammar-quiz",
+      "title": "Лексика судьбы и мести",
+      "questions": [
+        {
+          "question": "Il a ___ son meilleur ami pour de l'argent.",
+          "options": [
+            "trahi",
+            "récompensé",
+            "creusé",
+            "harponné"
+          ],
+          "correctAnswer": "trahi",
+          "explanation": "Предать — trahir."
+        },
+        {
+          "question": "Les conspirateurs préparent un ___ contre le ministre.",
+          "options": [
+            "complot",
+            "cachot",
+            "trésor",
+            "tunnel"
+          ],
+          "correctAnswer": "complot",
+          "explanation": "Заговор — un complot."
+        },
+        {
+          "question": "Le tribunal doit ___ les coupables et innocenter les victimes.",
+          "options": [
+            "punir",
+            "trahir",
+            "dénoncer",
+            "emprisonner sans"
+          ],
+          "correctAnswer": "punir",
+          "explanation": "Наказать виновных — punir."
+        },
+        {
+          "question": "Grâce à son héritage, elle a fait ___ .",
+          "options": [
+            "fortune",
+            "cachot",
+            "naufrage",
+            "procès"
+          ],
+          "correctAnswer": "fortune",
+          "explanation": "Разбогатеть — faire fortune."
+        }
+      ]
+    }
+  ]
+}

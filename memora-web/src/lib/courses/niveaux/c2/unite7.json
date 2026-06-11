@@ -1,0 +1,211 @@
+{
+  "id": "unite7",
+  "title": "Unité 7 : Idiomatique — образы тела и животных",
+  "description": "Вторая волна идиом: части тела и животные. Уровень perfectionnement: нюансы, регистр, ловушки буквального перевода.",
+  "vocabulary": [
+    {
+      "fr": "avoir le bras long",
+      "ru": "иметь связи",
+      "type": "word"
+    },
+    {
+      "fr": "se croiser les bras",
+      "ru": "сидеть сложа руки",
+      "type": "word"
+    },
+    {
+      "fr": "coûter un bras",
+      "ru": "стоить безумно дорого (разг.)",
+      "type": "word"
+    },
+    {
+      "fr": "garder la tête froide",
+      "ru": "сохранять хладнокровие",
+      "type": "word"
+    },
+    {
+      "fr": "se creuser la tête",
+      "ru": "ломать голову",
+      "type": "word"
+    },
+    {
+      "fr": "avoir un cheveu sur la langue",
+      "ru": "шепелявить",
+      "type": "word"
+    },
+    {
+      "fr": "ne pas avoir froid aux yeux",
+      "ru": "быть смелым",
+      "type": "word"
+    },
+    {
+      "fr": "avoir un chat dans la gorge",
+      "ru": "охрипнуть",
+      "type": "word"
+    },
+    {
+      "fr": "appeler un chat un chat",
+      "ru": "называть вещи своими именами",
+      "type": "word"
+    },
+    {
+      "fr": "avoir d'autres chats à fouetter",
+      "ru": "иметь дела поважнее",
+      "type": "word"
+    },
+    {
+      "fr": "entre chien et loup",
+      "ru": "в сумерках",
+      "type": "word"
+    },
+    {
+      "fr": "un froid de canard",
+      "ru": "собачий холод",
+      "type": "word"
+    },
+    {
+      "fr": "revenons à nos moutons",
+      "ru": "вернёмся к теме",
+      "type": "word"
+    },
+    {
+      "fr": "ménager la chèvre et le chou",
+      "ru": "усидеть на двух стульях",
+      "type": "word"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "idb-th1",
+      "type": "theory",
+      "title": "Тело и звери — образный словарь",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Идиома</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Смысл</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Контекст</th></tr><tr><td style='padding:0.5rem'>avoir le bras long</td><td style='padding:0.5rem'>влиятельные связи</td><td style='padding:0.5rem'>Méfie-toi, il a le bras long au ministère.</td></tr><tr><td style='padding:0.5rem'>garder la tête froide</td><td style='padding:0.5rem'>не паниковать</td><td style='padding:0.5rem'>En crise, gardez la tête froide.</td></tr><tr><td style='padding:0.5rem'>ne pas avoir froid aux yeux</td><td style='padding:0.5rem'>смелость</td><td style='padding:0.5rem'>Cette journaliste n'a pas froid aux yeux.</td></tr><tr><td style='padding:0.5rem'>appeler un chat un chat</td><td style='padding:0.5rem'>прямота</td><td style='padding:0.5rem'>Appelons un chat un chat : c'est un échec.</td></tr><tr><td style='padding:0.5rem'>d'autres chats à fouetter</td><td style='padding:0.5rem'>дела поважнее</td><td style='padding:0.5rem'>Laisse tomber, j'ai d'autres chats à fouetter.</td></tr><tr><td style='padding:0.5rem'>revenons à nos moutons</td><td style='padding:0.5rem'>к теме!</td><td style='padding:0.5rem'>Bref, revenons à nos moutons.</td></tr><tr><td style='padding:0.5rem'>entre chien et loup</td><td style='padding:0.5rem'>сумерки</td><td style='padding:0.5rem'>Ils sont partis entre chien et loup.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Ловушка перевода: «avoir un chat dans la gorge» — это охрипнуть (рус. «лягушка в горле»), образы в языках разные!</p>"
+    },
+    {
+      "id": "idb-qz1",
+      "type": "grammar-quiz",
+      "title": "Подберите идиому",
+      "questions": [
+        {
+          "question": "Il connaît tout le monde à la mairie : il ___ .",
+          "options": [
+            "a le bras long",
+            "a froid aux yeux",
+            "a un chat dans la gorge",
+            "se croise les bras"
+          ],
+          "correctAnswer": "a le bras long",
+          "explanation": "Связи и влияние — avoir le bras long."
+        },
+        {
+          "question": "Au lieu d'aider, il reste là à ___ .",
+          "options": [
+            "se croiser les bras",
+            "se creuser la tête",
+            "appeler un chat",
+            "fouetter les chats"
+          ],
+          "correctAnswer": "se croiser les bras",
+          "explanation": "Бездействовать — se croiser les bras."
+        },
+        {
+          "question": "Pardon, je suis enroué : j'ai ___ .",
+          "options": [
+            "un chat dans la gorge",
+            "un cheveu sur la langue",
+            "froid aux yeux",
+            "le bras long"
+          ],
+          "correctAnswer": "un chat dans la gorge",
+          "explanation": "Охрип — un chat dans la gorge. Cheveu sur la langue — шепелявость!"
+        },
+        {
+          "question": "Assez de digressions ! ___ .",
+          "options": [
+            "Revenons à nos moutons",
+            "Ménageons la chèvre",
+            "Appelons le chat",
+            "Fouettons d'autres chats"
+          ],
+          "correctAnswer": "Revenons à nos moutons",
+          "explanation": "Вернуться к теме — revenons à nos moutons (из средневекового фарса)."
+        },
+        {
+          "question": "Dire la vérité sans détour, c'est ___ .",
+          "options": [
+            "appeler un chat un chat",
+            "ménager la chèvre et le chou",
+            "avoir un poil dans la main",
+            "garder un chat"
+          ],
+          "correctAnswer": "appeler un chat un chat",
+          "explanation": "Прямота — appeler un chat un chat."
+        },
+        {
+          "question": "Il veut plaire aux deux camps : il essaie de ___ .",
+          "options": [
+            "ménager la chèvre et le chou",
+            "fouetter le chou",
+            "croiser les moutons",
+            "creuser le chou"
+          ],
+          "correctAnswer": "ménager la chèvre et le chou",
+          "explanation": "Угодить обеим сторонам — ménager la chèvre et le chou."
+        }
+      ]
+    },
+    {
+      "id": "idb-fb1",
+      "type": "fill-blank",
+      "title": "Рабочая запарка (идиомы в действии)",
+      "text": "Quel lundi ! Un ___ de canard dehors, et au bureau, la crise. Le chef nous répète de garder la tête ___ . Je me ___ la tête sur le dossier depuis ce matin. Ma collègue, elle, n'a pas froid aux ___ : elle est allée dire au directeur ses quatre vérités. Moi ? J'ai d'autres chats à ___ — le client appelle dans une heure !",
+      "blanks": [
+        {
+          "correctAnswer": "froid",
+          "options": [
+            "froid",
+            "temps",
+            "vent"
+          ],
+          "explanation": "Собачий холод — un froid de canard."
+        },
+        {
+          "correctAnswer": "froide",
+          "options": [
+            "froide",
+            "chaude",
+            "haute"
+          ],
+          "explanation": "Хладнокровие — garder la tête froide."
+        },
+        {
+          "correctAnswer": "creuse",
+          "options": [
+            "creuse",
+            "casse",
+            "lave"
+          ],
+          "explanation": "Ломаю голову — se creuser la tête."
+        },
+        {
+          "correctAnswer": "yeux",
+          "options": [
+            "yeux",
+            "mains",
+            "dents"
+          ],
+          "explanation": "Смелость — ne pas avoir froid aux yeux."
+        },
+        {
+          "correctAnswer": "fouetter",
+          "options": [
+            "fouetter",
+            "caresser",
+            "chercher"
+          ],
+          "explanation": "Дела поважнее — d'autres chats à fouetter."
+        }
+      ]
+    }
+  ]
+}

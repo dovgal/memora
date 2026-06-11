@@ -4,12 +4,13 @@
 import { use, useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import { ChevronLeft, CheckCircle2, Loader2, SkipForward } from 'lucide-react';
+import { ChevronLeft, CheckCircle2, Loader2, SkipForward, Star } from 'lucide-react';
 import { LEVELS } from '@/lib/courses/niveaux';
 import { ExerciseRenderer } from '@/components/edito/ExerciseRenderer';
 import {
   getCourseProgress, recordExerciseProgress, markUnitKnown,
 } from '@/lib/courses/customCoursesApi';
+import { addVocabToPersonalSet } from '@/lib/courses/vocabToSet';
 
 export default function LevelUnitPage({ params }: { params: Promise<{ levelId: string; unitId: string }> }) {
   const { levelId, unitId } = use(params);
@@ -63,6 +64,23 @@ export default function LevelUnitPage({ params }: { params: Promise<{ levelId: s
   const completedCount = Object.keys(completed).length;
   const totalInteractive = unit ? unit.exercises.filter(e => e.type !== 'theory').length : 0;
   const pct = totalInteractive > 0 ? Math.round((completedCount / totalInteractive) * 100) : 100;
+
+  const [savingVocab, setSavingVocab] = useState(false);
+  const [vocabSaved, setVocabSaved] = useState<number | null>(null);
+  const handleVocabToSet = useCallback(async () => {
+    if (!unit || !idToken || !course || savingVocab) return;
+    setSavingVocab(true);
+    try {
+      const n = await addVocabToPersonalSet(
+        `${course.title} — Словарь`,
+        `Лексика тренажёра «${course.title}» — пополняется по мере прохождения юнитов.`,
+        unit.vocabulary ?? [],
+        idToken,
+      );
+      setVocabSaved(n);
+    } catch { setVocabSaved(-1); }
+    setSavingVocab(false);
+  }, [unit, idToken, course, savingVocab]);
 
   if (!course || !unit) {
     return (
@@ -118,7 +136,21 @@ export default function LevelUnitPage({ params }: { params: Promise<{ levelId: s
 
         {(unit.vocabulary?.length ?? 0) > 0 && (
           <div className="bg-qz-card border border-border rounded-xl p-4 mb-6">
-            <h2 className="text-foreground text-sm font-semibold mb-3">Лексика юнита</h2>
+            <div className="flex items-center justify-between mb-3 gap-2 flex-wrap">
+              <h2 className="text-foreground text-sm font-semibold">Лексика юнита</h2>
+              <button
+                onClick={handleVocabToSet}
+                disabled={savingVocab}
+                className="inline-flex items-center gap-1.5 border border-border hover:border-[#ffcd1f]/50 text-qz-text-muted hover:text-[#ffcd1f] text-xs font-semibold px-3 py-1.5 rounded-xl transition-colors"
+                title="Добавить слова юнита в личный набор карточек"
+              >
+                {savingVocab ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Star className="w-3.5 h-3.5" />}
+                {vocabSaved === null ? 'В личный набор'
+                  : vocabSaved === -1 ? 'Ошибка — ещё раз?'
+                  : vocabSaved === 0 ? 'Уже в наборе ✓'
+                  : `Добавлено: ${vocabSaved} ✓`}
+              </button>
+            </div>
             <div className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5">
               {unit.vocabulary!.map((v, i) => (
                 <div key={i} className="flex items-baseline justify-between gap-3 text-sm">

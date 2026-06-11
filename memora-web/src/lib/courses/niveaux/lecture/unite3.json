@@ -1,0 +1,284 @@
+{
+  "id": "unite3",
+  "title": "Livre 3 : Moby Dick (B2)",
+  "description": "Герман Мелвилл, 1851. Капитан Ахав против белого кита. Морской словарь и язык одержимости.",
+  "vocabulary": [
+    {
+      "fr": "une baleine",
+      "ru": "кит",
+      "type": "word"
+    },
+    {
+      "fr": "un baleinier",
+      "ru": "китобойное судно",
+      "type": "word"
+    },
+    {
+      "fr": "la chasse à la baleine",
+      "ru": "китобойный промысел",
+      "type": "phrase"
+    },
+    {
+      "fr": "un harpon",
+      "ru": "гарпун",
+      "type": "word"
+    },
+    {
+      "fr": "un harponneur",
+      "ru": "гарпунёр",
+      "type": "word"
+    },
+    {
+      "fr": "l'équipage (m)",
+      "ru": "экипаж",
+      "type": "word"
+    },
+    {
+      "fr": "un matelot",
+      "ru": "матрос",
+      "type": "word"
+    },
+    {
+      "fr": "le pont",
+      "ru": "палуба",
+      "type": "word"
+    },
+    {
+      "fr": "une vigie",
+      "ru": "вперёдсмотрящий",
+      "type": "word"
+    },
+    {
+      "fr": "apercevoir",
+      "ru": "заметить, увидеть",
+      "type": "word"
+    },
+    {
+      "fr": "la vengeance",
+      "ru": "месть",
+      "type": "word"
+    },
+    {
+      "fr": "se venger de",
+      "ru": "мстить за",
+      "type": "phrase"
+    },
+    {
+      "fr": "obsédé(e) par",
+      "ru": "одержимый (чем-л.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "une jambe d'ivoire",
+      "ru": "нога из китовой кости",
+      "type": "phrase"
+    },
+    {
+      "fr": "un naufrage",
+      "ru": "кораблекрушение",
+      "type": "word"
+    },
+    {
+      "fr": "sombrer",
+      "ru": "тонуть, идти ко дну",
+      "type": "word"
+    },
+    {
+      "fr": "une prime",
+      "ru": "награда, премия",
+      "type": "word"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "mob-th1",
+      "type": "theory",
+      "title": "Знакомство с романом",
+      "content": "<p style='margin:0.75rem 0'>«Moby Dick» (1851) Германа Мелвилла — рассказ моряка Измаила о плавании на китобойце «Пекод». Капитан Ахав, потерявший ногу в схватке с белым китом, превратил промысловый рейс в личную войну: найти Моби Дика и отомстить.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Вехи сюжета</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>На что обратить внимание</th></tr><tr><td style='padding:0.5rem'>Нью-Бедфорд: Измаил и Квикег</td><td style='padding:0.5rem'>как рождается дружба двух «чужаков»?</td></tr><tr><td style='padding:0.5rem'>Выход «Пекода» в море</td><td style='padding:0.5rem'>когда экипаж впервые видит Ахава?</td></tr><tr><td style='padding:0.5rem'>Золотой дублон на мачте</td><td style='padding:0.5rem'>что обещано тому, кто заметит кита?</td></tr><tr><td style='padding:0.5rem'>Встречные корабли</td><td style='padding:0.5rem'>какие предупреждения игнорирует Ахав?</td></tr><tr><td style='padding:0.5rem'>Трёхдневная погоня</td><td style='padding:0.5rem'>чем платит экипаж за одержимость капитана?</td></tr></table><p style='margin:0.75rem 0'><b>Как работать с книгой:</b> 1) прочитайте главу в вашем издании; 2) прослушайте её в аудио; 3) пройдите проверку понимания здесь; 4) добавьте словарь юнита в личный набор кнопкой над упражнениями и учите слова в коуче.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Сначала слушайте БЕЗ текста (общий смысл), затем читайте, затем слушайте ещё раз, следя по тексту. Три прохода = максимум пользы.</p>"
+    },
+    {
+      "id": "mob-qz1",
+      "type": "grammar-quiz",
+      "title": "Завязка — проверка понимания",
+      "questions": [
+        {
+          "question": "Кто рассказчик романа?",
+          "options": [
+            "матрос Измаил",
+            "капитан Ахав",
+            "гарпунёр Квикег",
+            "сам кит"
+          ],
+          "correctAnswer": "матрос Измаил",
+          "explanation": "Знаменитое начало: рассказ ведёт нанявшийся на судно Измаил."
+        },
+        {
+          "question": "Кем становится Квикег для Измаила?",
+          "options": [
+            "ближайшим другом",
+            "врагом",
+            "начальником",
+            "слугой"
+          ],
+          "correctAnswer": "ближайшим другом",
+          "explanation": "Татуированный гарпунёр с островов поначалу пугает Измаила, затем они неразлучны."
+        },
+        {
+          "question": "Почему Ахав одержим Моби Диком?",
+          "options": [
+            "кит лишил его ноги",
+            "кит потопил его дом",
+            "ради премии",
+            "по приказу владельцев"
+          ],
+          "correctAnswer": "кит лишил его ноги",
+          "explanation": "Ахав ходит на протезе из китовой кости и жаждет мести — la vengeance."
+        },
+        {
+          "question": "Что Ахав прибивает к мачте?",
+          "options": [
+            "золотой дублон",
+            "карту",
+            "гарпун",
+            "флаг"
+          ],
+          "correctAnswer": "золотой дублон",
+          "explanation": "Награда первому, кто заметит белого кита: золотая монета."
+        },
+        {
+          "question": "Чем заканчивается погоня (финал романа)?",
+          "options": [
+            "гибелью корабля и почти всего экипажа",
+            "победой Ахава",
+            "кит уплывает навсегда",
+            "мирным возвращением"
+          ],
+          "correctAnswer": "гибелью корабля и почти всего экипажа",
+          "explanation": "«Пекод» идёт ко дну; спасается лишь рассказчик."
+        }
+      ]
+    },
+    {
+      "id": "mob-fb1",
+      "type": "fill-blank",
+      "title": "Морской рассказ — заполните",
+      "text": "Le « Pequod » est un ___ parti de Nantucket. Son capitaine, Achab, marche sur une jambe d' ___ : il est ___ par la vengeance. Du haut du mât, la ___ crie « Elle souffle ! » quand elle ___ une baleine. Les ___ lancent alors leurs harpons. Mais chasser Moby Dick, c'est courir au ___ .",
+      "blanks": [
+        {
+          "correctAnswer": "baleinier",
+          "options": [
+            "baleinier",
+            "paquebot",
+            "voilier de plaisance"
+          ],
+          "explanation": "Китобойное судно — un baleinier."
+        },
+        {
+          "correctAnswer": "ivoire",
+          "options": [
+            "ivoire",
+            "argent",
+            "bois vert"
+          ],
+          "explanation": "Протез из китовой кости — une jambe d'ivoire."
+        },
+        {
+          "correctAnswer": "obsédé",
+          "options": [
+            "obsédé",
+            "guéri",
+            "fatigué"
+          ],
+          "explanation": "Одержим местью — obsédé par la vengeance."
+        },
+        {
+          "correctAnswer": "vigie",
+          "options": [
+            "vigie",
+            "cuisinière",
+            "capitaine"
+          ],
+          "explanation": "Вперёдсмотрящий — la vigie."
+        },
+        {
+          "correctAnswer": "aperçoit",
+          "options": [
+            "aperçoit",
+            "oublie",
+            "vend"
+          ],
+          "explanation": "Заметить кита — apercevoir."
+        },
+        {
+          "correctAnswer": "harponneurs",
+          "options": [
+            "harponneurs",
+            "facteurs",
+            "précepteurs"
+          ],
+          "explanation": "Гарпунёры — les harponneurs."
+        },
+        {
+          "correctAnswer": "naufrage",
+          "options": [
+            "naufrage",
+            "port",
+            "marché"
+          ],
+          "explanation": "Идти к кораблекрушению — courir au naufrage."
+        }
+      ]
+    },
+    {
+      "id": "mob-qz2",
+      "type": "grammar-quiz",
+      "title": "Лексика моря и одержимости",
+      "questions": [
+        {
+          "question": "Le navire a ___ pendant la tempête : tout l'équipage à la mer !",
+          "options": [
+            "sombré",
+            "aperçu",
+            "harponné",
+            "navigué bien"
+          ],
+          "correctAnswer": "sombré",
+          "explanation": "Пойти ко дну — sombrer."
+        },
+        {
+          "question": "Tout l'___ obéit au capitaine.",
+          "options": [
+            "équipage",
+            "harpon",
+            "ivoire",
+            "océan"
+          ],
+          "correctAnswer": "équipage",
+          "explanation": "Команда судна — l'équipage."
+        },
+        {
+          "question": "Il est ___ par ce projet : il en parle jour et nuit.",
+          "options": [
+            "obsédé",
+            "aperçu",
+            "vengé",
+            "sombré"
+          ],
+          "correctAnswer": "obsédé",
+          "explanation": "Одержимость — être obsédé par."
+        },
+        {
+          "question": "Elle veut se ___ de cette humiliation.",
+          "options": [
+            "venger",
+            "sombrer",
+            "mépriser",
+            "harponner"
+          ],
+          "correctAnswer": "venger",
+          "explanation": "Мстить за — se venger de."
+        }
+      ]
+    }
+  ]
+}

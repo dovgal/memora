@@ -1,0 +1,270 @@
+{
+  "id": "unite2",
+  "title": "Livre 2 : Le Rouge et le Noir (B1)",
+  "description": "Стендаль, 1830. Жюльен Сорель: честолюбие, любовь и общество эпохи Реставрации. Словарь амбиций и чувств.",
+  "vocabulary": [
+    {
+      "fr": "l'ambition (f)",
+      "ru": "честолюбие",
+      "type": "word"
+    },
+    {
+      "fr": "ambitieux / ambitieuse",
+      "ru": "честолюбивый",
+      "type": "word"
+    },
+    {
+      "fr": "un précepteur",
+      "ru": "домашний учитель, гувернёр",
+      "type": "word"
+    },
+    {
+      "fr": "une scierie",
+      "ru": "лесопилка",
+      "type": "word"
+    },
+    {
+      "fr": "le clergé",
+      "ru": "духовенство",
+      "type": "word"
+    },
+    {
+      "fr": "un séminaire",
+      "ru": "семинария",
+      "type": "word"
+    },
+    {
+      "fr": "la noblesse",
+      "ru": "дворянство",
+      "type": "word"
+    },
+    {
+      "fr": "mépriser",
+      "ru": "презирать",
+      "type": "word"
+    },
+    {
+      "fr": "le mépris",
+      "ru": "презрение",
+      "type": "word"
+    },
+    {
+      "fr": "séduire",
+      "ru": "соблазнять, покорять",
+      "type": "word"
+    },
+    {
+      "fr": "l'orgueil (m)",
+      "ru": "гордыня",
+      "type": "word"
+    },
+    {
+      "fr": "humilier",
+      "ru": "унижать",
+      "type": "word"
+    },
+    {
+      "fr": "une ascension sociale",
+      "ru": "социальный взлёт",
+      "type": "phrase"
+    },
+    {
+      "fr": "un procès",
+      "ru": "судебный процесс",
+      "type": "word"
+    },
+    {
+      "fr": "condamner",
+      "ru": "осуждать, приговаривать",
+      "type": "word"
+    },
+    {
+      "fr": "l'hypocrisie (f)",
+      "ru": "лицемерие",
+      "type": "word"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "rou-th1",
+      "type": "theory",
+      "title": "Знакомство с романом",
+      "content": "<p style='margin:0.75rem 0'>«Le Rouge et le Noir» (1830) Стендаля — история Жюльена Сореля, сына плотника из городка Веррьер. Умный и честолюбивый, он мечтает о славе наполеоновского образца, но в эпоху Реставрации путь наверх лежит не через армию («красное»), а через церковь («чёрное»).</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Этапы сюжета</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Ключевой вопрос</th></tr><tr><td style='padding:0.5rem'>Веррьер: гувернёр у мэра де Реналя</td><td style='padding:0.5rem'>что движет Жюльеном — чувство или расчёт?</td></tr><tr><td style='padding:0.5rem'>Связь с мадам де Реналь</td><td style='padding:0.5rem'>любовь или победа над «классом врагов»?</td></tr><tr><td style='padding:0.5rem'>Семинария в Безансоне</td><td style='padding:0.5rem'>почему лицемерие — условие выживания?</td></tr><tr><td style='padding:0.5rem'>Париж, маркиз де Ла Моль, Матильда</td><td style='padding:0.5rem'>изменился ли Жюльен наверху?</td></tr><tr><td style='padding:0.5rem'>Выстрел, процесс, развязка</td><td style='padding:0.5rem'>за что общество судит Жюльена на самом деле?</td></tr></table><p style='margin:0.75rem 0'><b>Как работать с книгой:</b> 1) прочитайте главу в вашем издании; 2) прослушайте её в аудио; 3) пройдите проверку понимания здесь; 4) добавьте словарь юнита в личный набор кнопкой над упражнениями и учите слова в коуче.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Сначала слушайте БЕЗ текста (общий смысл), затем читайте, затем слушайте ещё раз, следя по тексту. Три прохода = максимум пользы.</p>"
+    },
+    {
+      "id": "rou-qz1",
+      "type": "grammar-quiz",
+      "title": "Завязка — проверка понимания",
+      "questions": [
+        {
+          "question": "Кто такой Жюльен Сорель по происхождению?",
+          "options": [
+            "сын плотника/владельца лесопилки",
+            "сын маркиза",
+            "сирота-найдёныш",
+            "сын офицера"
+          ],
+          "correctAnswer": "сын плотника/владельца лесопилки",
+          "explanation": "Отец держит лесопилку в Веррьере; в семье Жюльена считают бесполезным книжником."
+        },
+        {
+          "question": "Кем Жюльен поступает в дом господина де Реналя?",
+          "options": [
+            "гувернёром (précepteur) его детей",
+            "садовником",
+            "секретарём",
+            "поваром"
+          ],
+          "correctAnswer": "гувернёром (précepteur) его детей",
+          "explanation": "Мэр Веррьера нанимает его учить детей — ради престижа."
+        },
+        {
+          "question": "Кого тайно боготворит Жюльен?",
+          "options": [
+            "Наполеона",
+            "короля",
+            "Вольтера",
+            "своего отца"
+          ],
+          "correctAnswer": "Наполеона",
+          "explanation": "Культ Наполеона приходится скрывать: эпоха Реставрации таких взглядов не прощает."
+        },
+        {
+          "question": "Что означают цвета заглавия (распространённое прочтение)?",
+          "options": [
+            "армию и церковь",
+            "кровь и смерть",
+            "любовь и ненависть",
+            "Францию и Италию"
+          ],
+          "correctAnswer": "армию и церковь",
+          "explanation": "«Красное» — военная слава, «чёрное» — сутана: два пути наверх для бедняка."
+        },
+        {
+          "question": "Отношение Жюльена к «хозяевам жизни»:",
+          "options": [
+            "скрытое презрение при внешней почтительности",
+            "открытый бунт",
+            "искреннее восхищение",
+            "равнодушие"
+          ],
+          "correctAnswer": "скрытое презрение при внешней почтительности",
+          "explanation": "Лицемерие как оружие: внешне образцовый, внутри — гордец и стратег."
+        }
+      ]
+    },
+    {
+      "id": "rou-fb1",
+      "type": "fill-blank",
+      "title": "Портрет героя — заполните",
+      "text": "Julien Sorel est un jeune homme pauvre mais ___ . Il rêve d'une ___ sociale rapide. Engagé comme ___ chez le maire de Verrières, il cache son ___ pour Napoléon et joue l'élève modèle du ___ . Sous le masque, pourtant, brûlent l'orgueil et le ___ pour cette société d'hypocrites.",
+      "blanks": [
+        {
+          "correctAnswer": "ambitieux",
+          "options": [
+            "ambitieux",
+            "paresseux",
+            "timide"
+          ],
+          "explanation": "Главная черта — честолюбие: ambitieux."
+        },
+        {
+          "correctAnswer": "ascension",
+          "options": [
+            "ascension",
+            "descente",
+            "addition"
+          ],
+          "explanation": "Социальный взлёт — une ascension sociale."
+        },
+        {
+          "correctAnswer": "précepteur",
+          "options": [
+            "précepteur",
+            "percepteur",
+            "préfet"
+          ],
+          "explanation": "Гувернёр — précepteur (не путайте с percepteur — налоговый инспектор!)."
+        },
+        {
+          "correctAnswer": "culte",
+          "options": [
+            "culte",
+            "dégoût",
+            "oubli"
+          ],
+          "explanation": "Тайный культ Наполеона — son culte pour Napoléon."
+        },
+        {
+          "correctAnswer": "clergé",
+          "options": [
+            "clergé",
+            "clergie",
+            "clerc"
+          ],
+          "explanation": "Путь «чёрного» — le clergé, духовенство."
+        },
+        {
+          "correctAnswer": "mépris",
+          "options": [
+            "mépris",
+            "respect",
+            "remords"
+          ],
+          "explanation": "Презрение — le mépris."
+        }
+      ]
+    },
+    {
+      "id": "rou-qz2",
+      "type": "grammar-quiz",
+      "title": "Лексика романа в новых контекстах",
+      "questions": [
+        {
+          "question": "Carrière fulgurante, postes prestigieux : une vraie ___ sociale.",
+          "options": [
+            "ascension",
+            "scierie",
+            "condamnation",
+            "traversée"
+          ],
+          "correctAnswer": "ascension",
+          "explanation": "Социальный взлёт — ascension sociale."
+        },
+        {
+          "question": "Il dit une chose et fait le contraire : quelle ___ !",
+          "options": [
+            "hypocrisie",
+            "ambition",
+            "noblesse",
+            "évasion"
+          ],
+          "correctAnswer": "hypocrisie",
+          "explanation": "Слова расходятся с делами — лицемерие."
+        },
+        {
+          "question": "Son ___ l'empêche de demander pardon.",
+          "options": [
+            "orgueil",
+            "indice",
+            "séminaire",
+            "coffre"
+          ],
+          "correctAnswer": "orgueil",
+          "explanation": "Гордыня мешает извиниться — l'orgueil."
+        },
+        {
+          "question": "Le tribunal va ___ l'accusé demain.",
+          "options": [
+            "condamner",
+            "séduire",
+            "mépriser",
+            "humilier"
+          ],
+          "correctAnswer": "condamner",
+          "explanation": "Суд выносит приговор — condamner."
+        }
+      ]
+    }
+  ]
+}

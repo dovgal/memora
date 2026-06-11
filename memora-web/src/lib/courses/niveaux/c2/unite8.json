@@ -1,0 +1,281 @@
+{
+  "id": "unite8",
+  "title": "Unité 8 : Nuances lexicales — уровень perfectionnement",
+  "description": "Тонкие различия похожих слов: amener/apporter, an/année, savoir/connaître, neuf/nouveau, faux-amis и паронимы.",
+  "vocabulary": [
+    {
+      "fr": "amener qn / apporter qch",
+      "ru": "привести кого-л. / принести что-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "emmener / emporter",
+      "ru": "увести / унести",
+      "type": "phrase"
+    },
+    {
+      "fr": "an / année",
+      "ru": "год (счёт / длительность)",
+      "type": "phrase"
+    },
+    {
+      "fr": "neuf / nouveau",
+      "ru": "новый (только что сделан / новый для владельца)",
+      "type": "phrase"
+    },
+    {
+      "fr": "savoir / connaître",
+      "ru": "уметь, знать факт / быть знакомым с",
+      "type": "phrase"
+    },
+    {
+      "fr": "entendre / écouter",
+      "ru": "слышать / слушать",
+      "type": "phrase"
+    },
+    {
+      "fr": "éventuellement",
+      "ru": "возможно (НЕ «в итоге»!)",
+      "type": "word"
+    },
+    {
+      "fr": "actuellement",
+      "ru": "в настоящее время (НЕ «актуально»!)",
+      "type": "word"
+    },
+    {
+      "fr": "une partie / une part",
+      "ru": "часть / доля",
+      "type": "word"
+    },
+    {
+      "fr": "la chance / le hasard",
+      "ru": "удача / случайность",
+      "type": "word"
+    },
+    {
+      "fr": "apporter une précision",
+      "ru": "внести уточнение",
+      "type": "phrase"
+    },
+    {
+      "fr": "prétendre",
+      "ru": "утверждать (faux ami: не «претендовать»)",
+      "type": "word"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "idn-th1",
+      "type": "theory",
+      "title": "Пары-ловушки",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пара</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Различие</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Примеры</th></tr><tr><td style='padding:0.5rem'>amener / apporter</td><td style='padding:0.5rem'>людей ведут, вещи носят</td><td style='padding:0.5rem'>J'amène ma sœur ; j'apporte le vin.</td></tr><tr><td style='padding:0.5rem'>an / année</td><td style='padding:0.5rem'>an — счёт, année — содержание</td><td style='padding:0.5rem'>Il a 30 ans. / Quelle belle année !</td></tr><tr><td style='padding:0.5rem'>neuf / nouveau</td><td style='padding:0.5rem'>neuf — только с завода; nouveau — новый для вас</td><td style='padding:0.5rem'>une voiture neuve / ma nouvelle voiture (м.б. подержанная)</td></tr><tr><td style='padding:0.5rem'>savoir / connaître</td><td style='padding:0.5rem'>savoir + факт/инфинитив; connaître + сущ.</td><td style='padding:0.5rem'>Je sais nager. / Je connais ce quartier.</td></tr><tr><td style='padding:0.5rem'>entendre / écouter</td><td style='padding:0.5rem'>слышать (пассивно) / слушать (активно)</td><td style='padding:0.5rem'>J'entends du bruit. / J'écoute un podcast.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Faux amis уровня C2: <b>éventuellement</b> = возможно (не «в конечном счёте»), <b>actuellement</b> = сейчас (не «актуально»), <b>prétendre</b> = утверждать (не «претендовать»).</p>"
+    },
+    {
+      "id": "idn-qz1",
+      "type": "grammar-quiz",
+      "title": "Выберите точное слово",
+      "questions": [
+        {
+          "question": "Tu peux ___ ton frère à la fête ?",
+          "options": [
+            "amener",
+            "apporter",
+            "emporter",
+            "prendre sur"
+          ],
+          "correctAnswer": "amener",
+          "explanation": "Людей — amener; вещи — apporter."
+        },
+        {
+          "question": "N'oublie pas d'___ le dessert !",
+          "options": [
+            "apporter",
+            "amener",
+            "emmener",
+            "savoir"
+          ],
+          "correctAnswer": "apporter",
+          "explanation": "Вещь приносят — apporter."
+        },
+        {
+          "question": "Cette ___ a été riche en événements.",
+          "options": [
+            "année",
+            "an",
+            "ans",
+            "année de l'an"
+          ],
+          "correctAnswer": "année",
+          "explanation": "Качество/содержание периода — année."
+        },
+        {
+          "question": "Je ___ conduire, mais je ne ___ pas cette route.",
+          "options": [
+            "sais ... connais",
+            "connais ... sais",
+            "sais ... sais",
+            "connais ... connais"
+          ],
+          "correctAnswer": "sais ... connais",
+          "explanation": "Savoir + инфинитив (уметь); connaître + существительное (знать место)."
+        },
+        {
+          "question": "Il a acheté une voiture d'occasion : c'est sa ___ voiture.",
+          "options": [
+            "nouvelle",
+            "neuve",
+            "neuf",
+            "nouveau"
+          ],
+          "correctAnswer": "nouvelle",
+          "explanation": "Подержанная не может быть neuve, но для него она nouvelle."
+        },
+        {
+          "question": "« ___ , je travaille à Lyon » означает…",
+          "options": [
+            "actuellement = сейчас",
+            "actuellement = актуально",
+            "éventuellement = в итоге",
+            "также"
+          ],
+          "correctAnswer": "actuellement = сейчас",
+          "explanation": "Actuellement — «в настоящее время», классический faux ami."
+        }
+      ]
+    },
+    {
+      "id": "idn-qz2",
+      "type": "grammar-quiz",
+      "title": "Faux amis и паронимы — финал",
+      "questions": [
+        {
+          "question": "Il ___ avoir rencontré le président. (утверждает, без доказательств)",
+          "options": [
+            "prétend",
+            "prétend à",
+            "attend",
+            "entend"
+          ],
+          "correctAnswer": "prétend",
+          "explanation": "Prétendre = утверждать. «Претендовать на» — prétendre À или aspirer à."
+        },
+        {
+          "question": "Nous pourrions ___ nous voir jeudi. (возможно)",
+          "options": [
+            "éventuellement",
+            "finalement",
+            "actuellement",
+            "également"
+          ],
+          "correctAnswer": "éventuellement",
+          "explanation": "Éventuellement = возможно, при случае."
+        },
+        {
+          "question": "J'ai gagné par pur ___ . (случайность)",
+          "options": [
+            "hasard",
+            "chance",
+            "destin sûr",
+            "bonheur"
+          ],
+          "correctAnswer": "hasard",
+          "explanation": "Par hasard — случайно. La chance — везение."
+        },
+        {
+          "question": "Une grande ___ du budget passe en publicité. (доля)",
+          "options": [
+            "part",
+            "partie",
+            "portion de la",
+            "pièce"
+          ],
+          "correctAnswer": "part",
+          "explanation": "Доля целого — une part (une partie — часть-фрагмент)."
+        },
+        {
+          "question": "Parle plus fort, je t'___ mal !",
+          "options": [
+            "entends",
+            "écoute",
+            "attends",
+            "apporte"
+          ],
+          "correctAnswer": "entends",
+          "explanation": "Физически слышать — entendre."
+        }
+      ]
+    },
+    {
+      "id": "idn-fb1",
+      "type": "fill-blank",
+      "title": "Письмо без ловушек",
+      "text": "Chère Anna,\n___ , je vis à Bordeaux : nous avons déménagé l'___ dernière. Samedi, j'___ mes enfants chez mes parents et j'en profiterai pour ___ des fleurs à ma mère. Tu pourrais ___ passer nous voir ? Je ___ un excellent restaurant près du port — et je ___ enfin cuisiner le canard !",
+      "blanks": [
+        {
+          "correctAnswer": "Actuellement",
+          "options": [
+            "Actuellement",
+            "Éventuellement",
+            "Finalement"
+          ],
+          "explanation": "«Сейчас» — actuellement."
+        },
+        {
+          "correctAnswer": "année",
+          "options": [
+            "année",
+            "an",
+            "ans"
+          ],
+          "explanation": "L'année dernière — устойчиво с année."
+        },
+        {
+          "correctAnswer": "amène",
+          "options": [
+            "amène",
+            "apporte",
+            "emporte"
+          ],
+          "explanation": "Детей ведут — amener."
+        },
+        {
+          "correctAnswer": "apporter",
+          "options": [
+            "apporter",
+            "amener",
+            "emmener"
+          ],
+          "explanation": "Цветы приносят — apporter."
+        },
+        {
+          "correctAnswer": "éventuellement",
+          "options": [
+            "éventuellement",
+            "actuellement",
+            "également bien"
+          ],
+          "explanation": "«Возможно» — éventuellement."
+        },
+        {
+          "correctAnswer": "connais",
+          "options": [
+            "connais",
+            "sais",
+            "prétends"
+          ],
+          "explanation": "Знаком с местом — connaître."
+        },
+        {
+          "correctAnswer": "sais",
+          "options": [
+            "sais",
+            "connais",
+            "entends"
+          ],
+          "explanation": "Умею готовить — savoir + инфинитив."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,271 @@
+{
+  "id": "unite1",
+  "title": "Livre 1 : Arsène Lupin, gentleman cambrioleur (A2–B1)",
+  "description": "Морис Леблан, 1907. Девять новелл о джентльмене-грабителе. Компаньон: план чтения, проверка понимания, словарь детектива.",
+  "vocabulary": [
+    {
+      "fr": "un cambrioleur",
+      "ru": "грабитель, взломщик",
+      "type": "word"
+    },
+    {
+      "fr": "un vol",
+      "ru": "кража",
+      "type": "word"
+    },
+    {
+      "fr": "voler / dérober",
+      "ru": "красть / похищать",
+      "type": "word"
+    },
+    {
+      "fr": "une enquête",
+      "ru": "расследование",
+      "type": "word"
+    },
+    {
+      "fr": "un inspecteur",
+      "ru": "инспектор",
+      "type": "word"
+    },
+    {
+      "fr": "arrêter",
+      "ru": "арестовать",
+      "type": "word"
+    },
+    {
+      "fr": "une arrestation",
+      "ru": "арест",
+      "type": "word"
+    },
+    {
+      "fr": "s'évader",
+      "ru": "сбежать (из тюрьмы)",
+      "type": "word"
+    },
+    {
+      "fr": "une évasion",
+      "ru": "побег",
+      "type": "word"
+    },
+    {
+      "fr": "un déguisement",
+      "ru": "маскировка, переодевание",
+      "type": "word"
+    },
+    {
+      "fr": "se faire passer pour",
+      "ru": "выдавать себя за",
+      "type": "phrase"
+    },
+    {
+      "fr": "un indice",
+      "ru": "улика",
+      "type": "word"
+    },
+    {
+      "fr": "un coffre-fort",
+      "ru": "сейф",
+      "type": "word"
+    },
+    {
+      "fr": "une traversée",
+      "ru": "морской переход, плавание",
+      "type": "word"
+    },
+    {
+      "fr": "un télégramme",
+      "ru": "телеграмма",
+      "type": "word"
+    },
+    {
+      "fr": "rusé(e)",
+      "ru": "хитрый",
+      "type": "word"
+    },
+    {
+      "fr": "insaisissable",
+      "ru": "неуловимый",
+      "type": "word"
+    },
+    {
+      "fr": "avouer un crime",
+      "ru": "признаться в преступлении",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "lup-th1",
+      "type": "theory",
+      "title": "Знакомство с книгой и метод работы",
+      "content": "<p style='margin:0.75rem 0'>«Arsène Lupin, gentleman cambrioleur» — сборник новелл Мориса Леблана (1907), открывший публике самого знаменитого вора французской литературы. Люпен элегантен, остроумен, меняет облики и всегда на шаг впереди полиции; его вечный противник — инспектор Ганимар.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>План чтения</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Что отслеживать</th></tr><tr><td style='padding:0.5rem'>Новелла 1 — арест на пароходе</td><td style='padding:0.5rem'>кто рассказчик? откуда пассажиры знают о Люпене?</td></tr><tr><td style='padding:0.5rem'>Новелла 2 — Люпен в тюрьме</td><td style='padding:0.5rem'>как он готовит публику к побегу?</td></tr><tr><td style='padding:0.5rem'>Новеллы 3-5 — кражи и загадки</td><td style='padding:0.5rem'>какие маскировки использует Люпен?</td></tr><tr><td style='padding:0.5rem'>Новеллы 6-9 — игра с Ганимаром</td><td style='padding:0.5rem'>кто на самом деле выигрывает каждую партию?</td></tr></table><p style='margin:0.75rem 0'><b>Как работать с книгой:</b> 1) прочитайте главу в вашем издании; 2) прослушайте её в аудио; 3) пройдите проверку понимания здесь; 4) добавьте словарь юнита в личный набор кнопкой над упражнениями и учите слова в коуче.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Сначала слушайте БЕЗ текста (общий смысл), затем читайте, затем слушайте ещё раз, следя по тексту. Три прохода = максимум пользы.</p>"
+    },
+    {
+      "id": "lup-qz1",
+      "type": "grammar-quiz",
+      "title": "Новелла 1 «L'arrestation» — проверка понимания",
+      "questions": [
+        {
+          "question": "Где происходит действие первой новеллы?",
+          "options": [
+            "на трансатлантическом пароходе",
+            "в парижском метро",
+            "в замке",
+            "в поезде"
+          ],
+          "correctAnswer": "на трансатлантическом пароходе",
+          "explanation": "Рассказчик плывёт через Атлантику; новость о том, что Люпен на борту, приходит по телеграфу."
+        },
+        {
+          "question": "Как пассажиры узнают, что Люпен среди них?",
+          "options": [
+            "по радиотелеграмме",
+            "из газеты",
+            "Люпен сам объявляет",
+            "от капитана-детектива"
+          ],
+          "correctAnswer": "по радиотелеграмме",
+          "explanation": "Беспроводная депеша обрывается на полуслове — известна лишь часть приметы."
+        },
+        {
+          "question": "Что обрывает телеграмму на самом интересном месте?",
+          "options": [
+            "гроза/сбой связи",
+            "цензура",
+            "капитан",
+            "Люпен перерезал провод"
+          ],
+          "correctAnswer": "гроза/сбой связи",
+          "explanation": "Сообщение прерывается, и пассажиры знают только начало имени, под которым скрывается Люпен."
+        },
+        {
+          "question": "Кто арестовывает Люпена по прибытии?",
+          "options": [
+            "инспектор Ганимар",
+            "рассказчик",
+            "капитан",
+            "Шерлок Холмс"
+          ],
+          "correctAnswer": "инспектор Ганимар",
+          "explanation": "Ганимар — постоянный противник Люпена — ждёт его на берегу."
+        },
+        {
+          "question": "Главный сюжетный твист новеллы:",
+          "options": [
+            "рассказчик и есть Люпен",
+            "Люпена не существует",
+            "кражи не было",
+            "Ганимар — сообщник"
+          ],
+          "correctAnswer": "рассказчик и есть Люпен",
+          "explanation": "Классический приём Леблана: повествование от первого лица скрывает самого вора."
+        }
+      ]
+    },
+    {
+      "id": "lup-qz2",
+      "type": "grammar-quiz",
+      "title": "Мир Люпена — персонажи и приёмы",
+      "questions": [
+        {
+          "question": "Главный «фирменный» приём Люпена:",
+          "options": [
+            "маскировка и чужие имена",
+            "взлом сейфов динамитом",
+            "подкуп полиции",
+            "гипноз"
+          ],
+          "correctAnswer": "маскировка и чужие имена",
+          "explanation": "Se faire passer pour... — Люпен постоянно выдаёт себя за других."
+        },
+        {
+          "question": "Ганимар — это…",
+          "options": [
+            "упорный инспектор полиции",
+            "сообщник Люпена",
+            "судья",
+            "журналист"
+          ],
+          "correctAnswer": "упорный инспектор полиции",
+          "explanation": "Честный и цепкий, но Люпен почти всегда хитрее."
+        },
+        {
+          "question": "Люпен ворует прежде всего у…",
+          "options": [
+            "богатых и самодовольных",
+            "бедняков",
+            "государства только",
+            "музеев только"
+          ],
+          "correctAnswer": "богатых и самодовольных",
+          "explanation": "Образ «благородного вора»: жертвы — снобы и нечестные богачи."
+        },
+        {
+          "question": "Тон новелл скорее…",
+          "options": [
+            "ироничный и игровой",
+            "мрачный и жестокий",
+            "документальный",
+            "сентиментальный"
+          ],
+          "correctAnswer": "ироничный и игровой",
+          "explanation": "Леблан пишет с юмором; читатель болеет за вора — в этом шарм книги."
+        }
+      ]
+    },
+    {
+      "id": "lup-fb1",
+      "type": "fill-blank",
+      "title": "Перескажите завязку (своими словами)",
+      "text": "Pendant la ___ de l'Atlantique, un télégramme annonce qu'Arsène Lupin, célèbre ___ , se cache parmi les passagers sous un faux ___ . Tout le monde cherche des ___ . À l'arrivée, l'inspecteur Ganimard procède à l' ___ — mais le lecteur découvre que le narrateur lui-même n'était pas celui qu'on croyait !",
+      "blanks": [
+        {
+          "correctAnswer": "traversée",
+          "options": [
+            "traversée",
+            "randonnée",
+            "croisière de plage"
+          ],
+          "explanation": "Морской переход — la traversée."
+        },
+        {
+          "correctAnswer": "cambrioleur",
+          "options": [
+            "cambrioleur",
+            "facteur",
+            "matelot"
+          ],
+          "explanation": "Знаменитый взломщик — cambrioleur."
+        },
+        {
+          "correctAnswer": "nom",
+          "options": [
+            "nom",
+            "passeport rouge",
+            "chapeau"
+          ],
+          "explanation": "Под чужим именем — sous un faux nom."
+        },
+        {
+          "correctAnswer": "indices",
+          "options": [
+            "indices",
+            "valises",
+            "billets"
+          ],
+          "explanation": "Ищут улики — des indices."
+        },
+        {
+          "correctAnswer": "arrestation",
+          "options": [
+            "arrestation",
+            "évasion",
+            "enquête"
+          ],
+          "explanation": "Ганимар производит арест — l'arrestation."
+        }
+      ]
+    }
+  ]
+}

@@ -21,6 +21,9 @@ import c2u6 from './c2/unite6.json';
 import pr1 from './presse/unite1.json'; import pr2 from './presse/unite2.json';
 import pr3 from './presse/unite3.json';
 import ph1 from './phonetique/unite1.json'; import ph2 from './phonetique/unite2.json';
+import c2u7 from './c2/unite7.json'; import c2u8 from './c2/unite8.json';
+import le1 from './lecture/unite1.json'; import le2 from './lecture/unite2.json';
+import le3 from './lecture/unite3.json'; import le4 from './lecture/unite4.json';
 
 const U = (m: unknown) => m as EditoUnit;
 
@@ -61,8 +64,8 @@ export const LEVELS: Record<string, LevelCourse> = {
     id: 'c2', courseId: 'niveau-c2', title: 'Французский C2', level: 'C2',
     description: 'Мастерство: синтез и реформулировка, фигуры речи, идиоматика soutenu, искусство аргументации, грамматические тонкости.',
     accent: 'rose',
-    units: { '1': U(c2u1), '2': U(c2u2), '3': U(c2u3), '4': U(c2u4), '5': U(c2u5), '6': U(c2u6) },
-    order: ['1','2','3','4','5','6'],
+    units: { '1': U(c2u1), '2': U(c2u2), '3': U(c2u3), '4': U(c2u4), '5': U(c2u5), '6': U(c2u6), '7': U(c2u7), '8': U(c2u8) },
+    order: ['1','2','3','4','5','6','7','8'],
   },
   presse: {
     id: 'presse', courseId: 'niveau-presse', title: 'Язык прессы', level: 'B1–C1',
@@ -77,5 +80,12 @@ export const LEVELS: Record<string, LevelCourse> = {
     accent: 'teal',
     units: { '1': U(ph1), '2': U(ph2) },
     order: ['1','2'],
+  },
+  lecture: {
+    id: 'lecture', courseId: 'niveau-lecture', title: 'Lecture suivie — чтение книг', level: 'A2–B2',
+    description: 'Компаньон к адаптированным книгам: план чтения по главам, проверка понимания сюжета, словарь книги — в личный набор. Читайте и слушайте ваше издание, проверяйте себя здесь.',
+    accent: 'orange',
+    units: { '1': U(le1), '2': U(le2), '3': U(le3), '4': U(le4) },
+    order: ['1','2','3','4'],
   },
 };

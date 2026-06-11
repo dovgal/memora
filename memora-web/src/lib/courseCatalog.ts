@@ -79,6 +79,12 @@ export const BUILTIN_COURSES: CatalogCourse[] = [
     description: 'Интонация, ритм, факультативные liaisons и e caduc — звучать естественно.',
     subject: 'Языки', topic: 'Французский', level: 'B1–B2', emoji: '🔊',
   },
+  {
+    id: 'niveau-lecture', href: '/dashboard/student/courses/niveau/lecture',
+    title: 'Lecture suivie — чтение книг',
+    description: 'Компаньон к адаптированным книгам: Lupin, Le Rouge et le Noir, Moby Dick, Monte-Cristo.',
+    subject: 'Языки', topic: 'Французский', level: 'A2–B2', emoji: '📖',
+  },
 ];
 
 /** Тема для пользовательского курса по коду языка. */
