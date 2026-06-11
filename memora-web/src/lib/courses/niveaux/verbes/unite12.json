@@ -1,0 +1,315 @@
+{
+  "id": "unite12",
+  "title": "Unité 12 : Répertoire 5 — D à O (продолжение)",
+  "description": "Disposer de, s'engager à, se fier… нет — здесь новое: s'ennuyer de, guérir de, s'insurger contre, se joindre à, mourir de…",
+  "vocabulary": [
+    {
+      "fr": "dériver de qch",
+      "ru": "происходить от, проистекать из",
+      "type": "phrase"
+    },
+    {
+      "fr": "se démettre de qch",
+      "ru": "сложить с себя (полномочия)",
+      "type": "phrase"
+    },
+    {
+      "fr": "démissionner de qch",
+      "ru": "уйти в отставку с",
+      "type": "phrase"
+    },
+    {
+      "fr": "ne pas démordre de qch",
+      "ru": "не отступаться от",
+      "type": "phrase"
+    },
+    {
+      "fr": "se diriger vers qch",
+      "ru": "направляться к",
+      "type": "phrase"
+    },
+    {
+      "fr": "disposer de qch",
+      "ru": "располагать чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se disputer avec qn",
+      "ru": "ссориться с",
+      "type": "phrase"
+    },
+    {
+      "fr": "dissimuler qch à qn",
+      "ru": "скрывать что-л. от",
+      "type": "phrase"
+    },
+    {
+      "fr": "distinguer qch de qch",
+      "ru": "отличать что-л. от",
+      "type": "phrase"
+    },
+    {
+      "fr": "doter qch de qch",
+      "ru": "оснастить что-л. чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "écrire à qn",
+      "ru": "писать кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "éloigner qn de qch",
+      "ru": "отдалить кого-л. от",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'émerveiller de qch",
+      "ru": "восхищаться чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "empiéter sur qch",
+      "ru": "посягать на, заходить на",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'employer à faire",
+      "ru": "усердно заниматься тем, что",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'engager à faire",
+      "ru": "обязаться сделать",
+      "type": "phrase"
+    },
+    {
+      "fr": "enlever qch à qn",
+      "ru": "отнять что-л. у кого-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'ennuyer de qn",
+      "ru": "скучать по кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'étonner de qch",
+      "ru": "удивляться чему-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "exclure qn de qch",
+      "ru": "исключить кого-л. из",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'expliquer avec qn",
+      "ru": "объясниться с",
+      "type": "phrase"
+    },
+    {
+      "fr": "se ficher de qn/qch",
+      "ru": "плевать на (разг.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "foncer sur qch",
+      "ru": "ринуться на",
+      "type": "phrase"
+    },
+    {
+      "fr": "se fonder sur qch",
+      "ru": "основываться на",
+      "type": "phrase"
+    },
+    {
+      "fr": "garnir qch de qch",
+      "ru": "украсить/наполнить чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "guérir de qch",
+      "ru": "излечиться от",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'habiller en qch",
+      "ru": "одеться в (костюм)",
+      "type": "phrase"
+    },
+    {
+      "fr": "immuniser contre qch",
+      "ru": "сделать невосприимчивым к",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'infiltrer dans qch",
+      "ru": "просочиться в",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'insurger contre qch",
+      "ru": "восстать против",
+      "type": "phrase"
+    },
+    {
+      "fr": "interroger qn sur qch",
+      "ru": "расспрашивать кого-л. о",
+      "type": "phrase"
+    },
+    {
+      "fr": "se joindre à qn/qch",
+      "ru": "присоединиться к",
+      "type": "phrase"
+    },
+    {
+      "fr": "se lamenter sur qch",
+      "ru": "сокрушаться о",
+      "type": "phrase"
+    },
+    {
+      "fr": "libérer qn de qch",
+      "ru": "освободить кого-л. от",
+      "type": "phrase"
+    },
+    {
+      "fr": "se liguer contre qn",
+      "ru": "сговориться против",
+      "type": "phrase"
+    },
+    {
+      "fr": "médire de qn",
+      "ru": "злословить о",
+      "type": "phrase"
+    },
+    {
+      "fr": "menacer qn de qch",
+      "ru": "угрожать кому-л. чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "mourir de qch",
+      "ru": "умирать от",
+      "type": "phrase"
+    },
+    {
+      "fr": "se munir de qch",
+      "ru": "запастись чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se nourrir de qch",
+      "ru": "питаться чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "ôter qch à qn",
+      "ru": "отнять, снять что-л. у",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "vb12-th1",
+      "type": "theory",
+      "title": "Répertoire 5 — D–O",
+      "content": "<p style='margin:0.75rem 0'>Продолжение справочника управлений (dériver → ôter). Конструкции отобраны по сверке с полным списком книги: здесь те глаголы, у которых есть предложное управление, ещё не встречавшееся в курсе.</p><p style='margin:0.75rem 0'><b>Цикл тот же:</b> просмотреть → «⭐ В личный набор» → тест → коуч повторяет до усвоения.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Обычные переходные глаголы без предлога (aimer, casser, choisir…) сюда не включены — их правило уже выучено в юните 1: дополнение без предлога.</p><p style='margin:0.75rem 0'>Акценты: <b>disposer de</b> — «располагать» (de обязательно: nous disposons d'une heure); <b>s'ennuyer de qn</b> — скучать по кому-то (рядом с tu me manques); <b>menacer de</b> — угроза и у инфинитива: il menace de partir; <b>se joindre à</b> — присоединиться (joignez-vous à nous !).</p>"
+    },
+    {
+      "id": "vb12-qz1",
+      "type": "grammar-quiz",
+      "title": "D–O: тест-ловушка",
+      "questions": [
+        {
+          "question": "Nous ne ___ que de dix minutes pour décider.",
+          "options": [
+            "disposons",
+            "disposons à",
+            "avons disposé sur",
+            "composons"
+          ],
+          "correctAnswer": "disposons",
+          "explanation": "Disposer DE qch — располагать (временем, средствами)."
+        },
+        {
+          "question": "Il a fini par ___ de sa grippe.",
+          "options": [
+            "guérir",
+            "guérir à",
+            "se guérir sur",
+            "mourir"
+          ],
+          "correctAnswer": "guérir",
+          "explanation": "Guérir DE qch — излечиться от."
+        },
+        {
+          "question": "Les habitants se sont ___ contre ce projet d'autoroute.",
+          "options": [
+            "insurgés",
+            "joints",
+            "fondés",
+            "employés"
+          ],
+          "correctAnswer": "insurgés",
+          "explanation": "S'insurger CONTRE qch — восстать против."
+        },
+        {
+          "question": "Puis-je me ___ à vous pour le dîner ?",
+          "options": [
+            "joindre",
+            "liguer",
+            "fonder",
+            "diriger"
+          ],
+          "correctAnswer": "joindre",
+          "explanation": "Se joindre À qn — присоединиться."
+        },
+        {
+          "question": "Il m'a menacé ___ tout raconter au chef.",
+          "options": [
+            "de",
+            "à",
+            "pour",
+            "par"
+          ],
+          "correctAnswer": "de",
+          "explanation": "Menacer DE + infinitif — угрожать сделать."
+        },
+        {
+          "question": "Cette théorie se ___ sur des données solides.",
+          "options": [
+            "fonde",
+            "ligue",
+            "munit",
+            "explique"
+          ],
+          "correctAnswer": "fonde",
+          "explanation": "Se fonder SUR qch — основываться на."
+        },
+        {
+          "question": "Munissez-vous ___ une pièce d'identité.",
+          "options": [
+            "d'",
+            "à",
+            "avec",
+            "par"
+          ],
+          "correctAnswer": "d'",
+          "explanation": "Se munir DE qch — запастись, взять с собой."
+        },
+        {
+          "question": "Elle s'ennuie ___ ses amis restés au pays.",
+          "options": [
+            "de",
+            "à",
+            "sur",
+            "avec"
+          ],
+          "correctAnswer": "de",
+          "explanation": "S'ennuyer DE qn — скучать по (синоним: ils lui manquent)."
+        }
+      ]
+    }
+  ]
+}

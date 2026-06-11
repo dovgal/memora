@@ -1,0 +1,360 @@
+{
+  "id": "unite13",
+  "title": "Unité 13 : Répertoire 6 — P à V (продолжение)",
+  "description": "Финал сверки: se prononcer sur, réagir à, réduire à, se réfugier… нет — rogner sur, se ruer sur, soustraire à, trembler de…",
+  "vocabulary": [
+    {
+      "fr": "peiner à faire",
+      "ru": "делать с трудом",
+      "type": "phrase"
+    },
+    {
+      "fr": "pester contre qn/qch",
+      "ru": "ругаться на",
+      "type": "phrase"
+    },
+    {
+      "fr": "se porter sur qch",
+      "ru": "пасть на (о выборе)",
+      "type": "phrase"
+    },
+    {
+      "fr": "pourvoir à qch",
+      "ru": "обеспечивать (нужды)",
+      "type": "phrase"
+    },
+    {
+      "fr": "préférer qch à qch",
+      "ru": "предпочитать что-л. чему-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se prononcer sur/pour qch",
+      "ru": "высказаться о / за",
+      "type": "phrase"
+    },
+    {
+      "fr": "se prosterner devant qn",
+      "ru": "пасть ниц перед",
+      "type": "phrase"
+    },
+    {
+      "fr": "punir qn de qch",
+      "ru": "наказать кого-л. за",
+      "type": "phrase"
+    },
+    {
+      "fr": "se qualifier pour qch",
+      "ru": "выйти (в финал и т.п.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "se raccrocher à qch",
+      "ru": "цепляться за (надежду)",
+      "type": "phrase"
+    },
+    {
+      "fr": "rayer qch de qch",
+      "ru": "вычеркнуть что-л. из",
+      "type": "phrase"
+    },
+    {
+      "fr": "réagir à qch",
+      "ru": "реагировать на",
+      "type": "phrase"
+    },
+    {
+      "fr": "se rebeller contre qch",
+      "ru": "бунтовать против",
+      "type": "phrase"
+    },
+    {
+      "fr": "redoubler de qch",
+      "ru": "удвоить (усилия, осторожность)",
+      "type": "phrase"
+    },
+    {
+      "fr": "réduire qch à/en qch",
+      "ru": "свести к / превратить в",
+      "type": "phrase"
+    },
+    {
+      "fr": "se refléter dans qch",
+      "ru": "отражаться в",
+      "type": "phrase"
+    },
+    {
+      "fr": "remplacer qch par qch",
+      "ru": "заменить что-л. чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "remplir qch de qch",
+      "ru": "наполнить что-л. чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se rendre à qch",
+      "ru": "отправиться в; сдаться перед",
+      "type": "phrase"
+    },
+    {
+      "fr": "se renseigner sur qch",
+      "ru": "навести справки о",
+      "type": "phrase"
+    },
+    {
+      "fr": "répartir qch entre",
+      "ru": "распределить между",
+      "type": "phrase"
+    },
+    {
+      "fr": "répugner à faire",
+      "ru": "испытывать отвращение к",
+      "type": "phrase"
+    },
+    {
+      "fr": "résider dans qch",
+      "ru": "заключаться в",
+      "type": "phrase"
+    },
+    {
+      "fr": "se retirer de qch",
+      "ru": "удалиться, выйти из",
+      "type": "phrase"
+    },
+    {
+      "fr": "rogner sur qch",
+      "ru": "урезать, экономить на",
+      "type": "phrase"
+    },
+    {
+      "fr": "rouer qn de coups",
+      "ru": "осыпать кого-л. ударами",
+      "type": "phrase"
+    },
+    {
+      "fr": "se ruer sur qch",
+      "ru": "наброситься на",
+      "type": "phrase"
+    },
+    {
+      "fr": "se saisir de qch",
+      "ru": "завладеть чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se séparer de qn/qch",
+      "ru": "расстаться с",
+      "type": "phrase"
+    },
+    {
+      "fr": "serrer qn contre soi",
+      "ru": "прижать кого-л. к себе",
+      "type": "phrase"
+    },
+    {
+      "fr": "se solidariser avec qn",
+      "ru": "солидаризироваться с",
+      "type": "phrase"
+    },
+    {
+      "fr": "soustraire qch à qn",
+      "ru": "изъять, утаить что-л. от",
+      "type": "phrase"
+    },
+    {
+      "fr": "souhaiter qch à qn",
+      "ru": "желать что-л. кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "suppléer à qch",
+      "ru": "восполнять, компенсировать",
+      "type": "phrase"
+    },
+    {
+      "fr": "suspecter qn de qch",
+      "ru": "подозревать кого-л. в",
+      "type": "phrase"
+    },
+    {
+      "fr": "suspendre qch à qch",
+      "ru": "подвесить что-л. к",
+      "type": "phrase"
+    },
+    {
+      "fr": "taper sur qn/qch",
+      "ru": "стучать по; нападать на (разг.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "teindre qch en + couleur",
+      "ru": "покрасить что-л. в (цвет)",
+      "type": "phrase"
+    },
+    {
+      "fr": "terminer par qch",
+      "ru": "закончить чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se tourner vers qn/qch",
+      "ru": "обратиться к",
+      "type": "phrase"
+    },
+    {
+      "fr": "trébucher sur qch",
+      "ru": "споткнуться о",
+      "type": "phrase"
+    },
+    {
+      "fr": "trembler de qch",
+      "ru": "дрожать от",
+      "type": "phrase"
+    },
+    {
+      "fr": "tremper qch dans qch",
+      "ru": "макать что-л. в",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'unir à qn",
+      "ru": "объединиться с",
+      "type": "phrase"
+    },
+    {
+      "fr": "user de qch",
+      "ru": "прибегать к, пользоваться (книжн.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "vaquer à ses occupations",
+      "ru": "заниматься своими делами",
+      "type": "phrase"
+    },
+    {
+      "fr": "se vexer de qch",
+      "ru": "обидеться на",
+      "type": "phrase"
+    },
+    {
+      "fr": "vider qch de qch",
+      "ru": "опустошить, лишить содержания",
+      "type": "phrase"
+    },
+    {
+      "fr": "vociférer contre qn",
+      "ru": "орать на, поносить",
+      "type": "phrase"
+    },
+    {
+      "fr": "vouer qch à qn",
+      "ru": "питать (чувство) к",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "vb13-th1",
+      "type": "theory",
+      "title": "Répertoire 6 — P–V",
+      "content": "<p style='margin:0.75rem 0'>Продолжение справочника управлений (peiner → vouer). Конструкции отобраны по сверке с полным списком книги: здесь те глаголы, у которых есть предложное управление, ещё не встречавшееся в курсе.</p><p style='margin:0.75rem 0'><b>Цикл тот же:</b> просмотреть → «⭐ В личный набор» → тест → коуч повторяет до усвоения.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Обычные переходные глаголы без предлога (aimer, casser, choisir…) сюда не включены — их правило уже выучено в юните 1: дополнение без предлога.</p><p style='margin:0.75rem 0'>Акценты: <b>préférer X à Y</b> — «предпочитать X Y-ку» (одно à!); <b>remplacer par</b> — заменить ЧЕМ-то; <b>réagir à</b> — реагировать НА; <b>se renseigner sur</b> — справки О; <b>teindre en</b> + цвет.</p>"
+    },
+    {
+      "id": "vb13-qz1",
+      "type": "grammar-quiz",
+      "title": "P–V: тест-ловушка",
+      "questions": [
+        {
+          "question": "Je préfère le thé ___ café.",
+          "options": [
+            "au",
+            "du",
+            "que le",
+            "sur le"
+          ],
+          "correctAnswer": "au",
+          "explanation": "Préférer X À Y: à + le café = au café."
+        },
+        {
+          "question": "Comment a-t-il ___ à la nouvelle ?",
+          "options": [
+            "réagi",
+            "réagi sur",
+            "répondu de",
+            "tourné"
+          ],
+          "correctAnswer": "réagi",
+          "explanation": "Réagir À qch — реагировать на."
+        },
+        {
+          "question": "Nous avons remplacé le sucre ___ du miel.",
+          "options": [
+            "par",
+            "avec",
+            "de",
+            "pour"
+          ],
+          "correctAnswer": "par",
+          "explanation": "Remplacer qch PAR qch — заменить чем-л."
+        },
+        {
+          "question": "Renseigne-toi ___ les horaires avant de partir.",
+          "options": [
+            "sur",
+            "de",
+            "à",
+            "pour"
+          ],
+          "correctAnswer": "sur",
+          "explanation": "Se renseigner SUR qch."
+        },
+        {
+          "question": "Elle a fait ___ ses cheveux ___ roux.",
+          "options": [
+            "teindre ... en",
+            "teindre ... à",
+            "colorer ... de",
+            "teindre ... par"
+          ],
+          "correctAnswer": "teindre ... en",
+          "explanation": "Teindre EN + цвет: teindre en roux."
+        },
+        {
+          "question": "Affamés, les invités se sont ___ sur le buffet.",
+          "options": [
+            "rués",
+            "raccrochés",
+            "prosternés",
+            "retirés"
+          ],
+          "correctAnswer": "rués",
+          "explanation": "Se ruer SUR qch — наброситься на."
+        },
+        {
+          "question": "Il faudra ___ sur les dépenses ce mois-ci.",
+          "options": [
+            "rogner",
+            "taper",
+            "trembler",
+            "suppléer"
+          ],
+          "correctAnswer": "rogner",
+          "explanation": "Rogner SUR qch — урезать, экономить на."
+        },
+        {
+          "question": "Ne te ___ pas de ma remarque, c'était amical !",
+          "options": [
+            "vexe",
+            "vexes sur",
+            "sépare",
+            "tourne"
+          ],
+          "correctAnswer": "vexe",
+          "explanation": "Se vexer DE qch — обидеться на."
+        }
+      ]
+    }
+  ]
+}

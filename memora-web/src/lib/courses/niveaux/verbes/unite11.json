@@ -1,0 +1,289 @@
+{
+  "id": "unite11",
+  "title": "Unité 11 : Répertoire 4 — A à D (продолжение)",
+  "description": "Закрываем пробелы сверки: abonder en, s'arranger pour, brûler de, crouler sous, se désintéresser de…",
+  "vocabulary": [
+    {
+      "fr": "abonder en qch",
+      "ru": "изобиловать чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'abriter de/sous",
+      "ru": "укрыться от/под",
+      "type": "phrase"
+    },
+    {
+      "fr": "accompagner qch de qch",
+      "ru": "сопровождать что-л. чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'accorder sur qch",
+      "ru": "согласиться, договориться о",
+      "type": "phrase"
+    },
+    {
+      "fr": "achever de faire",
+      "ru": "довершить, окончательно",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'adapter à qch",
+      "ru": "адаптироваться к",
+      "type": "phrase"
+    },
+    {
+      "fr": "affecter qn à qch",
+      "ru": "назначить кого-л. на",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'affranchir de qch",
+      "ru": "освободиться от",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'aligner sur qch",
+      "ru": "равняться на",
+      "type": "phrase"
+    },
+    {
+      "fr": "alimenter qch en qch",
+      "ru": "снабжать что-л. чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "ambitionner de faire",
+      "ru": "ставить целью",
+      "type": "phrase"
+    },
+    {
+      "fr": "amener qn à faire",
+      "ru": "привести кого-л. к тому, чтобы",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'amuser à faire",
+      "ru": "развлекаться, делая",
+      "type": "phrase"
+    },
+    {
+      "fr": "arracher qch à qn",
+      "ru": "вырвать что-л. у кого-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'arranger pour faire",
+      "ru": "устроить так, чтобы",
+      "type": "phrase"
+    },
+    {
+      "fr": "arroser qch de qch",
+      "ru": "поливать что-л. чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "assaillir qn de questions",
+      "ru": "засыпать кого-л. вопросами",
+      "type": "phrase"
+    },
+    {
+      "fr": "assortir qch de qch",
+      "ru": "снабдить, дополнить чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'assurer de qch",
+      "ru": "удостовериться в",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'assurer contre qch",
+      "ru": "застраховаться от",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'aviser de faire",
+      "ru": "вздумать сделать",
+      "type": "phrase"
+    },
+    {
+      "fr": "se bagarrer avec qn",
+      "ru": "подраться с (разг.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "bannir qch de qch",
+      "ru": "изгнать что-л. из",
+      "type": "phrase"
+    },
+    {
+      "fr": "bombarder qn de qch",
+      "ru": "забросать кого-л. чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "briller par qch",
+      "ru": "блистать чем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "brûler de faire",
+      "ru": "гореть желанием",
+      "type": "phrase"
+    },
+    {
+      "fr": "se changer en qch",
+      "ru": "превратиться в",
+      "type": "phrase"
+    },
+    {
+      "fr": "coller à qch",
+      "ru": "прилипать к; точно соответствовать",
+      "type": "phrase"
+    },
+    {
+      "fr": "commander à qn de faire",
+      "ru": "приказать кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "se composer de qch",
+      "ru": "состоять из",
+      "type": "phrase"
+    },
+    {
+      "fr": "confondre qch avec qch",
+      "ru": "спутать что-л. с",
+      "type": "phrase"
+    },
+    {
+      "fr": "consoler qn de qch",
+      "ru": "утешить кого-л. в",
+      "type": "phrase"
+    },
+    {
+      "fr": "contraindre qn à faire",
+      "ru": "принудить кого-л. к",
+      "type": "phrase"
+    },
+    {
+      "fr": "crever de faim/froid",
+      "ru": "умирать с голоду/холоду (разг.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "crouler sous qch",
+      "ru": "рушиться под тяжестью; быть заваленным",
+      "type": "phrase"
+    },
+    {
+      "fr": "se désintéresser de qch",
+      "ru": "утратить интерес к",
+      "type": "phrase"
+    },
+    {
+      "fr": "destiner qch à qn",
+      "ru": "предназначать что-л. кому-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "détourner qn de qch",
+      "ru": "отвлечь/отвратить кого-л. от",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "vb11-th1",
+      "type": "theory",
+      "title": "Répertoire 4 — A–D",
+      "content": "<p style='margin:0.75rem 0'>Продолжение справочника управлений (abonder → détourner). Конструкции отобраны по сверке с полным списком книги: здесь те глаголы, у которых есть предложное управление, ещё не встречавшееся в курсе.</p><p style='margin:0.75rem 0'><b>Цикл тот же:</b> просмотреть → «⭐ В личный набор» → тест → коуч повторяет до усвоения.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Обычные переходные глаголы без предлога (aimer, casser, choisir…) сюда не включены — их правило уже выучено в юните 1: дополнение без предлога.</p><p style='margin:0.75rem 0'>Акценты: <b>s'arranger pour</b> + inf — «устроить так, чтобы»; <b>brûler de</b> + inf — «гореть желанием»; <b>confondre avec</b> — «спутать С» (не «et»!); <b>contraindre à</b> против forcer à / obliger à — синонимический ряд принуждения.</p>"
+    },
+    {
+      "id": "vb11-qz1",
+      "type": "grammar-quiz",
+      "title": "A–D: тест-ловушка",
+      "questions": [
+        {
+          "question": "Je ___ d'impatience de connaître les résultats !",
+          "options": [
+            "brûle",
+            "crève sur",
+            "colle",
+            "abonde"
+          ],
+          "correctAnswer": "brûle",
+          "explanation": "Brûler DE + сущ./инф. — гореть желанием/нетерпением."
+        },
+        {
+          "question": "Ne confonds pas la Slovaquie ___ la Slovénie !",
+          "options": [
+            "avec",
+            "et",
+            "de",
+            "à"
+          ],
+          "correctAnswer": "avec",
+          "explanation": "Confondre qch AVEC qch — спутать с."
+        },
+        {
+          "question": "Mon bureau ___ sous les dossiers en retard.",
+          "options": [
+            "croule",
+            "brille",
+            "s'abrite",
+            "coule"
+          ],
+          "correctAnswer": "croule",
+          "explanation": "Crouler SOUS qch — быть заваленным."
+        },
+        {
+          "question": "Elle s'est arrangée ___ partir plus tôt.",
+          "options": [
+            "pour",
+            "de",
+            "à",
+            "afin"
+          ],
+          "correctAnswer": "pour",
+          "explanation": "S'arranger POUR + infinitif — устроить так, чтобы."
+        },
+        {
+          "question": "On l'a contraint ___ démissionner.",
+          "options": [
+            "à",
+            "de",
+            "pour",
+            "en"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Contraindre qn À faire (но прич.: contraint de — допустимо; учим базовую форму à)."
+        },
+        {
+          "question": "Cette région ___ en lacs et en forêts.",
+          "options": [
+            "abonde",
+            "s'abrite",
+            "se compose",
+            "colle"
+          ],
+          "correctAnswer": "abonde",
+          "explanation": "Abonder EN qch — изобиловать."
+        },
+        {
+          "question": "Le comité s'est enfin accordé ___ une date.",
+          "options": [
+            "sur",
+            "de",
+            "à",
+            "avec"
+          ],
+          "correctAnswer": "sur",
+          "explanation": "S'accorder SUR qch — договориться о."
+        }
+      ]
+    }
+  ]
+}
