@@ -1,0 +1,190 @@
+{
+  "id": "unite1",
+  "title": "Unité 1 : Lire les titres — язык заголовков",
+  "description": "Как устроены заголовки прессы: номинализация, эллипсис, présent de narration, кавычки и двоеточие.",
+  "vocabulary": [
+    {
+      "fr": "à la une",
+      "ru": "на первой полосе",
+      "type": "phrase"
+    },
+    {
+      "fr": "un quotidien",
+      "ru": "ежедневная газета",
+      "type": "phrase"
+    },
+    {
+      "fr": "un hebdomadaire",
+      "ru": "еженедельник",
+      "type": "phrase"
+    },
+    {
+      "fr": "une rubrique",
+      "ru": "рубрика",
+      "type": "phrase"
+    },
+    {
+      "fr": "un fait divers",
+      "ru": "происшествие (рубрика)",
+      "type": "phrase"
+    },
+    {
+      "fr": "une manchette",
+      "ru": "шапка-заголовок",
+      "type": "phrase"
+    },
+    {
+      "fr": "un chapeau",
+      "ru": "лид (вводка статьи)",
+      "type": "phrase"
+    },
+    {
+      "fr": "une dépêche",
+      "ru": "сводка агентства",
+      "type": "phrase"
+    },
+    {
+      "fr": "démentir",
+      "ru": "опровергать",
+      "type": "phrase"
+    },
+    {
+      "fr": "annoncer",
+      "ru": "объявлять",
+      "type": "phrase"
+    },
+    {
+      "fr": "faire la une",
+      "ru": "попасть на первую полосу",
+      "type": "phrase"
+    },
+    {
+      "fr": "selon nos informations",
+      "ru": "по нашим данным",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "pr1-th1",
+      "type": "theory",
+      "title": "Грамматика заголовка",
+      "content": "<p style='margin:0.75rem 0'>Заголовки экономят каждое слово. Их приёмы:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Приём</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример заголовка</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Полная фраза</th></tr><tr><td style='padding:0.5rem'>номинализация</td><td style='padding:0.5rem'>Hausse des prix de l'énergie</td><td style='padding:0.5rem'>Les prix de l'énergie ont augmenté</td></tr><tr><td style='padding:0.5rem'>эллипсис (без артиклей/глагола)</td><td style='padding:0.5rem'>Grève demain dans les transports</td><td style='padding:0.5rem'>Il y aura une grève demain</td></tr><tr><td style='padding:0.5rem'>présent вместо прошлого</td><td style='padding:0.5rem'>Le président arrive à Tokyo</td><td style='padding:0.5rem'>Le président est arrivé à Tokyo</td></tr><tr><td style='padding:0.5rem'>двоеточие = причина/тема</td><td style='padding:0.5rem'>Climat : un nouveau rapport alarmant</td><td style='padding:0.5rem'>Un rapport alarmant sur le climat</td></tr><tr><td style='padding:0.5rem'>кавычки = чьи-то слова</td><td style='padding:0.5rem'>« Nous gagnerons », promet l'entraîneur</td><td style='padding:0.5rem'>L'entraîneur promet la victoire</td></tr><tr><td style='padding:0.5rem'>infinitif = совет/вопрос</td><td style='padding:0.5rem'>Comment économiser l'eau ?</td><td style='padding:0.5rem'>—</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Conditionnel в заголовке = информация не подтверждена: «Le ministre démissionnerait» — возможно, уйдёт.</p>"
+    },
+    {
+      "id": "pr1-qz1",
+      "type": "grammar-quiz",
+      "title": "Расшифруйте заголовок",
+      "questions": [
+        {
+          "question": "«Baisse du chômage en mai» означает…",
+          "options": [
+            "безработица снизилась",
+            "безработица вырастет",
+            "о безработице спорят",
+            "безработица не изменилась"
+          ],
+          "correctAnswer": "безработица снизилась",
+          "explanation": "Baisse — номинализация от baisser: «снижение безработицы»."
+        },
+        {
+          "question": "«Séisme au Japon : des centaines d'évacués» — что после двоеточия?",
+          "options": [
+            "следствие события",
+            "причина события",
+            "цитата",
+            "опровержение"
+          ],
+          "correctAnswer": "следствие события",
+          "explanation": "Двоеточие вводит развитие/следствие: землетрясение → сотни эвакуированных."
+        },
+        {
+          "question": "«L'accord serait signé la semaine prochaine» — почему conditionnel?",
+          "options": [
+            "информация не подтверждена",
+            "действие в прошлом",
+            "вежливость",
+            "приказ"
+          ],
+          "correctAnswer": "информация не подтверждена",
+          "explanation": "Conditionnel прессы — данные без гарантии."
+        },
+        {
+          "question": "«Réouverture du musée après dix ans de travaux» — глагольная фраза:",
+          "options": [
+            "Le musée rouvre après dix ans de travaux",
+            "Le musée ferme pour travaux",
+            "On découvre un musée",
+            "Le musée a dix ans"
+          ],
+          "correctAnswer": "Le musée rouvre après dix ans de travaux",
+          "explanation": "Réouverture ← rouvrir: «музей снова открывается»."
+        },
+        {
+          "question": "«Carburants : vers une nouvelle hausse ?» — слово vers означает…",
+          "options": [
+            "тенденцию к (ожидается)",
+            "направление на карте",
+            "около (время)",
+            "против"
+          ],
+          "correctAnswer": "тенденцию к (ожидается)",
+          "explanation": "Vers + номинализация = «дело идёт к…»: ожидается подорожание."
+        }
+      ]
+    },
+    {
+      "id": "pr1-fb1",
+      "type": "fill-blank",
+      "title": "Соберите заголовки",
+      "text": "1) ___ des impôts annoncée pour janvier. 2) Football : les Bleus ___ en finale ! 3) Le directeur ___ les accusations de fraude. 4) Canicule : ___ records attendues cette semaine. 5) « Je ne ___ pas », affirme la ministre.",
+      "blanks": [
+        {
+          "correctAnswer": "Baisse",
+          "options": [
+            "Baisse",
+            "Baisser",
+            "Bas"
+          ],
+          "explanation": "Заголовок-номинализация: Baisse des impôts."
+        },
+        {
+          "correctAnswer": "qualifiés",
+          "options": [
+            "qualifiés",
+            "qualifier",
+            "qualification de"
+          ],
+          "explanation": "Эллипсис глагола être: les Bleus (sont) qualifiés."
+        },
+        {
+          "correctAnswer": "dément",
+          "options": [
+            "dément",
+            "démentir",
+            "démenti par"
+          ],
+          "explanation": "Présent de narration: le directeur dément."
+        },
+        {
+          "correctAnswer": "températures",
+          "options": [
+            "températures",
+            "chaleurs degrés",
+            "mesures"
+          ],
+          "explanation": "Canicule → рекордные температуры: températures records."
+        },
+        {
+          "correctAnswer": "démissionnerai",
+          "options": [
+            "démissionnerai",
+            "démissionne pas",
+            "démissionnais"
+          ],
+          "explanation": "Цитата с futur: je ne démissionnerai pas."
+        }
+      ]
+    }
+  ]
+}

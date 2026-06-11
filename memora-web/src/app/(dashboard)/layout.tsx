@@ -7,7 +7,9 @@ import {
     Plus,
     Search,
     Folder,
-    Sparkles
+    Sparkles,
+    GraduationCap,
+    UserRound
 } from "lucide-react";
 import LogoutButton from "@/components/LogoutButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -59,6 +61,14 @@ export default async function DashboardLayout({
                         <Link href={`/dashboard/${role}`} className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card text-qz-text-muted rounded-lg font-medium transition-colors">
                             <Home className="w-5 h-5" />
                             Home
+                        </Link>
+                        <Link href="/courses" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium">
+                            <GraduationCap className="w-5 h-5" />
+                            Каталог курсов
+                        </Link>
+                        <Link href="/cabinet" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium">
+                            <UserRound className="w-5 h-5" />
+                            Мой кабинет
                         </Link>
                         <Link href="/library" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium">
                             <Library className="w-5 h-5" />

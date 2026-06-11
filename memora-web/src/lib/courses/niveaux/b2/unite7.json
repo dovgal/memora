@@ -1,0 +1,236 @@
+{
+  "id": "unite7",
+  "title": "Unité 7 : DELF B2 — пробный экзамен",
+  "description": "Формат DELF B2, стратегии каждой части и тренировочные задания: аргументированное письмо, понимание прессы, синтез мнений.",
+  "vocabulary": [
+    {
+      "fr": "une épreuve",
+      "ru": "экзаменационное испытание",
+      "type": "phrase"
+    },
+    {
+      "fr": "la consigne",
+      "ru": "инструкция к заданию",
+      "type": "phrase"
+    },
+    {
+      "fr": "un essai argumenté",
+      "ru": "аргументированное эссе",
+      "type": "phrase"
+    },
+    {
+      "fr": "prendre position",
+      "ru": "занять позицию",
+      "type": "phrase"
+    },
+    {
+      "fr": "un argument étayé",
+      "ru": "подкреплённый аргумент",
+      "type": "phrase"
+    },
+    {
+      "fr": "un exemple concret",
+      "ru": "конкретный пример",
+      "type": "phrase"
+    },
+    {
+      "fr": "le monologue suivi",
+      "ru": "связный монолог",
+      "type": "phrase"
+    },
+    {
+      "fr": "le débat",
+      "ru": "дебаты",
+      "type": "phrase"
+    },
+    {
+      "fr": "convaincre",
+      "ru": "убеждать",
+      "type": "phrase"
+    },
+    {
+      "fr": "nuancer son propos",
+      "ru": "смягчать/уточнять сказанное",
+      "type": "phrase"
+    },
+    {
+      "fr": "la grille d'évaluation",
+      "ru": "критерии оценки",
+      "type": "phrase"
+    },
+    {
+      "fr": "le temps imparti",
+      "ru": "отведённое время",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "db2-th1",
+      "type": "theory",
+      "title": "Формат DELF B2 и стратегии",
+      "content": "<p style='margin:0.75rem 0'>Четыре части по 25 баллов, проходной — 50/100 (минимум 5 в каждой части):</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Часть</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Задания</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Время</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Стратегия</th></tr><tr><td style='padding:0.5rem'>CO (аудирование)</td><td style='padding:0.5rem'>интервью/доклад + радио, 2 прослушивания первой записи</td><td style='padding:0.5rem'>~30 мин</td><td style='padding:0.5rem'>читайте вопросы заранее; ответы идут по порядку записи</td></tr><tr><td style='padding:0.5rem'>CE (чтение)</td><td style='padding:0.5rem'>2 текста: аргументативный + информативный</td><td style='padding:0.5rem'>60 мин</td><td style='padding:0.5rem'>сначала вопросы о структуре, потом детали</td></tr><tr><td style='padding:0.5rem'>PE (письмо)</td><td style='padding:0.5rem'>аргументированное письмо/эссе 250+ слов</td><td style='padding:0.5rem'>60 мин</td><td style='padding:0.5rem'>план 10 мин: тезис → 2-3 аргумента с примерами → вывод</td></tr><tr><td style='padding:0.5rem'>PO (устная)</td><td style='padding:0.5rem'>защита точки зрения по статье + дебаты</td><td style='padding:0.5rem'>20 мин + 30 подготовка</td><td style='padding:0.5rem'>структурируйте: intro, plan annoncé, развитие, conclusion</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 В PE оценивают и связки: обязательно используйте d'une part/d'autre part, en outre, néanmoins, par conséquent.</p>"
+    },
+    {
+      "id": "db2-qz1",
+      "type": "grammar-quiz",
+      "title": "CE: понимание аргументативного текста",
+      "questions": [
+        {
+          "question": "«Контраргумент в тексте обычно вводится словами…»",
+          "options": [
+            "certes... mais, pourtant",
+            "d'abord, ensuite",
+            "par exemple",
+            "autrement dit"
+          ],
+          "correctAnswer": "certes... mais, pourtant",
+          "explanation": "Уступка-возражение: certes + mais / pourtant — маркеры контраргумента."
+        },
+        {
+          "question": "Если автор пишет «Cette mesure, dont l'efficacité reste à prouver,...», он…",
+          "options": [
+            "сомневается в мере",
+            "полностью поддерживает",
+            "цитирует закон",
+            "шутит"
+          ],
+          "correctAnswer": "сомневается в мере",
+          "explanation": "«Эффективность ещё предстоит доказать» — скрытое сомнение, типичная имплицитная оценка B2."
+        },
+        {
+          "question": "Вопрос «Quel est le ton de l'auteur ?» проверяет умение…",
+          "options": [
+            "распознавать оценку и стиль",
+            "считать абзацы",
+            "знать даты",
+            "переводить"
+          ],
+          "correctAnswer": "распознавать оценку и стиль",
+          "explanation": "На B2 проверяют имплицитное: ирония, скепсис, энтузиазм автора."
+        },
+        {
+          "question": "«Justifiez votre réponse en citant le texte» означает…",
+          "options": [
+            "привести точную цитату-доказательство",
+            "пересказать всё",
+            "дать своё мнение",
+            "перевести текст"
+          ],
+          "correctAnswer": "привести точную цитату-доказательство",
+          "explanation": "Нужна короткая цитата, подтверждающая ваш ответ."
+        }
+      ]
+    },
+    {
+      "id": "db2-th2",
+      "type": "theory",
+      "title": "PE: каркас аргументированного письма",
+      "content": "<p style='margin:0.75rem 0'>Типовая структура на 250 слов (формальное письмо в газету/мэру/директору):</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Блок</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Содержание</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Объём</th></tr><tr><td style='padding:0.5rem'>формулы + повод</td><td style='padding:0.5rem'>Madame, Monsieur, / Je me permets de vous écrire au sujet de...</td><td style='padding:0.5rem'>~30 слов</td></tr><tr><td style='padding:0.5rem'>позиция</td><td style='padding:0.5rem'>Je tiens à exprimer mon désaccord avec...</td><td style='padding:0.5rem'>~30 слов</td></tr><tr><td style='padding:0.5rem'>аргумент 1 + пример</td><td style='padding:0.5rem'>Tout d'abord, ... En effet, ... Par exemple, ...</td><td style='padding:0.5rem'>~70 слов</td></tr><tr><td style='padding:0.5rem'>аргумент 2 + уступка</td><td style='padding:0.5rem'>En outre, ... Certes, ..., mais ...</td><td style='padding:0.5rem'>~70 слов</td></tr><tr><td style='padding:0.5rem'>предложение/призыв</td><td style='padding:0.5rem'>C'est pourquoi je vous demande de...</td><td style='padding:0.5rem'>~30 слов</td></tr><tr><td style='padding:0.5rem'>вежливое закрытие</td><td style='padding:0.5rem'>Dans l'attente de votre réponse, je vous prie d'agréer...</td><td style='padding:0.5rem'>~20 слов</td></tr></table>"
+    },
+    {
+      "id": "db2-fb1",
+      "type": "fill-blank",
+      "title": "PE: письмо протеста — заполните связки",
+      "text": "Madame la Maire,\nJe me permets de vous écrire au ___ de la fermeture annoncée de la piscine municipale. ___ , cet équipement est le seul accessible aux écoles du quartier. ___ , des centaines d'enfants y apprennent à nager chaque année. ___ , des travaux coûteux soient nécessaires, la fermeture définitive me paraît disproportionnée. ___ , je vous demande d'étudier une rénovation par étapes.\nJe vous prie d'agréer, Madame la Maire, l'expression de ma considération distinguée.",
+      "blanks": [
+        {
+          "correctAnswer": "sujet",
+          "options": [
+            "sujet",
+            "propos",
+            "thème de"
+          ],
+          "explanation": "Формула: au sujet de — «по поводу»."
+        },
+        {
+          "correctAnswer": "Tout d'abord",
+          "options": [
+            "Tout d'abord",
+            "Enfin",
+            "Bref"
+          ],
+          "explanation": "Первый аргумент — tout d'abord."
+        },
+        {
+          "correctAnswer": "En effet",
+          "options": [
+            "En effet",
+            "Pourtant",
+            "Sinon"
+          ],
+          "explanation": "Подкрепление аргумента фактом — en effet."
+        },
+        {
+          "correctAnswer": "Bien que",
+          "options": [
+            "Bien que",
+            "Parce que",
+            "Alors que"
+          ],
+          "explanation": "Уступка + субжонктив (soient): bien que."
+        },
+        {
+          "correctAnswer": "C'est pourquoi",
+          "options": [
+            "C'est pourquoi",
+            "Néanmoins",
+            "Au cas où"
+          ],
+          "explanation": "Вывод-требование — c'est pourquoi."
+        }
+      ]
+    },
+    {
+      "id": "db2-qz2",
+      "type": "grammar-quiz",
+      "title": "PO: дебаты — реакции",
+      "questions": [
+        {
+          "question": "Экзаменатор возражает. Лучшая реакция:",
+          "options": [
+            "Je comprends votre point de vue, néanmoins...",
+            "Vous avez tort.",
+            "Je ne sais pas.",
+            "C'est comme ça."
+          ],
+          "correctAnswer": "Je comprends votre point de vue, néanmoins...",
+          "explanation": "Вежливое признание + контраргумент — именно это оценивается в дебатах."
+        },
+        {
+          "question": "Чтобы выиграть время на раздумье:",
+          "options": [
+            "C'est une question intéressante ; disons que...",
+            "Euh... euh... euh...",
+            "Répétez !",
+            "Silence."
+          ],
+          "correctAnswer": "C'est une question intéressante ; disons que...",
+          "explanation": "Заполнители высокого уровня вместо «эээ»."
+        },
+        {
+          "question": "Смягчить категоричность тезиса:",
+          "options": [
+            "Il me semble que... / J'aurais tendance à penser que...",
+            "C'est absolument certain !",
+            "Tout le monde sait que...",
+            "C'est évident, non ?"
+          ],
+          "correctAnswer": "Il me semble que... / J'aurais tendance à penser que...",
+          "explanation": "Модализация — признак B2: il me semble, j'aurais tendance à..."
+        },
+        {
+          "question": "Завершить монолог:",
+          "options": [
+            "Pour conclure, je dirais que...",
+            "Voilà voilà.",
+            "C'est tout.",
+            "J'ai fini de parler."
+          ],
+          "correctAnswer": "Pour conclure, je dirais que...",
+          "explanation": "Маркированное заключение — обязательный элемент структуры."
+        }
+      ]
+    }
+  ]
+}

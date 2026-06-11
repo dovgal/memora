@@ -146,6 +146,22 @@ async fn main() {
         .route("/api/courses/{course_id}/coach/review", post(handlers::coach::record_coach_review))
         .route("/api/courses/{course_id}/coach/stats", get(handlers::coach::get_coach_stats))
         .route("/api/courses/{course_id}/coach/mark-known", post(handlers::coach::mark_known))
+        // Классы v2: кабинеты преподавателя/ученика, задания, сообщения, подписки
+        .route("/api/classes/mine", get(handlers::classroom::my_classes_all))
+        .route("/api/classes/{id}/detail", get(handlers::classroom::class_detail))
+        .route(
+            "/api/classes/{id}/assignments",
+            get(handlers::classroom::list_class_assignments)
+                .post(handlers::classroom::create_class_assignment)
+        )
+        .route(
+            "/api/classes/{id}/messages",
+            get(handlers::classroom::list_class_messages)
+                .post(handlers::classroom::post_class_message)
+        )
+        .route("/api/assignments/{id}/done", post(handlers::classroom::mark_assignment_done))
+        .route("/api/subscriptions", get(handlers::classroom::list_subscriptions).post(handlers::classroom::add_subscription))
+        .route("/api/subscriptions/{course_id}", delete(handlers::classroom::remove_subscription))
         // ИИ-инструменты курсов: генерация юнита, тьютор, практика, разговор, истории
         .route("/api/ai/course/generate-unit", post(handlers::ai::generate_course_unit))
         .route("/api/ai/course/explain", post(handlers::ai::explain_exercise))

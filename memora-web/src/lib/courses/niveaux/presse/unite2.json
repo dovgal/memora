@@ -1,0 +1,220 @@
+{
+  "id": "unite2",
+  "title": "Unité 2 : Économie et société — лексика новостей",
+  "description": "Ключевые слова экономических и социальных рубрик: рост и падение, занятость, протесты, реформы.",
+  "vocabulary": [
+    {
+      "fr": "une hausse / une baisse",
+      "ru": "рост / снижение",
+      "type": "phrase"
+    },
+    {
+      "fr": "grimper / chuter",
+      "ru": "взлетать / падать",
+      "type": "phrase"
+    },
+    {
+      "fr": "le pouvoir d'achat",
+      "ru": "покупательная способность",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'inflation (f)",
+      "ru": "инфляция",
+      "type": "phrase"
+    },
+    {
+      "fr": "le chômage",
+      "ru": "безработица",
+      "type": "phrase"
+    },
+    {
+      "fr": "une embauche",
+      "ru": "наём на работу",
+      "type": "phrase"
+    },
+    {
+      "fr": "un licenciement",
+      "ru": "увольнение",
+      "type": "phrase"
+    },
+    {
+      "fr": "une grève",
+      "ru": "забастовка",
+      "type": "phrase"
+    },
+    {
+      "fr": "une manifestation",
+      "ru": "демонстрация",
+      "type": "phrase"
+    },
+    {
+      "fr": "revendiquer",
+      "ru": "выдвигать требования",
+      "type": "phrase"
+    },
+    {
+      "fr": "un projet de loi",
+      "ru": "законопроект",
+      "type": "phrase"
+    },
+    {
+      "fr": "adopter / rejeter une loi",
+      "ru": "принять / отклонить закон",
+      "type": "phrase"
+    },
+    {
+      "fr": "un sondage",
+      "ru": "опрос",
+      "type": "phrase"
+    },
+    {
+      "fr": "la croissance",
+      "ru": "экономический рост",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "pr2-th1",
+      "type": "theory",
+      "title": "Глаголы движения цифр",
+      "content": "<p style='margin:0.75rem 0'>Пресса любит образные глаголы для графиков:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Рост</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Падение</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Стабильность</th></tr><tr><td style='padding:0.5rem'>augmenter, progresser</td><td style='padding:0.5rem'>baisser, reculer</td><td style='padding:0.5rem'>stagner</td></tr><tr><td style='padding:0.5rem'>grimper (карабкаться)</td><td style='padding:0.5rem'>chuter (рухнуть)</td><td style='padding:0.5rem'>se stabiliser</td></tr><tr><td style='padding:0.5rem'>s'envoler, exploser (резко)</td><td style='padding:0.5rem'>s'effondrer (обвалиться)</td><td style='padding:0.5rem'>rester stable</td></tr><tr><td style='padding:0.5rem'>doubler (удвоиться)</td><td style='padding:0.5rem'>être divisé par deux</td><td style='padding:0.5rem'>plafonner (упереться в потолок)</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Интенсивность: progresser < grimper < s'envoler; reculer < chuter < s'effondrer.</p>"
+    },
+    {
+      "id": "pr2-qz1",
+      "type": "grammar-quiz",
+      "title": "Экономическая лексика",
+      "questions": [
+        {
+          "question": "Les prix ont ___ de 2 % : ситуация умеренная.",
+          "options": [
+            "progressé",
+            "explosé",
+            "chuté",
+            "s'effondré"
+          ],
+          "correctAnswer": "progressé",
+          "explanation": "2% — умеренный рост: progresser. Exploser — для резкого скачка."
+        },
+        {
+          "question": "La Bourse ___ après la mauvaise nouvelle : -8 % en un jour !",
+          "options": [
+            "s'est effondrée",
+            "a stagné",
+            "a plafonné",
+            "a doublé"
+          ],
+          "correctAnswer": "s'est effondrée",
+          "explanation": "Резкое падение — s'effondrer (обвалиться)."
+        },
+        {
+          "question": "Les syndicats ___ une augmentation des salaires.",
+          "options": [
+            "revendiquent",
+            "licencient",
+            "adoptent",
+            "embauchent"
+          ],
+          "correctAnswer": "revendiquent",
+          "explanation": "Профсоюзы выдвигают требования — revendiquer."
+        },
+        {
+          "question": "L'entreprise annonce 200 ___ : 200 personnes perdront leur emploi.",
+          "options": [
+            "licenciements",
+            "embauches",
+            "sondages",
+            "grèves"
+          ],
+          "correctAnswer": "licenciements",
+          "explanation": "Потеря работы — licenciement. Embauche — наоборот, наём."
+        },
+        {
+          "question": "Le ___ des Français recule à cause de l'inflation.",
+          "options": [
+            "pouvoir d'achat",
+            "projet de loi",
+            "fait divers",
+            "chômage technique"
+          ],
+          "correctAnswer": "pouvoir d'achat",
+          "explanation": "Инфляция съедает покупательную способность — le pouvoir d'achat."
+        },
+        {
+          "question": "L'Assemblée a ___ le projet de loi par 310 voix contre 240.",
+          "options": [
+            "adopté",
+            "revendiqué",
+            "chuté",
+            "manifesté"
+          ],
+          "correctAnswer": "adopté",
+          "explanation": "Принять закон — adopter (антоним rejeter)."
+        }
+      ]
+    },
+    {
+      "id": "pr2-fb1",
+      "type": "fill-blank",
+      "title": "Новостная заметка",
+      "text": "Selon un ___ publié ce matin, 68 % des Français s'inquiètent de l'___ . Le ___ d'achat reste leur première préoccupation. Hier, plusieurs milliers de personnes ont participé à une ___ à Paris ; les syndicats ___ un gel des prix de l'énergie. Le gouvernement promet un ___ de loi avant l'été.",
+      "blanks": [
+        {
+          "correctAnswer": "sondage",
+          "options": [
+            "sondage",
+            "licenciement",
+            "chômage"
+          ],
+          "explanation": "Опрос общественного мнения — un sondage."
+        },
+        {
+          "correctAnswer": "inflation",
+          "options": [
+            "inflation",
+            "embauche",
+            "grève"
+          ],
+          "explanation": "Беспокоятся о росте цен — l'inflation."
+        },
+        {
+          "correctAnswer": "pouvoir",
+          "options": [
+            "pouvoir",
+            "prix",
+            "pouvoir de"
+          ],
+          "explanation": "Le pouvoir d'achat — устойчивое словосочетание."
+        },
+        {
+          "correctAnswer": "manifestation",
+          "options": [
+            "manifestation",
+            "manifestant",
+            "démonstration"
+          ],
+          "explanation": "Уличная акция — une manifestation (не «démonstration»!)."
+        },
+        {
+          "correctAnswer": "revendiquent",
+          "options": [
+            "revendiquent",
+            "rejettent",
+            "stagnent"
+          ],
+          "explanation": "Требуют — revendiquer."
+        },
+        {
+          "correctAnswer": "projet",
+          "options": [
+            "projet",
+            "sujet",
+            "trajet"
+          ],
+          "explanation": "Законопроект — un projet de loi."
+        }
+      ]
+    }
+  ]
+}

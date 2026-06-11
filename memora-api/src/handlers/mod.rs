@@ -12,4 +12,5 @@ pub mod classes;
 pub mod course_progress;
 pub mod courses;
 pub mod coach;
+pub mod classroom;
 

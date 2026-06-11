@@ -1,0 +1,220 @@
+{
+  "id": "unite6",
+  "title": "Unité 6 : Idiomatique avancé — образный язык",
+  "description": "Частотные идиомы живой речи: эмоции, усилия, конфликты, удача. Распознавание и уместное употребление.",
+  "vocabulary": [
+    {
+      "fr": "avoir le cafard",
+      "ru": "хандрить",
+      "type": "phrase"
+    },
+    {
+      "fr": "avoir la pêche",
+      "ru": "быть полным энергии",
+      "type": "phrase"
+    },
+    {
+      "fr": "en avoir ras le bol",
+      "ru": "быть сытым по горло",
+      "type": "phrase"
+    },
+    {
+      "fr": "poser un lapin",
+      "ru": "не прийти на встречу",
+      "type": "phrase"
+    },
+    {
+      "fr": "raconter des salades",
+      "ru": "рассказывать небылицы",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre son grain de sel",
+      "ru": "вставить свои пять копеек",
+      "type": "phrase"
+    },
+    {
+      "fr": "tomber dans les pommes",
+      "ru": "упасть в обморок",
+      "type": "phrase"
+    },
+    {
+      "fr": "coûter les yeux de la tête",
+      "ru": "стоить бешеных денег",
+      "type": "phrase"
+    },
+    {
+      "fr": "donner sa langue au chat",
+      "ru": "сдаться (в загадке)",
+      "type": "phrase"
+    },
+    {
+      "fr": "avoir un poil dans la main",
+      "ru": "быть лентяем",
+      "type": "phrase"
+    },
+    {
+      "fr": "chercher midi à quatorze heures",
+      "ru": "усложнять на пустом месте",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre les pieds dans le plat",
+      "ru": "ляпнуть бестактность",
+      "type": "phrase"
+    },
+    {
+      "fr": "passer une nuit blanche",
+      "ru": "провести бессонную ночь",
+      "type": "phrase"
+    },
+    {
+      "fr": "avoir le coup de foudre",
+      "ru": "влюбиться с первого взгляда",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "id-th1",
+      "type": "theory",
+      "title": "Идиомы по ситуациям",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Ситуация</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Идиома</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Буквально</th></tr><tr><td style='padding:0.5rem'>хандра</td><td style='padding:0.5rem'>avoir le cafard</td><td style='padding:0.5rem'>иметь таракана</td></tr><tr><td style='padding:0.5rem'>энергия</td><td style='padding:0.5rem'>avoir la pêche / la patate</td><td style='padding:0.5rem'>иметь персик/картошку</td></tr><tr><td style='padding:0.5rem'>«достало!»</td><td style='padding:0.5rem'>en avoir ras le bol</td><td style='padding:0.5rem'>полная миска</td></tr><tr><td style='padding:0.5rem'>сорванная встреча</td><td style='padding:0.5rem'>poser un lapin à qn</td><td style='padding:0.5rem'>подложить кролика</td></tr><tr><td style='padding:0.5rem'>обман</td><td style='padding:0.5rem'>raconter des salades</td><td style='padding:0.5rem'>рассказывать салаты</td></tr><tr><td style='padding:0.5rem'>дорого</td><td style='padding:0.5rem'>coûter les yeux de la tête</td><td style='padding:0.5rem'>стоить глаз</td></tr><tr><td style='padding:0.5rem'>обморок</td><td style='padding:0.5rem'>tomber dans les pommes</td><td style='padding:0.5rem'>упасть в яблоки</td></tr><tr><td style='padding:0.5rem'>лень</td><td style='padding:0.5rem'>avoir un poil dans la main</td><td style='padding:0.5rem'>волос в ладони</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Идиомы — маркер живого языка, но регистр у них разговорный: в essai DALF — нельзя, в диалоге и интервью — отлично.</p>"
+    },
+    {
+      "id": "id-qz1",
+      "type": "grammar-quiz",
+      "title": "Подберите идиому",
+      "questions": [
+        {
+          "question": "Он не пришёл на свидание. → Il m'a ___ .",
+          "options": [
+            "posé un lapin",
+            "donné sa langue au chat",
+            "mis son grain de sel",
+            "passé une nuit blanche"
+          ],
+          "correctAnswer": "posé un lapin",
+          "explanation": "Не явиться на встречу — poser un lapin."
+        },
+        {
+          "question": "Не верь ему, он вечно ___ . (привирает)",
+          "options": [
+            "raconte des salades",
+            "tombe dans les pommes",
+            "a la pêche",
+            "cherche midi"
+          ],
+          "correctAnswer": "raconte des salades",
+          "explanation": "Небылицы — raconter des salades."
+        },
+        {
+          "question": "Ce manteau ___ ! Je ne peux pas me le permettre.",
+          "options": [
+            "coûte les yeux de la tête",
+            "pose un lapin",
+            "a le cafard",
+            "met les pieds dans le plat"
+          ],
+          "correctAnswer": "coûte les yeux de la tête",
+          "explanation": "«Стоит безумно дорого» — coûter les yeux de la tête."
+        },
+        {
+          "question": "Депрессия осенью: J'___ depuis une semaine.",
+          "options": [
+            "ai le cafard",
+            "ai la pêche",
+            "ai un poil dans la main",
+            "ai le coup de foudre"
+          ],
+          "correctAnswer": "ai le cafard",
+          "explanation": "Хандра — avoir le cafard."
+        },
+        {
+          "question": "Il ne veut rien faire, il ___ .",
+          "options": [
+            "a un poil dans la main",
+            "a la patate",
+            "tombe dans les pommes",
+            "donne sa langue au chat"
+          ],
+          "correctAnswer": "a un poil dans la main",
+          "explanation": "Лентяй — avoir un poil dans la main."
+        },
+        {
+          "question": "Перестань всё усложнять! Tu ___ .",
+          "options": [
+            "cherches midi à quatorze heures",
+            "mets ton grain de sel",
+            "poses un lapin",
+            "racontes des salades"
+          ],
+          "correctAnswer": "cherches midi à quatorze heures",
+          "explanation": "Искать полдень в два часа дня — усложнять простое."
+        }
+      ]
+    },
+    {
+      "id": "id-fb1",
+      "type": "fill-blank",
+      "title": "История одного свидания (идиомы в контексте)",
+      "text": "Samedi, j'avais rendez-vous avec Hugo. Le matin, j'avais la ___ : premier rendez-vous, grand restaurant ! Mais il m'a posé un ___ . J'en avais ras le ___ , j'ai passé une nuit ___ à ruminer. Dimanche, il m'a appelée : sa grand-mère était tombée dans les ___ , il avait passé la soirée aux urgences. Bref, j'avais cherché midi à ___ heures — et lui, il avait une vraie excuse !",
+      "blanks": [
+        {
+          "correctAnswer": "pêche",
+          "options": [
+            "pêche",
+            "cafard",
+            "langue"
+          ],
+          "explanation": "Утром полна энергии — avoir la pêche."
+        },
+        {
+          "correctAnswer": "lapin",
+          "options": [
+            "lapin",
+            "chat",
+            "poil"
+          ],
+          "explanation": "Не пришёл — poser un lapin."
+        },
+        {
+          "correctAnswer": "bol",
+          "options": [
+            "bol",
+            "plat",
+            "sel"
+          ],
+          "explanation": "«Сыта по горло» — en avoir ras le bol."
+        },
+        {
+          "correctAnswer": "blanche",
+          "options": [
+            "blanche",
+            "noire",
+            "longue"
+          ],
+          "explanation": "Бессонная ночь — une nuit blanche."
+        },
+        {
+          "correctAnswer": "pommes",
+          "options": [
+            "pommes",
+            "salades",
+            "plats"
+          ],
+          "explanation": "Упасть в обморок — tomber dans les pommes."
+        },
+        {
+          "correctAnswer": "quatorze",
+          "options": [
+            "quatorze",
+            "douze",
+            "seize"
+          ],
+          "explanation": "Chercher midi à quatorze heures — усложнять."
+        }
+      ]
+    }
+  ]
+}

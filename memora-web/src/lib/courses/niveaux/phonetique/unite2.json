@@ -1,0 +1,186 @@
+{
+  "id": "unite2",
+  "title": "Unité 2 : Liaisons facultatives et e caduc",
+  "description": "Обязательные, запрещённые и факультативные liaisons; выпадение e caduc; стиль и беглость.",
+  "vocabulary": [
+    {
+      "fr": "une liaison obligatoire",
+      "ru": "обязательное связывание",
+      "type": "phrase"
+    },
+    {
+      "fr": "une liaison interdite",
+      "ru": "запрещённое связывание",
+      "type": "phrase"
+    },
+    {
+      "fr": "une liaison facultative",
+      "ru": "факультативное связывание",
+      "type": "phrase"
+    },
+    {
+      "fr": "le e caduc / e muet",
+      "ru": "беглое e",
+      "type": "phrase"
+    },
+    {
+      "fr": "soutenu / relâché",
+      "ru": "тщательный / небрежный (стиль)",
+      "type": "phrase"
+    },
+    {
+      "fr": "la fluidité",
+      "ru": "беглость",
+      "type": "phrase"
+    },
+    {
+      "fr": "avaler une syllabe",
+      "ru": "проглотить слог",
+      "type": "phrase"
+    },
+    {
+      "fr": "le h aspiré",
+      "ru": "придыхательное h",
+      "type": "phrase"
+    },
+    {
+      "fr": "le h muet",
+      "ru": "немое h",
+      "type": "phrase"
+    },
+    {
+      "fr": "samedi → sam'di",
+      "ru": "суббота (разг. произношение)",
+      "type": "phrase"
+    },
+    {
+      "fr": "je ne sais pas → j'sais pas",
+      "ru": "не знаю (разг.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "petit → p'tit",
+      "ru": "маленький (разг.)",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "phB2-th1",
+      "type": "theory",
+      "title": "Три типа liaison",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Тип</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Когда</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Примеры</th></tr><tr><td style='padding:0.5rem'>обязательная</td><td style='padding:0.5rem'>определитель+сущ., местоимение+глагол, после très/dans/en</td><td style='padding:0.5rem'>les‿amis, nous‿avons, très‿utile, en‿été</td></tr><tr><td style='padding:0.5rem'>запрещённая</td><td style='padding:0.5rem'>после et; перед h aspiré; сущ.ед.ч.+глагол</td><td style='padding:0.5rem'>et // alors, les // héros, le étudiant// est...</td></tr><tr><td style='padding:0.5rem'>факультативная</td><td style='padding:0.5rem'>после форм être/avoir, наречий, pas</td><td style='padding:0.5rem'>je suis(‿)allé, pas(‿)encore</td></tr></table><p style='margin:0.75rem 0'>Факультативные liaisons — маркер стиля: в официальной речи их делают (c'est‿une honte), в разговорной — опускают.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Чем выше регистр — тем больше liaisons. Новости радио = максимум, разговор друзей = минимум.</p>"
+    },
+    {
+      "id": "phB2-th2",
+      "type": "theory",
+      "title": "E caduc — когда «е» исчезает",
+      "content": "<p style='margin:0.75rem 0'>Безударное <b>e</b> часто выпадает в потоке речи:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пишем</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Говорим (разг.)</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Правило</th></tr><tr><td style='padding:0.5rem'>samedi</td><td style='padding:0.5rem'>sam'di</td><td style='padding:0.5rem'>e между двумя согласными выпадает</td></tr><tr><td style='padding:0.5rem'>la petite</td><td style='padding:0.5rem'>la p'tite</td><td style='padding:0.5rem'>одна согласная перед e — выпадает</td></tr><tr><td style='padding:0.5rem'>vendredi</td><td style='padding:0.5rem'>vendreDI (e остаётся!)</td><td style='padding:0.5rem'>две согласные перед e (dr) — НЕ выпадает</td></tr><tr><td style='padding:0.5rem'>je te le dis</td><td style='padding:0.5rem'>j'te l'dis</td><td style='padding:0.5rem'>в цепочке je/te/le выпадают через одно</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Правило «двух согласных»: e сохраняется, если перед ним two согласных звука — иначе придётся произнести три согласных подряд (vendr'di — невозможно).</p>"
+    },
+    {
+      "id": "phB2-qz1",
+      "type": "grammar-quiz",
+      "title": "Liaisons и e caduc — практика",
+      "questions": [
+        {
+          "question": "Где liaison ЗАПРЕЩЕНА?",
+          "options": [
+            "et // elle",
+            "les‿enfants",
+            "nous‿avons",
+            "très‿important"
+          ],
+          "correctAnswer": "et // elle",
+          "explanation": "После et связывание запрещено всегда."
+        },
+        {
+          "question": "«Les héros» произносится…",
+          "options": [
+            "ле эро (без liaison)",
+            "ле-зэро",
+            "лез-херос",
+            "ле-зеро с z"
+          ],
+          "correctAnswer": "ле эро (без liaison)",
+          "explanation": "Héros — h aspiré: liaison запрещена (иначе звучало бы как les zéros — нули!)."
+        },
+        {
+          "question": "В каком слове e caduc НЕ выпадает?",
+          "options": [
+            "vendredi",
+            "samedi",
+            "petite",
+            "je te dis"
+          ],
+          "correctAnswer": "vendredi",
+          "explanation": "Перед e две согласные (dr) — e обязано остаться: vendredi."
+        },
+        {
+          "question": "«Je ne sais pas» в быстрой разговорной речи звучит…",
+          "options": [
+            "ж'сэ па",
+            "же не сэ пас",
+            "жё нё сэ па",
+            "жэ-нэ-сэ-пас"
+          ],
+          "correctAnswer": "ж'сэ па",
+          "explanation": "Ne выпадает, e в je выпадает: j'sais pas [жсэпа]."
+        },
+        {
+          "question": "Liaison в «je suis allé» (je suis‿allé)…",
+          "options": [
+            "факультативна — маркер аккуратной речи",
+            "обязательна",
+            "запрещена",
+            "ошибка"
+          ],
+          "correctAnswer": "факультативна — маркер аккуратной речи",
+          "explanation": "После форм être liaison факультативна: в официальной речи делаем, в быту — нет."
+        }
+      ]
+    },
+    {
+      "id": "phB2-fb1",
+      "type": "fill-blank",
+      "title": "Отметьте произношение",
+      "text": "В новостях диктор скажет «vous êtes ___ invités» (с liaison или без?). Друг скажет «t'es où ?» вместо « ___ ». Слово «mercredi» в беглой речи станет « ___ ». А в «les onze joueurs» liaison ___ .",
+      "blanks": [
+        {
+          "correctAnswer": "с liaison",
+          "options": [
+            "с liaison",
+            "без liaison"
+          ],
+          "explanation": "Высокий регистр + обязательная liaison после vous êtes: vous êtes‿invités."
+        },
+        {
+          "correctAnswer": "tu es où ?",
+          "options": [
+            "tu es où ?",
+            "tes où ?",
+            "vous êtes où ?"
+          ],
+          "explanation": "T'es = разговорное стяжение tu es."
+        },
+        {
+          "correctAnswer": "mercr'di",
+          "options": [
+            "mercr'di",
+            "m'rcredi",
+            "mercredi-é"
+          ],
+          "explanation": "E между r и d... после rc двух согласных? mer-cre-di: перед e согласные c+r → по правилу двух согласных e сохраняется в тщательной речи, но в беглой парижской выпадает: mercr'di."
+        },
+        {
+          "correctAnswer": "запрещена",
+          "options": [
+            "запрещена",
+            "обязательна",
+            "факультативна"
+          ],
+          "explanation": "Onze — особое слово: liaison и элизия перед ним запрещены (le onze, les // onze)."
+        }
+      ]
+    }
+  ]
+}

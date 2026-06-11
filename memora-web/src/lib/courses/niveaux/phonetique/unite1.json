@@ -1,0 +1,166 @@
+{
+  "id": "unite1",
+  "title": "Unité 1 : Rythme, accent et intonation",
+  "description": "Ритмические группы, ударение на последнем слоге, интонация вопроса, продолжения и завершения.",
+  "vocabulary": [
+    {
+      "fr": "une syllabe",
+      "ru": "слог",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'accent tonique",
+      "ru": "тоническое ударение",
+      "type": "phrase"
+    },
+    {
+      "fr": "un groupe rythmique",
+      "ru": "ритмическая группа",
+      "type": "phrase"
+    },
+    {
+      "fr": "la montée / la chute",
+      "ru": "повышение / понижение (тона)",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'enchaînement (m)",
+      "ru": "сцепление слов",
+      "type": "phrase"
+    },
+    {
+      "fr": "une pause",
+      "ru": "пауза",
+      "type": "phrase"
+    },
+    {
+      "fr": "prononcer",
+      "ru": "произносить",
+      "type": "phrase"
+    },
+    {
+      "fr": "articuler",
+      "ru": "артикулировать",
+      "type": "phrase"
+    },
+    {
+      "fr": "le débit",
+      "ru": "темп речи",
+      "type": "phrase"
+    },
+    {
+      "fr": "monotone",
+      "ru": "монотонный",
+      "type": "phrase"
+    },
+    {
+      "fr": "expressif / expressive",
+      "ru": "выразительный",
+      "type": "phrase"
+    },
+    {
+      "fr": "hacher son discours",
+      "ru": "рубить речь (плохо)",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "phB-th1",
+      "type": "theory",
+      "title": "Французский ритм — не слова, а группы",
+      "content": "<p style='margin:0.75rem 0'>Французская речь делится не на слова, а на <b>ритмические группы</b>; ударение падает на ПОСЛЕДНИЙ слог группы:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Фраза</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Группы</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Ударные слоги</th></tr><tr><td style='padding:0.5rem'>Je voudrais un café.</td><td style='padding:0.5rem'>[Je voudrais un caFÉ]</td><td style='padding:0.5rem'>-fé</td></tr><tr><td style='padding:0.5rem'>Je voudrais un café noir.</td><td style='padding:0.5rem'>[Je voudrais un café NOIR]</td><td style='padding:0.5rem'>-noir (ударение «переехало»!)</td></tr><tr><td style='padding:0.5rem'>Demain matin, je pars à Lyon.</td><td style='padding:0.5rem'>[Demain maTIN] [je pars à LYON]</td><td style='padding:0.5rem'>-tin, -lyon</td></tr></table><p style='margin:0.75rem 0'><b>Интонация</b>: внутри фразы группы заканчиваются лёгким подъёмом (↗ — «я не закончил»), финальная группа — падением (↘ — точка). Общий вопрос без инверсии — подъём в конце (↗).</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Главная ошибка русскоязычных — ударять каждое слово. Произносите группу слитно, как одно длинное слово: «жевудрэзэнкафэ-НУАР».</p>"
+    },
+    {
+      "id": "phB-qz1",
+      "type": "grammar-quiz",
+      "title": "Ритм и интонация — практика",
+      "questions": [
+        {
+          "question": "Куда падает ударение в группе «une tasse de thé vert» ?",
+          "options": [
+            "на VERT",
+            "на TASSE",
+            "на THÉ",
+            "на UNE"
+          ],
+          "correctAnswer": "на VERT",
+          "explanation": "Ударение всегда на последнем слоге ритмической группы: thé VERT."
+        },
+        {
+          "question": "«Tu viens ce soir ?» (без inversion) произносится…",
+          "options": [
+            "с подъёмом в конце ↗",
+            "с падением в конце ↘",
+            "монотонно",
+            "с ударением на tu"
+          ],
+          "correctAnswer": "с подъёмом в конце ↗",
+          "explanation": "Общий вопрос интонационного типа — голос вверх."
+        },
+        {
+          "question": "В «Quand il pleut, je reste chez moi» после pleut голос…",
+          "options": [
+            "слегка поднимается (фраза не закончена)",
+            "падает (точка)",
+            "исчезает",
+            "дрожит"
+          ],
+          "correctAnswer": "слегка поднимается (фраза не закончена)",
+          "explanation": "Незавершённость — лёгкий подъём ↗, завершение фразы — падение ↘."
+        },
+        {
+          "question": "Сколько ритмических групп в «Hier soir, mes amis et moi, nous avons dîné ensemble» ?",
+          "options": [
+            "3",
+            "1",
+            "6",
+            "9"
+          ],
+          "correctAnswer": "3",
+          "explanation": "[Hier SOIR] [mes amis et MOI] [nous avons dîné enSEMBLE] — три группы, три ударения."
+        }
+      ]
+    },
+    {
+      "id": "phB-fb1",
+      "type": "fill-blank",
+      "title": "Разметьте интонацию (↗ или ↘)",
+      "text": "Si tu es libre samedi ___ , on pourrait aller au cinéma ___ . Tu préfères le film français ___ ou la comédie américaine ___ ?",
+      "blanks": [
+        {
+          "correctAnswer": "↗",
+          "options": [
+            "↗",
+            "↘"
+          ],
+          "explanation": "Придаточное условия в начале — фраза не закончена: подъём ↗."
+        },
+        {
+          "correctAnswer": "↘",
+          "options": [
+            "↘",
+            "↗"
+          ],
+          "explanation": "Конец повествовательной фразы — падение ↘."
+        },
+        {
+          "correctAnswer": "↗",
+          "options": [
+            "↗",
+            "↘"
+          ],
+          "explanation": "Первый элемент альтернативного вопроса (ou...) — подъём ↗."
+        },
+        {
+          "correctAnswer": "↘",
+          "options": [
+            "↘",
+            "↗"
+          ],
+          "explanation": "Второй элемент альтернативы завершает вопрос — падение ↘ (особенность вопросов с ou!)."
+        }
+      ]
+    }
+  ]
+}

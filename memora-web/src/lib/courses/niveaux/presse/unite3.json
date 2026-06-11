@@ -1,0 +1,199 @@
+{
+  "id": "unite3",
+  "title": "Unité 3 : Citer et rapporter — кто что сказал",
+  "description": "Глаголы цитирования с оттенками, источники информации, осторожность и опровержения.",
+  "vocabulary": [
+    {
+      "fr": "affirmer",
+      "ru": "утверждать",
+      "type": "phrase"
+    },
+    {
+      "fr": "assurer",
+      "ru": "заверять",
+      "type": "phrase"
+    },
+    {
+      "fr": "reconnaître",
+      "ru": "признавать",
+      "type": "phrase"
+    },
+    {
+      "fr": "souligner",
+      "ru": "подчёркивать",
+      "type": "phrase"
+    },
+    {
+      "fr": "préciser",
+      "ru": "уточнять",
+      "type": "phrase"
+    },
+    {
+      "fr": "ajouter",
+      "ru": "добавлять",
+      "type": "phrase"
+    },
+    {
+      "fr": "dénoncer",
+      "ru": "осуждать, разоблачать",
+      "type": "phrase"
+    },
+    {
+      "fr": "saluer",
+      "ru": "приветствовать (решение)",
+      "type": "phrase"
+    },
+    {
+      "fr": "regretter",
+      "ru": "сожалеть",
+      "type": "phrase"
+    },
+    {
+      "fr": "une source proche du dossier",
+      "ru": "источник, близкий к делу",
+      "type": "phrase"
+    },
+    {
+      "fr": "sous couvert d'anonymat",
+      "ru": "на условиях анонимности",
+      "type": "phrase"
+    },
+    {
+      "fr": "un porte-parole",
+      "ru": "официальный представитель",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "pr3-th1",
+      "type": "theory",
+      "title": "Палитра глаголов цитирования",
+      "content": "<p style='margin:0.75rem 0'>«Dire» в прессе почти не встречается — каждый глагол несёт оценку:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Оттенок</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Глаголы</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>нейтрально</td><td style='padding:0.5rem'>déclarer, indiquer, préciser</td><td style='padding:0.5rem'>Le maire a indiqué que les travaux commenceraient lundi.</td></tr><tr><td style='padding:0.5rem'>уверенно</td><td style='padding:0.5rem'>affirmer, assurer, garantir</td><td style='padding:0.5rem'>Elle assure que tout est prêt.</td></tr><tr><td style='padding:0.5rem'>признание</td><td style='padding:0.5rem'>reconnaître, admettre, avouer</td><td style='padding:0.5rem'>Il reconnaît des erreurs.</td></tr><tr><td style='padding:0.5rem'>критика</td><td style='padding:0.5rem'>dénoncer, critiquer, déplorer</td><td style='padding:0.5rem'>L'opposition dénonce un budget injuste.</td></tr><tr><td style='padding:0.5rem'>одобрение</td><td style='padding:0.5rem'>saluer, se féliciter de</td><td style='padding:0.5rem'>Les ONG saluent cette décision.</td></tr><tr><td style='padding:0.5rem'>опровержение</td><td style='padding:0.5rem'>démentir, réfuter</td><td style='padding:0.5rem'>Le club dément tout contact avec le joueur.</td></tr></table>"
+    },
+    {
+      "id": "pr3-qz1",
+      "type": "grammar-quiz",
+      "title": "Выберите глагол по смыслу",
+      "questions": [
+        {
+          "question": "L'association ___ les conditions de travail dans l'usine. (критикует, разоблачает)",
+          "options": [
+            "dénonce",
+            "salue",
+            "assure",
+            "précise"
+          ],
+          "correctAnswer": "dénonce",
+          "explanation": "Осуждение/разоблачение — dénoncer."
+        },
+        {
+          "question": "Le ministère ___ ces rumeurs : « C'est totalement faux. »",
+          "options": [
+            "dément",
+            "reconnaît",
+            "salue",
+            "ajoute"
+          ],
+          "correctAnswer": "dément",
+          "explanation": "Опровержение — démentir."
+        },
+        {
+          "question": "La direction ___ enfin sa responsabilité dans l'accident.",
+          "options": [
+            "reconnaît",
+            "dément",
+            "s'envole",
+            "déplore que non"
+          ],
+          "correctAnswer": "reconnaît",
+          "explanation": "Признание — reconnaître sa responsabilité."
+        },
+        {
+          "question": "Les médecins ___ la décision d'augmenter le budget de l'hôpital.",
+          "options": [
+            "saluent",
+            "dénoncent",
+            "démentent",
+            "chutent"
+          ],
+          "correctAnswer": "saluent",
+          "explanation": "Одобрение — saluer une décision."
+        },
+        {
+          "question": "« Le projet coûtera 2 millions », ___ le maire, sans donner plus de détails.",
+          "options": [
+            "précise",
+            "dément",
+            "rejette",
+            "manifeste"
+          ],
+          "correctAnswer": "précise",
+          "explanation": "Уточнение цифры — préciser."
+        }
+      ]
+    },
+    {
+      "id": "pr3-fb1",
+      "type": "fill-blank",
+      "title": "Статья с цитированием",
+      "text": "Une ___ proche du dossier, s'exprimant sous couvert d'___ , affirme que la fusion est imminente. Le ___ -parole du groupe ___ ces informations : « Aucune décision n'est prise. » De son côté, le syndicat ___ le manque de transparence et ___ que les salariés soient informés les derniers.",
+      "blanks": [
+        {
+          "correctAnswer": "source",
+          "options": [
+            "source",
+            "ressource",
+            "personne près"
+          ],
+          "explanation": "Une source proche du dossier — журналистская формула."
+        },
+        {
+          "correctAnswer": "anonymat",
+          "options": [
+            "anonymat",
+            "anonyme",
+            "incognito"
+          ],
+          "explanation": "Sous couvert d'anonymat — на условиях анонимности."
+        },
+        {
+          "correctAnswer": "porte",
+          "options": [
+            "porte",
+            "prend",
+            "par"
+          ],
+          "explanation": "Le porte-parole — официальный представитель."
+        },
+        {
+          "correctAnswer": "dément",
+          "options": [
+            "dément",
+            "salue",
+            "confirme"
+          ],
+          "explanation": "Дальше цитата-отрицание → démentir."
+        },
+        {
+          "correctAnswer": "dénonce",
+          "options": [
+            "dénonce",
+            "félicite",
+            "assure"
+          ],
+          "explanation": "Критика непрозрачности — dénoncer."
+        },
+        {
+          "correctAnswer": "regrette",
+          "options": [
+            "regrette",
+            "salue",
+            "garantit"
+          ],
+          "explanation": "Сожаление + que + субжонктив: regrette que... soient."
+        }
+      ]
+    }
+  ]
+}

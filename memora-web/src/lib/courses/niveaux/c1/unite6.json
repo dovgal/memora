@@ -1,0 +1,230 @@
+{
+  "id": "unite6",
+  "title": "Unité 6 : DALF C1 — пробный экзамен",
+  "description": "Формат DALF C1: synthèse de documents, essai argumenté, exposé. Техника синтеза и критерии оценки.",
+  "vocabulary": [
+    {
+      "fr": "la synthèse de documents",
+      "ru": "синтез документов",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'essai argumenté",
+      "ru": "аргументированное эссе",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'exposé (m)",
+      "ru": "устный доклад",
+      "type": "phrase"
+    },
+    {
+      "fr": "dégager la problématique",
+      "ru": "выделить проблематику",
+      "type": "phrase"
+    },
+    {
+      "fr": "confronter les sources",
+      "ru": "сопоставить источники",
+      "type": "phrase"
+    },
+    {
+      "fr": "un plan en deux parties",
+      "ru": "план из двух частей",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'objectivité (f)",
+      "ru": "объективность",
+      "type": "phrase"
+    },
+    {
+      "fr": "la concision",
+      "ru": "сжатость",
+      "type": "phrase"
+    },
+    {
+      "fr": "le mot-charnière",
+      "ru": "слово-связка",
+      "type": "phrase"
+    },
+    {
+      "fr": "respecter le nombre de mots",
+      "ru": "соблюсти объём",
+      "type": "phrase"
+    },
+    {
+      "fr": "la reformulation",
+      "ru": "переформулировка",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'entretien avec le jury",
+      "ru": "беседа с комиссией",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "dc1-th1",
+      "type": "theory",
+      "title": "Формат DALF C1",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Часть</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Задание</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Особенности</th></tr><tr><td style='padding:0.5rem'>CO</td><td style='padding:0.5rem'>длинная запись (интервью, лекция) — одно/два прослушивания</td><td style='padding:0.5rem'>конспектируйте: цифры, имена, причины</td></tr><tr><td style='padding:0.5rem'>CE</td><td style='padding:0.5rem'>большой текст 1500-2000 слов + вопросы</td><td style='padding:0.5rem'>имплицит, структура аргументации, лексика</td></tr><tr><td style='padding:0.5rem'>PE</td><td style='padding:0.5rem'>synthèse (220±10 % слов из 2 текстов) + essai (250 слов)</td><td style='padding:0.5rem'>синтез: ТОЛЬКО идеи источников, без своего мнения</td></tr><tr><td style='padding:0.5rem'>PO</td><td style='padding:0.5rem'>exposé по досье статей + entretien</td><td style='padding:0.5rem'>30-60 мин подготовки; чёткий план обязателен</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Самое опасное в synthèse: выйти за объём, скопировать фразы из текста или вставить своё мнение — за всё снимают баллы.</p>"
+    },
+    {
+      "id": "dc1-qz1",
+      "type": "grammar-quiz",
+      "title": "Synthèse: правила игры",
+      "questions": [
+        {
+          "question": "В synthèse можно…",
+          "options": [
+            "переформулировать идеи обоих текстов",
+            "цитировать целые предложения",
+            "добавить свои примеры",
+            "высказать мнение в конце"
+          ],
+          "correctAnswer": "переформулировать идеи обоих текстов",
+          "explanation": "Только идеи источников, своими словами, без мнения и без копирования."
+        },
+        {
+          "question": "Объём synthèse 220 слов означает…",
+          "options": [
+            "от ~200 до ~240 слов",
+            "ровно 220",
+            "не меньше 300",
+            "сколько хочется"
+          ],
+          "correctAnswer": "от ~200 до ~240 слов",
+          "explanation": "Допуск ±10 %; выход за рамки штрафуется."
+        },
+        {
+          "question": "Первая фраза synthèse должна…",
+          "options": [
+            "представить тему и источники",
+            "начать с цитаты",
+            "задать вопрос читателю",
+            "выразить ваше мнение"
+          ],
+          "correctAnswer": "представить тему и источники",
+          "explanation": "Вводка: «Ces deux documents traitent de...» — тема + природа документов."
+        },
+        {
+          "question": "Если тексты противоречат друг другу, в synthèse нужно…",
+          "options": [
+            "показать это противопоставление",
+            "выбрать «правильный»",
+            "игнорировать один",
+            "согласиться с обоими"
+          ],
+          "correctAnswer": "показать это противопоставление",
+          "explanation": "Confronter: tandis que le premier..., le second..."
+        }
+      ]
+    },
+    {
+      "id": "dc1-fb1",
+      "type": "fill-blank",
+      "title": "Каркас synthèse — заполните",
+      "text": "Ces deux documents ___ de l'impact du numérique sur la lecture. Le premier, un article de presse, ___ que les écrans détournent les jeunes du livre, ___ que le second, une étude universitaire, ___ ce constat : la lecture ne disparaît pas, elle se transforme. ___ , les deux auteurs s'accordent sur la nécessité d'accompagner ces nouveaux usages.",
+      "blanks": [
+        {
+          "correctAnswer": "traitent",
+          "options": [
+            "traitent",
+            "parlent sur",
+            "disent"
+          ],
+          "explanation": "Вводка: ces documents traitent de..."
+        },
+        {
+          "correctAnswer": "soutient",
+          "options": [
+            "soutient",
+            "nie",
+            "copie"
+          ],
+          "explanation": "Атрибуция тезиса: le premier soutient que."
+        },
+        {
+          "correctAnswer": "tandis",
+          "options": [
+            "tandis",
+            "afin",
+            "bien"
+          ],
+          "explanation": "Противопоставление источников: tandis que."
+        },
+        {
+          "correctAnswer": "nuance",
+          "options": [
+            "nuance",
+            "répète",
+            "ignore"
+          ],
+          "explanation": "Второй текст корректирует тезис: nuance ce constat."
+        },
+        {
+          "correctAnswer": "Néanmoins",
+          "options": [
+            "Néanmoins",
+            "Par exemple",
+            "Sinon"
+          ],
+          "explanation": "Точка согласия после контраста — néanmoins."
+        }
+      ]
+    },
+    {
+      "id": "dc1-qz2",
+      "type": "grammar-quiz",
+      "title": "Essai и exposé C1",
+      "questions": [
+        {
+          "question": "План essai C1 чаще всего…",
+          "options": [
+            "две части по 2 абзаца + intro/conclusion",
+            "десять абзацев",
+            "без плана",
+            "один длинный абзац"
+          ],
+          "correctAnswer": "две части по 2 абзаца + intro/conclusion",
+          "explanation": "Классика: введение с проблематикой, I (2 абз.), II (2 абз.), заключение."
+        },
+        {
+          "question": "«Annoncer le plan» в exposé значит…",
+          "options": [
+            "сказать, о чём будут части доклада",
+            "прочитать статьи вслух",
+            "назвать своё имя",
+            "поприветствовать жюри"
+          ],
+          "correctAnswer": "сказать, о чём будут части доклада",
+          "explanation": "«Dans un premier temps..., puis...» — обязательный элемент."
+        },
+        {
+          "question": "В entretien жюри провоцирует вас. Ваша задача…",
+          "options": [
+            "аргументированно защищаться, сохраняя нюансы",
+            "согласиться со всем",
+            "молчать",
+            "сменить тему"
+          ],
+          "correctAnswer": "аргументированно защищаться, сохраняя нюансы",
+          "explanation": "Проверяют гибкость аргументации: уступка + контраргумент + нюанс."
+        },
+        {
+          "question": "Хорошая problématique — это…",
+          "options": [
+            "вопрос, допускающий спор",
+            "пересказ темы",
+            "да/нет факт",
+            "цитата"
+          ],
+          "correctAnswer": "вопрос, допускающий спор",
+          "explanation": "Проблематика — спорный вопрос: «Dans quelle mesure... ?», «Faut-il... ?»"
+        }
+      ]
+    }
+  ]
+}
