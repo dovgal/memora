@@ -850,6 +850,120 @@
       "videoFile": "U05_ST_720p.mp4",
       "source": "sub",
       "description": "Regardez la vidéo. Observez comment on demande son chemin en France."
+    },
+    {
+      "id": "u5-add-theory-1",
+      "type": "theory",
+      "title": "Il y a — «есть, имеется»",
+      "content": "<p style='margin:0.75rem 0'><b>Il y a</b> — безличный оборот «есть / имеется». Форма не меняется ни в числе, ни в роде.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Фраза</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th></tr><tr><td style='padding:0.5rem'>Il y a un café près d'ici.</td><td style='padding:0.5rem'>Рядом есть кафе.</td></tr><tr><td style='padding:0.5rem'>Il y a des magasins dans cette rue.</td><td style='padding:0.5rem'>На этой улице есть магазины.</td></tr><tr><td style='padding:0.5rem'>Il n'y a pas de métro ici.</td><td style='padding:0.5rem'>Здесь нет метро.</td></tr><tr><td style='padding:0.5rem'>Est-ce qu'il y a une pharmacie ?</td><td style='padding:0.5rem'>Здесь есть аптека?</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 В отрицании артикль un/une/des превращается в <b>de</b>: il n'y a pas <b>de</b> banque.</p>"
+    },
+    {
+      "id": "u5-add-quiz-1",
+      "type": "grammar-quiz",
+      "title": "Il y a — практика",
+      "questions": [
+        {
+          "question": "___ un parc dans mon quartier.",
+          "options": [
+            "Il y a",
+            "Il est",
+            "C'est",
+            "Il a"
+          ],
+          "correctAnswer": "Il y a",
+          "explanation": "«Есть, имеется» — il y a. Il est — это «он есть (кто-то)»."
+        },
+        {
+          "question": "Il n'y a pas ___ supermarché ici.",
+          "options": [
+            "de",
+            "du",
+            "un",
+            "des"
+          ],
+          "correctAnswer": "de",
+          "explanation": "После отрицания il n'y a pas артикль заменяется на de."
+        },
+        {
+          "question": "___ des touristes sur la place ?",
+          "options": [
+            "Est-ce qu'il y a",
+            "Est-ce qu'il est",
+            "Qui est-ce",
+            "Y a-t-il de"
+          ],
+          "correctAnswer": "Est-ce qu'il y a",
+          "explanation": "Вопрос с il y a: Est-ce qu'il y a... ? (или Y a-t-il... ?)"
+        },
+        {
+          "question": "Dans ma ville, ___ beaucoup de musées.",
+          "options": [
+            "il y a",
+            "ils sont",
+            "c'est",
+            "il fait"
+          ],
+          "correctAnswer": "il y a",
+          "explanation": "Описание того, что имеется в городе — il y a."
+        }
+      ]
+    },
+    {
+      "id": "u5-add-theory-2",
+      "type": "theory",
+      "title": "Il faut + devoir — обязанность и запрет",
+      "content": "<p style='margin:0.75rem 0'>Чтобы сказать «нужно / нельзя», используем:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Конструкция</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th></tr><tr><td style='padding:0.5rem'>il faut + инфинитив</td><td style='padding:0.5rem'>Il faut tourner à gauche.</td><td style='padding:0.5rem'>Нужно повернуть налево.</td></tr><tr><td style='padding:0.5rem'>il ne faut pas + инф.</td><td style='padding:0.5rem'>Il ne faut pas traverser ici.</td><td style='padding:0.5rem'>Здесь нельзя переходить.</td></tr><tr><td style='padding:0.5rem'>c'est interdit</td><td style='padding:0.5rem'>C'est interdit de fumer.</td><td style='padding:0.5rem'>Курить запрещено.</td></tr><tr><td style='padding:0.5rem'>devoir + инфинитив</td><td style='padding:0.5rem'>Tu dois prendre le bus 12.</td><td style='padding:0.5rem'>Ты должен сесть на 12-й автобус.</td></tr></table><p style='margin:0.75rem 0'>Спряжение <b>devoir</b> (быть должным): je dois, tu dois, il doit, nous devons, vous devez, ils doivent.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 <b>Il faut</b> — безличная форма, она никогда не меняется.</p>"
+    },
+    {
+      "id": "u5-add-quiz-2",
+      "type": "grammar-quiz",
+      "title": "Il faut / devoir — практика",
+      "questions": [
+        {
+          "question": "Pour aller à la gare, ___ prendre le métro.",
+          "options": [
+            "il faut",
+            "il faux",
+            "ils faut",
+            "il fauts"
+          ],
+          "correctAnswer": "il faut",
+          "explanation": "Il faut — безличный оборот, всегда в этой форме."
+        },
+        {
+          "question": "Vous ___ acheter un ticket.",
+          "options": [
+            "devez",
+            "doivent",
+            "dois",
+            "devons"
+          ],
+          "correctAnswer": "devez",
+          "explanation": "Vous devez — второе лицо множественного числа."
+        },
+        {
+          "question": "Il ne ___ pas marcher sur la pelouse.",
+          "options": [
+            "faut",
+            "dois",
+            "doit",
+            "faux"
+          ],
+          "correctAnswer": "faut",
+          "explanation": "Запрет: il ne faut pas + инфинитив."
+        },
+        {
+          "question": "Elles ___ partir avant huit heures.",
+          "options": [
+            "doivent",
+            "devez",
+            "doit",
+            "devons"
+          ],
+          "correctAnswer": "doivent",
+          "explanation": "Elles doivent — третье лицо множественного числа."
+        }
+      ]
     }
   ]
 }

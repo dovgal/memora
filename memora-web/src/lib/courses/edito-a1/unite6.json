@@ -899,6 +899,63 @@
           "ru": "Когда идёт дождь, мы занимаемся музыкой."
         }
       ]
+    },
+    {
+      "id": "u6-add-theory-1",
+      "type": "theory",
+      "title": "Le passé récent — venir de + infinitif",
+      "content": "<p style='margin:0.75rem 0'>Чтобы сказать «только что что-то сделал», используем <b>venir de + инфинитив</b>:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Фраза</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th></tr><tr><td style='padding:0.5rem'>Je viens de finir mon travail.</td><td style='padding:0.5rem'>Я только что закончил работу.</td></tr><tr><td style='padding:0.5rem'>Elle vient d'arriver.</td><td style='padding:0.5rem'>Она только что пришла.</td></tr><tr><td style='padding:0.5rem'>Nous venons de manger.</td><td style='padding:0.5rem'>Мы только что поели.</td></tr><tr><td style='padding:0.5rem'>Le film vient de commencer.</td><td style='padding:0.5rem'>Фильм только что начался.</td></tr></table><p style='margin:0.75rem 0'>Спрягается только venir: je viens, tu viens, il vient, nous venons, vous venez, ils viennent. Перед гласной de → d'.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Сравните три времени: <i>Je viens de jouer</i> (только что) — <i>Je joue</i> (сейчас) — <i>Je vais jouer</i> (скоро).</p>"
+    },
+    {
+      "id": "u6-add-quiz-1",
+      "type": "grammar-quiz",
+      "title": "Passé récent — практика",
+      "questions": [
+        {
+          "question": "Le match ___ commencer.",
+          "options": [
+            "vient de",
+            "va",
+            "viens de",
+            "vient"
+          ],
+          "correctAnswer": "vient de",
+          "explanation": "«Только что начался» — vient de + инфинитив."
+        },
+        {
+          "question": "Nous ___ rentrer du cinéma.",
+          "options": [
+            "venons de",
+            "allons",
+            "venez de",
+            "venons"
+          ],
+          "correctAnswer": "venons de",
+          "explanation": "Nous venons de + инфинитив — «мы только что вернулись»."
+        },
+        {
+          "question": "Elle vient ___ appeler.",
+          "options": [
+            "d'",
+            "de",
+            "à",
+            "des"
+          ],
+          "correctAnswer": "d'",
+          "explanation": "Перед гласной de сокращается до d': vient d'appeler."
+        },
+        {
+          "question": "Ils ___ de gagner le match !",
+          "options": [
+            "viennent",
+            "vient",
+            "venez",
+            "venons"
+          ],
+          "correctAnswer": "viennent",
+          "explanation": "Ils viennent de gagner — третье лицо множественного числа."
+        }
+      ]
     }
   ]
 }

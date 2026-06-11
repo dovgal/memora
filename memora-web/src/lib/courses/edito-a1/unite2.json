@@ -869,6 +869,74 @@
       "videoFile": "U02_ST_720p.mp4",
       "source": "sub",
       "description": "Regardez la vidéo. Identifiez les membres de la famille."
+    },
+    {
+      "id": "u2-add-theory-1",
+      "type": "theory",
+      "title": "Le masculin et le féminin des professions — Профессии",
+      "content": "<p style='margin:0.75rem 0'>Название профессии меняется по роду. Основные модели:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Модель</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Мужской</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Женский</th></tr><tr><td style='padding:0.5rem'>+ -e</td><td style='padding:0.5rem'>un étudiant</td><td style='padding:0.5rem'>une étudiante</td></tr><tr><td style='padding:0.5rem'>-er → -ère</td><td style='padding:0.5rem'>un boulanger</td><td style='padding:0.5rem'>une boulangère</td></tr><tr><td style='padding:0.5rem'>-eur → -euse</td><td style='padding:0.5rem'>un vendeur</td><td style='padding:0.5rem'>une vendeuse</td></tr><tr><td style='padding:0.5rem'>-teur → -trice</td><td style='padding:0.5rem'>un acteur</td><td style='padding:0.5rem'>une actrice</td></tr><tr><td style='padding:0.5rem'>-ien → -ienne</td><td style='padding:0.5rem'>un musicien</td><td style='padding:0.5rem'>une musicienne</td></tr><tr><td style='padding:0.5rem'>не меняется</td><td style='padding:0.5rem'>un / une journaliste</td><td style='padding:0.5rem'>un / une médecin</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 После профессии без артикля: <i>Elle est professeure.</i> (а не «une professeure»), когда говорим «кто она по профессии».</p>"
+    },
+    {
+      "id": "u2-add-quiz-1",
+      "type": "grammar-quiz",
+      "title": "Профессии: мужской и женский род",
+      "questions": [
+        {
+          "question": "Marie est ___ dans un café.",
+          "options": [
+            "serveuse",
+            "serveur",
+            "serveure",
+            "servante"
+          ],
+          "correctAnswer": "serveuse",
+          "explanation": "-eur → -euse: serveur → serveuse."
+        },
+        {
+          "question": "Paul est ___ de français.",
+          "options": [
+            "professeur",
+            "professeuse",
+            "professrice",
+            "professeure femme"
+          ],
+          "correctAnswer": "professeur",
+          "explanation": "Paul — мужчина: professeur. Для женщины часто пишут professeure."
+        },
+        {
+          "question": "Léa est ___ célèbre.",
+          "options": [
+            "actrice",
+            "acteur",
+            "acteuse",
+            "actrise"
+          ],
+          "correctAnswer": "actrice",
+          "explanation": "-teur → -trice: acteur → actrice."
+        },
+        {
+          "question": "Mon frère est ___ .",
+          "options": [
+            "infirmier",
+            "infirmière",
+            "infirmieuse",
+            "infirmien"
+          ],
+          "correctAnswer": "infirmier",
+          "explanation": "Брат — мужчина: infirmier (медбрат). Женщина — infirmière."
+        },
+        {
+          "question": "Elle est ___ à la radio.",
+          "options": [
+            "journaliste",
+            "journalisteuse",
+            "journalistrice",
+            "journalier"
+          ],
+          "correctAnswer": "journaliste",
+          "explanation": "Journaliste не меняется по роду: un/une journaliste."
+        }
+      ]
     }
   ]
 }

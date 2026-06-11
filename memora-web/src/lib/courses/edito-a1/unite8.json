@@ -831,6 +831,131 @@
           "ru": "Каждое утро мы ездим на работу на велосипеде."
         }
       ]
+    },
+    {
+      "id": "u8-add-theory-1",
+      "type": "theory",
+      "title": "Le comparatif — Сравнение",
+      "content": "<p style='margin:0.75rem 0'>Сравниваем с помощью <b>plus / moins / aussi ... que</b>:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Конструкция</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th></tr><tr><td style='padding:0.5rem'>plus + прил. + que</td><td style='padding:0.5rem'>Le train est plus rapide que le bus.</td><td style='padding:0.5rem'>Поезд быстрее автобуса.</td></tr><tr><td style='padding:0.5rem'>moins + прил. + que</td><td style='padding:0.5rem'>Le bus est moins cher que le taxi.</td><td style='padding:0.5rem'>Автобус дешевле такси.</td></tr><tr><td style='padding:0.5rem'>aussi + прил. + que</td><td style='padding:0.5rem'>L'avion est aussi confortable que le train.</td><td style='padding:0.5rem'>Самолёт так же удобен, как поезд.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Исключение: bon → <b>meilleur</b> (а не «plus bon»): <i>Ce café est meilleur que l'autre.</i></p>"
+    },
+    {
+      "id": "u8-add-quiz-1",
+      "type": "grammar-quiz",
+      "title": "Comparatif — практика",
+      "questions": [
+        {
+          "question": "Le TGV est ___ rapide ___ le bus.",
+          "options": [
+            "plus ... que",
+            "plus ... de",
+            "aussi ... de",
+            "moins ... à"
+          ],
+          "correctAnswer": "plus ... que",
+          "explanation": "Сравнение: plus + прилагательное + que."
+        },
+        {
+          "question": "Le métro est ___ cher que le taxi.",
+          "options": [
+            "moins",
+            "moin",
+            "mieux",
+            "meilleur"
+          ],
+          "correctAnswer": "moins",
+          "explanation": "«Дешевле» = менее дорогой: moins cher que."
+        },
+        {
+          "question": "Ce restaurant est ___ que l'autre.",
+          "options": [
+            "meilleur",
+            "plus bon",
+            "plus meilleur",
+            "bien"
+          ],
+          "correctAnswer": "meilleur",
+          "explanation": "Bon → meilleur. «Plus bon» — ошибка."
+        },
+        {
+          "question": "L'hôtel est ___ confortable que l'auberge.",
+          "options": [
+            "aussi",
+            "autant",
+            "comme",
+            "ainsi"
+          ],
+          "correctAnswer": "aussi",
+          "explanation": "«Так же ... как» с прилагательным — aussi ... que."
+        },
+        {
+          "question": "Marseille est ___ grande ___ Lyon.",
+          "options": [
+            "plus ... que",
+            "plus ... comme",
+            "aussi ... de",
+            "moins ... des"
+          ],
+          "correctAnswer": "plus ... que",
+          "explanation": "Классическая схема сравнения: plus + adj + que."
+        }
+      ]
+    },
+    {
+      "id": "u8-add-theory-2",
+      "type": "theory",
+      "title": "C'était, il y avait, il faisait — впечатления о прошлом",
+      "content": "<p style='margin:0.75rem 0'>Чтобы описать впечатления от поездки, хватит трёх безличных форм прошедшего времени (imparfait):</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Форма</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th></tr><tr><td style='padding:0.5rem'>c'était</td><td style='padding:0.5rem'>C'était magnifique !</td><td style='padding:0.5rem'>Было великолепно!</td></tr><tr><td style='padding:0.5rem'>il y avait</td><td style='padding:0.5rem'>Il y avait beaucoup de monde.</td><td style='padding:0.5rem'>Было много народу.</td></tr><tr><td style='padding:0.5rem'>il faisait</td><td style='padding:0.5rem'>Il faisait beau et chaud.</td><td style='padding:0.5rem'>Погода была хорошая и тёплая.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Эти формы — готовые фразы для открытки или рассказа об отпуске: <i>C'était super, il faisait beau, il y avait la mer !</i></p>"
+    },
+    {
+      "id": "u8-add-quiz-2",
+      "type": "grammar-quiz",
+      "title": "C'était / il y avait / il faisait — практика",
+      "questions": [
+        {
+          "question": "Mes vacances ? ___ génial !",
+          "options": [
+            "C'était",
+            "Il y avait",
+            "Il faisait",
+            "C'est"
+          ],
+          "correctAnswer": "C'était",
+          "explanation": "Оценка «было здорово» — c'était + прилагательное."
+        },
+        {
+          "question": "___ froid à la montagne.",
+          "options": [
+            "Il faisait",
+            "C'était",
+            "Il y avait",
+            "Il est"
+          ],
+          "correctAnswer": "Il faisait",
+          "explanation": "О погоде — il faisait: il faisait froid/beau/chaud."
+        },
+        {
+          "question": "___ un grand marché sur la place.",
+          "options": [
+            "Il y avait",
+            "Il faisait",
+            "C'était",
+            "Il était"
+          ],
+          "correctAnswer": "Il y avait",
+          "explanation": "«Был, имелся» в прошлом — il y avait (прошедшее от il y a)."
+        },
+        {
+          "question": "Le voyage ? ___ un peu long.",
+          "options": [
+            "C'était",
+            "Il y avait",
+            "Il faisait",
+            "Ce sont"
+          ],
+          "correctAnswer": "C'était",
+          "explanation": "Оценка-характеристика — c'était un peu long."
+        }
+      ]
     }
   ]
 }

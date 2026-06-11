@@ -847,6 +847,74 @@
       "videoFile": "U04_ST_720p.mp4",
       "source": "sub",
       "description": "Regardez la vidéo. Observez comment on commande au restaurant en France."
+    },
+    {
+      "id": "u4-add-theory-1",
+      "type": "theory",
+      "title": "Choisir, finir — глаголы на -ir (1-я модель) + prendre, boire",
+      "content": "<p style='margin:0.75rem 0'>Правильные глаголы на <b>-ir</b> во множественном числе получают <b>-iss-</b>:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Лицо</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>choisir (выбирать)</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>finir (заканчивать)</th></tr><tr><td style='padding:0.5rem'>je</td><td style='padding:0.5rem'>choisis</td><td style='padding:0.5rem'>finis</td></tr><tr><td style='padding:0.5rem'>tu</td><td style='padding:0.5rem'>choisis</td><td style='padding:0.5rem'>finis</td></tr><tr><td style='padding:0.5rem'>il / elle</td><td style='padding:0.5rem'>choisit</td><td style='padding:0.5rem'>finit</td></tr><tr><td style='padding:0.5rem'>nous</td><td style='padding:0.5rem'>choisissons</td><td style='padding:0.5rem'>finissons</td></tr><tr><td style='padding:0.5rem'>vous</td><td style='padding:0.5rem'>choisissez</td><td style='padding:0.5rem'>finissez</td></tr><tr><td style='padding:0.5rem'>ils / elles</td><td style='padding:0.5rem'>choisissent</td><td style='padding:0.5rem'>finissent</td></tr></table><p style='margin:0.75rem 0'>В кафе и ресторане незаменимы неправильные глаголы <b>prendre</b> (брать) и <b>boire</b> (пить):</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Лицо</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>prendre</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>boire</th></tr><tr><td style='padding:0.5rem'>je</td><td style='padding:0.5rem'>prends</td><td style='padding:0.5rem'>bois</td></tr><tr><td style='padding:0.5rem'>tu</td><td style='padding:0.5rem'>prends</td><td style='padding:0.5rem'>bois</td></tr><tr><td style='padding:0.5rem'>il / elle</td><td style='padding:0.5rem'>prend</td><td style='padding:0.5rem'>boit</td></tr><tr><td style='padding:0.5rem'>nous</td><td style='padding:0.5rem'>prenons</td><td style='padding:0.5rem'>buvons</td></tr><tr><td style='padding:0.5rem'>vous</td><td style='padding:0.5rem'>prenez</td><td style='padding:0.5rem'>buvez</td></tr><tr><td style='padding:0.5rem'>ils / elles</td><td style='padding:0.5rem'>prennent</td><td style='padding:0.5rem'>boivent</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 <i>Je prends un café et je choisis le dessert du jour.</i> — Я возьму кофе и выберу десерт дня.</p>"
+    },
+    {
+      "id": "u4-add-quiz-1",
+      "type": "grammar-quiz",
+      "title": "Choisir / finir / prendre / boire — практика",
+      "questions": [
+        {
+          "question": "Vous ___ le menu ou la carte ?",
+          "options": [
+            "choisissez",
+            "choisez",
+            "choisissent",
+            "choisis"
+          ],
+          "correctAnswer": "choisissez",
+          "explanation": "Vous choisissez — во множественном числе появляется -iss-."
+        },
+        {
+          "question": "Nous ___ le dîner à neuf heures.",
+          "options": [
+            "finissons",
+            "finons",
+            "finissez",
+            "finit"
+          ],
+          "correctAnswer": "finissons",
+          "explanation": "Nous finissons — модель finir: -issons."
+        },
+        {
+          "question": "Qu'est-ce que tu ___ ? — Un thé, s'il te plaît.",
+          "options": [
+            "prends",
+            "prend",
+            "prenez",
+            "prennes"
+          ],
+          "correctAnswer": "prends",
+          "explanation": "Tu prends — je/tu prends, il prend."
+        },
+        {
+          "question": "Ils ___ de l'eau minérale.",
+          "options": [
+            "boivent",
+            "boient",
+            "buvent",
+            "boit"
+          ],
+          "correctAnswer": "boivent",
+          "explanation": "Ils boivent — неправильная форма глагола boire."
+        },
+        {
+          "question": "Elle ___ une salade verte.",
+          "options": [
+            "prend",
+            "prends",
+            "prenne",
+            "prendre"
+          ],
+          "correctAnswer": "prend",
+          "explanation": "Il/elle prend — без s в третьем лице."
+        }
+      ]
     }
   ]
 }

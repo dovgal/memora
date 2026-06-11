@@ -832,6 +832,142 @@
       "videoFile": "U03_ST_720p.mp4",
       "source": "sub",
       "description": "Regardez la vidéo et observez les activités quotidiennes des personnages."
+    },
+    {
+      "id": "u3-add-theory-1",
+      "type": "theory",
+      "title": "Poser des questions — Как задавать вопросы",
+      "content": "<p style='margin:0.75rem 0'>Три способа задать общий вопрос («да/нет»):</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Способ</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Стиль</th></tr><tr><td style='padding:0.5rem'>интонация</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>Tu parles français ?</td><td style='padding:0.5rem'>разговорный</td></tr><tr><td style='padding:0.5rem'>est-ce que</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>Est-ce que tu parles français ?</td><td style='padding:0.5rem'>нейтральный</td></tr><tr><td style='padding:0.5rem'>инверсия</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>Parles-tu français ?</td><td style='padding:0.5rem'>формальный</td></tr></table><p style='margin:0.75rem 0'>Вопросительные слова:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Слово</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Значение</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>où</td><td style='padding:0.5rem'>где, куда</td><td style='padding:0.5rem'>Où habites-tu ?</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>quand</td><td style='padding:0.5rem'>когда</td><td style='padding:0.5rem'>Quand est-ce que tu pars ?</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>comment</td><td style='padding:0.5rem'>как</td><td style='padding:0.5rem'>Comment tu t'appelles ?</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>pourquoi</td><td style='padding:0.5rem'>почему</td><td style='padding:0.5rem'>Pourquoi tu étudies le français ?</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>combien (de)</td><td style='padding:0.5rem'>сколько</td><td style='padding:0.5rem'>Combien de frères as-tu ?</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>qui</td><td style='padding:0.5rem'>кто</td><td style='padding:0.5rem'>Qui est-ce ?</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>que / qu'est-ce que</td><td style='padding:0.5rem'>что</td><td style='padding:0.5rem'>Qu'est-ce que tu manges ?</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>quel / quelle</td><td style='padding:0.5rem'>какой / какая</td><td style='padding:0.5rem'>Quelle est ta profession ?</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 <b>Quel</b> согласуется с существительным: quel âge, quelle heure, quels livres, quelles couleurs.</p>"
+    },
+    {
+      "id": "u3-add-quiz-1",
+      "type": "grammar-quiz",
+      "title": "Вопросы — практика",
+      "questions": [
+        {
+          "question": "___ tu habites ? — À Lyon.",
+          "options": [
+            "Où est-ce que",
+            "Quand est-ce que",
+            "Pourquoi",
+            "Combien"
+          ],
+          "correctAnswer": "Où est-ce que",
+          "explanation": "Ответ «в Лионе» — вопрос о месте: où (где)."
+        },
+        {
+          "question": "___ est ton numéro de téléphone ?",
+          "options": [
+            "Quel",
+            "Quelle",
+            "Que",
+            "Qui"
+          ],
+          "correctAnswer": "Quel",
+          "explanation": "Numéro — мужской род, поэтому quel."
+        },
+        {
+          "question": "___ tu fais ce soir ?",
+          "options": [
+            "Qu'est-ce que",
+            "Est-ce que",
+            "Qui est-ce que",
+            "Où"
+          ],
+          "correctAnswer": "Qu'est-ce que",
+          "explanation": "«Что ты делаешь?» — вопрос о предмете действия: qu'est-ce que."
+        },
+        {
+          "question": "___ heure est-il ?",
+          "options": [
+            "Quelle",
+            "Quel",
+            "Combien",
+            "Comment"
+          ],
+          "correctAnswer": "Quelle",
+          "explanation": "Heure — женский род: quelle heure."
+        },
+        {
+          "question": "___ de sœurs as-tu ? — Deux.",
+          "options": [
+            "Combien",
+            "Comment",
+            "Quand",
+            "Pourquoi"
+          ],
+          "correctAnswer": "Combien",
+          "explanation": "Ответ — число, значит вопрос о количестве: combien de."
+        },
+        {
+          "question": "___ tu ne manges pas ? — Parce que je n'ai pas faim.",
+          "options": [
+            "Pourquoi",
+            "Quand",
+            "Où",
+            "Qui"
+          ],
+          "correctAnswer": "Pourquoi",
+          "explanation": "Ответ начинается с parce que (потому что) — вопрос был pourquoi (почему)."
+        }
+      ]
+    },
+    {
+      "id": "u3-add-theory-2",
+      "type": "theory",
+      "title": "Partir, sortir, dormir — глаголы на -ir (2-я модель)",
+      "content": "<p style='margin:0.75rem 0'>Эти частотные глаголы спрягаются по одной модели: в единственном числе теряют последнюю согласную основы.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Лицо</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>partir (уезжать)</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>sortir (выходить)</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>dormir (спать)</th></tr><tr><td style='padding:0.5rem'>je</td><td style='padding:0.5rem'>pars</td><td style='padding:0.5rem'>sors</td><td style='padding:0.5rem'>dors</td></tr><tr><td style='padding:0.5rem'>tu</td><td style='padding:0.5rem'>pars</td><td style='padding:0.5rem'>sors</td><td style='padding:0.5rem'>dors</td></tr><tr><td style='padding:0.5rem'>il / elle</td><td style='padding:0.5rem'>part</td><td style='padding:0.5rem'>sort</td><td style='padding:0.5rem'>dort</td></tr><tr><td style='padding:0.5rem'>nous</td><td style='padding:0.5rem'>partons</td><td style='padding:0.5rem'>sortons</td><td style='padding:0.5rem'>dormons</td></tr><tr><td style='padding:0.5rem'>vous</td><td style='padding:0.5rem'>partez</td><td style='padding:0.5rem'>sortez</td><td style='padding:0.5rem'>dormez</td></tr><tr><td style='padding:0.5rem'>ils / elles</td><td style='padding:0.5rem'>partent</td><td style='padding:0.5rem'>sortent</td><td style='padding:0.5rem'>dorment</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 <i>Je sors avec mes amis le samedi.</i> — Я гуляю (выхожу) с друзьями по субботам.</p>"
+    },
+    {
+      "id": "u3-add-quiz-2",
+      "type": "grammar-quiz",
+      "title": "Partir / sortir / dormir — практика",
+      "questions": [
+        {
+          "question": "Je ___ à huit heures du matin.",
+          "options": [
+            "pars",
+            "part",
+            "partons",
+            "partes"
+          ],
+          "correctAnswer": "pars",
+          "explanation": "Je pars — в единственном числе основа теряет t: pars, pars, part."
+        },
+        {
+          "question": "Elle ___ huit heures par nuit.",
+          "options": [
+            "dort",
+            "dors",
+            "dorment",
+            "dormit"
+          ],
+          "correctAnswer": "dort",
+          "explanation": "Il/elle dort — третье лицо единственного числа."
+        },
+        {
+          "question": "Nous ___ ce soir avec des amis.",
+          "options": [
+            "sortons",
+            "sortez",
+            "sors",
+            "sortent"
+          ],
+          "correctAnswer": "sortons",
+          "explanation": "Nous sortons — во множественном числе основа полная: sort-."
+        },
+        {
+          "question": "Ils ___ en vacances demain.",
+          "options": [
+            "partent",
+            "part",
+            "pars",
+            "partez"
+          ],
+          "correctAnswer": "partent",
+          "explanation": "Ils partent — окончание -ent, основа полная."
+        }
+      ]
     }
   ]
 }

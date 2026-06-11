@@ -936,6 +936,74 @@
       "videoFile": "U01_ST_720p.mp4",
       "source": "sub",
       "description": "Regardez la vidéo. Observez comment les personnes se présentent et se saluent."
+    },
+    {
+      "id": "u1-add-theory-1",
+      "type": "theory",
+      "title": "Les pays et les nationalités — Страны и национальности",
+      "content": "<p style='margin:0.75rem 0'>Предлог перед страной зависит от рода страны:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Тип страны</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Предлог</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>женский род (на -e)</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>en</td><td style='padding:0.5rem'>en France, en Russie, en Espagne</td></tr><tr><td style='padding:0.5rem'>мужской род</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>au</td><td style='padding:0.5rem'>au Japon, au Canada, au Portugal</td></tr><tr><td style='padding:0.5rem'>множественное число</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>aux</td><td style='padding:0.5rem'>aux États-Unis, aux Pays-Bas</td></tr><tr><td style='padding:0.5rem'>город</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>à</td><td style='padding:0.5rem'>à Paris, à Moscou, à Kyiv</td></tr></table><p style='margin:0.75rem 0'>Национальность согласуется в роде: обычно добавляем <b>-e</b> для женского рода.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Мужской</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Женский</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th></tr><tr><td style='padding:0.5rem'>français</td><td style='padding:0.5rem'>française</td><td style='padding:0.5rem'>француз / француженка</td></tr><tr><td style='padding:0.5rem'>russe</td><td style='padding:0.5rem'>russe</td><td style='padding:0.5rem'>русский / русская (не меняется)</td></tr><tr><td style='padding:0.5rem'>italien</td><td style='padding:0.5rem'>italienne</td><td style='padding:0.5rem'>итальянец / итальянка (-en → -enne)</td></tr><tr><td style='padding:0.5rem'>espagnol</td><td style='padding:0.5rem'>espagnole</td><td style='padding:0.5rem'>испанец / испанка</td></tr><tr><td style='padding:0.5rem'>canadien</td><td style='padding:0.5rem'>canadienne</td><td style='padding:0.5rem'>канадец / канадка</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Национальности пишутся с маленькой буквы: <i>Il est français.</i> Но страна — с большой: <i>la France</i>.</p>"
+    },
+    {
+      "id": "u1-add-quiz-1",
+      "type": "grammar-quiz",
+      "title": "Страны и национальности — практика",
+      "questions": [
+        {
+          "question": "Elle habite ___ Espagne.",
+          "options": [
+            "en",
+            "au",
+            "aux",
+            "à"
+          ],
+          "correctAnswer": "en",
+          "explanation": "Espagne — страна женского рода (оканчивается на -e), поэтому предлог en."
+        },
+        {
+          "question": "Nous travaillons ___ Japon.",
+          "options": [
+            "au",
+            "en",
+            "aux",
+            "à"
+          ],
+          "correctAnswer": "au",
+          "explanation": "Japon — мужской род, поэтому au."
+        },
+        {
+          "question": "Ils vivent ___ États-Unis.",
+          "options": [
+            "aux",
+            "en",
+            "au",
+            "à"
+          ],
+          "correctAnswer": "aux",
+          "explanation": "États-Unis — множественное число, поэтому aux."
+        },
+        {
+          "question": "Marta est ___ . Elle habite à Rome.",
+          "options": [
+            "italienne",
+            "italien",
+            "italiennes",
+            "italie"
+          ],
+          "correctAnswer": "italienne",
+          "explanation": "Marta — женщина: italien → italienne (-en → -enne)."
+        },
+        {
+          "question": "Tom habite ___ Londres.",
+          "options": [
+            "à",
+            "en",
+            "au",
+            "aux"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Перед городами всегда предлог à: à Londres, à Paris."
+        }
+      ]
     }
   ]
 }

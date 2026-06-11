@@ -823,6 +823,199 @@
           "ru": "Если я буду хорошо работать, то найду хорошую работу."
         }
       ]
+    },
+    {
+      "id": "u10-add-theory-1",
+      "type": "theory",
+      "title": "Les pronoms COD — le, la, l', les",
+      "content": "<p style='margin:0.75rem 0'>Прямое дополнение можно заменить местоимением, чтобы не повторяться. Оно ставится <b>перед</b> глаголом:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Полная фраза</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>С местоимением</th></tr><tr><td style='padding:0.5rem'>Je regarde ce film.</td><td style='padding:0.5rem'>Je le regarde. (его)</td></tr><tr><td style='padding:0.5rem'>Elle prépare la présentation.</td><td style='padding:0.5rem'>Elle la prépare. (её)</td></tr><tr><td style='padding:0.5rem'>Nous écoutons le professeur.</td><td style='padding:0.5rem'>Nous l'écoutons. (перед гласной)</td></tr><tr><td style='padding:0.5rem'>Il fait ses devoirs.</td><td style='padding:0.5rem'>Il les fait. (их)</td></tr></table><p style='margin:0.75rem 0'>Местоимения косвенного дополнения для людей: <b>me, te, nous, vous</b> — «мне/меня, тебе/тебя, нам/нас, вам/вас»: <i>Il me téléphone. Je t'invite. On vous écoute.</i></p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 В отрицании местоимение остаётся у глагола: <i>Je ne le regarde pas.</i></p>"
+    },
+    {
+      "id": "u10-add-quiz-1",
+      "type": "grammar-quiz",
+      "title": "Pronoms COD — практика",
+      "questions": [
+        {
+          "question": "Tu lis ce livre ? — Oui, je ___ lis.",
+          "options": [
+            "le",
+            "la",
+            "les",
+            "lui"
+          ],
+          "correctAnswer": "le",
+          "explanation": "Ce livre — мужской род единственного числа: le."
+        },
+        {
+          "question": "Elle achète la robe ? — Oui, elle ___ achète.",
+          "options": [
+            "l'",
+            "la",
+            "le",
+            "les"
+          ],
+          "correctAnswer": "l'",
+          "explanation": "Перед гласной achète местоимение la сокращается до l'."
+        },
+        {
+          "question": "Vous faites les exercices ? — Oui, nous ___ faisons.",
+          "options": [
+            "les",
+            "le",
+            "la",
+            "leur"
+          ],
+          "correctAnswer": "les",
+          "explanation": "Les exercices — множественное число: les."
+        },
+        {
+          "question": "Il ___ invite au restaurant. (нас)",
+          "options": [
+            "nous",
+            "vous",
+            "les",
+            "se"
+          ],
+          "correctAnswer": "nous",
+          "explanation": "«Нас» — местоимение nous: Il nous invite."
+        },
+        {
+          "question": "Je ne ___ comprends pas. (тебя)",
+          "options": [
+            "te",
+            "tu",
+            "toi",
+            "la"
+          ],
+          "correctAnswer": "te",
+          "explanation": "«Тебя» — te, и оно стоит перед глаголом даже в отрицании."
+        }
+      ]
+    },
+    {
+      "id": "u10-add-theory-2",
+      "type": "theory",
+      "title": "Les pronoms relatifs QUI et QUE",
+      "content": "<p style='margin:0.75rem 0'><b>Qui</b> и <b>que</b> соединяют два предложения в одно:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Местоимение</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Роль</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>qui</td><td style='padding:0.5rem'>подлежащее (кто/что делает)</td><td style='padding:0.5rem'>C'est un métier qui me passionne.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>que</td><td style='padding:0.5rem'>дополнение (кого/что)</td><td style='padding:0.5rem'>C'est le projet que je prépare.</td></tr></table><p style='margin:0.75rem 0'>Проверка: после <b>qui</b> сразу идёт глагол, после <b>que</b> — подлежащее (je, tu, mon ami...).</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Перед гласной que → qu': <i>le stage qu'elle fait</i>. Qui никогда не сокращается!</p>"
+    },
+    {
+      "id": "u10-add-quiz-2",
+      "type": "grammar-quiz",
+      "title": "Qui / que — практика",
+      "questions": [
+        {
+          "question": "J'ai un ami ___ travaille à Paris.",
+          "options": [
+            "qui",
+            "que",
+            "qu'",
+            "où"
+          ],
+          "correctAnswer": "qui",
+          "explanation": "После пропуска идёт глагол (travaille) — значит qui (подлежащее)."
+        },
+        {
+          "question": "C'est le diplôme ___ je veux obtenir.",
+          "options": [
+            "que",
+            "qui",
+            "où",
+            "dont"
+          ],
+          "correctAnswer": "que",
+          "explanation": "После пропуска идёт подлежащее (je) — значит que (дополнение)."
+        },
+        {
+          "question": "Elle a une profession ___ est très intéressante.",
+          "options": [
+            "qui",
+            "que",
+            "qu'",
+            "quoi"
+          ],
+          "correctAnswer": "qui",
+          "explanation": "Дальше глагол est — нужен qui."
+        },
+        {
+          "question": "Le stage ___ il fait est difficile.",
+          "options": [
+            "qu'",
+            "qui",
+            "que",
+            "où"
+          ],
+          "correctAnswer": "qu'",
+          "explanation": "Дальше подлежащее il — нужен que, перед гласной → qu'."
+        },
+        {
+          "question": "___ никогда не сокращается перед гласной.",
+          "options": [
+            "Qui",
+            "Que",
+            "Le",
+            "La"
+          ],
+          "correctAnswer": "Qui",
+          "explanation": "Qui не сокращается: l'ami qui arrive. Que → qu'."
+        }
+      ]
+    },
+    {
+      "id": "u10-add-theory-3",
+      "type": "theory",
+      "title": "Depuis — «с тех пор / уже ... как»",
+      "content": "<p style='margin:0.75rem 0'><b>Depuis</b> указывает, как давно длится действие. Глагол при этом стоит в <b>настоящем</b> времени:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Фраза</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th></tr><tr><td style='padding:0.5rem'>J'étudie le français depuis six mois.</td><td style='padding:0.5rem'>Я учу французский уже полгода.</td></tr><tr><td style='padding:0.5rem'>Elle travaille ici depuis 2022.</td><td style='padding:0.5rem'>Она работает здесь с 2022 года.</td></tr><tr><td style='padding:0.5rem'>Nous habitons à Lyon depuis trois ans.</td><td style='padding:0.5rem'>Мы живём в Лионе уже три года.</td></tr></table><p style='margin:0.75rem 0'>Вопрос: <b>Depuis quand... ?</b> (с какого времени?) или <b>Depuis combien de temps... ?</b> (как долго?)</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 По-русски «уже полгода учу» — прошлое+настоящее, по-французски просто настоящее + depuis.</p>"
+    },
+    {
+      "id": "u10-add-quiz-3",
+      "type": "grammar-quiz",
+      "title": "Depuis — практика",
+      "questions": [
+        {
+          "question": "Il travaille dans cette entreprise ___ cinq ans.",
+          "options": [
+            "depuis",
+            "pendant",
+            "il y a",
+            "dans"
+          ],
+          "correctAnswer": "depuis",
+          "explanation": "Действие продолжается до сих пор — depuis cinq ans."
+        },
+        {
+          "question": "J'___ le français depuis un an.",
+          "options": [
+            "étudie",
+            "ai étudié",
+            "étudierai",
+            "étudiais"
+          ],
+          "correctAnswer": "étudie",
+          "explanation": "С depuis глагол стоит в настоящем времени: j'étudie."
+        },
+        {
+          "question": "___ quand habites-tu ici ?",
+          "options": [
+            "Depuis",
+            "Pendant",
+            "Quand",
+            "Combien"
+          ],
+          "correctAnswer": "Depuis",
+          "explanation": "Вопрос «с какого времени» — Depuis quand ?"
+        },
+        {
+          "question": "Elle est étudiante ___ septembre.",
+          "options": [
+            "depuis",
+            "dans",
+            "pour",
+            "à"
+          ],
+          "correctAnswer": "depuis",
+          "explanation": "Точка отсчёта (сентябрь) — depuis septembre."
+        }
+      ]
     }
   ]
 }

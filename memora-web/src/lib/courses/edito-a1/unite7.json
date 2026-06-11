@@ -363,12 +363,6 @@
       "content": "<p style='margin-bottom:1rem'>Прилагательные цвета во французском согласуются с существительным в роде и числе.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Одежда</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Род</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример (rouge)</th></tr><tr><td style='padding:0.5rem'>un manteau (пальто)</td><td style='padding:0.5rem;color:#60a5fa'>муж.р.</td><td style='padding:0.5rem'>un manteau rouge</td></tr><tr><td style='padding:0.5rem'>une robe (платье)</td><td style='padding:0.5rem;color:#34d399'>жен.р.</td><td style='padding:0.5rem'>une robe rouge</td></tr><tr><td style='padding:0.5rem'>un pull (свитер)</td><td style='padding:0.5rem;color:#60a5fa'>муж.р.</td><td style='padding:0.5rem'>un pull bleu</td></tr><tr><td style='padding:0.5rem'>une veste (жакет)</td><td style='padding:0.5rem;color:#34d399'>жен.р.</td><td style='padding:0.5rem'>une veste bleue</td></tr><tr><td style='padding:0.5rem'>un jean (джинсы)</td><td style='padding:0.5rem;color:#60a5fa'>муж.р.</td><td style='padding:0.5rem'>un jean noir</td></tr><tr><td style='padding:0.5rem'>une jupe (юбка)</td><td style='padding:0.5rem;color:#34d399'>жен.р.</td><td style='padding:0.5rem'>une jupe verte</td></tr><tr><td style='padding:0.5rem'>des chaussures (обувь)</td><td style='padding:0.5rem;color:#c084fc'>мн.ч.</td><td style='padding:0.5rem'>des chaussures noires</td></tr></table><div style='padding:1rem;background:rgba(59,130,246,0.15);border-radius:8px;margin-top:0.5rem'><p><strong>Согласование цветов:</strong></p><p>• blanc → blanche (жен.р.) : une chemise blanche</p><p>• gris → grise (жен.р.) : une robe grise</p><p>• vert → verte (жен.р.) : une jupe verte</p><p>Цвета на -e не меняются: rouge, jaune, beige, rose</p></div>"
     },
     {
-      "id": "u7-theory-4",
-      "type": "theory",
-      "title": "Les adjectifs démonstratifs — ce / cet / cette / ces",
-      "content": "<p style='margin-bottom:1rem'>Указательные прилагательные заменяют артикль перед существительным и указывают на конкретный предмет.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Форма</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Правило употребления</th><th style='padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Примеры</th></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>ce</td><td style='padding:0.5rem'>Муж.р., ед.ч., перед согласной</td><td style='padding:0.5rem'>ce pull, ce manteau, ce jean</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>cet</td><td style='padding:0.5rem'>Муж.р., ед.ч., перед гласной или h</td><td style='padding:0.5rem'>cet imperméable, cet homme</td></tr><tr><td style='padding:0.5rem;color:#34d399;font-weight:bold'>cette</td><td style='padding:0.5rem'>Жен.р., ед.ч.</td><td style='padding:0.5rem'>cette robe, cette veste, cette jupe</td></tr><tr><td style='padding:0.5rem;color:#c084fc;font-weight:bold'>ces</td><td style='padding:0.5rem'>Мн.ч. (муж. и жен.)</td><td style='padding:0.5rem'>ces chaussures, ces pulls, ces robes</td></tr></table><div style='padding:1rem;background:rgba(239,68,68,0.15);border-radius:8px;margin-top:0.5rem'><p><strong>Частая ошибка:</strong> перед imperméable, hôtel — используем <strong>cet</strong>, а не ce!</p><p>• <em>cet imperméable</em> (не ce imperméable!)</p></div>"
-    },
-    {
       "id": "u7-ex4",
       "type": "grammar-quiz",
       "title": "Упражнение 4 : Adjectifs démonstratifs — ce/cet/cette/ces",
@@ -800,6 +794,74 @@
             "."
           ],
           "ru": "Я предпочитаю этот красный свитер серому."
+        }
+      ]
+    },
+    {
+      "id": "u7-add-theory-1",
+      "type": "theory",
+      "title": "La place des adjectifs — Место прилагательного",
+      "content": "<p style='margin:0.75rem 0'>Большинство прилагательных стоят <b>после</b> существительного: <i>une robe rouge, un pantalon noir</i>.</p><p style='margin:0.75rem 0'>Но короткие частотные прилагательные ставятся <b>перед</b> существительным:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Прилагательное</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>grand / petit</td><td style='padding:0.5rem'>un petit magasin, une grande taille</td></tr><tr><td style='padding:0.5rem'>beau / joli</td><td style='padding:0.5rem'>une jolie veste, un beau manteau</td></tr><tr><td style='padding:0.5rem'>bon / mauvais</td><td style='padding:0.5rem'>un bon prix, une mauvaise qualité</td></tr><tr><td style='padding:0.5rem'>nouveau / vieux</td><td style='padding:0.5rem'>une nouvelle collection, un vieux jean</td></tr><tr><td style='padding:0.5rem'>jeune</td><td style='padding:0.5rem'>une jeune vendeuse</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Перед прилагательным во множественном числе des → <b>de</b>: <i>de jolies chaussures</i>.</p>"
+    },
+    {
+      "id": "u7-add-quiz-1",
+      "type": "grammar-quiz",
+      "title": "Место прилагательного — практика",
+      "questions": [
+        {
+          "question": "J'achète ___ .",
+          "options": [
+            "une chemise blanche",
+            "une blanche chemise",
+            "blanche une chemise",
+            "une chemise blanc"
+          ],
+          "correctAnswer": "une chemise blanche",
+          "explanation": "Цвета всегда после существительного: une chemise blanche."
+        },
+        {
+          "question": "C'est ___ .",
+          "options": [
+            "un petit prix",
+            "un prix petit",
+            "petit un prix",
+            "un prix petite"
+          ],
+          "correctAnswer": "un petit prix",
+          "explanation": "Petit — короткое частотное прилагательное, стоит перед существительным."
+        },
+        {
+          "question": "Elle porte ___ .",
+          "options": [
+            "de jolies bottes",
+            "des jolies bottes",
+            "jolies de bottes",
+            "des bottes jolies"
+          ],
+          "correctAnswer": "de jolies bottes",
+          "explanation": "Перед прилагательным des превращается в de: de jolies bottes."
+        },
+        {
+          "question": "Il essaie ___ .",
+          "options": [
+            "un nouveau costume",
+            "un costume nouveau",
+            "nouveau un costume",
+            "un nouvelle costume"
+          ],
+          "correctAnswer": "un nouveau costume",
+          "explanation": "Nouveau ставится перед существительным: un nouveau costume."
+        },
+        {
+          "question": "Je cherche ___ .",
+          "options": [
+            "un pull vert",
+            "un vert pull",
+            "vert un pull",
+            "un pull verte"
+          ],
+          "correctAnswer": "un pull vert",
+          "explanation": "Цвет после существительного, pull — мужской род: vert."
         }
       ]
     }

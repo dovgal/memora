@@ -805,6 +805,120 @@
           "ru": "Она пошла в аптеку купить лекарства."
         }
       ]
+    },
+    {
+      "id": "u9-add-theory-1",
+      "type": "theory",
+      "title": "Le pronom Y — «туда / там»",
+      "content": "<p style='margin:0.75rem 0'>Местоимение <b>y</b> заменяет место (à / dans / chez + место) и ставится <b>перед</b> глаголом:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Полная фраза</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>С местоимением y</th></tr><tr><td style='padding:0.5rem'>Je vais à la pharmacie.</td><td style='padding:0.5rem'>J'y vais. (Я туда иду.)</td></tr><tr><td style='padding:0.5rem'>Elle travaille à l'hôpital.</td><td style='padding:0.5rem'>Elle y travaille.</td></tr><tr><td style='padding:0.5rem'>Nous allons chez le médecin.</td><td style='padding:0.5rem'>Nous y allons.</td></tr><tr><td style='padding:0.5rem'>Tu restes à la maison ?</td><td style='padding:0.5rem'>Oui, j'y reste.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Запомните готовые фразы: <i>On y va !</i> — Пошли! <i>Vas-y !</i> — Давай! Иди!</p>"
+    },
+    {
+      "id": "u9-add-quiz-1",
+      "type": "grammar-quiz",
+      "title": "Pronom Y — практика",
+      "questions": [
+        {
+          "question": "Tu vas à la pharmacie ? — Oui, j'___ vais.",
+          "options": [
+            "y",
+            "en",
+            "le",
+            "lui"
+          ],
+          "correctAnswer": "y",
+          "explanation": "Y заменяет à la pharmacie: j'y vais."
+        },
+        {
+          "question": "Le pronom y se place ___ .",
+          "options": [
+            "перед глаголом",
+            "после глагола",
+            "в конце фразы",
+            "перед подлежащим"
+          ],
+          "correctAnswer": "перед глаголом",
+          "explanation": "Y всегда стоит перед глаголом: elle y travaille."
+        },
+        {
+          "question": "Vous restez à l'hôpital ? — Oui, nous ___ restons.",
+          "options": [
+            "y",
+            "en",
+            "les",
+            "la"
+          ],
+          "correctAnswer": "y",
+          "explanation": "Y заменяет à l'hôpital: nous y restons."
+        },
+        {
+          "question": "On ___ va ?",
+          "options": [
+            "y",
+            "en",
+            "se",
+            "le"
+          ],
+          "correctAnswer": "y",
+          "explanation": "Готовая фраза On y va ! — «Пошли!»"
+        }
+      ]
+    },
+    {
+      "id": "u9-add-theory-2",
+      "type": "theory",
+      "title": "Donner un conseil — Давать советы",
+      "content": "<p style='margin:0.75rem 0'>Врач или друг может дать совет несколькими способами:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Конструкция</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th></tr><tr><td style='padding:0.5rem'>devoir + инфинитив</td><td style='padding:0.5rem'>Vous devez vous reposer.</td><td style='padding:0.5rem'>Вам нужно отдохнуть.</td></tr><tr><td style='padding:0.5rem'>il faut + инфинитив</td><td style='padding:0.5rem'>Il faut boire de l'eau.</td><td style='padding:0.5rem'>Нужно пить воду.</td></tr><tr><td style='padding:0.5rem'>императив</td><td style='padding:0.5rem'>Prenez ce médicament !</td><td style='padding:0.5rem'>Принимайте это лекарство!</td></tr><tr><td style='padding:0.5rem'>ne ... pas + инфинитив</td><td style='padding:0.5rem'>Il ne faut pas fumer.</td><td style='padding:0.5rem'>Нельзя курить.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Вежливый совет часто начинается с <i>Vous devriez...</i> («Вам стоило бы...») — эту форму просто запомните как готовую.</p>"
+    },
+    {
+      "id": "u9-add-quiz-2",
+      "type": "grammar-quiz",
+      "title": "Советы — практика",
+      "questions": [
+        {
+          "question": "Vous êtes fatigué. Vous ___ dormir plus.",
+          "options": [
+            "devez",
+            "doivent",
+            "dois",
+            "devons"
+          ],
+          "correctAnswer": "devez",
+          "explanation": "Vous devez + инфинитив — «вам нужно»."
+        },
+        {
+          "question": "Tu as mal à la tête ? ___ un comprimé !",
+          "options": [
+            "Prends",
+            "Prendre",
+            "Pris",
+            "Prenant"
+          ],
+          "correctAnswer": "Prends",
+          "explanation": "Совет в императиве: Prends un comprimé !"
+        },
+        {
+          "question": "Il ___ manger plus de légumes.",
+          "options": [
+            "faut",
+            "dois",
+            "devez",
+            "faite"
+          ],
+          "correctAnswer": "faut",
+          "explanation": "Il faut + инфинитив — безличный совет «нужно»."
+        },
+        {
+          "question": "Pour aller mieux, il ne faut pas ___ .",
+          "options": [
+            "fumer",
+            "fumez",
+            "fumes",
+            "fumé"
+          ],
+          "correctAnswer": "fumer",
+          "explanation": "После il ne faut pas — всегда инфинитив: fumer."
+        }
+      ]
     }
   ]
 }
