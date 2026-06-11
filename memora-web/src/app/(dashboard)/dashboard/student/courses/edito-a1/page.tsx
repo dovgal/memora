@@ -7,6 +7,8 @@ export default function EditoA1CoursePage() {
   const regularUnits = UNIT_ORDER.map(id => ({ id, unit: EDITO_A1_UNITS[id] }));
   const genre = EDITO_A1_UNITS['genre'];
   const numeros = EDITO_A1_UNITS['numeros'];
+  const phonetique = EDITO_A1_UNITS['phonetique'];
+  const delf = EDITO_A1_UNITS['delf'];
 
   return (
     <div className="min-h-screen bg-qz-card text-qz-text">
@@ -82,6 +84,38 @@ export default function EditoA1CoursePage() {
                   <div className="flex items-center gap-2">
                     <span className="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full">{numeros.exercises.length} упр.</span>
                     <span className="text-amber-400 text-sm group-hover:translate-x-1 transition-transform">→</span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            {/* Phonétique */}
+            <Link href="/dashboard/student/courses/edito-a1/phonetique">
+              <div className="relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-sky-900/30 via-cyan-900/20 to-transparent p-6 hover:scale-[1.01] hover:border-sky-500/40 transition-all duration-200 cursor-pointer group">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-sky-500/10 rounded-full blur-3xl" />
+                <div className="relative z-10">
+                  <div className="text-2xl mb-3">🔊</div>
+                  <h3 className="text-foreground font-bold text-base mb-1">{phonetique.title}</h3>
+                  <p className="text-qz-text-muted text-sm mb-3">{phonetique.description}</p>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded-full">{phonetique.exercises.length} упр.</span>
+                    <span className="text-sky-400 text-sm group-hover:translate-x-1 transition-transform">→</span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            {/* DELF A1 */}
+            <Link href="/dashboard/student/courses/edito-a1/delf">
+              <div className="relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-indigo-900/30 via-blue-900/20 to-transparent p-6 hover:scale-[1.01] hover:border-indigo-500/40 transition-all duration-200 cursor-pointer group">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl" />
+                <div className="relative z-10">
+                  <div className="text-2xl mb-3">🎓</div>
+                  <h3 className="text-foreground font-bold text-base mb-1">{delf.title}</h3>
+                  <p className="text-qz-text-muted text-sm mb-3">{delf.description}</p>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded-full">{delf.exercises.length} упр.</span>
+                    <span className="text-indigo-400 text-sm group-hover:translate-x-1 transition-transform">→</span>
                   </div>
                 </div>
               </div>

@@ -1,0 +1,280 @@
+{
+  "id": "phonetique",
+  "title": "La Phonétique — Звуки и правила чтения",
+  "description": "Спецмодуль: немые буквы, связывание (liaison), носовые гласные, акценты и интонация. Слушайте озвучку в вариантах ответов!",
+  "vocabulary": [],
+  "exercises": [
+    {
+      "id": "ph-theory-1",
+      "type": "theory",
+      "title": "Les lettres muettes — Немые буквы",
+      "content": "<p style='margin:0.75rem 0'>Французский пишется длинно, а читается коротко: многие буквы на конце слова <b>не произносятся</b>.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Правило</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Примеры</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Как звучит</th></tr><tr><td style='padding:0.5rem'>конечные -s, -t, -d, -x, -p</td><td style='padding:0.5rem'>Paris, petit, grand, deux, trop</td><td style='padding:0.5rem'>пари, пти, гран, дё, тро</td></tr><tr><td style='padding:0.5rem'>конечное -e</td><td style='padding:0.5rem'>table, madame, française</td><td style='padding:0.5rem'>табль, мадам, франсэз</td></tr><tr><td style='padding:0.5rem'>-ent у глаголов (ils/elles)</td><td style='padding:0.5rem'>ils parlent, elles habitent</td><td style='padding:0.5rem'>иль парль, эль абит</td></tr><tr><td style='padding:0.5rem'>h никогда не читается</td><td style='padding:0.5rem'>l'hôtel, l'homme</td><td style='padding:0.5rem'>лотэль, лом</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Конечные <b>-r</b> (bonjour), <b>-l</b> (avril), <b>-c</b> (avec), <b>-f</b> (neuf) обычно ЧИТАЮТСЯ — запомните слово <b>CaReFuL</b>.</p>"
+    },
+    {
+      "id": "ph-quiz-1",
+      "type": "grammar-quiz",
+      "title": "Немые буквы — практика (включайте озвучку!)",
+      "questions": [
+        {
+          "question": "В каком слове конечная согласная ПРОИЗНОСИТСЯ?",
+          "options": [
+            "avec",
+            "petit",
+            "grand",
+            "trois"
+          ],
+          "correctAnswer": "avec",
+          "explanation": "Конечное -c читается (правило CaReFuL): avec = [авэк]. В petit, grand, trois согласные немые."
+        },
+        {
+          "question": "Как читается «ils parlent»?",
+          "options": [
+            "иль парль",
+            "иль парлян",
+            "иль парлент",
+            "ильс парлент"
+          ],
+          "correctAnswer": "иль парль",
+          "explanation": "Окончание -ent у глаголов в 3-м лице мн. числа НЕ читается."
+        },
+        {
+          "question": "В каком слове больше НЕМЫХ букв на конце?",
+          "options": [
+            "temps",
+            "mer",
+            "sac",
+            "bol"
+          ],
+          "correctAnswer": "temps",
+          "explanation": "Temps = [тан]: и p, и s немые. В mer, sac, bol конечные согласные читаются."
+        },
+        {
+          "question": "Буква h во французском…",
+          "options": [
+            "никогда не произносится",
+            "читается как [х]",
+            "читается как [г]",
+            "читается только в начале"
+          ],
+          "correctAnswer": "никогда не произносится",
+          "explanation": "H всегда немая: l'hôpital = [лопиталь]."
+        }
+      ]
+    },
+    {
+      "id": "ph-theory-2",
+      "type": "theory",
+      "title": "La liaison — Связывание слов",
+      "content": "<p style='margin:0.75rem 0'>Если слово кончается на немую согласную, а следующее начинается с гласной, согласная «оживает» и присоединяется к следующему слову:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пишем</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Произносим</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th></tr><tr><td style='padding:0.5rem'>vous êtes</td><td style='padding:0.5rem'>ву-зэт</td><td style='padding:0.5rem'>вы есть</td></tr><tr><td style='padding:0.5rem'>les amis</td><td style='padding:0.5rem'>ле-зами</td><td style='padding:0.5rem'>друзья</td></tr><tr><td style='padding:0.5rem'>un petit appartement</td><td style='padding:0.5rem'>эн пти-таппартеман</td><td style='padding:0.5rem'>маленькая квартира</td></tr><tr><td style='padding:0.5rem'>ils ont</td><td style='padding:0.5rem'>иль-зон</td><td style='padding:0.5rem'>они имеют</td></tr><tr><td style='padding:0.5rem'>deux heures</td><td style='padding:0.5rem'>дё-зёр</td><td style='padding:0.5rem'>два часа</td></tr></table><p style='margin:0.75rem 0'>Связывание <b>обязательно</b>: после местоимений (nous, vous, ils, elles, on), после артиклей и определителей (les, des, un, mon, ces), в числах (deux, trois, six, dix + гласная).</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Важная пара: <b>ils ont</b> [иль-зон] = «у них есть», а <b>ils sont</b> [иль-сон] = «они есть». Одна liaison меняет смысл!</p>"
+    },
+    {
+      "id": "ph-quiz-2",
+      "type": "grammar-quiz",
+      "title": "Liaison — практика (слушайте варианты)",
+      "questions": [
+        {
+          "question": "Где liaison ОБЯЗАТЕЛЬНА?",
+          "options": [
+            "vous avez",
+            "et avec",
+            "Paris est",
+            "chat orange"
+          ],
+          "correctAnswer": "vous avez",
+          "explanation": "После местоимения vous связывание обязательно: [ву-завэ]. После et liaison запрещена!"
+        },
+        {
+          "question": "Как произносится «les enfants»?",
+          "options": [
+            "ле-занфан",
+            "ле-анфан",
+            "лес-енфантс",
+            "ле-енфан"
+          ],
+          "correctAnswer": "ле-занфан",
+          "explanation": "Артикль les + гласная: s превращается в звук [z]."
+        },
+        {
+          "question": "«Ils ont faim» звучит как…",
+          "options": [
+            "иль-зон фэн",
+            "иль-сон фэн",
+            "ильс-онт фэм",
+            "иль он фэм"
+          ],
+          "correctAnswer": "иль-зон фэн",
+          "explanation": "Ils ont — liaison с [z]. Не путайте с ils sont [иль-сон]!"
+        },
+        {
+          "question": "В «un grand ami» буква d при связывании звучит как…",
+          "options": [
+            "[t]",
+            "[d]",
+            "[z]",
+            "не звучит"
+          ],
+          "correctAnswer": "[t]",
+          "explanation": "При liaison d озвончается в [t]: un gran-t-ami."
+        }
+      ]
+    },
+    {
+      "id": "ph-theory-3",
+      "type": "theory",
+      "title": "Les voyelles nasales — Носовые гласные",
+      "content": "<p style='margin:0.75rem 0'>Гласная + n/m в одном слоге = носовой звук (воздух идёт через нос, n/m не произносится отдельно):</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Звук</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пишется</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Примеры</th></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>[ɑ̃] «ан»</td><td style='padding:0.5rem'>an, am, en, em</td><td style='padding:0.5rem'>France, chambre, parent, temps</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>[ɔ̃] «он»</td><td style='padding:0.5rem'>on, om</td><td style='padding:0.5rem'>bonjour, maison, nom, pont</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>[ɛ̃] «эн»</td><td style='padding:0.5rem'>in, im, ain, ein, un</td><td style='padding:0.5rem'>vin, important, pain, plein, lundi</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Если после n/m идёт гласная или вторая n/m — звук НЕ носовой: bonne = [бон], année = [анэ], ami = [ами].</p>"
+    },
+    {
+      "id": "ph-quiz-3",
+      "type": "grammar-quiz",
+      "title": "Носовые гласные — практика (озвучка в помощь)",
+      "questions": [
+        {
+          "question": "В каком слове НЕТ носового звука?",
+          "options": [
+            "bonne",
+            "bon",
+            "maison",
+            "France"
+          ],
+          "correctAnswer": "bonne",
+          "explanation": "В bonne после n идёт ещё одна n + e — звук чистый [бон], не носовой."
+        },
+        {
+          "question": "Какой носовой звук в слове «pain» (хлеб)?",
+          "options": [
+            "[ɛ̃] «эн»",
+            "[ɑ̃] «ан»",
+            "[ɔ̃] «он»",
+            "нет носового"
+          ],
+          "correctAnswer": "[ɛ̃] «эн»",
+          "explanation": "Сочетание -ain даёт [ɛ̃]: pain = [пэн]."
+        },
+        {
+          "question": "Слова «temps» и «France» объединяет звук…",
+          "options": [
+            "[ɑ̃] «ан»",
+            "[ɔ̃] «он»",
+            "[ɛ̃] «эн»",
+            "[u] «у»"
+          ],
+          "correctAnswer": "[ɑ̃] «ан»",
+          "explanation": "em и an дают один звук [ɑ̃]: [тан], [франс]."
+        },
+        {
+          "question": "В каком слове звук [ɔ̃] «он»?",
+          "options": [
+            "maison",
+            "matin",
+            "main",
+            "mardi"
+          ],
+          "correctAnswer": "maison",
+          "explanation": "Maison = [мэзон] — сочетание on даёт носовой [ɔ̃]."
+        }
+      ]
+    },
+    {
+      "id": "ph-theory-4",
+      "type": "theory",
+      "title": "Les accents — Зачем нужны значки над буквами",
+      "content": "<p style='margin:0.75rem 0'>Французские диакритические знаки меняют звук или смысл:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Знак</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Название</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Что делает</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>é</td><td style='padding:0.5rem'>accent aigu</td><td style='padding:0.5rem'>закрытый «э»</td><td style='padding:0.5rem'>café, été, étudiant</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>è</td><td style='padding:0.5rem'>accent grave</td><td style='padding:0.5rem'>открытый «э»</td><td style='padding:0.5rem'>mère, père, très</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>ê</td><td style='padding:0.5rem'>accent circonflexe</td><td style='padding:0.5rem'>открытый «э» (часто = старая s)</td><td style='padding:0.5rem'>fête, forêt, être</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>ç</td><td style='padding:0.5rem'>cédille</td><td style='padding:0.5rem'>c читается как [s] перед a, o, u</td><td style='padding:0.5rem'>français, garçon, ça</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>à / où</td><td style='padding:0.5rem'>accent grave</td><td style='padding:0.5rem'>различает слова</td><td style='padding:0.5rem'>a (имеет) / à (в); ou (или) / où (где)</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 ç нужна только перед a, o, u. Перед e и i буква c и так читается [s]: merci, France.</p>"
+    },
+    {
+      "id": "ph-quiz-4",
+      "type": "grammar-quiz",
+      "title": "Акценты — практика",
+      "questions": [
+        {
+          "question": "Почему в «garçon» нужна cédille?",
+          "options": [
+            "чтобы c читалась [s] перед o",
+            "для красоты",
+            "чтобы c читалась [k]",
+            "это старая буква"
+          ],
+          "correctAnswer": "чтобы c читалась [s] перед o",
+          "explanation": "Без ç было бы [гаркон]. Cédille даёт [гарсон]."
+        },
+        {
+          "question": "Чем отличаются «ou» и «où»?",
+          "options": [
+            "ou = или, où = где",
+            "ou = где, où = или",
+            "ничем",
+            "où — это ошибка"
+          ],
+          "correctAnswer": "ou = или, où = где",
+          "explanation": "Accent grave различает омонимы: Tu veux thé ou café ? / Où habites-tu ?"
+        },
+        {
+          "question": "В слове «été» (лето) звук é…",
+          "options": [
+            "закрытый «э», язык напряжён",
+            "открытый «э», рот широкий",
+            "как русское «е»",
+            "немой"
+          ],
+          "correctAnswer": "закрытый «э», язык напряжён",
+          "explanation": "Accent aigu (é) — закрытый звук [e]: été = [этэ]."
+        },
+        {
+          "question": "Какое слово написано ПРАВИЛЬНО?",
+          "options": [
+            "français",
+            "francais",
+            "françes",
+            "francès"
+          ],
+          "correctAnswer": "français",
+          "explanation": "Перед a нужна cédille: français = [франсэ]."
+        }
+      ]
+    },
+    {
+      "id": "ph-fill-1",
+      "type": "fill-blank",
+      "title": "Итог: вставьте правильную форму",
+      "text": "Bonjour ! Je suis ___ et j'habite à Paris. Le matin, je bois un café dans ma ___ préférée. Mes ___ habitent à Lyon. Nous ___ une grande famille.",
+      "blanks": [
+        {
+          "correctAnswer": "français",
+          "options": [
+            "français",
+            "francais",
+            "françait"
+          ],
+          "explanation": "Cédille перед a: français."
+        },
+        {
+          "correctAnswer": "brasserie",
+          "options": [
+            "brasserie",
+            "brassérie",
+            "brasseri"
+          ],
+          "explanation": "Brasserie пишется без акцента и с конечной немой -e."
+        },
+        {
+          "correctAnswer": "parents",
+          "options": [
+            "parents",
+            "parants",
+            "parentes"
+          ],
+          "explanation": "Parents: носовой [ɑ̃] пишется здесь как en."
+        },
+        {
+          "correctAnswer": "sommes",
+          "options": [
+            "sommes",
+            "somme",
+            "sont"
+          ],
+          "explanation": "Nous sommes — двойная m, звук не носовой: [сом]."
+        }
+      ]
+    }
+  ]
+}

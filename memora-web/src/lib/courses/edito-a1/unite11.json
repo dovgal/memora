@@ -1,0 +1,448 @@
+{
+  "id": "unite11",
+  "title": "Unité 11 : Chez moi",
+  "description": "Описывать жильё, искать квартиру, расставлять мебель. Предлоги места, лексика дома, объявления об аренде.",
+  "vocabulary": [
+    {
+      "fr": "un appartement",
+      "ru": "квартира",
+      "type": "word"
+    },
+    {
+      "fr": "une maison",
+      "ru": "дом",
+      "type": "word"
+    },
+    {
+      "fr": "une pièce",
+      "ru": "комната (помещение)",
+      "type": "word"
+    },
+    {
+      "fr": "la cuisine",
+      "ru": "кухня",
+      "type": "word"
+    },
+    {
+      "fr": "la salle de bains",
+      "ru": "ванная",
+      "type": "word"
+    },
+    {
+      "fr": "la chambre",
+      "ru": "спальня",
+      "type": "word"
+    },
+    {
+      "fr": "le salon",
+      "ru": "гостиная",
+      "type": "word"
+    },
+    {
+      "fr": "les toilettes",
+      "ru": "туалет",
+      "type": "word"
+    },
+    {
+      "fr": "un meuble",
+      "ru": "мебель (предмет)",
+      "type": "word"
+    },
+    {
+      "fr": "un lit",
+      "ru": "кровать",
+      "type": "word"
+    },
+    {
+      "fr": "une armoire",
+      "ru": "шкаф",
+      "type": "word"
+    },
+    {
+      "fr": "un canapé",
+      "ru": "диван",
+      "type": "word"
+    },
+    {
+      "fr": "un frigo",
+      "ru": "холодильник",
+      "type": "word"
+    },
+    {
+      "fr": "l'étage (m)",
+      "ru": "этаж",
+      "type": "word"
+    },
+    {
+      "fr": "l'ascenseur (m)",
+      "ru": "лифт",
+      "type": "word"
+    },
+    {
+      "fr": "le loyer",
+      "ru": "арендная плата",
+      "type": "word"
+    },
+    {
+      "fr": "le/la propriétaire",
+      "ru": "владелец / владелица",
+      "type": "word"
+    },
+    {
+      "fr": "le/la locataire",
+      "ru": "квартиросъёмщик(ца)",
+      "type": "word"
+    },
+    {
+      "fr": "un(e) voisin(e)",
+      "ru": "сосед(ка)",
+      "type": "word"
+    },
+    {
+      "fr": "déménager",
+      "ru": "переезжать",
+      "type": "word"
+    },
+    {
+      "fr": "louer un appartement",
+      "ru": "снимать квартиру",
+      "type": "phrase"
+    },
+    {
+      "fr": "au deuxième étage",
+      "ru": "на третьем этаже (по-русски)",
+      "type": "phrase"
+    },
+    {
+      "fr": "C'est lumineux !",
+      "ru": "Здесь светло!",
+      "type": "phrase"
+    },
+    {
+      "fr": "charges comprises",
+      "ru": "коммунальные включены",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u11-theory-1",
+      "type": "theory",
+      "title": "Le logement — Жильё по-французски",
+      "content": "<p style='margin:0.75rem 0'>Главные слова для разговора о жилье:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Слово</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>un studio</td><td style='padding:0.5rem'>студия</td><td style='padding:0.5rem'>Je loue un studio de 25 m².</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>un deux-pièces</td><td style='padding:0.5rem'>двухкомнатная</td><td style='padding:0.5rem'>C'est un deux-pièces avec balcon.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>le rez-de-chaussée</td><td style='padding:0.5rem'>первый этаж</td><td style='padding:0.5rem'>J'habite au rez-de-chaussée.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>le premier étage</td><td style='padding:0.5rem'>второй этаж (!)</td><td style='padding:0.5rem'>Ma chambre est au premier étage.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>meublé / vide</td><td style='padding:0.5rem'>с мебелью / без</td><td style='padding:0.5rem'>Un appartement meublé.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Французский «premier étage» — это наш <b>второй</b> этаж! Наш первый — le rez-de-chaussée.</p>"
+    },
+    {
+      "id": "u11-theory-2",
+      "type": "theory",
+      "title": "Les prépositions de lieu (2) — Где стоит мебель?",
+      "content": "<p style='margin:0.75rem 0'>Чтобы сказать, где находится предмет:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Предлог</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Значение</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>sur</td><td style='padding:0.5rem'>на</td><td style='padding:0.5rem'>Le livre est sur la table.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>sous</td><td style='padding:0.5rem'>под</td><td style='padding:0.5rem'>Le chat dort sous le lit.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>dans</td><td style='padding:0.5rem'>в</td><td style='padding:0.5rem'>Les assiettes sont dans l'armoire.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>devant</td><td style='padding:0.5rem'>перед</td><td style='padding:0.5rem'>Il y a un tapis devant le canapé.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>derrière</td><td style='padding:0.5rem'>за</td><td style='padding:0.5rem'>La lampe est derrière le fauteuil.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>entre</td><td style='padding:0.5rem'>между</td><td style='padding:0.5rem'>La table est entre les chaises.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>à côté de</td><td style='padding:0.5rem'>рядом с</td><td style='padding:0.5rem'>Le frigo est à côté de l'évier.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>en face de</td><td style='padding:0.5rem'>напротив</td><td style='padding:0.5rem'>La télé est en face du canapé.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 de + le = <b>du</b>: en face <b>du</b> canapé. de + les = <b>des</b>: à côté <b>des</b> fenêtres.</p>"
+    },
+    {
+      "id": "u11-quiz-1",
+      "type": "grammar-quiz",
+      "title": "Предлоги места — практика",
+      "questions": [
+        {
+          "question": "Le vase est ___ la table.",
+          "options": [
+            "sur",
+            "sous",
+            "dans",
+            "entre"
+          ],
+          "correctAnswer": "sur",
+          "explanation": "Ваза стоит НА столе — sur la table."
+        },
+        {
+          "question": "Mes chaussures sont ___ le lit.",
+          "options": [
+            "sous",
+            "sur",
+            "devant",
+            "en face"
+          ],
+          "correctAnswer": "sous",
+          "explanation": "Обувь ПОД кроватью — sous le lit."
+        },
+        {
+          "question": "La pharmacie est en face ___ supermarché.",
+          "options": [
+            "du",
+            "de le",
+            "de la",
+            "des"
+          ],
+          "correctAnswer": "du",
+          "explanation": "de + le supermarché = du supermarché."
+        },
+        {
+          "question": "Le bureau est ___ la fenêtre et l'armoire.",
+          "options": [
+            "entre",
+            "dans",
+            "sous",
+            "chez"
+          ],
+          "correctAnswer": "entre",
+          "explanation": "МЕЖДУ окном и шкафом — entre ... et ..."
+        },
+        {
+          "question": "Les clés sont ___ mon sac.",
+          "options": [
+            "dans",
+            "sur",
+            "entre",
+            "derrière"
+          ],
+          "correctAnswer": "dans",
+          "explanation": "Ключи В сумке — dans mon sac."
+        }
+      ]
+    },
+    {
+      "id": "u11-genre1",
+      "type": "gender-quiz",
+      "title": "Род слов: дом и мебель",
+      "items": [
+        {
+          "word": "cuisine",
+          "article": "la",
+          "ru": "кухня",
+          "hint": "-ine — почти всегда женский род"
+        },
+        {
+          "word": "salon",
+          "article": "le",
+          "ru": "гостиная",
+          "hint": "-on — мужской род"
+        },
+        {
+          "word": "chambre",
+          "article": "la",
+          "ru": "спальня",
+          "hint": "-re после согласной — чаще женский"
+        },
+        {
+          "word": "lit",
+          "article": "le",
+          "ru": "кровать",
+          "hint": "короткие на согласную — чаще мужской"
+        },
+        {
+          "word": "armoire",
+          "article": "l' (f)",
+          "ru": "шкаф",
+          "hint": "-oire — женский род"
+        },
+        {
+          "word": "étage",
+          "article": "l' (m)",
+          "ru": "этаж",
+          "hint": "-age — мужской род"
+        }
+      ]
+    },
+    {
+      "id": "u11-fill1",
+      "type": "fill-blank",
+      "title": "Объявление об аренде",
+      "text": "À louer : appartement de trois ___ au centre-ville. Il est ___ troisième étage, avec ascenseur. La cuisine est équipée, il y a un grand ___ dans le salon. Le ___ est de 800 euros par mois, charges ___ .",
+      "blanks": [
+        {
+          "correctAnswer": "pièces",
+          "options": [
+            "pièces",
+            "chambres à coucher",
+            "salles"
+          ],
+          "explanation": "Размер квартиры считают в pièces: un trois-pièces."
+        },
+        {
+          "correctAnswer": "au",
+          "options": [
+            "au",
+            "à le",
+            "dans le"
+          ],
+          "explanation": "à + le troisième étage = au troisième étage."
+        },
+        {
+          "correctAnswer": "canapé",
+          "options": [
+            "canapé",
+            "frigo",
+            "lavabo"
+          ],
+          "explanation": "В гостиной логичен диван — un canapé."
+        },
+        {
+          "correctAnswer": "loyer",
+          "options": [
+            "loyer",
+            "prix",
+            "salaire"
+          ],
+          "explanation": "Арендная плата — le loyer."
+        },
+        {
+          "correctAnswer": "comprises",
+          "options": [
+            "comprises",
+            "compris",
+            "comprenant"
+          ],
+          "explanation": "Les charges (f, pl) comprises — согласование в женском роде мн. числа."
+        }
+      ]
+    },
+    {
+      "id": "u11-dialogue1",
+      "type": "dialogue",
+      "title": "La visite de l'appartement",
+      "context": "Тома осматривает квартиру с владелицей.",
+      "exchanges": [
+        {
+          "speaker": "Propriétaire",
+          "side": "left",
+          "text": "Bonjour ! Entrez, je vous montre l'appartement."
+        },
+        {
+          "speaker": "Thomas",
+          "side": "right",
+          "isBlank": true,
+          "options": [
+            "Merci ! Il y a combien de pièces ?",
+            "Merci ! Quel âge avez-vous ?",
+            "Non, au revoir."
+          ],
+          "correctAnswer": "Merci ! Il y a combien de pièces ?",
+          "explanation": "Логичный вопрос при осмотре — сколько комнат: combien de pièces."
+        },
+        {
+          "speaker": "Propriétaire",
+          "side": "left",
+          "text": "Trois pièces : un salon et deux chambres. La cuisine est à côté du salon."
+        },
+        {
+          "speaker": "Thomas",
+          "side": "right",
+          "isBlank": true,
+          "options": [
+            "C'est très lumineux ! Quel est le loyer ?",
+            "Je déteste cet appartement.",
+            "Où est la gare ?"
+          ],
+          "correctAnswer": "C'est très lumineux ! Quel est le loyer ?",
+          "explanation": "Хвалим (c'est lumineux) и спрашиваем цену аренды — le loyer."
+        },
+        {
+          "speaker": "Propriétaire",
+          "side": "left",
+          "text": "750 euros par mois, charges comprises."
+        },
+        {
+          "speaker": "Thomas",
+          "side": "right",
+          "isBlank": true,
+          "options": [
+            "Très bien, je le prends !",
+            "Très bien, je la prends !",
+            "Très bien, je les prends !"
+          ],
+          "correctAnswer": "Très bien, je le prends !",
+          "explanation": "L'appartement — мужской род: je LE prends (местоимение COD из юнита 10!)."
+        }
+      ]
+    },
+    {
+      "id": "u11-sb1",
+      "type": "sentence-builder",
+      "title": "Соберите фразы о жилье",
+      "sentences": [
+        {
+          "words": [
+            "J'habite",
+            "dans",
+            "un",
+            "petit",
+            "appartement"
+          ],
+          "ru": "Я живу в маленькой квартире"
+        },
+        {
+          "words": [
+            "La",
+            "cuisine",
+            "est",
+            "à",
+            "côté",
+            "du",
+            "salon"
+          ],
+          "ru": "Кухня рядом с гостиной"
+        },
+        {
+          "words": [
+            "Le",
+            "loyer",
+            "est",
+            "trop",
+            "cher"
+          ],
+          "ru": "Аренда слишком дорогая"
+        }
+      ]
+    },
+    {
+      "id": "u11-quiz-2",
+      "type": "grammar-quiz",
+      "title": "Жильё — итоговая проверка",
+      "questions": [
+        {
+          "question": "J'habite ___ rez-de-chaussée.",
+          "options": [
+            "au",
+            "à la",
+            "dans",
+            "sur"
+          ],
+          "correctAnswer": "au",
+          "explanation": "à + le rez-de-chaussée = au rez-de-chaussée."
+        },
+        {
+          "question": "Nous cherchons un appartement ___ .",
+          "options": [
+            "meublé",
+            "meublée",
+            "meublés",
+            "meuble"
+          ],
+          "correctAnswer": "meublé",
+          "explanation": "Un appartement (м.р. ед.ч.) meublé — с мебелью."
+        },
+        {
+          "question": "Le ___ paie le loyer au propriétaire.",
+          "options": [
+            "locataire",
+            "voisin",
+            "facteur",
+            "boulanger"
+          ],
+          "correctAnswer": "locataire",
+          "explanation": "Аренду платит квартиросъёмщик — le locataire."
+        },
+        {
+          "question": "Ma chambre est ___ premier étage.",
+          "options": [
+            "au",
+            "à le",
+            "en",
+            "dans"
+          ],
+          "correctAnswer": "au",
+          "explanation": "à + le premier étage = au premier étage (наш второй этаж)."
+        }
+      ]
+    }
+  ]
+}

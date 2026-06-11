@@ -1,0 +1,284 @@
+{
+  "id": "delf",
+  "title": "DELF A1 — Пробный экзамен",
+  "description": "Спецмодуль: формат экзамена DELF A1 и тренировочные задания по всем четырём частям. Используйте режим «Экзамен юнита» для прохождения на время!",
+  "vocabulary": [],
+  "exercises": [
+    {
+      "id": "delf-theory-1",
+      "type": "theory",
+      "title": "Comment se passe le DELF A1 ? — Формат экзамена",
+      "content": "<p style='margin:0.75rem 0'>DELF A1 — официальный диплом французского языка начального уровня. Четыре части по 25 баллов:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Часть</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Что делать</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Время</th></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>Compréhension de l'oral (CO)</td><td style='padding:0.5rem'>слушать короткие записи, отвечать на вопросы</td><td style='padding:0.5rem'>~20 мин</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>Compréhension des écrits (CE)</td><td style='padding:0.5rem'>читать объявления, письма, афиши</td><td style='padding:0.5rem'>30 мин</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>Production écrite (PE)</td><td style='padding:0.5rem'>заполнить анкету + написать короткое сообщение</td><td style='padding:0.5rem'>30 мин</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>Production orale (PO)</td><td style='padding:0.5rem'>беседа: о себе, вопросы, ролевая сценка</td><td style='padding:0.5rem'>5–7 мин</td></tr></table><p style='margin:0.75rem 0'><b>Проходной балл: 50 из 100</b>, при этом ни одна часть не должна быть ниже 5 из 25.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Стратегия A1: всегда читайте вопросы ДО прослушивания/чтения текста — будете знать, что искать.</p>"
+    },
+    {
+      "id": "delf-q-ce1",
+      "type": "grammar-quiz",
+      "title": "CE: понимание объявлений",
+      "questions": [
+        {
+          "question": "«Boulangerie ouverte du mardi au samedi, 7h–19h». Когда закрыто?",
+          "options": [
+            "dimanche et lundi",
+            "mardi",
+            "samedi",
+            "jamais"
+          ],
+          "correctAnswer": "dimanche et lundi",
+          "explanation": "«Du mardi au samedi» = со вторника по субботу. Значит, воскресенье и понедельник — выходные."
+        },
+        {
+          "question": "«Cours de yoga — débutants bienvenus — mercredi 18h, salle 2, 10 € la séance». Сколько стоит занятие?",
+          "options": [
+            "10 euros",
+            "18 euros",
+            "2 euros",
+            "бесплатно"
+          ],
+          "correctAnswer": "10 euros",
+          "explanation": "«10 € la séance» — 10 евро за занятие. 18h — это время, salle 2 — зал."
+        },
+        {
+          "question": "«Cherche colocataire, chambre meublée, 400 €/mois, proche métro». Что предлагают?",
+          "options": [
+            "комнату с мебелью",
+            "квартиру без мебели",
+            "место в отеле",
+            "офис"
+          ],
+          "correctAnswer": "комнату с мебелью",
+          "explanation": "Chambre meublée = меблированная комната; colocataire — сосед по квартире."
+        },
+        {
+          "question": "«Le musée est gratuit le premier dimanche du mois». Когда вход бесплатный?",
+          "options": [
+            "в первое воскресенье месяца",
+            "каждое воскресенье",
+            "первого числа",
+            "по понедельникам"
+          ],
+          "correctAnswer": "в первое воскресенье месяца",
+          "explanation": "Le premier dimanche du mois — первое воскресенье каждого месяца."
+        }
+      ]
+    },
+    {
+      "id": "delf-q-ce2",
+      "type": "grammar-quiz",
+      "title": "CE: понимание короткого письма",
+      "questions": [
+        {
+          "question": "«Salut Léo ! Rendez-vous samedi à 15h devant le cinéma. Après, on mange une pizza. À samedi ! Emma». Где встреча?",
+          "options": [
+            "перед кинотеатром",
+            "в пиццерии",
+            "у Эммы",
+            "в 15-м зале"
+          ],
+          "correctAnswer": "перед кинотеатром",
+          "explanation": "Devant le cinéma — перед кинотеатром."
+        },
+        {
+          "question": "В том же сообщении: что планируют ПОСЛЕ кино?",
+          "options": [
+            "есть пиццу",
+            "идти домой",
+            "смотреть второй фильм",
+            "гулять в парке"
+          ],
+          "correctAnswer": "есть пиццу",
+          "explanation": "«Après, on mange une pizza» — потом едим пиццу."
+        },
+        {
+          "question": "«Désolée, je ne peux pas venir ce soir, je suis malade». Почему она не придёт?",
+          "options": [
+            "она болеет",
+            "она работает",
+            "она путешествует",
+            "она забыла"
+          ],
+          "correctAnswer": "она болеет",
+          "explanation": "Je suis malade — я больна."
+        },
+        {
+          "question": "«Merci pour ton invitation ! J'arrive vendredi par le train de 18h40». Как он приедет?",
+          "options": [
+            "на поезде",
+            "на машине",
+            "на самолёте",
+            "на автобусе"
+          ],
+          "correctAnswer": "на поезде",
+          "explanation": "Par le train de 18h40 — поездом в 18:40."
+        }
+      ]
+    },
+    {
+      "id": "delf-fill-pe1",
+      "type": "fill-blank",
+      "title": "PE: заполните анкету",
+      "text": "FICHE D'INSCRIPTION — Bibliothèque municipale\nNom : Petrov\nPrénom : Ivan\n___ : russe\nDate de naissance : 12/03/1995\n___ : 15 rue Victor Hugo, Lyon\nTéléphone : 06 12 34 56 78\n___ : ivan.petrov@mail.com\nSignature : I.P.",
+      "blanks": [
+        {
+          "correctAnswer": "Nationalité",
+          "options": [
+            "Nationalité",
+            "Nation",
+            "Pays de langue"
+          ],
+          "explanation": "Графа «гражданство» в анкете — Nationalité (ответ: russe)."
+        },
+        {
+          "correctAnswer": "Adresse",
+          "options": [
+            "Adresse",
+            "Addresse",
+            "Maison"
+          ],
+          "explanation": "Улица и город — это Adresse (одна d по-французски!)."
+        },
+        {
+          "correctAnswer": "Courriel",
+          "options": [
+            "Courriel",
+            "Lettre",
+            "Numéro"
+          ],
+          "explanation": "Email в официальных анкетах — courriel (или e-mail)."
+        }
+      ]
+    },
+    {
+      "id": "delf-theory-2",
+      "type": "theory",
+      "title": "PE: как написать короткое сообщение (модель)",
+      "content": "<p style='margin:0.75rem 0'>Во второй части PE просят написать 40–50 слов: открытку, приглашение или ответ. Универсальный каркас:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Шаг</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Фразы-заготовки</th></tr><tr><td style='padding:0.5rem'>1. Приветствие</td><td style='padding:0.5rem'>Salut Marie ! / Bonjour Paul !</td></tr><tr><td style='padding:0.5rem'>2. Повод</td><td style='padding:0.5rem'>Samedi, c'est mon anniversaire. / Je suis en vacances à Nice.</td></tr><tr><td style='padding:0.5rem'>3. Детали (где? когда?)</td><td style='padding:0.5rem'>La fête est chez moi, à 19h. / Il fait beau, la mer est super.</td></tr><tr><td style='padding:0.5rem'>4. Вопрос или просьба</td><td style='padding:0.5rem'>Tu peux venir ? / Réponds-moi vite !</td></tr><tr><td style='padding:0.5rem'>5. Прощание</td><td style='padding:0.5rem'>Bises ! / À bientôt ! / Amitiés.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Считайте слова! Меньше 40 — снимут баллы. Проверьте: заглавные буквы, точки, accents (é, è, à).</p>"
+    },
+    {
+      "id": "delf-dial-po1",
+      "type": "dialogue",
+      "title": "PO: ролевая сценка — в кафе (как на экзамене)",
+      "context": "Экзаменатор играет официанта. Ваша задача — заказать и расплатиться.",
+      "exchanges": [
+        {
+          "speaker": "Serveur",
+          "side": "left",
+          "text": "Bonjour ! Vous désirez ?"
+        },
+        {
+          "speaker": "Vous",
+          "side": "right",
+          "isBlank": true,
+          "options": [
+            "Bonjour ! Je voudrais un café et un croissant, s'il vous plaît.",
+            "Donne-moi un café !",
+            "Bonjour ! Tu as du café ?"
+          ],
+          "correctAnswer": "Bonjour ! Je voudrais un café et un croissant, s'il vous plaît.",
+          "explanation": "На экзамене важна вежливость: je voudrais + s'il vous plaît, обращение на vous."
+        },
+        {
+          "speaker": "Serveur",
+          "side": "left",
+          "text": "Très bien. C'est tout ?"
+        },
+        {
+          "speaker": "Vous",
+          "side": "right",
+          "isBlank": true,
+          "options": [
+            "Oui, c'est tout. Ça fait combien ?",
+            "Oui. Donne l'addition.",
+            "Non. Au revoir."
+          ],
+          "correctAnswer": "Oui, c'est tout. Ça fait combien ?",
+          "explanation": "Спросить цену: Ça fait combien ? / C'est combien ?"
+        },
+        {
+          "speaker": "Serveur",
+          "side": "left",
+          "text": "Ça fait quatre euros cinquante."
+        },
+        {
+          "speaker": "Vous",
+          "side": "right",
+          "isBlank": true,
+          "options": [
+            "Voilà. Merci, bonne journée !",
+            "C'est trop cher, au revoir !",
+            "Je n'ai pas d'argent."
+          ],
+          "correctAnswer": "Voilà. Merci, bonne journée !",
+          "explanation": "Завершаем вежливо: voilà (вот, пожалуйста) + merci + пожелание."
+        }
+      ]
+    },
+    {
+      "id": "delf-q-grammar",
+      "type": "grammar-quiz",
+      "title": "Грамматический мини-тест (как в DELF)",
+      "questions": [
+        {
+          "question": "Je ___ étudiant et j'___ 22 ans.",
+          "options": [
+            "suis ... ai",
+            "ai ... suis",
+            "es ... as",
+            "suis ... suis"
+          ],
+          "correctAnswer": "suis ... ai",
+          "explanation": "Профессия/статус — être (je suis), возраст — avoir (j'ai 22 ans)."
+        },
+        {
+          "question": "___ est-ce que tu habites ? — À Marseille.",
+          "options": [
+            "Où",
+            "Quand",
+            "Qui",
+            "Quel"
+          ],
+          "correctAnswer": "Où",
+          "explanation": "Ответ — город, значит вопрос о месте: où."
+        },
+        {
+          "question": "Nous ___ au cinéma hier soir.",
+          "options": [
+            "sommes allés",
+            "avons allé",
+            "allons",
+            "sommes allé"
+          ],
+          "correctAnswer": "sommes allés",
+          "explanation": "Aller в passé composé — с être, причастие согласуется: nous sommes allés."
+        },
+        {
+          "question": "Tu veux ___ eau ?",
+          "options": [
+            "de l'",
+            "du",
+            "de la",
+            "des"
+          ],
+          "correctAnswer": "de l'",
+          "explanation": "Eau — женский род, начинается с гласной: de l'eau."
+        },
+        {
+          "question": "Il fait froid, ___ ton manteau !",
+          "options": [
+            "mets",
+            "met",
+            "mettre",
+            "mettez"
+          ],
+          "correctAnswer": "mets",
+          "explanation": "Императив на tu: mets ! (от mettre — надевать)."
+        }
+      ]
+    },
+    {
+      "id": "delf-theory-3",
+      "type": "theory",
+      "title": "PO: о себе за 1 минуту — план ответа",
+      "content": "<p style='margin:0.75rem 0'>Первая часть устного экзамена — рассказ о себе. Подготовьте мини-монолог по плану:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Тема</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример фразы</th></tr><tr><td style='padding:0.5rem'>Имя, возраст</td><td style='padding:0.5rem'>Je m'appelle Anna, j'ai 25 ans.</td></tr><tr><td style='padding:0.5rem'>Откуда</td><td style='padding:0.5rem'>Je suis russe, je viens de Moscou.</td></tr><tr><td style='padding:0.5rem'>Где живёте</td><td style='padding:0.5rem'>J'habite à Lyon depuis six mois.</td></tr><tr><td style='padding:0.5rem'>Работа / учёба</td><td style='padding:0.5rem'>Je suis étudiante en économie.</td></tr><tr><td style='padding:0.5rem'>Семья</td><td style='padding:0.5rem'>J'ai un frère et une sœur.</td></tr><tr><td style='padding:0.5rem'>Увлечения</td><td style='padding:0.5rem'>J'aime le sport et la musique. Je fais du tennis.</td></tr><tr><td style='padding:0.5rem'>Французский</td><td style='padding:0.5rem'>J'étudie le français parce que j'aime la France.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Экзаменатор задаст 5–6 простых вопросов (возраст, семья, хобби). Не молчите: переспросить — нормально: <i>Vous pouvez répéter, s'il vous plaît ?</i></p>"
+    }
+  ]
+}

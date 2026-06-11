@@ -8,8 +8,11 @@ import unite7 from './unite7.json';
 import unite8 from './unite8.json';
 import unite9 from './unite9.json';
 import unite10 from './unite10.json';
+import unite11 from './unite11.json';
 import genre from './genre.json';
 import numeros from './numeros.json';
+import phonetique from './phonetique.json';
+import delf from './delf.json';
 
 export const EDITO_A1_UNITS: Record<string, EditoUnit> = {
   '1': unite1 as unknown as EditoUnit,
@@ -22,12 +25,15 @@ export const EDITO_A1_UNITS: Record<string, EditoUnit> = {
   '8': unite8 as unknown as EditoUnit,
   '9': unite9 as unknown as EditoUnit,
   '10': unite10 as unknown as EditoUnit,
+  '11': unite11 as unknown as EditoUnit,
   'genre': genre as unknown as EditoUnit,
   'numeros': numeros as unknown as EditoUnit,
+  'phonetique': phonetique as unknown as EditoUnit,
+  'delf': delf as unknown as EditoUnit,
 };
 
-export const UNIT_ORDER = ['1','2','3','4','5','6','7','8','9','10'];
-export const SPECIAL_MODULES = ['genre', 'numeros'];
+export const UNIT_ORDER = ['1','2','3','4','5','6','7','8','9','10','11'];
+export const SPECIAL_MODULES = ['genre', 'numeros', 'phonetique', 'delf'];
 
 export interface EditoExercise {
   id: string;
