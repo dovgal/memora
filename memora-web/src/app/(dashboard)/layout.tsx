@@ -153,9 +153,29 @@ export default async function DashboardLayout({
                 </header>
 
                 {/* Page Content */}
-                <div className="flex-1 overflow-y-auto w-full bg-background">
+                <div className="flex-1 overflow-y-auto w-full bg-background pb-16 md:pb-0">
                     {children}
                 </div>
+
+                {/* Мобильная нижняя навигация: выход из любого курса на телефоне */}
+                <nav className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-card/95 backdrop-blur border-t border-border flex items-stretch justify-around pb-[env(safe-area-inset-bottom)]">
+                    <Link href={`/dashboard/${role}`} className="flex flex-col items-center gap-0.5 py-2 px-3 text-qz-text-muted hover:text-[#4255ff] transition-colors">
+                        <Home className="w-5 h-5" />
+                        <span className="text-[10px] font-semibold">Главная</span>
+                    </Link>
+                    <Link href="/courses" className="flex flex-col items-center gap-0.5 py-2 px-3 text-qz-text-muted hover:text-[#4255ff] transition-colors">
+                        <GraduationCap className="w-5 h-5" />
+                        <span className="text-[10px] font-semibold">Каталог</span>
+                    </Link>
+                    <Link href="/cabinet" className="flex flex-col items-center gap-0.5 py-2 px-3 text-qz-text-muted hover:text-[#4255ff] transition-colors">
+                        <UserRound className="w-5 h-5" />
+                        <span className="text-[10px] font-semibold">Кабинет</span>
+                    </Link>
+                    <Link href="/library" className="flex flex-col items-center gap-0.5 py-2 px-3 text-qz-text-muted hover:text-[#4255ff] transition-colors">
+                        <Library className="w-5 h-5" />
+                        <span className="text-[10px] font-semibold">Наборы</span>
+                    </Link>
+                </nav>
             </main>
         </div>
     );
