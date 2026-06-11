@@ -369,7 +369,8 @@
             "Le cinéma",
             "La lecture"
           ],
-          "correctAnswer": "Le sport"
+          "correctAnswer": "Le sport",
+          "explanation": "Первым в записи названо спортивное занятие (le sport / faire du sport), музыка и кино упоминаются позже или не упоминаются."
         }
       ]
     },

@@ -816,7 +816,8 @@
             "De l'école",
             "Des amis"
           ],
-          "correctAnswer": "De la famille"
+          "correctAnswer": "De la famille",
+          "explanation": "Герои называют членов семьи (mère, frère...) — диалог о семье (la famille), а не о работе, школе или друзьях."
         }
       ]
     },

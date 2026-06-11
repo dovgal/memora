@@ -302,7 +302,8 @@
             "Des chaussures",
             "Un pull"
           ],
-          "correctAnswer": "Une robe"
+          "correctAnswer": "Une robe",
+          "explanation": "Покупательница говорит je cherche une robe — она ищет платье. Manteau (пальто), chaussures (обувь) и pull (свитер) не звучат как цель покупки."
         }
       ]
     },

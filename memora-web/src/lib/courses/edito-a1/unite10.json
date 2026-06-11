@@ -308,7 +308,8 @@
             "De son travail actuel",
             "De sa famille"
           ],
-          "correctAnswer": "De ses projets"
+          "correctAnswer": "De ses projets",
+          "explanation": "Человек использует будущее время (je vais..., je voudrais devenir...) — он говорит о своих планах (ses projets), а не о прошлом."
         }
       ]
     },

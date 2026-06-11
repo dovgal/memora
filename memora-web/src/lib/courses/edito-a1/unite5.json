@@ -797,7 +797,8 @@
             "À la pharmacie",
             "À la banque"
           ],
-          "correctAnswer": "À la gare"
+          "correctAnswer": "À la gare",
+          "explanation": "Человек спрашивает дорогу к вокзалу (Où est la gare ?) — цель пути именно la gare, остальные места не упоминаются."
         }
       ]
     },

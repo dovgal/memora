@@ -299,7 +299,8 @@
             "Il a mal au dos",
             "Il est fatigué"
           ],
-          "correctAnswer": "Il a de la fièvre"
+          "correctAnswer": "Il a de la fièvre",
+          "explanation": "Пациент жалуется на жар: j'ai de la fièvre. Mal à la tête (голова) и mal au dos (спина) — другие жалобы, их в записи нет."
         }
       ]
     },

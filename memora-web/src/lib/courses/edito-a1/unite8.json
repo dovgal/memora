@@ -327,7 +327,8 @@
             "La voiture",
             "Le bus"
           ],
-          "correctAnswer": "Le train"
+          "correctAnswer": "Le train",
+          "explanation": "В записи ключевые слова про поезд: le train, le quai, le billet de train — значит транспорт — поезд."
         }
       ]
     },

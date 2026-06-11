@@ -11,6 +11,107 @@
       "content": "<p style='margin-bottom:1rem'>Во французском языке <strong>каждое существительное имеет род</strong>: мужской (<em>masculin</em>) или женский (<em>féminin</em>). Это влияет на артикль, прилагательное и местоимение.</p><div style='display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0'><div style='padding:1rem;background:rgba(59,130,246,0.15);border-radius:8px;border-left:4px solid #3b82f6'><h4 style='color:#60a5fa;margin-bottom:0.5rem'>Masculin (м.р.)</h4><p style='color:#94a3b8;font-size:0.9rem'>le, un, mon, ce...</p><p style='margin-top:0.5rem'><em>le café</em>, <em>un livre</em></p><p><em>mon ami</em>, <em>ce soir</em></p></div><div style='padding:1rem;background:rgba(236,72,153,0.15);border-radius:8px;border-left:4px solid #ec4899'><h4 style='color:#f472b6;margin-bottom:0.5rem'>Féminin (ж.р.)</h4><p style='color:#94a3b8;font-size:0.9rem'>la, une, ma, cette...</p><p style='margin-top:0.5rem'><em>la table</em>, <em>une maison</em></p><p><em>ma sœur</em>, <em>cette rue</em></p></div></div><p style='padding:1rem;background:rgba(251,191,36,0.1);border-radius:8px;border-left:4px solid #fbbf24'>⚠️ <strong>Главное правило для новичка:</strong> Всегда учите слово ВМЕСТЕ с артиклем:<br>не просто «кофе = café», а «кофе = <em>le café</em>»</p>"
     },
     {
+      "id": "genre-theory-articles",
+      "type": "theory",
+      "title": "Le, la, les / un, une, des / l' — какой артикль выбрать?",
+      "content": "<p style='margin:0.75rem 0'>Во французском артикль показывает сразу две вещи: <b>род/число</b> существительного и то, <b>определённый</b> это предмет или <b>любой</b>.</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'></th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Мужской род</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Женский род</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Мн. число</th></tr><tr><td style='padding:0.5rem'><b>Определённый</b> (этот, тот самый)</td><td style='padding:0.5rem'><b>le</b> — le café</td><td style='padding:0.5rem'><b>la</b> — la table</td><td style='padding:0.5rem'><b>les</b> — les tables</td></tr><tr><td style='padding:0.5rem'><b>Неопределённый</b> (какой-то, один из)</td><td style='padding:0.5rem'><b>un</b> — un café</td><td style='padding:0.5rem'><b>une</b> — une table</td><td style='padding:0.5rem'><b>des</b> — des tables</td></tr><tr><td style='padding:0.5rem'><b>Перед гласной или немым h</b></td><td style='padding:0.5rem'><b>l'</b> — l'ami, l'hôtel</td><td style='padding:0.5rem'><b>l'</b> — l'amie, l'eau</td><td style='padding:0.5rem'>les amis (лиезон [z])</td></tr></table><p style='margin:0.75rem 0'><b>Когда определённый (le / la / les / l'):</b></p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Случай</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Почему</th></tr><tr><td style='padding:0.5rem'>предмет уже известен или единственный</td><td style='padding:0.5rem'>La gare est loin.</td><td style='padding:0.5rem'>вокзал в городе один, оба понимают какой</td></tr><tr><td style='padding:0.5rem'>говорим о вещи вообще / обобщаем</td><td style='padding:0.5rem'>Le café est bon pour le matin.</td><td style='padding:0.5rem'>кофе как явление, а не чашка</td></tr><tr><td style='padding:0.5rem'>вкусы: aimer, adorer, détester, préférer</td><td style='padding:0.5rem'>J'aime la musique. Je déteste les lundis.</td><td style='padding:0.5rem'>после глаголов вкуса — ВСЕГДА le/la/les</td></tr><tr><td style='padding:0.5rem'>уже упомянули раньше</td><td style='padding:0.5rem'>Je vois un chat. Le chat est noir.</td><td style='padding:0.5rem'>второй раз — уже определённый</td></tr></table><p style='margin:0.75rem 0'><b>Когда неопределённый (un / une / des):</b></p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Случай</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Почему</th></tr><tr><td style='padding:0.5rem'>впервые упоминаем</td><td style='padding:0.5rem'>Il y a un musée dans ma ville.</td><td style='padding:0.5rem'>слушатель ещё не знает, какой</td></tr><tr><td style='padding:0.5rem'>один из многих, неважно какой</td><td style='padding:0.5rem'>Je cherche une boulangerie.</td><td style='padding:0.5rem'>любая подойдёт</td></tr><tr><td style='padding:0.5rem'>считаем: один, одна</td><td style='padding:0.5rem'>J'achète une baguette et deux croissants.</td><td style='padding:0.5rem'>un/une = ещё и число «один»</td></tr><tr><td style='padding:0.5rem'>несколько неопределённых</td><td style='padding:0.5rem'>Elle a des amis à Paris.</td><td style='padding:0.5rem'>des = «какие-то, несколько»</td></tr></table><p style='margin:0.75rem 0'><b>Особые правила, которые часто проверяют:</b></p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Правило</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>le, la → <b>l'</b> перед гласной и немым h</td><td style='padding:0.5rem'>l'orange, l'étudiant, l'hôpital (но: le héros — h придыхательное)</td></tr><tr><td style='padding:0.5rem'>les и des не сокращаются, но даёт лиезон</td><td style='padding:0.5rem'>les amis [ле-зами], des écoles [де-зеколь]</td></tr><tr><td style='padding:0.5rem'>в отрицании un/une/des → <b>de</b></td><td style='padding:0.5rem'>J'ai une voiture. → Je n'ai pas <b>de</b> voiture.</td></tr><tr><td style='padding:0.5rem'>после c'est остаётся un/une</td><td style='padding:0.5rem'>C'est <b>une</b> bonne question. (не «c'est de»)</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Быстрая проверка: можно подставить «этот/тот самый» — ставьте le/la/les. Можно «какой-то/один» — un/une/des. Говорите о любви/ненависти к чему-то — только le/la/les!</p>"
+    },
+    {
+      "id": "genre-quiz-articles",
+      "type": "grammar-quiz",
+      "title": "Le / la / les / un / une / des / l' — выберите правильно",
+      "questions": [
+        {
+          "question": "Dans ma rue, il y a ___ pharmacie.",
+          "options": [
+            "une",
+            "la",
+            "le",
+            "les"
+          ],
+          "correctAnswer": "une",
+          "explanation": "Аптека упоминается впервые («есть какая-то аптека») — неопределённый артикль: une pharmacie (ж.р., -ie)."
+        },
+        {
+          "question": "___ pharmacie ouvre à 9 heures. (та самая, из прошлой фразы)",
+          "options": [
+            "La",
+            "Une",
+            "Le",
+            "Des"
+          ],
+          "correctAnswer": "La",
+          "explanation": "Аптека уже известна из контекста — определённый артикль la. Второе упоминание всегда с le/la/les."
+        },
+        {
+          "question": "J'adore ___ chocolat !",
+          "options": [
+            "le",
+            "un",
+            "du",
+            "des"
+          ],
+          "correctAnswer": "le",
+          "explanation": "После глаголов вкуса (aimer, adorer, détester, préférer) — всегда определённый артикль: j'adore LE chocolat (шоколад вообще)."
+        },
+        {
+          "question": "Elle achète ___ oranges au marché.",
+          "options": [
+            "des",
+            "les",
+            "une",
+            "la"
+          ],
+          "correctAnswer": "des",
+          "explanation": "«Покупает (какие-то) апельсины» — несколько неопределённых предметов: des. Les было бы «те самые апельсины»."
+        },
+        {
+          "question": "C'est ___ hôtel moderne.",
+          "options": [
+            "un",
+            "l'",
+            "le",
+            "une"
+          ],
+          "correctAnswer": "un",
+          "explanation": "«Это (некий) современный отель» — впервые, один из многих: un. Элизия l' нужна только для le/la, а un не сокращается."
+        },
+        {
+          "question": "___ eau est froide !",
+          "options": [
+            "L'",
+            "La",
+            "Une",
+            "Le"
+          ],
+          "correctAnswer": "L'",
+          "explanation": "Eau — женский род, но начинается с гласной, поэтому la → l': l'eau. Полная форма la eau не существует."
+        },
+        {
+          "question": "Je n'ai pas ___ voiture.",
+          "options": [
+            "de",
+            "une",
+            "la",
+            "des"
+          ],
+          "correctAnswer": "de",
+          "explanation": "В отрицании un/une/des превращаются в de: j'ai une voiture → je n'ai pas DE voiture."
+        },
+        {
+          "question": "___ enfants de Marie sont adorables.",
+          "options": [
+            "Les",
+            "Des",
+            "L'",
+            "Un"
+          ],
+          "correctAnswer": "Les",
+          "explanation": "Дети Марии — конкретные, известные (чьи именно — сказано): определённый артикль мн. числа les."
+        }
+      ]
+    },
+    {
       "id": "genre-theory-2",
       "type": "theory",
       "title": "Мужской род — типичные окончания",
@@ -136,7 +237,7 @@
           "emoji": "🏥",
           "ru": "больница",
           "article": "l'",
-          "hint": "Мужской: l'hôpital (le hôpital) — перед h aspiré нет элизии"
+          "hint": "Мужской: h в hôpital НЕМОЕ (h muet), поэтому есть элизия — l'hôpital (= le hôpital)"
         },
         {
           "word": "pharmacie",
@@ -753,7 +854,7 @@
           "emoji": "🌸",
           "ru": "цветок",
           "article": "la",
-          "hint": "Женский: -eur для цветков/предметов → женский (но -eur для профессий → мужской)"
+          "hint": "Женский: la fleur. Абстрактные слова и вещи на -eur чаще женские (la couleur, la peur), а ПРОФЕССИИ на -eur — мужские (le serveur)"
         },
         {
           "word": "arbre",

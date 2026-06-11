@@ -779,7 +779,8 @@
             "Le soir",
             "La nuit"
           ],
-          "correctAnswer": "Le matin"
+          "correctAnswer": "Le matin",
+          "explanation": "Подсказки в записи: je me lève, le petit-déjeuner — встают и завтракают, значит описано утро (le matin)."
         }
       ]
     },

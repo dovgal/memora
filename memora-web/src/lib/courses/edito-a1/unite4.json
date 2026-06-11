@@ -794,7 +794,8 @@
             "Au marché",
             "À l'école"
           ],
-          "correctAnswer": "Au restaurant"
+          "correctAnswer": "Au restaurant",
+          "explanation": "Звучат фразы заказа (je voudrais..., la carte, l'addition) — так говорят в ресторане (au restaurant)."
         }
       ]
     },

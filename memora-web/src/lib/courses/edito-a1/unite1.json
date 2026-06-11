@@ -864,7 +864,8 @@
             "Au revoir",
             "Merci"
           ],
-          "correctAnswer": "Bonjour"
+          "correctAnswer": "Bonjour",
+          "explanation": "В записи звучит дневное приветствие Bonjour (добрый день). Bonsoir говорят вечером, Au revoir — это прощание, Merci — благодарность."
         }
       ]
     },
@@ -883,7 +884,8 @@
             "Couleurs",
             "Jours"
           ],
-          "correctAnswer": "Nationalités"
+          "correctAnswer": "Nationalités",
+          "explanation": "В записи перечисляются национальности (français, espagnole...). Chiffres — это цифры, couleurs — цвета, jours — дни недели."
         }
       ]
     },
