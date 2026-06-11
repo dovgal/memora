@@ -1,0 +1,338 @@
+{
+  "id": "unite3",
+  "title": "Unité 3 : Remettre — снова, заново, обратно",
+  "description": "Приставка re-: вернуть в состояние или повторить. Remettre en état, en marche, à plus tard, à neuf, sur pied, au goût du jour и другие.",
+  "vocabulary": [
+    {
+      "fr": "remettre en cause",
+      "ru": "оспаривать, пересматривать",
+      "type": "phrase"
+    },
+    {
+      "fr": "remettre en question",
+      "ru": "подвергать сомнению",
+      "type": "phrase"
+    },
+    {
+      "fr": "remettre en état",
+      "ru": "восстанавливать",
+      "type": "phrase"
+    },
+    {
+      "fr": "remettre en liberté",
+      "ru": "освобождать",
+      "type": "phrase"
+    },
+    {
+      "fr": "remettre en marche",
+      "ru": "снова запускать",
+      "type": "phrase"
+    },
+    {
+      "fr": "remettre en service",
+      "ru": "вновь вводить в эксплуатацию",
+      "type": "phrase"
+    },
+    {
+      "fr": "remettre à plus tard",
+      "ru": "откладывать",
+      "type": "phrase"
+    },
+    {
+      "fr": "remettre à neuf",
+      "ru": "обновлять до состояния нового",
+      "type": "phrase"
+    },
+    {
+      "fr": "remettre sur pied",
+      "ru": "поставить на ноги, восстановить",
+      "type": "phrase"
+    },
+    {
+      "fr": "remettre au goût du jour",
+      "ru": "снова сделать актуальным",
+      "type": "phrase"
+    },
+    {
+      "fr": "remettre au courant",
+      "ru": "информировать (снова)",
+      "type": "phrase"
+    },
+    {
+      "fr": "remettre au point",
+      "ru": "уточнять, отлаживать",
+      "type": "phrase"
+    },
+    {
+      "fr": "remettre à disposition",
+      "ru": "предоставлять (вновь)",
+      "type": "phrase"
+    },
+    {
+      "fr": "remettre hors de cause",
+      "ru": "снять обвинения",
+      "type": "phrase"
+    },
+    {
+      "fr": "remettre en route",
+      "ru": "запускать, отправлять в путь",
+      "type": "phrase"
+    },
+    {
+      "fr": "remettre en examen",
+      "ru": "привлекать в качестве обвиняемого",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "mt3-th1",
+      "type": "theory",
+      "title": "Re- + mettre = вернуть или повторить",
+      "content": "<p style='margin:0.75rem 0'>Приставка <b>re-</b> добавляет к mettre идею «<b>снова / обратно</b>». Поэтому многие пары различаются именно этим:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Mettre</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Remettre</th></tr><tr><td style='padding:0.5rem'>mettre en marche — запустить</td><td style='padding:0.5rem'>remettre en marche — запустить СНОВА (после остановки)</td></tr><tr><td style='padding:0.5rem'>mettre en service — ввести в эксплуатацию</td><td style='padding:0.5rem'>remettre en service — ВНОВЬ ввести в эксплуатацию</td></tr><tr><td style='padding:0.5rem'>mettre au courant — ввести в курс</td><td style='padding:0.5rem'>remettre au courant — напомнить, обновить информацию</td></tr><tr><td style='padding:0.5rem'>mettre en cause — поставить под сомнение</td><td style='padding:0.5rem'>remettre en cause — пересмотреть (то, что считалось решённым)</td></tr></table><p style='margin:0.75rem 0'>А у некоторых выражений своё, особое значение:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Выражение</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Смысл</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>remettre à plus tard</td><td style='padding:0.5rem'>отложить</td><td style='padding:0.5rem'>Ne remets pas ce travail à plus tard !</td></tr><tr><td style='padding:0.5rem'>remettre à neuf</td><td style='padding:0.5rem'>обновить «как новое»</td><td style='padding:0.5rem'>Ils ont remis l'appartement à neuf.</td></tr><tr><td style='padding:0.5rem'>remettre sur pied</td><td style='padding:0.5rem'>поставить на ноги</td><td style='padding:0.5rem'>Ce traitement m'a remis sur pied.</td></tr><tr><td style='padding:0.5rem'>remettre au goût du jour</td><td style='padding:0.5rem'>вернуть в моду</td><td style='padding:0.5rem'>Cette marque remet le vintage au goût du jour.</td></tr><tr><td style='padding:0.5rem'>remettre en liberté</td><td style='padding:0.5rem'>освободить</td><td style='padding:0.5rem'>Le juge a remis le suspect en liberté.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Причастие то же: remis. <i>L'appartement a été remis à neuf.</i></p>"
+    },
+    {
+      "id": "mt3-qz1",
+      "type": "grammar-quiz",
+      "title": "Mettre или remettre? Выберите по смыслу",
+      "questions": [
+        {
+          "question": "La machine s'est arrêtée, mais on l'a ___ en marche.",
+          "options": [
+            "remise",
+            "mise",
+            "mit",
+            "remettue"
+          ],
+          "correctAnswer": "remise",
+          "explanation": "Машина работала, остановилась — запускаем СНОВА: remettre. La machine → причастие согласуется: remise."
+        },
+        {
+          "question": "Ne ___ pas à demain ce que tu peux faire aujourd'hui !",
+          "options": [
+            "remets",
+            "mets",
+            "remettras",
+            "met"
+          ],
+          "correctAnswer": "remets",
+          "explanation": "«Не откладывай» — remettre à plus tard / à demain. Императив: ne remets pas."
+        },
+        {
+          "question": "Après sa maladie, le sport l'a ___ sur pied.",
+          "options": [
+            "remis",
+            "mis",
+            "remise",
+            "remit"
+          ],
+          "correctAnswer": "remis",
+          "explanation": "«Поставить на ноги, восстановить» — remettre sur pied; l' = его (м.р.) → remis."
+        },
+        {
+          "question": "Cette découverte ___ toute la théorie.",
+          "options": [
+            "remet en cause",
+            "met en vente",
+            "remet à neuf",
+            "met au monde"
+          ],
+          "correctAnswer": "remet en cause",
+          "explanation": "«Пересматривать, оспаривать» устоявшееся — remettre en cause."
+        },
+        {
+          "question": "Ils ont ___ la vieille maison ___ : elle est comme neuve !",
+          "options": [
+            "remise ... à neuf",
+            "mise ... en cause",
+            "remise ... en prison",
+            "mise ... au point"
+          ],
+          "correctAnswer": "remise ... à neuf",
+          "explanation": "«Обновить до состояния нового» — remettre à neuf; la maison → remise."
+        },
+        {
+          "question": "Le juge a décidé de ___ le prisonnier ___ .",
+          "options": [
+            "remettre ... en liberté",
+            "mettre ... en valeur",
+            "remettre ... au monde",
+            "mettre ... à jour"
+          ],
+          "correctAnswer": "remettre ... en liberté",
+          "explanation": "«Освободить» — remettre en liberté."
+        }
+      ]
+    },
+    {
+      "id": "mt3-fb1",
+      "type": "fill-blank",
+      "title": "Ремонт кафе — история",
+      "text": "Le vieux café de la place était fermé depuis des années. Un jeune couple a décidé de le remettre à ___ . Ils ont remis la machine à café en ___ et remis la terrasse en ___ . Leur idée ? Remettre les recettes de grand-mère au ___ du jour. L'ouverture ? Ils ne l'ont pas remise à plus ___ : c'est samedi !",
+      "blanks": [
+        {
+          "correctAnswer": "neuf",
+          "options": [
+            "neuf",
+            "jour",
+            "point"
+          ],
+          "explanation": "«Обновить как новое» — remettre à neuf."
+        },
+        {
+          "correctAnswer": "marche",
+          "options": [
+            "marche",
+            "liberté",
+            "examen"
+          ],
+          "explanation": "Кофемашина снова работает — remettre en marche."
+        },
+        {
+          "correctAnswer": "état",
+          "options": [
+            "état",
+            "prison",
+            "question"
+          ],
+          "explanation": "«Восстановить» террасу — remettre en état."
+        },
+        {
+          "correctAnswer": "goût",
+          "options": [
+            "goût",
+            "point",
+            "courant"
+          ],
+          "explanation": "«Вернуть моду на» — remettre au goût du jour."
+        },
+        {
+          "correctAnswer": "tard",
+          "options": [
+            "tard",
+            "neuf",
+            "pied"
+          ],
+          "explanation": "«Отложить» — remettre à plus tard."
+        }
+      ]
+    },
+    {
+      "id": "mt3-sb1",
+      "type": "sentence-builder",
+      "title": "Соберите фразы с remettre",
+      "sentences": [
+        {
+          "words": [
+            "Il",
+            "faut",
+            "remettre",
+            "le",
+            "moteur",
+            "en",
+            "route"
+          ],
+          "ru": "Нужно снова завести мотор"
+        },
+        {
+          "words": [
+            "Ce",
+            "traitement",
+            "va",
+            "te",
+            "remettre",
+            "sur",
+            "pied"
+          ],
+          "ru": "Это лечение поставит тебя на ноги"
+        },
+        {
+          "words": [
+            "Ne",
+            "remets",
+            "pas",
+            "cette",
+            "décision",
+            "à",
+            "plus",
+            "tard"
+          ],
+          "ru": "Не откладывай это решение на потом"
+        }
+      ]
+    },
+    {
+      "id": "mt3-qz2",
+      "type": "grammar-quiz",
+      "title": "Финальный тест: вся семья mettre",
+      "questions": [
+        {
+          "question": "Le plan a été ___ rapidement. (реализован)",
+          "options": [
+            "mis en œuvre",
+            "mis au monde",
+            "remis en liberté",
+            "mis en location"
+          ],
+          "correctAnswer": "mis en œuvre",
+          "explanation": "«Реализовать, внедрить» — mettre en œuvre, в пассиве: a été mis en œuvre."
+        },
+        {
+          "question": "Cette présentation ___ nos résultats. (наглядно показывает)",
+          "options": [
+            "met en évidence",
+            "met en péril",
+            "remet en prison",
+            "met sous tutelle"
+          ],
+          "correctAnswer": "met en évidence",
+          "explanation": "«Наглядно показать» — mettre en évidence."
+        },
+        {
+          "question": "Je peux vous ___ avec notre expert. (познакомить, связать)",
+          "options": [
+            "mettre en contact",
+            "mettre en danger",
+            "remettre à neuf",
+            "mettre en vente"
+          ],
+          "correctAnswer": "mettre en contact",
+          "explanation": "«Связать, познакомить» — mettre en contact avec qn."
+        },
+        {
+          "question": "Après la panne, le système a été ___ . (вновь введён в работу)",
+          "options": [
+            "remis en service",
+            "mis en cause",
+            "mis au monde",
+            "remis à plus tard"
+          ],
+          "correctAnswer": "remis en service",
+          "explanation": "Система работала и сломалась — ВНОВЬ ввести: remettre en service."
+        },
+        {
+          "question": "Ses erreurs ___ le projet ___ . (подвергают серьёзной опасности)",
+          "options": [
+            "mettent ... en péril",
+            "remettent ... à neuf",
+            "mettent ... en commun",
+            "remettent ... au point"
+          ],
+          "correctAnswer": "mettent ... en péril",
+          "explanation": "«Серьёзная опасность» — mettre en péril."
+        },
+        {
+          "question": "Profite de ces vacances pour ___ tes idées ___ ! (использовать с пользой)",
+          "options": [
+            "mettre ... à profit",
+            "mettre ... en circulation",
+            "remettre ... en examen",
+            "mettre ... hors service"
+          ],
+          "correctAnswer": "mettre ... à profit",
+          "explanation": "«Использовать с пользой» — mettre à profit."
+        }
+      ]
+    }
+  ]
+}

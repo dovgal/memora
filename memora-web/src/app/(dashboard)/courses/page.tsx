@@ -38,6 +38,13 @@ const BUILTIN_COURSES = [
     badge: 'Французский · A2',
     emoji: '📗',
   },
+  {
+    href: '/dashboard/student/courses/mettre',
+    title: 'Mettre & Remettre',
+    description: 'Устойчивые выражения с mettre и remettre: en place, au point, à neuf, sur pied — с коучем и экзаменами.',
+    badge: 'Французский · A2–B1',
+    emoji: '🗝️',
+  },
 ];
 
 export default function CoursesCatalogPage() {

@@ -1,0 +1,266 @@
+{
+  "id": "unite1",
+  "title": "Unité 1 : Mettre — базовые значения и mettre en…",
+  "description": "Глагол mettre: спряжение, причастие mis, базовые значения и устойчивые выражения с mettre en (cause, question, valeur, évidence, place, service…).",
+  "vocabulary": [
+    {
+      "fr": "mettre en cause",
+      "ru": "ставить под сомнение, обвинять",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en question",
+      "ru": "ставить под вопрос",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en lumière",
+      "ru": "проливать свет, выявлять",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en valeur",
+      "ru": "подчёркивать достоинства, выгодно представлять",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en avant",
+      "ru": "выдвигать на первый план",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en perspective",
+      "ru": "рассматривать в контексте",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en évidence",
+      "ru": "наглядно показывать, выявлять",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en relief",
+      "ru": "выделять, акцентировать",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en pratique",
+      "ru": "применять на практике",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en œuvre",
+      "ru": "реализовывать, внедрять",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en place",
+      "ru": "организовывать, вводить, создавать",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en service",
+      "ru": "вводить в эксплуатацию",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en circulation",
+      "ru": "пускать в обращение",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en vente",
+      "ru": "выставлять на продажу",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en location",
+      "ru": "сдавать в аренду",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en commun",
+      "ru": "объединять (ресурсы, идеи)",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en contact",
+      "ru": "связывать, знакомить",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "mt1-th1",
+      "type": "theory",
+      "title": "Mettre — глагол на все случаи жизни",
+      "content": "<p style='margin:0.75rem 0'><b>Mettre</b> — один из самых частотных глаголов французского. Базовые значения: <b>класть/ставить</b> (mettre les clés sur la table), <b>надевать</b> (mettre un manteau), <b>включать</b> (mettre la radio), <b>тратить время</b> (mettre une heure).</p><p style='margin:0.75rem 0'>Спряжение в настоящем (неправильный глагол!):</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Лицо</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Форма</th></tr><tr><td style='padding:0.5rem'>je</td><td style='padding:0.5rem'>mets</td></tr><tr><td style='padding:0.5rem'>tu</td><td style='padding:0.5rem'>mets</td></tr><tr><td style='padding:0.5rem'>il / elle</td><td style='padding:0.5rem'>met</td></tr><tr><td style='padding:0.5rem'>nous</td><td style='padding:0.5rem'>mettons</td></tr><tr><td style='padding:0.5rem'>vous</td><td style='padding:0.5rem'>mettez</td></tr><tr><td style='padding:0.5rem'>ils / elles</td><td style='padding:0.5rem'>mettent</td></tr></table><p style='margin:0.75rem 0'>Причастие — <b>mis</b> (passé composé с avoir): <i>J'ai mis le projet en route.</i> С être в пассиве причастие согласуется: <i>La maison est mise en vente. Les billets sont mis en circulation.</i></p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Запомните цепочку: je mets — j'ai mis — je mettrai. В единственном числе t не читается: [мэ].</p>"
+    },
+    {
+      "id": "mt1-th2",
+      "type": "theory",
+      "title": "Mettre en + абстрактное слово — «приводить в состояние»",
+      "content": "<p style='margin:0.75rem 0'>Конструкция <b>mettre en + существительное без артикля</b> означает «привести что-то в это состояние». Сгруппируем по смыслу:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Группа</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Выражения</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Смысл</th></tr><tr><td style='padding:0.5rem'>сомнение</td><td style='padding:0.5rem'>mettre en cause, mettre en question</td><td style='padding:0.5rem'>подвергнуть сомнению, поставить под вопрос</td></tr><tr><td style='padding:0.5rem'>показать</td><td style='padding:0.5rem'>mettre en lumière, en évidence, en relief, en valeur, en avant</td><td style='padding:0.5rem'>выявить, подчеркнуть, выделить</td></tr><tr><td style='padding:0.5rem'>запустить</td><td style='padding:0.5rem'>mettre en place, en œuvre, en service, en pratique, en circulation</td><td style='padding:0.5rem'>организовать, внедрить, ввести в действие</td></tr><tr><td style='padding:0.5rem'>коммерция</td><td style='padding:0.5rem'>mettre en vente, en location</td><td style='padding:0.5rem'>выставить на продажу, сдать в аренду</td></tr><tr><td style='padding:0.5rem'>связи</td><td style='padding:0.5rem'>mettre en contact, en relation, en commun</td><td style='padding:0.5rem'>познакомить, связать, объединить</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Нюанс: <b>mettre en cause</b> — сильнее (обвинить, вовлечь в ответственность), <b>mettre en question</b> — мягче (усомниться).</p>"
+    },
+    {
+      "id": "mt1-qz1",
+      "type": "grammar-quiz",
+      "title": "Mettre en… — выберите выражение по смыслу",
+      "questions": [
+        {
+          "question": "Le rapport ___ les causes réelles du problème. (проливает свет)",
+          "options": [
+            "met en lumière",
+            "met en vente",
+            "met en location",
+            "met en commun"
+          ],
+          "correctAnswer": "met en lumière",
+          "explanation": "«Пролить свет на, выявить» — mettre en lumière. En vente — продажа, en location — аренда, en commun — объединить."
+        },
+        {
+          "question": "Ce CV ___ vos compétences. (выгодно подчёркивает)",
+          "options": [
+            "met en valeur",
+            "met en cause",
+            "met en circulation",
+            "met en question"
+          ],
+          "correctAnswer": "met en valeur",
+          "explanation": "«Выгодно представить, подчеркнуть достоинства» — mettre en valeur. En cause/en question — наоборот, сомнение."
+        },
+        {
+          "question": "La ville a ___ un nouveau système de vélos. (организовала, ввела)",
+          "options": [
+            "mis en place",
+            "mis en doute",
+            "mis en relief",
+            "mis en cause"
+          ],
+          "correctAnswer": "mis en place",
+          "explanation": "«Организовать, создать, ввести» — mettre en place. Причастие mis: a mis en place."
+        },
+        {
+          "question": "Personne ne ___ son honnêteté. (не ставит под вопрос)",
+          "options": [
+            "met en question",
+            "met en pratique",
+            "met en location",
+            "met en avant"
+          ],
+          "correctAnswer": "met en question",
+          "explanation": "«Ставить под вопрос, сомневаться» — mettre en question."
+        },
+        {
+          "question": "Ils ont ___ leurs idées pour le projet. (объединили)",
+          "options": [
+            "mis en commun",
+            "mis en vente",
+            "mis en péril",
+            "mis en relief"
+          ],
+          "correctAnswer": "mis en commun",
+          "explanation": "«Объединить ресурсы/идеи» — mettre en commun."
+        },
+        {
+          "question": "Le nouveau site sera ___ lundi. (введён в эксплуатацию)",
+          "options": [
+            "mis en service",
+            "mis en cause",
+            "mis en perspective",
+            "mis en question"
+          ],
+          "correctAnswer": "mis en service",
+          "explanation": "«Ввести в эксплуатацию» — mettre en service; в пассиве: sera mis en service."
+        }
+      ]
+    },
+    {
+      "id": "mt1-fb1",
+      "type": "fill-blank",
+      "title": "Запуск проекта — вставьте выражения",
+      "text": "Notre équipe a un plan ambitieux. D'abord, nous voulons mettre en ___ une nouvelle stratégie : il faut la mettre en ___ avant l'été. Pour convaincre le directeur, je vais mettre en ___ les avantages du projet. Et si quelqu'un met en ___ nos chiffres, nous avons toutes les preuves !",
+      "blanks": [
+        {
+          "correctAnswer": "place",
+          "options": [
+            "place",
+            "vente",
+            "location"
+          ],
+          "explanation": "«Организовать, ввести» стратегию — mettre en place."
+        },
+        {
+          "correctAnswer": "œuvre",
+          "options": [
+            "œuvre",
+            "cause",
+            "circulation"
+          ],
+          "explanation": "«Реализовать, внедрить» — mettre en œuvre."
+        },
+        {
+          "correctAnswer": "avant",
+          "options": [
+            "avant",
+            "question",
+            "commun"
+          ],
+          "explanation": "«Выдвинуть на первый план» преимущества — mettre en avant."
+        },
+        {
+          "correctAnswer": "cause",
+          "options": [
+            "cause",
+            "valeur",
+            "service"
+          ],
+          "explanation": "«Поставить под сомнение» цифры — mettre en cause."
+        }
+      ]
+    },
+    {
+      "id": "mt1-sb1",
+      "type": "sentence-builder",
+      "title": "Соберите фразы с mettre",
+      "sentences": [
+        {
+          "words": [
+            "Nous",
+            "avons",
+            "mis",
+            "en",
+            "place",
+            "un",
+            "nouveau",
+            "système"
+          ],
+          "ru": "Мы ввели новую систему"
+        },
+        {
+          "words": [
+            "Cette",
+            "robe",
+            "met",
+            "en",
+            "valeur",
+            "ta",
+            "silhouette"
+          ],
+          "ru": "Это платье подчёркивает твою фигуру"
+        },
+        {
+          "words": [
+            "Il",
+            "met",
+            "son",
+            "appartement",
+            "en",
+            "location"
+          ],
+          "ru": "Он сдаёт свою квартиру в аренду"
+        }
+      ]
+    }
+  ]
+}

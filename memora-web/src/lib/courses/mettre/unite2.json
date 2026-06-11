@@ -1,0 +1,268 @@
+{
+  "id": "unite2",
+  "title": "Unité 2 : Mettre à…, au…, en danger — продолжение",
+  "description": "Выражения mettre à jour, à disposition, à profit, à l'épreuve, au courant, au point, au monde и группа «опасность»: en danger, en difficulté, en péril.",
+  "vocabulary": [
+    {
+      "fr": "mettre à jour",
+      "ru": "обновлять",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre à disposition",
+      "ru": "предоставлять в распоряжение",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre à profit",
+      "ru": "использовать с пользой",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre à contribution",
+      "ru": "привлекать к участию",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre à l'épreuve",
+      "ru": "испытывать, подвергать испытанию",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre au courant",
+      "ru": "информировать, вводить в курс",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre au point",
+      "ru": "разрабатывать, отлаживать",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre au monde",
+      "ru": "родить ребёнка, произвести на свет",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en danger",
+      "ru": "подвергать опасности",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en difficulté",
+      "ru": "ставить в затруднительное положение",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en péril",
+      "ru": "подвергать серьёзной опасности",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en concurrence",
+      "ru": "создавать конкуренцию",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre en relation",
+      "ru": "устанавливать связь между",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre hors service",
+      "ru": "выводить из эксплуатации",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre sous pression",
+      "ru": "оказывать давление",
+      "type": "phrase"
+    },
+    {
+      "fr": "mettre sous contrôle",
+      "ru": "брать под контроль",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "mt2-th1",
+      "type": "theory",
+      "title": "Mettre à / au — полезные дела",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Выражение</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Смысл</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>mettre à jour</td><td style='padding:0.5rem'>обновить (данные, программу)</td><td style='padding:0.5rem'>Pense à mettre à jour ton application.</td></tr><tr><td style='padding:0.5rem'>mettre à disposition</td><td style='padding:0.5rem'>предоставить в распоряжение</td><td style='padding:0.5rem'>L'école met des livres à disposition des élèves.</td></tr><tr><td style='padding:0.5rem'>mettre à profit</td><td style='padding:0.5rem'>использовать с пользой</td><td style='padding:0.5rem'>Mets à profit ton temps libre !</td></tr><tr><td style='padding:0.5rem'>mettre à contribution</td><td style='padding:0.5rem'>привлечь к участию</td><td style='padding:0.5rem'>On a mis toute l'équipe à contribution.</td></tr><tr><td style='padding:0.5rem'>mettre à l'épreuve</td><td style='padding:0.5rem'>испытать</td><td style='padding:0.5rem'>Ce travail met ma patience à l'épreuve.</td></tr><tr><td style='padding:0.5rem'>mettre au courant</td><td style='padding:0.5rem'>ввести в курс дела</td><td style='padding:0.5rem'>Tu peux me mettre au courant ?</td></tr><tr><td style='padding:0.5rem'>mettre au point</td><td style='padding:0.5rem'>отладить, доработать</td><td style='padding:0.5rem'>Ils mettent au point un nouveau moteur.</td></tr><tr><td style='padding:0.5rem'>mettre au monde</td><td style='padding:0.5rem'>родить</td><td style='padding:0.5rem'>Elle a mis au monde une fille.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 <b>Mettre à jour</b> (обновить) ≠ <b>mettre au jour</b> (раскопать, обнаружить) — не путайте!</p>"
+    },
+    {
+      "id": "mt2-th2",
+      "type": "theory",
+      "title": "Группа «опасность и давление»",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Выражение</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Степень</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>mettre en difficulté</td><td style='padding:0.5rem'>затруднение</td><td style='padding:0.5rem'>La question a mis le candidat en difficulté.</td></tr><tr><td style='padding:0.5rem'>mettre en danger</td><td style='padding:0.5rem'>опасность</td><td style='padding:0.5rem'>Ne mets pas ta santé en danger.</td></tr><tr><td style='padding:0.5rem'>mettre en péril</td><td style='padding:0.5rem'>серьёзная угроза</td><td style='padding:0.5rem'>Ces erreurs mettent le projet en péril.</td></tr><tr><td style='padding:0.5rem'>mettre sous pression</td><td style='padding:0.5rem'>давление</td><td style='padding:0.5rem'>Le chef met l'équipe sous pression.</td></tr><tr><td style='padding:0.5rem'>mettre sous contrôle</td><td style='padding:0.5rem'>контроль</td><td style='padding:0.5rem'>Les pompiers ont mis le feu sous contrôle.</td></tr><tr><td style='padding:0.5rem'>mettre hors service</td><td style='padding:0.5rem'>вывести из строя</td><td style='padding:0.5rem'>L'orage a mis l'ascenseur hors service.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Лестница опасности: en difficulté (неприятно) → en danger (опасно) → en péril (критично).</p>"
+    },
+    {
+      "id": "mt2-qz1",
+      "type": "grammar-quiz",
+      "title": "Выберите выражение по смыслу",
+      "questions": [
+        {
+          "question": "Merci de me ___ : je ne connais pas les dernières nouvelles.",
+          "options": [
+            "mettre au courant",
+            "mettre au monde",
+            "mettre à l'épreuve",
+            "mettre sous pression"
+          ],
+          "correctAnswer": "mettre au courant",
+          "explanation": "«Ввести в курс дела, информировать» — mettre au courant."
+        },
+        {
+          "question": "Les ingénieurs ___ un nouveau logiciel.",
+          "options": [
+            "mettent au point",
+            "mettent au monde",
+            "mettent en danger",
+            "mettent à jour le monde"
+          ],
+          "correctAnswer": "mettent au point",
+          "explanation": "«Разрабатывать, отлаживать» — mettre au point."
+        },
+        {
+          "question": "Cette randonnée extrême a ___ notre endurance.",
+          "options": [
+            "mis à l'épreuve",
+            "mis à jour",
+            "mis à disposition",
+            "mis au monde"
+          ],
+          "correctAnswer": "mis à l'épreuve",
+          "explanation": "«Подвергнуть испытанию» — mettre à l'épreuve."
+        },
+        {
+          "question": "Conduire trop vite, c'est ___ les autres.",
+          "options": [
+            "mettre en danger",
+            "mettre à profit",
+            "mettre au courant",
+            "mettre en valeur"
+          ],
+          "correctAnswer": "mettre en danger",
+          "explanation": "«Подвергать опасности» — mettre en danger."
+        },
+        {
+          "question": "La bibliothèque ___ des ordinateurs ___ des étudiants.",
+          "options": [
+            "met ... à disposition",
+            "met ... au monde",
+            "met ... en péril",
+            "met ... sous contrôle"
+          ],
+          "correctAnswer": "met ... à disposition",
+          "explanation": "«Предоставлять в распоряжение» — mettre à disposition de qn."
+        },
+        {
+          "question": "N'oublie pas de ___ ton téléphone : la nouvelle version est sortie.",
+          "options": [
+            "mettre à jour",
+            "mettre au jour",
+            "mettre à profit",
+            "mettre en cause"
+          ],
+          "correctAnswer": "mettre à jour",
+          "explanation": "«Обновить» — mettre À jour. Mettre AU jour — «раскопать, обнаружить»."
+        }
+      ]
+    },
+    {
+      "id": "mt2-fb1",
+      "type": "fill-blank",
+      "title": "Трудная неделя в стартапе",
+      "text": "Cette semaine, le patron nous a mis sous ___ : il faut finir l'application avant vendredi ! Nous avons mis tout le week-end à ___ pour la mettre au ___ . Une panne a presque mis le serveur hors ___ , mais l'équipe a mis la situation sous ___ .",
+      "blanks": [
+        {
+          "correctAnswer": "pression",
+          "options": [
+            "pression",
+            "contrôle",
+            "tutelle"
+          ],
+          "explanation": "«Оказывать давление» — mettre sous pression."
+        },
+        {
+          "correctAnswer": "profit",
+          "options": [
+            "profit",
+            "jour",
+            "disposition"
+          ],
+          "explanation": "«Использовать с пользой» выходные — mettre à profit."
+        },
+        {
+          "correctAnswer": "point",
+          "options": [
+            "point",
+            "monde",
+            "courant"
+          ],
+          "explanation": "«Доработать, отладить» приложение — mettre au point."
+        },
+        {
+          "correctAnswer": "service",
+          "options": [
+            "service",
+            "pression",
+            "cause"
+          ],
+          "explanation": "«Вывести из строя» — mettre hors service."
+        },
+        {
+          "correctAnswer": "contrôle",
+          "options": [
+            "contrôle",
+            "pression",
+            "location"
+          ],
+          "explanation": "«Взять под контроль» — mettre sous contrôle."
+        }
+      ]
+    },
+    {
+      "id": "mt2-sb1",
+      "type": "sentence-builder",
+      "title": "Соберите фразы",
+      "sentences": [
+        {
+          "words": [
+            "Mets-moi",
+            "au",
+            "courant",
+            "de",
+            "la",
+            "situation"
+          ],
+          "ru": "Введи меня в курс ситуации"
+        },
+        {
+          "words": [
+            "Elle",
+            "a",
+            "mis",
+            "au",
+            "monde",
+            "un",
+            "garçon"
+          ],
+          "ru": "Она родила мальчика"
+        },
+        {
+          "words": [
+            "Cette",
+            "crise",
+            "met",
+            "l'entreprise",
+            "en",
+            "difficulté"
+          ],
+          "ru": "Этот кризис ставит компанию в трудное положение"
+        }
+      ]
+    }
+  ]
+}
