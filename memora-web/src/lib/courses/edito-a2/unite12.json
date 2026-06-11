@@ -1,0 +1,279 @@
+{
+  "id": "unite12",
+  "title": "Unité 12 : Soif de nature",
+  "description": "Природа и экология. Выражение цели (pour / afin de / pour que), сложные отрицания с местоимениями, итоговое повторение.",
+  "vocabulary": [
+    {
+      "fr": "la nature",
+      "ru": "природа",
+      "type": "word"
+    },
+    {
+      "fr": "l'environnement (m)",
+      "ru": "окружающая среда",
+      "type": "word"
+    },
+    {
+      "fr": "la biodiversité",
+      "ru": "биоразнообразие",
+      "type": "word"
+    },
+    {
+      "fr": "une espèce",
+      "ru": "вид (животных)",
+      "type": "word"
+    },
+    {
+      "fr": "protéger",
+      "ru": "защищать",
+      "type": "word"
+    },
+    {
+      "fr": "polluer",
+      "ru": "загрязнять",
+      "type": "word"
+    },
+    {
+      "fr": "un déchet",
+      "ru": "отход, мусор",
+      "type": "word"
+    },
+    {
+      "fr": "une randonnée",
+      "ru": "поход, прогулка",
+      "type": "word"
+    },
+    {
+      "fr": "un sentier",
+      "ru": "тропа",
+      "type": "word"
+    },
+    {
+      "fr": "une forêt",
+      "ru": "лес",
+      "type": "word"
+    },
+    {
+      "fr": "sauvage",
+      "ru": "дикий",
+      "type": "word"
+    },
+    {
+      "fr": "s'inquiéter de",
+      "ru": "беспокоиться о",
+      "type": "phrase"
+    },
+    {
+      "fr": "Ça me fait peur.",
+      "ru": "Это меня пугает.",
+      "type": "phrase"
+    },
+    {
+      "fr": "On peut y arriver !",
+      "ru": "У нас получится!",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "a2u12-th1",
+      "type": "theory",
+      "title": "Exprimer le but — pour, afin de, pour que",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Конструкция</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Когда</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>pour + infinitif</td><td style='padding:0.5rem'>одно подлежащее</td><td style='padding:0.5rem'>Je trie mes déchets pour protéger la nature.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>afin de + infinitif</td><td style='padding:0.5rem'>формальнее</td><td style='padding:0.5rem'>Afin de réduire le plastique, le magasin vend en vrac.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>pour que + subjonctif</td><td style='padding:0.5rem'>разные подлежащие</td><td style='padding:0.5rem'>Je recycle pour que mes enfants aient une belle planète.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Если «чтобы Я… чтобы Я» — pour + инфинитив. Если «чтобы ОНИ…» — pour que + субжонктив.</p>"
+    },
+    {
+      "id": "a2u12-qz1",
+      "type": "grammar-quiz",
+      "title": "Цель — практика",
+      "questions": [
+        {
+          "question": "Nous marchons ___ rester en forme.",
+          "options": [
+            "pour",
+            "pour que",
+            "afin que",
+            "que"
+          ],
+          "correctAnswer": "pour",
+          "explanation": "Одно подлежащее (nous) — pour + инфинитив."
+        },
+        {
+          "question": "Je donne de l'argent ___ l'association protège les océans.",
+          "options": [
+            "pour que",
+            "pour",
+            "afin de",
+            "parce que"
+          ],
+          "correctAnswer": "pour que",
+          "explanation": "Разные подлежащие (je / l'association) — pour que + субжонктив."
+        },
+        {
+          "question": "___ d'économiser l'eau, fermez le robinet !",
+          "options": [
+            "Afin",
+            "Pour que",
+            "Parce que",
+            "Alors"
+          ],
+          "correctAnswer": "Afin",
+          "explanation": "Afin DE + инфинитив — формальный вариант цели."
+        },
+        {
+          "question": "Il faut protéger les forêts ___ les espèces sauvages ___ survivre.",
+          "options": [
+            "pour que ... puissent",
+            "pour ... peuvent",
+            "afin de ... peuvent",
+            "que ... puissent"
+          ],
+          "correctAnswer": "pour que ... puissent",
+          "explanation": "Цель с другим подлежащим: pour que + субжонктив (puissent)."
+        }
+      ]
+    },
+    {
+      "id": "a2u12-th2",
+      "type": "theory",
+      "title": "Отрицания + местоимения — продвинутый уровень",
+      "content": "<p style='margin:0.75rem 0'>Сочетание отрицаний с местоимениями en/y/COD:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Фраза</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Разбор</th></tr><tr><td style='padding:0.5rem'>Je n'en jette plus.</td><td style='padding:0.5rem'>en (отходов) + ne...plus: «больше не выбрасываю»</td></tr><tr><td style='padding:0.5rem'>Il n'y va jamais.</td><td style='padding:0.5rem'>y (туда) + ne...jamais: «никогда туда не ходит»</td></tr><tr><td style='padding:0.5rem'>On ne les protège pas assez.</td><td style='padding:0.5rem'>les (виды) + ne...pas: «их недостаточно защищают»</td></tr><tr><td style='padding:0.5rem'>Personne n'en parle.</td><td style='padding:0.5rem'>personne-подлежащее + en: «никто об этом не говорит»</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Порядок неизменен: ne + местоимение + глагол + второй элемент отрицания.</p>"
+    },
+    {
+      "id": "a2u12-qz2",
+      "type": "grammar-quiz",
+      "title": "Отрицания с местоимениями — практика",
+      "questions": [
+        {
+          "question": "Du plastique ? Je n'___ achète plus.",
+          "options": [
+            "en",
+            "y",
+            "le",
+            "lui"
+          ],
+          "correctAnswer": "en",
+          "explanation": "Du plastique → en, плюс ne...plus."
+        },
+        {
+          "question": "Cette forêt ? Ils n'___ vont jamais.",
+          "options": [
+            "y",
+            "en",
+            "la",
+            "leur"
+          ],
+          "correctAnswer": "y",
+          "explanation": "Dans cette forêt → y + ne...jamais."
+        },
+        {
+          "question": "___ ne s'inquiète de la pollution ici.",
+          "options": [
+            "Personne",
+            "Rien",
+            "Jamais",
+            "Aucun"
+          ],
+          "correctAnswer": "Personne",
+          "explanation": "«Никто не беспокоится» — personne + ne."
+        },
+        {
+          "question": "Les déchets ? Nous ne ___ jetons jamais dans la nature.",
+          "options": [
+            "les",
+            "leur",
+            "en",
+            "y"
+          ],
+          "correctAnswer": "les",
+          "explanation": "Les déchets — COD: nous ne les jetons jamais."
+        }
+      ]
+    },
+    {
+      "id": "a2u12-fb1",
+      "type": "fill-blank",
+      "title": "Манифест эко-клуба",
+      "text": "Notre club agit ___ protéger la biodiversité. Chaque dimanche, nous organisons une randonnée ___ que les habitants découvrent la forêt. Les déchets ? Nous ne ___ laissons jamais derrière nous ! Rejoignez-nous ___ la planète ait un avenir !",
+      "blanks": [
+        {
+          "correctAnswer": "pour",
+          "options": [
+            "pour",
+            "pour que",
+            "parce que"
+          ],
+          "explanation": "Одно подлежащее — pour + инфинитив."
+        },
+        {
+          "correctAnswer": "pour",
+          "options": [
+            "pour",
+            "afin",
+            "parce"
+          ],
+          "explanation": "Pour que + субжонктив: разные подлежащие."
+        },
+        {
+          "correctAnswer": "les",
+          "options": [
+            "les",
+            "en",
+            "y"
+          ],
+          "explanation": "Les déchets — COD: ne les laissons jamais."
+        },
+        {
+          "correctAnswer": "pour que",
+          "options": [
+            "pour que",
+            "pour",
+            "afin de"
+          ],
+          "explanation": "«Чтобы у планеты было будущее» — pour que + субжонктив (ait)."
+        }
+      ]
+    },
+    {
+      "id": "a2u12-dlg1",
+      "type": "dialogue",
+      "title": "La randonnée nature",
+      "context": "Перед походом гид инструктирует группу.",
+      "exchanges": [
+        {
+          "speaker": "Guide",
+          "side": "left",
+          "text": "Bienvenue ! Aujourd'hui, nous marchons huit kilomètres pour découvrir la réserve naturelle."
+        },
+        {
+          "speaker": "Participante",
+          "side": "right",
+          "isBlank": true,
+          "options": [
+            "Super ! Est-ce qu'on verra des espèces sauvages ?",
+            "Donc je rentre pour que dormir.",
+            "Huit kilomètres ? Personne n'y va pas jamais."
+          ],
+          "correctAnswer": "Super ! Est-ce qu'on verra des espèces sauvages ?",
+          "explanation": "Логичный вопрос (futur: on verra) про диких животных."
+        },
+        {
+          "speaker": "Guide",
+          "side": "left",
+          "text": "Peut-être ! Mais il faut que tout le monde reste sur le sentier, pour que les animaux ne soient pas dérangés."
+        },
+        {
+          "speaker": "Participante",
+          "side": "right",
+          "isBlank": true,
+          "options": [
+            "Bien sûr, et nous ne laisserons aucun déchet derrière nous.",
+            "Bien sûr, je jette tout dans la forêt.",
+            "Non, je n'en reste que jamais."
+          ],
+          "correctAnswer": "Bien sûr, et nous ne laisserons aucun déchet derrière nous.",
+          "explanation": "Эко-правило: futur + отрицание aucun — «не оставим никакого мусора»."
+        }
+      ]
+    }
+  ]
+}

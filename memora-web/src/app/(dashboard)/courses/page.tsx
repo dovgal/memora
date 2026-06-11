@@ -25,6 +25,13 @@ const BUILTIN_COURSES = [
     emoji: '📘',
   },
   {
+    href: '/dashboard/student/courses/edito-a2',
+    title: 'Тренажер Édito A2',
+    description: '12 юнитов уровня A2: прошедшие времена, субжонктив, местоимения — с коучем и экзаменами.',
+    badge: 'Французский · A2',
+    emoji: '🇫🇷',
+  },
+  {
     href: '/dashboard/student/courses/french-a2',
     title: 'Французский A2',
     description: 'Продвинутый тренажёр: диагностика, мой план, классы и лидерборд.',

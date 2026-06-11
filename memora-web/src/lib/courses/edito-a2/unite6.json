@@ -1,0 +1,284 @@
+{
+  "id": "unite6",
+  "title": "Unité 6 : En cuisine !",
+  "description": "Рецепты и рестораны. Местоимение en (количества), долженствование и запрет, ограничение ne...que.",
+  "vocabulary": [
+    {
+      "fr": "une recette",
+      "ru": "рецепт",
+      "type": "word"
+    },
+    {
+      "fr": "un ingrédient",
+      "ru": "ингредиент",
+      "type": "word"
+    },
+    {
+      "fr": "une casserole",
+      "ru": "кастрюля",
+      "type": "word"
+    },
+    {
+      "fr": "une poêle",
+      "ru": "сковорода",
+      "type": "word"
+    },
+    {
+      "fr": "couper",
+      "ru": "резать",
+      "type": "word"
+    },
+    {
+      "fr": "mélanger",
+      "ru": "смешивать",
+      "type": "word"
+    },
+    {
+      "fr": "ajouter",
+      "ru": "добавлять",
+      "type": "word"
+    },
+    {
+      "fr": "verser",
+      "ru": "наливать",
+      "type": "word"
+    },
+    {
+      "fr": "faire cuire",
+      "ru": "готовить (варить/жарить)",
+      "type": "phrase"
+    },
+    {
+      "fr": "une cuillère à soupe",
+      "ru": "столовая ложка",
+      "type": "phrase"
+    },
+    {
+      "fr": "le goût",
+      "ru": "вкус",
+      "type": "word"
+    },
+    {
+      "fr": "épicé(e)",
+      "ru": "острый",
+      "type": "word"
+    },
+    {
+      "fr": "sucré(e)",
+      "ru": "сладкий",
+      "type": "word"
+    },
+    {
+      "fr": "salé(e)",
+      "ru": "солёный",
+      "type": "word"
+    },
+    {
+      "fr": "C'est délicieux !",
+      "ru": "Очень вкусно!",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "a2u6-th1",
+      "type": "theory",
+      "title": "Le pronom EN — количества",
+      "content": "<p style='margin:0.75rem 0'><b>En</b> заменяет существительное с du/de la/des/de или с числом. Ставится перед глаголом:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Вопрос</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Ответ с en</th></tr><tr><td style='padding:0.5rem'>Tu veux du fromage ?</td><td style='padding:0.5rem'>Oui, j'en veux bien.</td></tr><tr><td style='padding:0.5rem'>Vous avez des œufs ?</td><td style='padding:0.5rem'>Oui, j'en ai six. (число остаётся!)</td></tr><tr><td style='padding:0.5rem'>Il reste de la sauce ?</td><td style='padding:0.5rem'>Non, il n'en reste plus.</td></tr><tr><td style='padding:0.5rem'>Tu mets beaucoup de sel ?</td><td style='padding:0.5rem'>Non, j'en mets peu.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Число или мера повторяются после глагола: <i>J'en prends deux. Elle en boit un litre.</i></p>"
+    },
+    {
+      "id": "a2u6-qz1",
+      "type": "grammar-quiz",
+      "title": "EN — практика",
+      "questions": [
+        {
+          "question": "Tu manges de la viande ? — Non, je n'___ mange pas.",
+          "options": [
+            "en",
+            "y",
+            "la",
+            "le"
+          ],
+          "correctAnswer": "en",
+          "explanation": "De la viande → en."
+        },
+        {
+          "question": "Des tomates ? J'___ achète un kilo.",
+          "options": [
+            "en",
+            "y",
+            "les",
+            "la"
+          ],
+          "correctAnswer": "en",
+          "explanation": "Количество (un kilo de tomates) → en + мера после глагола."
+        },
+        {
+          "question": "Il veut du café ? — Oui, il ___ veut une tasse.",
+          "options": [
+            "en",
+            "y",
+            "le",
+            "lui"
+          ],
+          "correctAnswer": "en",
+          "explanation": "Du café → en: il en veut une tasse."
+        },
+        {
+          "question": "Vous avez des desserts ? — Oui, nous ___ avons trois.",
+          "options": [
+            "en",
+            "y",
+            "les",
+            "des"
+          ],
+          "correctAnswer": "en",
+          "explanation": "Des desserts → en, число trois остаётся."
+        }
+      ]
+    },
+    {
+      "id": "a2u6-th2",
+      "type": "theory",
+      "title": "Obligation, interdiction, restriction ne...que",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Конструкция</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th></tr><tr><td style='padding:0.5rem'>il faut + inf / que...</td><td style='padding:0.5rem'>Il faut laver les légumes.</td><td style='padding:0.5rem'>Нужно помыть овощи.</td></tr><tr><td style='padding:0.5rem'>devoir + inf</td><td style='padding:0.5rem'>Tu dois goûter la sauce.</td><td style='padding:0.5rem'>Ты должен попробовать соус.</td></tr><tr><td style='padding:0.5rem'>il est interdit de</td><td style='padding:0.5rem'>Il est interdit de fumer ici.</td><td style='padding:0.5rem'>Здесь запрещено курить.</td></tr><tr><td style='padding:0.5rem'>ne ... que</td><td style='padding:0.5rem'>Je ne mange que des produits frais.</td><td style='padding:0.5rem'>Я ем ТОЛЬКО свежие продукты.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 <b>Ne...que</b> — не отрицание, а «только»: <i>Il ne reste que deux œufs</i> = осталось только два яйца.</p>"
+    },
+    {
+      "id": "a2u6-qz2",
+      "type": "grammar-quiz",
+      "title": "Il faut / ne...que — практика",
+      "questions": [
+        {
+          "question": "Pour cette recette, il ___ un four chaud.",
+          "options": [
+            "faut",
+            "dois",
+            "doit",
+            "faire"
+          ],
+          "correctAnswer": "faut",
+          "explanation": "Il faut + существительное/инфинитив — «нужно»."
+        },
+        {
+          "question": "Je ne bois ___ de l'eau pendant le repas.",
+          "options": [
+            "que",
+            "pas",
+            "rien",
+            "plus"
+          ],
+          "correctAnswer": "que",
+          "explanation": "«Пью только воду» — ne ... que."
+        },
+        {
+          "question": "Vous ___ ajouter le sucre à la fin.",
+          "options": [
+            "devez",
+            "faut",
+            "devoir",
+            "doivent"
+          ],
+          "correctAnswer": "devez",
+          "explanation": "Vous devez + инфинитив."
+        },
+        {
+          "question": "Ce restaurant ne sert ___ des plats végétariens.",
+          "options": [
+            "que",
+            "pas",
+            "jamais",
+            "personne"
+          ],
+          "correctAnswer": "que",
+          "explanation": "«Подаёт только вегетарианские блюда» — ne sert que."
+        }
+      ]
+    },
+    {
+      "id": "a2u6-fb1",
+      "type": "fill-blank",
+      "title": "Рецепт омлета — инструкция",
+      "text": "Pour faire une bonne omelette, il ___ trois œufs. Cassez-les et mélangez. Ajoutez du sel, mais n'___ mettez pas trop ! Versez dans la poêle chaude. Il ne faut ___ deux minutes de cuisson. Servez et dégustez : c'est ___ !",
+      "blanks": [
+        {
+          "correctAnswer": "faut",
+          "options": [
+            "faut",
+            "doit",
+            "devez"
+          ],
+          "explanation": "Il faut trois œufs — «нужно три яйца»."
+        },
+        {
+          "correctAnswer": "en",
+          "options": [
+            "en",
+            "y",
+            "le"
+          ],
+          "explanation": "Du sel → en: n'en mettez pas trop."
+        },
+        {
+          "correctAnswer": "que",
+          "options": [
+            "que",
+            "pas",
+            "plus"
+          ],
+          "explanation": "«Нужно ТОЛЬКО две минуты» — ne faut que."
+        },
+        {
+          "correctAnswer": "délicieux",
+          "options": [
+            "délicieux",
+            "délicieuse",
+            "délice"
+          ],
+          "explanation": "C'est délicieux — устойчивая оценка блюда."
+        }
+      ]
+    },
+    {
+      "id": "a2u6-dlg1",
+      "type": "dialogue",
+      "title": "Au restaurant",
+      "context": "Камиль и официант: заказ и впечатления.",
+      "exchanges": [
+        {
+          "speaker": "Serveur",
+          "side": "left",
+          "text": "Bonsoir ! Vous avez choisi ?"
+        },
+        {
+          "speaker": "Camille",
+          "side": "right",
+          "isBlank": true,
+          "options": [
+            "Oui, je prendrai le poisson du jour. Il est épicé ?",
+            "Oui, donne le poisson !",
+            "Non, je mange rien que."
+          ],
+          "correctAnswer": "Oui, je prendrai le poisson du jour. Il est épicé ?",
+          "explanation": "Вежливый заказ (futur: je prendrai) + вопрос о вкусе: il est épicé ?"
+        },
+        {
+          "speaker": "Serveur",
+          "side": "left",
+          "text": "Non, il n'est pas épicé. Et comme boisson ?"
+        },
+        {
+          "speaker": "Camille",
+          "side": "right",
+          "isBlank": true,
+          "options": [
+            "De l'eau, s'il vous plaît. Je n'en prends qu'une carafe.",
+            "Du vin ! J'en bois pas.",
+            "Rien que tout !"
+          ],
+          "correctAnswer": "De l'eau, s'il vous plaît. Je n'en prends qu'une carafe.",
+          "explanation": "En + ne...que вместе: «возьму только графин (воды)»."
+        }
+      ]
+    }
+  ]
+}

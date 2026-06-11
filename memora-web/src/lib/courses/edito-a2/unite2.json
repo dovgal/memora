@@ -1,0 +1,286 @@
+{
+  "id": "unite2",
+  "title": "Unité 2 : Je me souviens",
+  "description": "Воспоминания, пейзажи и погода. Imparfait, местоимения y и en (места), место прилагательного.",
+  "vocabulary": [
+    {
+      "fr": "un souvenir",
+      "ru": "воспоминание",
+      "type": "word"
+    },
+    {
+      "fr": "se souvenir de",
+      "ru": "помнить о",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'enfance (f)",
+      "ru": "детство",
+      "type": "word"
+    },
+    {
+      "fr": "un paysage",
+      "ru": "пейзаж",
+      "type": "word"
+    },
+    {
+      "fr": "la campagne",
+      "ru": "деревня, сельская местность",
+      "type": "word"
+    },
+    {
+      "fr": "la côte",
+      "ru": "побережье",
+      "type": "word"
+    },
+    {
+      "fr": "une odeur",
+      "ru": "запах",
+      "type": "word"
+    },
+    {
+      "fr": "un bruit",
+      "ru": "шум, звук",
+      "type": "word"
+    },
+    {
+      "fr": "doux / douce",
+      "ru": "мягкий, нежный",
+      "type": "word"
+    },
+    {
+      "fr": "magnifique",
+      "ru": "великолепный",
+      "type": "word"
+    },
+    {
+      "fr": "inoubliable",
+      "ru": "незабываемый",
+      "type": "word"
+    },
+    {
+      "fr": "Il pleuvait.",
+      "ru": "Шёл дождь.",
+      "type": "phrase"
+    },
+    {
+      "fr": "Il y avait du soleil.",
+      "ru": "Было солнечно.",
+      "type": "phrase"
+    },
+    {
+      "fr": "Quand j'étais petit(e)...",
+      "ru": "Когда я был(а) маленьким(ой)...",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "a2u2-th1",
+      "type": "theory",
+      "title": "L'imparfait — прошедшее «фоновое» время",
+      "content": "<p style='margin:0.75rem 0'>Imparfait описывает фон, привычки и состояния в прошлом. Образование: основа <b>nous</b> в настоящем + окончания:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Лицо</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Окончание</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>habiter → nous habit-ons</th></tr><tr><td style='padding:0.5rem'>je</td><td style='padding:0.5rem'>-ais</td><td style='padding:0.5rem'>j'habitais</td></tr><tr><td style='padding:0.5rem'>tu</td><td style='padding:0.5rem'>-ais</td><td style='padding:0.5rem'>tu habitais</td></tr><tr><td style='padding:0.5rem'>il/elle</td><td style='padding:0.5rem'>-ait</td><td style='padding:0.5rem'>elle habitait</td></tr><tr><td style='padding:0.5rem'>nous</td><td style='padding:0.5rem'>-ions</td><td style='padding:0.5rem'>nous habitions</td></tr><tr><td style='padding:0.5rem'>vous</td><td style='padding:0.5rem'>-iez</td><td style='padding:0.5rem'>vous habitiez</td></tr><tr><td style='padding:0.5rem'>ils/elles</td><td style='padding:0.5rem'>-aient</td><td style='padding:0.5rem'>ils habitaient</td></tr></table><p style='margin:0.75rem 0'>Единственное исключение — être: j'<b>étais</b>, tu étais, il était, nous étions, vous étiez, ils étaient.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Воспоминание почти всегда начинается с imparfait: <i>Quand j'étais petit, nous passions l'été à la mer.</i></p>"
+    },
+    {
+      "id": "a2u2-qz1",
+      "type": "grammar-quiz",
+      "title": "Imparfait — практика",
+      "questions": [
+        {
+          "question": "Quand j'___ enfant, j'adorais la plage.",
+          "options": [
+            "étais",
+            "était",
+            "êtais",
+            "suis"
+          ],
+          "correctAnswer": "étais",
+          "explanation": "Être в imparfait: j'étais."
+        },
+        {
+          "question": "Nous ___ tous les étés chez ma grand-mère.",
+          "options": [
+            "passions",
+            "passons",
+            "passaient",
+            "passé"
+          ],
+          "correctAnswer": "passions",
+          "explanation": "Nous + -ions: passions."
+        },
+        {
+          "question": "Il ___ toujours beau en août.",
+          "options": [
+            "faisait",
+            "faisais",
+            "fait",
+            "a fait"
+          ],
+          "correctAnswer": "faisait",
+          "explanation": "Описание погоды-фона — il faisait beau."
+        },
+        {
+          "question": "Mes parents ___ une vieille maison en Provence.",
+          "options": [
+            "avaient",
+            "avait",
+            "ont",
+            "avaient eu"
+          ],
+          "correctAnswer": "avaient",
+          "explanation": "Ils/elles + -aient: avaient."
+        }
+      ]
+    },
+    {
+      "id": "a2u2-th2",
+      "type": "theory",
+      "title": "Les pronoms Y et EN — места и количества",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Местоимение</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Заменяет</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>y</td><td style='padding:0.5rem'>à / dans / chez + место</td><td style='padding:0.5rem'>Tu vas à Nice ? — Oui, j'y vais chaque été.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>en</td><td style='padding:0.5rem'>de + место; du/de la/des + кол-во</td><td style='padding:0.5rem'>Tu viens de la plage ? — Oui, j'en viens. / Des photos ? J'en ai cent !</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Оба стоят перед глаголом: <i>J'y pense souvent. Je m'en souviens très bien.</i></p>"
+    },
+    {
+      "id": "a2u2-qz2",
+      "type": "grammar-quiz",
+      "title": "Y и EN — практика",
+      "questions": [
+        {
+          "question": "Tu retournes souvent dans ton village ? — Oui, j'___ retourne chaque année.",
+          "options": [
+            "y",
+            "en",
+            "le",
+            "lui"
+          ],
+          "correctAnswer": "y",
+          "explanation": "Dans ton village (место с dans) → y."
+        },
+        {
+          "question": "Tu as des souvenirs de cette époque ? — Oui, j'___ ai beaucoup !",
+          "options": [
+            "en",
+            "y",
+            "les",
+            "la"
+          ],
+          "correctAnswer": "en",
+          "explanation": "Des souvenirs (количество) → en."
+        },
+        {
+          "question": "Vous venez de Bretagne ? — Oui, nous ___ venons.",
+          "options": [
+            "en",
+            "y",
+            "la",
+            "le"
+          ],
+          "correctAnswer": "en",
+          "explanation": "De + место → en: nous en venons."
+        },
+        {
+          "question": "Je me souviens bien de ces étés. → Je m'___ souviens bien.",
+          "options": [
+            "en",
+            "y",
+            "les",
+            "leur"
+          ],
+          "correctAnswer": "en",
+          "explanation": "Se souvenir DE qch → en."
+        }
+      ]
+    },
+    {
+      "id": "a2u2-fb1",
+      "type": "fill-blank",
+      "title": "Воспоминание о каникулах",
+      "text": "Quand j'étais petite, nous ___ nos vacances en Normandie. La mer ___ froide, mais le paysage était ___ . Le matin, il y ___ une odeur de crêpes dans la cuisine. Je m'en ___ encore !",
+      "blanks": [
+        {
+          "correctAnswer": "passions",
+          "options": [
+            "passions",
+            "passons",
+            "passâmes"
+          ],
+          "explanation": "Привычка в прошлом — imparfait: nous passions."
+        },
+        {
+          "correctAnswer": "était",
+          "options": [
+            "était",
+            "est",
+            "a été"
+          ],
+          "explanation": "Состояние-фон — imparfait: la mer était froide."
+        },
+        {
+          "correctAnswer": "magnifique",
+          "options": [
+            "magnifique",
+            "magnifiquement",
+            "magnifiques"
+          ],
+          "explanation": "Прилагательное к paysage (м.р. ед.ч.): magnifique."
+        },
+        {
+          "correctAnswer": "avait",
+          "options": [
+            "avait",
+            "a",
+            "avais"
+          ],
+          "explanation": "Il y avait — «был, имелся» в прошлом."
+        },
+        {
+          "correctAnswer": "souviens",
+          "options": [
+            "souviens",
+            "souvient",
+            "souvenir"
+          ],
+          "explanation": "Je me souviens — «я помню», en заменяет de ces moments."
+        }
+      ]
+    },
+    {
+      "id": "a2u2-sb1",
+      "type": "sentence-builder",
+      "title": "Соберите воспоминания",
+      "sentences": [
+        {
+          "words": [
+            "Quand",
+            "j'étais",
+            "petit,",
+            "j'habitais",
+            "à",
+            "la",
+            "campagne"
+          ],
+          "ru": "Когда я был маленьким, я жил в деревне"
+        },
+        {
+          "words": [
+            "Il",
+            "y",
+            "avait",
+            "beaucoup",
+            "de",
+            "soleil"
+          ],
+          "ru": "Было много солнца"
+        },
+        {
+          "words": [
+            "Je",
+            "m'en",
+            "souviens",
+            "très",
+            "bien"
+          ],
+          "ru": "Я это очень хорошо помню"
+        }
+      ]
+    }
+  ]
+}

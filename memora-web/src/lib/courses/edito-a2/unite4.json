@@ -1,0 +1,277 @@
+{
+  "id": "unite4",
+  "title": "Unité 4 : Tous pareils, tous différents",
+  "description": "Внешность, характер, комплименты. Chaque/tout/tous/toutes, притяжательные местоимения (le mien...), описание людей.",
+  "vocabulary": [
+    {
+      "fr": "ressembler à",
+      "ru": "быть похожим на",
+      "type": "phrase"
+    },
+    {
+      "fr": "les cheveux (m)",
+      "ru": "волосы",
+      "type": "word"
+    },
+    {
+      "fr": "frisé(e)",
+      "ru": "кудрявый",
+      "type": "word"
+    },
+    {
+      "fr": "roux / rousse",
+      "ru": "рыжий",
+      "type": "word"
+    },
+    {
+      "fr": "une qualité",
+      "ru": "достоинство",
+      "type": "word"
+    },
+    {
+      "fr": "un défaut",
+      "ru": "недостаток",
+      "type": "word"
+    },
+    {
+      "fr": "drôle",
+      "ru": "смешной, забавный",
+      "type": "word"
+    },
+    {
+      "fr": "têtu(e)",
+      "ru": "упрямый",
+      "type": "word"
+    },
+    {
+      "fr": "généreux / généreuse",
+      "ru": "щедрый",
+      "type": "word"
+    },
+    {
+      "fr": "paresseux / paresseuse",
+      "ru": "ленивый",
+      "type": "word"
+    },
+    {
+      "fr": "fier / fière",
+      "ru": "гордый",
+      "type": "word"
+    },
+    {
+      "fr": "faire un compliment",
+      "ru": "сделать комплимент",
+      "type": "phrase"
+    },
+    {
+      "fr": "avoir l'air + adj",
+      "ru": "выглядеть...",
+      "type": "phrase"
+    },
+    {
+      "fr": "Ça te va très bien !",
+      "ru": "Тебе очень идёт!",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "a2u4-th1",
+      "type": "theory",
+      "title": "Chaque, tout, toute, tous, toutes",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Форма</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Употребление</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>chaque + ед.ч.</td><td style='padding:0.5rem'>каждый</td><td style='padding:0.5rem'>Chaque personne est différente.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>tout + м.р. ед.</td><td style='padding:0.5rem'>весь</td><td style='padding:0.5rem'>tout le monde (все)</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>toute + ж.р. ед.</td><td style='padding:0.5rem'>вся</td><td style='padding:0.5rem'>toute la famille</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>tous + м.р. мн.</td><td style='padding:0.5rem'>все</td><td style='padding:0.5rem'>tous mes amis</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>toutes + ж.р. мн.</td><td style='padding:0.5rem'>все</td><td style='padding:0.5rem'>toutes les qualités</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Tout le monde = «все», но глагол в единственном числе: <i>Tout le monde est là.</i></p>"
+    },
+    {
+      "id": "a2u4-qz1",
+      "type": "grammar-quiz",
+      "title": "Tout / chaque — практика",
+      "questions": [
+        {
+          "question": "___ mes amis sont différents.",
+          "options": [
+            "Tous",
+            "Tout",
+            "Toute",
+            "Chaque"
+          ],
+          "correctAnswer": "Tous",
+          "explanation": "Mes amis — м.р. мн.ч.: tous."
+        },
+        {
+          "question": "___ personne a des qualités et des défauts.",
+          "options": [
+            "Chaque",
+            "Tous",
+            "Tout",
+            "Toutes"
+          ],
+          "correctAnswer": "Chaque",
+          "explanation": "«Каждый человек» — chaque + единственное число."
+        },
+        {
+          "question": "Elle sourit ___ la journée.",
+          "options": [
+            "toute",
+            "tout",
+            "tous",
+            "toutes"
+          ],
+          "correctAnswer": "toute",
+          "explanation": "La journée — ж.р. ед.ч.: toute la journée."
+        },
+        {
+          "question": "___ le monde aime les compliments.",
+          "options": [
+            "Tout",
+            "Tous",
+            "Toute",
+            "Chaque"
+          ],
+          "correctAnswer": "Tout",
+          "explanation": "Устойчивое tout le monde + глагол в ед. числе."
+        }
+      ]
+    },
+    {
+      "id": "a2u4-th2",
+      "type": "theory",
+      "title": "Les pronoms possessifs — le mien, la tienne...",
+      "content": "<p style='margin:0.75rem 0'>Чтобы не повторять существительное: «мой, твой, его...» как самостоятельное слово:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'></th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>м.р. ед.</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>ж.р. ед.</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>мн. число</th></tr><tr><td style='padding:0.5rem'>мой</td><td style='padding:0.5rem'>le mien</td><td style='padding:0.5rem'>la mienne</td><td style='padding:0.5rem'>les miens / les miennes</td></tr><tr><td style='padding:0.5rem'>твой</td><td style='padding:0.5rem'>le tien</td><td style='padding:0.5rem'>la tienne</td><td style='padding:0.5rem'>les tiens / les tiennes</td></tr><tr><td style='padding:0.5rem'>его/её</td><td style='padding:0.5rem'>le sien</td><td style='padding:0.5rem'>la sienne</td><td style='padding:0.5rem'>les siens / les siennes</td></tr><tr><td style='padding:0.5rem'>наш</td><td style='padding:0.5rem'>le nôtre</td><td style='padding:0.5rem'>la nôtre</td><td style='padding:0.5rem'>les nôtres</td></tr><tr><td style='padding:0.5rem'>ваш</td><td style='padding:0.5rem'>le vôtre</td><td style='padding:0.5rem'>la vôtre</td><td style='padding:0.5rem'>les vôtres</td></tr><tr><td style='padding:0.5rem'>их</td><td style='padding:0.5rem'>le leur</td><td style='padding:0.5rem'>la leur</td><td style='padding:0.5rem'>les leurs</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Род — по заменяемому слову: <i>Ta veste est belle, la mienne est vieille.</i></p>"
+    },
+    {
+      "id": "a2u4-qz2",
+      "type": "grammar-quiz",
+      "title": "Притяжательные местоимения — практика",
+      "questions": [
+        {
+          "question": "Mon frère est blond, ___ est brun. (твой)",
+          "options": [
+            "le tien",
+            "la tienne",
+            "le mien",
+            "les tiens"
+          ],
+          "correctAnswer": "le tien",
+          "explanation": "Frère — м.р. ед.ч., «твой» — le tien."
+        },
+        {
+          "question": "Vos enfants sont calmes, ___ sont très actifs ! (наши)",
+          "options": [
+            "les nôtres",
+            "le nôtre",
+            "les vôtres",
+            "la nôtre"
+          ],
+          "correctAnswer": "les nôtres",
+          "explanation": "Enfants — мн.ч., «наши» — les nôtres."
+        },
+        {
+          "question": "Ma coiffure est simple, ___ est originale. (её)",
+          "options": [
+            "la sienne",
+            "le sien",
+            "la tienne",
+            "les siennes"
+          ],
+          "correctAnswer": "la sienne",
+          "explanation": "Coiffure — ж.р. ед.ч.: la sienne."
+        },
+        {
+          "question": "Nos voisins sont sympas. Et ___ ? (ваши)",
+          "options": [
+            "les vôtres",
+            "les nôtres",
+            "la vôtre",
+            "le vôtre"
+          ],
+          "correctAnswer": "les vôtres",
+          "explanation": "Voisins — мн.ч.: les vôtres."
+        }
+      ]
+    },
+    {
+      "id": "a2u4-fb1",
+      "type": "fill-blank",
+      "title": "Портрет подруги",
+      "text": "Ma meilleure amie s'appelle Inès. Elle a les cheveux ___ et les yeux verts. ___ le monde dit que nous nous ressemblons, mais nos caractères sont différents : elle est patiente, et moi, je suis ___ . Elle a beaucoup de qualités et très peu de ___ .",
+      "blanks": [
+        {
+          "correctAnswer": "frisés",
+          "options": [
+            "frisés",
+            "frisé",
+            "frisée"
+          ],
+          "explanation": "Les cheveux — м.р. мн.ч.: frisés."
+        },
+        {
+          "correctAnswer": "Tout",
+          "options": [
+            "Tout",
+            "Tous",
+            "Toute"
+          ],
+          "explanation": "Tout le monde — устойчивое выражение."
+        },
+        {
+          "correctAnswer": "têtue",
+          "options": [
+            "têtue",
+            "têtu",
+            "têtus"
+          ],
+          "explanation": "Говорит девушка (moi) — ж.р.: têtue."
+        },
+        {
+          "correctAnswer": "défauts",
+          "options": [
+            "défauts",
+            "qualités",
+            "cheveux"
+          ],
+          "explanation": "Противопоставление качествам — défauts (недостатки)."
+        }
+      ]
+    },
+    {
+      "id": "a2u4-sb1",
+      "type": "sentence-builder",
+      "title": "Комплименты и описания",
+      "sentences": [
+        {
+          "words": [
+            "Tu",
+            "as",
+            "l'air",
+            "en",
+            "pleine",
+            "forme"
+          ],
+          "ru": "Ты отлично выглядишь"
+        },
+        {
+          "words": [
+            "Cette",
+            "couleur",
+            "te",
+            "va",
+            "très",
+            "bien"
+          ],
+          "ru": "Этот цвет тебе очень идёт"
+        },
+        {
+          "words": [
+            "Il",
+            "ressemble",
+            "beaucoup",
+            "à",
+            "son",
+            "père"
+          ],
+          "ru": "Он очень похож на своего отца"
+        }
+      ]
+    }
+  ]
+}

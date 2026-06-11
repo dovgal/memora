@@ -1,0 +1,288 @@
+{
+  "id": "unite10",
+  "title": "Unité 10 : Envies d'ailleurs ?",
+  "description": "Путешествия и рассказы о них. Passé composé против imparfait в рассказе, согласование причастия, celui/celle.",
+  "vocabulary": [
+    {
+      "fr": "un séjour",
+      "ru": "пребывание, поездка",
+      "type": "word"
+    },
+    {
+      "fr": "l'hébergement (m)",
+      "ru": "размещение, жильё",
+      "type": "word"
+    },
+    {
+      "fr": "une auberge de jeunesse",
+      "ru": "хостел",
+      "type": "phrase"
+    },
+    {
+      "fr": "un vol",
+      "ru": "рейс, полёт",
+      "type": "word"
+    },
+    {
+      "fr": "une escale",
+      "ru": "пересадка",
+      "type": "word"
+    },
+    {
+      "fr": "les bagages (m)",
+      "ru": "багаж",
+      "type": "word"
+    },
+    {
+      "fr": "un site touristique",
+      "ru": "достопримечательность",
+      "type": "phrase"
+    },
+    {
+      "fr": "une visite guidée",
+      "ru": "экскурсия с гидом",
+      "type": "phrase"
+    },
+    {
+      "fr": "un souvenir (objet)",
+      "ru": "сувенир",
+      "type": "word"
+    },
+    {
+      "fr": "se perdre",
+      "ru": "заблудиться",
+      "type": "word"
+    },
+    {
+      "fr": "incroyable",
+      "ru": "невероятный",
+      "type": "word"
+    },
+    {
+      "fr": "agacé(e)",
+      "ru": "раздражённый",
+      "type": "word"
+    },
+    {
+      "fr": "Quel dommage !",
+      "ru": "Как жаль!",
+      "type": "phrase"
+    },
+    {
+      "fr": "Bon voyage !",
+      "ru": "Счастливого пути!",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "a2u10-th1",
+      "type": "theory",
+      "title": "Passé composé vs imparfait — рассказ о путешествии",
+      "content": "<p style='margin:0.75rem 0'>В рассказе два прошедших времени работают вместе:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Время</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Роль</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>imparfait</td><td style='padding:0.5rem'>фон, описание, состояние</td><td style='padding:0.5rem'>Il faisait beau, la ville était calme...</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>passé composé</td><td style='padding:0.5rem'>событие, действие</td><td style='padding:0.5rem'>...et soudain, j'ai rencontré un vieil ami !</td></tr></table><p style='margin:0.75rem 0'>Типичная схема: <i>Je visitais le musée (фон) quand on a annoncé la fermeture (событие).</i></p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Подсказки: toujours, souvent, tous les jours → imparfait; soudain, un jour, tout à coup → passé composé.</p>"
+    },
+    {
+      "id": "a2u10-qz1",
+      "type": "grammar-quiz",
+      "title": "PC vs imparfait — практика",
+      "questions": [
+        {
+          "question": "Nous ___ sur la plage quand l'orage a commencé.",
+          "options": [
+            "étions",
+            "avons été",
+            "sommes",
+            "serions"
+          ],
+          "correctAnswer": "étions",
+          "explanation": "Фон («мы были на пляже») — imparfait: étions."
+        },
+        {
+          "question": "Un jour, elle ___ de partir en Argentine.",
+          "options": [
+            "a décidé",
+            "décidait",
+            "décide",
+            "décidera"
+          ],
+          "correctAnswer": "a décidé",
+          "explanation": "Событие (un jour) — passé composé: a décidé."
+        },
+        {
+          "question": "Quand j'étais étudiant, je ___ chaque été en stop.",
+          "options": [
+            "voyageais",
+            "ai voyagé",
+            "voyage",
+            "voyagerai"
+          ],
+          "correctAnswer": "voyageais",
+          "explanation": "Привычка (chaque été) — imparfait: voyageais."
+        },
+        {
+          "question": "Il ___ ses bagages quand le taxi est arrivé.",
+          "options": [
+            "faisait",
+            "a fait",
+            "fait",
+            "fera"
+          ],
+          "correctAnswer": "faisait",
+          "explanation": "Процесс-фон, прерванный событием: il faisait ses bagages."
+        }
+      ]
+    },
+    {
+      "id": "a2u10-th2",
+      "type": "theory",
+      "title": "Accord du participe и celui / celle",
+      "content": "<p style='margin:0.75rem 0'>С <b>être</b> причастие согласуется с подлежащим: <i>Elle est partie. Ils sont rentrés. Elles sont allées.</i></p><p style='margin:0.75rem 0'>С <b>avoir</b> причастие согласуется с COD, если COD стоит ПЕРЕД глаголом: <i>Ces photos ? Je les ai prises ! La valise que j'ai achetée...</i></p><p style='margin:0.75rem 0'><b>Celui / celle / ceux / celles</b> — «тот / та / те», чтобы не повторять слово:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Форма</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>celui (м.р.)</td><td style='padding:0.5rem'>Quel hôtel ? Celui qui est près de la gare.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>celle (ж.р.)</td><td style='padding:0.5rem'>Cette plage ? Non, celle de l'année dernière.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>ceux / celles (мн.)</td><td style='padding:0.5rem'>Ces souvenirs ? Ceux que j'ai rapportés du Maroc.</td></tr></table>"
+    },
+    {
+      "id": "a2u10-qz2",
+      "type": "grammar-quiz",
+      "title": "Accord / celui — практика",
+      "questions": [
+        {
+          "question": "Marie est ___ en Italie sans ses valises !",
+          "options": [
+            "partie",
+            "parti",
+            "partis",
+            "part"
+          ],
+          "correctAnswer": "partie",
+          "explanation": "С être согласование: Marie est partie."
+        },
+        {
+          "question": "Ces photos, je les ai ___ à Lisbonne.",
+          "options": [
+            "prises",
+            "pris",
+            "prise",
+            "prendre"
+          ],
+          "correctAnswer": "prises",
+          "explanation": "COD (les = photos, ж.р. мн.) перед avoir → prises."
+        },
+        {
+          "question": "Quel vol tu prends ? — ___ de 9 heures.",
+          "options": [
+            "Celui",
+            "Celle",
+            "Ceux",
+            "Cela"
+          ],
+          "correctAnswer": "Celui",
+          "explanation": "Un vol — м.р. ед.ч.: celui de 9 heures."
+        },
+        {
+          "question": "Ces plages sont belles, mais je préfère ___ de Corse.",
+          "options": [
+            "celles",
+            "ceux",
+            "celle",
+            "celui"
+          ],
+          "correctAnswer": "celles",
+          "explanation": "Les plages — ж.р. мн.ч.: celles."
+        }
+      ]
+    },
+    {
+      "id": "a2u10-fb1",
+      "type": "fill-blank",
+      "title": "Рассказ о поездке",
+      "text": "L'été dernier, je suis ___ en Grèce. Il ___ très chaud et la mer était magnifique. Un matin, nous ___ un petit village dans la montagne. Je voulais acheter des souvenirs : ___ que j'ai choisis étaient faits à la main. Quelle ___ voyage inoubliable !",
+      "blanks": [
+        {
+          "correctAnswer": "allée",
+          "options": [
+            "allée",
+            "allé",
+            "aller"
+          ],
+          "explanation": "Рассказчица (женщина) + être: je suis allée."
+        },
+        {
+          "correctAnswer": "faisait",
+          "options": [
+            "faisait",
+            "a fait",
+            "fait"
+          ],
+          "explanation": "Фон-погода — imparfait: il faisait chaud."
+        },
+        {
+          "correctAnswer": "avons découvert",
+          "options": [
+            "avons découvert",
+            "découvrions",
+            "découvrons"
+          ],
+          "explanation": "Событие (un matin) — passé composé."
+        },
+        {
+          "correctAnswer": "ceux",
+          "options": [
+            "ceux",
+            "celles",
+            "celui"
+          ],
+          "explanation": "Les souvenirs — м.р. мн.ч.: ceux que j'ai choisis."
+        },
+        {
+          "correctAnswer": "Quel",
+          "options": [
+            "Quel",
+            "Quelle",
+            "Quels"
+          ],
+          "explanation": "Восклицание: quel + voyage (м.р.) — Quel voyage !"
+        }
+      ]
+    },
+    {
+      "id": "a2u10-dlg1",
+      "type": "dialogue",
+      "title": "À l'office de tourisme",
+      "context": "Турист спрашивает про экскурсии.",
+      "exchanges": [
+        {
+          "speaker": "Employée",
+          "side": "left",
+          "text": "Bonjour ! Je peux vous aider ?"
+        },
+        {
+          "speaker": "Touriste",
+          "side": "right",
+          "isBlank": true,
+          "options": [
+            "Oui, je voudrais des renseignements sur les visites guidées.",
+            "Oui, donnez-moi tout !",
+            "Oui, où je suis ?"
+          ],
+          "correctAnswer": "Oui, je voudrais des renseignements sur les visites guidées.",
+          "explanation": "Вежливый запрос информации: je voudrais des renseignements sur..."
+        },
+        {
+          "speaker": "Employée",
+          "side": "left",
+          "text": "Il y a deux visites : celle du matin et celle du soir."
+        },
+        {
+          "speaker": "Touriste",
+          "side": "right",
+          "isBlank": true,
+          "options": [
+            "Je préfère celle du matin. Il y a encore de la place ?",
+            "Je préfère celui du matin si.",
+            "Celles je veux tous."
+          ],
+          "correctAnswer": "Je préfère celle du matin. Il y a encore de la place ?",
+          "explanation": "La visite — ж.р.: celle du matin. + вопрос о местах."
+        }
+      ]
+    }
+  ]
+}

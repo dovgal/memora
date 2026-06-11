@@ -1,0 +1,298 @@
+{
+  "id": "unite5",
+  "title": "Unité 5 : En route vers le futur !",
+  "description": "Будущее, технологии, прогнозы. Futur simple (включая неправильные), условие si + présent → futur, местоимение on.",
+  "vocabulary": [
+    {
+      "fr": "l'avenir (m)",
+      "ru": "будущее",
+      "type": "word"
+    },
+    {
+      "fr": "le progrès",
+      "ru": "прогресс",
+      "type": "word"
+    },
+    {
+      "fr": "une invention",
+      "ru": "изобретение",
+      "type": "word"
+    },
+    {
+      "fr": "un objet connecté",
+      "ru": "умное устройство",
+      "type": "phrase"
+    },
+    {
+      "fr": "un écran",
+      "ru": "экран",
+      "type": "word"
+    },
+    {
+      "fr": "télécharger",
+      "ru": "скачивать",
+      "type": "word"
+    },
+    {
+      "fr": "une application",
+      "ru": "приложение",
+      "type": "word"
+    },
+    {
+      "fr": "un robot",
+      "ru": "робот",
+      "type": "word"
+    },
+    {
+      "fr": "utile",
+      "ru": "полезный",
+      "type": "word"
+    },
+    {
+      "fr": "inutile",
+      "ru": "бесполезный",
+      "type": "word"
+    },
+    {
+      "fr": "fonctionner",
+      "ru": "работать (о технике)",
+      "type": "word"
+    },
+    {
+      "fr": "C'est incroyable !",
+      "ru": "Невероятно!",
+      "type": "phrase"
+    },
+    {
+      "fr": "J'espère que...",
+      "ru": "Надеюсь, что...",
+      "type": "phrase"
+    },
+    {
+      "fr": "dans dix ans",
+      "ru": "через десять лет",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "a2u5-th1",
+      "type": "theory",
+      "title": "Le futur simple — будущее время",
+      "content": "<p style='margin:0.75rem 0'>Образование: инфинитив + окончания -ai, -as, -a, -ons, -ez, -ont (у глаголов на -re отбрасываем e):</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Лицо</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>parler</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>prendre</th></tr><tr><td style='padding:0.5rem'>je</td><td style='padding:0.5rem'>parlerai</td><td style='padding:0.5rem'>prendrai</td></tr><tr><td style='padding:0.5rem'>tu</td><td style='padding:0.5rem'>parleras</td><td style='padding:0.5rem'>prendras</td></tr><tr><td style='padding:0.5rem'>il/elle/on</td><td style='padding:0.5rem'>parlera</td><td style='padding:0.5rem'>prendra</td></tr><tr><td style='padding:0.5rem'>nous</td><td style='padding:0.5rem'>parlerons</td><td style='padding:0.5rem'>prendrons</td></tr><tr><td style='padding:0.5rem'>vous</td><td style='padding:0.5rem'>parlerez</td><td style='padding:0.5rem'>prendrez</td></tr><tr><td style='padding:0.5rem'>ils/elles</td><td style='padding:0.5rem'>parleront</td><td style='padding:0.5rem'>prendront</td></tr></table><p style='margin:0.75rem 0'>Неправильные основы, которые нужно выучить:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Глагол</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Основа</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>être</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>ser-</td><td style='padding:0.5rem'>La vie sera différente.</td></tr><tr><td style='padding:0.5rem'>avoir</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>aur-</td><td style='padding:0.5rem'>On aura des robots.</td></tr><tr><td style='padding:0.5rem'>aller</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>ir-</td><td style='padding:0.5rem'>J'irai sur Mars !</td></tr><tr><td style='padding:0.5rem'>faire</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>fer-</td><td style='padding:0.5rem'>Il fera plus chaud.</td></tr><tr><td style='padding:0.5rem'>pouvoir</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>pourr-</td><td style='padding:0.5rem'>On pourra tout faire.</td></tr><tr><td style='padding:0.5rem'>venir</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>viendr-</td><td style='padding:0.5rem'>Tu viendras avec nous ?</td></tr><tr><td style='padding:0.5rem'>voir</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>verr-</td><td style='padding:0.5rem'>Nous verrons bien.</td></tr></table>"
+    },
+    {
+      "id": "a2u5-qz1",
+      "type": "grammar-quiz",
+      "title": "Futur simple — практика",
+      "questions": [
+        {
+          "question": "Dans 20 ans, les voitures ___ électriques.",
+          "options": [
+            "seront",
+            "serons",
+            "sera",
+            "êtront"
+          ],
+          "correctAnswer": "seront",
+          "explanation": "Être → ser- + -ont: elles seront."
+        },
+        {
+          "question": "On ___ travailler de la maison.",
+          "options": [
+            "pourra",
+            "pouvra",
+            "peut",
+            "pourras"
+          ],
+          "correctAnswer": "pourra",
+          "explanation": "Pouvoir → pourr-: on pourra."
+        },
+        {
+          "question": "J'___ une maison intelligente.",
+          "options": [
+            "aurai",
+            "aurais",
+            "ai",
+            "avoirai"
+          ],
+          "correctAnswer": "aurai",
+          "explanation": "Avoir → aur- + -ai: j'aurai."
+        },
+        {
+          "question": "Nous ___ nos amis en hologramme !",
+          "options": [
+            "verrons",
+            "voirons",
+            "voyons",
+            "verront"
+          ],
+          "correctAnswer": "verrons",
+          "explanation": "Voir → verr-: nous verrons."
+        },
+        {
+          "question": "Tu ___ à la conférence demain ?",
+          "options": [
+            "viendras",
+            "venira",
+            "viens",
+            "viendra"
+          ],
+          "correctAnswer": "viendras",
+          "explanation": "Venir → viendr-: tu viendras."
+        }
+      ]
+    },
+    {
+      "id": "a2u5-th2",
+      "type": "theory",
+      "title": "Si + présent → futur и местоимение ON",
+      "content": "<p style='margin:0.75rem 0'>Реальное условие о будущем: <b>si + настоящее, затем futur simple</b>:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Условие (présent)</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Результат (futur)</th></tr><tr><td style='padding:0.5rem'>Si tu télécharges cette appli,</td><td style='padding:0.5rem'>tu gagneras du temps.</td></tr><tr><td style='padding:0.5rem'>Si on invente ça,</td><td style='padding:0.5rem'>tout changera.</td></tr><tr><td style='padding:0.5rem'>S'il fait beau demain,</td><td style='padding:0.5rem'>nous sortirons.</td></tr></table><p style='margin:0.75rem 0'><b>On</b> — универсальное местоимение (глагол как с il): on = nous (разговорное), люди вообще, кто-то: <i>On verra ! En France, on dîne à 20h.</i></p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Si + il = <b>s'il</b>, но si + on/elle не сокращается: si on veut, si elle peut.</p>"
+    },
+    {
+      "id": "a2u5-qz2",
+      "type": "grammar-quiz",
+      "title": "Si + futur, ON — практика",
+      "questions": [
+        {
+          "question": "Si tu ___ ce robot, tu auras plus de temps libre.",
+          "options": [
+            "achètes",
+            "achèteras",
+            "acheté",
+            "achetais"
+          ],
+          "correctAnswer": "achètes",
+          "explanation": "После si — настоящее время: si tu achètes."
+        },
+        {
+          "question": "Si on continue comme ça, on ___ de gros progrès.",
+          "options": [
+            "fera",
+            "fait",
+            "faisons",
+            "ferons"
+          ],
+          "correctAnswer": "fera",
+          "explanation": "Результат — futur; on + 3-е лицо ед.ч.: on fera."
+        },
+        {
+          "question": "___ il pleut, le drone ne volera pas.",
+          "options": [
+            "S'",
+            "Si",
+            "Se",
+            "Sa"
+          ],
+          "correctAnswer": "S'",
+          "explanation": "Si + il = s'il."
+        },
+        {
+          "question": "En 2050, ___ vivra peut-être sur la Lune.",
+          "options": [
+            "on",
+            "ils",
+            "nous",
+            "tout"
+          ],
+          "correctAnswer": "on",
+          "explanation": "«Люди вообще» — on + глагол в 3-м лице ед.ч."
+        }
+      ]
+    },
+    {
+      "id": "a2u5-fb1",
+      "type": "fill-blank",
+      "title": "Прогноз на 2050 год",
+      "text": "À mon avis, en 2050, la vie ___ très différente. Les robots ___ le ménage et nous ___ plus de temps libre. Si les scientifiques continuent leurs recherches, on ___ peut-être voyager dans l'espace. J'espère que le futur ___ positif !",
+      "blanks": [
+        {
+          "correctAnswer": "sera",
+          "options": [
+            "sera",
+            "serai",
+            "est"
+          ],
+          "explanation": "Être в futur: la vie sera."
+        },
+        {
+          "correctAnswer": "feront",
+          "options": [
+            "feront",
+            "ferons",
+            "font"
+          ],
+          "explanation": "Les robots (ils) feront — faire → fer-."
+        },
+        {
+          "correctAnswer": "aurons",
+          "options": [
+            "aurons",
+            "avons",
+            "auront"
+          ],
+          "explanation": "Nous aurons — avoir → aur-."
+        },
+        {
+          "correctAnswer": "pourra",
+          "options": [
+            "pourra",
+            "peut",
+            "pourrait"
+          ],
+          "explanation": "Условие si + présent → futur: on pourra."
+        },
+        {
+          "correctAnswer": "sera",
+          "options": [
+            "sera",
+            "soit",
+            "était"
+          ],
+          "explanation": "J'espère que + futur: le futur sera positif."
+        }
+      ]
+    },
+    {
+      "id": "a2u5-sb1",
+      "type": "sentence-builder",
+      "title": "Соберите прогнозы",
+      "sentences": [
+        {
+          "words": [
+            "Dans",
+            "dix",
+            "ans,",
+            "on",
+            "aura",
+            "des",
+            "voitures",
+            "volantes"
+          ],
+          "ru": "Через десять лет у нас будут летающие машины"
+        },
+        {
+          "words": [
+            "Si",
+            "tu",
+            "veux,",
+            "on",
+            "ira",
+            "ensemble"
+          ],
+          "ru": "Если хочешь, пойдём вместе"
+        },
+        {
+          "words": [
+            "La",
+            "technologie",
+            "changera",
+            "notre",
+            "vie"
+          ],
+          "ru": "Технологии изменят нашу жизнь"
+        }
+      ]
+    }
+  ]
+}

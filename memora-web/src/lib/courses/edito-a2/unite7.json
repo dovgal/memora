@@ -1,0 +1,287 @@
+{
+  "id": "unite7",
+  "title": "Unité 7 : À votre santé !",
+  "description": "Здоровье и самочувствие. Местоимения COD/COI (lui, leur), превосходная степень, вопросительное lequel.",
+  "vocabulary": [
+    {
+      "fr": "se sentir bien / mal",
+      "ru": "чувствовать себя хорошо/плохо",
+      "type": "phrase"
+    },
+    {
+      "fr": "la douleur",
+      "ru": "боль",
+      "type": "word"
+    },
+    {
+      "fr": "le sommeil",
+      "ru": "сон",
+      "type": "word"
+    },
+    {
+      "fr": "être en forme",
+      "ru": "быть в форме",
+      "type": "phrase"
+    },
+    {
+      "fr": "un médicament",
+      "ru": "лекарство",
+      "type": "word"
+    },
+    {
+      "fr": "une ordonnance",
+      "ru": "рецепт врача",
+      "type": "word"
+    },
+    {
+      "fr": "les urgences (f)",
+      "ru": "скорая помощь, приёмный покой",
+      "type": "word"
+    },
+    {
+      "fr": "tousser",
+      "ru": "кашлять",
+      "type": "word"
+    },
+    {
+      "fr": "la fièvre",
+      "ru": "температура, жар",
+      "type": "word"
+    },
+    {
+      "fr": "un rendez-vous",
+      "ru": "приём, встреча",
+      "type": "word"
+    },
+    {
+      "fr": "conseiller",
+      "ru": "советовать",
+      "type": "word"
+    },
+    {
+      "fr": "guérir",
+      "ru": "выздоравливать, лечить",
+      "type": "word"
+    },
+    {
+      "fr": "Qu'est-ce qui ne va pas ?",
+      "ru": "Что случилось / что болит?",
+      "type": "phrase"
+    },
+    {
+      "fr": "Soignez-vous bien !",
+      "ru": "Лечитесь хорошенько!",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "a2u7-th1",
+      "type": "theory",
+      "title": "COD и COI вместе: le/la/les против lui/leur",
+      "content": "<p style='margin:0.75rem 0'><b>COD</b> (кого? что?) — le, la, l', les. <b>COI</b> (кому? с предлогом à) — lui (ему/ей), leur (им):</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Фраза</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Местоимение</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Результат</th></tr><tr><td style='padding:0.5rem'>Je vois le médecin.</td><td style='padding:0.5rem'>COD → le</td><td style='padding:0.5rem'>Je le vois.</td></tr><tr><td style='padding:0.5rem'>Je parle au médecin.</td><td style='padding:0.5rem'>COI → lui</td><td style='padding:0.5rem'>Je lui parle.</td></tr><tr><td style='padding:0.5rem'>Elle appelle ses parents.</td><td style='padding:0.5rem'>COD → les</td><td style='padding:0.5rem'>Elle les appelle.</td></tr><tr><td style='padding:0.5rem'>Elle téléphone à ses parents.</td><td style='padding:0.5rem'>COI → leur</td><td style='padding:0.5rem'>Elle leur téléphone.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Глаголы с à (parler à, téléphoner à, demander à, conseiller à...) требуют lui/leur, даже про женщину: <i>Je lui parle</i> = я говорю с ней/ним.</p>"
+    },
+    {
+      "id": "a2u7-qz1",
+      "type": "grammar-quiz",
+      "title": "COD / COI — практика",
+      "questions": [
+        {
+          "question": "Le docteur examine la patiente. → Il ___ examine.",
+          "options": [
+            "la",
+            "lui",
+            "le",
+            "leur"
+          ],
+          "correctAnswer": "la",
+          "explanation": "Examiner кого? — COD: la patiente → la."
+        },
+        {
+          "question": "Je demande conseil à mon pharmacien. → Je ___ demande conseil.",
+          "options": [
+            "lui",
+            "le",
+            "la",
+            "les"
+          ],
+          "correctAnswer": "lui",
+          "explanation": "Demander À qn — COI: lui."
+        },
+        {
+          "question": "Elle donne les médicaments aux enfants. → Elle ___ donne les médicaments.",
+          "options": [
+            "leur",
+            "les",
+            "lui",
+            "leurs"
+          ],
+          "correctAnswer": "leur",
+          "explanation": "Donner À qn (aux enfants) — COI мн.ч.: leur."
+        },
+        {
+          "question": "Tu prends tes vitamines ? — Oui, je ___ prends chaque matin.",
+          "options": [
+            "les",
+            "leur",
+            "en",
+            "lui"
+          ],
+          "correctAnswer": "les",
+          "explanation": "Prendre что? — COD мн.ч.: les."
+        }
+      ]
+    },
+    {
+      "id": "a2u7-th2",
+      "type": "theory",
+      "title": "Le superlatif и le pronom interrogatif LEQUEL",
+      "content": "<p style='margin:0.75rem 0'>Превосходная степень — «самый»:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Конструкция</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>le/la/les plus + adj</td><td style='padding:0.5rem'>C'est le sport le plus complet.</td></tr><tr><td style='padding:0.5rem'>le/la/les moins + adj</td><td style='padding:0.5rem'>C'est la solution la moins chère.</td></tr><tr><td style='padding:0.5rem'>le meilleur / la meilleure</td><td style='padding:0.5rem'>C'est le meilleur médecin de la ville.</td></tr><tr><td style='padding:0.5rem'>le mieux (наречие)</td><td style='padding:0.5rem'>C'est elle qui dort le mieux.</td></tr></table><p style='margin:0.75rem 0'><b>Lequel ?</b> — «который из?» Согласуется: lequel (м), laquelle (ж), lesquels, lesquelles: <i>Il y a deux pharmacies. Laquelle est ouverte ?</i></p>"
+    },
+    {
+      "id": "a2u7-qz2",
+      "type": "grammar-quiz",
+      "title": "Superlatif / lequel — практика",
+      "questions": [
+        {
+          "question": "La marche est l'exercice ___ simple.",
+          "options": [
+            "le plus",
+            "plus",
+            "le mieux",
+            "mieux"
+          ],
+          "correctAnswer": "le plus",
+          "explanation": "Превосходная степень: le plus simple."
+        },
+        {
+          "question": "C'est ___ médecin du quartier. (самый лучший)",
+          "options": [
+            "le meilleur",
+            "le plus bon",
+            "le mieux",
+            "meilleur"
+          ],
+          "correctAnswer": "le meilleur",
+          "explanation": "Bon → le meilleur. «Le plus bon» — ошибка."
+        },
+        {
+          "question": "Voici deux médicaments. ___ préférez-vous ?",
+          "options": [
+            "Lequel",
+            "Laquelle",
+            "Lesquels",
+            "Quel"
+          ],
+          "correctAnswer": "Lequel",
+          "explanation": "Un médicament — м.р. ед.ч.: lequel."
+        },
+        {
+          "question": "De toutes mes amies, c'est Zoé qui dort ___ .",
+          "options": [
+            "le mieux",
+            "la meilleure",
+            "le plus bien",
+            "mieux la"
+          ],
+          "correctAnswer": "le mieux",
+          "explanation": "Наречие при глаголе dormir: le mieux."
+        }
+      ]
+    },
+    {
+      "id": "a2u7-fb1",
+      "type": "fill-blank",
+      "title": "Chez le médecin",
+      "text": "— Bonjour, docteur. Je ne me ___ pas bien : je tousse et j'ai de la ___ .\n— Depuis quand ?\n— Depuis trois jours. J'ai appelé ma pharmacienne et je ___ ai demandé conseil.\n— Elle a raison, il faut vous reposer. Je vous fais une ___ . Prenez ce sirop : c'est ___ traitement pour la toux.",
+      "blanks": [
+        {
+          "correctAnswer": "sens",
+          "options": [
+            "sens",
+            "sent",
+            "sentir"
+          ],
+          "explanation": "Je me sens — se sentir в 1-м лице."
+        },
+        {
+          "correctAnswer": "fièvre",
+          "options": [
+            "fièvre",
+            "douleur",
+            "forme"
+          ],
+          "explanation": "Кашель + температура: j'ai de la fièvre."
+        },
+        {
+          "correctAnswer": "lui",
+          "options": [
+            "lui",
+            "la",
+            "le"
+          ],
+          "explanation": "Demander À la pharmacienne — COI: lui."
+        },
+        {
+          "correctAnswer": "ordonnance",
+          "options": [
+            "ordonnance",
+            "annonce",
+            "addition"
+          ],
+          "explanation": "Врач выписывает рецепт — une ordonnance."
+        },
+        {
+          "correctAnswer": "le meilleur",
+          "options": [
+            "le meilleur",
+            "le plus bon",
+            "le mieux"
+          ],
+          "explanation": "Bon → le meilleur traitement."
+        }
+      ]
+    },
+    {
+      "id": "a2u7-sb1",
+      "type": "sentence-builder",
+      "title": "Фразы о здоровье",
+      "sentences": [
+        {
+          "words": [
+            "Je",
+            "me",
+            "sens",
+            "beaucoup",
+            "mieux",
+            "aujourd'hui"
+          ],
+          "ru": "Сегодня я чувствую себя гораздо лучше"
+        },
+        {
+          "words": [
+            "Le",
+            "médecin",
+            "lui",
+            "a",
+            "donné",
+            "une",
+            "ordonnance"
+          ],
+          "ru": "Врач дал ему рецепт"
+        },
+        {
+          "words": [
+            "C'est",
+            "le",
+            "meilleur",
+            "moyen",
+            "de",
+            "guérir"
+          ],
+          "ru": "Это лучший способ выздороветь"
+        }
+      ]
+    }
+  ]
+}

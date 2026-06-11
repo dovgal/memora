@@ -99,6 +99,26 @@ export default function FrenchA2CoursePage() {
           </div>
         </div>
 
+        {/* Структурированный тренажёр Édito A2: юниты + коуч + разговор + чтение */}
+        <Link href="/dashboard/student/courses/edito-a2" className="block group">
+          <div className="relative overflow-hidden rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-900/30 via-teal-900/15 to-transparent p-5 hover:border-emerald-500/60 transition-all">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl" />
+            <div className="relative z-10 flex items-center justify-between gap-4 flex-wrap">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <Sparkles className="w-4 h-4 text-emerald-400" />
+                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">Новинка · Тренажёр по юнитам</span>
+                </div>
+                <h3 className="text-foreground font-bold">Тренажер Édito A2 — 12 юнитов</h3>
+                <p className="text-qz-text-muted text-sm">Теория и упражнения по программе A2 + коуч-режим, разговор, чтение, экзамены и личный словарь.</p>
+              </div>
+              <span className="inline-flex items-center gap-2 bg-emerald-600 group-hover:bg-emerald-500 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors shrink-0">
+                Открыть <ArrowRight className="w-4 h-4" />
+              </span>
+            </div>
+          </div>
+        </Link>
+
         {/* Геймификация */}
         {game && lvl && (
           <div className="bg-qz-card border border-border rounded-2xl px-4 py-3 space-y-3">

@@ -1,0 +1,290 @@
+{
+  "id": "unite3",
+  "title": "Unité 3 : Comme à la maison",
+  "description": "Снимать жильё и описывать его. Относительные qui/que/où, сравнение (прилагательные, наречия, существительные), утешение.",
+  "vocabulary": [
+    {
+      "fr": "une colocation",
+      "ru": "совместная аренда",
+      "type": "word"
+    },
+    {
+      "fr": "un(e) colocataire",
+      "ru": "сосед(ка) по квартире",
+      "type": "word"
+    },
+    {
+      "fr": "une annonce",
+      "ru": "объявление",
+      "type": "word"
+    },
+    {
+      "fr": "les charges (f)",
+      "ru": "коммунальные платежи",
+      "type": "word"
+    },
+    {
+      "fr": "une caution",
+      "ru": "залог",
+      "type": "word"
+    },
+    {
+      "fr": "un quartier",
+      "ru": "район",
+      "type": "word"
+    },
+    {
+      "fr": "lumineux / lumineuse",
+      "ru": "светлый",
+      "type": "word"
+    },
+    {
+      "fr": "bruyant(e)",
+      "ru": "шумный",
+      "type": "word"
+    },
+    {
+      "fr": "calme",
+      "ru": "тихий",
+      "type": "word"
+    },
+    {
+      "fr": "équipé(e)",
+      "ru": "оборудованный",
+      "type": "word"
+    },
+    {
+      "fr": "le cadre de vie",
+      "ru": "условия жизни",
+      "type": "phrase"
+    },
+    {
+      "fr": "Ne t'inquiète pas !",
+      "ru": "Не волнуйся!",
+      "type": "phrase"
+    },
+    {
+      "fr": "C'est dommage.",
+      "ru": "Жаль.",
+      "type": "phrase"
+    },
+    {
+      "fr": "Ça va aller !",
+      "ru": "Всё будет хорошо!",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "a2u3-th1",
+      "type": "theory",
+      "title": "Qui, que, où — относительные местоимения",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Слово</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Роль</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>qui</td><td style='padding:0.5rem'>подлежащее</td><td style='padding:0.5rem'>Je cherche un coloc qui aime cuisiner.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>que</td><td style='padding:0.5rem'>дополнение</td><td style='padding:0.5rem'>L'appartement que je loue est petit.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>où</td><td style='padding:0.5rem'>место или время</td><td style='padding:0.5rem'>Le quartier où j'habite est calme. / Le jour où j'ai déménagé...</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Проверка: после qui — глагол, после que — подлежащее, où — отвечает на «где/когда».</p>"
+    },
+    {
+      "id": "a2u3-qz1",
+      "type": "grammar-quiz",
+      "title": "Qui / que / où — практика",
+      "questions": [
+        {
+          "question": "C'est la chambre ___ je préfère.",
+          "options": [
+            "que",
+            "qui",
+            "où",
+            "dont"
+          ],
+          "correctAnswer": "que",
+          "explanation": "После пропуска подлежащее je — значит que."
+        },
+        {
+          "question": "J'ai un voisin ___ joue du piano la nuit !",
+          "options": [
+            "qui",
+            "que",
+            "où",
+            "quoi"
+          ],
+          "correctAnswer": "qui",
+          "explanation": "После пропуска глагол joue — значит qui."
+        },
+        {
+          "question": "La ville ___ je suis né est très belle.",
+          "options": [
+            "où",
+            "que",
+            "qui",
+            "quand"
+          ],
+          "correctAnswer": "où",
+          "explanation": "«Город, ГДЕ я родился» — où."
+        },
+        {
+          "question": "Le canapé ___ nous avons acheté est confortable.",
+          "options": [
+            "que",
+            "qui",
+            "où",
+            "quel"
+          ],
+          "correctAnswer": "que",
+          "explanation": "Дальше nous avons — подлежащее, значит que."
+        }
+      ]
+    },
+    {
+      "id": "a2u3-th2",
+      "type": "theory",
+      "title": "La comparaison — полная система",
+      "content": "<p style='margin:0.75rem 0'>Сравнивать можно не только прилагательные:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Что сравниваем</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Конструкция</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>прилагательное</td><td style='padding:0.5rem'>plus/moins/aussi + adj + que</td><td style='padding:0.5rem'>Cette rue est plus calme que l'autre.</td></tr><tr><td style='padding:0.5rem'>наречие</td><td style='padding:0.5rem'>plus/moins/aussi + adv + que</td><td style='padding:0.5rem'>Il cuisine mieux que moi. (bien → mieux !)</td></tr><tr><td style='padding:0.5rem'>существительное</td><td style='padding:0.5rem'>plus de/moins de/autant de + nom + que</td><td style='padding:0.5rem'>J'ai autant de meubles que toi.</td></tr><tr><td style='padding:0.5rem'>глагол</td><td style='padding:0.5rem'>verbe + plus/moins/autant que</td><td style='padding:0.5rem'>Elle paie moins que nous.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Запомните пары: bon → <b>meilleur</b> (лучший), bien → <b>mieux</b> (лучше).</p>"
+    },
+    {
+      "id": "a2u3-qz2",
+      "type": "grammar-quiz",
+      "title": "Сравнение — практика",
+      "questions": [
+        {
+          "question": "Mon nouveau studio est ___ lumineux ___ l'ancien.",
+          "options": [
+            "plus ... que",
+            "plus ... de",
+            "mieux ... que",
+            "autant ... que"
+          ],
+          "correctAnswer": "plus ... que",
+          "explanation": "Прилагательное: plus + adj + que."
+        },
+        {
+          "question": "Ici, je paie ___ charges qu'avant.",
+          "options": [
+            "moins de",
+            "moins",
+            "moins que",
+            "plus que de"
+          ],
+          "correctAnswer": "moins de",
+          "explanation": "Существительное: moins DE charges que."
+        },
+        {
+          "question": "On mange ___ chez toi qu'au restaurant !",
+          "options": [
+            "mieux",
+            "meilleur",
+            "plus bien",
+            "bon"
+          ],
+          "correctAnswer": "mieux",
+          "explanation": "Наречие к глаголу: bien → mieux."
+        },
+        {
+          "question": "Cette colocation est ___ que l'hôtel.",
+          "options": [
+            "meilleure",
+            "mieux",
+            "plus bonne",
+            "bonne plus"
+          ],
+          "correctAnswer": "meilleure",
+          "explanation": "Bon(ne) → meilleur(e): colocation — ж.р."
+        },
+        {
+          "question": "Nous avons ___ de place que vous.",
+          "options": [
+            "autant",
+            "aussi",
+            "autant que",
+            "comme"
+          ],
+          "correctAnswer": "autant",
+          "explanation": "«Столько же» с существительным — autant de."
+        }
+      ]
+    },
+    {
+      "id": "a2u3-fb1",
+      "type": "fill-blank",
+      "title": "Объявление о колокации",
+      "text": "Cherche colocataire pour un appartement ___ se trouve près du centre. La chambre ___ nous proposons est grande et lumineuse. Le quartier, ___ il y a beaucoup de cafés, est très vivant. Loyer : 450 €, charges ___ .",
+      "blanks": [
+        {
+          "correctAnswer": "qui",
+          "options": [
+            "qui",
+            "que",
+            "où"
+          ],
+          "explanation": "Дальше глагол se trouve — qui."
+        },
+        {
+          "correctAnswer": "que",
+          "options": [
+            "que",
+            "qui",
+            "où"
+          ],
+          "explanation": "Дальше подлежащее nous — que."
+        },
+        {
+          "correctAnswer": "où",
+          "options": [
+            "où",
+            "que",
+            "qui"
+          ],
+          "explanation": "«Район, ГДЕ много кафе» — où."
+        },
+        {
+          "correctAnswer": "comprises",
+          "options": [
+            "comprises",
+            "compris",
+            "comprise"
+          ],
+          "explanation": "Les charges (ж.р. мн.ч.) comprises."
+        }
+      ]
+    },
+    {
+      "id": "a2u3-dlg1",
+      "type": "dialogue",
+      "title": "Réconforter un ami",
+      "context": "У Лео сорвалась аренда квартиры, Эмма его утешает.",
+      "exchanges": [
+        {
+          "speaker": "Léo",
+          "side": "left",
+          "text": "Le propriétaire a choisi un autre locataire... Je suis déçu."
+        },
+        {
+          "speaker": "Emma",
+          "side": "right",
+          "isBlank": true,
+          "options": [
+            "Ne t'inquiète pas, tu vas trouver mieux !",
+            "Tant pis pour toi !",
+            "C'est ta faute, certainement."
+          ],
+          "correctAnswer": "Ne t'inquiète pas, tu vas trouver mieux !",
+          "explanation": "Утешение: Ne t'inquiète pas + tu vas trouver mieux (сравнение: mieux!)."
+        },
+        {
+          "speaker": "Léo",
+          "side": "left",
+          "text": "Tu crois ? C'était l'appartement que je préférais..."
+        },
+        {
+          "speaker": "Emma",
+          "side": "right",
+          "isBlank": true,
+          "options": [
+            "Regarde, il y a une annonce qui est encore plus intéressante !",
+            "Oui, c'est le pire appartement.",
+            "Non, je ne crois personne."
+          ],
+          "correctAnswer": "Regarde, il y a une annonce qui est encore plus intéressante !",
+          "explanation": "Подбадриваем и используем qui + сравнение plus intéressante."
+        }
+      ]
+    }
+  ]
+}

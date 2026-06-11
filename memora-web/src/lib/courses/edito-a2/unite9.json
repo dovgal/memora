@@ -1,0 +1,277 @@
+{
+  "id": "unite9",
+  "title": "Unité 9 : Consommer responsable",
+  "description": "Осознанное потребление. Conditionnel présent (вежливость, желание, совет), герундий (en + -ant).",
+  "vocabulary": [
+    {
+      "fr": "consommer",
+      "ru": "потреблять",
+      "type": "word"
+    },
+    {
+      "fr": "d'occasion",
+      "ru": "подержанный, б/у",
+      "type": "phrase"
+    },
+    {
+      "fr": "réparer",
+      "ru": "чинить",
+      "type": "word"
+    },
+    {
+      "fr": "jeter",
+      "ru": "выбрасывать",
+      "type": "word"
+    },
+    {
+      "fr": "le gaspillage",
+      "ru": "расточительство",
+      "type": "word"
+    },
+    {
+      "fr": "recycler",
+      "ru": "перерабатывать",
+      "type": "word"
+    },
+    {
+      "fr": "un atelier",
+      "ru": "мастерская",
+      "type": "word"
+    },
+    {
+      "fr": "le bricolage",
+      "ru": "рукоделие, ремонт своими руками",
+      "type": "word"
+    },
+    {
+      "fr": "une matière",
+      "ru": "материал",
+      "type": "word"
+    },
+    {
+      "fr": "le bois",
+      "ru": "дерево (материал)",
+      "type": "word"
+    },
+    {
+      "fr": "le verre",
+      "ru": "стекло",
+      "type": "word"
+    },
+    {
+      "fr": "échanger",
+      "ru": "обменивать",
+      "type": "word"
+    },
+    {
+      "fr": "rendre service",
+      "ru": "оказать услугу",
+      "type": "phrase"
+    },
+    {
+      "fr": "Tu pourrais m'aider ?",
+      "ru": "Ты мог бы мне помочь?",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "a2u9-th1",
+      "type": "theory",
+      "title": "Le conditionnel présent — вежливость, желание, совет",
+      "content": "<p style='margin:0.75rem 0'>Образование: основа futur + окончания imparfait (-ais, -ais, -ait, -ions, -iez, -aient):</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Употребление</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th></tr><tr><td style='padding:0.5rem'>вежливая просьба</td><td style='padding:0.5rem'>Vous pourriez répéter ?</td><td style='padding:0.5rem'>Вы могли бы повторить?</td></tr><tr><td style='padding:0.5rem'>желание</td><td style='padding:0.5rem'>J'aimerais acheter moins.</td><td style='padding:0.5rem'>Мне хотелось бы покупать меньше.</td></tr><tr><td style='padding:0.5rem'>совет</td><td style='padding:0.5rem'>Tu devrais réparer ce vélo.</td><td style='padding:0.5rem'>Тебе стоило бы починить велосипед.</td></tr><tr><td style='padding:0.5rem'>мечта</td><td style='padding:0.5rem'>On vivrait sans plastique...</td><td style='padding:0.5rem'>Мы жили бы без пластика...</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Тройка вежливости наизусть: <b>je voudrais</b> (хотел бы), <b>tu pourrais</b> (ты мог бы), <b>tu devrais</b> (тебе стоило бы).</p>"
+    },
+    {
+      "id": "a2u9-qz1",
+      "type": "grammar-quiz",
+      "title": "Conditionnel — практика",
+      "questions": [
+        {
+          "question": "Tu ___ vendre tes vieux vêtements en ligne. (совет)",
+          "options": [
+            "devrais",
+            "dois",
+            "devras",
+            "devais"
+          ],
+          "correctAnswer": "devrais",
+          "explanation": "Совет — conditionnel: tu devrais."
+        },
+        {
+          "question": "J'___ une machine à café d'occasion.",
+          "options": [
+            "aimerais",
+            "aimerai",
+            "aime",
+            "aimais"
+          ],
+          "correctAnswer": "aimerais",
+          "explanation": "Желание — conditionnel: j'aimerais (≠ futur j'aimerai)."
+        },
+        {
+          "question": "Vous ___ me montrer cet atelier ?",
+          "options": [
+            "pourriez",
+            "pouvez",
+            "pourrez",
+            "pouviez"
+          ],
+          "correctAnswer": "pourriez",
+          "explanation": "Вежливая просьба: vous pourriez."
+        },
+        {
+          "question": "Nous ___ moins jeter si tout était réparable.",
+          "options": [
+            "pourrions",
+            "pouvons",
+            "pourrons",
+            "pouvions"
+          ],
+          "correctAnswer": "pourrions",
+          "explanation": "Гипотеза-мечта — conditionnel: nous pourrions."
+        }
+      ]
+    },
+    {
+      "id": "a2u9-th2",
+      "type": "theory",
+      "title": "Le gérondif — en + -ant",
+      "content": "<p style='margin:0.75rem 0'>Герундий показывает, КАК или КОГДА происходит действие: <b>en</b> + основа nous + <b>-ant</b>:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Глагол</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Герундий</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>acheter</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>en achetant</td><td style='padding:0.5rem'>On économise en achetant d'occasion.</td></tr><tr><td style='padding:0.5rem'>réparer</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>en réparant</td><td style='padding:0.5rem'>Il apprend en réparant des vélos.</td></tr><tr><td style='padding:0.5rem'>faire</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>en faisant</td><td style='padding:0.5rem'>Elle écoute un podcast en faisant le ménage.</td></tr><tr><td style='padding:0.5rem'>choisir</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>en choisissant</td><td style='padding:0.5rem'>En choisissant local, on pollue moins.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Три неправильных: être → en étant, avoir → en ayant, savoir → en sachant.</p>"
+    },
+    {
+      "id": "a2u9-qz2",
+      "type": "grammar-quiz",
+      "title": "Gérondif — практика",
+      "questions": [
+        {
+          "question": "On protège la planète ___ moins.",
+          "options": [
+            "en consommant",
+            "en consommer",
+            "consommant",
+            "à consommer"
+          ],
+          "correctAnswer": "en consommant",
+          "explanation": "«Потребляя меньше» — en + -ant."
+        },
+        {
+          "question": "Elle a appris le bricolage ___ des tutos.",
+          "options": [
+            "en regardant",
+            "en regarder",
+            "regardant en",
+            "à regardant"
+          ],
+          "correctAnswer": "en regardant",
+          "explanation": "«Смотря туториалы» — en regardant."
+        },
+        {
+          "question": "___ tes objets, tu fais des économies.",
+          "options": [
+            "En réparant",
+            "Réparer",
+            "En réparer",
+            "Réparant en"
+          ],
+          "correctAnswer": "En réparant",
+          "explanation": "Герундий в начале фразы: En réparant tes objets..."
+        },
+        {
+          "question": "Il chante toujours ___ la vaisselle.",
+          "options": [
+            "en faisant",
+            "en fait",
+            "faisant",
+            "en faire"
+          ],
+          "correctAnswer": "en faisant",
+          "explanation": "Одновременность: поёт, делая посуду — en faisant."
+        }
+      ]
+    },
+    {
+      "id": "a2u9-fb1",
+      "type": "fill-blank",
+      "title": "Объявление мастерской",
+      "text": "Atelier « Seconde Vie » : apprenez à réparer ___ vous amusant ! Vous ___ donner une seconde vie à vos objets ? Nos bénévoles vous aideront. Apportez vos appareils : nous ne jetons ___ ! Entrée libre, mais vous ___ réserver votre place en ligne.",
+      "blanks": [
+        {
+          "correctAnswer": "en",
+          "options": [
+            "en",
+            "et",
+            "pour"
+          ],
+          "explanation": "Герундий: en vous amusant — «развлекаясь»."
+        },
+        {
+          "correctAnswer": "aimeriez",
+          "options": [
+            "aimeriez",
+            "aimerez",
+            "aimez"
+          ],
+          "explanation": "Вежливое предположение-желание: vous aimeriez."
+        },
+        {
+          "correctAnswer": "rien",
+          "options": [
+            "rien",
+            "personne",
+            "plus de"
+          ],
+          "explanation": "«Ничего не выбрасываем» — ne jetons rien."
+        },
+        {
+          "correctAnswer": "devriez",
+          "options": [
+            "devriez",
+            "devez",
+            "deviez"
+          ],
+          "explanation": "Мягкая рекомендация: vous devriez réserver."
+        }
+      ]
+    },
+    {
+      "id": "a2u9-sb1",
+      "type": "sentence-builder",
+      "title": "Фразы об осознанном потреблении",
+      "sentences": [
+        {
+          "words": [
+            "Je",
+            "voudrais",
+            "acheter",
+            "moins",
+            "de",
+            "plastique"
+          ],
+          "ru": "Я хотел бы покупать меньше пластика"
+        },
+        {
+          "words": [
+            "Tu",
+            "devrais",
+            "réparer",
+            "au",
+            "lieu",
+            "de",
+            "jeter"
+          ],
+          "ru": "Тебе стоило бы чинить вместо того, чтобы выбрасывать"
+        },
+        {
+          "words": [
+            "On",
+            "apprend",
+            "beaucoup",
+            "en",
+            "bricolant"
+          ],
+          "ru": "Многому учишься, мастеря своими руками"
+        }
+      ]
+    }
+  ]
+}

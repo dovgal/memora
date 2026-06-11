@@ -1,0 +1,306 @@
+{
+  "id": "unite1",
+  "title": "Unité 1 : Nouvelles vies",
+  "description": "Рассказывать о переменах в жизни. Passé composé (повторение + неправильные причастия), отрицания rien/personne/jamais/plus, il y a / pendant / depuis.",
+  "vocabulary": [
+    {
+      "fr": "changer de vie",
+      "ru": "изменить жизнь",
+      "type": "phrase"
+    },
+    {
+      "fr": "déménager",
+      "ru": "переезжать",
+      "type": "word"
+    },
+    {
+      "fr": "un parcours",
+      "ru": "путь, биография",
+      "type": "word"
+    },
+    {
+      "fr": "une formation",
+      "ru": "обучение, образование",
+      "type": "word"
+    },
+    {
+      "fr": "un emploi",
+      "ru": "работа, занятость",
+      "type": "word"
+    },
+    {
+      "fr": "démissionner",
+      "ru": "уволиться",
+      "type": "word"
+    },
+    {
+      "fr": "s'inscrire à",
+      "ru": "записаться на",
+      "type": "phrase"
+    },
+    {
+      "fr": "une sortie",
+      "ru": "выход в свет, прогулка",
+      "type": "word"
+    },
+    {
+      "fr": "en plein air",
+      "ru": "на открытом воздухе",
+      "type": "phrase"
+    },
+    {
+      "fr": "un loisir",
+      "ru": "досуг, хобби",
+      "type": "word"
+    },
+    {
+      "fr": "proposer",
+      "ru": "предлагать",
+      "type": "word"
+    },
+    {
+      "fr": "accepter",
+      "ru": "соглашаться",
+      "type": "word"
+    },
+    {
+      "fr": "refuser",
+      "ru": "отказываться",
+      "type": "word"
+    },
+    {
+      "fr": "avoir l'intention de",
+      "ru": "намереваться",
+      "type": "phrase"
+    },
+    {
+      "fr": "Ça te dit ?",
+      "ru": "Как тебе идея?",
+      "type": "phrase"
+    },
+    {
+      "fr": "Pourquoi pas !",
+      "ru": "Почему бы и нет!",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "a2u1-th1",
+      "type": "theory",
+      "title": "Passé composé — повторение и неправильные причастия",
+      "content": "<p style='margin:0.75rem 0'>Passé composé = avoir/être в настоящем + причастие. Главная трудность A2 — неправильные причастия:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Инфинитив</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Причастие</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem'>prendre</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>pris</td><td style='padding:0.5rem'>J'ai pris une grande décision.</td></tr><tr><td style='padding:0.5rem'>faire</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>fait</td><td style='padding:0.5rem'>Elle a fait une formation.</td></tr><tr><td style='padding:0.5rem'>voir</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>vu</td><td style='padding:0.5rem'>Nous avons vu une annonce.</td></tr><tr><td style='padding:0.5rem'>vivre</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>vécu</td><td style='padding:0.5rem'>Il a vécu deux ans à Lyon.</td></tr><tr><td style='padding:0.5rem'>devenir</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>devenu</td><td style='padding:0.5rem'>Elle est devenue photographe.</td></tr><tr><td style='padding:0.5rem'>ouvrir</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>ouvert</td><td style='padding:0.5rem'>Ils ont ouvert un café.</td></tr><tr><td style='padding:0.5rem'>recevoir</td><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>reçu</td><td style='padding:0.5rem'>J'ai reçu une bonne nouvelle.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 С être причастие согласуется: <i>Elle est devenue... Ils sont partis...</i></p>"
+    },
+    {
+      "id": "a2u1-qz1",
+      "type": "grammar-quiz",
+      "title": "Passé composé — практика",
+      "questions": [
+        {
+          "question": "L'année dernière, j'ai ___ de travail.",
+          "options": [
+            "changé",
+            "changer",
+            "changeais",
+            "change"
+          ],
+          "correctAnswer": "changé",
+          "explanation": "Passé composé: ai + причастие changé."
+        },
+        {
+          "question": "Elle a ___ une école de cuisine.",
+          "options": [
+            "ouvert",
+            "ouvri",
+            "ouvrert",
+            "ouverte"
+          ],
+          "correctAnswer": "ouvert",
+          "explanation": "Ouvrir → ouvert (неправильное причастие)."
+        },
+        {
+          "question": "Nous avons ___ trois ans en Espagne.",
+          "options": [
+            "vécu",
+            "vivé",
+            "vivu",
+            "vécus"
+          ],
+          "correctAnswer": "vécu",
+          "explanation": "Vivre → vécu."
+        },
+        {
+          "question": "Ils sont ___ à Bordeaux en 2023.",
+          "options": [
+            "partis",
+            "parti",
+            "partir",
+            "partu"
+          ],
+          "correctAnswer": "partis",
+          "explanation": "С être причастие согласуется: ils sont partis."
+        },
+        {
+          "question": "Tu as ___ ma nouvelle adresse ?",
+          "options": [
+            "reçu",
+            "recevu",
+            "reçois",
+            "reçue"
+          ],
+          "correctAnswer": "reçu",
+          "explanation": "Recevoir → reçu."
+        }
+      ]
+    },
+    {
+      "id": "a2u1-th2",
+      "type": "theory",
+      "title": "La négation : rien, personne, jamais, plus",
+      "content": "<p style='margin:0.75rem 0'>На A2 отрицание становится точнее, чем простое ne...pas:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Форма</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Значение</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>ne ... rien</td><td style='padding:0.5rem'>ничего</td><td style='padding:0.5rem'>Je ne regrette rien.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>ne ... personne</td><td style='padding:0.5rem'>никого</td><td style='padding:0.5rem'>Elle ne connaît personne ici.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>ne ... jamais</td><td style='padding:0.5rem'>никогда</td><td style='padding:0.5rem'>Il ne refuse jamais une sortie.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>ne ... plus</td><td style='padding:0.5rem'>больше не</td><td style='padding:0.5rem'>Nous n'habitons plus à Paris.</td></tr></table><p style='margin:0.75rem 0'>В passé composé <b>rien/jamais/plus</b> стоят между avoir/être и причастием: <i>Je n'ai rien dit.</i> А <b>personne</b> — после причастия: <i>Je n'ai vu personne.</i></p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Rien и personne могут быть подлежащим: <i>Personne ne répond. Rien ne change.</i></p>"
+    },
+    {
+      "id": "a2u1-qz2",
+      "type": "grammar-quiz",
+      "title": "Отрицания — практика",
+      "questions": [
+        {
+          "question": "Je ne travaille ___ dans ce bureau. (больше не)",
+          "options": [
+            "plus",
+            "rien",
+            "personne",
+            "jamais"
+          ],
+          "correctAnswer": "plus",
+          "explanation": "«Больше не» — ne ... plus."
+        },
+        {
+          "question": "Elle n'a ___ dit à ses collègues.",
+          "options": [
+            "rien",
+            "personne",
+            "plus de",
+            "aucun"
+          ],
+          "correctAnswer": "rien",
+          "explanation": "«Ничего не сказала» — rien между avoir и причастием."
+        },
+        {
+          "question": "Nous n'avons vu ___ au club.",
+          "options": [
+            "personne",
+            "rien",
+            "jamais",
+            "plus"
+          ],
+          "correctAnswer": "personne",
+          "explanation": "«Никого не видели» — personne после причастия."
+        },
+        {
+          "question": "___ ne m'a téléphoné aujourd'hui.",
+          "options": [
+            "Personne",
+            "Rien",
+            "Jamais",
+            "Plus"
+          ],
+          "correctAnswer": "Personne",
+          "explanation": "«Никто не звонил» — personne как подлежащее + ne."
+        }
+      ]
+    },
+    {
+      "id": "a2u1-th3",
+      "type": "theory",
+      "title": "Il y a, pendant, depuis — указатели времени",
+      "content": "<table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Слово</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Значение</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>il y a + прош. время</td><td style='padding:0.5rem'>тому назад</td><td style='padding:0.5rem'>J'ai déménagé il y a deux ans.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>pendant</td><td style='padding:0.5rem'>в течение (закончилось)</td><td style='padding:0.5rem'>Il a étudié pendant cinq ans.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>depuis + наст. время</td><td style='padding:0.5rem'>с тех пор / уже...</td><td style='padding:0.5rem'>Je vis ici depuis 2022.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Il y a — про точку в прошлом, pendant — про закрытый отрезок, depuis — про то, что длится до сих пор.</p>"
+    },
+    {
+      "id": "a2u1-fb1",
+      "type": "fill-blank",
+      "title": "История перемен — вставьте слова",
+      "text": "Avant, Léo travaillait dans une banque. ___ trois ans, il a démissionné. Il a voyagé ___ six mois en Asie. ___ son retour, il est photographe et il ne regrette ___ !",
+      "blanks": [
+        {
+          "correctAnswer": "Il y a",
+          "options": [
+            "Il y a",
+            "Depuis",
+            "Pendant"
+          ],
+          "explanation": "Точка в прошлом («три года назад») — il y a."
+        },
+        {
+          "correctAnswer": "pendant",
+          "options": [
+            "pendant",
+            "depuis",
+            "il y a"
+          ],
+          "explanation": "Закрытый отрезок времени — pendant six mois."
+        },
+        {
+          "correctAnswer": "Depuis",
+          "options": [
+            "Depuis",
+            "Pendant",
+            "Il y a"
+          ],
+          "explanation": "Действие длится до сих пор — depuis son retour."
+        },
+        {
+          "correctAnswer": "rien",
+          "options": [
+            "rien",
+            "personne",
+            "jamais"
+          ],
+          "explanation": "«Ни о чём не жалеет» — ne regrette rien."
+        }
+      ]
+    },
+    {
+      "id": "a2u1-dlg1",
+      "type": "dialogue",
+      "title": "On sort ce soir ?",
+      "context": "Хлоэ предлагает Маэлю сходить на концерт.",
+      "exchanges": [
+        {
+          "speaker": "Chloé",
+          "side": "left",
+          "text": "Salut Maël ! Il y a un concert gratuit ce soir. Ça te dit ?"
+        },
+        {
+          "speaker": "Maël",
+          "side": "right",
+          "isBlank": true,
+          "options": [
+            "Pourquoi pas ! Je n'ai rien prévu.",
+            "Non, je suis jamais libre rien.",
+            "Oui, je ne viens plus."
+          ],
+          "correctAnswer": "Pourquoi pas ! Je n'ai rien prévu.",
+          "explanation": "Принять предложение: Pourquoi pas ! + «ничего не запланировал» — je n'ai rien prévu."
+        },
+        {
+          "speaker": "Chloé",
+          "side": "left",
+          "text": "Super ! On se retrouve où ?"
+        },
+        {
+          "speaker": "Maël",
+          "side": "right",
+          "isBlank": true,
+          "options": [
+            "Devant la salle, à 20 heures ?",
+            "Il y a deux ans, à la gare.",
+            "Pendant le concert, chez moi."
+          ],
+          "correctAnswer": "Devant la salle, à 20 heures ?",
+          "explanation": "Назначаем место и время встречи: devant la salle à 20h."
+        }
+      ]
+    }
+  ]
+}

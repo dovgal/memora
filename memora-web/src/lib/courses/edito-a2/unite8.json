@@ -1,0 +1,279 @@
+{
+  "id": "unite8",
+  "title": "Unité 8 : Dans les médias",
+  "description": "СМИ и критика. Субжонктив (необходимость и мнение), следствие (donc, alors, c'est pourquoi), место двух местоимений.",
+  "vocabulary": [
+    {
+      "fr": "les médias (m)",
+      "ru": "СМИ",
+      "type": "word"
+    },
+    {
+      "fr": "une chaîne",
+      "ru": "канал",
+      "type": "word"
+    },
+    {
+      "fr": "un journal",
+      "ru": "газета",
+      "type": "word"
+    },
+    {
+      "fr": "les informations / les infos",
+      "ru": "новости",
+      "type": "word"
+    },
+    {
+      "fr": "un podcast",
+      "ru": "подкаст",
+      "type": "word"
+    },
+    {
+      "fr": "une émission",
+      "ru": "передача",
+      "type": "word"
+    },
+    {
+      "fr": "un réseau social",
+      "ru": "соцсеть",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'informer",
+      "ru": "узнавать новости",
+      "type": "word"
+    },
+    {
+      "fr": "un titre",
+      "ru": "заголовок",
+      "type": "word"
+    },
+    {
+      "fr": "une critique",
+      "ru": "критика, рецензия",
+      "type": "word"
+    },
+    {
+      "fr": "fiable",
+      "ru": "надёжный, достоверный",
+      "type": "word"
+    },
+    {
+      "fr": "passionnant(e)",
+      "ru": "увлекательный",
+      "type": "word"
+    },
+    {
+      "fr": "ennuyeux / ennuyeuse",
+      "ru": "скучный",
+      "type": "word"
+    },
+    {
+      "fr": "À mon avis...",
+      "ru": "По моему мнению...",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "a2u8-th1",
+      "type": "theory",
+      "title": "Le subjonctif présent — после il faut que",
+      "content": "<p style='margin:0.75rem 0'>После <b>il faut que</b>, <b>je voudrais que</b> и выражений мнения с отрицанием глагол встаёт в субжонктив. Образование: основа ils в настоящем + -e, -es, -e, -ions, -iez, -ent:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Фраза</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Глагол</th></tr><tr><td style='padding:0.5rem'>Il faut que tu lises cet article.</td><td style='padding:0.5rem'>lire → ils lisent → lis-</td></tr><tr><td style='padding:0.5rem'>Il faut que vous choisissiez une source fiable.</td><td style='padding:0.5rem'>choisir → choisiss-</td></tr><tr><td style='padding:0.5rem'>Je ne pense pas que ce soit vrai.</td><td style='padding:0.5rem'>être → soit (неправ.)</td></tr><tr><td style='padding:0.5rem'>Il faut qu'on ait l'esprit critique.</td><td style='padding:0.5rem'>avoir → ait (неправ.)</td></tr><tr><td style='padding:0.5rem'>Il faut que tu fasses attention aux fake news.</td><td style='padding:0.5rem'>faire → fass- (неправ.)</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 На A2 достаточно узнавать субжонктив после il faut que и знать формы soit, ait, fasse, puisse, aille.</p>"
+    },
+    {
+      "id": "a2u8-qz1",
+      "type": "grammar-quiz",
+      "title": "Subjonctif — практика",
+      "questions": [
+        {
+          "question": "Il faut que tu ___ les sources.",
+          "options": [
+            "vérifies",
+            "vérifie",
+            "vérifier",
+            "vérifieras"
+          ],
+          "correctAnswer": "vérifies",
+          "explanation": "Il faut que tu + субжонктив: vérifies (-es)."
+        },
+        {
+          "question": "Il faut que ce journal ___ plus objectif.",
+          "options": [
+            "soit",
+            "est",
+            "sera",
+            "es"
+          ],
+          "correctAnswer": "soit",
+          "explanation": "Être в субжонктиве: soit."
+        },
+        {
+          "question": "Il faut que nous ___ attention aux titres.",
+          "options": [
+            "fassions",
+            "faisons",
+            "ferons",
+            "faisions"
+          ],
+          "correctAnswer": "fassions",
+          "explanation": "Faire → fass- + -ions: fassions."
+        },
+        {
+          "question": "Je ne pense pas que cette info ___ vraie.",
+          "options": [
+            "soit",
+            "est",
+            "sois",
+            "être"
+          ],
+          "correctAnswer": "soit",
+          "explanation": "Мнение с отрицанием → субжонктив: soit."
+        }
+      ]
+    },
+    {
+      "id": "a2u8-th2",
+      "type": "theory",
+      "title": "La conséquence и место двух местоимений",
+      "content": "<p style='margin:0.75rem 0'>Выразить следствие:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Слово</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>donc</td><td style='padding:0.5rem'>Je n'ai pas la télé, donc j'écoute la radio.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>alors</td><td style='padding:0.5rem'>Le titre était drôle, alors j'ai cliqué.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>c'est pourquoi</td><td style='padding:0.5rem'>Les infos m'intéressent, c'est pourquoi je lis deux journaux.</td></tr><tr><td style='padding:0.5rem;color:#60a5fa;font-weight:bold'>du coup (разг.)</td><td style='padding:0.5rem'>Le wifi ne marchait pas, du coup j'ai raté l'émission.</td></tr></table><p style='margin:0.75rem 0'>Два местоимения вместе: сначала me/te/nous/vous, потом le/la/les; а lui/leur — после le/la/les: <i>Il me le montre. Je le lui envoie.</i></p>"
+    },
+    {
+      "id": "a2u8-qz2",
+      "type": "grammar-quiz",
+      "title": "Conséquence / два местоимения — практика",
+      "questions": [
+        {
+          "question": "La radio est gratuite, ___ tout le monde peut s'informer.",
+          "options": [
+            "donc",
+            "parce que",
+            "si",
+            "que"
+          ],
+          "correctAnswer": "donc",
+          "explanation": "Следствие — donc. Parce que вводит причину, не следствие."
+        },
+        {
+          "question": "Tu as vu ce reportage ? — Oui, on ___ a montré hier.",
+          "options": [
+            "me l'",
+            "le m'",
+            "m'en",
+            "le me"
+          ],
+          "correctAnswer": "me l'",
+          "explanation": "Порядок: me + le → on me l'a montré."
+        },
+        {
+          "question": "Cet article est passionnant, ___ je te le recommande.",
+          "options": [
+            "c'est pourquoi",
+            "pourquoi",
+            "parce que",
+            "pour que"
+          ],
+          "correctAnswer": "c'est pourquoi",
+          "explanation": "«Вот почему» — c'est pourquoi + следствие."
+        },
+        {
+          "question": "Elle envoie le podcast à son frère. → Elle ___ envoie.",
+          "options": [
+            "le lui",
+            "lui le",
+            "le leur",
+            "la lui"
+          ],
+          "correctAnswer": "le lui",
+          "explanation": "Le (podcast) + lui (à son frère): elle le lui envoie."
+        }
+      ]
+    },
+    {
+      "id": "a2u8-fb1",
+      "type": "fill-blank",
+      "title": "Критика передачи",
+      "text": "Hier, j'ai écouté un nouveau podcast sur les sciences. Le sujet était ___ : une heure sur les robots ! Le journaliste parle clairement, ___ c'est facile à comprendre. Mais il faut que les invités ___ plus de temps pour répondre. À mon ___ , ce podcast mérite quatre étoiles sur cinq.",
+      "blanks": [
+        {
+          "correctAnswer": "passionnant",
+          "options": [
+            "passionnant",
+            "ennuyeux",
+            "fiable"
+          ],
+          "explanation": "Четыре звезды — отзыв положительный: passionnant."
+        },
+        {
+          "correctAnswer": "donc",
+          "options": [
+            "donc",
+            "parce que",
+            "mais"
+          ],
+          "explanation": "Следствие: говорит ясно, ПОЭТОМУ легко понять."
+        },
+        {
+          "correctAnswer": "aient",
+          "options": [
+            "aient",
+            "ont",
+            "auront"
+          ],
+          "explanation": "Il faut que + avoir в субжонктиве: aient."
+        },
+        {
+          "correctAnswer": "avis",
+          "options": [
+            "avis",
+            "opinion de moi",
+            "idée"
+          ],
+          "explanation": "Устойчивое «по моему мнению» — à mon avis."
+        }
+      ]
+    },
+    {
+      "id": "a2u8-dlg1",
+      "type": "dialogue",
+      "title": "Quelle émission choisir ?",
+      "context": "Юго и Лина выбирают, что посмотреть.",
+      "exchanges": [
+        {
+          "speaker": "Hugo",
+          "side": "left",
+          "text": "Il y a un documentaire sur l'espace et une série policière. Laquelle tu préfères ?"
+        },
+        {
+          "speaker": "Lina",
+          "side": "right",
+          "isBlank": true,
+          "options": [
+            "Le documentaire ! Il faut que tu le voies, il est passionnant.",
+            "La série, donc je déteste l'espace que.",
+            "Rien, il faut que je dors."
+          ],
+          "correctAnswer": "Le documentaire ! Il faut que tu le voies, il est passionnant.",
+          "explanation": "Il faut que + субжонктив (voies) + оценка passionnant."
+        },
+        {
+          "speaker": "Hugo",
+          "side": "left",
+          "text": "D'accord. Tu l'as déjà vu ?"
+        },
+        {
+          "speaker": "Lina",
+          "side": "right",
+          "isBlank": true,
+          "options": [
+            "Oui, ma sœur me l'a recommandé la semaine dernière.",
+            "Oui, ma sœur le m'a recommandé.",
+            "Oui, je lui le ai vu."
+          ],
+          "correctAnswer": "Oui, ma sœur me l'a recommandé la semaine dernière.",
+          "explanation": "Порядок местоимений: me + le → me l'a recommandé."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,290 @@
+{
+  "id": "unite11",
+  "title": "Unité 11 : De jolis parcours",
+  "description": "Учёба, работа, официальные письма. Косвенная речь в настоящем, формальные сообщения, благодарность.",
+  "vocabulary": [
+    {
+      "fr": "la scolarité",
+      "ru": "школьное обучение",
+      "type": "word"
+    },
+    {
+      "fr": "un diplôme",
+      "ru": "диплом",
+      "type": "word"
+    },
+    {
+      "fr": "une candidature",
+      "ru": "заявка, кандидатура",
+      "type": "word"
+    },
+    {
+      "fr": "un CV",
+      "ru": "резюме",
+      "type": "word"
+    },
+    {
+      "fr": "une lettre de motivation",
+      "ru": "мотивационное письмо",
+      "type": "phrase"
+    },
+    {
+      "fr": "un entretien",
+      "ru": "собеседование",
+      "type": "word"
+    },
+    {
+      "fr": "une entreprise",
+      "ru": "компания, предприятие",
+      "type": "word"
+    },
+    {
+      "fr": "un stage",
+      "ru": "стажировка",
+      "type": "word"
+    },
+    {
+      "fr": "embaucher",
+      "ru": "нанимать",
+      "type": "word"
+    },
+    {
+      "fr": "un secteur",
+      "ru": "отрасль",
+      "type": "word"
+    },
+    {
+      "fr": "se reconvertir",
+      "ru": "сменить профессию",
+      "type": "word"
+    },
+    {
+      "fr": "évidemment",
+      "ru": "очевидно, конечно",
+      "type": "word"
+    },
+    {
+      "fr": "Je vous remercie de...",
+      "ru": "Благодарю вас за...",
+      "type": "phrase"
+    },
+    {
+      "fr": "Cordialement",
+      "ru": "С уважением (в письме)",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "a2u11-th1",
+      "type": "theory",
+      "title": "Le discours rapporté au présent — косвенная речь",
+      "content": "<p style='margin:0.75rem 0'>Передаём чужие слова без кавычек:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Прямая речь</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Косвенная речь</th></tr><tr><td style='padding:0.5rem'>Il dit : « Je cherche un stage. »</td><td style='padding:0.5rem'>Il dit qu'il cherche un stage.</td></tr><tr><td style='padding:0.5rem'>Elle demande : « Tu es libre ? »</td><td style='padding:0.5rem'>Elle demande si tu es libre.</td></tr><tr><td style='padding:0.5rem'>Il demande : « Qu'est-ce que tu fais ? »</td><td style='padding:0.5rem'>Il demande ce que tu fais.</td></tr><tr><td style='padding:0.5rem'>Elle dit : « Envoyez votre CV ! »</td><td style='padding:0.5rem'>Elle dit d'envoyer votre CV.</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Вопрос «да/нет» → <b>si</b>; qu'est-ce que → <b>ce que</b>; приказ → <b>de + инфинитив</b>.</p>"
+    },
+    {
+      "id": "a2u11-qz1",
+      "type": "grammar-quiz",
+      "title": "Косвенная речь — практика",
+      "questions": [
+        {
+          "question": "Le recruteur demande ___ vous avez de l'expérience.",
+          "options": [
+            "si",
+            "que",
+            "ce que",
+            "quoi"
+          ],
+          "correctAnswer": "si",
+          "explanation": "Вопрос «да/нет» в косвенной речи — si."
+        },
+        {
+          "question": "Elle dit ___ elle prépare un diplôme de commerce.",
+          "options": [
+            "qu'",
+            "si",
+            "ce qu'",
+            "de"
+          ],
+          "correctAnswer": "qu'",
+          "explanation": "Утверждение — que (qu' перед гласной)."
+        },
+        {
+          "question": "Il me demande ___ je fais comme études.",
+          "options": [
+            "ce que",
+            "que",
+            "si",
+            "quel"
+          ],
+          "correctAnswer": "ce que",
+          "explanation": "Qu'est-ce que tu fais ? → ce que je fais."
+        },
+        {
+          "question": "Le professeur nous dit ___ envoyer le dossier avant lundi.",
+          "options": [
+            "d'",
+            "que",
+            "si",
+            "à"
+          ],
+          "correctAnswer": "d'",
+          "explanation": "Приказ/просьба → dire de + инфинитив."
+        }
+      ]
+    },
+    {
+      "id": "a2u11-th2",
+      "type": "theory",
+      "title": "Le message formel — официальное письмо",
+      "content": "<p style='margin:0.75rem 0'>Каркас формального письма (кандидатура, запрос):</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Часть</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Формулы</th></tr><tr><td style='padding:0.5rem'>обращение</td><td style='padding:0.5rem'>Madame, Monsieur,</td></tr><tr><td style='padding:0.5rem'>цель</td><td style='padding:0.5rem'>Je vous écris au sujet de... / Je suis intéressé(e) par...</td></tr><tr><td style='padding:0.5rem'>о себе</td><td style='padding:0.5rem'>Actuellement étudiant(e) en..., je cherche un stage...</td></tr><tr><td style='padding:0.5rem'>просьба</td><td style='padding:0.5rem'>Je voudrais savoir si... / Pourriez-vous me dire...</td></tr><tr><td style='padding:0.5rem'>благодарность</td><td style='padding:0.5rem'>Je vous remercie de votre attention.</td></tr><tr><td style='padding:0.5rem'>прощание</td><td style='padding:0.5rem'>Cordialement, / Sincères salutations,</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 В формальном письме всегда <b>vous</b>; никаких «Salut» и «Bises» — это для друзей!</p>"
+    },
+    {
+      "id": "a2u11-qz2",
+      "type": "grammar-quiz",
+      "title": "Формальный стиль — практика",
+      "questions": [
+        {
+          "question": "Начало официального письма:",
+          "options": [
+            "Madame, Monsieur,",
+            "Salut !",
+            "Coucou l'équipe !",
+            "Bonjour mon ami,"
+          ],
+          "correctAnswer": "Madame, Monsieur,",
+          "explanation": "Стандартное обращение, когда адресат неизвестен: Madame, Monsieur,"
+        },
+        {
+          "question": "«Я пишу вам по поводу стажировки»:",
+          "options": [
+            "Je vous écris au sujet du stage.",
+            "Je t'écris pour le stage.",
+            "J'écris au stage de vous.",
+            "Écris-moi le stage."
+          ],
+          "correctAnswer": "Je vous écris au sujet du stage.",
+          "explanation": "Формально: je vous écris au sujet de..."
+        },
+        {
+          "question": "Завершение делового письма:",
+          "options": [
+            "Cordialement",
+            "Bises",
+            "À plus !",
+            "Gros bisous"
+          ],
+          "correctAnswer": "Cordialement",
+          "explanation": "Деловое прощание — Cordialement. Bises — только близким!"
+        },
+        {
+          "question": "«Могли бы вы сообщить мне даты?»:",
+          "options": [
+            "Pourriez-vous me dire les dates ?",
+            "Tu peux dire les dates ?",
+            "Dis-moi les dates !",
+            "Vous dites les dates ?"
+          ],
+          "correctAnswer": "Pourriez-vous me dire les dates ?",
+          "explanation": "Вежливый вопрос — conditionnel: pourriez-vous."
+        }
+      ]
+    },
+    {
+      "id": "a2u11-fb1",
+      "type": "fill-blank",
+      "title": "Мотивационное письмо — фрагмент",
+      "text": "Madame, Monsieur,\nJe vous écris au ___ de votre annonce pour un stage en marketing. Actuellement étudiante en commerce, je ___ acquérir de l'expérience dans votre ___ . Mon professeur dit que je ___ très motivée. Je vous ___ de votre attention.\nCordialement,\nSofia Marchetti",
+      "blanks": [
+        {
+          "correctAnswer": "sujet",
+          "options": [
+            "sujet",
+            "propos",
+            "thème"
+          ],
+          "explanation": "Устойчивое: au sujet de — «по поводу»."
+        },
+        {
+          "correctAnswer": "voudrais",
+          "options": [
+            "voudrais",
+            "veux",
+            "voudrai"
+          ],
+          "explanation": "Вежливое желание: je voudrais."
+        },
+        {
+          "correctAnswer": "entreprise",
+          "options": [
+            "entreprise",
+            "maison",
+            "cuisine"
+          ],
+          "explanation": "Стажировка в компании — entreprise."
+        },
+        {
+          "correctAnswer": "suis",
+          "options": [
+            "suis",
+            "sois",
+            "serai"
+          ],
+          "explanation": "Косвенная речь в настоящем: il dit que je suis motivée."
+        },
+        {
+          "correctAnswer": "remercie",
+          "options": [
+            "remercie",
+            "remercier",
+            "merci"
+          ],
+          "explanation": "Je vous remercie de... — формула благодарности."
+        }
+      ]
+    },
+    {
+      "id": "a2u11-sb1",
+      "type": "sentence-builder",
+      "title": "Соберите фразы о карьере",
+      "sentences": [
+        {
+          "words": [
+            "Elle",
+            "dit",
+            "qu'elle",
+            "cherche",
+            "un",
+            "nouveau",
+            "travail"
+          ],
+          "ru": "Она говорит, что ищет новую работу"
+        },
+        {
+          "words": [
+            "Il",
+            "demande",
+            "si",
+            "le",
+            "poste",
+            "est",
+            "encore",
+            "libre"
+          ],
+          "ru": "Он спрашивает, свободна ли ещё вакансия"
+        },
+        {
+          "words": [
+            "J'ai",
+            "un",
+            "entretien",
+            "dans",
+            "une",
+            "grande",
+            "entreprise"
+          ],
+          "ru": "У меня собеседование в большой компании"
+        }
+      ]
+    }
+  ]
+}
