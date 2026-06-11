@@ -1,0 +1,278 @@
+{
+  "id": "unite17",
+  "title": "Unité 17 : Adjectifs + préposition — система",
+  "description": "Управления прилагательных: ключевой контраст «facile à» vs «facile de», que + indicatif или subjonctif, предлоги avec/envers/dans/en.",
+  "vocabulary": [
+    {
+      "fr": "prêt(e) à + inf",
+      "ru": "готовый (сделать)",
+      "type": "phrase"
+    },
+    {
+      "fr": "facile à / difficile à + inf",
+      "ru": "лёгкий/трудный для (подхват темы)",
+      "type": "phrase"
+    },
+    {
+      "fr": "il est facile/difficile de + inf",
+      "ru": "легко/трудно (безличное)",
+      "type": "phrase"
+    },
+    {
+      "fr": "capable de + inf",
+      "ru": "способный (сделать)",
+      "type": "phrase"
+    },
+    {
+      "fr": "content(e) de qch / que + subj",
+      "ru": "довольный чем-л. / что…",
+      "type": "phrase"
+    },
+    {
+      "fr": "certain(e) de qch / que + ind",
+      "ru": "уверенный в / что…",
+      "type": "phrase"
+    },
+    {
+      "fr": "désolé(e) de / que + subj",
+      "ru": "сожалеющий",
+      "type": "phrase"
+    },
+    {
+      "fr": "aimable avec/envers qn",
+      "ru": "любезный с кем-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "confiant(e) dans qch",
+      "ru": "уверенный, доверяющий (в чём-л.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "bon(ne) en qch",
+      "ru": "сильный в (предмете)",
+      "type": "phrase"
+    },
+    {
+      "fr": "conscient(e) de qch",
+      "ru": "осознающий что-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "contraire à qch",
+      "ru": "противоречащий чему-л.",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "vb17-th1",
+      "type": "theory",
+      "title": "Семь схем прилагательного",
+      "content": "<p style='margin:0.75rem 0'>Прилагательные присоединяют дополнения по тем же принципам, что глаголы. Семь рабочих схем:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Схема</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Когда</th></tr><tr><td style='padding:0.5rem'>adj + à + inf (+ дополнение)</td><td style='padding:0.5rem'>Elle est prête à signer le contrat.</td><td style='padding:0.5rem'>готовность/пригодность к действию</td></tr><tr><td style='padding:0.5rem'>adj + à + inf (без дополнения)</td><td style='padding:0.5rem'>Ce plat est facile à préparer.</td><td style='padding:0.5rem'>подхватываем уже названную тему</td></tr><tr><td style='padding:0.5rem'>adj + de + inf</td><td style='padding:0.5rem'>Il est facile de préparer ce plat.</td><td style='padding:0.5rem'>безличный оборот il/c'est + adj</td></tr><tr><td style='padding:0.5rem'>adj + предлог (не à/de) + глагол</td><td style='padding:0.5rem'>Dix euros, c'est insuffisant pour dîner ici.</td><td style='padding:0.5rem'>pour, sans...</td></tr><tr><td style='padding:0.5rem'>adj + предлог + существительное</td><td style='padding:0.5rem'>Elle est aimable avec les clients.</td><td style='padding:0.5rem'>avec, envers, dans, en, contre</td></tr><tr><td style='padding:0.5rem'>adj + que + indicatif</td><td style='padding:0.5rem'>Je suis sûr que tu réussiras.</td><td style='padding:0.5rem'>уверенность, констатация</td></tr><tr><td style='padding:0.5rem'>adj + que + subjonctif</td><td style='padding:0.5rem'>Je suis content que tu sois là.</td><td style='padding:0.5rem'>чувство, оценка</td></tr></table>"
+    },
+    {
+      "id": "vb17-th2",
+      "type": "theory",
+      "title": "Главный контраст: facile À или facile DE?",
+      "content": "<p style='margin:0.75rem 0'>Одно прилагательное — два предлога, и оба правильны в своём месте:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Конструкция</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Пример</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Логика</th></tr><tr><td style='padding:0.5rem'><b>известная тема + adj + à</b></td><td style='padding:0.5rem'>Ce texte est difficile à comprendre.</td><td style='padding:0.5rem'>подлежащее = то, что понимают; инфинитив БЕЗ дополнения</td></tr><tr><td style='padding:0.5rem'><b>il/c'est + adj + de</b></td><td style='padding:0.5rem'>Il est difficile de comprendre ce texte.</td><td style='padding:0.5rem'>безличный зачин; дополнение идёт ПОСЛЕ инфинитива</td></tr></table><p style='margin:0.75rem 0'>Проверка: если после инфинитива есть дополнение — нужен <b>de</b> (il est facile de faire DES ERREURS); если инфинитив «голый», а предмет уже назван подлежащим — <b>à</b> (les erreurs sont faciles à faire).</p><p style='margin:0.75rem 0'><b>Que + indicatif или subjonctif?</b> Уверенность и очевидность — индикатив (sûr, certain, clair, évident que + ind.); чувство и оценка — субжонктив (content, désolé, surpris, bon que + subj.).</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Разговорная ловушка: «c'est difficile à dire» (тема ясна из контекста) и «il est difficile de dire qui a raison» — обе фразы верны, выбор зависит от наличия дополнения.</p>"
+    },
+    {
+      "id": "vb17-qz1",
+      "type": "grammar-quiz",
+      "title": "À или DE после прилагательного?",
+      "questions": [
+        {
+          "question": "Ce mot est impossible ___ prononcer !",
+          "options": [
+            "à",
+            "de",
+            "pour",
+            "en"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Тема (ce mot) — подлежащее, инфинитив без дополнения → à."
+        },
+        {
+          "question": "Il est impossible ___ prononcer ce mot sans accent.",
+          "options": [
+            "de",
+            "à",
+            "pour",
+            "que"
+          ],
+          "correctAnswer": "de",
+          "explanation": "Безличное il est + adj, дополнение после инфинитива → de."
+        },
+        {
+          "question": "Cette règle est facile ___ retenir.",
+          "options": [
+            "à",
+            "de",
+            "pour",
+            "sans"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Подхват темы: la règle est facile à retenir."
+        },
+        {
+          "question": "C'est dangereux ___ rouler si vite la nuit.",
+          "options": [
+            "de",
+            "à",
+            "en",
+            "par"
+          ],
+          "correctAnswer": "de",
+          "explanation": "C'est + adj + de + полный инфинитив (есть обстоятельства) — безличная конструкция."
+        },
+        {
+          "question": "Elle est prête ___ tout pour réussir.",
+          "options": [
+            "à",
+            "de",
+            "pour",
+            "vers"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Prêt À — всегда à: prête à tout."
+        },
+        {
+          "question": "Martin est capable ___ travailler douze heures d'affilée.",
+          "options": [
+            "de",
+            "à",
+            "pour",
+            "en"
+          ],
+          "correctAnswer": "de",
+          "explanation": "Capable DE + infinitif."
+        }
+      ]
+    },
+    {
+      "id": "vb17-qz2",
+      "type": "grammar-quiz",
+      "title": "Indicatif или subjonctif после adj + que?",
+      "questions": [
+        {
+          "question": "Je suis certain que tu ___ raison.",
+          "options": [
+            "as",
+            "aies",
+            "aurais",
+            "ayant"
+          ],
+          "correctAnswer": "as",
+          "explanation": "Certain que — уверенность → индикатив: tu as raison."
+        },
+        {
+          "question": "Nous sommes ravis que vous ___ venir.",
+          "options": [
+            "puissiez",
+            "pouvez",
+            "pourrez",
+            "pouvoir"
+          ],
+          "correctAnswer": "puissiez",
+          "explanation": "Ravi que — чувство → субжонктив: puissiez."
+        },
+        {
+          "question": "Il est évident que le projet ___ du retard.",
+          "options": [
+            "a pris",
+            "ait pris",
+            "prenne",
+            "prendre"
+          ],
+          "correctAnswer": "a pris",
+          "explanation": "Évident que → индикатив."
+        },
+        {
+          "question": "C'est dommage que tu ne ___ pas rester.",
+          "options": [
+            "puisses",
+            "peux",
+            "pourras",
+            "pouvais"
+          ],
+          "correctAnswer": "puisses",
+          "explanation": "Оценка (dommage que) → субжонктив."
+        },
+        {
+          "question": "Elle est sûre que l'équipe ___ .",
+          "options": [
+            "gagnera",
+            "gagne subj",
+            "gagnât",
+            "gagnerait que"
+          ],
+          "correctAnswer": "gagnera",
+          "explanation": "Sûr que → индикатив (здесь futur)."
+        }
+      ]
+    },
+    {
+      "id": "vb17-fb1",
+      "type": "fill-blank",
+      "title": "Отзыв о стажёре",
+      "text": "Notre stagiaire est très agréable : il est aimable ___ tout le monde et toujours prêt ___ aider. Il est conscient ___ ses points faibles, mais il est facile ___ travailler avec lui. Je suis certaine qu'il ___ une belle carrière, et je suis ravie qu'il ___ chez nous l'année prochaine !",
+      "blanks": [
+        {
+          "correctAnswer": "avec",
+          "options": [
+            "avec",
+            "à",
+            "de"
+          ],
+          "explanation": "Aimable AVEC qn (или envers)."
+        },
+        {
+          "correctAnswer": "à",
+          "options": [
+            "à",
+            "de",
+            "pour"
+          ],
+          "explanation": "Prêt À + infinitif."
+        },
+        {
+          "correctAnswer": "de",
+          "options": [
+            "de",
+            "à",
+            "sur"
+          ],
+          "explanation": "Conscient DE qch."
+        },
+        {
+          "correctAnswer": "de",
+          "options": [
+            "de",
+            "à",
+            "en"
+          ],
+          "explanation": "Здесь безличная логика: il est facile DE travailler avec lui (есть дополнение avec lui)."
+        },
+        {
+          "correctAnswer": "fera",
+          "options": [
+            "fera",
+            "fasse",
+            "ferait"
+          ],
+          "explanation": "Certain que → индикатив: il fera."
+        },
+        {
+          "correctAnswer": "reste",
+          "options": [
+            "reste",
+            "restera",
+            "resterait"
+          ],
+          "explanation": "Ravi que → субжонктив: qu'il reste."
+        }
+      ]
+    }
+  ]
+}

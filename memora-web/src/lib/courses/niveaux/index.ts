@@ -34,6 +34,7 @@ import vb11 from './verbes/unite11.json'; import vb12 from './verbes/unite12.jso
 import vb13 from './verbes/unite13.json';
 import vb14 from './verbes/unite14.json'; import vb15 from './verbes/unite15.json';
 import vb16 from './verbes/unite16.json';
+import vb17 from './verbes/unite17.json'; import vb18 from './verbes/unite18.json';
 
 const U = (m: unknown) => m as EditoUnit;
 
@@ -102,7 +103,7 @@ export const LEVELS: Record<string, LevelCourse> = {
     id: 'verbes', courseId: 'niveau-verbes', title: 'Les verbes et leurs prépositions', level: 'A2–B2',
     description: 'Система глагольных управлений: transitif/intransitif, глаголы с à и de, двойные дополнения, à/de + infinitif, предлоги-смыслоразличители. Теория на русском, словари юнитов — в личные наборы.',
     accent: 'lime',
-    units: { '1': U(vb1), '2': U(vb2), '3': U(vb3), '4': U(vb4), '5': U(vb5), '6': U(vb6), '7': U(vb7), '8': U(vb8), '9': U(vb9), '10': U(vb10), '11': U(vb11), '12': U(vb12), '13': U(vb13), '14': U(vb14), '15': U(vb15), '16': U(vb16) },
-    order: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16'],
+    units: { '1': U(vb1), '2': U(vb2), '3': U(vb3), '4': U(vb4), '5': U(vb5), '6': U(vb6), '7': U(vb7), '8': U(vb8), '9': U(vb9), '10': U(vb10), '11': U(vb11), '12': U(vb12), '13': U(vb13), '14': U(vb14), '15': U(vb15), '16': U(vb16), '17': U(vb17), '18': U(vb18) },
+    order: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18'],
   },
 };

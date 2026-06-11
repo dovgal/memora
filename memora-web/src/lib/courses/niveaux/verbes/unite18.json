@@ -1,0 +1,396 @@
+{
+  "id": "unite18",
+  "title": "Unité 18 : Répertoire — adjectifs et leurs prépositions",
+  "description": "Справочник частотных прилагательных с управлениями: от accro à до utile à. В карточки и в коуч.",
+  "vocabulary": [
+    {
+      "fr": "accro à qch (fam.)",
+      "ru": "зависимый от, фанат",
+      "type": "phrase"
+    },
+    {
+      "fr": "allergique à qch",
+      "ru": "аллергичный к; не переносящий",
+      "type": "phrase"
+    },
+    {
+      "fr": "attentif / attentive à qch",
+      "ru": "внимательный к",
+      "type": "phrase"
+    },
+    {
+      "fr": "bon(ne) à + inf / en qch",
+      "ru": "годный к / сильный в",
+      "type": "phrase"
+    },
+    {
+      "fr": "brutal(e) avec qn",
+      "ru": "грубый с",
+      "type": "phrase"
+    },
+    {
+      "fr": "capable de qch",
+      "ru": "способный на",
+      "type": "phrase"
+    },
+    {
+      "fr": "certain(e) de qch",
+      "ru": "уверенный в",
+      "type": "phrase"
+    },
+    {
+      "fr": "commode à/de + inf",
+      "ru": "удобный (для)",
+      "type": "phrase"
+    },
+    {
+      "fr": "conscient(e) de qch",
+      "ru": "осознающий",
+      "type": "phrase"
+    },
+    {
+      "fr": "content(e) de qch",
+      "ru": "довольный",
+      "type": "phrase"
+    },
+    {
+      "fr": "contraire à qch",
+      "ru": "противоречащий",
+      "type": "phrase"
+    },
+    {
+      "fr": "curieux / curieuse de qch",
+      "ru": "любопытствующий",
+      "type": "phrase"
+    },
+    {
+      "fr": "différent(e) de qch",
+      "ru": "отличный от",
+      "type": "phrase"
+    },
+    {
+      "fr": "digne de qch",
+      "ru": "достойный",
+      "type": "phrase"
+    },
+    {
+      "fr": "doué(e) pour/en qch",
+      "ru": "одарённый в",
+      "type": "phrase"
+    },
+    {
+      "fr": "égal(e) à qch",
+      "ru": "равный; ça m'est égal — мне всё равно",
+      "type": "phrase"
+    },
+    {
+      "fr": "étonné(e) de qch",
+      "ru": "удивлённый",
+      "type": "phrase"
+    },
+    {
+      "fr": "fâché(e) contre qn",
+      "ru": "сердитый на",
+      "type": "phrase"
+    },
+    {
+      "fr": "fidèle à qn/qch",
+      "ru": "верный кому-л./чему-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "fier / fière de qch",
+      "ru": "гордый",
+      "type": "phrase"
+    },
+    {
+      "fr": "fou / folle de qch",
+      "ru": "без ума от",
+      "type": "phrase"
+    },
+    {
+      "fr": "furieux / furieuse contre qn",
+      "ru": "в ярости на",
+      "type": "phrase"
+    },
+    {
+      "fr": "heureux / heureuse de qch",
+      "ru": "счастливый",
+      "type": "phrase"
+    },
+    {
+      "fr": "hostile à qch",
+      "ru": "враждебный к",
+      "type": "phrase"
+    },
+    {
+      "fr": "impatient(e) de + inf",
+      "ru": "с нетерпением ждущий",
+      "type": "phrase"
+    },
+    {
+      "fr": "indifférent(e) à qch",
+      "ru": "равнодушный к",
+      "type": "phrase"
+    },
+    {
+      "fr": "inférieur(e) / supérieur(e) à",
+      "ru": "ниже / выше чего-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "inquiet / inquiète de/pour",
+      "ru": "обеспокоенный чем-л./за",
+      "type": "phrase"
+    },
+    {
+      "fr": "jaloux / jalouse de qn",
+      "ru": "ревнующий/завидующий",
+      "type": "phrase"
+    },
+    {
+      "fr": "lent(e) à + inf",
+      "ru": "медлительный в",
+      "type": "phrase"
+    },
+    {
+      "fr": "libre de + inf",
+      "ru": "вольный (сделать)",
+      "type": "phrase"
+    },
+    {
+      "fr": "plein(e) de qch",
+      "ru": "полный чего-л.",
+      "type": "phrase"
+    },
+    {
+      "fr": "prêt(e) à qch",
+      "ru": "готовый к",
+      "type": "phrase"
+    },
+    {
+      "fr": "proche de qch",
+      "ru": "близкий к",
+      "type": "phrase"
+    },
+    {
+      "fr": "ravi(e) de qch",
+      "ru": "в восторге от",
+      "type": "phrase"
+    },
+    {
+      "fr": "reconnaissant(e) à qn de qch",
+      "ru": "благодарный кому-л. за",
+      "type": "phrase"
+    },
+    {
+      "fr": "responsable de qch",
+      "ru": "ответственный за",
+      "type": "phrase"
+    },
+    {
+      "fr": "satisfait(e) de qch",
+      "ru": "удовлетворённый",
+      "type": "phrase"
+    },
+    {
+      "fr": "semblable à qch",
+      "ru": "похожий на",
+      "type": "phrase"
+    },
+    {
+      "fr": "sensible à qch",
+      "ru": "чувствительный к",
+      "type": "phrase"
+    },
+    {
+      "fr": "sûr(e) de qch",
+      "ru": "уверенный в",
+      "type": "phrase"
+    },
+    {
+      "fr": "surpris(e) de qch",
+      "ru": "удивлённый",
+      "type": "phrase"
+    },
+    {
+      "fr": "utile à qn/qch",
+      "ru": "полезный для",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "vb18-th1",
+      "type": "theory",
+      "title": "Справочник прилагательных: как учить",
+      "content": "<p style='margin:0.75rem 0'>Те же семьи, что у глаголов:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Предлог</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Типичные прилагательные</th></tr><tr><td style='padding:0.5rem'>à</td><td style='padding:0.5rem'>fidèle, hostile, indifférent, semblable, sensible, utile, contraire, égal, inférieur/supérieur, prêt, attentif, allergique, accro</td></tr><tr><td style='padding:0.5rem'>de</td><td style='padding:0.5rem'>content, fier, sûr, certain, capable, conscient, curieux, différent, digne, fou, heureux, plein, ravi, responsable, satisfait, surpris</td></tr><tr><td style='padding:0.5rem'>contre</td><td style='padding:0.5rem'>fâché, furieux (на человека)</td></tr><tr><td style='padding:0.5rem'>avec/envers</td><td style='padding:0.5rem'>aimable, brutal, gentil, poli</td></tr><tr><td style='padding:0.5rem'>pour/en</td><td style='padding:0.5rem'>doué, bon (в области)</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Заучивайте с опорной фразой: fier DE son travail, fidèle À ses amis, fâché CONTRE son frère. Кнопка «⭐ В личный набор» — и в коуч.</p>"
+    },
+    {
+      "id": "vb18-qz1",
+      "type": "grammar-quiz",
+      "title": "Прилагательные — тест-ловушка",
+      "questions": [
+        {
+          "question": "Elle est très fière ___ ses enfants.",
+          "options": [
+            "de",
+            "à",
+            "pour",
+            "avec"
+          ],
+          "correctAnswer": "de",
+          "explanation": "Fier DE qch/qn."
+        },
+        {
+          "question": "Il reste fidèle ___ ses principes.",
+          "options": [
+            "à",
+            "de",
+            "avec",
+            "pour"
+          ],
+          "correctAnswer": "à",
+          "explanation": "Fidèle À qch."
+        },
+        {
+          "question": "Pourquoi es-tu fâché ___ moi ?",
+          "options": [
+            "contre",
+            "avec",
+            "sur",
+            "de"
+          ],
+          "correctAnswer": "contre",
+          "explanation": "Fâché CONTRE qn (норма; разг. встречается après, но учим contre)."
+        },
+        {
+          "question": "Ma fille est douée ___ les langues.",
+          "options": [
+            "pour",
+            "de",
+            "à",
+            "dans"
+          ],
+          "correctAnswer": "pour",
+          "explanation": "Doué POUR (или en) — одарённый в области."
+        },
+        {
+          "question": "Nous sommes impatients ___ vous revoir.",
+          "options": [
+            "de",
+            "à",
+            "pour",
+            "en"
+          ],
+          "correctAnswer": "de",
+          "explanation": "Impatient DE + infinitif."
+        },
+        {
+          "question": "Ce quartier est très différent ___ centre-ville.",
+          "options": [
+            "du",
+            "au",
+            "que le",
+            "avec le"
+          ],
+          "correctAnswer": "du",
+          "explanation": "Différent DE: de + le = du."
+        },
+        {
+          "question": "Je vous suis reconnaissante ___ votre soutien.",
+          "options": [
+            "de",
+            "à",
+            "pour à",
+            "contre"
+          ],
+          "correctAnswer": "de",
+          "explanation": "Reconnaissant À qn DE qch — благодарен (вам) за поддержку."
+        },
+        {
+          "question": "Il est complètement accro ___ jeux vidéo.",
+          "options": [
+            "aux",
+            "des",
+            "les",
+            "sur les"
+          ],
+          "correctAnswer": "aux",
+          "explanation": "Accro À: à + les = aux jeux vidéo."
+        }
+      ]
+    },
+    {
+      "id": "vb18-fb1",
+      "type": "fill-blank",
+      "title": "Семейный ужин — заполните",
+      "text": "Mon frère est fou ___ cuisine italienne, mais il est allergique ___ gluten — pas commode ! Maman, toujours attentive ___ chacun, a préparé un menu spécial. Papa était sceptique, indifférent ___ ces « modes alimentaires », mais il s'est dit satisfait ___ résultat. Et moi ? Je suis surtout reconnaissante ___ maman ___ sa patience !",
+      "blanks": [
+        {
+          "correctAnswer": "de",
+          "options": [
+            "de",
+            "à",
+            "pour"
+          ],
+          "explanation": "Fou DE qch — без ума от."
+        },
+        {
+          "correctAnswer": "au",
+          "options": [
+            "au",
+            "du",
+            "le"
+          ],
+          "explanation": "Allergique À: à + le gluten = au."
+        },
+        {
+          "correctAnswer": "à",
+          "options": [
+            "à",
+            "de",
+            "envers"
+          ],
+          "explanation": "Attentif À qn/qch."
+        },
+        {
+          "correctAnswer": "à",
+          "options": [
+            "à",
+            "de",
+            "contre"
+          ],
+          "explanation": "Indifférent À qch."
+        },
+        {
+          "correctAnswer": "du",
+          "options": [
+            "du",
+            "au",
+            "avec le"
+          ],
+          "explanation": "Satisfait DE: de + le résultat = du."
+        },
+        {
+          "correctAnswer": "à",
+          "options": [
+            "à",
+            "de",
+            "envers"
+          ],
+          "explanation": "Reconnaissant À qn..."
+        },
+        {
+          "correctAnswer": "de",
+          "options": [
+            "de",
+            "pour",
+            "à cause"
+          ],
+          "explanation": "...DE qch: за её терпение."
+        }
+      ]
+    }
+  ]
+}
