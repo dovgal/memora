@@ -813,6 +813,50 @@
           "explanation": "Désoler (T): ça me désole — меня это огорчает."
         }
       ]
+    },
+    {
+      "id": "vb14-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: согласование (accepter qch)",
+      "sentence": "La proposition qu'il a accepté était claire.",
+      "errorIndex": 4,
+      "correction": "acceptée",
+      "explanation": "« accepter » переходный (accepter qch). « proposition » (ж.р.) стоит перед avoir → « qu'il a acceptéE ».",
+      "rule": {
+        "skill": "transitivite",
+        "point": "переходный глагол + COD антёпозе → согласование причастия",
+        "trap": "accepter à / qu'il a accepté",
+        "examplesCorrect": "B2",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "vb14-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): accepter qch",
+      "sentence": "Elle a accepté notre invitation avec plaisir.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « accepter quelque chose » — переходный, без предлога. Корректно.",
+      "rule": {
+        "skill": "transitivite",
+        "point": "accepter/abriter/acclimater qch — переходные",
+        "trap": "",
+        "examplesCorrect": [
+          "Il a abattu le mur."
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

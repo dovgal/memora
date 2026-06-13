@@ -264,6 +264,48 @@
           "explanation": "Se lancer DANS qch — пуститься в новое дело."
         }
       ]
+    },
+    {
+      "id": "vb9-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: enquêter SUR qch",
+      "sentence": "La police enquête à ce crime depuis un mois.",
+      "errorIndex": 3,
+      "correction": "sur",
+      "explanation": "« enquêter SUR quelque chose ». Правильно: « enquête SUR ce crime ».",
+      "rule": {
+        "skill": "verb-government",
+        "point": "enquêter sur / s'interroger sur",
+        "trap": "enquêter à / de",
+        "examplesCorrect": "B2",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "vb9-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: s'efforcer DE + inf",
+      "sentence": "Il s'efforce à comprendre la leçon difficile.",
+      "errorIndex": 2,
+      "correction": "de",
+      "explanation": "« s'efforcer DE faire quelque chose ». Правильно: « s'efforce DE comprendre ».",
+      "rule": {
+        "skill": "verb-government",
+        "point": "s'efforcer de / s'empresser de",
+        "trap": "s'efforcer à faire",
+        "examplesCorrect": "B2",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

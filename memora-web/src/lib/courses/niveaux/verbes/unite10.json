@@ -285,6 +285,50 @@
           "explanation": "Veiller À (ce que + subj.) — проследить, чтобы."
         }
       ]
+    },
+    {
+      "id": "vb10-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: persister À + inf",
+      "sentence": "Elle persiste de refuser notre proposition.",
+      "errorIndex": 2,
+      "correction": "à",
+      "explanation": "« persister À faire quelque chose ». Правильно: « persiste À refuser ».",
+      "rule": {
+        "skill": "verb-government",
+        "point": "persister à / parvenir à / pousser qn à",
+        "trap": "persister de faire",
+        "examplesCorrect": "B2",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "vb10-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): postuler pour/à un poste",
+      "sentence": "Il a postulé pour ce poste hier matin.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « postuler À un poste » и « postuler POUR un poste » — оба корректны.",
+      "rule": {
+        "skill": "verb-government",
+        "point": "postuler à / pour un poste",
+        "trap": "",
+        "examplesCorrect": [
+          "Elle a postulé à plusieurs offres."
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

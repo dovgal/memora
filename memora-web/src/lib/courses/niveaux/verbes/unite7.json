@@ -325,6 +325,48 @@
           "explanation": "Promettre DE faire."
         }
       ]
+    },
+    {
+      "id": "vb7-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: compter SUR qn",
+      "sentence": "Tu peux compter avec moi en cas de besoin.",
+      "errorIndex": 3,
+      "correction": "sur",
+      "explanation": "« compter SUR quelqu'un » (полагаться). Правильно: « compter SUR moi ».",
+      "rule": {
+        "skill": "verb-government",
+        "point": "compter sur / s'appuyer sur / donner sur",
+        "trap": "compter avec qn",
+        "examplesCorrect": "B1",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "vb7-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: donner SUR qch",
+      "sentence": "La fenêtre donne à la rue principale.",
+      "errorIndex": 3,
+      "correction": "sur",
+      "explanation": "« donner SUR » (выходить на): « La fenêtre donne SUR la rue ».",
+      "rule": {
+        "skill": "verb-government",
+        "point": "donner sur (выходить на)",
+        "trap": "la fenêtre donne à",
+        "examplesCorrect": "B2",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

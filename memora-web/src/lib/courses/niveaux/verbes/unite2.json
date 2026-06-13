@@ -286,6 +286,50 @@
           "explanation": "Tenir À qch — дорожить."
         }
       ]
+    },
+    {
+      "id": "vb2-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: penser À",
+      "sentence": "Je pense de toi tous les jours.",
+      "errorIndex": 2,
+      "correction": "à",
+      "explanation": "« penser À quelqu'un/quelque chose ». Правильно: « Je pense À toi ». (penser DE — только для мнения: que penses-tu de…)",
+      "rule": {
+        "skill": "verb-government",
+        "point": "penser à / réfléchir à / s'intéresser à / tenir à",
+        "trap": "penser de qn",
+        "examplesCorrect": "B1",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "vb2-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): participer à",
+      "sentence": "Il participe à toutes les réunions.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « participer À quelque chose ». Корректно.",
+      "rule": {
+        "skill": "verb-government",
+        "point": "participer à / assister à / réussir à",
+        "trap": "",
+        "examplesCorrect": [
+          "Elle assiste à la conférence."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

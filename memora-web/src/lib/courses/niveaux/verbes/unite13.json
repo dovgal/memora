@@ -355,6 +355,48 @@
           "explanation": "Se vexer DE qch — обидеться на."
         }
       ]
+    },
+    {
+      "id": "vb13-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: préférer qch À qch",
+      "sentence": "Je préfère le thé que le café le matin.",
+      "errorIndex": 4,
+      "correction": "à",
+      "explanation": "« préférer quelque chose À quelque chose » (не « que »). Правильно: « le thé AU café ».",
+      "rule": {
+        "skill": "verb-government",
+        "point": "préférer A à B (предлог à, не que)",
+        "trap": "préférer A que B",
+        "examplesCorrect": "B1",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "vb13-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: se prononcer SUR qch",
+      "sentence": "Le juge s'est prononcé de cette affaire.",
+      "errorIndex": 4,
+      "correction": "sur",
+      "explanation": "« se prononcer SUR quelque chose » (высказаться по). Правильно: « prononcé SUR cette affaire ».",
+      "rule": {
+        "skill": "verb-government",
+        "point": "se prononcer sur / se porter sur",
+        "trap": "se prononcer de",
+        "examplesCorrect": "B2",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

@@ -286,6 +286,48 @@
           "explanation": "Dépendre DE qch."
         }
       ]
+    },
+    {
+      "id": "vb3-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: se souvenir DE",
+      "sentence": "Je me souviens à ce voyage en Italie.",
+      "errorIndex": 3,
+      "correction": "de",
+      "explanation": "« se souvenir DE quelque chose ». Правильно: « Je me souviens DE ce voyage ».",
+      "rule": {
+        "skill": "verb-government",
+        "point": "se souvenir de / parler de / s'occuper de",
+        "trap": "se souvenir à",
+        "examplesCorrect": "B1",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "vb3-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: avoir besoin DE",
+      "sentence": "Nous avons besoin à votre aide.",
+      "errorIndex": 3,
+      "correction": "de",
+      "explanation": "« avoir besoin DE quelque chose ». Правильно: « besoin DE votre aide ».",
+      "rule": {
+        "skill": "verb-government",
+        "point": "avoir besoin de / avoir envie de / manquer de",
+        "trap": "avoir besoin à",
+        "examplesCorrect": "B1",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

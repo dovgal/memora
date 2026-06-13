@@ -231,6 +231,48 @@
           "explanation": "Priver qn DE qch."
         }
       ]
+    },
+    {
+      "id": "vb4-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: donner qch À qn",
+      "sentence": "J'ai donné un cadeau pour ma mère.",
+      "errorIndex": 4,
+      "correction": "à",
+      "explanation": "« donner quelque chose À quelqu'un ». Правильно: « un cadeau À ma mère ».",
+      "rule": {
+        "skill": "verb-government",
+        "point": "donner/offrir/prêter qch à qn",
+        "trap": "donner qch pour qn",
+        "examplesCorrect": "B1",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "vb4-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: emprunter qch À qn",
+      "sentence": "Il a emprunté de l'argent de son ami.",
+      "errorIndex": 5,
+      "correction": "à",
+      "explanation": "« emprunter quelque chose À quelqu'un » (брать у кого-то). Правильно: « emprunté de l'argent À son ami ».",
+      "rule": {
+        "skill": "verb-government",
+        "point": "emprunter/demander/acheter qch à qn",
+        "trap": "emprunter qch de qn",
+        "examplesCorrect": "B2",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

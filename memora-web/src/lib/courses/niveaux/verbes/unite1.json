@@ -289,6 +289,50 @@
           "explanation": "Monter l'escalier — прямое дополнение → avoir + причастие без согласования: j'ai monté."
         }
       ]
+    },
+    {
+      "id": "vb1-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: согласование (payer qch — переходный)",
+      "sentence": "Les places que j'ai payé sont chères.",
+      "errorIndex": 4,
+      "correction": "payées",
+      "explanation": "« payer » переходный (payer qch). Прямое дополнение « places » стоит перед avoir → причастие согласуется: « que j'ai payéES ».",
+      "rule": {
+        "skill": "transitivite",
+        "point": "переходный глагол + COD антёпозе → согласование причастия",
+        "trap": "payer à / les places que j'ai payé",
+        "examplesCorrect": "B1",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "vb1-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): attendre qch",
+      "sentence": "Nous attendons le bus depuis dix minutes.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « attendre » переходный — « attendre qch/qn » без предлога. Корректно.",
+      "rule": {
+        "skill": "transitivite",
+        "point": "attendre/regarder/écouter/chercher qch — без предлога",
+        "trap": "",
+        "examplesCorrect": [
+          "J'écoute la radio."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

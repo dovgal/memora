@@ -273,6 +273,48 @@
           "explanation": "Ravi que → субжонктив: qu'il reste."
         }
       ]
+    },
+    {
+      "id": "vb17-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: facile À + inf",
+      "sentence": "Ce livre est facile de lire pour un débutant.",
+      "errorIndex": 4,
+      "correction": "à",
+      "explanation": "С подлежащим-предметом — « adjectif + À + инфинитив »: « facile À lire ». (« il est facile DE lire ce livre » — с безличным il.)",
+      "rule": {
+        "skill": "adj-preposition",
+        "point": "facile/difficile/prêt à + inf (с конкретным подлежащим)",
+        "trap": "ce livre est facile de lire",
+        "examplesCorrect": "B2",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "vb17-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: capable DE + inf",
+      "sentence": "Elle est capable à réussir cet examen.",
+      "errorIndex": 3,
+      "correction": "de",
+      "explanation": "« être capable DE faire quelque chose ». Правильно: « capable DE réussir ».",
+      "rule": {
+        "skill": "adj-preposition",
+        "point": "capable de / content de / certain de + qch/inf",
+        "trap": "capable à faire",
+        "examplesCorrect": "B2",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

@@ -391,6 +391,48 @@
           "explanation": "...DE qch: за её терпение."
         }
       ]
+    },
+    {
+      "id": "vb18-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: allergique À qch",
+      "sentence": "Il est allergique de la poussière et du pollen.",
+      "errorIndex": 3,
+      "correction": "à",
+      "explanation": "« être allergique À quelque chose ». Правильно: « allergique À la poussière ».",
+      "rule": {
+        "skill": "adj-preposition",
+        "point": "allergique à / accro à / attentif à qch",
+        "trap": "allergique de",
+        "examplesCorrect": "B2",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "vb18-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: attentif À qch",
+      "sentence": "Elle est attentive sur les détails du dossier.",
+      "errorIndex": 3,
+      "correction": "à",
+      "explanation": "« attentif/attentive À quelque chose ». Правильно: « attentive AUX détails » (à + les). Здесь нужно « à ».",
+      "rule": {
+        "skill": "adj-preposition",
+        "point": "attentif à qch",
+        "trap": "attentive sur",
+        "examplesCorrect": "B2",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

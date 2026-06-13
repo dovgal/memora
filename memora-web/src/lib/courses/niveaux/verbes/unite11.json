@@ -284,6 +284,48 @@
           "explanation": "S'accorder SUR qch — договориться о."
         }
       ]
+    },
+    {
+      "id": "vb11-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: s'adapter À qch",
+      "sentence": "Il faut s'adapter de la nouvelle situation.",
+      "errorIndex": 3,
+      "correction": "à",
+      "explanation": "« s'adapter À quelque chose ». Правильно: « s'adapter À la situation ».",
+      "rule": {
+        "skill": "verb-government",
+        "point": "s'adapter à / s'accorder sur",
+        "trap": "s'adapter de qch",
+        "examplesCorrect": "B2",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "vb11-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: achever DE + inf",
+      "sentence": "Il a achevé à écrire son roman cet été.",
+      "errorIndex": 3,
+      "correction": "de",
+      "explanation": "« achever DE faire quelque chose ». Правильно: « achevé D'écrire ».",
+      "rule": {
+        "skill": "verb-government",
+        "point": "achever de / cesser de / finir de + infinitif",
+        "trap": "achever à faire",
+        "examplesCorrect": "B2",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

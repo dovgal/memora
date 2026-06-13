@@ -598,6 +598,50 @@
           "explanation": "Tarir (I/T): la source a tari."
         }
       ]
+    },
+    {
+      "id": "vb16-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: согласование (prédire qch)",
+      "sentence": "Les événements qu'il a prédit sont arrivés.",
+      "errorIndex": 4,
+      "correction": "prédits",
+      "explanation": "« prédire » переходный. « événements » (м.р. мн.) перед avoir → « qu'il a préditS ».",
+      "rule": {
+        "skill": "transitivite",
+        "point": "переходный глагол + COD антёпозе → согласование причастия",
+        "trap": "qu'il a prédit (мн.)",
+        "examplesCorrect": "B2",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "vb16-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): prédire qch",
+      "sentence": "Il a prédit la victoire de son équipe.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « prédire quelque chose » — переходный, без предлога. Корректно.",
+      "rule": {
+        "skill": "transitivite",
+        "point": "précéder/préciser/prédire/proclamer qch — переходные",
+        "trap": "",
+        "examplesCorrect": [
+          "Le maire a proclamé les résultats."
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

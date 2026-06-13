@@ -287,6 +287,50 @@
           "explanation": "Sert DE bureau — в качестве."
         }
       ]
+    },
+    {
+      "id": "vb6-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: jouer DE + инструмент",
+      "sentence": "Elle joue à la guitare depuis dix ans.",
+      "errorIndex": 2,
+      "correction": "de",
+      "explanation": "С музыкальными инструментами — « jouer DE »: « jouer DE la guitare ». « jouer à » — для спорта/игр.",
+      "rule": {
+        "skill": "verb-government",
+        "point": "jouer de + инструмент; jouer à + спорт/игра",
+        "trap": "jouer à la guitare",
+        "examplesCorrect": "B1",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "vb6-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): jouer AU + спорт",
+      "sentence": "Les enfants jouent au football le dimanche.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « jouer À » + спорт/игра → « jouer au football ». Корректно.",
+      "rule": {
+        "skill": "verb-government",
+        "point": "jouer à + спорт/игра",
+        "trap": "",
+        "examplesCorrect": [
+          "Ils jouent aux échecs."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

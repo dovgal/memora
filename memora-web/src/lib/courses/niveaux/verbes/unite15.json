@@ -628,6 +628,50 @@
           "explanation": "Occuper (T): occuper un poste."
         }
       ]
+    },
+    {
+      "id": "vb15-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: согласование (s'écrier)",
+      "sentence": "Elle s'est écrié de surprise en entrant.",
+      "errorIndex": 2,
+      "correction": "écriée",
+      "explanation": "« s'écrier » — местоименный, причастие согласуется с подлежащим: « elle » ж.р. → « s'est écriéE ».",
+      "rule": {
+        "skill": "accord-pronominal",
+        "point": "местоименный без COD после → согласование с подлежащим",
+        "trap": "elle s'est écrié",
+        "examplesCorrect": "B2",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "vb15-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): effacer qch",
+      "sentence": "Il a effacé son message rapidement.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « effacer quelque chose » — переходный, без предлога. Корректно.",
+      "rule": {
+        "skill": "transitivite",
+        "point": "effacer/égaliser/égratigner qch — переходные",
+        "trap": "",
+        "examplesCorrect": [
+          "Elle a effacé le tableau."
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

@@ -310,6 +310,48 @@
           "explanation": "S'ennuyer DE qn — скучать по (синоним: ils lui manquent)."
         }
       ]
+    },
+    {
+      "id": "vb12-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: démissionner DE qch",
+      "sentence": "Le ministre a démissionné à son poste hier.",
+      "errorIndex": 4,
+      "correction": "de",
+      "explanation": "« démissionner DE quelque chose ». Правильно: « démissionné DE son poste ».",
+      "rule": {
+        "skill": "verb-government",
+        "point": "démissionner de / disposer de / se démettre de",
+        "trap": "démissionner à",
+        "examplesCorrect": "B2",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "vb12-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: se diriger VERS qch",
+      "sentence": "Ils se dirigent à la sortie de secours.",
+      "errorIndex": 3,
+      "correction": "vers",
+      "explanation": "« se diriger VERS » (направляться к). Правильно: « se dirigent VERS la sortie ».",
+      "rule": {
+        "skill": "verb-government",
+        "point": "se diriger vers / se tourner vers",
+        "trap": "se diriger à",
+        "examplesCorrect": "B2",
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }
