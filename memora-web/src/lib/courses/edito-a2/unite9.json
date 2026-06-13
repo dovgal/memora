@@ -272,6 +272,71 @@
           "ru": "Многому учишься, мастеря своими руками"
         }
       ]
+    },
+    {
+      "id": "a2u9-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: conditionnel вежливости",
+      "sentence": "Je voudrai un café, s'il vous plaît.",
+      "errorIndex": 1,
+      "correction": "voudrais",
+      "explanation": "Для вежливой просьбы — CONDITIONNEL: « je voudrais » (-ais), а не futur « voudrai » (-ai).",
+      "rule": {
+        "skill": "conditionnel",
+        "point": "conditionnel présent для вежливости/желания: voudrais, pourrais, aimerais",
+        "trap": "je voudrai (futur)",
+        "examplesCorrect": [],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u9-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: gérondif (en + -ant)",
+      "sentence": "J'apprends le français en regarder des films.",
+      "errorIndex": 4,
+      "correction": "regardant",
+      "explanation": "Gérondif = « en + причастие настоящего времени (-ant) »: « en regardant ».",
+      "rule": {
+        "skill": "gerondif",
+        "point": "gérondif: en + participe présent (-ant)",
+        "trap": "en regarder / en regardé",
+        "examplesCorrect": [],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u9-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): conditionnel",
+      "sentence": "À ta place, je partirais plus tôt.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « je partirais » — conditionnel (совет). Корректно.",
+      "rule": {
+        "skill": "conditionnel",
+        "point": "conditionnel для совета/гипотезы",
+        "trap": "",
+        "examplesCorrect": [
+          "On pourrait sortir ce soir."
+        ],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

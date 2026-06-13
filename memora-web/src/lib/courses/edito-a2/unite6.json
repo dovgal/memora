@@ -279,6 +279,71 @@
           "explanation": "En + ne...que вместе: «возьму только графин (воды)»."
         }
       ]
+    },
+    {
+      "id": "a2u6-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: количество (Y vs EN)",
+      "sentence": "Des frères ? Moi, j'y ai deux.",
+      "errorIndex": 4,
+      "correction": "j'en",
+      "explanation": "Количество заменяется местоимением EN: « j'EN ai deux ». Y заменяет « à + место/вещь ».",
+      "rule": {
+        "skill": "pronom-en",
+        "point": "EN заменяет количество (de): j'en ai deux",
+        "trap": "j'y ai deux",
+        "examplesCorrect": [],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u6-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: beaucoup DE",
+      "sentence": "J'ai beaucoup des amis.",
+      "errorIndex": 2,
+      "correction": "d'",
+      "explanation": "После наречий количества (beaucoup, peu, trop…) ставится « de » без артикля: « beaucoup d'amis ».",
+      "rule": {
+        "skill": "quantite-de",
+        "point": "beaucoup/peu/trop + de + сущ. (без артикля)",
+        "trap": "beaucoup des amis",
+        "examplesCorrect": [],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u6-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): ne…que",
+      "sentence": "Il ne reste que cinq minutes.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « ne…que » = «только». « Il ne reste que cinq minutes » — корректно.",
+      "rule": {
+        "skill": "ne-que",
+        "point": "ne…que = ограничение «только»",
+        "trap": "",
+        "examplesCorrect": [
+          "Je ne bois que de l'eau."
+        ],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

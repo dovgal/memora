@@ -285,6 +285,71 @@
           "ru": "У меня собеседование в большой компании"
         }
       ]
+    },
+    {
+      "id": "a2u11-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: элизия que + elle",
+      "sentence": "Elle dit que elle est malade.",
+      "errorIndex": 2,
+      "correction": "qu'",
+      "explanation": "Перед гласной « que » сокращается: « que + elle → qu'elle ». Правильно: « Elle dit qu'elle est malade. »",
+      "rule": {
+        "skill": "elision",
+        "point": "que → qu' перед гласной (qu'il, qu'elle, qu'on)",
+        "trap": "que elle / que il",
+        "examplesCorrect": [],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u11-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: косвенная речь (местоимение)",
+      "sentence": "Marie dit qu'il est fatiguée.",
+      "errorIndex": 2,
+      "correction": "qu'elle",
+      "explanation": "Marie — женщина, поэтому в косвенной речи « qu'ELLE est fatiguée » (и причастие fatiguée — ж.р.).",
+      "rule": {
+        "skill": "discours-rapporte",
+        "point": "косвенная речь: согласование местоимения с говорящим",
+        "trap": "Marie dit qu'il (о женщине)",
+        "examplesCorrect": [],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u11-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): косвенная речь",
+      "sentence": "Il répond qu'il ne sait pas.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « Il répond qu'il ne sait pas » — корректная косвенная речь.",
+      "rule": {
+        "skill": "discours-rapporte",
+        "point": "dire/répondre que + предложение",
+        "trap": "",
+        "examplesCorrect": [
+          "Elle explique qu'elle est occupée."
+        ],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

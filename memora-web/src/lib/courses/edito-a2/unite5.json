@@ -293,6 +293,71 @@
           "ru": "Технологии изменят нашу жизнь"
         }
       ]
+    },
+    {
+      "id": "a2u5-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: futur (неправильная основа)",
+      "sentence": "Tu viendras à la fête ? Oui, je venirai.",
+      "errorIndex": 8,
+      "correction": "viendrai",
+      "explanation": "Будущее от venir образуется от основы viendr-: « je viendrai ». « venirai » не существует.",
+      "rule": {
+        "skill": "futur-simple",
+        "point": "futur — неправильные основы: venir→viendr-, faire→fer-, aller→ir-",
+        "trap": "je venirai",
+        "examplesCorrect": [],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u5-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: si + présent",
+      "sentence": "Si tu auras le temps, appelle-moi.",
+      "errorIndex": 2,
+      "correction": "as",
+      "explanation": "После « si » (условие) употребляется НАСТОЯЩЕЕ время, а будущее — в главной части: « Si tu as le temps… ».",
+      "rule": {
+        "skill": "si-condition",
+        "point": "si + présent → futur/impératif в главной части",
+        "trap": "si tu auras",
+        "examplesCorrect": [],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u5-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): si + présent → futur",
+      "sentence": "S'il pleut demain, nous resterons à la maison.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « si + présent (pleut) → futur (resterons) ». Корректная схема условия.",
+      "rule": {
+        "skill": "si-condition",
+        "point": "si + présent → futur",
+        "trap": "",
+        "examplesCorrect": [
+          "Si tu viens, on sera contents."
+        ],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

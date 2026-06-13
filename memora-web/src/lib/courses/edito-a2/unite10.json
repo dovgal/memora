@@ -283,6 +283,71 @@
           "explanation": "La visite — ж.р.: celle du matin. + вопрос о местах."
         }
       ]
+    },
+    {
+      "id": "a2u10-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: согласование причастия с COD",
+      "sentence": "Les fleurs que j'ai acheté sont belles.",
+      "errorIndex": 4,
+      "correction": "achetées",
+      "explanation": "С avoir причастие согласуется с прямым дополнением, стоящим ПЕРЕД глаголом: « les fleurs QUE… achetéES ».",
+      "rule": {
+        "skill": "accord-participe",
+        "point": "accord du participe passé avec COD antéposé (avoir)",
+        "trap": "les fleurs que j'ai acheté",
+        "examplesCorrect": "B1",
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u10-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: celui / celle",
+      "sentence": "J'aime cette voiture, mais celui de Paul est mieux.",
+      "errorIndex": 4,
+      "correction": "celle",
+      "explanation": "« voiture » — ж.р., поэтому указательное местоимение « CELLE de Paul ». Celui — для м.р.",
+      "rule": {
+        "skill": "celui-celle",
+        "point": "celui/celle/ceux/celles согласуются в роде и числе",
+        "trap": "celui (для воiture ж.р.)",
+        "examplesCorrect": [],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u10-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): PC vs imparfait",
+      "sentence": "Quand je suis arrivé, il pleuvait.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: событие (passé composé «suis arrivé») на фоне (imparfait «pleuvait»). Корректно.",
+      "rule": {
+        "skill": "pc-imparfait",
+        "point": "passé composé = событие, imparfait = фон",
+        "trap": "",
+        "examplesCorrect": [
+          "Il dormait quand le téléphone a sonné."
+        ],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

@@ -282,6 +282,71 @@
           "ru": "Это лучший способ выздороветь"
         }
       ]
+    },
+    {
+      "id": "a2u7-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: COI (lui/leur)",
+      "sentence": "Mes parents ? Je les parle souvent.",
+      "errorIndex": 4,
+      "correction": "leur",
+      "explanation": "« parler À quelqu'un » требует косвенного местоимения: « je LEUR parle ». le/la/les — прямое дополнение.",
+      "rule": {
+        "skill": "cod-coi",
+        "point": "COI (à qqn) → lui/leur; COD → le/la/les",
+        "trap": "je les parle (parler à)",
+        "examplesCorrect": [],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u7-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: превосходная степень (род)",
+      "sentence": "Paris est la ville le plus belle du monde.",
+      "errorIndex": 4,
+      "correction": "la",
+      "explanation": "Превосходная степень согласуется с существительным: « ville » ж.р. → « la plus belle ».",
+      "rule": {
+        "skill": "superlatif",
+        "point": "le/la/les plus + adj — согласование с сущ.",
+        "trap": "la ville le plus belle",
+        "examplesCorrect": [],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u7-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): COD",
+      "sentence": "Tu vois Paul ? Oui, je le vois.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: Paul — прямое дополнение → « je LE vois ». Корректно.",
+      "rule": {
+        "skill": "cod-coi",
+        "point": "COD → le/la/les",
+        "trap": "",
+        "examplesCorrect": [
+          "Cette robe ? Je la prends."
+        ],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

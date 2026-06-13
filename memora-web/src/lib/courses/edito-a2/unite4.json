@@ -272,6 +272,71 @@
           "ru": "Он очень похож на своего отца"
         }
       ]
+    },
+    {
+      "id": "a2u4-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: tous / toutes",
+      "sentence": "Toutes les jours, je cours.",
+      "errorIndex": 0,
+      "correction": "Tous",
+      "explanation": "« jour » — мужского рода, поэтому « TOUS les jours ». Toute(s) — для женского рода.",
+      "rule": {
+        "skill": "tout",
+        "point": "tout согласуется в роде и числе: tous les jours, toutes les semaines",
+        "trap": "toutes les jours",
+        "examplesCorrect": [],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u4-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: chaque + ед. число",
+      "sentence": "Chaque étudiants doit travailler.",
+      "errorIndex": 1,
+      "correction": "étudiant",
+      "explanation": "После « chaque » существительное стоит в ЕДИНСТВЕННОМ числе: « chaque étudiant ».",
+      "rule": {
+        "skill": "chaque",
+        "point": "chaque + существительное в единственном числе",
+        "trap": "chaque étudiants",
+        "examplesCorrect": [],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u4-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): притяжательное местоимение",
+      "sentence": "Cette idée est la mienne, pas la tienne.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « la mienne / la tienne » согласованы с « idée » (ж.р.). Корректно.",
+      "rule": {
+        "skill": "possessifs",
+        "point": "le mien/la mienne… согласуются с предметом",
+        "trap": "",
+        "examplesCorrect": [
+          "Ce stylo est le mien."
+        ],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

@@ -285,6 +285,71 @@
           "explanation": "Подбадриваем и используем qui + сравнение plus intéressante."
         }
       ]
+    },
+    {
+      "id": "a2u3-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: qui или que",
+      "sentence": "Le train que part à midi est complet.",
+      "errorIndex": 2,
+      "correction": "qui",
+      "explanation": "« qui » — подлежащее придаточного (выполняет действие), « que » — дополнение. Здесь нужен подлежащее: « le train QUI part ».",
+      "rule": {
+        "skill": "relatifs",
+        "point": "qui = подлежащее, que = прямое дополнение, où = место/время",
+        "trap": "le train que part",
+        "examplesCorrect": [],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u3-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: сравнение aussi…que",
+      "sentence": "Marie est aussi grande comme Paul.",
+      "errorIndex": 4,
+      "correction": "que",
+      "explanation": "Сравнение равенства строится « aussi + прилагательное + QUE », а не « comme »: « aussi grande que Paul ».",
+      "rule": {
+        "skill": "comparaison",
+        "point": "aussi/plus/moins + adj + que",
+        "trap": "aussi grande comme",
+        "examplesCorrect": [],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u3-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): où",
+      "sentence": "La ville où je suis né est petite.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « où » корректно вводит место. Предложение верное.",
+      "rule": {
+        "skill": "relatifs",
+        "point": "où = место/время",
+        "trap": "",
+        "examplesCorrect": [
+          "Le jour où il est parti, il pleuvait."
+        ],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

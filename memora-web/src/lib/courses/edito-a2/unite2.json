@@ -281,6 +281,71 @@
           "ru": "Я это очень хорошо помню"
         }
       ]
+    },
+    {
+      "id": "a2u2-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: imparfait (3 л. мн.)",
+      "sentence": "Il faisait beau et les oiseaux chantait.",
+      "errorIndex": 6,
+      "correction": "chantaient",
+      "explanation": "В imparfait 3 л. мн. ч. окончание -aient: « les oiseaux chantaient ». Подлежащее во мн. числе.",
+      "rule": {
+        "skill": "imparfait",
+        "point": "imparfait: -ais, -ais, -ait, -ions, -iez, -aient",
+        "trap": "les oiseaux chantait",
+        "examplesCorrect": [],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u2-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: местоимения Y / EN",
+      "sentence": "Tu vas à la gare ? Oui, j'en vais.",
+      "errorIndex": 7,
+      "correction": "j'y",
+      "explanation": "« aller À un lieu » заменяется на Y, а не EN: « j'y vais ». EN заменяет « de + ... » или количество.",
+      "rule": {
+        "skill": "pronoms-y-en",
+        "point": "Y = à + место/вещь; EN = de + .../количество",
+        "trap": "j'en vais вместо j'y vais",
+        "examplesCorrect": [],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u2-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): EN",
+      "sentence": "Tu veux du café ? Oui, j'en veux.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: EN заменяет « du café » (de + ...). « j'en veux » — корректно.",
+      "rule": {
+        "skill": "pronoms-y-en",
+        "point": "EN заменяет частичный артикль/количество",
+        "trap": "",
+        "examplesCorrect": [
+          "Des gâteaux ? J'en ai mangé deux."
+        ],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

@@ -274,6 +274,71 @@
           "explanation": "Порядок местоимений: me + le → me l'a recommandé."
         }
       ]
+    },
+    {
+      "id": "a2u8-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: subjonctif после il faut que",
+      "sentence": "Il faut que tu viens demain.",
+      "errorIndex": 4,
+      "correction": "viennes",
+      "explanation": "После « il faut que » употребляется SUBJONCTIF: « que tu viennes ».",
+      "rule": {
+        "skill": "subjonctif",
+        "point": "il faut que + subjonctif (vienne, fasse, soit…)",
+        "trap": "il faut que tu viens",
+        "examplesCorrect": [],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u8-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: subjonctif глагола être",
+      "sentence": "Il faut que tu es à l'heure.",
+      "errorIndex": 4,
+      "correction": "sois",
+      "explanation": "Subjonctif от être: que je sois, que tu sois… Правильно: « Il faut que tu sois à l'heure. »",
+      "rule": {
+        "skill": "subjonctif",
+        "point": "subjonctif être: sois, soit, soyons, soient",
+        "trap": "il faut que tu es",
+        "examplesCorrect": [],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u8-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): subjonctif",
+      "sentence": "Je veux que tu sois heureux.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: после « vouloir que » — subjonctif: « que tu sois ». Корректно.",
+      "rule": {
+        "skill": "subjonctif",
+        "point": "vouloir que + subjonctif",
+        "trap": "",
+        "examplesCorrect": [
+          "Il faut que nous soyons prêts."
+        ],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

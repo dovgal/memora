@@ -301,6 +301,74 @@
           "explanation": "Назначаем место и время встречи: devant la salle à 20h."
         }
       ]
+    },
+    {
+      "id": "a2u1-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: passé composé (причастие)",
+      "sentence": "J'ai prendre le train ce matin.",
+      "errorIndex": 1,
+      "correction": "pris",
+      "explanation": "В passé composé после avoir идёт ПРИЧАСТИЕ, а не инфинитив: prendre → pris. Правильно: « J'ai pris le train. »",
+      "rule": {
+        "skill": "passe-compose",
+        "point": "passé composé = avoir/être + participe passé (не инфинитив)",
+        "trap": "j'ai prendre / il a manger",
+        "examplesCorrect": [
+          "J'ai pris le bus.",
+          "Nous avons compris la leçon."
+        ],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u1-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: вспомогательный глагол",
+      "sentence": "Je suis mangé une pomme.",
+      "errorIndex": 1,
+      "correction": "ai",
+      "explanation": "Большинство глаголов в passé composé спрягаются с avoir, а не с être: « J'ai mangé une pomme. »",
+      "rule": {
+        "skill": "passe-compose",
+        "point": "выбор вспомогательного: avoir для большинства глаголов",
+        "trap": "je suis mangé / j'ai allé",
+        "examplesCorrect": [],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u1-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): passé composé",
+      "sentence": "Hier, nous avons visité le musée du Louvre.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « nous avons visité » — корректный passé composé. Иногда предложение верное.",
+      "rule": {
+        "skill": "passe-compose",
+        "point": "passé composé построен правильно",
+        "trap": "",
+        "examplesCorrect": [
+          "Ils ont regardé un film."
+        ],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

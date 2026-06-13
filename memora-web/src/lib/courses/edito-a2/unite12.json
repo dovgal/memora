@@ -274,6 +274,71 @@
           "explanation": "Эко-правило: futur + отрицание aucun — «не оставим никакого мусора»."
         }
       ]
+    },
+    {
+      "id": "a2u12-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: pour que + subjonctif",
+      "sentence": "Je parle lentement pour que tu comprends.",
+      "errorIndex": 6,
+      "correction": "comprennes",
+      "explanation": "После « pour que » (цель) — SUBJONCTIF: « pour que tu comprennes ».",
+      "rule": {
+        "skill": "but-subjonctif",
+        "point": "pour que / afin que + subjonctif",
+        "trap": "pour que tu comprends",
+        "examplesCorrect": "B1",
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u12-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: afin que + subjonctif",
+      "sentence": "On agit maintenant afin que la planète survit.",
+      "errorIndex": 7,
+      "correction": "survive",
+      "explanation": "После « afin que » — subjonctif: « afin que la planète survive ».",
+      "rule": {
+        "skill": "but-subjonctif",
+        "point": "afin que + subjonctif",
+        "trap": "afin que la planète survit",
+        "examplesCorrect": "B1",
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a2u12-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): pour + инфинитив",
+      "sentence": "Nous trions nos déchets pour protéger l'environnement.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « pour + инфинитив » (одно подлежащее) — корректное выражение цели.",
+      "rule": {
+        "skill": "but-infinitif",
+        "point": "pour + инфинитив, когда подлежащее одно",
+        "trap": "",
+        "examplesCorrect": [
+          "Il économise pour acheter une maison."
+        ],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }
