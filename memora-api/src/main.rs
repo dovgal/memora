@@ -168,6 +168,7 @@ async fn main() {
         .route("/api/ai/course/generate-practice", post(handlers::ai::generate_practice))
         .route("/api/ai/course/converse", post(handlers::ai::converse))
         .route("/api/ai/course/story", post(handlers::ai::generate_story))
+        .route("/api/ai/course/regenerate-variant", post(handlers::ai::regenerate_variant))
         // Diagnostics (Temporary). Только для авторизованных пользователей.
         .route("/api/diag/db", get(|_user: middleware::auth::AuthenticatedUser, State(pool): State<sqlx::PgPool>| async move {
             let audio_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM flashcard_audio").fetch_one(&pool).await.unwrap_or((-1,));

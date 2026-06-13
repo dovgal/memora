@@ -37,8 +37,16 @@ export const SPECIAL_MODULES = ['genre', 'numeros', 'phonetique', 'delf'];
 
 export interface EditoExercise {
   id: string;
-  type: 'theory' | 'grammar-quiz' | 'sentence-builder' | 'gender-quiz' | 'dialogue' | 'fill-blank' | 'number-quiz' | 'listening' | 'video';
+  type: 'theory' | 'grammar-quiz' | 'sentence-builder' | 'gender-quiz' | 'dialogue' | 'fill-blank' | 'number-quiz' | 'listening' | 'video' | 'error-hunt';
   title: string;
+  // error-hunt (какография, метод Voltaire): найти ошибочное слово в предложении
+  // sentence уже объявлен ниже (sentence-builder). errorIndex=null → ошибки нет.
+  errorIndex?: number | null;
+  correction?: string;
+  explanation?: string;
+  // Метаданные правила и политика регенерации варианта на повторе (Voltaire).
+  rule?: { id?: string; skill?: string; point?: string; trap?: string; examplesCorrect?: string[]; cefr?: string };
+  variantPolicy?: { regenerateOnRepeat?: boolean; format?: 'error-hunt' | 'preserve'; avoidLastN?: number };
   // theory
   content?: string;
   // grammar-quiz

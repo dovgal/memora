@@ -17,7 +17,7 @@ use crate::domain::dtos::{
     QChatRequest,
     AIGenerateRequest, AIGradeRequest, AIGradeResponse, AIAnalyzeRequest
 };
-use sqlx::PgPool;
+use sqlx::{PgPool, Row};
 
 /// Модель Ollama настраивается переменной OLLAMA_MODEL.
 /// По умолчанию gpt-oss:120b — доступна на бесплатном тарифе Ollama Cloud
@@ -1068,4 +1068,214 @@ pub async fn generate_course_unit(
         .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Parse Error: {} - Content: {}", e, content) })))?;
 
     Ok(Json(unit))
+}
+
+// ============================================================================
+// Voltaire-метод: регенерация варианта упражнения на повторе.
+// Каждый повтор по FSRS возвращает ТО ЖЕ правило в НОВОМ предложении,
+// сгенерированном Ollama, — чтобы тренировать навык применения правила,
+// а не заучивать конкретный текст. Планирование остаётся на правиле
+// (exercise_id), эту логику в coach.rs не трогаем.
+// ============================================================================
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RegenerateVariantRequest {
+    pub course_id: String,
+    pub unit_id: String,
+    /// Стабильный ключ ПРАВИЛА (= exercise_id в course_exercise_reviews).
+    pub exercise_id: String,
+    /// Эталонное упражнение (EditoExercise) — задаёт смысл правила.
+    pub seed_exercise: serde_json::Value,
+    /// 'error-hunt' (по умолчанию) | 'preserve'.
+    pub format: Option<String>,
+    /// Последние показанные предложения — чтобы не повторяться.
+    pub avoid_sentences: Option<Vec<String>>,
+    /// Явная формулировка правила (если упражнение размечено).
+    pub rule_point: Option<String>,
+    /// Типичная ловушка/ошибка по этому правилу.
+    pub rule_trap: Option<String>,
+    pub language: Option<String>,
+    pub level: Option<String>,
+}
+
+/// Сгенерированный вариант какографии («найди ошибку»).
+#[derive(Serialize, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+struct ErrorHuntVariant {
+    sentence: String,
+    /// Индекс ошибочного слова при разбиении sentence по пробелам (0-based); null — ошибки нет.
+    error_index: Option<i64>,
+    correction: Option<String>,
+    explanation: String,
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RegenerateVariantResponse {
+    /// Готовый EditoExercise-вариант (type: 'error-hunt').
+    pub variant: serde_json::Value,
+    pub rule_id: String,
+    /// true — вернули фолбэк (кэш/эталон), а не свежую генерацию.
+    pub fallback: bool,
+}
+
+fn normalize_sentence(s: &str) -> String {
+    s.split_whitespace().collect::<Vec<_>>().join(" ").to_lowercase()
+}
+
+/// Проверяет корректность сгенерированного варианта какографии.
+fn validate_error_hunt(v: &ErrorHuntVariant, avoid_norm: &[String]) -> bool {
+    let sentence = v.sentence.trim();
+    if sentence.is_empty() || v.explanation.trim().is_empty() {
+        return false;
+    }
+    let token_count = sentence.split_whitespace().count() as i64;
+    match v.error_index {
+        Some(idx) => {
+            // Индекс в допустимом диапазоне, есть непустая коррекция.
+            if idx < 0 || idx >= token_count {
+                return false;
+            }
+            match &v.correction {
+                Some(c) if !c.trim().is_empty() => {}
+                _ => return false,
+            }
+        }
+        None => {} // «нет ошибки» — допустимый валидный кейс
+    }
+    // Анти-повтор.
+    !avoid_norm.contains(&normalize_sentence(sentence))
+}
+
+/// Собирает EditoExercise-вариант (type 'error-hunt') из сгенерированных данных.
+fn build_variant_exercise(rule_id: &str, seed_title: &str, v: &ErrorHuntVariant) -> serde_json::Value {
+    serde_json::json!({
+        "id": format!("{}::variant", rule_id),
+        "type": "error-hunt",
+        "title": seed_title,
+        "sentence": v.sentence.trim(),
+        "errorIndex": v.error_index,
+        "correction": v.correction,
+        "explanation": v.explanation.trim(),
+    })
+}
+
+/// POST /api/ai/course/regenerate-variant
+/// Генерирует НОВЫЙ вариант того же правила (какография) на лету при повторе.
+pub async fn regenerate_variant(
+    State(pool): State<PgPool>,
+    State(rate_limiter): State<AppRateLimiter>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Json(payload): Json<RegenerateVariantRequest>,
+) -> Result<Json<RegenerateVariantResponse>, (StatusCode, Json<AiGatewayError>)> {
+    let user_uuid = check_rate_limit(&rate_limiter, &user.sub)?;
+
+    if payload.course_id.trim().is_empty() || payload.exercise_id.trim().is_empty() {
+        return Err((StatusCode::BAD_REQUEST, Json(AiGatewayError { error: "courseId and exerciseId are required".to_string() })));
+    }
+
+    let language = payload.language.clone().unwrap_or_else(|| "французский".to_string());
+    let level = payload.level.clone().unwrap_or_else(|| "A2".to_string());
+    let seed_title = payload.seed_exercise.get("title").and_then(|t| t.as_str()).unwrap_or("Найдите ошибку").to_string();
+    let seed_json: String = serde_json::to_string(&payload.seed_exercise).unwrap_or_default().chars().take(4000).collect();
+
+    // Анти-повтор: переданные клиентом + последние из БД.
+    let mut avoid: Vec<String> = payload.avoid_sentences.clone().unwrap_or_default();
+    let recent_rows = sqlx::query(
+        "SELECT payload::text AS payload, sentence
+         FROM course_exercise_variants
+         WHERE user_id = $1 AND course_id = $2 AND unit_id = $3 AND exercise_id = $4 AND flagged = FALSE
+         ORDER BY created_at DESC LIMIT 10"
+    )
+    .bind(user_uuid)
+    .bind(&payload.course_id)
+    .bind(&payload.unit_id)
+    .bind(&payload.exercise_id)
+    .fetch_all(&pool)
+    .await
+    .unwrap_or_default();
+    for r in &recent_rows {
+        if let Ok(Some(s)) = r.try_get::<Option<String>, _>("sentence") {
+            avoid.push(s);
+        }
+    }
+    let avoid_norm: Vec<String> = avoid.iter().map(|s| normalize_sentence(s)).collect();
+
+    let rule_point = payload.rule_point.clone().unwrap_or_else(|| "выведи правило из эталонного упражнения".to_string());
+    let rule_trap = payload.rule_trap.clone().unwrap_or_else(|| "—".to_string());
+    let avoid_block = if avoid.is_empty() { "—".to_string() } else {
+        avoid.iter().take(8).map(|s| format!("«{}»", s)).collect::<Vec<_>>().join("; ")
+    };
+
+    let system = format!(
+        "Ты — методист по французскому языку (метод Projet Voltaire). \
+         Сгенерируй ОДНО новое упражнение типа «найди ошибку» (cacographie), проверяющее ТО ЖЕ правило, \
+         что и эталон, но на ДРУГОМ предложении и другой лексике. \
+         Правило: {rule_point}. Типичная ловушка: {rule_trap}. Уровень: {level}. Язык контента: {language}. \
+         Французский — безупречный и естественный. В предложении должна быть РОВНО ОДНА целевая ошибка \
+         ИЛИ ни одной (иногда корректное предложение — чтобы тренировать и вариант «нет ошибки»). \
+         Не повторяй эти предложения: {avoid_block}. \
+         Верни ТОЛЬКО валидный JSON без markdown: \
+         {{\"sentence\": string, \"errorIndex\": number|null, \"correction\": string|null, \"explanation\": string}}. \
+         errorIndex — индекс слова с ошибкой при разбиении sentence по пробелам (0-based); null если ошибки нет. \
+         correction — правильное написание слова (или null). explanation — по-русски, кратко: правило и почему."
+    );
+    let user_msg = format!("Эталонное упражнение (JSON): {seed_json}. Сгенерируй вариант сейчас.");
+
+    // До 3 попыток получить валидный вариант.
+    let mut produced: Option<ErrorHuntVariant> = None;
+    for _ in 0..3 {
+        let content = match ollama_chat(vec![
+            OllamaMessage { role: "system".to_string(), content: system.clone(), images: None },
+            OllamaMessage { role: "user".to_string(), content: user_msg.clone(), images: None },
+        ], 700).await {
+            Ok(c) => c,
+            Err(_) => break, // Ollama недоступна — выходим к фолбэку
+        };
+        if let Ok(v) = serde_json::from_str::<ErrorHuntVariant>(extract_json_object(&content)) {
+            if validate_error_hunt(&v, &avoid_norm) {
+                produced = Some(v);
+                break;
+            }
+        }
+    }
+
+    if let Some(v) = produced {
+        let variant = build_variant_exercise(&payload.exercise_id, &seed_title, &v);
+        let payload_text = serde_json::to_string(&variant).unwrap_or_else(|_| "{}".to_string());
+        let _ = sqlx::query(
+            "INSERT INTO course_exercise_variants
+                (user_id, course_id, unit_id, exercise_id, rule_key, format, payload, sentence, source)
+             VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb, $8, 'ollama')"
+        )
+        .bind(user_uuid)
+        .bind(&payload.course_id)
+        .bind(&payload.unit_id)
+        .bind(&payload.exercise_id)
+        .bind(&payload.rule_point)
+        .bind(payload.format.clone().unwrap_or_else(|| "error-hunt".to_string()))
+        .bind(&payload_text)
+        .bind(v.sentence.trim())
+        .execute(&pool)
+        .await;
+
+        return Ok(Json(RegenerateVariantResponse { variant, rule_id: payload.exercise_id, fallback: false }));
+    }
+
+    // Фолбэк 1: недавно сгенерированный вариант из кэша, которого нет в avoid.
+    for r in &recent_rows {
+        if let Ok(s) = r.try_get::<Option<String>, _>("sentence") {
+            let is_avoided = s.as_ref().map(|x| avoid_norm.contains(&normalize_sentence(x))).unwrap_or(false);
+            if is_avoided { continue; }
+        }
+        if let Ok(p) = r.try_get::<String, _>("payload") {
+            if let Ok(variant) = serde_json::from_str::<serde_json::Value>(&p) {
+                return Ok(Json(RegenerateVariantResponse { variant, rule_id: payload.exercise_id, fallback: true }));
+            }
+        }
+    }
+
+    // Фолбэк 2: вернуть эталон (учащийся хотя бы повторит правило).
+    Ok(Json(RegenerateVariantResponse { variant: payload.seed_exercise, rule_id: payload.exercise_id, fallback: true }))
 }

@@ -258,6 +258,47 @@ export async function generateStory(
   }));
 }
 
+// ---------- Voltaire: регенерация варианта на повторе ----------
+
+export interface RegenerateVariantParams {
+  courseId: string;
+  unitId: string;
+  /** Ключ ПРАВИЛА (= exerciseId в ревью коуча). */
+  exerciseId: string;
+  /** Эталонное упражнение (задаёт смысл правила). */
+  seedExercise: EditoExercise;
+  /** 'error-hunt' (по умолчанию) | 'preserve'. */
+  format?: 'error-hunt' | 'preserve';
+  /** Последние показанные предложения — чтобы не повторяться. */
+  avoidSentences?: string[];
+  /** Явная формулировка правила (если размечено). */
+  rulePoint?: string;
+  ruleTrap?: string;
+  language?: string;
+  level?: string;
+}
+
+export interface RegeneratedVariant {
+  variant: EditoExercise;
+  ruleId: string;
+  /** true — вернулся фолбэк (кэш/эталон), а не свежая генерация. */
+  fallback: boolean;
+}
+
+/**
+ * Генерирует НОВЫЙ вариант того же правила (какография «найди ошибку»).
+ * Вызывать на повторе упражнения (reps > 0). Первый показ — эталон.
+ */
+export async function regenerateVariant(
+  params: RegenerateVariantParams, idToken?: string,
+): Promise<RegeneratedVariant> {
+  return ok(await fetch('/api/ai/course/regenerate-variant', {
+    method: 'POST',
+    headers: headers(idToken),
+    body: JSON.stringify(params),
+  }));
+}
+
 // ---------- ИИ-генерация юнита ----------
 
 export interface GeneratedUnitContent {

@@ -10,7 +10,7 @@
 // - ИИ-тьютор «Не понял — объясни» для любого упражнения.
 // - После сессии — дополнительная ИИ-практика по слабым местам.
 
-import { useEffect, useMemo, useState, useCallback } from 'react';
+import { useEffect, useMemo, useState, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import {
@@ -22,6 +22,7 @@ import { ExerciseRenderer } from '@/components/edito/ExerciseRenderer';
 import { VocabQuiz } from '@/components/courses/VocabQuiz';
 import {
   getCoachReviews, recordCoachReview, getCoachStats, explainExercise, generatePractice,
+  regenerateVariant,
   type CoachReviewEntry, type CoachStats,
 } from '@/lib/courses/customCoursesApi';
 
@@ -87,6 +88,12 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
   const [submitting, setSubmitting] = useState(false);
   const [sessionStats, setSessionStats] = useState({ completed: 0, again: 0 });
   const [attempt, setAttempt] = useState(0);
+
+  // Voltaire: вариант упражнения, сгенерированный на повтор (анти-заучивание).
+  const [variant, setVariant] = useState<EditoExercise | null>(null);
+  const [variantBusy, setVariantBusy] = useState(false);
+  // Показанные предложения по каждому правилу — чтобы варианты не повторялись.
+  const avoidRef = useRef<Map<string, string[]>>(new Map());
 
   // Результат текущего упражнения и предложенная тренером оценка
   const [lastResult, setLastResult] = useState<ExerciseResult | null>(null);
@@ -168,6 +175,46 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
     });
   }, [idToken, courseId]);
 
+  // Voltaire: на повторе (isReview) генерируем НОВЫЙ вариант того же правила —
+  // какографию «найди ошибку», чтобы тренировать навык, а не заучивать текст.
+  // Первый показ правила — эталон. Опт-ин: variantPolicy.regenerateOnRepeat или type 'error-hunt'.
+  useEffect(() => {
+    setVariant(null);
+    const item = queue[index];
+    if (!item || item.kind !== 'exercise' || !item.exercise || item.ephemeral) return;
+    const ex = item.exercise;
+    const wants = ex.variantPolicy?.regenerateOnRepeat === true || ex.type === 'error-hunt';
+    if (!wants || !item.isReview || !idToken) return;
+
+    const key = `${item.unitId}::${item.trackId}`;
+    const avoid = avoidRef.current.get(key) ?? [];
+    let cancelled = false;
+    setVariantBusy(true);
+    regenerateVariant({
+      courseId,
+      unitId: item.unitId,
+      exerciseId: item.trackId,
+      seedExercise: ex,
+      format: 'error-hunt',
+      avoidSentences: avoid,
+      rulePoint: ex.rule?.point,
+      ruleTrap: ex.rule?.trap,
+      language,
+      level,
+    }, idToken)
+      .then(res => {
+        if (cancelled) return;
+        setVariant(res.variant);
+        const s = res.variant?.sentence;
+        if (s) avoidRef.current.set(key, [...avoid, s].slice(-8));
+      })
+      .catch(() => { /* фолбэк: покажем эталон */ })
+      .finally(() => { if (!cancelled) setVariantBusy(false); });
+
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [index, attempt]);
+
   const startSession = () => {
     const due = pools.due.slice(0, 30);
     const fresh = pools.fresh.slice(0, newGoal);
@@ -241,7 +288,7 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
     try {
       const payload = current.kind === 'vocab'
         ? { type: 'vocabulary', word: current.vocab?.fr, translation: current.vocab?.ru }
-        : current.exercise;
+        : (variant ?? current.exercise);
       const res = await explainExercise(payload, undefined, undefined, idToken);
       setExplainText(res.explanation);
     } catch {
@@ -506,11 +553,17 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
           />
         )}
         {current && current.kind === 'exercise' && current.exercise && (
-          <ExerciseRenderer
-            key={`${current.unitId}-${current.trackId}-${attempt}`}
-            exercise={current.exercise}
-            onComplete={(_id, result) => { setExerciseDone(true); setLastResult(result ?? null); }}
-          />
+          variantBusy ? (
+            <div className="bg-qz-card border border-border rounded-2xl p-8 flex items-center justify-center gap-2 text-qz-text-muted text-sm">
+              <Loader2 className="w-5 h-5 animate-spin" /> Подбираю новый пример…
+            </div>
+          ) : (
+            <ExerciseRenderer
+              key={`${current.unitId}-${current.trackId}-${attempt}-${variant ? 'v' : 's'}`}
+              exercise={variant ?? current.exercise}
+              onComplete={(_id, result) => { setExerciseDone(true); setLastResult(result ?? null); }}
+            />
+          )
         )}
 
         {/* ИИ-тьютор */}

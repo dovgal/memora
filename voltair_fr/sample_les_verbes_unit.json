@@ -1,0 +1,99 @@
+{
+  "title": "Les verbes et leurs prépositions — управление глаголов",
+  "description": "Какография (метод Projet Voltaire): найдите ошибочный предлог при глаголе. Каждое упражнение на повторе перегенерируется в новом предложении того же правила.",
+  "vocabulary": [
+    { "fr": "se souvenir de qqch", "ru": "помнить о чём-л.", "type": "phrase" },
+    { "fr": "se rappeler qqch", "ru": "вспоминать что-л. (без de)", "type": "phrase" },
+    { "fr": "penser à qqn/qqch", "ru": "думать о ком-л./чём-л.", "type": "phrase" },
+    { "fr": "dépendre de qqch", "ru": "зависеть от чего-л.", "type": "phrase" },
+    { "fr": "profiter de qqch", "ru": "пользоваться чем-л.", "type": "phrase" },
+    { "fr": "s'intéresser à qqch", "ru": "интересоваться чем-л.", "type": "phrase" }
+  ],
+  "exercises": [
+    {
+      "id": "verbes-prep-souvenir",
+      "type": "error-hunt",
+      "title": "Глагольное управление: se souvenir",
+      "sentence": "Je me souviens à mon enfance.",
+      "errorIndex": 3,
+      "correction": "de",
+      "explanation": "«se souvenir DE qqch» — глагол требует предлог de. Правильно: « Je me souviens de mon enfance. » (Не путать с «se rappeler qqch» — без предлога.)",
+      "rule": {
+        "skill": "verb-government",
+        "point": "se souvenir de qqch (требует предлог de)",
+        "trap": "se souvenir à / смешение с se rappeler de",
+        "examplesCorrect": ["Je me souviens de ce jour.", "Tu te souviens de lui ?"],
+        "cefr": "B1"
+      },
+      "variantPolicy": { "regenerateOnRepeat": true, "format": "error-hunt", "avoidLastN": 6 }
+    },
+    {
+      "id": "verbes-prep-penser",
+      "type": "error-hunt",
+      "title": "Глагольное управление: penser",
+      "sentence": "Je pense de toi tous les jours.",
+      "errorIndex": 2,
+      "correction": "à",
+      "explanation": "«penser À qqn/qqch» = думать о ком-то. Правильно: « Je pense à toi. » Предлог «de» с penser — только при просьбе об оценке: « Que penses-tu de ce film ? »",
+      "rule": {
+        "skill": "verb-government",
+        "point": "penser à qqn/qqch (предлог à)",
+        "trap": "penser de (только для мнения: que penses-tu de…)",
+        "examplesCorrect": ["Je pense à mes vacances.", "Pense à fermer la porte."],
+        "cefr": "B1"
+      },
+      "variantPolicy": { "regenerateOnRepeat": true, "format": "error-hunt", "avoidLastN": 6 }
+    },
+    {
+      "id": "verbes-prep-dependre",
+      "type": "error-hunt",
+      "title": "Глагольное управление: dépendre",
+      "sentence": "Tout dépend à toi maintenant.",
+      "errorIndex": 2,
+      "correction": "de",
+      "explanation": "«dépendre DE qqch/qqn» = зависеть от. Правильно: « Tout dépend de toi. »",
+      "rule": {
+        "skill": "verb-government",
+        "point": "dépendre de qqch (предлог de)",
+        "trap": "dépendre à",
+        "examplesCorrect": ["Cela dépend de la météo.", "Le résultat dépend de nous."],
+        "cefr": "B1"
+      },
+      "variantPolicy": { "regenerateOnRepeat": true, "format": "error-hunt", "avoidLastN": 6 }
+    },
+    {
+      "id": "verbes-prep-profiter",
+      "type": "error-hunt",
+      "title": "Глагольное управление: profiter",
+      "sentence": "Nous profitons à ce beau temps.",
+      "errorIndex": 2,
+      "correction": "de",
+      "explanation": "«profiter DE qqch» = пользоваться чем-л. Правильно: « Nous profitons de ce beau temps. »",
+      "rule": {
+        "skill": "verb-government",
+        "point": "profiter de qqch (предлог de)",
+        "trap": "profiter à (имеет другое значение: «идти на пользу кому-то»)",
+        "examplesCorrect": ["Profite de la vie !", "Ils ont profité des soldes."],
+        "cefr": "B1"
+      },
+      "variantPolicy": { "regenerateOnRepeat": true, "format": "error-hunt", "avoidLastN": 6 }
+    },
+    {
+      "id": "verbes-prep-interesser-ok",
+      "type": "error-hunt",
+      "title": "Глагольное управление: s'intéresser (проверка «нет ошибки»)",
+      "sentence": "Il s'intéresse à la musique classique.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: «s'intéresser À qqch» — корректное управление. Иногда предложение верное — это тренирует бдительность.",
+      "rule": {
+        "skill": "verb-government",
+        "point": "s'intéresser à qqch (предлог à)",
+        "trap": "s'intéresser de",
+        "examplesCorrect": ["Elle s'intéresse à l'art.", "Je m'intéresse aux langues."],
+        "cefr": "B1"
+      },
+      "variantPolicy": { "regenerateOnRepeat": true, "format": "error-hunt", "avoidLastN": 6 }
+    }
+  ]
+}

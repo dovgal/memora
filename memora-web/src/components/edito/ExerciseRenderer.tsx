@@ -9,6 +9,7 @@ import { DialogueExercise } from './DialogueExercise';
 import { SentenceBuilder } from './SentenceBuilder';
 import { ListeningExercise } from './ListeningExercise';
 import { VideoExercise } from './VideoExercise';
+import { ErrorHunt } from './ErrorHunt';
 
 export type { ExerciseResult };
 
@@ -40,6 +41,8 @@ export function ExerciseRenderer({ exercise, onComplete }: ExerciseRendererProps
       return <ListeningExercise exercise={exercise} onComplete={handleComplete} />;
     case 'video':
       return <VideoExercise exercise={exercise} onComplete={handleComplete} />;
+    case 'error-hunt':
+      return <ErrorHunt exercise={exercise} onComplete={handleComplete} />;
     default:
       return null;
   }
