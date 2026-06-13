@@ -309,16 +309,18 @@
     {
       "id": "b1u1-eh2",
       "type": "error-hunt",
-      "title": "Найдите ошибку: il y a / depuis",
-      "sentence": "J'ai fini mon travail depuis une heure.",
-      "errorIndex": 4,
-      "correction": "il y a",
-      "explanation": "Завершённое действие в прошлом — « IL Y A une heure » (час назад). « depuis » — для длящегося до сих пор.",
+      "title": "Найдите ошибку: plus-que-parfait (действие до прошлого)",
+      "sentence": "Quand je suis rentré, ma mère a déjà préparé le dîner.",
+      "errorIndex": 6,
+      "correction": "avait",
+      "explanation": "Действие, предшествующее другому прошлому, выражается plus-que-parfait: « ma mère AVAIT déjà préparé le dîner » (ещё до того, как я вернулся).",
       "rule": {
-        "skill": "indicateurs-temps",
-        "point": "il y a (завершённое) vs depuis (длящееся)",
-        "trap": "fini depuis une heure",
-        "examplesCorrect": [],
+        "skill": "plus-que-parfait",
+        "point": "plus-que-parfait — действие, предшествующее другому прошлому",
+        "trap": "a déjà préparé (PC) вместо avait déjà préparé",
+        "examplesCorrect": [
+          "Il avait déjà mangé quand je suis arrivé."
+        ],
         "cefr": "B1"
       },
       "variantPolicy": {

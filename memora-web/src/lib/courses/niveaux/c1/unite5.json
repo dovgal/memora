@@ -190,7 +190,7 @@
       "id": "c1u5-eh1",
       "type": "error-hunt",
       "title": "Найдите ошибку: à moins que + subjonctif",
-      "sentence": "À moins qu'il pleut, on sort ce soir.",
+      "sentence": "À moins qu'il pleut ce soir, on sort.",
       "errorIndex": 3,
       "correction": "pleuve",
       "explanation": "После « à moins que » — SUBJONCTIF: « à moins qu'il PLEUVE ».",

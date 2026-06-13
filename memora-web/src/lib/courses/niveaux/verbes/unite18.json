@@ -417,10 +417,10 @@
       "id": "vb18-eh2",
       "type": "error-hunt",
       "title": "Найдите ошибку: attentif À qch",
-      "sentence": "Elle est attentive sur les détails du dossier.",
+      "sentence": "Elle est attentive sur chaque détail du dossier.",
       "errorIndex": 3,
       "correction": "à",
-      "explanation": "« attentif/attentive À quelque chose ». Правильно: « attentive AUX détails » (à + les). Здесь нужно « à ».",
+      "explanation": "« attentif/attentive À quelque chose ». Правильно: « attentive À chaque détail ».",
       "rule": {
         "skill": "adj-preposition",
         "point": "attentif à qch",
