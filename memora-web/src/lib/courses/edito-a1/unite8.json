@@ -957,6 +957,71 @@
           "explanation": "Оценка-характеристика — c'était un peu long."
         }
       ]
+    },
+    {
+      "id": "a1u8-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: passé composé (причастие)",
+      "sentence": "Il a prend le bus.",
+      "errorIndex": 2,
+      "correction": "pris",
+      "explanation": "В passé composé после avoir идёт причастие, а не présent: prendre → PRIS. « Il a pris le bus. »",
+      "rule": {
+        "skill": "passe-compose-avoir",
+        "point": "passé composé = avoir + participe passé (pris, fait, vu…)",
+        "trap": "il a prend / il a prends",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u8-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: предлог перед страной",
+      "sentence": "Je vais à France.",
+      "errorIndex": 2,
+      "correction": "en",
+      "explanation": "Перед странами женского рода — « EN »: « en France », « en Italie ». (au Japon — м.р., aux États-Unis — мн.ч.)",
+      "rule": {
+        "skill": "prepositions-pays",
+        "point": "en + страна ж.р.; au + м.р.; aux + мн.ч.",
+        "trap": "à France / à Japon",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u8-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): passé composé",
+      "sentence": "Nous avons visité le Japon.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « nous avons visité » — корректный passé composé (visiter + прямое дополнение, без предлога).",
+      "rule": {
+        "skill": "passe-compose-avoir",
+        "point": "passé composé с avoir",
+        "trap": "",
+        "examplesCorrect": [
+          "Elle a regardé un film."
+        ],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

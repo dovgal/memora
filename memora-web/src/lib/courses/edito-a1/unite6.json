@@ -957,6 +957,71 @@
           "explanation": "Ils viennent de gagner — третье лицо множественного числа."
         }
       ]
+    },
+    {
+      "id": "a1u6-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: глагол faire (vous)",
+      "sentence": "Vous faisez du sport ?",
+      "errorIndex": 1,
+      "correction": "faites",
+      "explanation": "Faire — неправильный глагол: « vous FAITES » (не faisez). Nous faisons, vous faites, ils font.",
+      "rule": {
+        "skill": "faire",
+        "point": "faire: je fais, tu fais, il fait, nous faisons, vous faites, ils font",
+        "trap": "vous faisez / ils faisent",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u6-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: jouer du / au",
+      "sentence": "Je joue au piano.",
+      "errorIndex": 2,
+      "correction": "du",
+      "explanation": "С музыкальными инструментами — « jouer DU » (de + le): « je joue du piano ». « jouer au » — для спорта/игр.",
+      "rule": {
+        "skill": "jouer-faire",
+        "point": "jouer du/de la (инструмент), jouer au (спорт/игра)",
+        "trap": "jouer au piano / jouer du foot",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u6-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): futur proche",
+      "sentence": "Je vais faire du vélo ce week-end.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « je vais faire » (futur proche = aller + инфинитив) и « du vélo » — корректно.",
+      "rule": {
+        "skill": "futur-proche",
+        "point": "aller + инфинитив (ближайшее будущее)",
+        "trap": "",
+        "examplesCorrect": [
+          "On va manger au restaurant."
+        ],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

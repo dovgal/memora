@@ -938,6 +938,71 @@
           "explanation": "Journaliste не меняется по роду: un/une journaliste."
         }
       ]
+    },
+    {
+      "id": "a1u2-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: притяжательное прилагательное",
+      "sentence": "Ma frère habite à Lyon.",
+      "errorIndex": 0,
+      "correction": "Mon",
+      "explanation": "« frère » — мужского рода, поэтому « MON frère ». Ma — для женского рода (ma sœur).",
+      "rule": {
+        "skill": "possessifs",
+        "point": "mon/ma/mes — по роду и числу существительного",
+        "trap": "ma frère / mon mère",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u2-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: согласование прилагательного",
+      "sentence": "C'est une femme intelligent.",
+      "errorIndex": 3,
+      "correction": "intelligente",
+      "explanation": "Прилагательное согласуется с существительным в роде: « femme » ж.р. → « intelligentE ».",
+      "rule": {
+        "skill": "accord-adjectif",
+        "point": "прилагательное согласуется в роде и числе",
+        "trap": "une femme intelligent",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u2-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): притяжательные",
+      "sentence": "J'aime mes nouveaux livres.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « mes nouveaux livres » — всё во множественном числе, согласовано.",
+      "rule": {
+        "skill": "possessifs",
+        "point": "mes + согласование прилагательного",
+        "trap": "",
+        "examplesCorrect": [
+          "Ce sont mes amis."
+        ],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

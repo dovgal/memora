@@ -969,6 +969,71 @@
           "explanation": "Ils partent — окончание -ent, основа полная."
         }
       ]
+    },
+    {
+      "id": "a1u3-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: глагол на -ER (nous)",
+      "sentence": "Nous parlez anglais.",
+      "errorIndex": 1,
+      "correction": "parlons",
+      "explanation": "Глаголы на -ER в 1 л. мн. ч.: « nous parlONS ». parlez — это « vous ».",
+      "rule": {
+        "skill": "verbes-er",
+        "point": "-ER: je parle, tu parles, il parle, nous parlons, vous parlez, ils parlent",
+        "trap": "nous parlez / vous parlons",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u3-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: de после отрицания",
+      "sentence": "Je ne mange pas du pain.",
+      "errorIndex": 4,
+      "correction": "de",
+      "explanation": "После отрицания « ne…pas » частичный артикль du/de la/des заменяется на « de »: « ne mange pas DE pain ».",
+      "rule": {
+        "skill": "negation-de",
+        "point": "ne…pas + de (вместо du/de la/des)",
+        "trap": "ne…pas du pain",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u3-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): -ER + наречие",
+      "sentence": "Le matin, je bois souvent du thé.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: предложение корректно (наречие частотности « souvent » на месте).",
+      "rule": {
+        "skill": "verbes-er",
+        "point": "présent + наречие частотности",
+        "trap": "",
+        "examplesCorrect": [
+          "Je regarde toujours les infos."
+        ],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

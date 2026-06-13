@@ -1017,6 +1017,71 @@
           "explanation": "Точка отсчёта (сентябрь) — depuis septembre."
         }
       ]
+    },
+    {
+      "id": "a1u10-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: futur simple (faire)",
+      "sentence": "Demain, il faira beau.",
+      "errorIndex": 2,
+      "correction": "fera",
+      "explanation": "Будущее от faire образуется от основы fer-: « il FERA ». Формы « faira » не существует.",
+      "rule": {
+        "skill": "futur-simple",
+        "point": "futur faire = fera (неправильная основа fer-)",
+        "trap": "il faira / il faisera",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u10-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: элизия (parce que + il)",
+      "sentence": "Je reste à la maison parce que il pleut.",
+      "errorIndex": 6,
+      "correction": "qu'",
+      "explanation": "Перед гласной « que » сокращается: « parce QU'il pleut ».",
+      "rule": {
+        "skill": "elision",
+        "point": "que → qu' перед гласной (parce qu'il, qu'elle, qu'on)",
+        "trap": "parce que il / que elle",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u10-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): si + présent → futur",
+      "sentence": "Si tu veux, on ira au cinéma.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « si + présent (veux) → futur (ira) » — корректная схема.",
+      "rule": {
+        "skill": "si-condition",
+        "point": "si + présent → futur",
+        "trap": "",
+        "examplesCorrect": [
+          "Si j'ai le temps, je viendrai."
+        ],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

@@ -443,6 +443,71 @@
           "explanation": "à + le premier étage = au premier étage (наш второй этаж)."
         }
       ]
+    },
+    {
+      "id": "a1u11-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: предлог места (на стене)",
+      "sentence": "L'affiche est dans le mur.",
+      "errorIndex": 2,
+      "correction": "sur",
+      "explanation": "На поверхности (стена) — предлог « SUR »: « sur le mur ». dans = внутри.",
+      "rule": {
+        "skill": "prepositions-lieu",
+        "point": "sur (на поверхности) vs dans (внутри)",
+        "trap": "dans le mur",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u11-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: предлог места (в шкафу)",
+      "sentence": "Les vêtements sont sur l'armoire.",
+      "errorIndex": 3,
+      "correction": "dans",
+      "explanation": "Внутри шкафа — предлог « DANS »: « dans l'armoire ». sur = на поверхности (сверху).",
+      "rule": {
+        "skill": "prepositions-lieu",
+        "point": "dans (внутри) vs sur (на поверхности)",
+        "trap": "sur l'armoire (одежда внутри)",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u11-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): предлог места",
+      "sentence": "La lampe est à côté du lit.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « à côté du lit » (рядом с кроватью) — корректный предлог места.",
+      "rule": {
+        "skill": "prepositions-lieu",
+        "point": "à côté de, en face de, près de",
+        "trap": "",
+        "examplesCorrect": [
+          "Le tapis est devant le canapé."
+        ],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

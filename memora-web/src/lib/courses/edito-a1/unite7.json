@@ -865,6 +865,71 @@
           "explanation": "Цвет после существительного, pull — мужской род: vert."
         }
       ]
+    },
+    {
+      "id": "a1u7-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: указательное прилагательное (род)",
+      "sentence": "Ce maison est belle.",
+      "errorIndex": 0,
+      "correction": "Cette",
+      "explanation": "« maison » — женского рода, поэтому « CETTE maison ». ce — для мужского рода.",
+      "rule": {
+        "skill": "demonstratifs",
+        "point": "ce (м.р.) / cet (перед гласной) / cette (ж.р.) / ces (мн.ч.)",
+        "trap": "ce maison / cette livre",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u7-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: cet перед гласной",
+      "sentence": "Ce homme est sympa.",
+      "errorIndex": 0,
+      "correction": "Cet",
+      "explanation": "Перед гласной или немой h у мужского рода — « CET »: « cet homme », « cet ami ».",
+      "rule": {
+        "skill": "demonstratifs",
+        "point": "cet перед гласной/h немым (м.р.)",
+        "trap": "ce homme / ce ami",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u7-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): démonstratifs",
+      "sentence": "J'achète ces chaussures.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « ces chaussures » (мн.ч.) и « j'achète » — корректно.",
+      "rule": {
+        "skill": "demonstratifs",
+        "point": "ces + множественное число",
+        "trap": "",
+        "examplesCorrect": [
+          "Cette robe est jolie."
+        ],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

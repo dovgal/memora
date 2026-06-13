@@ -916,6 +916,71 @@
           "explanation": "Il/elle prend — без s в третьем лице."
         }
       ]
+    },
+    {
+      "id": "a1u4-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: de l' перед гласной",
+      "sentence": "Je voudrais de la eau.",
+      "errorIndex": 3,
+      "correction": "l'",
+      "explanation": "Перед гласной « de la » сокращается до « de l' »: « de l'eau ».",
+      "rule": {
+        "skill": "partitif",
+        "point": "du / de la / de l' (перед гласной) / des",
+        "trap": "de la eau / de le café",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u4-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: глагол vouloir (tu)",
+      "sentence": "Tu veut un gâteau ?",
+      "errorIndex": 1,
+      "correction": "veux",
+      "explanation": "Vouloir: je veux, tu VEUX, il veut. После « tu » — veux.",
+      "rule": {
+        "skill": "vouloir-pouvoir",
+        "point": "vouloir/pouvoir: je veux/peux, tu veux/peux, il veut/peut",
+        "trap": "tu veut / tu peut",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u4-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): партитив + vouloir",
+      "sentence": "Nous voulons du café et des croissants.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « du café », « des croissants » и « nous voulons » — корректно.",
+      "rule": {
+        "skill": "partitif",
+        "point": "партитив + vouloir",
+        "trap": "",
+        "examplesCorrect": [
+          "Je veux de la soupe."
+        ],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

@@ -965,6 +965,71 @@
           "explanation": "Elles doivent — третье лицо множественного числа."
         }
       ]
+    },
+    {
+      "id": "a1u5-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: глагол aller (tu)",
+      "sentence": "Tu va à l'école.",
+      "errorIndex": 1,
+      "correction": "vas",
+      "explanation": "Aller: je vais, tu VAS, il va. После « tu » — vas.",
+      "rule": {
+        "skill": "aller-venir",
+        "point": "aller: je vais, tu vas, il va, nous allons, vous allez, ils vont",
+        "trap": "tu va / il vas",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u5-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: императив (-ER без -s)",
+      "sentence": "Parles plus fort, s'il te plaît !",
+      "errorIndex": 0,
+      "correction": "Parle",
+      "explanation": "В повелительном наклонении глаголы на -ER теряют -s во 2 л. ед. ч.: « Parle ! » (не Parles).",
+      "rule": {
+        "skill": "imperatif",
+        "point": "императив tu для -ER без -s: parle, mange, écoute",
+        "trap": "Parles ! / Manges !",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u5-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): предлог места",
+      "sentence": "Le chat est sous la table.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « sous la table » (под столом) — корректный предлог места.",
+      "rule": {
+        "skill": "prepositions-lieu",
+        "point": "sur, sous, dans, devant, derrière",
+        "trap": "",
+        "examplesCorrect": [
+          "Le livre est sur la chaise."
+        ],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

@@ -1006,6 +1006,71 @@
           "explanation": "Перед городами всегда предлог à: à Londres, à Paris."
         }
       ]
+    },
+    {
+      "id": "a1u1-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: глагол être",
+      "sentence": "Ils est français.",
+      "errorIndex": 1,
+      "correction": "sont",
+      "explanation": "Глагол être в 3 л. мн. ч.: « ils SONT ». Спряжение: je suis, tu es, il est, nous sommes, vous êtes, ils sont.",
+      "rule": {
+        "skill": "etre",
+        "point": "être: je suis, tu es, il/elle est, nous sommes, vous êtes, ils/elles sont",
+        "trap": "ils est / vous est",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u1-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: артикль un / une",
+      "sentence": "Je voudrais un pomme.",
+      "errorIndex": 2,
+      "correction": "une",
+      "explanation": "« pomme » — женского рода, поэтому неопределённый артикль « UNE pomme ». un — для мужского рода.",
+      "rule": {
+        "skill": "articles",
+        "point": "un (м.р.) / une (ж.р.) / des (мн.ч.)",
+        "trap": "un pomme / une livre",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u1-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): être / avoir",
+      "sentence": "Elle est française et elle a un chat.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « elle est » (être) и « elle a » (avoir) — корректно.",
+      "rule": {
+        "skill": "etre-avoir",
+        "point": "être и avoir в présent",
+        "trap": "",
+        "examplesCorrect": [
+          "Il est grand et il a vingt ans."
+        ],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

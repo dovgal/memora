@@ -920,6 +920,71 @@
           "explanation": "После il ne faut pas — всегда инфинитив: fumer."
         }
       ]
+    },
+    {
+      "id": "a1u9-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: согласование (passé composé с être)",
+      "sentence": "Elle est allé au cinéma.",
+      "errorIndex": 2,
+      "correction": "allée",
+      "explanation": "С глаголом être причастие согласуется с подлежащим: « elle » ж.р. → « alléE ». « Elle est allée. »",
+      "rule": {
+        "skill": "passe-compose-etre",
+        "point": "PC с être — согласование причастия с подлежащим (allé/allée/allés/allées)",
+        "trap": "elle est allé",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u9-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: вспомогательный être (движение)",
+      "sentence": "Tu as parti tôt.",
+      "errorIndex": 1,
+      "correction": "es",
+      "explanation": "Глаголы движения (partir, venir, aller, arriver…) в passé composé спрягаются с être: « tu ES parti ».",
+      "rule": {
+        "skill": "passe-compose-etre",
+        "point": "глаголы движения/состояния → PC с être",
+        "trap": "tu as parti / j'ai allé",
+        "examplesCorrect": [],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "a1u9-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): глагол местоименный",
+      "sentence": "Elle s'est levée à sept heures.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: местоименный глагол « se lever » в PC с être, причастие « levée » согласовано (ж.р.).",
+      "rule": {
+        "skill": "verbes-pronominaux",
+        "point": "местоименные глаголы — PC с être + согласование",
+        "trap": "",
+        "examplesCorrect": [
+          "Il s'est réveillé tôt."
+        ],
+        "cefr": "A1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }
