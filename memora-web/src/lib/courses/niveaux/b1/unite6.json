@@ -231,6 +231,71 @@
           "explanation": "Будущее в плане прошлого → conditionnel: reviendraient."
         }
       ]
+    },
+    {
+      "id": "b1u6-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: согласование времён (présent → imparfait)",
+      "sentence": "Elle a dit qu'elle est malade.",
+      "errorIndex": 4,
+      "correction": "était",
+      "explanation": "В косвенной речи в прошедшем présent переходит в imparfait: « Elle a dit qu'elle ÉTAIT malade. »",
+      "rule": {
+        "skill": "discours-rapporte",
+        "point": "косвенная речь в прошедшем: présent → imparfait",
+        "trap": "a dit qu'elle est",
+        "examplesCorrect": [],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b1u6-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: согласование времён (futur → conditionnel)",
+      "sentence": "Elle a promis qu'elle viendra.",
+      "errorIndex": 4,
+      "correction": "viendrait",
+      "explanation": "В косвенной речи в прошедшем futur переходит в conditionnel: « Elle a promis qu'elle VIENDRAIT. »",
+      "rule": {
+        "skill": "discours-rapporte",
+        "point": "косвенная речь в прошедшем: futur → conditionnel",
+        "trap": "a promis qu'elle viendra",
+        "examplesCorrect": [],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b1u6-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): косвенный вопрос",
+      "sentence": "Il m'a demandé si j'étais prêt.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: косвенный вопрос в прошедшем (« demander si » + imparfait). Корректно.",
+      "rule": {
+        "skill": "discours-rapporte",
+        "point": "косвенный вопрос: si + согласование времён",
+        "trap": "",
+        "examplesCorrect": [
+          "Je lui ai demandé où il habitait."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

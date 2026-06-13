@@ -215,6 +215,50 @@
           "explanation": "Chercher midi à quatorze heures — усложнять."
         }
       ]
+    },
+    {
+      "id": "c2u6-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: COI leur (donner à)",
+      "sentence": "Je les ai donné un cadeau pour la fête.",
+      "errorIndex": 1,
+      "correction": "leur",
+      "explanation": "« donner À quelqu'un » требует косвенного местоимения « LEUR »: « je LEUR ai donné un cadeau ».",
+      "rule": {
+        "skill": "cod-coi",
+        "point": "COI (à qqn) → lui/leur; le/la/les — прямое дополнение",
+        "trap": "je les ai donné (donner à)",
+        "examplesCorrect": "C2",
+        "cefr": "C1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "c2u6-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): se souvenir",
+      "sentence": "Elle s'est souvenue de son enfance heureuse.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « se souvenir » согласуется с подлежащим (ж.р.) → « souvenue ». Корректно.",
+      "rule": {
+        "skill": "accord-pronominal",
+        "point": "se souvenir — согласование с подлежащим",
+        "trap": "",
+        "examplesCorrect": [
+          "Ils se sont souvenus de ce jour."
+        ],
+        "cefr": "C2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

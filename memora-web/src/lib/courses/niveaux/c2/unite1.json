@@ -174,6 +174,50 @@
           "explanation": "En filigrane — «между строк»."
         }
       ]
+    },
+    {
+      "id": "c2u1-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: местоименный глагол + прямое дополнение",
+      "sentence": "Elle s'est lavée les mains avant de manger.",
+      "errorIndex": 2,
+      "correction": "lavé",
+      "explanation": "Если прямое дополнение стоит ПОСЛЕ глагола (« les mains »), причастие местоименного глагола НЕ согласуется: « elle s'est LAVÉ les mains ».",
+      "rule": {
+        "skill": "accord-pronominal",
+        "point": "pronominal + COD после глагола → нет согласования",
+        "trap": "elle s'est lavée les mains",
+        "examplesCorrect": "C2",
+        "cefr": "C1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "c2u1-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): местоименный глагол",
+      "sentence": "Elle s'est lavée et habillée rapidement.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: без прямого дополнения причастие согласуется с подлежащим (ж.р.): « s'est lavée ». Корректно.",
+      "rule": {
+        "skill": "accord-pronominal",
+        "point": "pronominal без COD → согласование с подлежащим",
+        "trap": "",
+        "examplesCorrect": [
+          "Ils se sont levés tôt."
+        ],
+        "cefr": "C2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

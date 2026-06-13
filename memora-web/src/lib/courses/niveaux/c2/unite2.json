@@ -196,6 +196,50 @@
           "explanation": "«Сто раз» — преувеличение, гипербола."
         }
       ]
+    },
+    {
+      "id": "c2u2-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: leur / leurs",
+      "sentence": "Les enfants ont rangé leur jouets.",
+      "errorIndex": 4,
+      "correction": "leurs",
+      "explanation": "Перед существительным во множественном числе — « LEURS »: « leurs jouets ».",
+      "rule": {
+        "skill": "leur-leurs",
+        "point": "leur (+ ед.) / leurs (+ мн.); leur (местоимение COI — неизменно)",
+        "trap": "leur jouets",
+        "examplesCorrect": "C2",
+        "cefr": "C1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "c2u2-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): chacun + ses",
+      "sentence": "Chacun a pris ses affaires et est parti.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « chacun » (ед. ч.) сочетается с « ses » и глаголом в ед. ч. Корректно.",
+      "rule": {
+        "skill": "accord",
+        "point": "chacun + singulier + ses",
+        "trap": "",
+        "examplesCorrect": [
+          "Chacun fait ce qu'il veut."
+        ],
+        "cefr": "C2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

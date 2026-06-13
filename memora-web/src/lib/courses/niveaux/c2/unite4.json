@@ -185,6 +185,50 @@
           "explanation": "Loin s'en faut — «далеко не так»."
         }
       ]
+    },
+    {
+      "id": "c2u4-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: aussi… que (уступка) + subjonctif",
+      "sentence": "Aussi surprenant que cela peut paraître, c'est vrai.",
+      "errorIndex": 4,
+      "correction": "puisse",
+      "explanation": "В уступительной конструкции « aussi/si + прилагательное + que » — SUBJONCTIF: « aussi surprenant que cela PUISSE paraître ».",
+      "rule": {
+        "skill": "concession-subjonctif",
+        "point": "aussi/si/quelque + adj + que (уступка) + subjonctif",
+        "trap": "aussi… que cela peut",
+        "examplesCorrect": "C2",
+        "cefr": "C1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "c2u4-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): quoi que + subjonctif",
+      "sentence": "Quoi qu'il arrive, je serai là.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « quoi que » (что бы ни) в два слова + subjonctif « arrive ». Корректно.",
+      "rule": {
+        "skill": "concession-subjonctif",
+        "point": "quoi que (что бы ни) + subjonctif ≠ quoique (хотя)",
+        "trap": "",
+        "examplesCorrect": [
+          "Quoi que tu fasses, fais-le bien."
+        ],
+        "cefr": "C2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

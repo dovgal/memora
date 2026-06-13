@@ -231,6 +231,71 @@
           "explanation": "Номинализация: l'entrée sera gratuite."
         }
       ]
+    },
+    {
+      "id": "b1u5-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: согласование в пассиве",
+      "sentence": "La lettre a été écrit par Marie.",
+      "errorIndex": 4,
+      "correction": "écrite",
+      "explanation": "В пассиве причастие согласуется с подлежащим: « lettre » ж.р. → « a été écritE ».",
+      "rule": {
+        "skill": "passif",
+        "point": "пассив — причастие согласуется с подлежащим",
+        "trap": "la lettre a été écrit",
+        "examplesCorrect": [],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b1u5-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: агент пассива (par)",
+      "sentence": "Ce livre est lu pour beaucoup de gens.",
+      "errorIndex": 4,
+      "correction": "par",
+      "explanation": "В пассиве исполнитель действия вводится предлогом « PAR »: « lu PAR beaucoup de gens ».",
+      "rule": {
+        "skill": "passif",
+        "point": "пассив — агент вводится par (иногда de)",
+        "trap": "lu pour qqn",
+        "examplesCorrect": [],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b1u5-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): пассив",
+      "sentence": "Les résultats seront annoncés demain.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « seront annoncés » (пассив в будущем), причастие согласовано (résultats м.р. мн.). Корректно.",
+      "rule": {
+        "skill": "passif",
+        "point": "пассив в разных временах",
+        "trap": "",
+        "examplesCorrect": [
+          "La maison a été vendue."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

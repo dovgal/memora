@@ -206,6 +206,50 @@
           "explanation": "Дела поважнее — d'autres chats à fouetter."
         }
       ]
+    },
+    {
+      "id": "c2u7-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: местоименный + часть тела (COD после)",
+      "sentence": "Elle s'est cassée le bras en tombant.",
+      "errorIndex": 2,
+      "correction": "cassé",
+      "explanation": "Прямое дополнение (« le bras ») стоит после глагола → причастие НЕ согласуется: « elle s'est CASSÉ le bras ».",
+      "rule": {
+        "skill": "accord-pronominal",
+        "point": "se casser/se laver + часть тела (COD после) → без согласования",
+        "trap": "elle s'est cassée le bras",
+        "examplesCorrect": "C2",
+        "cefr": "C1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "c2u7-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): se serrer la main",
+      "sentence": "Ils se sont serré la main chaleureusement.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « la main » — прямое дополнение после глагола, « se » — косвенное → причастие неизменно « serré ». Корректно.",
+      "rule": {
+        "skill": "accord-pronominal",
+        "point": "se serrer la main — без согласования (se = COI)",
+        "trap": "",
+        "examplesCorrect": [
+          "Elles se sont parlé longuement."
+        ],
+        "cefr": "C2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

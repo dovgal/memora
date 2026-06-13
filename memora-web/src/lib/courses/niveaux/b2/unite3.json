@@ -224,6 +224,71 @@
           "ru": "Тебе следовало сказать мне это раньше"
         }
       ]
+    },
+    {
+      "id": "b2u3-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: conditionnel passé (вспомогательный)",
+      "sentence": "Si j'avais su, j'aurais venu.",
+      "errorIndex": 3,
+      "correction": "je serais",
+      "explanation": "Conditionnel passé глаголов движения — с être: « je SERAIS venu » (venir → être).",
+      "rule": {
+        "skill": "conditionnel-passe",
+        "point": "conditionnel passé = conditionnel вспомогательного + participe (être для движения)",
+        "trap": "j'aurais venu / j'aurais allé",
+        "examplesCorrect": [],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b2u3-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: si + plus-que-parfait",
+      "sentence": "Si j'aurais su, je ne serais pas venu.",
+      "errorIndex": 1,
+      "correction": "j'avais",
+      "explanation": "После « si » — plus-que-parfait, а conditionnel passé — в главной части: « Si j'AVAIS su… ».",
+      "rule": {
+        "skill": "hypothese-passe",
+        "point": "si + plus-que-parfait → conditionnel passé",
+        "trap": "si j'aurais su",
+        "examplesCorrect": [],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b2u3-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): гипотеза о прошлом",
+      "sentence": "Si elle avait étudié, elle aurait réussi son examen.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « si + plus-que-parfait (avait étudié) → conditionnel passé (aurait réussi) ». Корректно.",
+      "rule": {
+        "skill": "hypothese-passe",
+        "point": "si + PQP → conditionnel passé (сожаление о прошлом)",
+        "trap": "",
+        "examplesCorrect": [
+          "Si tu m'avais appelé, je serais venu."
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

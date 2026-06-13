@@ -196,6 +196,48 @@
           "explanation": "Ne serait-ce que — «хотя бы»."
         }
       ]
+    },
+    {
+      "id": "c2u5-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: согласование причастия с COD",
+      "sentence": "Les fautes que j'ai fait m'ont beaucoup appris.",
+      "errorIndex": 4,
+      "correction": "faites",
+      "explanation": "Причастие согласуется с COD « fautes » (ж.р. мн.), стоящим перед avoir: « que j'ai faitES ».",
+      "rule": {
+        "skill": "accord-participe",
+        "point": "accord du participe passé avec COD antéposé",
+        "trap": "les fautes que j'ai fait",
+        "examplesCorrect": "C2",
+        "cefr": "C1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "c2u5-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: согласование причастия с подлежащим",
+      "sentence": "Toutes les portes sont ouverts ce matin.",
+      "errorIndex": 4,
+      "correction": "ouvertes",
+      "explanation": "Причастие-определение согласуется с « portes » (ж.р. мн.): « portes ouvertES ».",
+      "rule": {
+        "skill": "accord",
+        "point": "согласование причастия/прилагательного с существительным",
+        "trap": "les portes sont ouverts",
+        "examplesCorrect": "C2",
+        "cefr": "C1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

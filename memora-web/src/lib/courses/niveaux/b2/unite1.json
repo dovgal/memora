@@ -231,6 +231,71 @@
           "explanation": "Avant que + субжонктив: ne soit ouverte."
         }
       ]
+    },
+    {
+      "id": "b2u1-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: passé simple (неправильный)",
+      "sentence": "Elle prit son sac et partit.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « prit » (prendre) и « partit » (partir) — корректные формы passé simple. Иногда предложение верное.",
+      "rule": {
+        "skill": "passe-simple",
+        "point": "passé simple: il prit, il fut, il vint, il fit",
+        "trap": "",
+        "examplesCorrect": [
+          "Il vint, il vit, il vainquit."
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b2u1-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: avant que + subjonctif",
+      "sentence": "Je veux finir avant que tu pars.",
+      "errorIndex": 6,
+      "correction": "partes",
+      "explanation": "После « avant que » — SUBJONCTIF: « avant que tu PARTES ».",
+      "rule": {
+        "skill": "temporelles",
+        "point": "avant que / jusqu'à ce que + subjonctif (но après que + indicatif)",
+        "trap": "avant que tu pars",
+        "examplesCorrect": [],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b2u1-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: passé simple (prendre)",
+      "sentence": "Elle prena son sac et sortit.",
+      "errorIndex": 1,
+      "correction": "prit",
+      "explanation": "Passé simple от prendre — « prit » (неправильный). « prena » не существует.",
+      "rule": {
+        "skill": "passe-simple",
+        "point": "passé simple неправильных: prit, fit, vint, fut",
+        "trap": "elle prena / il prenда",
+        "examplesCorrect": [],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

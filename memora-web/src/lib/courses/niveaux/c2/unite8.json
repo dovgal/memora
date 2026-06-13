@@ -276,6 +276,50 @@
           "explanation": "Умею готовить — savoir + инфинитив."
         }
       ]
+    },
+    {
+      "id": "c2u8-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: ce / se (омофоны)",
+      "sentence": "Je ne sais pas se qu'il veut vraiment.",
+      "errorIndex": 4,
+      "correction": "ce",
+      "explanation": "« ce que » — указательное (то, что). « se » — возвратное местоимение при глаголе. Здесь: « ce qu'il veut ».",
+      "rule": {
+        "skill": "homophones",
+        "point": "ce (указательное) vs se (возвратное)",
+        "trap": "se qu'il veut / se que je pense",
+        "examplesCorrect": "C2",
+        "cefr": "C1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "c2u8-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): relatif composé",
+      "sentence": "C'est la raison pour laquelle il est parti.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « pour laquelle » (raison ж.р.) — корректное сложное относительное местоимение.",
+      "rule": {
+        "skill": "relatifs-composes",
+        "point": "pour laquelle / auquel / duquel — согласование",
+        "trap": "",
+        "examplesCorrect": [
+          "L'outil avec lequel je travaille."
+        ],
+        "cefr": "C2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

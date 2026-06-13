@@ -242,6 +242,71 @@
           "explanation": "Les résultats — COD: on me les communiquera."
         }
       ]
+    },
+    {
+      "id": "b1u4-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: относительное dont",
+      "sentence": "C'est la personne que je t'ai parlé.",
+      "errorIndex": 3,
+      "correction": "dont",
+      "explanation": "« parler DE quelqu'un » → относительное местоимение « DONT »: « la personne DONT je t'ai parlé ».",
+      "rule": {
+        "skill": "relatifs",
+        "point": "dont заменяет « de + ... » (parler de, avoir besoin de…)",
+        "trap": "la personne que je t'ai parlé",
+        "examplesCorrect": [],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b1u4-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: относительное où (время)",
+      "sentence": "C'est le moment que tout a changé.",
+      "errorIndex": 3,
+      "correction": "où",
+      "explanation": "Для времени и места — « OÙ »: « le moment OÙ tout a changé ».",
+      "rule": {
+        "skill": "relatifs",
+        "point": "où = место/время; que = прямое дополнение",
+        "trap": "le moment que / le jour que",
+        "examplesCorrect": [],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b1u4-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): dont",
+      "sentence": "Le livre dont tu parles est intéressant.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « dont tu parles » (parler de) — корректно.",
+      "rule": {
+        "skill": "relatifs",
+        "point": "dont (de + ...)",
+        "trap": "",
+        "examplesCorrect": [
+          "La fille dont je connais le frère."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

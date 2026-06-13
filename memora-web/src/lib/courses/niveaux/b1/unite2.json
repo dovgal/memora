@@ -244,6 +244,71 @@
           "explanation": "Faire → fass-: que tu fasses."
         }
       ]
+    },
+    {
+      "id": "b1u2-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: subjonctif после vouloir que",
+      "sentence": "Je veux que tu viens.",
+      "errorIndex": 4,
+      "correction": "viennes",
+      "explanation": "После « vouloir que » — SUBJONCTIF: « que tu viennes ».",
+      "rule": {
+        "skill": "subjonctif",
+        "point": "vouloir/falloir/souhaiter que + subjonctif",
+        "trap": "je veux que tu viens",
+        "examplesCorrect": [],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b1u2-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: subjonctif после отрицания мнения",
+      "sentence": "Je ne pense pas qu'il est là.",
+      "errorIndex": 5,
+      "correction": "soit",
+      "explanation": "После отрицательного мнения (« ne pas penser que ») употребляется subjonctif: « qu'il SOIT là ».",
+      "rule": {
+        "skill": "subjonctif",
+        "point": "ne pas penser/croire que + subjonctif",
+        "trap": "je ne pense pas qu'il est",
+        "examplesCorrect": [],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b1u2-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): subjonctif эмоции",
+      "sentence": "Je suis content que tu sois là.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: после выражения эмоции (« être content que ») — subjonctif « sois ». Корректно.",
+      "rule": {
+        "skill": "subjonctif",
+        "point": "эмоция (content/triste/heureux que) + subjonctif",
+        "trap": "",
+        "examplesCorrect": [
+          "J'ai peur qu'il soit en retard."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

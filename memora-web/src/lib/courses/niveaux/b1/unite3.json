@@ -242,6 +242,71 @@
           "explanation": "«Что бы ты сделал» — conditionnel: tu ferais."
         }
       ]
+    },
+    {
+      "id": "b1u3-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: si + imparfait (не conditionnel)",
+      "sentence": "Si j'aurais le temps, je viendrais.",
+      "errorIndex": 1,
+      "correction": "j'avais",
+      "explanation": "После « si » (гипотеза) — IMPARFAIT, а conditionnel — в главной части: « Si j'AVAIS le temps, je viendrais. »",
+      "rule": {
+        "skill": "hypothese",
+        "point": "si + imparfait → conditionnel (в si никогда conditionnel)",
+        "trap": "si j'aurais / si je serais",
+        "examplesCorrect": [],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b1u3-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: élision (puisque)",
+      "sentence": "Puisque il est tard, rentrons.",
+      "errorIndex": 0,
+      "correction": "Puisqu'",
+      "explanation": "Перед гласной « puisque » сокращается: « PUISQU'il est tard ».",
+      "rule": {
+        "skill": "elision",
+        "point": "puisque/lorsque/quoique → puisqu', lorsqu', quoiqu' перед гласной",
+        "trap": "puisque il",
+        "examplesCorrect": [],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b1u3-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): гипотеза",
+      "sentence": "Si j'avais le temps, je t'aiderais.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « si + imparfait (avais) → conditionnel (aiderais) » — корректная схема воображаемого.",
+      "rule": {
+        "skill": "hypothese",
+        "point": "si + imparfait → conditionnel présent",
+        "trap": "",
+        "examplesCorrect": [
+          "Si tu venais, on serait contents."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

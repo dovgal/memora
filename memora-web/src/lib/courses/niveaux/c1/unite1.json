@@ -185,6 +185,50 @@
           "explanation": "Pour ainsi dire — «так сказать»."
         }
       ]
+    },
+    {
+      "id": "c1u1-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: согласование причастия с COD",
+      "sentence": "Les décisions qu'il a pris sont justes.",
+      "errorIndex": 4,
+      "correction": "prises",
+      "explanation": "Причастие с avoir согласуется с прямым дополнением, стоящим перед глаголом: « décisions » ж.р. мн. → « prisES ».",
+      "rule": {
+        "skill": "accord-participe",
+        "point": "accord du participe passé avec COD antéposé",
+        "trap": "les décisions qu'il a pris",
+        "examplesCorrect": [],
+        "cefr": "C1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "c1u1-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): модализация",
+      "sentence": "Il se peut qu'il soit en retard.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « il se peut que » требует subjonctif → « qu'il soit ». Корректно.",
+      "rule": {
+        "skill": "modalisation",
+        "point": "il se peut que / il est possible que + subjonctif",
+        "trap": "",
+        "examplesCorrect": [
+          "Il semblerait qu'elle ait raison."
+        ],
+        "cefr": "C1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

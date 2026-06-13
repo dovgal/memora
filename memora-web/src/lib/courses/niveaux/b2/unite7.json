@@ -231,6 +231,50 @@
           "explanation": "Маркированное заключение — обязательный элемент структуры."
         }
       ]
+    },
+    {
+      "id": "b2u7-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: subjonctif (il est important que)",
+      "sentence": "Il est important que tu prends une décision.",
+      "errorIndex": 5,
+      "correction": "prennes",
+      "explanation": "После « il est important que » — SUBJONCTIF: « que tu PRENNES une décision ».",
+      "rule": {
+        "skill": "subjonctif",
+        "point": "оценка/необходимость (il est important/essentiel que) + subjonctif",
+        "trap": "il est important que tu prends",
+        "examplesCorrect": [],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b2u7-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): связки аргументации",
+      "sentence": "Non seulement il est compétent, mais il est aussi sympathique.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: конструкция « non seulement…, mais aussi » корректна для аргументации (DELF).",
+      "rule": {
+        "skill": "connecteurs",
+        "point": "non seulement… mais aussi; d'une part… d'autre part",
+        "trap": "",
+        "examplesCorrect": [
+          "D'une part c'est utile, d'autre part c'est beau."
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

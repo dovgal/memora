@@ -185,6 +185,50 @@
           "explanation": "Финальная формула: salutations distinguées."
         }
       ]
+    },
+    {
+      "id": "c1u4-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: quel que (в два слова)",
+      "sentence": "Quelque soit ta décision, je te soutiens.",
+      "errorIndex": 0,
+      "correction": "Quelle que",
+      "explanation": "Перед глаголом être в subjonctif пишется « quel que » в ДВА слова и согласуется: « QUELLE QUE soit ta décision ».",
+      "rule": {
+        "skill": "quel-que",
+        "point": "quel que + être au subjonctif (согласуется: quel/quelle/quels/quelles que)",
+        "trap": "quelque soit / quelque soient",
+        "examplesCorrect": [],
+        "cefr": "C1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "c1u4-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): регистр soutenu",
+      "sentence": "Je vous saurais gré de me répondre rapidement.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « savoir gré » — правильная форма (НЕ « être gré »): « je vous saurais gré ». Корректный soutenu.",
+      "rule": {
+        "skill": "registre",
+        "point": "savoir gré (de) — правильная форма вежливости",
+        "trap": "",
+        "examplesCorrect": [
+          "Je vous saurais gré de votre compréhension."
+        ],
+        "cefr": "C1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

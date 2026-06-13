@@ -202,6 +202,71 @@
           "explanation": "Croire À + une promesse (ж.р.) → à laquelle."
         }
       ]
+    },
+    {
+      "id": "b2u6-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: mise en relief (c'est moi qui)",
+      "sentence": "C'est moi qui a raison.",
+      "errorIndex": 3,
+      "correction": "ai",
+      "explanation": "При « c'est moi qui » глагол согласуется с « moi » (1 л.): « c'est moi qui AI raison ».",
+      "rule": {
+        "skill": "mise-en-relief",
+        "point": "c'est moi qui ai…, c'est toi qui as…, c'est nous qui avons…",
+        "trap": "c'est moi qui a",
+        "examplesCorrect": [],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b2u6-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: согласование relatif composé",
+      "sentence": "La maison dans lequel j'habite est grande.",
+      "errorIndex": 3,
+      "correction": "laquelle",
+      "explanation": "Сложное относительное местоимение согласуется: « maison » ж.р. → « dans LAQUELLE ».",
+      "rule": {
+        "skill": "relatifs-composes",
+        "point": "lequel/laquelle/lesquels/lesquelles — согласование с антецедентом",
+        "trap": "la maison dans lequel",
+        "examplesCorrect": [],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b2u6-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): ce dont",
+      "sentence": "C'est exactement ce dont j'ai besoin.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « ce dont j'ai besoin » (avoir besoin DE → dont). Корректно.",
+      "rule": {
+        "skill": "relatifs",
+        "point": "ce dont = ce + de (avoir besoin de, parler de)",
+        "trap": "",
+        "examplesCorrect": [
+          "Voilà ce dont je rêve."
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

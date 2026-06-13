@@ -253,6 +253,71 @@
           "explanation": "Один субъект → инфинитив: il espère obtenir."
         }
       ]
+    },
+    {
+      "id": "b2u2-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: уверенность → indicatif",
+      "sentence": "Il est certain qu'il vienne.",
+      "errorIndex": 4,
+      "correction": "vient",
+      "explanation": "После выражений уверенности (« il est certain/sûr que ») — INDICATIF: « qu'il VIENT ». Subjonctif — после сомнения.",
+      "rule": {
+        "skill": "mode-choice",
+        "point": "уверенность → indicatif; сомнение/эмоция → subjonctif",
+        "trap": "il est certain qu'il vienne",
+        "examplesCorrect": [],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b2u2-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: douter que + subjonctif",
+      "sentence": "Je doute qu'il a fini.",
+      "errorIndex": 3,
+      "correction": "ait",
+      "explanation": "После « douter que » — subjonctif (здесь subjonctif passé): « qu'il AIT fini ».",
+      "rule": {
+        "skill": "subjonctif-passe",
+        "point": "douter/ne pas croire que + subjonctif (ait fini, soit venu)",
+        "trap": "je doute qu'il a fini",
+        "examplesCorrect": [],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b2u2-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): subjonctif passé",
+      "sentence": "Il faut que nous ayons fini avant midi.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « que nous ayons fini » — subjonctif passé (действие завершится к сроку). Корректно.",
+      "rule": {
+        "skill": "subjonctif-passe",
+        "point": "subjonctif passé = aie/aies/ait/ayons + participe",
+        "trap": "",
+        "examplesCorrect": [
+          "Bien qu'il ait plu, on est sortis."
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

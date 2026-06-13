@@ -185,6 +185,50 @@
           "explanation": "Le cas échéant — «при необходимости»."
         }
       ]
+    },
+    {
+      "id": "c1u5-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: à moins que + subjonctif",
+      "sentence": "À moins qu'il pleut, on sort ce soir.",
+      "errorIndex": 3,
+      "correction": "pleuve",
+      "explanation": "После « à moins que » — SUBJONCTIF: « à moins qu'il PLEUVE ».",
+      "rule": {
+        "skill": "subjonctif",
+        "point": "à moins que / pourvu que / jusqu'à ce que + subjonctif",
+        "trap": "à moins qu'il pleut",
+        "examplesCorrect": [],
+        "cefr": "C1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "c1u5-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): ne explétif",
+      "sentence": "Je crains qu'il ne fasse trop froid.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « ne » после craindre que — это ne explétif (не отрицание), глагол в subjonctif. Корректно.",
+      "rule": {
+        "skill": "ne-expletif",
+        "point": "ne explétif после craindre/avoir peur/avant que (не меняет смысла)",
+        "trap": "",
+        "examplesCorrect": [
+          "J'ai peur qu'il ne soit trop tard."
+        ],
+        "cefr": "C1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

@@ -202,6 +202,71 @@
           "explanation": "Avoir beau: on a beau multiplier..."
         }
       ]
+    },
+    {
+      "id": "b2u4-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: bien que + subjonctif",
+      "sentence": "Bien qu'il est fatigué, il continue.",
+      "errorIndex": 2,
+      "correction": "soit",
+      "explanation": "После « bien que » — SUBJONCTIF: « Bien qu'il SOIT fatigué ».",
+      "rule": {
+        "skill": "concession",
+        "point": "bien que / quoique + subjonctif",
+        "trap": "bien qu'il est",
+        "examplesCorrect": [],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b2u4-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: quoique + subjonctif",
+      "sentence": "Quoiqu'il fait froid, il sort sans manteau.",
+      "errorIndex": 1,
+      "correction": "fasse",
+      "explanation": "После « quoique » (хотя) — субжонктив: « Quoiqu'il FASSE froid ».",
+      "rule": {
+        "skill": "concession",
+        "point": "quoique + subjonctif (≠ quoi que)",
+        "trap": "quoiqu'il fait",
+        "examplesCorrect": [],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "b2u4-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): malgré + существительное",
+      "sentence": "Malgré la fatigue, elle a continué.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « malgré + существительное » (без que): « malgré la fatigue ». Корректно.",
+      "rule": {
+        "skill": "concession",
+        "point": "malgré + nom; bien que + verbe au subjonctif",
+        "trap": "",
+        "examplesCorrect": [
+          "Malgré la pluie, le match a eu lieu."
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }
