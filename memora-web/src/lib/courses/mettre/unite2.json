@@ -263,6 +263,100 @@
           "ru": "Этот кризис ставит компанию в трудное положение"
         }
       ]
+    },
+    {
+      "id": "mt2-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: предлог в mettre au point",
+      "sentence": "Les ingénieurs ont mis à point le nouveau moteur.",
+      "errorIndex": 4,
+      "correction": "au",
+      "explanation": "« mettre AU point » = налаживать, доводить до совершенства (предлог au). Правильно: « mis au point ». (« à point » — про степень готовности/прожарки.)",
+      "rule": {
+        "skill": "fixed-preposition",
+        "point": "mettre au point — налаживать, дорабатывать (предлог au)",
+        "trap": "mettre à point",
+        "examplesCorrect": [
+          "Ils ont mis au point une méthode efficace."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "mt2-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: спряжение mettre (nous)",
+      "sentence": "Nous metons nos compétences à profit.",
+      "errorIndex": 1,
+      "correction": "mettons",
+      "explanation": "Спряжение mettre: nous mettons — с двумя t. Правильно: « Nous mettons nos compétences à profit. »",
+      "rule": {
+        "skill": "conjugation",
+        "point": "mettre: nous mettons, vous mettez, ils mettent (двойная t)",
+        "trap": "nous metons / vous metez",
+        "examplesCorrect": [
+          "Nous mettons la table.",
+          "Vous mettez vos chaussures."
+        ],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "mt2-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: mettre en danger",
+      "sentence": "Ce comportement met en dangers la sécurité.",
+      "errorIndex": 4,
+      "correction": "danger",
+      "explanation": "В выражении « mettre en danger » слово danger не ставится во множественное число. Правильно: « met en danger ».",
+      "rule": {
+        "skill": "fixed-expression",
+        "point": "mettre en danger / en difficulté / en péril — существительное без -s",
+        "trap": "en dangers / en difficultés",
+        "examplesCorrect": [
+          "Cela met en danger des vies.",
+          "Il met en péril le projet."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "mt2-eh4",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): mettre au monde",
+      "sentence": "Le médecin a mis au monde des jumeaux.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « mettre au monde » = рождать, принимать роды (предлог au). Предложение корректно.",
+      "rule": {
+        "skill": "fixed-expression",
+        "point": "mettre au monde — рождать (корректно)",
+        "trap": "—",
+        "examplesCorrect": [
+          "Elle a mis au monde un garçon."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

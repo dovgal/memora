@@ -261,6 +261,101 @@
           "ru": "Он сдаёт свою квартиру в аренду"
         }
       ]
+    },
+    {
+      "id": "mt1-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: спряжение mettre",
+      "sentence": "Tu met ton manteau avant de sortir.",
+      "errorIndex": 1,
+      "correction": "mets",
+      "explanation": "Спряжение mettre в présent: je mets, tu mets, il met. После « tu » нужна -s. Правильно: « Tu mets ton manteau. »",
+      "rule": {
+        "skill": "conjugation",
+        "point": "mettre au présent: je mets, tu mets, il met, nous mettons, vous mettez, ils mettent",
+        "trap": "tu met / il mets",
+        "examplesCorrect": [
+          "Tu mets la table.",
+          "Je mets mes chaussures."
+        ],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "mt1-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: согласование mis",
+      "sentence": "La nouvelle loi a été mis en place hier.",
+      "errorIndex": 5,
+      "correction": "mise",
+      "explanation": "Причастие mis при глаголе être (пассив) согласуется с подлежащим. « loi » — ж.р. → mise. Правильно: « La loi a été mise en place. »",
+      "rule": {
+        "skill": "participle-agreement",
+        "point": "mis согласуется в роде и числе с подлежащим при être: mis/mise/mises",
+        "trap": "a été mis (без согласования)",
+        "examplesCorrect": [
+          "Les règles ont été mises en place.",
+          "La maison est mise en vente."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "mt1-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: предлог в mettre en place",
+      "sentence": "Ils ont mis à place un nouveau système.",
+      "errorIndex": 3,
+      "correction": "en",
+      "explanation": "Конструкция « mettre EN place » (предлог en, без артикля). Правильно: « mis en place ».",
+      "rule": {
+        "skill": "fixed-preposition",
+        "point": "mettre en place / en œuvre / en service — предлог en без артикля",
+        "trap": "mettre à place / en la place",
+        "examplesCorrect": [
+          "mettre en œuvre un plan",
+          "mettre en service une ligne"
+        ],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "mt1-eh4",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): mettre en valeur",
+      "sentence": "Ce CV met en valeur vos compétences.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « mettre en valeur » — устойчивое выражение «выгодно подчёркивать». Иногда предложение верное — это тренирует бдительность.",
+      "rule": {
+        "skill": "fixed-expression",
+        "point": "mettre en valeur — выгодно представлять (корректно)",
+        "trap": "—",
+        "examplesCorrect": [
+          "Cette robe met en valeur ta silhouette."
+        ],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }

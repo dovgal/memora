@@ -333,6 +333,98 @@
           "explanation": "«Использовать с пользой» — mettre à profit."
         }
       ]
+    },
+    {
+      "id": "mt3-eh1",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: согласование remis",
+      "sentence": "La voiture a été remis à neuf.",
+      "errorIndex": 4,
+      "correction": "remise",
+      "explanation": "Причастие remis при être согласуется с подлежащим. « voiture » — ж.р. → remise. Правильно: « La voiture a été remise à neuf. »",
+      "rule": {
+        "skill": "participle-agreement",
+        "point": "remis согласуется в роде и числе при être: remis/remise/remises",
+        "trap": "a été remis (без согласования)",
+        "examplesCorrect": [
+          "Les maisons ont été remises à neuf."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "mt3-eh2",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: remettre sur pied",
+      "sentence": "Le médecin l'a remis sur pieds en deux semaines.",
+      "errorIndex": 5,
+      "correction": "pied",
+      "explanation": "В выражении « remettre sur pied » (поставить на ноги, восстановить) pied стоит в единственном числе. Правильно: « sur pied ».",
+      "rule": {
+        "skill": "fixed-expression",
+        "point": "remettre sur pied — восстановить; pied без -s",
+        "trap": "sur pieds",
+        "examplesCorrect": [
+          "Ce traitement l'a remis sur pied."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "mt3-eh3",
+      "type": "error-hunt",
+      "title": "Найдите ошибку: предлог в remettre à plus tard",
+      "sentence": "Ils ont remis en plus tard le voyage.",
+      "errorIndex": 3,
+      "correction": "à",
+      "explanation": "« remettre À plus tard » = откладывать (предлог à). Правильно: « remis à plus tard ».",
+      "rule": {
+        "skill": "fixed-preposition",
+        "point": "remettre à plus tard / à neuf — предлог à",
+        "trap": "remettre en plus tard",
+        "examplesCorrect": [
+          "On remet la réunion à plus tard."
+        ],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "mt3-eh4",
+      "type": "error-hunt",
+      "title": "Найдите ошибку (или её нет): remettre en marche",
+      "sentence": "Le mécanicien a remis le moteur en marche.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « remettre en marche » = снова запустить. Предложение корректно.",
+      "rule": {
+        "skill": "fixed-expression",
+        "point": "remettre en marche — снова запустить (корректно)",
+        "trap": "—",
+        "examplesCorrect": [
+          "Il a remis l'ordinateur en marche."
+        ],
+        "cefr": "A2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
     }
   ]
 }
