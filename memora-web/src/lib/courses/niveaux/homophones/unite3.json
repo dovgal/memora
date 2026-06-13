@@ -1,0 +1,173 @@
+{
+  "id": "unite3",
+  "title": "Омофоны 3 : leur/leurs, peu/peut, près/prêt, quel/qu'elle",
+  "description": "Частые ловушки B1–B2 и приёмы проверки.",
+  "vocabulary": [
+    {
+      "fr": "leur / leurs",
+      "ru": "им / их (мн.)",
+      "type": "phrase"
+    },
+    {
+      "fr": "peut/peux / peu",
+      "ru": "мочь / мало",
+      "type": "phrase"
+    },
+    {
+      "fr": "prêt / près",
+      "ru": "готов / близко",
+      "type": "phrase"
+    },
+    {
+      "fr": "quel(le) / qu'elle",
+      "ru": "какой / что она",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "hp3-th1",
+      "type": "theory",
+      "title": "Ловушки B1–B2: подстановка",
+      "content": "<p style='margin:.6rem 0'>Третья группа — частые ловушки уровня B1–B2.</p><table style='width:100%;border-collapse:collapse;margin:.8rem 0'><tr><th style='text-align:left;padding:.4rem;border-bottom:1px solid rgba(255,255,255,.2)'>Слово</th><th style='text-align:left;padding:.4rem;border-bottom:1px solid rgba(255,255,255,.2)'>Замена-проверка</th></tr><tr><td style='padding:.4rem'><b>leur</b> / leurs</td><td style='padding:.4rem'>leur перед глаголом = «им» (без -s). leurs + сущ. мн.ч.</td></tr><tr><td style='padding:.4rem'><b>peut/peux</b> / peu</td><td style='padding:.4rem'>peut/peux = pouvoir → «pouvait». peu = «мало»</td></tr><tr><td style='padding:.4rem'><b>prêt</b> / près</td><td style='padding:.4rem'>prêt = готов (prêt à). près = близко (près de)</td></tr><tr><td style='padding:.4rem'><b>quel(le)</b> / qu'elle</td><td style='padding:.4rem'>quel/quelle + сущ. qu'elle → «qu'il»</td></tr></table>"
+    },
+    {
+      "id": "hp3-eh1",
+      "type": "error-hunt",
+      "title": "leur или leurs ?",
+      "sentence": "Je leurs ai donné un cadeau hier.",
+      "errorIndex": 1,
+      "correction": "leur",
+      "explanation": "Перед глаголом «leur» = местоимение «им», всегда БЕЗ -s: « Je LEUR ai donné ». «leurs» бывает только перед существительным во мн.ч.",
+      "rule": {
+        "skill": "homophones",
+        "point": "Омофоны leur/leurs. Приём: leur (перед глаголом) = им, без -s; leurs + сущ. мн.ч.",
+        "trap": "leur/leurs",
+        "examplesCorrect": [
+          "Je leur parle. / leurs enfants"
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "hp3-eh2",
+      "type": "error-hunt",
+      "title": "leur или leurs ?",
+      "sentence": "Les voisins ont repeint leur volets.",
+      "errorIndex": 4,
+      "correction": "leurs",
+      "explanation": "Перед существительным во множественном числе — « leurs volets ».",
+      "rule": {
+        "skill": "homophones",
+        "point": "Омофоны leur/leurs. Приём: leurs + существительное во мн.ч.",
+        "trap": "leur/leurs",
+        "examplesCorrect": [
+          "leurs idées / leur maison"
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "hp3-eh3",
+      "type": "error-hunt",
+      "title": "peut или peu ?",
+      "sentence": "Il peux venir avec nous demain.",
+      "errorIndex": 1,
+      "correction": "peut",
+      "explanation": "«peut/peux» = глагол pouvoir: замена на « pouvait » (« il pouvait venir »). С « il » — форма « peut ». «peu» = «мало».",
+      "rule": {
+        "skill": "homophones",
+        "point": "Омофоны peut/peux/peu. Приём: peut/peux = pouvoir (→ pouvait); peu = мало",
+        "trap": "peut/peux/peu",
+        "examplesCorrect": [
+          "Il peut partir. / Je mange peu."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "hp3-eh4",
+      "type": "error-hunt",
+      "title": "peu или peut ?",
+      "sentence": "Elle dort très peut en ce moment.",
+      "errorIndex": 3,
+      "correction": "peu",
+      "explanation": "Здесь «мало» → наречие « peu ». Замена на « pouvait » невозможна, значит не глагол.",
+      "rule": {
+        "skill": "homophones",
+        "point": "Омофоны peu/peut. Приём: peu = мало (наречие); peut = pouvoir",
+        "trap": "peu/peut",
+        "examplesCorrect": [
+          "Il y a peu de monde."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "hp3-eh5",
+      "type": "error-hunt",
+      "title": "prêt или près ?",
+      "sentence": "Je suis près à partir en voyage.",
+      "errorIndex": 2,
+      "correction": "prêt",
+      "explanation": "«prêt» = готов (prêt À faire qch). «près» = близко (près DE). Здесь — « prêt à partir ».",
+      "rule": {
+        "skill": "homophones",
+        "point": "Омофоны prêt/près. Приём: prêt à (готов); près de (близко)",
+        "trap": "prêt/près",
+        "examplesCorrect": [
+          "Il est prêt. / C'est près d'ici."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "hp3-eh6",
+      "type": "error-hunt",
+      "title": "quel или qu'elle ?",
+      "sentence": "Quelle dommage qu'il ne soit pas venu !",
+      "errorIndex": 0,
+      "correction": "Quel",
+      "explanation": "«quel/quelle» согласуется с существительным: « dommage » — м.р. → « QUEL dommage ». «qu'elle» = que + elle (можно заменить на « qu'il »).",
+      "rule": {
+        "skill": "homophones",
+        "point": "Омофоны quel/qu'elle. Приём: quel(le) + сущ.; qu'elle → qu'il",
+        "trap": "quel/qu'elle",
+        "examplesCorrect": [
+          "Quel temps ! / Je crois qu'elle vient."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    }
+  ]
+}

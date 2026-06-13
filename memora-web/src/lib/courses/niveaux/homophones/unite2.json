@@ -1,0 +1,178 @@
+{
+  "id": "unite2",
+  "title": "Омофоны 2 : ce/se, c'est/s'est, ces/ses, la/là/l'a, ça/sa",
+  "description": "Формы с «c»/«s» и апострофом. Приёмы подстановки.",
+  "vocabulary": [
+    {
+      "fr": "se / ce",
+      "ru": "возвратное / указательное",
+      "type": "phrase"
+    },
+    {
+      "fr": "c'est / s'est",
+      "ru": "это / возвратный глагол",
+      "type": "phrase"
+    },
+    {
+      "fr": "ses / ces",
+      "ru": "его-её / эти",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'a / la / là",
+      "ru": "его+avoir / артикль / там",
+      "type": "phrase"
+    },
+    {
+      "fr": "ça / sa",
+      "ru": "это / его-её",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "hp2-th1",
+      "type": "theory",
+      "title": "Омофоны c/s: подстановка",
+      "content": "<p style='margin:.6rem 0'>Вторая группа — «c»/«s» и формы с апострофом. Те же приёмы подстановки.</p><table style='width:100%;border-collapse:collapse;margin:.8rem 0'><tr><th style='text-align:left;padding:.4rem;border-bottom:1px solid rgba(255,255,255,.2)'>Слово</th><th style='text-align:left;padding:.4rem;border-bottom:1px solid rgba(255,255,255,.2)'>Замена-проверка</th></tr><tr><td style='padding:.4rem'><b>se</b> / ce</td><td style='padding:.4rem'>se → «me/te» (il se/me lave). ce → «cela»</td></tr><tr><td style='padding:.4rem'><b>c'est</b> / s'est</td><td style='padding:.4rem'>c'est → «cela est». s'est — возвратный глагол</td></tr><tr><td style='padding:.4rem'><b>ses</b> / ces</td><td style='padding:.4rem'>ses = его/её (les siens). ces = эти (ces …-là)</td></tr><tr><td style='padding:.4rem'><b>l'a</b> / la / là</td><td style='padding:.4rem'>l'a → «l'avait». la → «les». là = там</td></tr><tr><td style='padding:.4rem'><b>sa</b> / ça</td><td style='padding:.4rem'>sa — притяжательное (+сущ.). ça → «cela»</td></tr></table>"
+    },
+    {
+      "id": "hp2-eh1",
+      "type": "error-hunt",
+      "title": "ce или se ?",
+      "sentence": "Il ce lave les mains avant de manger.",
+      "errorIndex": 1,
+      "correction": "se",
+      "explanation": "«se» можно заменить на «me/te» (« je me lave ») → возвратное « se ». «ce» заменяется на « cela ».",
+      "rule": {
+        "skill": "homophones",
+        "point": "Омофоны ce/se. Приём: se → me/te; ce → cela",
+        "trap": "ce/se",
+        "examplesCorrect": [
+          "Il se lève. / Ce livre est à moi."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "hp2-eh2",
+      "type": "error-hunt",
+      "title": "c'est или s'est ?",
+      "sentence": "Regarde le ciel, s'est magnifique !",
+      "errorIndex": 3,
+      "correction": "c'est",
+      "explanation": "Замена на « cela est » возможна (« cela est magnifique ») → пишем « c'est ». «s'est» — часть возвратного глагола (« il s'est levé »).",
+      "rule": {
+        "skill": "homophones",
+        "point": "Омофоны c'est/s'est. Приём: c'est → cela est; s'est → возвратный глагол",
+        "trap": "c'est/s'est",
+        "examplesCorrect": [
+          "C'est vrai. / Il s'est trompé."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "hp2-eh3",
+      "type": "error-hunt",
+      "title": "ces или ses ?",
+      "sentence": "Paul adore ces enfants, ce sont les siens.",
+      "errorIndex": 2,
+      "correction": "ses",
+      "explanation": "Речь о «его» детях → притяжательное « ses » (можно сказать « les siens »). «ces» = «эти» (ces enfants-là).",
+      "rule": {
+        "skill": "homophones",
+        "point": "Омофоны ces/ses. Приём: ses = его/её (les siens); ces = эти",
+        "trap": "ces/ses",
+        "examplesCorrect": [
+          "Il a rangé ses affaires."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "hp2-eh4",
+      "type": "error-hunt",
+      "title": "la, là или l'a ?",
+      "sentence": "Le chien la mordu à la jambe.",
+      "errorIndex": 2,
+      "correction": "l'a",
+      "explanation": "«l'a» = местоимение + avoir: замена на « l'avait » (« le chien l'avait mordu »). «la» = артикль/местоимение (= les), «là» = там.",
+      "rule": {
+        "skill": "homophones",
+        "point": "Омофоны la/là/l'a. Приём: l'a → l'avait; la → les; là = там",
+        "trap": "la/là/l'a",
+        "examplesCorrect": [
+          "Il l'a vu. / La porte, il la ferme."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "hp2-eh5",
+      "type": "error-hunt",
+      "title": "sa или ça ?",
+      "sentence": "Il a oublié ça valise à la gare.",
+      "errorIndex": 3,
+      "correction": "sa",
+      "explanation": "Перед существительным нужно притяжательное « sa valise ». «ça» = « cela » (указательное, без существительного).",
+      "rule": {
+        "skill": "homophones",
+        "point": "Омофоны ça/sa. Приём: sa = притяжательное (+сущ.); ça = cela",
+        "trap": "ça/sa",
+        "examplesCorrect": [
+          "Sa voiture est neuve. / Ça suffit."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "hp2-eh6",
+      "type": "error-hunt",
+      "title": "là или la ?",
+      "sentence": "Reste la et ne bouge pas.",
+      "errorIndex": 1,
+      "correction": "là",
+      "explanation": "Речь о месте («там») → « là » с акцентом. «la» без акцента — артикль или местоимение.",
+      "rule": {
+        "skill": "homophones",
+        "point": "Омофоны la/là. Приём: là = там/место; la = артикль/местоимение",
+        "trap": "la/là",
+        "examplesCorrect": [
+          "Assieds-toi là. / La table est propre."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    }
+  ]
+}

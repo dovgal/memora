@@ -35,6 +35,8 @@ import vb13 from './verbes/unite13.json';
 import vb14 from './verbes/unite14.json'; import vb15 from './verbes/unite15.json';
 import vb16 from './verbes/unite16.json';
 import vb17 from './verbes/unite17.json'; import vb18 from './verbes/unite18.json';
+import hp1 from './homophones/unite1.json'; import hp2 from './homophones/unite2.json';
+import hp3 from './homophones/unite3.json';
 
 const U = (m: unknown) => m as EditoUnit;
 
@@ -105,5 +107,12 @@ export const LEVELS: Record<string, LevelCourse> = {
     accent: 'lime',
     units: { '1': U(vb1), '2': U(vb2), '3': U(vb3), '4': U(vb4), '5': U(vb5), '6': U(vb6), '7': U(vb7), '8': U(vb8), '9': U(vb9), '10': U(vb10), '11': U(vb11), '12': U(vb12), '13': U(vb13), '14': U(vb14), '15': U(vb15), '16': U(vb16), '17': U(vb17), '18': U(vb18) },
     order: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18'],
+  },
+  homophones: {
+    id: 'homophones', courseId: 'niveau-homophones', title: 'Омофоны и ловушки', level: 'A2–C1',
+    description: "Метод Projet Voltaire: a/à, et/est, son/sont, on/ont, ce/se, c'est/s'est, ces/ses, leur/leurs, peut/peu, prêt/près… Объяснения — приёмы подстановки (Astuces). Каждый повтор — новое предложение того же правила.",
+    accent: 'fuchsia',
+    units: { '1': U(hp1), '2': U(hp2), '3': U(hp3) },
+    order: ['1','2','3'],
   },
 };

@@ -1,0 +1,178 @@
+{
+  "id": "unite1",
+  "title": "Омофоны 1 : a/à, et/est, son/sont, on/ont, ou/où",
+  "description": "Базовые грамматические омофоны и приём подстановки (метод Projet Voltaire).",
+  "vocabulary": [
+    {
+      "fr": "a / à",
+      "ru": "avoir / предлог",
+      "type": "phrase"
+    },
+    {
+      "fr": "est / et",
+      "ru": "être / и",
+      "type": "phrase"
+    },
+    {
+      "fr": "sont / son",
+      "ru": "être / его-её",
+      "type": "phrase"
+    },
+    {
+      "fr": "ont / on",
+      "ru": "avoir / местоимение",
+      "type": "phrase"
+    },
+    {
+      "fr": "où / ou",
+      "ru": "где / или",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "hp1-th1",
+      "type": "theory",
+      "title": "Омофоны: тест на подстановку",
+      "content": "<p style='margin:.6rem 0'>Омофоны звучат одинаково, но пишутся по-разному. Главный приём Projet Voltaire — <b>тест на подстановку</b>: мысленно замените слово, и написание станет очевидным.</p><table style='width:100%;border-collapse:collapse;margin:.8rem 0'><tr><th style='text-align:left;padding:.4rem;border-bottom:1px solid rgba(255,255,255,.2)'>Слово</th><th style='text-align:left;padding:.4rem;border-bottom:1px solid rgba(255,255,255,.2)'>Замена-проверка</th></tr><tr><td style='padding:.4rem'><b>a</b> / à</td><td style='padding:.4rem'>a = avoir → «avait» (Il a/avait mangé). à — предлог</td></tr><tr><td style='padding:.4rem'><b>est</b> / et</td><td style='padding:.4rem'>est = être → «était». et = «и» (et puis)</td></tr><tr><td style='padding:.4rem'><b>sont</b> / son</td><td style='padding:.4rem'>sont = être → «seront». son — притяжательное</td></tr><tr><td style='padding:.4rem'><b>ont</b> / on</td><td style='padding:.4rem'>ont = avoir → «avaient». on = «il»</td></tr><tr><td style='padding:.4rem'><b>où</b> / ou</td><td style='padding:.4rem'>où = место/вопрос. ou = «или» (ou bien)</td></tr></table>"
+    },
+    {
+      "id": "hp1-eh1",
+      "type": "error-hunt",
+      "title": "a или à ?",
+      "sentence": "Il à mangé une pomme rouge.",
+      "errorIndex": 1,
+      "correction": "a",
+      "explanation": "«a» — это глагол avoir: замените на «avait» → « Il avait mangé ». Значит, без акцента: « Il a mangé ». «à» (с акцентом) — предлог.",
+      "rule": {
+        "skill": "homophones",
+        "point": "Омофоны a/à. Приём: a = avoir (→ avait); à = предлог",
+        "trap": "a/à",
+        "examplesCorrect": [
+          "Il a fini. / Il va à Paris."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "hp1-eh2",
+      "type": "error-hunt",
+      "title": "a или à ?",
+      "sentence": "Je vais a la plage cet été.",
+      "errorIndex": 2,
+      "correction": "à",
+      "explanation": "Здесь «a» нельзя заменить на «avait» → это предлог направления « à »: « Je vais À la plage ».",
+      "rule": {
+        "skill": "homophones",
+        "point": "Омофоны a/à. Приём: нельзя заменить на avait → предлог à",
+        "trap": "a/à",
+        "examplesCorrect": [
+          "On part à midi."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "hp1-eh3",
+      "type": "error-hunt",
+      "title": "et или est ?",
+      "sentence": "Mon frère et grand et fort.",
+      "errorIndex": 2,
+      "correction": "est",
+      "explanation": "Первое слово можно заменить на «était» (« Mon frère était grand ») → это глагол « est ». Союз « et » (= «и») остаётся вторым.",
+      "rule": {
+        "skill": "homophones",
+        "point": "Омофоны et/est. Приём: est = être (→ était); et = и",
+        "trap": "et/est",
+        "examplesCorrect": [
+          "Il est là et il chante."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "hp1-eh4",
+      "type": "error-hunt",
+      "title": "son или sont ?",
+      "sentence": "Il a pris sont parapluie ce matin.",
+      "errorIndex": 3,
+      "correction": "son",
+      "explanation": "«sont» = глагол être: проверка заменой на « seront ». Тут нельзя → значит притяжательное « son parapluie ».",
+      "rule": {
+        "skill": "homophones",
+        "point": "Омофоны son/sont. Приём: sont = être (→ seront); son = притяжательное",
+        "trap": "son/sont",
+        "examplesCorrect": [
+          "Les bureaux sont fermés."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "hp1-eh5",
+      "type": "error-hunt",
+      "title": "on или ont ?",
+      "sentence": "Les enfants on mangé tout le gâteau.",
+      "errorIndex": 2,
+      "correction": "ont",
+      "explanation": "«ont» = глагол avoir: замените на « avaient » → « Les enfants avaient mangé ». Значит « ont ». «on» = местоимение (= il).",
+      "rule": {
+        "skill": "homophones",
+        "point": "Омофоны on/ont. Приём: ont = avoir (→ avaient); on = il",
+        "trap": "on/ont",
+        "examplesCorrect": [
+          "On part. / Ils ont fini."
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "hp1-eh6",
+      "type": "error-hunt",
+      "title": "ou или où ?",
+      "sentence": "Je ne sais pas ou il habite.",
+      "errorIndex": 4,
+      "correction": "où",
+      "explanation": "Здесь речь о месте → « où » (с акцентом). «ou» (без акцента) = «или», его можно заменить на « ou bien ».",
+      "rule": {
+        "skill": "homophones",
+        "point": "Омофоны ou/où. Приём: où = место/вопрос; ou = или (ou bien)",
+        "trap": "ou/où",
+        "examplesCorrect": [
+          "Thé ou café ? / Où vas-tu ?"
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    }
+  ]
+}
