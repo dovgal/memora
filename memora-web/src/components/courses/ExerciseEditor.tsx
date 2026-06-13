@@ -18,6 +18,7 @@ export const EXERCISE_TYPE_LABELS: Record<string, string> = {
   'gender-quiz': 'Род существительных',
   'listening': 'Аудирование',
   'video': 'Видео',
+  'error-hunt': 'Найди ошибку',
 };
 
 interface Props {
@@ -170,9 +171,97 @@ function TypeFields({ exercise, set }: { exercise: EditoExercise; set: (p: Parti
         </div>
       );
 
+    case 'error-hunt':
+      return <ErrorHuntFields exercise={exercise} set={set} />;
+
     default:
       return <p className="text-qz-text-muted text-xs">Для типа «{exercise.type}» используйте JSON-режим.</p>;
   }
+}
+
+// ---------- error-hunt (какография, метод Voltaire) ----------
+
+function ErrorHuntFields({ exercise, set }: { exercise: EditoExercise; set: (p: Partial<EditoExercise>) => void }) {
+  const tokens = (exercise.sentence ?? '').split(/\s+/).filter(Boolean);
+  const noError = exercise.errorIndex === null || exercise.errorIndex === undefined;
+  const regenerate = exercise.variantPolicy?.regenerateOnRepeat !== false;
+
+  return (
+    <div className="space-y-3">
+      <div>
+        <label className={labelCls}>Предложение (на изучаемом языке)</label>
+        <textarea
+          value={exercise.sentence ?? ''}
+          onChange={e => set({ sentence: e.target.value })}
+          rows={2}
+          className={`${inputCls} resize-y`}
+          placeholder="Например: Je pense de toi."
+        />
+      </div>
+
+      <div>
+        <label className={labelCls}>Кликните слово с ошибкой</label>
+        <div className="flex flex-wrap gap-1.5">
+          {tokens.length === 0 && <span className="text-qz-text-muted text-xs">Сначала введите предложение выше…</span>}
+          {tokens.map((tok, i) => (
+            <button
+              type="button"
+              key={i}
+              onClick={() => set({ errorIndex: exercise.errorIndex === i ? null : i })}
+              className={`px-2 py-1 rounded-md border text-sm transition-colors ${
+                exercise.errorIndex === i
+                  ? 'border-red-500/60 bg-red-500/15 text-red-300'
+                  : 'border-border text-foreground hover:border-[#4255ff]/60'
+              }`}
+            >
+              {tok}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <label className="flex items-center gap-2 text-xs text-qz-text-muted cursor-pointer">
+        <input
+          type="checkbox"
+          checked={noError}
+          onChange={e => set(e.target.checked ? { errorIndex: null, correction: '' } : { errorIndex: 0 })}
+        />
+        В предложении нет ошибки («Il n'y a pas de faute»)
+      </label>
+
+      {!noError && (
+        <div>
+          <label className={labelCls}>Правильное слово (коррекция)</label>
+          <input
+            value={exercise.correction ?? ''}
+            onChange={e => set({ correction: e.target.value })}
+            className={inputCls}
+            placeholder="Например: à"
+          />
+        </div>
+      )}
+
+      <div>
+        <label className={labelCls}>Объяснение правила (по-русски)</label>
+        <textarea
+          value={exercise.explanation ?? ''}
+          onChange={e => set({ explanation: e.target.value })}
+          rows={3}
+          className={`${inputCls} resize-y`}
+          placeholder="Например: « penser À quelqu'un/quelque chose »…"
+        />
+      </div>
+
+      <label className="flex items-center gap-2 text-xs text-qz-text-muted cursor-pointer">
+        <input
+          type="checkbox"
+          checked={regenerate}
+          onChange={e => set({ variantPolicy: { ...(exercise.variantPolicy ?? {}), regenerateOnRepeat: e.target.checked, format: 'error-hunt' } })}
+        />
+        Генерировать новый пример того же правила на повторе (метод Voltaire)
+      </label>
+    </div>
+  );
 }
 
 // ---------- grammar-quiz ----------
