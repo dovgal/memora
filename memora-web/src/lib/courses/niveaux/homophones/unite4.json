@@ -1,0 +1,183 @@
+{
+  "id": "unite4",
+  "title": "Омофоны 4 : ni/n'y, s'y, s'en, or/hors, quand/quant, plus tôt",
+  "description": "Продвинутые омофоны и приёмы подстановки.",
+  "vocabulary": [
+    {
+      "fr": "n'y / ni",
+      "ru": "ne+y / ни…ни",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'y / si",
+      "ru": "se+y / если",
+      "type": "phrase"
+    },
+    {
+      "fr": "s'en / sans",
+      "ru": "se+en / без",
+      "type": "phrase"
+    },
+    {
+      "fr": "or / hors",
+      "ru": "однако / вне",
+      "type": "phrase"
+    },
+    {
+      "fr": "quand / quant",
+      "ru": "когда / что касается",
+      "type": "phrase"
+    },
+    {
+      "fr": "plus tôt / plutôt",
+      "ru": "раньше / скорее",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "hp4-th1",
+      "type": "theory",
+      "title": "Омофоны 4: подстановка",
+      "content": "<p style='margin:.6rem 0'>Ещё частые омофоны. Тот же приём — подстановка.</p><table style='width:100%;border-collapse:collapse;margin:.8rem 0'><tr><th style='text-align:left;padding:.4rem;border-bottom:1px solid rgba(255,255,255,.2)'>Слово</th><th style='text-align:left;padding:.4rem;border-bottom:1px solid rgba(255,255,255,.2)'>Проверка</th></tr><tr><td style='padding:.4rem'><b>n'y</b> / ni</td><td style='padding:.4rem'>n'y = ne+y, перед глаголом (часто рядом pas/jamais). ni = ни…ни</td></tr><tr><td style='padding:.4rem'><b>s'y</b> / si</td><td style='padding:.4rem'>s'y = se+y → замена на «se» возможна. si = если/так</td></tr><tr><td style='padding:.4rem'><b>s'en</b> / sans</td><td style='padding:.4rem'>s'en перед глаголом (вставь il/elle). sans = без</td></tr><tr><td style='padding:.4rem'><b>or</b> / hors</td><td style='padding:.4rem'>or → «et/pourtant». hors = вне (hors de)</td></tr><tr><td style='padding:.4rem'><b>quand</b> / quant</td><td style='padding:.4rem'>quand → «lorsque». quant à = что касается</td></tr><tr><td style='padding:.4rem'><b>plus tôt</b> / plutôt</td><td style='padding:.4rem'>plus tôt = раньше (↔ plus tard). plutôt = скорее</td></tr></table>"
+    },
+    {
+      "id": "hp4-eh1",
+      "type": "error-hunt",
+      "title": "ni или n'y ?",
+      "sentence": "Il ni pense jamais vraiment.",
+      "errorIndex": 1,
+      "correction": "n'y",
+      "explanation": "Перед глаголом и рядом с « jamais » → « n'y » (= ne y): « Il N'Y pense jamais ». « ni » = «ни…ни».",
+      "rule": {
+        "skill": "homophones",
+        "point": "n'y = ne+y (перед глаголом, рядом pas/jamais); ni = ни…ни",
+        "trap": "ni/n'y",
+        "examplesCorrect": [
+          "Je n'y vais pas. / ni l'un ni l'autre"
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "hp4-eh2",
+      "type": "error-hunt",
+      "title": "si или s'y ?",
+      "sentence": "La piscine, on si retrouve à midi.",
+      "errorIndex": 3,
+      "correction": "s'y",
+      "explanation": "Можно заменить на « se » (« on se retrouve ») → « s'y » (se + y), перед глаголом. « si » = «если/так».",
+      "rule": {
+        "skill": "homophones",
+        "point": "s'y → замена на se возможна; si = если/так",
+        "trap": "si/s'y",
+        "examplesCorrect": [
+          "Il s'y intéresse. / si tu veux"
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "hp4-eh3",
+      "type": "error-hunt",
+      "title": "sans или s'en ?",
+      "sentence": "Il sans moque complètement.",
+      "errorIndex": 1,
+      "correction": "s'en",
+      "explanation": "« s'en » стоит перед глаголом (можно вставить il/elle): « Il S'EN moque ». « sans » = «без» (предлог).",
+      "rule": {
+        "skill": "homophones",
+        "point": "s'en (перед глаголом); sans = без",
+        "trap": "sans/s'en",
+        "examplesCorrect": [
+          "Il s'en va. / sans toi"
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "hp4-eh4",
+      "type": "error-hunt",
+      "title": "or или hors ?",
+      "sentence": "Il semble calme, hors il est furieux.",
+      "errorIndex": 3,
+      "correction": "or",
+      "explanation": "Можно заменить на « et / pourtant » → союз « or ». « hors » = «вне» (hors de, hors jeu).",
+      "rule": {
+        "skill": "homophones",
+        "point": "or → et/pourtant; hors = вне",
+        "trap": "or/hors",
+        "examplesCorrect": [
+          "…, or personne ne le sait. / hors de prix"
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "hp4-eh5",
+      "type": "error-hunt",
+      "title": "quand или quant ?",
+      "sentence": "Quant il pleut, je reste à la maison.",
+      "errorIndex": 0,
+      "correction": "Quand",
+      "explanation": "Здесь «когда» → « Quand » (можно заменить на « lorsque »). « quant » существует только в « quant à » (что касается).",
+      "rule": {
+        "skill": "homophones",
+        "point": "quand → lorsque; quant à = что касается",
+        "trap": "quand/quant",
+        "examplesCorrect": [
+          "Quand tu veux. / Quant à moi…"
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "hp4-eh6",
+      "type": "error-hunt",
+      "title": "plutôt или plus tôt ?",
+      "sentence": "Le train est parti dix minutes plutôt que prévu.",
+      "errorIndex": 6,
+      "correction": "plus tôt",
+      "explanation": "«plus tôt» = раньше (противоположность « plus tard »): « parti dix minutes PLUS TÔT ». «plutôt» = скорее/предпочтительно.",
+      "rule": {
+        "skill": "homophones",
+        "point": "plus tôt = раньше (↔ plus tard); plutôt = скорее",
+        "trap": "plutôt/plus tôt",
+        "examplesCorrect": [
+          "Réveille-toi plus tôt. / plutôt sympa"
+        ],
+        "cefr": "B1"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+{
+  "id": "unite2",
+  "title": "Orthographe 2 : accents, cédille, омофоны лексические",
+  "description": "Accent grave, cédille и пары-ловушки (session/cession, censé/sensé, voix/voie).",
+  "vocabulary": [
+    {
+      "fr": "préfère",
+      "ru": "предпочитает (è)",
+      "type": "word"
+    },
+    {
+      "fr": "commençons",
+      "ru": "начнём (ç)",
+      "type": "word"
+    },
+    {
+      "fr": "session / cession",
+      "ru": "заседание / уступка",
+      "type": "phrase"
+    },
+    {
+      "fr": "censé / sensé",
+      "ru": "должен / разумный",
+      "type": "phrase"
+    },
+    {
+      "fr": "voix / voie",
+      "ru": "голос / путь",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "or2-th1",
+      "type": "theory",
+      "title": "Accents, cédille, омофоны",
+      "content": "<p style='margin:.6rem 0'><b>Акценты и cédille.</b> Accent grave « è » — когда в следующем слоге немой e (père, préfère, achète). « c » перед a/o/u даёт [k]; чтобы получить [s], пишут « ç » (ça, commençons, reçu).</p><p style='margin:.6rem 0'><b>Лексические омофоны:</b> session (заседание) ≠ cession (уступка); censé (должен) ≠ sensé (разумный); voix (голос) ≠ voie (путь).</p>"
+    },
+    {
+      "id": "or2-eh1",
+      "type": "error-hunt",
+      "title": "Accent grave",
+      "sentence": "Mon frère préfere le thé au café.",
+      "errorIndex": 2,
+      "correction": "préfère",
+      "explanation": "Перед слогом с немым e ставится accent grave: « préfère » (как « père, achète »).",
+      "rule": {
+        "skill": "accents",
+        "point": "è (accent grave) перед слогом с немым e",
+        "trap": "préfere",
+        "examplesCorrect": "B1",
+        "cefr": [
+          "il achète, une mère"
+        ]
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "or2-eh2",
+      "type": "error-hunt",
+      "title": "Cédille",
+      "sentence": "Nous commencons le projet demain.",
+      "errorIndex": 1,
+      "correction": "commençons",
+      "explanation": "« c » перед o/a/u звучит [k]; для [s] нужна cédille: « commençons » (как « ça, reçu »).",
+      "rule": {
+        "skill": "cedille",
+        "point": "ç для звука [s] перед a/o/u",
+        "trap": "commencons",
+        "examplesCorrect": "B1",
+        "cefr": [
+          "nous plaçons, un garçon"
+        ]
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "or2-eh3",
+      "type": "error-hunt",
+      "title": "session или cession ?",
+      "sentence": "La prochaine cession du parlement est lundi.",
+      "errorIndex": 2,
+      "correction": "session",
+      "explanation": "« session » = заседание/сессия. « cession » = уступка (от céder). Здесь нужно « session ».",
+      "rule": {
+        "skill": "homophones-lexicaux",
+        "point": "session (заседание) ≠ cession (уступка)",
+        "trap": "cession/session",
+        "examplesCorrect": "C1",
+        "cefr": [
+          "une session d'examen"
+        ]
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "or2-eh4",
+      "type": "error-hunt",
+      "title": "censé или sensé ?",
+      "sentence": "Tu es sensé arriver à neuf heures.",
+      "errorIndex": 2,
+      "correction": "censé",
+      "explanation": "« censé » = должен / предполагается (supposé). « sensé » = разумный (от sens). Здесь — « censé arriver ».",
+      "rule": {
+        "skill": "homophones-lexicaux",
+        "point": "censé = должен (supposé); sensé = разумный",
+        "trap": "censé/sensé",
+        "examplesCorrect": "C1",
+        "cefr": [
+          "Nul n'est censé ignorer la loi."
+        ]
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "or2-eh5",
+      "type": "error-hunt",
+      "title": "voix или voie ?",
+      "sentence": "Elle a une très belle voie grave.",
+      "errorIndex": 5,
+      "correction": "voix",
+      "explanation": "« voix » = голос. « voie » = путь/дорога (voie ferrée). Здесь о голосе → « voix ».",
+      "rule": {
+        "skill": "homophones-lexicaux",
+        "point": "voix = голос; voie = путь",
+        "trap": "voix/voie",
+        "examplesCorrect": "B2",
+        "cefr": [
+          "à voix haute / la voie publique"
+        ]
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "or2-eh6",
+      "type": "error-hunt",
+      "title": "Проверка: accueil",
+      "sentence": "L'accueil de l'hôtel était chaleureux.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « accueil » пишется « cc » + « -ueil » (после c/g — ueil, а не euil). Корректно.",
+      "rule": {
+        "skill": "orthographe-usage",
+        "point": "accueil, cueillir — сочетание -ueil после c/g",
+        "trap": "acceuil",
+        "examplesCorrect": "B2",
+        "cefr": [
+          "la page d'accueil"
+        ]
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    }
+  ]
+}

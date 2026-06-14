@@ -36,7 +36,8 @@ import vb14 from './verbes/unite14.json'; import vb15 from './verbes/unite15.jso
 import vb16 from './verbes/unite16.json';
 import vb17 from './verbes/unite17.json'; import vb18 from './verbes/unite18.json';
 import hp1 from './homophones/unite1.json'; import hp2 from './homophones/unite2.json';
-import hp3 from './homophones/unite3.json';
+import hp3 from './homophones/unite3.json'; import hp4 from './homophones/unite4.json';
+import or1 from './orthographe/unite1.json'; import or2 from './orthographe/unite2.json';
 
 const U = (m: unknown) => m as EditoUnit;
 
@@ -112,7 +113,14 @@ export const LEVELS: Record<string, LevelCourse> = {
     id: 'homophones', courseId: 'niveau-homophones', title: 'Омофоны и ловушки', level: 'A2–C1',
     description: "Метод Projet Voltaire: a/à, et/est, son/sont, on/ont, ce/se, c'est/s'est, ces/ses, leur/leurs, peut/peu, prêt/près… Объяснения — приёмы подстановки (Astuces). Каждый повтор — новое предложение того же правила.",
     accent: 'fuchsia',
-    units: { '1': U(hp1), '2': U(hp2), '3': U(hp3) },
-    order: ['1','2','3'],
+    units: { '1': U(hp1), '2': U(hp2), '3': U(hp3), '4': U(hp4) },
+    order: ['1','2','3','4'],
+  },
+  orthographe: {
+    id: 'orthographe', courseId: 'niveau-orthographe', title: "Orthographe d'usage", level: 'B1–C1',
+    description: "Орфография употребления (Voltaire): наречия -amment/-emment, удвоение согласных, accents и cédille, лексические омофоны (session/cession, censé/sensé, voix/voie). Объяснения — приёмы и подстановки.",
+    accent: 'indigo',
+    units: { '1': U(or1), '2': U(or2) },
+    order: ['1','2'],
   },
 };

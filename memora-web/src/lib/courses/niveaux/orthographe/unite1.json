@@ -1,0 +1,173 @@
+{
+  "id": "unite1",
+  "title": "Orthographe 1 : наречия -amment/-emment и удвоение",
+  "description": "Орфография употребления: суффиксы наречий и двойные согласные.",
+  "vocabulary": [
+    {
+      "fr": "couramment",
+      "ru": "бегло (courant)",
+      "type": "word"
+    },
+    {
+      "fr": "évidemment",
+      "ru": "очевидно (évident)",
+      "type": "word"
+    },
+    {
+      "fr": "appeler → j'appelle",
+      "ru": "звать (двойное p)",
+      "type": "phrase"
+    },
+    {
+      "fr": "un dilemme",
+      "ru": "дилемма (-mm-)",
+      "type": "word"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "or1-th1",
+      "type": "theory",
+      "title": "Наречия на -amment/-emment",
+      "content": "<p style='margin:.6rem 0'><b>Наречия на -amment / -emment.</b> От прилагательного: основа на <b>-ant</b> → наречие на <b>-amment</b> (courant → couramment); основа на <b>-ent</b> → <b>-emment</b> (évident → évidemment). В обоих случаях — <b>две m</b>, звук [amɑ̃].</p><p style='margin:.6rem 0'>И классика удвоения согласных: <i>appeler → j'appelle</i> (два p), <i>message</i> (два s).</p>"
+    },
+    {
+      "id": "or1-eh1",
+      "type": "error-hunt",
+      "title": "Наречие от courant",
+      "sentence": "Il parle couramant le français.",
+      "errorIndex": 2,
+      "correction": "couramment",
+      "explanation": "Прилагательное на -ant → наречие на « -amment » с ДВУМЯ m: « couramment ».",
+      "rule": {
+        "skill": "adverbes-ment",
+        "point": "-ant → -amment; -ent → -emment (две m)",
+        "trap": "couramant/courament",
+        "examplesCorrect": "B2",
+        "cefr": [
+          "Il roule prudemment."
+        ]
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "or1-eh2",
+      "type": "error-hunt",
+      "title": "Наречие от évident",
+      "sentence": "Elle a évidemant raison sur ce point.",
+      "errorIndex": 2,
+      "correction": "évidemment",
+      "explanation": "Прилагательное на -ent → наречие на « -emment » (две m): « évidemment ».",
+      "rule": {
+        "skill": "adverbes-ment",
+        "point": "-ent → -emment (две m, звук [amɑ̃])",
+        "trap": "évidemant/évidement",
+        "examplesCorrect": "B2",
+        "cefr": [
+          "fréquemment, récemment"
+        ]
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "or1-eh3",
+      "type": "error-hunt",
+      "title": "Удвоение: appeler",
+      "sentence": "Je t'apelle ce soir sans faute.",
+      "errorIndex": 1,
+      "correction": "t'appelle",
+      "explanation": "« appeler » удваивает p перед немым e: « j'appelle, tu appelles ». Правильно: « je t'appelle ».",
+      "rule": {
+        "skill": "consonnes-doubles",
+        "point": "appeler → appelle (двойное p); jeter → jette",
+        "trap": "apeler/japelle",
+        "examplesCorrect": "B1",
+        "cefr": [
+          "Nous appelons (одно p)."
+        ]
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "or1-eh4",
+      "type": "error-hunt",
+      "title": "Классика: cauchemar",
+      "sentence": "C'est vraiment un cauchemard horrible.",
+      "errorIndex": 3,
+      "correction": "cauchemar",
+      "explanation": "« cauchemar » пишется БЕЗ d на конце.",
+      "rule": {
+        "skill": "orthographe-usage",
+        "point": "cauchemar (без d на конце)",
+        "trap": "cauchemard",
+        "examplesCorrect": "B2",
+        "cefr": [
+          "faire un cauchemar"
+        ]
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "or1-eh5",
+      "type": "error-hunt",
+      "title": "Классика: langage",
+      "sentence": "J'apprends le language Python.",
+      "errorIndex": 2,
+      "correction": "langage",
+      "explanation": "« langage » пишется БЕЗ u (в отличие от англ. language).",
+      "rule": {
+        "skill": "orthographe-usage",
+        "point": "langage (без u)",
+        "trap": "language",
+        "examplesCorrect": "B2",
+        "cefr": [
+          "le langage courant"
+        ]
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "or1-eh6",
+      "type": "error-hunt",
+      "title": "Проверка: dilemme",
+      "sentence": "Je suis face à un dilemme difficile.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « dilemme » пишется с « -mm- » (частая ошибка — « dilemne »). Корректно.",
+      "rule": {
+        "skill": "orthographe-usage",
+        "point": "dilemme (-mm-, не -mn-)",
+        "trap": "dilemne",
+        "examplesCorrect": "B2",
+        "cefr": [
+          "un dilemme moral"
+        ]
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    }
+  ]
+}
