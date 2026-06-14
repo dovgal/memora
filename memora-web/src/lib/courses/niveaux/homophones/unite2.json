@@ -86,10 +86,10 @@
       "id": "hp2-eh3",
       "type": "error-hunt",
       "title": "ces или ses ?",
-      "sentence": "Paul adore ces enfants, ce sont les siens.",
-      "errorIndex": 2,
+      "sentence": "En partant, il a pris ces clés et son manteau.",
+      "errorIndex": 5,
       "correction": "ses",
-      "explanation": "Речь о «его» детях → притяжательное « ses » (можно сказать « les siens »). «ces» = «эти» (ces enfants-là).",
+      "explanation": "« ses » = его (les siennes): параллель с « son manteau » → « ses clés et son manteau ». « ces » = «эти», но здесь речь о ЕГО ключах, а не о «этих».",
       "rule": {
         "skill": "homophones",
         "point": "Омофоны ces/ses. Приём: ses = его/её (les siens); ces = эти",
