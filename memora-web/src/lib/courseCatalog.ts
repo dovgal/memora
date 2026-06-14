@@ -91,6 +91,18 @@ export const BUILTIN_COURSES: CatalogCourse[] = [
     description: 'Глагольные управления: transitif/intransitif, à или de, двойные дополнения, инфинитивы.',
     subject: 'Языки', topic: 'Французский', level: 'A2–B2', emoji: '🔗',
   },
+  {
+    id: 'niveau-homophones', href: '/dashboard/student/courses/niveau/homophones',
+    title: 'Омофоны и ловушки',
+    description: 'Метод Projet Voltaire: a/à, ce/se, son/sont, leur/leurs, peut/peu… с приёмами подстановки (Astuces).',
+    subject: 'Языки', topic: 'Французский', level: 'A2–C1', emoji: '🎯',
+  },
+  {
+    id: 'niveau-orthographe', href: '/dashboard/student/courses/niveau/orthographe',
+    title: "Orthographe d'usage",
+    description: 'Наречия -amment/-emment, удвоение согласных, accents и cédille, омофоны session/cession, voix/voie.',
+    subject: 'Языки', topic: 'Французский', level: 'B1–C1', emoji: '✒️',
+  },
 ];
 
 /** Тема для пользовательского курса по коду языка. */
