@@ -1,0 +1,173 @@
+{
+  "id": "unite2",
+  "title": "Orthotypo 2 : кавычки, сокращения, заглавные",
+  "description": "Ёлочки « », M./Mme, etc., акценты на заглавных, порядковые.",
+  "vocabulary": [
+    {
+      "fr": "« … »",
+      "ru": "французские кавычки-ёлочки",
+      "type": "phrase"
+    },
+    {
+      "fr": "M. / Mme",
+      "ru": "Monsieur / Madame",
+      "type": "phrase"
+    },
+    {
+      "fr": "État, École",
+      "ru": "акценты на заглавных",
+      "type": "phrase"
+    },
+    {
+      "fr": "1er, 2e",
+      "ru": "порядковые числительные",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ot2-th1",
+      "type": "theory",
+      "title": "Кавычки, сокращения, заглавные",
+      "content": "<p style='margin:.6rem 0'><b>Кавычки</b> по-французски — ёлочки « … » с пробелами внутри. <b>Сокращения:</b> Monsieur → « M. » (не Mr), Madame → « Mme », « etc. » (с точкой, без многоточия).</p><p style='margin:.6rem 0'><b>Заглавные сохраняют акценты:</b> « État », « École », « À bientôt ». Порядковые: « 1er », « 2e » (не « 1ier », не « 2ème »).</p>"
+    },
+    {
+      "id": "ot2-eh1",
+      "type": "error-hunt",
+      "title": "Французские кавычки",
+      "sentence": "Il a dit \"bonjour\" à tout le monde.",
+      "errorIndex": 3,
+      "correction": "« bonjour »",
+      "explanation": "Во французском используются кавычки-ёлочки с пробелами внутри: « bonjour ». Прямые \" \" — английские.",
+      "rule": {
+        "skill": "orthotypographie",
+        "point": "кавычки французские « … » с пробелами",
+        "trap": "\"…\" (прямые кавычки)",
+        "examplesCorrect": [
+          "Il a répondu « oui »."
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "ot2-eh2",
+      "type": "error-hunt",
+      "title": "Сокращение Monsieur",
+      "sentence": "Bonjour, Mr Dupont, entrez !",
+      "errorIndex": 1,
+      "correction": "M.",
+      "explanation": "«Monsieur» сокращается « M. » (с точкой), а не « Mr » (это по-английски). Madame → « Mme ».",
+      "rule": {
+        "skill": "orthotypographie",
+        "point": "M. = Monsieur; Mme = Madame",
+        "trap": "Mr / Mr.",
+        "examplesCorrect": [
+          "M. et Mme Martin"
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "ot2-eh3",
+      "type": "error-hunt",
+      "title": "Акцент на заглавной",
+      "sentence": "Il travaille pour l'Etat depuis dix ans.",
+      "errorIndex": 3,
+      "correction": "l'État",
+      "explanation": "Заглавные буквы сохраняют акценты: « État », « École », « À ». « Etat » без акцента — ошибка.",
+      "rule": {
+        "skill": "orthotypographie",
+        "point": "majuscules accentuées: État, École, À",
+        "trap": "Etat / Ecole",
+        "examplesCorrect": [
+          "À bientôt ! / En Égypte"
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "ot2-eh4",
+      "type": "error-hunt",
+      "title": "Сокращение etc.",
+      "sentence": "J'aime le thé, le café, etc...",
+      "errorIndex": 5,
+      "correction": "etc.",
+      "explanation": "« etc. » уже содержит точку и не требует многоточия: пишите « etc. », а не « etc... ».",
+      "rule": {
+        "skill": "orthotypographie",
+        "point": "etc. (с одной точкой, без многоточия)",
+        "trap": "etc... / ect.",
+        "examplesCorrect": [
+          "des fruits, des légumes, etc."
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "ot2-eh5",
+      "type": "error-hunt",
+      "title": "Порядковое числительное",
+      "sentence": "La réunion aura lieu le 1ier mars prochain.",
+      "errorIndex": 5,
+      "correction": "1er",
+      "explanation": "«Premier» сокращается « 1er » (не « 1ier »). Далее: 2e, 3e (не « 2ème »).",
+      "rule": {
+        "skill": "orthotypographie",
+        "point": "1er, 2e, 3e — порядковые",
+        "trap": "1ier / 2ème",
+        "examplesCorrect": [
+          "le 1er janvier / la 2e place"
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "ot2-eh6",
+      "type": "error-hunt",
+      "title": "Проверка: Mme и часы",
+      "sentence": "Mme Martin arrive à 9 h 15.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « Mme » (Madame, без точки) и « 9 h 15 » записаны корректно.",
+      "rule": {
+        "skill": "orthotypographie",
+        "point": "Mme (без точки), 9 h 15 — корректно",
+        "trap": "",
+        "examplesCorrect": [
+          "M. Dubois à 10 h"
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    }
+  ]
+}

@@ -38,6 +38,7 @@ import vb17 from './verbes/unite17.json'; import vb18 from './verbes/unite18.jso
 import hp1 from './homophones/unite1.json'; import hp2 from './homophones/unite2.json';
 import hp3 from './homophones/unite3.json'; import hp4 from './homophones/unite4.json';
 import or1 from './orthographe/unite1.json'; import or2 from './orthographe/unite2.json';
+import ot1 from './orthotypo/unite1.json'; import ot2 from './orthotypo/unite2.json';
 
 const U = (m: unknown) => m as EditoUnit;
 
@@ -121,6 +122,13 @@ export const LEVELS: Record<string, LevelCourse> = {
     description: "Орфография употребления (Voltaire): наречия -amment/-emment, удвоение согласных, accents и cédille, лексические омофоны (session/cession, censé/sensé, voix/voie). Объяснения — приёмы и подстановки.",
     accent: 'indigo',
     units: { '1': U(or1), '2': U(or2) },
+    order: ['1','2'],
+  },
+  orthotypo: {
+    id: 'orthotypo', courseId: 'niveau-orthotypo', title: 'Orthotypographie', level: 'B2–C1',
+    description: 'Типографика Voltaire: пробелы перед ; : ! ?, проценты (30 %), часы (8 h 30), n° 10, кавычки-ёлочки « », сокращения M./Mme, акценты на заглавных (État), etc.',
+    accent: 'slate',
+    units: { '1': U(ot1), '2': U(ot2) },
     order: ['1','2'],
   },
 };

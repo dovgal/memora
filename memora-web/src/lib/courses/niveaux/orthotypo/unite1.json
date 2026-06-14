@@ -1,0 +1,173 @@
+{
+  "id": "unite1",
+  "title": "Orthotypo 1 : пробелы, пунктуация, числа",
+  "description": "Пробелы перед двойными знаками, проценты, часы, n°.",
+  "vocabulary": [
+    {
+      "fr": "demain ?",
+      "ru": "пробел перед ? ! ; :",
+      "type": "phrase"
+    },
+    {
+      "fr": "30 %",
+      "ru": "число + пробел + %",
+      "type": "phrase"
+    },
+    {
+      "fr": "8 h 30",
+      "ru": "часы с пробелами",
+      "type": "phrase"
+    },
+    {
+      "fr": "n° 10",
+      "ru": "n° + пробел + число",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ot1-th1",
+      "type": "theory",
+      "title": "Пробелы и числа",
+      "content": "<p style='margin:.6rem 0'><b>Двойные знаки</b> ( ; : ! ? ) требуют пробела ПЕРЕД ними (в идеале неразрывного): « Vraiment ? », « la liste : ». Точка и запятая — без пробела перед, с пробелом после.</p><p style='margin:.6rem 0'><b>Числа:</b> « 30 % » (с пробелом), часы « 8 h 30 », « n° 10 » (n° + пробел). Между числом и единицей — неразрывный пробел.</p>"
+    },
+    {
+      "id": "ot1-eh1",
+      "type": "error-hunt",
+      "title": "Пробел перед знаком ?",
+      "sentence": "Tu viens demain?",
+      "errorIndex": 2,
+      "correction": "demain ?",
+      "explanation": "Перед « ? » (как и ! ; :) ставится пробел, в идеале неразрывный: « Tu viens demain ? ».",
+      "rule": {
+        "skill": "orthotypographie",
+        "point": "пробел перед двойными знаками ; : ! ?",
+        "trap": "demain? (без пробела)",
+        "examplesCorrect": [
+          "Vraiment ? / C'est fini !"
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "ot1-eh2",
+      "type": "error-hunt",
+      "title": "Пробел перед двоеточием",
+      "sentence": "Voici la liste: pain, lait, œufs.",
+      "errorIndex": 2,
+      "correction": "liste :",
+      "explanation": "Перед « : » ставится пробел: « la liste : … ». Запятая — наоборот, без пробела перед, с пробелом после.",
+      "rule": {
+        "skill": "orthotypographie",
+        "point": "пробел перед : ; ! ?",
+        "trap": "liste: (без пробела)",
+        "examplesCorrect": [
+          "Attention : danger."
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "ot1-eh3",
+      "type": "error-hunt",
+      "title": "Пробел перед %",
+      "sentence": "J'ai eu 50% à mon examen final.",
+      "errorIndex": 2,
+      "correction": "50 %",
+      "explanation": "Между числом и « % » ставится (неразрывный) пробел: « 50 % ».",
+      "rule": {
+        "skill": "orthotypographie",
+        "point": "число + espace insécable + %",
+        "trap": "50% (без пробела)",
+        "examplesCorrect": [
+          "une hausse de 30 %"
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "ot1-eh4",
+      "type": "error-hunt",
+      "title": "Запись часов",
+      "sentence": "Le train part à 8h30 précises.",
+      "errorIndex": 4,
+      "correction": "8 h 30",
+      "explanation": "Часы пишутся с пробелами вокруг « h »: « 8 h 30 » (не « 8h30 »).",
+      "rule": {
+        "skill": "orthotypographie",
+        "point": "часы: 8 h 30 (пробелы вокруг h)",
+        "trap": "8h30 / 8H30",
+        "examplesCorrect": [
+          "rendez-vous à 14 h"
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "ot1-eh5",
+      "type": "error-hunt",
+      "title": "Запись номера",
+      "sentence": "Consultez la page n°12 du manuel.",
+      "errorIndex": 3,
+      "correction": "n° 12",
+      "explanation": "После « n° » ставится пробел перед числом: « n° 12 ».",
+      "rule": {
+        "skill": "orthotypographie",
+        "point": "n° + espace + число",
+        "trap": "n°12 / N°12",
+        "examplesCorrect": [
+          "la chambre n° 7"
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    },
+    {
+      "id": "ot1-eh6",
+      "type": "error-hunt",
+      "title": "Проверка: часы",
+      "sentence": "Réponds-moi avant 18 h, s'il te plaît.",
+      "errorIndex": null,
+      "correction": null,
+      "explanation": "Здесь ошибки нет: « 18 h » с пробелом — корректная запись часа.",
+      "rule": {
+        "skill": "orthotypographie",
+        "point": "18 h — корректно",
+        "trap": "",
+        "examplesCorrect": [
+          "à 9 h 15"
+        ],
+        "cefr": "B2"
+      },
+      "variantPolicy": {
+        "regenerateOnRepeat": true,
+        "format": "error-hunt",
+        "avoidLastN": 6
+      }
+    }
+  ]
+}

@@ -103,6 +103,12 @@ export const BUILTIN_COURSES: CatalogCourse[] = [
     description: 'Наречия -amment/-emment, удвоение согласных, accents и cédille, омофоны session/cession, voix/voie.',
     subject: 'Языки', topic: 'Французский', level: 'B1–C1', emoji: '✒️',
   },
+  {
+    id: 'niveau-orthotypo', href: '/dashboard/student/courses/niveau/orthotypo',
+    title: 'Orthotypographie',
+    description: 'Типографика: пробелы перед ; : ! ?, 30 %, 8 h 30, n° 10, кавычки « », M./Mme, État, etc.',
+    subject: 'Языки', topic: 'Французский', level: 'B2–C1', emoji: '📐',
+  },
 ];
 
 /** Тема для пользовательского курса по коду языка. */
