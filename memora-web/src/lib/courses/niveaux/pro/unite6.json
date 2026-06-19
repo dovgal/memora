@@ -1,0 +1,223 @@
+{
+  "id": "unite6",
+  "title": "Module 6 : Indicateurs, magasin et relation client",
+  "description": "Коммерческие показатели, ежедневная работа магазина и обслуживание клиентов — лексика ритейла.",
+  "vocabulary": [
+    {
+      "fr": "le chiffre d'affaires",
+      "ru": "выручка, оборот",
+      "type": "phrase"
+    },
+    {
+      "fr": "le panier moyen",
+      "ru": "средний чек",
+      "type": "phrase"
+    },
+    {
+      "fr": "le taux de transformation",
+      "ru": "конверсия (доля купивших из зашедших)",
+      "type": "phrase"
+    },
+    {
+      "fr": "la marge",
+      "ru": "маржа, наценка",
+      "type": "phrase"
+    },
+    {
+      "fr": "les objectifs commerciaux",
+      "ru": "коммерческие цели/планы",
+      "type": "phrase"
+    },
+    {
+      "fr": "le stock",
+      "ru": "товарный запас",
+      "type": "phrase"
+    },
+    {
+      "fr": "la rupture de stock",
+      "ru": "отсутствие товара (out of stock)",
+      "type": "phrase"
+    },
+    {
+      "fr": "la rotation des produits",
+      "ru": "оборачиваемость товара",
+      "type": "phrase"
+    },
+    {
+      "fr": "la vente additionnelle",
+      "ru": "допродажа (сопутствующий товар)",
+      "type": "phrase"
+    },
+    {
+      "fr": "la satisfaction client",
+      "ru": "удовлетворённость клиента",
+      "type": "phrase"
+    },
+    {
+      "fr": "les soldes",
+      "ru": "сезонные распродажи",
+      "type": "phrase"
+    },
+    {
+      "fr": "les opérations commerciales",
+      "ru": "рекламные/маркетинговые акции",
+      "type": "phrase"
+    },
+    {
+      "fr": "la réception des marchandises",
+      "ru": "приёмка товара",
+      "type": "phrase"
+    },
+    {
+      "fr": "la mise en rayon",
+      "ru": "выкладка товара на полки",
+      "type": "phrase"
+    },
+    {
+      "fr": "le merchandising",
+      "ru": "мерчандайзинг (выкладка и оформление)",
+      "type": "phrase"
+    },
+    {
+      "fr": "le Click & Collect",
+      "ru": "заказ онлайн с самовывозом",
+      "type": "phrase"
+    },
+    {
+      "fr": "les retours clients",
+      "ru": "возвраты от клиентов",
+      "type": "phrase"
+    },
+    {
+      "fr": "le service après-vente (SAV)",
+      "ru": "послепродажное обслуживание",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'accueil (m)",
+      "ru": "приём, встреча клиента",
+      "type": "phrase"
+    },
+    {
+      "fr": "le conseil",
+      "ru": "консультация (помощь покупателю)",
+      "type": "phrase"
+    },
+    {
+      "fr": "la fidélisation",
+      "ru": "удержание клиентов, программа лояльности",
+      "type": "phrase"
+    },
+    {
+      "fr": "la gestion des réclamations",
+      "ru": "работа с жалобами",
+      "type": "phrase"
+    },
+    {
+      "fr": "un échange",
+      "ru": "обмен товара",
+      "type": "phrase"
+    },
+    {
+      "fr": "un remboursement",
+      "ru": "возврат денег",
+      "type": "phrase"
+    },
+    {
+      "fr": "la carte de fidélité",
+      "ru": "карта лояльности",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'image de l'enseigne (f)",
+      "ru": "имидж бренда/сети",
+      "type": "phrase"
+    },
+    {
+      "fr": "la rentrée scolaire",
+      "ru": "начало учебного года (пик продаж)",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "pro6-th1",
+      "type": "theory",
+      "title": "Показатели и жизнь магазина",
+      "content": "<p style='margin:0.75rem 0'>Заместитель отвечает за коммерческие результаты и качество обслуживания. Главные KPI:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Показатель (FR)</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Что измеряет</th></tr><tr><td style='padding:0.5rem'>chiffre d'affaires</td><td style='padding:0.5rem'>общая выручка магазина</td></tr><tr><td style='padding:0.5rem'>panier moyen</td><td style='padding:0.5rem'>средняя сумма одной покупки</td></tr><tr><td style='padding:0.5rem'>taux de transformation</td><td style='padding:0.5rem'>сколько зашедших стали покупателями (конверсия)</td></tr><tr><td style='padding:0.5rem'>marge</td><td style='padding:0.5rem'>разница между ценой продажи и закупки</td></tr><tr><td style='padding:0.5rem'>rotation des produits</td><td style='padding:0.5rem'>как быстро товар продаётся и обновляется</td></tr><tr><td style='padding:0.5rem'>vente additionnelle</td><td style='padding:0.5rem'>допродажа: носки к кроссовкам и т.п.</td></tr></table><p style='margin:0.75rem 0'>Ежедневная работа: <b>réception des marchandises</b> (приёмка), <b>mise en rayon</b> (выкладка), <b>merchandising</b>, <b>Click & Collect</b>, <b>SAV</b> (послепродажное обслуживание), пики продаж — <b>soldes</b>, <b>Noël</b>, <b>rentrée scolaire</b>.</p><p style='margin:0.75rem 0'>Клиент: <b>accueil</b> (встреча), <b>conseil</b> (консультация), <b>fidélisation</b> (удержание), <b>gestion des réclamations</b> (жалобы), <b>échanges</b> и <b>remboursements</b> (обмен/возврат).</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Связка для интервью: повысить chiffre d'affaires можно через panier moyen (ventes additionnelles) и taux de transformation (accueil + conseil + satisfaction client).</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Нажмите «⭐ В личный набор» над списком — все термины уйдут в карточки Memora: лицевая сторона французская (с озвучкой), обратная — русская. В режимах «Карточки» и «Тест» можно учить и наоборот, RU→FR.</p>"
+    },
+    {
+      "id": "pro6-qz1",
+      "type": "grammar-quiz",
+      "title": "Показатели и магазин — практика",
+      "questions": [
+        {
+          "question": "«Средний чек» — это…",
+          "options": [
+            "le panier moyen",
+            "le chiffre d'affaires",
+            "la marge",
+            "le stock"
+          ],
+          "correctAnswer": "le panier moyen",
+          "explanation": "Panier moyen — средняя сумма одной покупки."
+        },
+        {
+          "question": "«Доля зашедших, которые что-то купили» — это…",
+          "options": [
+            "le taux de transformation",
+            "la rotation des produits",
+            "la démarque inconnue",
+            "la marge"
+          ],
+          "correctAnswer": "le taux de transformation",
+          "explanation": "Taux de transformation — конверсия посетителей в покупателей."
+        },
+        {
+          "question": "«Отсутствие товара на складе/полке» — это…",
+          "options": [
+            "la rupture de stock",
+            "la rotation des produits",
+            "les soldes",
+            "le SAV"
+          ],
+          "correctAnswer": "la rupture de stock",
+          "explanation": "Rupture de stock — товар закончился."
+        },
+        {
+          "question": "Предложить носки к купленным кроссовкам — это…",
+          "options": [
+            "une vente additionnelle",
+            "un remboursement",
+            "un échange",
+            "une rupture de stock"
+          ],
+          "correctAnswer": "une vente additionnelle",
+          "explanation": "Vente additionnelle — допродажа сопутствующего товара, поднимает panier moyen."
+        },
+        {
+          "question": "«Послепродажное обслуживание» — это…",
+          "options": [
+            "le service après-vente (SAV)",
+            "la mise en rayon",
+            "l'accueil",
+            "les soldes"
+          ],
+          "correctAnswer": "le service après-vente (SAV)",
+          "explanation": "SAV — ремонт, гарантия, помощь после покупки."
+        },
+        {
+          "question": "«Заказ онлайн с самовывозом в магазине» — это…",
+          "options": [
+            "le Click & Collect",
+            "le merchandising",
+            "la fidélisation",
+            "la marge"
+          ],
+          "correctAnswer": "le Click & Collect",
+          "explanation": "Click & Collect — оформил онлайн, забрал в магазине."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "id": "unite2",
+  "title": "Module 2 : Temps de travail, dimanche et jours fériés",
+  "description": "Организация рабочего времени, переработки, отдых; работа в воскресенья и праздники, компенсации и равенство в команде.",
+  "vocabulary": [
+    {
+      "fr": "le temps plein",
+      "ru": "полная занятость",
+      "type": "phrase"
+    },
+    {
+      "fr": "le temps partiel",
+      "ru": "частичная занятость",
+      "type": "phrase"
+    },
+    {
+      "fr": "les horaires de travail",
+      "ru": "график работы",
+      "type": "phrase"
+    },
+    {
+      "fr": "les heures supplémentaires",
+      "ru": "сверхурочные часы",
+      "type": "phrase"
+    },
+    {
+      "fr": "le repos hebdomadaire",
+      "ru": "еженедельный отдых",
+      "type": "phrase"
+    },
+    {
+      "fr": "le temps de pause",
+      "ru": "время перерыва",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'amplitude horaire (f)",
+      "ru": "разброс рабочего дня (от начала до конца)",
+      "type": "phrase"
+    },
+    {
+      "fr": "le planning",
+      "ru": "расписание, график смен",
+      "type": "phrase"
+    },
+    {
+      "fr": "la modification des horaires",
+      "ru": "изменение графика",
+      "type": "phrase"
+    },
+    {
+      "fr": "le respect des temps de repos",
+      "ru": "соблюдение времени отдыха",
+      "type": "phrase"
+    },
+    {
+      "fr": "le repos dominical",
+      "ru": "воскресный отдых",
+      "type": "phrase"
+    },
+    {
+      "fr": "les jours fériés",
+      "ru": "праздничные (нерабочие) дни",
+      "type": "phrase"
+    },
+    {
+      "fr": "une autorisation",
+      "ru": "разрешение",
+      "type": "phrase"
+    },
+    {
+      "fr": "une contrepartie",
+      "ru": "компенсация, ответная льгота",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'organisation des équipes (f)",
+      "ru": "организация работы команд",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'équité entre les collaborateurs (f)",
+      "ru": "справедливость между сотрудниками",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "pro2-th1",
+      "type": "theory",
+      "title": "Рабочее время и работа по воскресеньям",
+      "content": "<p style='margin:0.75rem 0'>Магазин спорттоваров часто работает по воскресеньям и в праздники — это зона ответственности заместителя руководителя. Ключевые понятия:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Французский</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Что означает</th></tr><tr><td style='padding:0.5rem'>heures supplémentaires</td><td style='padding:0.5rem'>часы сверх нормы — оплачиваются с надбавкой</td></tr><tr><td style='padding:0.5rem'>repos hebdomadaire</td><td style='padding:0.5rem'>обязательный еженедельный выходной</td></tr><tr><td style='padding:0.5rem'>amplitude horaire</td><td style='padding:0.5rem'>промежуток от начала до конца рабочего дня</td></tr><tr><td style='padding:0.5rem'>repos dominical</td><td style='padding:0.5rem'>право на воскресный отдых (есть исключения для торговли)</td></tr><tr><td style='padding:0.5rem'>contreparties</td><td style='padding:0.5rem'>компенсации за работу в воскресенье/праздник (оплата, отгул)</td></tr><tr><td style='padding:0.5rem'>équité entre les collaborateurs</td><td style='padding:0.5rem'>честное распределение смен между сотрудниками</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 На собеседовании могут спросить, как вы составите planning так, чтобы соблюсти repos hebdomadaire и обеспечить équité — справедливость при распределении воскресных смен.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Нажмите «⭐ В личный набор» над списком — все термины уйдут в карточки Memora: лицевая сторона французская (с озвучкой), обратная — русская. В режимах «Карточки» и «Тест» можно учить и наоборот, RU→FR.</p>"
+    },
+    {
+      "id": "pro2-qz1",
+      "type": "grammar-quiz",
+      "title": "Рабочее время — практика",
+      "questions": [
+        {
+          "question": "«Сверхурочные часы» — это…",
+          "options": [
+            "les heures supplémentaires",
+            "le temps partiel",
+            "l'amplitude horaire",
+            "le repos dominical"
+          ],
+          "correctAnswer": "les heures supplémentaires",
+          "explanation": "Heures supplémentaires оплачиваются с повышающим коэффициентом."
+        },
+        {
+          "question": "«Право на еженедельный выходной» — это…",
+          "options": [
+            "le repos hebdomadaire",
+            "le temps de pause",
+            "les jours fériés",
+            "le planning"
+          ],
+          "correctAnswer": "le repos hebdomadaire",
+          "explanation": "Repos hebdomadaire — обязательный отдых раз в неделю."
+        },
+        {
+          "question": "Работа в воскресенье обычно даёт сотруднику…",
+          "options": [
+            "des contreparties",
+            "une démission",
+            "un préavis",
+            "une amplitude"
+          ],
+          "correctAnswer": "des contreparties",
+          "explanation": "Contreparties — компенсации (повышенная оплата и/или отгул)."
+        },
+        {
+          "question": "«Справедливое распределение смен между сотрудниками» — это…",
+          "options": [
+            "l'équité entre les collaborateurs",
+            "la modification des horaires",
+            "le temps plein",
+            "la prime"
+          ],
+          "correctAnswer": "l'équité entre les collaborateurs",
+          "explanation": "Équité — важный принцип управления командой и графиком."
+        }
+      ]
+    }
+  ]
+}

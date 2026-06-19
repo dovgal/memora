@@ -1,0 +1,167 @@
+{
+  "id": "unite3",
+  "title": "Module 3 : Contrats, fiche de paie et congés payés",
+  "description": "Виды трудовых договоров и их расторжение, чтение расчётного листка, оплачиваемые отпуска и управление ими.",
+  "vocabulary": [
+    {
+      "fr": "un CDI (contrat à durée indéterminée)",
+      "ru": "бессрочный трудовой договор",
+      "type": "phrase"
+    },
+    {
+      "fr": "un CDD (contrat à durée déterminée)",
+      "ru": "срочный трудовой договор",
+      "type": "phrase"
+    },
+    {
+      "fr": "un avenant au contrat",
+      "ru": "дополнительное соглашение к договору",
+      "type": "phrase"
+    },
+    {
+      "fr": "la rupture de période d'essai",
+      "ru": "прекращение в период испытательного срока",
+      "type": "phrase"
+    },
+    {
+      "fr": "la démission",
+      "ru": "увольнение по собственному желанию",
+      "type": "phrase"
+    },
+    {
+      "fr": "le licenciement",
+      "ru": "увольнение (по инициативе работодателя)",
+      "type": "phrase"
+    },
+    {
+      "fr": "la rupture conventionnelle",
+      "ru": "расторжение по соглашению сторон",
+      "type": "phrase"
+    },
+    {
+      "fr": "le salaire brut",
+      "ru": "зарплата до вычетов (брутто)",
+      "type": "phrase"
+    },
+    {
+      "fr": "le salaire net",
+      "ru": "зарплата на руки (нетто)",
+      "type": "phrase"
+    },
+    {
+      "fr": "la mutuelle",
+      "ru": "корпоративная медстраховка",
+      "type": "phrase"
+    },
+    {
+      "fr": "la prévoyance",
+      "ru": "страхование на случай нетрудоспособности",
+      "type": "phrase"
+    },
+    {
+      "fr": "les congés payés",
+      "ru": "оплачиваемый отпуск",
+      "type": "phrase"
+    },
+    {
+      "fr": "une fiche de paie",
+      "ru": "расчётный листок",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'acquisition des congés (f)",
+      "ru": "накопление дней отпуска",
+      "type": "phrase"
+    },
+    {
+      "fr": "la validation des congés",
+      "ru": "утверждение отпусков",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'organisation des absences (f)",
+      "ru": "организация отсутствий сотрудников",
+      "type": "phrase"
+    },
+    {
+      "fr": "les périodes de forte activité",
+      "ru": "периоды высокой нагрузки",
+      "type": "phrase"
+    },
+    {
+      "fr": "la gestion des congés de l'équipe",
+      "ru": "управление отпусками команды",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "pro3-th1",
+      "type": "theory",
+      "title": "Договоры, зарплата и отпуска",
+      "content": "<p style='margin:0.75rem 0'>Заместитель руководителя участвует в найме, согласовании отпусков и объяснении расчётных листков сотрудникам. Главное:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Французский</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод / суть</th></tr><tr><td style='padding:0.5rem'>CDI / CDD</td><td style='padding:0.5rem'>бессрочный / срочный договор</td></tr><tr><td style='padding:0.5rem'>avenant</td><td style='padding:0.5rem'>допсоглашение (меняет условия договора)</td></tr><tr><td style='padding:0.5rem'>démission / licenciement</td><td style='padding:0.5rem'>уход по желанию работника / увольнение работодателем</td></tr><tr><td style='padding:0.5rem'>rupture conventionnelle</td><td style='padding:0.5rem'>расторжение по обоюдному согласию</td></tr><tr><td style='padding:0.5rem'>salaire brut / net</td><td style='padding:0.5rem'>до вычетов / на руки</td></tr><tr><td style='padding:0.5rem'>mutuelle / prévoyance</td><td style='padding:0.5rem'>медстраховка / страхование нетрудоспособности</td></tr><tr><td style='padding:0.5rem'>congés payés</td><td style='padding:0.5rem'>оплачиваемый отпуск (накапливается ежемесячно)</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Частый вопрос управленцу: как согласовать congés команды в périodes de forte activité (Рождество, школьная rentrée) — нужно одновременно учесть желания людей и нагрузку магазина.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Нажмите «⭐ В личный набор» над списком — все термины уйдут в карточки Memora: лицевая сторона французская (с озвучкой), обратная — русская. В режимах «Карточки» и «Тест» можно учить и наоборот, RU→FR.</p>"
+    },
+    {
+      "id": "pro3-qz1",
+      "type": "grammar-quiz",
+      "title": "Договоры и зарплата — практика",
+      "questions": [
+        {
+          "question": "«Бессрочный трудовой договор» — это…",
+          "options": [
+            "un CDI",
+            "un CDD",
+            "un avenant",
+            "une mutuelle"
+          ],
+          "correctAnswer": "un CDI",
+          "explanation": "CDI — contrat à durée indéterminée (бессрочный)."
+        },
+        {
+          "question": "«Расторжение по соглашению сторон» — это…",
+          "options": [
+            "la rupture conventionnelle",
+            "le licenciement",
+            "la démission",
+            "le préavis"
+          ],
+          "correctAnswer": "la rupture conventionnelle",
+          "explanation": "Rupture conventionnelle — обоюдное согласие (не démission и не licenciement)."
+        },
+        {
+          "question": "В расчётном листке сумма «на руки» — это…",
+          "options": [
+            "le salaire net",
+            "le salaire brut",
+            "la prime",
+            "la mutuelle"
+          ],
+          "correctAnswer": "le salaire net",
+          "explanation": "Net — после вычетов; brut — до вычетов."
+        },
+        {
+          "question": "«Дополнительное соглашение к договору» — это…",
+          "options": [
+            "un avenant",
+            "un CDD",
+            "un préavis",
+            "un coefficient"
+          ],
+          "correctAnswer": "un avenant",
+          "explanation": "Avenant изменяет условия действующего договора (например, часы или должность)."
+        },
+        {
+          "question": "«Корпоративная медицинская страховка» — это…",
+          "options": [
+            "la mutuelle",
+            "la prévoyance",
+            "la prime",
+            "les congés payés"
+          ],
+          "correctAnswer": "la mutuelle",
+          "explanation": "Mutuelle — медстраховка; prévoyance покрывает нетрудоспособность/риски."
+        }
+      ]
+    }
+  ]
+}

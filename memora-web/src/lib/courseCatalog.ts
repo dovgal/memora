@@ -109,6 +109,12 @@ export const BUILTIN_COURSES: CatalogCourse[] = [
     description: 'Типографика: пробелы перед ; : ! ?, 30 %, 8 h 30, n° 10, кавычки « », M./Mme, État, etc.',
     subject: 'Языки', topic: 'Французский', level: 'B2–C1', emoji: '📐',
   },
+  {
+    id: 'niveau-pro-intersport', href: '/dashboard/student/courses/niveau/pro',
+    title: 'Français professionnel — Entretien',
+    description: 'Лексика собеседования (Responsable Adjointe, Intersport): договоры, зарплата, управление командой, KPI, клиенты. Карточки FR↔RU с озвучкой.',
+    subject: 'Языки', topic: 'Французский', level: 'Pro · B1–B2', emoji: '💼',
+  },
 ];
 
 /** Тема для пользовательского курса по коду языка. */

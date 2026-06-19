@@ -1,0 +1,136 @@
+{
+  "id": "unite5",
+  "title": "Module 5 : Management d'équipe à la française",
+  "description": "Руководство командой: распределение задач, сопровождение, разрешение конфликтов и французский стиль управления.",
+  "vocabulary": [
+    {
+      "fr": "la répartition des tâches",
+      "ru": "распределение задач",
+      "type": "phrase"
+    },
+    {
+      "fr": "des consignes (f)",
+      "ru": "указания, инструкции",
+      "type": "phrase"
+    },
+    {
+      "fr": "la communication",
+      "ru": "коммуникация",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'accompagnement des collaborateurs (m)",
+      "ru": "сопровождение/поддержка сотрудников",
+      "type": "phrase"
+    },
+    {
+      "fr": "la gestion des conflits",
+      "ru": "управление конфликтами",
+      "type": "phrase"
+    },
+    {
+      "fr": "le recadrage",
+      "ru": "корректирующая беседа, «возвращение в рамки»",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'intégration des nouveaux salariés (f)",
+      "ru": "адаптация новых сотрудников",
+      "type": "phrase"
+    },
+    {
+      "fr": "la motivation de l'équipe",
+      "ru": "мотивация команды",
+      "type": "phrase"
+    },
+    {
+      "fr": "donner des consignes claires",
+      "ru": "давать чёткие указания",
+      "type": "phrase"
+    },
+    {
+      "fr": "rester factuel / factuelle",
+      "ru": "держаться фактов (без эмоций)",
+      "type": "phrase"
+    },
+    {
+      "fr": "ne pas humilier un collaborateur devant l'équipe",
+      "ru": "не унижать сотрудника при команде",
+      "type": "phrase"
+    },
+    {
+      "fr": "faire des points réguliers",
+      "ru": "проводить регулярные летучки/встречи",
+      "type": "phrase"
+    },
+    {
+      "fr": "recadrer calmement",
+      "ru": "спокойно делать замечание",
+      "type": "phrase"
+    },
+    {
+      "fr": "faire remonter une situation au responsable",
+      "ru": "доводить важную ситуацию до руководителя",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "pro5-th1",
+      "type": "theory",
+      "title": "Французский стиль управления",
+      "content": "<p style='margin:0.75rem 0'>Управление командой — сердце роли Responsable Adjointe. Французский менеджмент ценит ясность, факты и уважение:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Принцип (FR)</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Смысл</th></tr><tr><td style='padding:0.5rem'>donner des consignes claires</td><td style='padding:0.5rem'>ставить понятные задачи</td></tr><tr><td style='padding:0.5rem'>rester factuel</td><td style='padding:0.5rem'>говорить о фактах, а не о личности</td></tr><tr><td style='padding:0.5rem'>ne pas humilier devant l'équipe</td><td style='padding:0.5rem'>критиковать наедине, хвалить при всех</td></tr><tr><td style='padding:0.5rem'>faire des points réguliers</td><td style='padding:0.5rem'>регулярные короткие встречи с командой</td></tr><tr><td style='padding:0.5rem'>recadrer calmement</td><td style='padding:0.5rem'>спокойно возвращать сотрудника в рамки правил</td></tr><tr><td style='padding:0.5rem'>faire remonter au responsable</td><td style='padding:0.5rem'>эскалировать важное вышестоящему</td></tr></table><p style='margin:0.75rem 0'>Полезные слова: <b>recadrage</b> (корректирующая беседа), <b>accompagnement</b> (сопровождение), <b>intégration</b> (адаптация новичка), <b>gestion des conflits</b> (разрешение конфликтов).</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Сильный ответ на собеседовании: «Je recadre calmement et en privé, je reste factuelle, et je fais remonter au responsable si la situation l'exige.»</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Нажмите «⭐ В личный набор» над списком — все термины уйдут в карточки Memora: лицевая сторона французская (с озвучкой), обратная — русская. В режимах «Карточки» и «Тест» можно учить и наоборот, RU→FR.</p>"
+    },
+    {
+      "id": "pro5-qz1",
+      "type": "grammar-quiz",
+      "title": "Управление командой — практика",
+      "questions": [
+        {
+          "question": "«Корректирующая беседа, возвращение сотрудника в рамки» — это…",
+          "options": [
+            "le recadrage",
+            "l'intégration",
+            "la répartition des tâches",
+            "la prévoyance"
+          ],
+          "correctAnswer": "le recadrage",
+          "explanation": "Recadrage — спокойно указать на отклонение от правил, наедине."
+        },
+        {
+          "question": "Французский принцип: критиковать сотрудника нужно…",
+          "options": [
+            "en privé, en restant factuel",
+            "devant toute l'équipe",
+            "par courriel public",
+            "jamais"
+          ],
+          "correctAnswer": "en privé, en restant factuel",
+          "explanation": "Ne pas humilier devant l'équipe; rester factuel — держаться фактов."
+        },
+        {
+          "question": "«Адаптация новых сотрудников» — это…",
+          "options": [
+            "l'intégration des nouveaux salariés",
+            "la gestion des conflits",
+            "le recadrage",
+            "la remise en banque"
+          ],
+          "correctAnswer": "l'intégration des nouveaux salariés",
+          "explanation": "Intégration — ввод новичка в команду и процессы."
+        },
+        {
+          "question": "«Доводить важную ситуацию до вышестоящего руководителя» — это…",
+          "options": [
+            "faire remonter au responsable",
+            "donner des consignes",
+            "faire des soldes",
+            "recadrer"
+          ],
+          "correctAnswer": "faire remonter au responsable",
+          "explanation": "Faire remonter — эскалация важного наверх."
+        }
+      ]
+    }
+  ]
+}

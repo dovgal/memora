@@ -1,0 +1,167 @@
+{
+  "id": "unite4",
+  "title": "Module 4 : Santé-sécurité et gestion de caisse",
+  "description": "Безопасность клиентов и персонала, профилактика рисков; работа кассы, инвентаризация и предотвращение потерь.",
+  "vocabulary": [
+    {
+      "fr": "la sécurité des clients",
+      "ru": "безопасность клиентов",
+      "type": "phrase"
+    },
+    {
+      "fr": "la sécurité des salariés",
+      "ru": "безопасность сотрудников",
+      "type": "phrase"
+    },
+    {
+      "fr": "un accident du travail",
+      "ru": "несчастный случай на производстве",
+      "type": "phrase"
+    },
+    {
+      "fr": "la prévention des risques",
+      "ru": "профилактика рисков",
+      "type": "phrase"
+    },
+    {
+      "fr": "le port de charges",
+      "ru": "переноска тяжестей",
+      "type": "phrase"
+    },
+    {
+      "fr": "les issues de secours",
+      "ru": "аварийные выходы",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'affichage obligatoire (m)",
+      "ru": "обязательная информационная табличка/стенд",
+      "type": "phrase"
+    },
+    {
+      "fr": "le registre de sécurité",
+      "ru": "журнал безопасности",
+      "type": "phrase"
+    },
+    {
+      "fr": "le respect des procédures",
+      "ru": "соблюдение процедур",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'ouverture de caisse (f)",
+      "ru": "открытие кассы",
+      "type": "phrase"
+    },
+    {
+      "fr": "la fermeture de caisse",
+      "ru": "закрытие кассы",
+      "type": "phrase"
+    },
+    {
+      "fr": "un écart de caisse",
+      "ru": "расхождение в кассе",
+      "type": "phrase"
+    },
+    {
+      "fr": "la remise en banque",
+      "ru": "инкассация (сдача выручки в банк)",
+      "type": "phrase"
+    },
+    {
+      "fr": "un inventaire",
+      "ru": "инвентаризация",
+      "type": "phrase"
+    },
+    {
+      "fr": "la démarque inconnue",
+      "ru": "неучтённые потери товара",
+      "type": "phrase"
+    },
+    {
+      "fr": "le vol client",
+      "ru": "кража со стороны покупателя",
+      "type": "phrase"
+    },
+    {
+      "fr": "le vol interne",
+      "ru": "внутренняя кража (персонал)",
+      "type": "phrase"
+    },
+    {
+      "fr": "les procédures anti-vol",
+      "ru": "процедуры против краж",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "pro4-th1",
+      "type": "theory",
+      "title": "Безопасность и касса",
+      "content": "<p style='margin:0.75rem 0'>Две зоны постоянной ответственности заместителя: <b>santé-sécurité</b> (люди) и <b>gestion de caisse / pertes</b> (деньги и товар).</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Французский</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Перевод</th></tr><tr><td style='padding:0.5rem'>prévention des risques</td><td style='padding:0.5rem'>профилактика рисков (травмы, пожар)</td></tr><tr><td style='padding:0.5rem'>port de charges</td><td style='padding:0.5rem'>правильная переноска тяжестей</td></tr><tr><td style='padding:0.5rem'>issues de secours</td><td style='padding:0.5rem'>аварийные выходы (должны быть свободны)</td></tr><tr><td style='padding:0.5rem'>affichage obligatoire</td><td style='padding:0.5rem'>обязательные таблички (правила, контакты)</td></tr><tr><td style='padding:0.5rem'>écart de caisse</td><td style='padding:0.5rem'>расхождение между суммой в кассе и по чекам</td></tr><tr><td style='padding:0.5rem'>démarque inconnue</td><td style='padding:0.5rem'>потери товара без объяснимой причины (кражи, ошибки)</td></tr><tr><td style='padding:0.5rem'>vol client / vol interne</td><td style='padding:0.5rem'>кража покупателя / кража персонала</td></tr></table><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 «Démarque inconnue» — ключевой ритейл-термин: разница между ожидаемым и реальным остатком, которую нельзя объяснить продажами. Снижается процедурами anti-vol и инвентаризациями.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Нажмите «⭐ В личный набор» над списком — все термины уйдут в карточки Memora: лицевая сторона французская (с озвучкой), обратная — русская. В режимах «Карточки» и «Тест» можно учить и наоборот, RU→FR.</p>"
+    },
+    {
+      "id": "pro4-qz1",
+      "type": "grammar-quiz",
+      "title": "Безопасность и касса — практика",
+      "questions": [
+        {
+          "question": "«Расхождение между деньгами в кассе и суммой по чекам» — это…",
+          "options": [
+            "un écart de caisse",
+            "la remise en banque",
+            "un inventaire",
+            "la démarque inconnue"
+          ],
+          "correctAnswer": "un écart de caisse",
+          "explanation": "Écart de caisse — кассовое расхождение при закрытии."
+        },
+        {
+          "question": "«Неучтённые потери товара (кражи, ошибки)» — это…",
+          "options": [
+            "la démarque inconnue",
+            "le vol client",
+            "l'inventaire",
+            "l'écart de caisse"
+          ],
+          "correctAnswer": "la démarque inconnue",
+          "explanation": "Démarque inconnue — необъяснённая разница остатков."
+        },
+        {
+          "question": "«Аварийные выходы» — это…",
+          "options": [
+            "les issues de secours",
+            "l'affichage obligatoire",
+            "le port de charges",
+            "le registre de sécurité"
+          ],
+          "correctAnswer": "les issues de secours",
+          "explanation": "Issues de secours должны быть всегда свободны."
+        },
+        {
+          "question": "«Сдача выручки в банк» — это…",
+          "options": [
+            "la remise en banque",
+            "l'ouverture de caisse",
+            "l'inventaire",
+            "la prévoyance"
+          ],
+          "correctAnswer": "la remise en banque",
+          "explanation": "Remise en banque — инкассация наличной выручки."
+        },
+        {
+          "question": "«Несчастный случай на работе» — это…",
+          "options": [
+            "un accident du travail",
+            "une démarque inconnue",
+            "un écart de caisse",
+            "un avenant"
+          ],
+          "correctAnswer": "un accident du travail",
+          "explanation": "Accident du travail оформляется по особой процедуре и фиксируется."
+        }
+      ]
+    }
+  ]
+}

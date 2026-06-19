@@ -1,0 +1,166 @@
+{
+  "id": "unite1",
+  "title": "Module 1 : Convention collective et statuts",
+  "description": "Коллективный договор сферы спорттоваров (Intersport), классификация и статусы сотрудников, надбавка за стаж.",
+  "vocabulary": [
+    {
+      "fr": "une convention collective",
+      "ru": "коллективный (отраслевой) договор",
+      "type": "phrase"
+    },
+    {
+      "fr": "le Code du travail",
+      "ru": "Трудовой кодекс",
+      "type": "phrase"
+    },
+    {
+      "fr": "la classification",
+      "ru": "классификация (должностей)",
+      "type": "phrase"
+    },
+    {
+      "fr": "le coefficient",
+      "ru": "коэффициент (тарифной сетки)",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'ancienneté (f)",
+      "ru": "стаж работы",
+      "type": "phrase"
+    },
+    {
+      "fr": "une prime",
+      "ru": "премия, надбавка",
+      "type": "phrase"
+    },
+    {
+      "fr": "le préavis",
+      "ru": "срок предупреждения (об увольнении)",
+      "type": "phrase"
+    },
+    {
+      "fr": "la période d'essai",
+      "ru": "испытательный срок",
+      "type": "phrase"
+    },
+    {
+      "fr": "le travail du dimanche et les jours fériés",
+      "ru": "работа по воскресеньям и праздникам",
+      "type": "phrase"
+    },
+    {
+      "fr": "la classification des emplois",
+      "ru": "классификация должностей",
+      "type": "phrase"
+    },
+    {
+      "fr": "les salaires minima conventionnels",
+      "ru": "минимальные оклады по договору",
+      "type": "phrase"
+    },
+    {
+      "fr": "les majorations du dimanche et des jours fériés",
+      "ru": "надбавки за воскресенья и праздники",
+      "type": "phrase"
+    },
+    {
+      "fr": "la prime d'ancienneté",
+      "ru": "надбавка за стаж",
+      "type": "phrase"
+    },
+    {
+      "fr": "la brochure (n° 3049)",
+      "ru": "сборник (номер публикации договора)",
+      "type": "phrase"
+    },
+    {
+      "fr": "l'IDCC (1557)",
+      "ru": "идентификатор коллективного договора",
+      "type": "phrase"
+    },
+    {
+      "fr": "un(e) employé(e)",
+      "ru": "рядовой сотрудник (статус)",
+      "type": "phrase"
+    },
+    {
+      "fr": "un agent de maîtrise",
+      "ru": "линейный руководитель (мастер, бригадир)",
+      "type": "phrase"
+    },
+    {
+      "fr": "un cadre",
+      "ru": "руководящий сотрудник, специалист высшей категории",
+      "type": "phrase"
+    },
+    {
+      "fr": "le commerce des articles de sport",
+      "ru": "торговля спортивными товарами",
+      "type": "phrase"
+    },
+    {
+      "fr": "une enseigne",
+      "ru": "торговая сеть, бренд магазина",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "pro1-th1",
+      "type": "theory",
+      "title": "Зачем это знать на собеседовании",
+      "content": "<p style='margin:0.75rem 0'>На должности <b>Responsable Adjointe</b> (заместитель руководителя магазина) от кандидата ждут понимания базовых правил трудовых отношений во Франции. Не нужно быть юристом — нужно узнавать термины и понимать суть.</p><p style='margin:0.75rem 0'>Для Intersport действует отраслевой коллективный договор <b>«Commerce des articles de sport et d'équipements de loisirs»</b> (IDCC 1557, brochure 3049). Что в нём важно:</p><table style='width:100%;border-collapse:collapse;margin:1rem 0'><tr><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Тема</th><th style='text-align:left;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.2)'>Суть</th></tr><tr><td style='padding:0.5rem'>classification / coefficient</td><td style='padding:0.5rem'>ступень должности и её тарифный коэффициент</td></tr><tr><td style='padding:0.5rem'>période d'essai</td><td style='padding:0.5rem'>испытательный срок до подтверждения найма</td></tr><tr><td style='padding:0.5rem'>salaires minima conventionnels</td><td style='padding:0.5rem'>минимальные оклады по договору</td></tr><tr><td style='padding:0.5rem'>majorations dimanche / jours fériés</td><td style='padding:0.5rem'>повышенная оплата в воскресенья и праздники</td></tr><tr><td style='padding:0.5rem'>prime d'ancienneté</td><td style='padding:0.5rem'>надбавка за стаж</td></tr><tr><td style='padding:0.5rem'>préavis</td><td style='padding:0.5rem'>срок предупреждения при уходе/увольнении</td></tr></table><p style='margin:0.75rem 0'>Надбавка за стаж по договору обычно: <b>3 года +4%, 6 лет +7%, 9 лет +10%, 12 лет +13%, 15 лет +16%</b>.</p><p style='margin:0.75rem 0'>Должность Responsable Adjointe чаще относят к статусу <b>agent de maîtrise</b>, иногда <b>cadre</b> — в зависимости от размера магазина и зоны ответственности.</p><p style='margin:0.75rem 0;padding:0.6rem 0.8rem;border-left:3px solid #fbbf24;background:rgba(251,191,36,0.08)'>💡 Нажмите «⭐ В личный набор» над списком — все термины уйдут в карточки Memora: лицевая сторона французская (с озвучкой), обратная — русская. В режимах «Карточки» и «Тест» можно учить и наоборот, RU→FR.</p>"
+    },
+    {
+      "id": "pro1-qz1",
+      "type": "grammar-quiz",
+      "title": "Термины коллективного договора",
+      "questions": [
+        {
+          "question": "«Период, в течение которого работодатель и сотрудник проверяют, подходят ли они друг другу» — это…",
+          "options": [
+            "la période d'essai",
+            "le préavis",
+            "l'ancienneté",
+            "la prime"
+          ],
+          "correctAnswer": "la période d'essai",
+          "explanation": "Période d'essai — испытательный срок. Préavis — срок предупреждения об уходе."
+        },
+        {
+          "question": "«Надбавка за стаж» по-французски:",
+          "options": [
+            "la prime d'ancienneté",
+            "le salaire minimum",
+            "la majoration du dimanche",
+            "le coefficient"
+          ],
+          "correctAnswer": "la prime d'ancienneté",
+          "explanation": "Prime d'ancienneté растёт со стажем: +4% после 3 лет и т.д."
+        },
+        {
+          "question": "Статус Responsable Adjointe чаще всего:",
+          "options": [
+            "agent de maîtrise",
+            "employé",
+            "stagiaire",
+            "apprenti"
+          ],
+          "correctAnswer": "agent de maîtrise",
+          "explanation": "Линейный руководитель — agent de maîtrise (иногда cadre)."
+        },
+        {
+          "question": "«Срок предупреждения при увольнении» — это…",
+          "options": [
+            "le préavis",
+            "la période d'essai",
+            "le coefficient",
+            "la mutuelle"
+          ],
+          "correctAnswer": "le préavis",
+          "explanation": "Préavis — обязательный срок уведомления перед расторжением договора."
+        }
+      ]
+    }
+  ]
+}

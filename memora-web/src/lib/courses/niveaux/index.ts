@@ -39,6 +39,9 @@ import hp1 from './homophones/unite1.json'; import hp2 from './homophones/unite2
 import hp3 from './homophones/unite3.json'; import hp4 from './homophones/unite4.json';
 import or1 from './orthographe/unite1.json'; import or2 from './orthographe/unite2.json';
 import ot1 from './orthotypo/unite1.json'; import ot2 from './orthotypo/unite2.json';
+import pro1 from './pro/unite1.json'; import pro2 from './pro/unite2.json';
+import pro3 from './pro/unite3.json'; import pro4 from './pro/unite4.json';
+import pro5 from './pro/unite5.json'; import pro6 from './pro/unite6.json';
 
 const U = (m: unknown) => m as EditoUnit;
 
@@ -130,5 +133,12 @@ export const LEVELS: Record<string, LevelCourse> = {
     accent: 'slate',
     units: { '1': U(ot1), '2': U(ot2) },
     order: ['1','2'],
+  },
+  pro: {
+    id: 'pro', courseId: 'niveau-pro-intersport', title: 'Français professionnel — Entretien (Intersport)', level: 'B1–B2',
+    description: 'Профессиональная лексика для собеседования на Responsable Adjointe: коллективный договор, договоры и зарплата, рабочее время, безопасность и касса, управление командой, коммерческие показатели и обслуживание клиентов. Кнопка «В личный набор» делает из терминов карточки FR↔RU с озвучкой.',
+    accent: 'pink',
+    units: { '1': U(pro1), '2': U(pro2), '3': U(pro3), '4': U(pro4), '5': U(pro5), '6': U(pro6) },
+    order: ['1','2','3','4','5','6'],
   },
 };
