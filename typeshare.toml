@@ -1,0 +1,6 @@
+# Конфиг typeshare (make types / sync.sh).
+# serde_json::Value в DTO — произвольный JSON: без маппинга typeshare выводит
+# несуществующее имя `Value` и generated.ts не компилируется.
+# Точная типизация полей fieldsSchema/fieldsData — оверрайды в src/types/schema.ts.
+[typescript]
+type_mappings = { "Value" = "Record<string, unknown>" }

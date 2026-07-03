@@ -14,7 +14,7 @@ fi
 # Run typeshare against the Rust API directory
 # We output the generated TypeScript interfaces into the Next.js types directory
 echo "📝 Generating TypeScript interfaces..."
-typeshare ./memora-api/src --lang=typescript --output-file=./memora-web/src/types/api.ts
+typeshare ./memora-api/src --lang=typescript --output-file=./memora-web/src/types/generated.ts
 
 if [ $? -eq 0 ]; then
     echo "✅ Type synchronization complete!"
