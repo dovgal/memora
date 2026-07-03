@@ -10,7 +10,7 @@
 // - ИИ-тьютор «Не понял — объясни» для любого упражнения.
 // - После сессии — дополнительная ИИ-практика по слабым местам.
 
-import { useEffect, useMemo, useState, useCallback, useRef } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import {
@@ -105,10 +105,13 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
   const [exerciseDone, setExerciseDone] = useState(false);
   const [manualMode, setManualMode] = useState(false);
 
-  // ИИ-тьютор
+  // ИИ-тьютор: сократическая лестница подсказок.
+  // hintLevel: 0 — без помощи, 1 — подсказка, 2 — наводящий вопрос, 3 — полное объяснение.
+  // Любая использованная ступень ограничивает авто-рейтинг FSRS до «Трудно».
   const [explainOpen, setExplainOpen] = useState(false);
   const [explainText, setExplainText] = useState<string | null>(null);
   const [explainBusy, setExplainBusy] = useState(false);
+  const [hintLevel, setHintLevel] = useState(0);
 
   // Доп. практика
   const [practiceBusy, setPracticeBusy] = useState(false);
@@ -271,11 +274,16 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
     setManualMode(false);
     setExplainOpen(false);
     setExplainText(null);
+    setHintLevel(0);
     setAttempt(a => a + 1);
   };
 
   const current = queue[index];
-  const suggested: Rating | null = lastResult ? autoRating(lastResult) : null;
+  // Авто-рейтинг: результат упражнения, но использованная подсказка ограничивает
+  // оценку до «Трудно» — материал с подсказкой ещё не усвоен самостоятельно.
+  const rawSuggested: Rating | null = lastResult ? autoRating(lastResult) : null;
+  const suggested: Rating | null =
+    rawSuggested === null ? null : hintLevel > 0 ? (Math.min(rawSuggested, 2) as Rating) : rawSuggested;
 
   const advance = (nextQueue: QueueItem[]) => {
     if (index + 1 >= nextQueue.length) {
@@ -317,19 +325,21 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
     setSubmitting(false);
   };
 
-  const handleExplain = async () => {
+  /** Ступень лестницы тьютора: 1 — подсказка, 2 — наводящий вопрос, 3 — полное объяснение. */
+  const handleTutor = async (step: 1 | 2 | 3) => {
     if (!current || explainBusy) return;
     setExplainOpen(true);
-    if (explainText) return;
     setExplainBusy(true);
+    setHintLevel(prev => Math.max(prev, step));
     try {
       const payload = current.kind === 'vocab'
         ? { type: 'vocabulary', word: current.vocab?.fr, translation: current.vocab?.ru }
         : (variant ?? current.exercise);
-      const res = await explainExercise(payload, undefined, undefined, idToken);
+      const mode = step === 1 ? 'hint' as const : step === 2 ? 'guide' as const : undefined;
+      const res = await explainExercise(payload, undefined, undefined, idToken, mode);
       setExplainText(res.explanation);
     } catch {
-      setExplainText('Не удалось получить объяснение. Попробуйте ещё раз чуть позже.');
+      setExplainText('Не удалось получить подсказку. Попробуйте ещё раз чуть позже.');
     } finally {
       setExplainBusy(false);
     }
@@ -607,13 +617,13 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
           )
         )}
 
-        {/* ИИ-тьютор */}
+        {/* ИИ-тьютор: лестница подсказок (подсказка → наводящий вопрос → объяснение) */}
         <div className="mt-4 flex justify-end">
           <button
-            onClick={handleExplain}
+            onClick={() => handleTutor(1)}
             className="inline-flex items-center gap-1.5 text-qz-text-muted hover:text-[#4255ff] text-xs font-semibold transition-colors"
           >
-            <HelpCircle className="w-4 h-4" /> Не понимаю — объясни
+            <HelpCircle className="w-4 h-4" /> Не понимаю — подскажи
           </button>
         </div>
         {explainOpen && (
@@ -621,10 +631,35 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
             <button onClick={() => setExplainOpen(false)} className="absolute top-3 right-3 text-qz-text-muted hover:text-foreground">
               <X className="w-4 h-4" />
             </button>
-            <p className="text-xs font-bold uppercase tracking-wider text-[#4255ff] mb-2">ИИ-тьютор</p>
-            {explainBusy
-              ? <p className="text-qz-text-muted text-sm flex items-center gap-2"><Loader2 className="w-4 h-4 animate-spin" /> Готовлю объяснение…</p>
-              : <p className="text-foreground text-sm whitespace-pre-wrap leading-relaxed">{explainText}</p>}
+            <p className="text-xs font-bold uppercase tracking-wider text-[#4255ff] mb-2">
+              {hintLevel >= 3 ? 'Объяснение' : hintLevel === 2 ? 'Наводящий вопрос' : 'Подсказка'}
+            </p>
+            {explainBusy ? (
+              <p className="text-qz-text-muted text-sm flex items-center gap-2">
+                <Loader2 className="w-4 h-4 animate-spin" />
+                {hintLevel >= 3 ? 'Готовлю объяснение…' : hintLevel === 2 ? 'Формулирую вопрос…' : 'Готовлю подсказку…'}
+              </p>
+            ) : (
+              <>
+                <p className="text-foreground text-sm whitespace-pre-wrap leading-relaxed">{explainText}</p>
+                {hintLevel === 1 && (
+                  <button
+                    onClick={() => handleTutor(2)}
+                    className="mt-3 text-[#4255ff] hover:underline text-xs font-semibold"
+                  >
+                    Всё ещё непонятно → наводящий вопрос
+                  </button>
+                )}
+                {hintLevel === 2 && (
+                  <button
+                    onClick={() => handleTutor(3)}
+                    className="mt-3 text-[#4255ff] hover:underline text-xs font-semibold"
+                  >
+                    Покажи полное объяснение
+                  </button>
+                )}
+              </>
+            )}
           </div>
         )}
 
@@ -639,6 +674,9 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
                       suggested >= 3 ? 'text-emerald-400' : suggested === 2 ? 'text-amber-400' : 'text-red-400'
                     }>{RATings_LABELS[suggested]}</span>
                     {lastResult && <span className="text-qz-text-muted font-normal text-xs"> · {lastResult.correct} из {lastResult.total} верно</span>}
+                    {hintLevel > 0 && rawSuggested !== null && rawSuggested > 2 && (
+                      <span className="text-amber-400 font-normal text-xs"> · с подсказкой — оценка снижена</span>
+                    )}
                   </p>
                   <p className="text-qz-text-muted text-xs mb-4">
                     {suggested === 1 && 'Упражнение вернётся ещё раз в этой сессии.'}

@@ -263,13 +263,19 @@ export async function markUnitKnown(courseId: string, unitId: string, exerciseId
 
 // ---------- ИИ-тьютор и практика ----------
 
+/**
+ * ИИ-тьютор. mode — ступень сократической лестницы:
+ * 'hint' — подсказка без ответа, 'guide' — наводящий вопрос,
+ * undefined — полное объяснение (как раньше).
+ */
 export async function explainExercise(
   exercise: unknown, userAnswer?: string, question?: string, idToken?: string,
+  mode?: 'hint' | 'guide',
 ): Promise<{ explanation: string }> {
   return ok(await fetch('/api/ai/course/explain', {
     method: 'POST',
     headers: headers(idToken),
-    body: JSON.stringify({ exercise, userAnswer, question }),
+    body: JSON.stringify({ exercise, userAnswer, question, mode }),
   }));
 }
 
