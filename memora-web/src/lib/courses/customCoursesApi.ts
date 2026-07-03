@@ -208,6 +208,24 @@ export async function getCoachStats(courseId: string, idToken?: string): Promise
   return ok(await fetch(`/api/courses/${courseId}/coach/stats?tz_offset_min=${tz}`, { headers: headers(idToken) }));
 }
 
+/** Распределение оценок по упражнению за окно (для mastery по навыкам). */
+export interface ExerciseRatingStats {
+  unitId: string;
+  exerciseId: string;
+  attempts: number;
+  again: number;
+  hard: number;
+}
+
+export async function getCoachRatingStats(
+  courseId: string, idToken?: string, days = 30,
+): Promise<ExerciseRatingStats[]> {
+  const data = await ok<{ days: number; stats: ExerciseRatingStats[] }>(
+    await fetch(`/api/courses/${courseId}/coach/rating-stats?days=${days}`, { headers: headers(idToken) })
+  );
+  return data.stats;
+}
+
 /** «Я уже знаю это» — пометить упражнения юнита усвоенными. */
 export async function markUnitKnown(courseId: string, unitId: string, exerciseIds: string[], idToken?: string): Promise<void> {
   return ok(await fetch(`/api/courses/${courseId}/coach/mark-known`, {

@@ -321,6 +321,73 @@ pub async fn get_coach_stats(
 }
 
 #[derive(Deserialize)]
+pub struct RatingStatsQuery {
+    /// Окно в днях (по умолчанию 30, максимум 365).
+    pub days: Option<u32>,
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ExerciseRatingStats {
+    pub unit_id: String,
+    pub exercise_id: String,
+    /// Оценок за окно.
+    pub attempts: i64,
+    /// Из них «Снова» (rating=1).
+    pub again: i64,
+    /// Из них «Трудно» (rating=2).
+    pub hard: i64,
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RatingStatsResponse {
+    pub days: u32,
+    pub stats: Vec<ExerciseRatingStats>,
+}
+
+/// GET /api/courses/{course_id}/coach/rating-stats?days=30
+/// Распределение оценок по упражнениям за окно — сырьё для mastery по навыкам:
+/// клиент группирует по rule.skill (контент упражнений есть только у него)
+/// и вычисляет статус навыка (new / learning / weak / mastered).
+pub async fn get_rating_stats(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Path(course_id): Path<String>,
+    axum::extract::Query(q): axum::extract::Query<RatingStatsQuery>,
+) -> ApiResult<impl IntoResponse> {
+    let user_id = uid(&user.sub)?;
+    let days = q.days.unwrap_or(30).clamp(1, 365);
+
+    let rows = sqlx::query(
+        "SELECT unit_id, exercise_id,
+                COUNT(*) AS attempts,
+                COUNT(*) FILTER (WHERE rating = 1) AS again,
+                COUNT(*) FILTER (WHERE rating = 2) AS hard
+         FROM course_review_logs
+         WHERE user_id = $1 AND course_id = $2
+           AND review_time >= NOW() - ($3 || ' days')::interval
+         GROUP BY unit_id, exercise_id"
+    )
+    .bind(user_id)
+    .bind(&course_id)
+    .bind(days.to_string())
+    .fetch_all(&pool)
+    .await
+    .map_err(db_err)?;
+
+    let stats = rows.into_iter().map(|r| ExerciseRatingStats {
+        unit_id: r.get("unit_id"),
+        exercise_id: r.get("exercise_id"),
+        attempts: r.get("attempts"),
+        again: r.get("again"),
+        hard: r.get("hard"),
+    }).collect();
+
+    Ok((StatusCode::OK, Json(RatingStatsResponse { days, stats })))
+}
+
+#[derive(Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct MarkKnownRequest {
     pub unit_id: String,

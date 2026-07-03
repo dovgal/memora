@@ -5,13 +5,14 @@ import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import {
-  ChevronLeft, Loader2, Flame, BarChart3, CalendarClock, AlertTriangle, GraduationCap,
+  ChevronLeft, Loader2, Flame, BarChart3, CalendarClock, AlertTriangle, GraduationCap, Target,
 } from 'lucide-react';
 import type { CoachUnit } from '@/components/courses/CoachSession';
 import {
-  getCoachReviews, getCoachStats,
-  type CoachReviewEntry, type CoachStats as Stats,
+  getCoachReviews, getCoachStats, getCoachRatingStats,
+  type CoachReviewEntry, type CoachStats as Stats, type ExerciseRatingStats,
 } from '@/lib/courses/customCoursesApi';
+import { computeSkillMastery, type SkillStatus } from '@/lib/courses/skillMastery';
 
 interface Props {
   courseId: string;
@@ -20,17 +21,26 @@ interface Props {
   backHref: string;
 }
 
+const SKILL_STATUS_STYLE: Record<SkillStatus, { label: string; card: string; badge: string }> = {
+  weak: { label: 'слабое место', card: 'bg-amber-500/5 border-amber-500/40', badge: 'bg-amber-500/15 text-amber-500' },
+  learning: { label: 'изучается', card: 'bg-qz-card border-border', badge: 'bg-[#4255ff]/15 text-[#4255ff]' },
+  new: { label: 'новый', card: 'bg-qz-card border-border', badge: 'bg-muted text-qz-text-muted' },
+  mastered: { label: 'усвоен', card: 'bg-emerald-500/5 border-emerald-500/30', badge: 'bg-emerald-500/15 text-emerald-500' },
+};
+
 export function CourseStats({ courseId, courseTitle, units, backHref }: Props) {
   const { data: session } = useSession();
   const idToken = session?.id_token as string | undefined;
 
   const [reviews, setReviews] = useState<CoachReviewEntry[] | null>(null);
   const [stats, setStats] = useState<Stats | null>(null);
+  const [ratingStats, setRatingStats] = useState<ExerciseRatingStats[]>([]);
 
   useEffect(() => {
     if (!idToken) return;
     getCoachReviews(courseId, idToken).then(setReviews).catch(() => setReviews([]));
     getCoachStats(courseId, idToken).then(setStats).catch(() => {});
+    getCoachRatingStats(courseId, idToken).then(setRatingStats).catch(() => {});
   }, [courseId, idToken]);
 
   // Карта названий элементов: exercise_id -> title
@@ -86,6 +96,12 @@ export function CourseStats({ courseId, courseTitle, units, backHref }: Props) {
 
     return { perUnit, totalItems, totalLearned, forecast, maxForecast, weak };
   }, [reviews, units]);
+
+  // Карта навыков: группировка прогресса по rule.skill (пусто, если контент не размечен).
+  const skills = useMemo(
+    () => reviews ? computeSkillMastery(units, reviews, ratingStats) : [],
+    [units, reviews, ratingStats],
+  );
 
   if (!analysis) {
     return (
@@ -157,6 +173,34 @@ export function CourseStats({ courseId, courseTitle, units, backHref }: Props) {
             })}
           </div>
         </section>
+
+        {/* Карта навыков (только для размеченного контента: rule.skill) */}
+        {skills.length > 0 && (
+          <section>
+            <h2 className="text-sm font-bold uppercase tracking-wider text-qz-text-muted mb-4">
+              <span className="inline-flex items-center gap-1.5"><Target className="w-4 h-4" /> Карта навыков</span>
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-2.5">
+              {skills.map(s => {
+                const style = SKILL_STATUS_STYLE[s.status];
+                return (
+                  <div key={s.skill} className={`border rounded-xl px-4 py-3 ${style.card}`}>
+                    <div className="flex items-center justify-between gap-2 mb-1">
+                      <p className="text-foreground text-sm font-medium line-clamp-1">{s.point ?? s.skill.replace(/-/g, ' ')}</p>
+                      <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full shrink-0 ${style.badge}`}>
+                        {style.label}
+                      </span>
+                    </div>
+                    <p className="text-qz-text-muted text-xs">
+                      {s.learned} / {s.exercises} усвоено
+                      {s.attempts > 0 && <> · ошибок {Math.round(s.errorRate * 100)}%</>}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
 
         {/* Прогноз повторений */}
         <section>
