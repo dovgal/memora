@@ -1214,9 +1214,8 @@ fn validate_fill_blank(v: &FillBlankVariant, avoid_norm: &[String]) -> Option<St
     if blank_slots(&v.text) != v.blanks.len() { return None; }
     for b in &v.blanks {
         if b.correct_answer.trim().is_empty() { return None; }
-        if let Some(opts) = &b.options {
-            if opts.len() < 2 || !opts.iter().any(|o| o == &b.correct_answer) { return None; }
-        }
+        if let Some(opts) = &b.options
+            && (opts.len() < 2 || !opts.iter().any(|o| o == &b.correct_answer)) { return None; }
     }
     let signature = normalize_sentence(&v.text);
     if avoid_norm.contains(&signature) { return None; }
@@ -1594,9 +1593,8 @@ pub async fn regenerate_variant(
     .await
     .unwrap_or_default();
     for r in &stock_rows {
-        if let Ok(Some(s)) = r.try_get::<Option<String>, _>("sentence") {
-            if avoid_norm.contains(&normalize_sentence(&s)) { continue; }
-        }
+        if let Ok(Some(s)) = r.try_get::<Option<String>, _>("sentence")
+            && avoid_norm.contains(&normalize_sentence(&s)) { continue; }
         let Ok(p) = r.try_get::<String, _>("payload") else { continue };
         let Ok(variant) = serde_json::from_str::<serde_json::Value>(&p) else { continue };
         let variant_id: i64 = r.get("id");
@@ -1659,11 +1657,10 @@ pub async fn regenerate_variant(
             let is_avoided = s.as_ref().map(|x| avoid_norm.contains(&normalize_sentence(x))).unwrap_or(false);
             if is_avoided { continue; }
         }
-        if let Ok(p) = r.try_get::<String, _>("payload") {
-            if let Ok(variant) = serde_json::from_str::<serde_json::Value>(&p) {
+        if let Ok(p) = r.try_get::<String, _>("payload")
+            && let Ok(variant) = serde_json::from_str::<serde_json::Value>(&p) {
                 return Ok(Json(RegenerateVariantResponse { variant, rule_id: payload.exercise_id, fallback: true }));
             }
-        }
     }
 
     // Фолбэк 2: вернуть эталон (учащийся хотя бы повторит правило).

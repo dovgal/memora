@@ -70,8 +70,8 @@ pub async fn login(
     .await
     .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {e}")))?;
 
-    if let Some(user) = user_record {
-        if let Some(hash) = user.password_hash {
+    if let Some(user) = user_record
+        && let Some(hash) = user.password_hash {
             let is_valid = verify(&payload.password, &hash)
                 .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to verify password: {e}")))?;
 
@@ -84,7 +84,6 @@ pub async fn login(
                 return Ok((StatusCode::OK, Json(response)));
             }
         }
-    }
 
     // Generic error for either not found or invalid password
     Err(ApiError::response(StatusCode::UNAUTHORIZED, "Invalid email or password"))

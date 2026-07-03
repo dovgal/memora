@@ -66,9 +66,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
                         // 2. Voice ID from schema
                         let mut voice_id = "Clive".to_string();
-                        if let Some(schema_array) = schema.as_array() {
-                            if let Some(field_schema) = schema_array.iter().find(|f| f.get("id").and_then(|v| v.as_str()) == Some(clean_field_id)) {
-                                if let Some(settings) = field_schema.get("settings").and_then(|v| v.as_object()) {
+                        if let Some(schema_array) = schema.as_array()
+                            && let Some(field_schema) = schema_array.iter().find(|f| f.get("id").and_then(|v| v.as_str()) == Some(clean_field_id))
+                                && let Some(settings) = field_schema.get("settings").and_then(|v| v.as_object()) {
                                     if let Some(v_id) = settings.get("ttsVoice").and_then(|v| v.as_str()) {
                                         voice_id = v_id.to_string();
                                     } else {
@@ -82,8 +82,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                                         }.to_string();
                                     }
                                 }
-                            }
-                        }
 
                         println!("  Generating TTS: Voice={voice_id}, Text='{text_to_speak}'");
                         

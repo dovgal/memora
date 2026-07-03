@@ -110,8 +110,8 @@ pub async fn get_public_set(
             let keys: Vec<String> = obj.keys().cloned().collect();
             
             for field_id in keys {
-                if let Some(value) = obj.get(&field_id) {
-                    if let Some(val_str) = value.as_str() {
+                if let Some(value) = obj.get(&field_id)
+                    && let Some(val_str) = value.as_str() {
                         // SELF-HEALING: If it's a base64 string, migrate it to binary storage
                         if val_str.starts_with("data:audio/") {
                             let clean_base64 = if let Some(pos) = val_str.find("base64,") {
@@ -144,7 +144,6 @@ pub async fn get_public_set(
                              obj.insert(field_id.clone(), serde_json::json!("__AUDIO_ON_SERVER__"));
                         }
                     }
-                }
             }
         }
 

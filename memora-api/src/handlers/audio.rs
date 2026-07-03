@@ -82,9 +82,9 @@ pub async fn get_flashcard_audio(
                     // B. Determine Voice ID from schema
                     let mut voice_id = "Clive".to_string(); // Ultimate default
                     
-                    if let Some(schema_array) = fields_schema.as_array() {
-                        if let Some(field_schema) = schema_array.iter().find(|f| f.get("id").and_then(|v| v.as_str()) == Some(clean_field_id)) {
-                            if let Some(settings) = field_schema.get("settings").and_then(|v| v.as_object()) {
+                    if let Some(schema_array) = fields_schema.as_array()
+                        && let Some(field_schema) = schema_array.iter().find(|f| f.get("id").and_then(|v| v.as_str()) == Some(clean_field_id))
+                            && let Some(settings) = field_schema.get("settings").and_then(|v| v.as_object()) {
                                 // Use explicit ttsVoice if available
                                 if let Some(v_id) = settings.get("ttsVoice").and_then(|v| v.as_str()) {
                                     let mapped_voice = match v_id {
@@ -105,8 +105,6 @@ pub async fn get_flashcard_audio(
                                     }.to_string();
                                 }
                             }
-                        }
-                    }
 
                     println!("INFO: Generating TTS on-the-fly: Card={flashcard_uuid}, Field={field_id}, Voice={voice_id}, Text='{text_to_speak}'");
                     
@@ -128,8 +126,8 @@ pub async fn get_flashcard_audio(
 
                     if res.status().is_success() {
                         let json: Value = res.json().await.map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to parse Inworld JSON: {e}")))?;
-                        if let Some(base64) = json.get("audioContent").and_then(|v| v.as_str()) {
-                            if let Ok(bytes) = general_purpose::STANDARD.decode(base64) {
+                        if let Some(base64) = json.get("audioContent").and_then(|v| v.as_str())
+                            && let Ok(bytes) = general_purpose::STANDARD.decode(base64) {
                                 // Save it for future requests
                                 let _ = sqlx::query(
                                     "INSERT INTO flashcard_audio (flashcard_id, field_id, audio_data) 
@@ -147,7 +145,6 @@ pub async fn get_flashcard_audio(
                                     bytes,
                                 ));
                             }
-                        }
                         return Err(ApiError::response(StatusCode::BAD_GATEWAY, "Inworld response missing audioContent"));
                     } else {
                         let err_status = res.status();
