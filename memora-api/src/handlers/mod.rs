@@ -15,4 +15,5 @@ pub mod coach;
 pub mod classroom;
 pub mod sources;
 pub mod checks;
+pub mod family;
 

@@ -213,6 +213,18 @@ pub async fn record_coach_review(
     .execute(&pool)
     .await;
 
+    // XP за повторение — универсальная геймификация (любой курс). Начисляет сервер:
+    // клиентским значениям не доверяем. Успех ценнее, но и попытка не нулевая.
+    let xp: i32 = match payload.rating { 1 => 2, 2 => 5, 3 => 10, _ => 12 };
+    let _ = sqlx::query(
+        "INSERT INTO user_xp (user_id, xp) VALUES ($1, $2)
+         ON CONFLICT (user_id) DO UPDATE SET xp = user_xp.xp + EXCLUDED.xp, updated_at = NOW()"
+    )
+    .bind(user_id)
+    .bind(xp)
+    .execute(&pool)
+    .await;
+
     // Успешная оценка (Good/Easy) также отмечает упражнение как выполненное в course_progress.
     if payload.rating >= 3 {
         let _ = sqlx::query(

@@ -161,6 +161,8 @@ async fn main() {
         .route("/api/sources/{id}", get(handlers::sources::get_source).delete(handlers::sources::delete_source))
         .route("/api/sources/{id}/chunks/{chunk_id}", get(handlers::sources::get_chunk))
         .route("/api/check/symbolic", post(handlers::checks::check_symbolic))
+        .route("/api/family/board", get(handlers::family::get_board))
+        .route("/api/family/member/{user_id}/courses", get(handlers::family::get_member_courses))
         .route("/api/courses/{course_id}/coach/mark-known", post(handlers::coach::mark_known))
         // Классы v2: кабинеты преподавателя/ученика, задания, сообщения, подписки
         .route("/api/classes/mine", get(handlers::classroom::my_classes_all))

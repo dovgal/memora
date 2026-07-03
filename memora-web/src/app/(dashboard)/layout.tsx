@@ -9,7 +9,8 @@ import {
     Folder,
     Sparkles,
     GraduationCap,
-    UserRound
+    UserRound,
+    Trophy
 } from "lucide-react";
 import LogoutButton from "@/components/LogoutButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -69,6 +70,10 @@ export default async function DashboardLayout({
                         <Link href="/cabinet" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium">
                             <UserRound className="w-5 h-5" />
                             Мой кабинет
+                        </Link>
+                        <Link href="/family" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium">
+                            <Trophy className="w-5 h-5" />
+                            Семейное табло
                         </Link>
                         <Link href="/library" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium">
                             <Library className="w-5 h-5" />
