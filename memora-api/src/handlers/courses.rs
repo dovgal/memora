@@ -29,14 +29,12 @@ fn db_err(e: sqlx::Error) -> (StatusCode, Json<ApiError>) {
     ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {}", e))
 }
 
-const ALLOWED_EXERCISE_TYPES: &[&str] = &[
-    "theory", "grammar-quiz", "sentence-builder", "gender-quiz",
-    "dialogue", "fill-blank", "number-quiz", "listening", "video",
-];
-
 /// Лёгкая валидация формата упражнений: массив объектов с id/type/title,
-/// type — из списка поддерживаемых рендерером.
-fn validate_exercises(exercises: &serde_json::Value) -> ApiResult<()> {
+/// type — из списка, разрешённого предметным паком курса.
+///
+/// `allowed_types` приходит из реестра паков (`crate::subjects`). Для языковых
+/// курсов это тот же набор, что был захардкожен раньше, — поведение 1:1.
+fn validate_exercises(exercises: &serde_json::Value, allowed_types: &[&str]) -> ApiResult<()> {
     let arr = exercises.as_array()
         .ok_or_else(|| ApiError::response(StatusCode::BAD_REQUEST, "exercises must be a JSON array"))?;
     if arr.len() > 200 {
@@ -50,7 +48,7 @@ fn validate_exercises(exercises: &serde_json::Value) -> ApiResult<()> {
         if id.is_empty() {
             return Err(ApiError::response(StatusCode::BAD_REQUEST, format!("exercises[{}] is missing 'id'", i)));
         }
-        if !ALLOWED_EXERCISE_TYPES.contains(&ex_type) {
+        if !allowed_types.contains(&ex_type) {
             return Err(ApiError::response(StatusCode::BAD_REQUEST, format!("exercises[{}] has unsupported type '{}'", i, ex_type)));
         }
     }
@@ -64,6 +62,21 @@ fn validate_vocabulary(vocabulary: &serde_json::Value) -> ApiResult<()> {
         return Err(ApiError::response(StatusCode::BAD_REQUEST, "Too many vocabulary items (max 1000)"));
     }
     Ok(())
+}
+
+/// Резолвит предметный пак курса по его `subject`/`language` (см. `crate::subjects`).
+/// Для языковых курсов набор разрешённых типов упражнений тот же, что был раньше,
+/// поэтому валидация остаётся 1:1 совместимой.
+async fn course_pack(pool: &PgPool, course_id: Uuid) -> ApiResult<&'static crate::subjects::SubjectPack> {
+    let row = sqlx::query("SELECT subject, language FROM custom_courses WHERE id = $1")
+        .bind(course_id)
+        .fetch_optional(pool)
+        .await
+        .map_err(db_err)?
+        .ok_or_else(|| ApiError::response(StatusCode::NOT_FOUND, "Course not found"))?;
+    let subject: String = row.get("subject");
+    let language: String = row.get("language");
+    Ok(crate::subjects::pack_for(&subject, Some(language.as_str())))
 }
 
 /// Проверяет, что курс существует и принадлежит пользователю.
@@ -363,8 +376,9 @@ pub async fn create_unit(
     let user_id = uid(&user.sub)?;
     let course_id = parse_id(&id)?;
     ensure_owner(&pool, course_id, user_id).await?;
+    let pack = course_pack(&pool, course_id).await?;
     validate_vocabulary(&payload.vocabulary)?;
-    validate_exercises(&payload.exercises)?;
+    validate_exercises(&payload.exercises, pack.allowed_types)?;
 
     let title = payload.title.trim();
     if title.is_empty() {
@@ -463,8 +477,9 @@ pub async fn update_unit(
     let course_id = parse_id(&id)?;
     let unit_uuid = parse_id(&unit_id)?;
     ensure_owner(&pool, course_id, user_id).await?;
+    let pack = course_pack(&pool, course_id).await?;
     validate_vocabulary(&payload.vocabulary)?;
-    validate_exercises(&payload.exercises)?;
+    validate_exercises(&payload.exercises, pack.allowed_types)?;
 
     let title = payload.title.trim();
     if title.is_empty() {

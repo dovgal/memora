@@ -1,0 +1,162 @@
+//! Реестр «предметных паков» (Subject Packs).
+//!
+//! Пак — это конфиг В КОДЕ (не в БД на старте), описывающий всё предметно-специфичное:
+//! трактовку уровня курса, разрешённые типы упражнений, персону генератора и голос(а)
+//! озвучки. Цель фазы 1 — ввести абстракцию обратносовместимо: пак `language-fr`
+//! обязан 1:1 повторять текущее поведение французского, поэтому неизвестные/пустые
+//! комбинации subject+language резолвятся в него же.
+//!
+//! См. `subject-packs-spec.md`.
+//!
+//! Часть API реестра (персона генератора, ролевые голоса, не-CEFR схемы уровней,
+//! маппинг встроенных курсов) подключается в следующих слайсах фазы 1 (DTO → handlers),
+//! поэтому пока помечено `allow(dead_code)`, чтобы не плодить предупреждения.
+#![allow(dead_code)]
+
+/// Как трактовать `course.level`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum LevelScheme {
+    /// Языки: A1…C2 (текущее поведение французского).
+    Cefr,
+    /// Класс/программа (например, «7 класс») — для STEM/истории позже.
+    Grade,
+    /// Уровень из освоенности пререквизитов — для STEM позже.
+    ConceptGraph,
+}
+
+/// Голос(а) Inworld для пака. Голос выбирается ПО ПАКУ (= по языку курса),
+/// а не один на всё приложение, иначе французский голос читал бы английский текст.
+#[derive(Debug, Clone, Copy)]
+pub struct TtsVoice {
+    /// Имя голоса Inworld по умолчанию (для языков — нативного).
+    pub default: &'static str,
+    /// Опциональные ролевые голоса (coach/example/dialogue). `None` → везде `default`.
+    pub roles: Option<&'static [(&'static str, &'static str)]>,
+}
+
+/// Описание предметного пака.
+#[derive(Debug, Clone, Copy)]
+pub struct SubjectPack {
+    /// Идентификатор пака: `language-fr`, `language-en`, … (для STEM позже `math` и т.п.).
+    pub id: &'static str,
+    /// Человекочитаемое имя.
+    pub display_name: &'static str,
+    /// Как трактовать `course.level`.
+    pub level_scheme: LevelScheme,
+    /// Типы упражнений, которые рендерер/редактор умеют сохранять и показывать.
+    pub allowed_types: &'static [&'static str],
+    /// Персона генератора (подставляется в системный промпт генерации юнита).
+    pub generation_persona: &'static str,
+    /// Голос(а) озвучки.
+    pub tts_voice: TtsVoice,
+}
+
+/// Типы упражнений языковых паков — дословно текущий серверный `ALLOWED_EXERCISE_TYPES`
+/// из `handlers/courses.rs`. Сохраняем порядок и состав, чтобы валидация сохранения
+/// юнитов вела себя 1:1 как раньше.
+///
+/// ПРИМЕЧАНИЕ: `error-hunt` сознательно НЕ включён — он отсутствует в текущем серверном
+/// списке (хотя рендерер и генератор вариантов его поддерживают). Включение `error-hunt`
+/// в allowed_types — отдельный follow-up, вне слайса абстракции паков.
+const LANGUAGE_EXERCISE_TYPES: &[&str] = &[
+    "theory", "grammar-quiz", "sentence-builder", "gender-quiz",
+    "dialogue", "fill-blank", "number-quiz", "listening", "video",
+];
+
+/// `language-fr` — эталон обратной совместимости. ДОЛЖЕН повторять текущее поведение
+/// французского: тот же набор типов, та же персона генератора, тот же голос (`Alain`).
+pub static LANGUAGE_FR: SubjectPack = SubjectPack {
+    id: "language-fr",
+    display_name: "Français",
+    level_scheme: LevelScheme::Cefr,
+    allowed_types: LANGUAGE_EXERCISE_TYPES,
+    generation_persona: "методист образовательной платформы Memora",
+    tts_voice: TtsVoice { default: "Alain", roles: None },
+};
+
+/// `language-en` — пилот мультипредметности. Максимум переиспользования FR:
+/// те же типы упражнений и стратегии проверки, отличается персона и голос (`Clive`).
+pub static LANGUAGE_EN: SubjectPack = SubjectPack {
+    id: "language-en",
+    display_name: "English",
+    level_scheme: LevelScheme::Cefr,
+    allowed_types: LANGUAGE_EXERCISE_TYPES,
+    generation_persona: "методист по английскому языку образовательной платформы Memora",
+    tts_voice: TtsVoice { default: "Clive", roles: None },
+};
+
+/// Подбор пака по домену и языку курса.
+///
+/// `subject` — домен (`language`/`math`/…). Для языков конкретный язык задаётся `language`
+/// (`fr`/`en`/…), pack-id собирается как `language-{language}`.
+///
+/// Обратная совместимость: любая неизвестная/пустая комбинация резолвится в `language-fr`,
+/// чтобы существующие курсы (где `subject` по умолчанию `'language'`, а `language` обычно `fr`)
+/// вели себя как раньше.
+pub fn pack_for(subject: &str, language: Option<&str>) -> &'static SubjectPack {
+    match subject {
+        "language" | "" => match language {
+            Some("en") => &LANGUAGE_EN,
+            Some("fr") | None => &LANGUAGE_FR,
+            // Прочие языки (de/es/…) появятся в фазе 2 — пока безопасный фолбэк на FR.
+            _ => &LANGUAGE_FR,
+        },
+        // STEM/история — фаза 6+; до их появления безопасный фолбэк на FR.
+        _ => &LANGUAGE_FR,
+    }
+}
+
+/// Подбор пака для встроенного курса по его строковому id.
+/// Встроенные курсы (`edito-a1` и т.п.) не лежат в `custom_courses`, поэтому мапятся по id.
+pub fn pack_for_course_id(course_id: &str) -> &'static SubjectPack {
+    match course_id {
+        "edito-a1" | "edito-a2" => &LANGUAGE_FR,
+        _ => &LANGUAGE_FR,
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn fr_pack_resolves_for_language_fr() {
+        let p = pack_for("language", Some("fr"));
+        assert_eq!(p.id, "language-fr");
+        assert_eq!(p.tts_voice.default, "Alain");
+        assert_eq!(p.level_scheme, LevelScheme::Cefr);
+    }
+
+    #[test]
+    fn en_pack_resolves_for_language_en() {
+        let p = pack_for("language", Some("en"));
+        assert_eq!(p.id, "language-en");
+        assert_eq!(p.tts_voice.default, "Clive");
+    }
+
+    #[test]
+    fn unknown_subject_or_language_falls_back_to_fr() {
+        assert_eq!(pack_for("language", None).id, "language-fr");
+        assert_eq!(pack_for("", None).id, "language-fr");
+        assert_eq!(pack_for("language", Some("de")).id, "language-fr");
+        assert_eq!(pack_for("math", None).id, "language-fr");
+    }
+
+    #[test]
+    fn builtin_edito_maps_to_fr() {
+        assert_eq!(pack_for_course_id("edito-a1").id, "language-fr");
+        assert_eq!(pack_for_course_id("edito-a2").id, "language-fr");
+    }
+
+    #[test]
+    fn fr_allowed_types_match_legacy_server_list() {
+        // Дословно текущий ALLOWED_EXERCISE_TYPES из handlers/courses.rs (порядок и состав).
+        let legacy = [
+            "theory", "grammar-quiz", "sentence-builder", "gender-quiz",
+            "dialogue", "fill-blank", "number-quiz", "listening", "video",
+        ];
+        assert_eq!(LANGUAGE_FR.allowed_types, &legacy);
+        // error-hunt пока вне списка (follow-up).
+        assert!(!LANGUAGE_FR.allowed_types.contains(&"error-hunt"));
+    }
+}
