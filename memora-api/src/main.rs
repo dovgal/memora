@@ -4,6 +4,7 @@ mod live_ws;
 mod llm;
 mod middleware;
 mod subjects;
+mod workers;
 
 use axum::{
     extract::{DefaultBodyLimit, State},
@@ -58,6 +59,9 @@ async fn main() {
         .run(&pool)
         .await
         .expect("Failed to run database migrations");
+
+    // Фоновая прегенерация вариантов упражнений (см. workers::variant_pregen).
+    workers::variant_pregen::spawn(pool.clone());
 
     // Initialize Rate Limiter for AI Gateway
     let rate_limiter = middleware::rate_limiter::initialize_rate_limiter();

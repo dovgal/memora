@@ -1050,7 +1050,7 @@ fn validate_sentence_builder(v: &SentenceBuilderVariant, avoid_norm: &[String]) 
 
 /// Целевой формат варианта: 'error-hunt' (по умолчанию) или 'preserve' → формат эталона.
 /// None — формат эталона регенерировать не умеем, сразу фолбэк на эталон.
-fn resolve_variant_format(requested: Option<&str>, seed_type: &str) -> Option<&'static str> {
+pub(crate) fn resolve_variant_format(requested: Option<&str>, seed_type: &str) -> Option<&'static str> {
     match requested.unwrap_or("error-hunt") {
         "preserve" => match seed_type {
             "grammar-quiz" => Some("grammar-quiz"),
@@ -1065,7 +1065,7 @@ fn resolve_variant_format(requested: Option<&str>, seed_type: &str) -> Option<&'
 }
 
 /// Системный промпт и JSON-схема генерации для формата варианта.
-fn variant_prompt(
+pub(crate) fn variant_prompt(
     target: &'static str,
     seed_exercise: &serde_json::Value,
     rule_point: &str,
@@ -1183,7 +1183,7 @@ fn variant_prompt(
 }
 
 /// Разбирает и валидирует ответ модели. Возвращает (готовый EditoExercise, подпись анти-повтора).
-fn try_build_variant(
+pub(crate) fn try_build_variant(
     target: &str,
     content: &str,
     rule_id: &str,
@@ -1272,6 +1272,37 @@ pub async fn regenerate_variant(
         return Ok(Json(RegenerateVariantResponse { variant: payload.seed_exercise, rule_id: payload.exercise_id, fallback: true }));
     };
 
+    // Быстрый путь: прегенерированный запас (фоновый воркер). Свежий неиспользованный
+    // вариант нужного формата отдаём мгновенно, без обращения к LLM.
+    let stock_rows = sqlx::query(
+        "SELECT id, payload::text AS payload, sentence
+         FROM course_exercise_variants
+         WHERE user_id = $1 AND course_id = $2 AND unit_id = $3 AND exercise_id = $4
+           AND used_at IS NULL AND flagged = FALSE AND format = $5
+         ORDER BY created_at DESC LIMIT 5"
+    )
+    .bind(user_uuid)
+    .bind(&payload.course_id)
+    .bind(&payload.unit_id)
+    .bind(&payload.exercise_id)
+    .bind(target)
+    .fetch_all(&pool)
+    .await
+    .unwrap_or_default();
+    for r in &stock_rows {
+        if let Ok(Some(s)) = r.try_get::<Option<String>, _>("sentence") {
+            if avoid_norm.contains(&normalize_sentence(&s)) { continue; }
+        }
+        let Ok(p) = r.try_get::<String, _>("payload") else { continue };
+        let Ok(variant) = serde_json::from_str::<serde_json::Value>(&p) else { continue };
+        let variant_id: i64 = r.get("id");
+        let _ = sqlx::query("UPDATE course_exercise_variants SET used_at = NOW() WHERE id = $1")
+            .bind(variant_id)
+            .execute(&pool)
+            .await;
+        return Ok(Json(RegenerateVariantResponse { variant, rule_id: payload.exercise_id, fallback: false }));
+    }
+
     let (system, schema) = variant_prompt(target, &payload.seed_exercise, &rule_point, &rule_trap, &level, &language, &avoid_block);
     let user_msg = format!("Эталонное упражнение (JSON): {seed_json}. Сгенерируй вариант сейчас.");
 
@@ -1295,10 +1326,11 @@ pub async fn regenerate_variant(
 
     if let Some((variant, signature)) = produced {
         let payload_text = serde_json::to_string(&variant).unwrap_or_else(|_| "{}".to_string());
+        // used_at = NOW(): живая генерация показывается сразу, в запас не попадает.
         let _ = sqlx::query(
             "INSERT INTO course_exercise_variants
-                (user_id, course_id, unit_id, exercise_id, rule_key, format, payload, sentence, source)
-             VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb, $8, 'ollama')"
+                (user_id, course_id, unit_id, exercise_id, rule_key, format, payload, sentence, source, used_at)
+             VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb, $8, 'ollama', NOW())"
         )
         .bind(user_uuid)
         .bind(&payload.course_id)
