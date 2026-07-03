@@ -69,7 +69,7 @@ const RATINGS: Array<{ value: Rating; label: string; hint: string; cls: string }
 ];
 
 /** Типы, для которых сервер умеет генерировать вариант того же правила. */
-const VARIANT_TYPES = new Set<string>(['error-hunt', 'grammar-quiz', 'fill-blank', 'sentence-builder']);
+const VARIANT_TYPES = new Set<string>(['error-hunt', 'grammar-quiz', 'fill-blank', 'sentence-builder', 'dictation']);
 
 function autoRating(result: ExerciseResult): Rating {
   if (result.total <= 0) return 3;

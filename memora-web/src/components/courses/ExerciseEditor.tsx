@@ -19,6 +19,7 @@ export const EXERCISE_TYPE_LABELS: Record<string, string> = {
   'listening': 'Аудирование',
   'video': 'Видео',
   'error-hunt': 'Найди ошибку',
+  'dictation': 'Диктант',
 };
 
 interface Props {
@@ -174,6 +175,30 @@ function TypeFields({ exercise, set }: { exercise: EditoExercise; set: (p: Parti
     case 'error-hunt':
       return <ErrorHuntFields exercise={exercise} set={set} />;
 
+    case 'dictation':
+      return (
+        <div className="space-y-3">
+          <div>
+            <label className={labelCls}>Фраза для диктанта (на изучаемом языке)</label>
+            <textarea
+              value={exercise.sentence ?? ''}
+              onChange={e => set({ sentence: e.target.value })}
+              rows={2}
+              className={`${inputCls} resize-y`}
+              placeholder="Например: Je me souviens de mon enfance."
+            />
+          </div>
+          <div>
+            <label className={labelCls}>Перевод (показывается после проверки)</label>
+            <input value={exercise.translation ?? ''} onChange={e => set({ translation: e.target.value })} className={inputCls} />
+          </div>
+          <div>
+            <label className={labelCls}>Пояснение (необязательно)</label>
+            <textarea value={exercise.explanation ?? ''} onChange={e => set({ explanation: e.target.value })} rows={2} className={`${inputCls} resize-y`} />
+          </div>
+        </div>
+      );
+
     default:
       return <p className="text-qz-text-muted text-xs">Для типа «{exercise.type}» используйте JSON-режим.</p>;
   }
@@ -226,7 +251,7 @@ function ErrorHuntFields({ exercise, set }: { exercise: EditoExercise; set: (p: 
           checked={noError}
           onChange={e => set(e.target.checked ? { errorIndex: null, correction: '' } : { errorIndex: 0 })}
         />
-        В предложении нет ошибки («Il n'y a pas de faute»)
+        В предложении нет ошибки («Il n&apos;y a pas de faute»)
       </label>
 
       {!noError && (

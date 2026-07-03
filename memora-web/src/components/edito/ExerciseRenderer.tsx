@@ -10,6 +10,7 @@ import { SentenceBuilder } from './SentenceBuilder';
 import { ListeningExercise } from './ListeningExercise';
 import { VideoExercise } from './VideoExercise';
 import { ErrorHunt } from './ErrorHunt';
+import { DictationExercise } from './DictationExercise';
 
 export type { ExerciseResult };
 
@@ -27,11 +28,12 @@ const KIND_TO_TYPE: Record<string, EditoExercise['type']> = {
   'error-hunt': 'error-hunt',
   'mcq': 'grammar-quiz',
   'cloze': 'fill-blank',
+  'dictation': 'dictation',
 };
 
 const RENDERABLE_TYPES = new Set<string>([
   'theory', 'grammar-quiz', 'gender-quiz', 'number-quiz', 'fill-blank',
-  'dialogue', 'sentence-builder', 'listening', 'video', 'error-hunt',
+  'dialogue', 'sentence-builder', 'listening', 'video', 'error-hunt', 'dictation',
 ]);
 
 export function ExerciseRenderer({ exercise, onComplete }: ExerciseRendererProps) {
@@ -64,6 +66,8 @@ export function ExerciseRenderer({ exercise, onComplete }: ExerciseRendererProps
       return <VideoExercise exercise={exercise} onComplete={handleComplete} />;
     case 'error-hunt':
       return <ErrorHunt exercise={exercise} onComplete={handleComplete} />;
+    case 'dictation':
+      return <DictationExercise exercise={exercise} onComplete={handleComplete} />;
     default:
       return null;
   }

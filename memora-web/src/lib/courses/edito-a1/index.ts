@@ -65,8 +65,11 @@ export function ruleLevel(ex: EditoExercise): string | undefined {
 
 export interface EditoExercise {
   id: string;
-  type: 'theory' | 'grammar-quiz' | 'sentence-builder' | 'gender-quiz' | 'dialogue' | 'fill-blank' | 'number-quiz' | 'listening' | 'video' | 'error-hunt';
+  type: 'theory' | 'grammar-quiz' | 'sentence-builder' | 'gender-quiz' | 'dialogue' | 'fill-blank' | 'number-quiz' | 'listening' | 'video' | 'error-hunt' | 'dictation';
   title: string;
+  // dictation (dictée): фраза озвучивается (sentence), учащийся печатает на слух,
+  // проверка — детерминированный пословный diff. translation — перевод для итогового экрана.
+  translation?: string;
   // error-hunt (какография, метод Voltaire): найти ошибочное слово в предложении
   // sentence уже объявлен ниже (sentence-builder). errorIndex=null → ошибки нет.
   errorIndex?: number | null;

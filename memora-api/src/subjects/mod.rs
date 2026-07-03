@@ -51,16 +51,16 @@ pub struct SubjectPack {
     pub tts_voice: TtsVoice,
 }
 
-/// Типы упражнений языковых паков — дословно текущий серверный `ALLOWED_EXERCISE_TYPES`
-/// из `handlers/courses.rs`. Сохраняем порядок и состав, чтобы валидация сохранения
-/// юнитов вела себя 1:1 как раньше.
+/// Типы упражнений языковых паков: legacy-список из `handlers/courses.rs`
+/// + `dictation` (диктант, слайс 10 плана июля-2026).
 ///
-/// ПРИМЕЧАНИЕ: `error-hunt` сознательно НЕ включён — он отсутствует в текущем серверном
-/// списке (хотя рендерер и генератор вариантов его поддерживают). Включение `error-hunt`
-/// в allowed_types — отдельный follow-up, вне слайса абстракции паков.
+/// ПРИМЕЧАНИЕ: `error-hunt` сознательно НЕ включён — он отсутствовал в исходном
+/// серверном списке (хотя рендерер и генератор вариантов его поддерживают).
+/// Включение `error-hunt` в allowed_types — отдельный follow-up.
 const LANGUAGE_EXERCISE_TYPES: &[&str] = &[
     "theory", "grammar-quiz", "sentence-builder", "gender-quiz",
     "dialogue", "fill-blank", "number-quiz", "listening", "video",
+    "dictation",
 ];
 
 /// `language-fr` — эталон обратной совместимости. ДОЛЖЕН повторять текущее поведение
@@ -173,13 +173,17 @@ mod tests {
     }
 
     #[test]
-    fn fr_allowed_types_match_legacy_server_list() {
-        // Дословно текущий ALLOWED_EXERCISE_TYPES из handlers/courses.rs (порядок и состав).
+    fn fr_allowed_types_cover_legacy_list_plus_dictation() {
+        // Исходный ALLOWED_EXERCISE_TYPES из handlers/courses.rs должен сохраниться целиком
+        // (обратная совместимость валидации юнитов) + новый тип dictation.
         let legacy = [
             "theory", "grammar-quiz", "sentence-builder", "gender-quiz",
             "dialogue", "fill-blank", "number-quiz", "listening", "video",
         ];
-        assert_eq!(LANGUAGE_FR.allowed_types, &legacy);
+        for t in legacy {
+            assert!(LANGUAGE_FR.allowed_types.contains(&t), "legacy type '{}' must stay allowed", t);
+        }
+        assert!(LANGUAGE_FR.allowed_types.contains(&"dictation"));
         // error-hunt пока вне списка (follow-up).
         assert!(!LANGUAGE_FR.allowed_types.contains(&"error-hunt"));
     }

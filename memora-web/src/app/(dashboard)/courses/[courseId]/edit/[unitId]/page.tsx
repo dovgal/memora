@@ -29,6 +29,7 @@ function newExercise(type: EditoExercise['type'], index: number): EditoExercise 
     case 'listening': return { ...base, audioFile: '', transcript: '' };
     case 'video': return { ...base, videoFile: '', description: '' };
     case 'error-hunt': return { ...base, sentence: '', errorIndex: null, correction: '', explanation: '', variantPolicy: { regenerateOnRepeat: true, format: 'error-hunt' } };
+    case 'dictation': return { ...base, sentence: '', translation: '', explanation: '' };
     default: return base;
   }
 }

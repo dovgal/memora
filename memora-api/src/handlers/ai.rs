@@ -872,7 +872,7 @@ pub async fn generate_course_unit(
     let subject = payload.subject.as_deref().unwrap_or("language");
     let pack = crate::subjects::pack_for(subject, crate::subjects::normalize_language(&language));
     let persona = pack.generation_persona;
-    let interactive_types: Vec<&str> = ["grammar-quiz", "fill-blank", "sentence-builder", "dialogue"]
+    let interactive_types: Vec<&str> = ["grammar-quiz", "fill-blank", "sentence-builder", "dialogue", "dictation"]
         .into_iter()
         .filter(|t| pack.allowed_types.contains(t))
         .collect();
@@ -889,7 +889,8 @@ pub async fn generate_course_unit(
              {{\"id\": \"ex-2\", \"type\": \"grammar-quiz\", \"title\": \"...\", \"questions\": [{{\"question\": \"...\", \"options\": [\"a\",\"b\",\"c\",\"d\"], \"correctAnswer\": \"a\", \"explanation\": \"...\"}}]}},\n\
              {{\"id\": \"ex-3\", \"type\": \"fill-blank\", \"title\": \"...\", \"text\": \"Je ___ Paul.\", \"blanks\": [{{\"correctAnswer\": \"suis\", \"options\": [\"suis\",\"es\",\"est\"], \"explanation\": \"...\"}}]}},\n\
              {{\"id\": \"ex-4\", \"type\": \"sentence-builder\", \"title\": \"...\", \"sentences\": [{{\"words\": [\"Je\",\"suis\",\"Paul\"], \"ru\": \"Я — Поль\"}}]}},\n\
-             {{\"id\": \"ex-5\", \"type\": \"dialogue\", \"title\": \"...\", \"context\": \"...\", \"exchanges\": [{{\"speaker\": \"A\", \"side\": \"left\", \"text\": \"Bonjour !\"}}, {{\"speaker\": \"B\", \"side\": \"right\", \"isBlank\": true, \"options\": [\"Salut !\",\"Au revoir !\"], \"correctAnswer\": \"Salut !\", \"explanation\": \"...\"}}]}}\n\
+             {{\"id\": \"ex-5\", \"type\": \"dialogue\", \"title\": \"...\", \"context\": \"...\", \"exchanges\": [{{\"speaker\": \"A\", \"side\": \"left\", \"text\": \"Bonjour !\"}}, {{\"speaker\": \"B\", \"side\": \"right\", \"isBlank\": true, \"options\": [\"Salut !\",\"Au revoir !\"], \"correctAnswer\": \"Salut !\", \"explanation\": \"...\"}}]}},\n\
+             {{\"id\": \"ex-6\", \"type\": \"dictation\", \"title\": \"Dictée\", \"sentence\": \"фраза на изучаемом языке для диктанта\", \"translation\": \"перевод фразы на русский\", \"explanation\": \"на что обратить внимание (по-русски)\"}}\n\
            ]\n\
          }}\n\
          Сгенерируй 10-20 словарных единиц и ровно {count} упражнений: первое — theory с понятным объяснением темы, \
@@ -1053,6 +1054,14 @@ struct FillBlankSlot {
 
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase")]
+struct DictationVariant {
+    sentence: String,
+    translation: Option<String>,
+    explanation: Option<String>,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
 struct SentenceBuilderVariant {
     sentences: Vec<SentenceBuilderSentence>,
 }
@@ -1117,6 +1126,15 @@ fn validate_fill_blank(v: &FillBlankVariant, avoid_norm: &[String]) -> Option<St
     Some(signature)
 }
 
+/// Валидация dictation: непустая фраза разумной длины (3-20 слов).
+fn validate_dictation(v: &DictationVariant, avoid_norm: &[String]) -> Option<String> {
+    let words = v.sentence.split_whitespace().count();
+    if !(3..=20).contains(&words) { return None; }
+    let signature = normalize_sentence(&v.sentence);
+    if avoid_norm.contains(&signature) { return None; }
+    Some(signature)
+}
+
 /// Валидация sentence-builder: 1-4 предложения, в каждом 3-16 непустых слов и перевод.
 fn validate_sentence_builder(v: &SentenceBuilderVariant, avoid_norm: &[String]) -> Option<String> {
     if v.sentences.is_empty() || v.sentences.len() > 4 { return None; }
@@ -1138,6 +1156,7 @@ pub(crate) fn resolve_variant_format(requested: Option<&str>, seed_type: &str) -
             "grammar-quiz" => Some("grammar-quiz"),
             "fill-blank" => Some("fill-blank"),
             "sentence-builder" => Some("sentence-builder"),
+            "dictation" => Some("dictation"),
             "error-hunt" => Some("error-hunt"),
             _ => None,
         },
@@ -1234,6 +1253,26 @@ pub(crate) fn variant_prompt(
             });
             (system, schema)
         }
+        "dictation" => {
+            let system = format!(
+                "Ты — методист языковой платформы Memora. Сгенерируй ОДНУ новую фразу для диктанта (dictée), \
+                 тренирующую ТО ЖЕ правило/орфографическую трудность, что и эталонное упражнение, \
+                 но с другой лексикой. {rule_block} \
+                 Фраза естественная, 5-12 слов, уровень выдержан. \
+                 Верни ТОЛЬКО валидный JSON без markdown: \
+                 {{\"sentence\": string, \"translation\": \"перевод на русский\", \"explanation\": \"на что обратить внимание, по-русски\"}}"
+            );
+            let schema = serde_json::json!({
+                "type": "object",
+                "properties": {
+                    "sentence": { "type": "string" },
+                    "translation": { "type": "string" },
+                    "explanation": { "type": "string" }
+                },
+                "required": ["sentence", "translation", "explanation"]
+            });
+            (system, schema)
+        }
         // error-hunt — прежний промпт Voltaire, дословно.
         _ => {
             let system = format!(
@@ -1289,6 +1328,14 @@ pub(crate) fn try_build_variant(
             let v: SentenceBuilderVariant = serde_json::from_str(json).ok()?;
             let sig = validate_sentence_builder(&v, avoid_norm)?;
             Some((serde_json::json!({ "id": id, "type": "sentence-builder", "title": seed_title, "sentences": v.sentences }), sig))
+        }
+        "dictation" => {
+            let v: DictationVariant = serde_json::from_str(json).ok()?;
+            let sig = validate_dictation(&v, avoid_norm)?;
+            Some((serde_json::json!({
+                "id": id, "type": "dictation", "title": seed_title,
+                "sentence": v.sentence.trim(), "translation": v.translation, "explanation": v.explanation,
+            }), sig))
         }
         _ => {
             let v: ErrorHuntVariant = serde_json::from_str(json).ok()?;
@@ -1456,6 +1503,7 @@ mod variant_tests {
         assert_eq!(resolve_variant_format(Some("preserve"), "grammar-quiz"), Some("grammar-quiz"));
         assert_eq!(resolve_variant_format(Some("preserve"), "fill-blank"), Some("fill-blank"));
         assert_eq!(resolve_variant_format(Some("preserve"), "sentence-builder"), Some("sentence-builder"));
+        assert_eq!(resolve_variant_format(Some("preserve"), "dictation"), Some("dictation"));
         assert_eq!(resolve_variant_format(Some("preserve"), "error-hunt"), Some("error-hunt"));
         // Неподдерживаемые типы под preserve — фолбэк на эталон (None).
         assert_eq!(resolve_variant_format(Some("preserve"), "dialogue"), None);
@@ -1526,6 +1574,22 @@ mod variant_tests {
             r#"{"sentences":[{"words":["Je","suis"],"ru":"Я есть"}]}"#
         ).unwrap();
         assert!(validate_sentence_builder(&short, &[]).is_none());
+    }
+
+    #[test]
+    fn dictation_validation() {
+        let ok: DictationVariant = serde_json::from_str(
+            r#"{"sentence":"Je me souviens de mon enfance.","translation":"Я помню своё детство.","explanation":"se souvenir DE"}"#
+        ).unwrap();
+        assert!(validate_dictation(&ok, &[]).is_some());
+
+        // Слишком короткая фраза — брак.
+        let short: DictationVariant = serde_json::from_str(r#"{"sentence":"Bonjour !"}"#).unwrap();
+        assert!(validate_dictation(&short, &[]).is_none());
+
+        // Анти-повтор.
+        let sig = validate_dictation(&ok, &[]).unwrap();
+        assert!(validate_dictation(&ok, &[sig]).is_none());
     }
 
     #[test]
