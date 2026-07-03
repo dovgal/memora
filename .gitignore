@@ -21,6 +21,18 @@ out/
 .env.*
 !.env.example
 
+# Отладочные артефакты с куками/токенами — НИКОГДА не коммитить
+cookies.txt
+raw_token.txt
+new_session.json
+
+# Учебные материалы (корпус для будущего ингеста, фаза 2.4) — большие бинарники, не для git
+/Учебники/
+/Édito A2, 2e édition - 2022/
+/Les verbes/
+/voltair_fr/
+/*.mp4
+
 # OS
 .DS_Store
 **/.DS_Store
