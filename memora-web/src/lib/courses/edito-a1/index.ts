@@ -65,8 +65,17 @@ export function ruleLevel(ex: EditoExercise): string | undefined {
 
 export interface EditoExercise {
   id: string;
-  type: 'theory' | 'grammar-quiz' | 'sentence-builder' | 'gender-quiz' | 'dialogue' | 'fill-blank' | 'number-quiz' | 'listening' | 'video' | 'error-hunt' | 'dictation';
+  type: 'theory' | 'grammar-quiz' | 'sentence-builder' | 'gender-quiz' | 'dialogue' | 'fill-blank' | 'number-quiz' | 'listening' | 'video' | 'error-hunt' | 'dictation' | 'numeric' | 'ordering';
   title: string;
+  // numeric (STEM): задача с числовым ответом. Проверка детерминированная —
+  // допуск (tolerance) + единицы измерения (unit / acceptedUnits с множителями).
+  prompt?: string;
+  numericAnswer?: number;
+  tolerance?: number;
+  unit?: string;
+  acceptedUnits?: Record<string, number>;
+  // ordering (история/этапы решения): элементы в ПРАВИЛЬНОМ порядке; ученику показываются перемешанными.
+  orderItems?: string[];
   // dictation (dictée): фраза озвучивается (sentence), учащийся печатает на слух,
   // проверка — детерминированный пословный diff. translation — перевод для итогового экрана.
   translation?: string;

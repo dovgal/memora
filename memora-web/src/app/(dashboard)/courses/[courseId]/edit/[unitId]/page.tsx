@@ -21,6 +21,9 @@ import {
 
 const inputCls = 'w-full bg-qz-bg border border-border rounded-xl px-3 py-2.5 text-sm text-foreground outline-none focus:border-[#4255ff]/60';
 
+/** Типы только для школьных предметов — в палитре языковых курсов не показываются. */
+const STEM_ONLY_TYPES = new Set<string>(['numeric', 'ordering']);
+
 function newExercise(type: EditoExercise['type'], index: number): EditoExercise {
   const base = { id: `ex-${Date.now()}-${index}`, type, title: EXERCISE_TYPE_LABELS[type] ?? type };
   switch (type) {
@@ -34,6 +37,8 @@ function newExercise(type: EditoExercise['type'], index: number): EditoExercise 
     case 'video': return { ...base, videoFile: '', description: '' };
     case 'error-hunt': return { ...base, sentence: '', errorIndex: null, correction: '', explanation: '', variantPolicy: { regenerateOnRepeat: true, format: 'error-hunt' } };
     case 'dictation': return { ...base, sentence: '', translation: '', explanation: '' };
+    case 'numeric': return { ...base, prompt: '', numericAnswer: undefined, tolerance: 0, unit: '', explanation: '' };
+    case 'ordering': return { ...base, prompt: '', orderItems: [], explanation: '' };
     default: return base;
   }
 }
@@ -357,7 +362,11 @@ export default function UnitEditPage({ params }: { params: Promise<{ courseId: s
           <div className="mt-4 border border-dashed border-border rounded-2xl p-4">
             <p className="text-xs text-qz-text-muted mb-3">Добавить упражнение:</p>
             <div className="flex flex-wrap gap-2">
-              {(Object.keys(EXERCISE_TYPE_LABELS) as EditoExercise['type'][]).map(type => (
+              {(Object.keys(EXERCISE_TYPE_LABELS) as EditoExercise['type'][])
+                // Числовые задачи и упорядочивание — для школьных предметов;
+                // языковым курсам их сервер не примет (allowed_types пака).
+                .filter(type => course?.subject !== 'language' || !STEM_ONLY_TYPES.has(type))
+                .map(type => (
                 <button
                   key={type}
                   onClick={() => patch({ exercises: [...unit.exercises, newExercise(type, unit.exercises.length)] })}

@@ -20,6 +20,8 @@ export const EXERCISE_TYPE_LABELS: Record<string, string> = {
   'video': 'Видео',
   'error-hunt': 'Найди ошибку',
   'dictation': 'Диктант',
+  'numeric': 'Числовая задача',
+  'ordering': 'Расставь по порядку',
 };
 
 interface Props {
@@ -174,6 +176,70 @@ function TypeFields({ exercise, set }: { exercise: EditoExercise; set: (p: Parti
 
     case 'error-hunt':
       return <ErrorHuntFields exercise={exercise} set={set} />;
+
+    case 'numeric':
+      return (
+        <div className="space-y-3">
+          <div>
+            <label className={labelCls}>Условие задачи</label>
+            <textarea value={exercise.prompt ?? ''} onChange={e => set({ prompt: e.target.value })} rows={3} className={`${inputCls} resize-y`} placeholder="Un rectangle mesure 3,5 m sur 2 m. Quelle est son aire ?" />
+          </div>
+          <div className="grid sm:grid-cols-3 gap-3">
+            <div>
+              <label className={labelCls}>Ответ (число)</label>
+              <input
+                value={exercise.numericAnswer ?? ''}
+                onChange={e => set({ numericAnswer: e.target.value === '' ? undefined : Number(e.target.value.replace(',', '.')) })}
+                inputMode="decimal"
+                className={inputCls}
+                placeholder="7"
+              />
+            </div>
+            <div>
+              <label className={labelCls}>Допуск (±)</label>
+              <input
+                value={exercise.tolerance ?? ''}
+                onChange={e => set({ tolerance: e.target.value === '' ? undefined : Number(e.target.value.replace(',', '.')) })}
+                inputMode="decimal"
+                className={inputCls}
+                placeholder="0"
+              />
+            </div>
+            <div>
+              <label className={labelCls}>Единица (необязательно)</label>
+              <input value={exercise.unit ?? ''} onChange={e => set({ unit: e.target.value || undefined })} className={inputCls} placeholder="m²" />
+            </div>
+          </div>
+          <div>
+            <label className={labelCls}>Пояснение (необязательно)</label>
+            <textarea value={exercise.explanation ?? ''} onChange={e => set({ explanation: e.target.value })} rows={2} className={`${inputCls} resize-y`} />
+          </div>
+        </div>
+      );
+
+    case 'ordering':
+      return (
+        <div className="space-y-3">
+          <div>
+            <label className={labelCls}>Задание</label>
+            <input value={exercise.prompt ?? ''} onChange={e => set({ prompt: e.target.value })} className={inputCls} placeholder="Range les événements dans l'ordre chronologique" />
+          </div>
+          <div>
+            <label className={labelCls}>Элементы в ПРАВИЛЬНОМ порядке (по строке на элемент; ученику покажутся перемешанными)</label>
+            <textarea
+              value={(exercise.orderItems ?? []).join('\n')}
+              onChange={e => set({ orderItems: e.target.value.split('\n').map(s => s.trim()).filter(Boolean) })}
+              rows={5}
+              className={`${inputCls} resize-y`}
+              placeholder={'1789 — Prise de la Bastille\n1799 — Coup d\'État de Bonaparte\n1804 — Sacre de Napoléon'}
+            />
+          </div>
+          <div>
+            <label className={labelCls}>Пояснение (необязательно)</label>
+            <textarea value={exercise.explanation ?? ''} onChange={e => set({ explanation: e.target.value })} rows={2} className={`${inputCls} resize-y`} />
+          </div>
+        </div>
+      );
 
     case 'dictation':
       return (

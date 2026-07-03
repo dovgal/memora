@@ -11,6 +11,8 @@ import { ListeningExercise } from './ListeningExercise';
 import { VideoExercise } from './VideoExercise';
 import { ErrorHunt } from './ErrorHunt';
 import { DictationExercise } from './DictationExercise';
+import { NumericExercise } from './NumericExercise';
+import { OrderingExercise } from './OrderingExercise';
 
 export type { ExerciseResult };
 
@@ -29,11 +31,14 @@ const KIND_TO_TYPE: Record<string, EditoExercise['type']> = {
   'mcq': 'grammar-quiz',
   'cloze': 'fill-blank',
   'dictation': 'dictation',
+  'numeric': 'numeric',
+  'ordering': 'ordering',
 };
 
 const RENDERABLE_TYPES = new Set<string>([
   'theory', 'grammar-quiz', 'gender-quiz', 'number-quiz', 'fill-blank',
   'dialogue', 'sentence-builder', 'listening', 'video', 'error-hunt', 'dictation',
+  'numeric', 'ordering',
 ]);
 
 export function ExerciseRenderer({ exercise, onComplete }: ExerciseRendererProps) {
@@ -68,6 +73,10 @@ export function ExerciseRenderer({ exercise, onComplete }: ExerciseRendererProps
       return <ErrorHunt exercise={exercise} onComplete={handleComplete} />;
     case 'dictation':
       return <DictationExercise exercise={exercise} onComplete={handleComplete} />;
+    case 'numeric':
+      return <NumericExercise exercise={exercise} onComplete={handleComplete} />;
+    case 'ordering':
+      return <OrderingExercise exercise={exercise} onComplete={handleComplete} />;
     default:
       return null;
   }
