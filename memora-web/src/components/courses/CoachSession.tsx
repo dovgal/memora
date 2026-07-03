@@ -22,8 +22,8 @@ import { ExerciseRenderer } from '@/components/edito/ExerciseRenderer';
 import { VocabQuiz } from '@/components/courses/VocabQuiz';
 import {
   getCoachReviews, recordCoachReview, getCoachStats, explainExercise, generatePractice,
-  regenerateVariant,
-  type CoachReviewEntry, type CoachStats,
+  regenerateVariant, getSessionPlan,
+  type CoachReviewEntry, type CoachStats, type SessionPlan,
 } from '@/lib/courses/customCoursesApi';
 
 export interface CoachUnit {
@@ -82,6 +82,8 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
 
   const [reviews, setReviews] = useState<CoachReviewEntry[] | null>(null);
   const [stats, setStats] = useState<CoachStats | null>(null);
+  // Серверный план сессии: порядок повторений и слабые места. null — фолбэк на локальную очередь.
+  const [plan, setPlan] = useState<SessionPlan | null>(null);
   const [queue, setQueue] = useState<QueueItem[]>([]);
   const [index, setIndex] = useState(0);
   const [phase, setPhase] = useState<'loading' | 'start' | 'session' | 'done'>('loading');
@@ -168,12 +170,41 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
     Promise.allSettled([
       getCoachReviews(courseId, idToken),
       getCoachStats(courseId, idToken),
-    ]).then(([revRes, statRes]) => {
+      getSessionPlan(courseId, idToken),
+    ]).then(([revRes, statRes, planRes]) => {
       setReviews(revRes.status === 'fulfilled' ? revRes.value : []);
       if (statRes.status === 'fulfilled') setStats(statRes.value);
+      if (planRes.status === 'fulfilled') setPlan(planRes.value);
       setPhase('start');
     });
   }, [idToken, courseId]);
+
+  // Композиция сессии: повторения в серверном порядке (interleaving по юнитам),
+  // затем проработка слабых мест (бонус, не двигает график FSRS), затем новое.
+  // Без плана (офлайн/ошибка) — прежняя локальная очередь.
+  const composition = useMemo(() => {
+    const byKey = new Map(allItems.map(it => [`${it.unitId}::${it.trackId}`, it]));
+
+    let due: QueueItem[];
+    if (plan && plan.due.length > 0) {
+      due = plan.due
+        .map(d => byKey.get(`${d.unitId}::${d.exerciseId}`))
+        .filter((it): it is QueueItem => !!it)
+        .map(it => ({ ...it, isReview: true }));
+    } else {
+      due = pools.due.slice(0, 30);
+    }
+
+    const dueKeys = new Set(due.map(it => `${it.unitId}::${it.trackId}`));
+    const weak: QueueItem[] = (plan?.weak ?? [])
+      .map(w => byKey.get(`${w.unitId}::${w.exerciseId}`))
+      .filter((it): it is QueueItem => !!it && it.kind === 'exercise' && !dueKeys.has(`${it.unitId}::${it.trackId}`))
+      .slice(0, 3)
+      .map(it => ({ ...it, isReview: false, ephemeral: true, unitTitle: `Проработка · ${it.unitTitle}` }));
+
+    const fresh = pools.fresh.slice(0, newGoal);
+    return { due, weak, fresh };
+  }, [plan, pools, allItems, newGoal]);
 
   // Voltaire: на повторе (isReview) генерируем НОВЫЙ вариант того же правила —
   // какографию «найди ошибку», чтобы тренировать навык, а не заучивать текст.
@@ -216,9 +247,7 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
   }, [index, attempt]);
 
   const startSession = () => {
-    const due = pools.due.slice(0, 30);
-    const fresh = pools.fresh.slice(0, newGoal);
-    const q = [...due, ...fresh];
+    const q = [...composition.due, ...composition.weak, ...composition.fresh];
     if (q.length === 0) return;
     setQueue(q);
     setIndex(0);
@@ -373,9 +402,8 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
   }
 
   if (phase === 'start') {
-    const dueCount = pools.due.length;
-    const freshCount = pools.fresh.length;
-    const planned = Math.min(dueCount, 30) + Math.min(freshCount, newGoal);
+    const dueCount = plan?.dueTotal ?? pools.due.length;
+    const planned = composition.due.length + composition.weak.length + composition.fresh.length;
     const estMinutes = Math.max(1, Math.round(planned * 1.2));
     const masteryPct = mastery.total > 0 ? Math.round((mastery.learned / mastery.total) * 100) : 0;
 
@@ -410,7 +438,7 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
             </div>
             <div className="bg-qz-card border border-border rounded-2xl p-4 text-center">
               <BookOpen className="w-5 h-5 text-emerald-400 mx-auto mb-1" />
-              <p className="text-2xl font-bold text-foreground">{Math.min(freshCount, newGoal)}</p>
+              <p className="text-2xl font-bold text-foreground">{composition.fresh.length}</p>
               <p className="text-qz-text-muted text-xs">нового</p>
             </div>
             <div className="bg-qz-card border border-border rounded-2xl p-4 text-center">
@@ -434,6 +462,11 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
             <p className="text-qz-text-muted text-xs mt-2">
               Сегодня выполнено повторений: {stats?.todayReviews ?? 0}. Примерное время сессии: ~{estMinutes} мин.
             </p>
+            {composition.weak.length > 0 && (
+              <p className="text-amber-400 text-xs mt-1">
+                В сессию добавлена проработка слабых мест: {composition.weak.length} упр. (не влияет на график повторений)
+              </p>
+            )}
           </div>
 
           {planned === 0 ? (

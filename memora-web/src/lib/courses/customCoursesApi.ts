@@ -226,6 +226,32 @@ export async function getCoachRatingStats(
   return data.stats;
 }
 
+// Серверный план сессии: повторения в порядке показа (interleaving по юнитам) + слабые места.
+export interface SessionPlanDueEntry {
+  unitId: string;
+  exerciseId: string;
+  state: number;
+  due: string;
+}
+
+export interface SessionPlanWeakEntry {
+  unitId: string;
+  exerciseId: string;
+  attempts: number;
+  errorRate: number;
+}
+
+export interface SessionPlan {
+  due: SessionPlanDueEntry[];
+  /** Всего просрочено (может превышать due.length из-за лимита сессии). */
+  dueTotal: number;
+  weak: SessionPlanWeakEntry[];
+}
+
+export async function getSessionPlan(courseId: string, idToken?: string): Promise<SessionPlan> {
+  return ok(await fetch(`/api/courses/${courseId}/coach/session-plan`, { headers: headers(idToken) }));
+}
+
 /** «Я уже знаю это» — пометить упражнения юнита усвоенными. */
 export async function markUnitKnown(courseId: string, unitId: string, exerciseIds: string[], idToken?: string): Promise<void> {
   return ok(await fetch(`/api/courses/${courseId}/coach/mark-known`, {

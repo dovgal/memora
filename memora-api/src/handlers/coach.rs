@@ -388,6 +388,197 @@ pub async fn get_rating_stats(
 }
 
 #[derive(Deserialize)]
+pub struct SessionPlanQuery {
+    /// Максимум повторений в сессии (по умолчанию 30).
+    pub due_limit: Option<u32>,
+    /// Максимум слабых мест для проработки (по умолчанию 5).
+    pub weak_limit: Option<u32>,
+    /// Окно статистики ошибок в днях (по умолчанию 30).
+    pub days: Option<u32>,
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DuePlanEntry {
+    pub unit_id: String,
+    pub exercise_id: String,
+    pub state: u8,
+    pub due: String,
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct WeakPlanEntry {
+    pub unit_id: String,
+    pub exercise_id: String,
+    pub attempts: i64,
+    pub error_rate: f64,
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SessionPlanResponse {
+    /// Повторения в порядке показа (interleaving по юнитам).
+    pub due: Vec<DuePlanEntry>,
+    /// Всего просрочено (может быть больше len(due) из-за лимита).
+    pub due_total: i64,
+    /// Слабые места (не входящие в due) — кандидаты на проработку в сессии.
+    pub weak: Vec<WeakPlanEntry>,
+}
+
+/// Round-robin по юнитам: подряд не идут два упражнения одного юнита (interleaving),
+/// внутри юнита сохраняется порядок по сроку. Уменьшает эффект «ответил по инерции».
+fn interleave_by_unit(entries: Vec<DuePlanEntry>, limit: usize) -> Vec<DuePlanEntry> {
+    use std::collections::VecDeque;
+    let mut groups: Vec<(String, VecDeque<DuePlanEntry>)> = Vec::new();
+    for e in entries {
+        match groups.iter_mut().find(|(u, _)| *u == e.unit_id) {
+            Some((_, g)) => g.push_back(e),
+            None => groups.push((e.unit_id.clone(), VecDeque::from([e]))),
+        }
+    }
+    let mut out = Vec::with_capacity(limit.min(64));
+    'fill: loop {
+        let mut took_any = false;
+        for (_, g) in groups.iter_mut() {
+            if let Some(e) = g.pop_front() {
+                out.push(e);
+                took_any = true;
+                if out.len() >= limit { break 'fill; }
+            }
+        }
+        if !took_any { break; }
+    }
+    out
+}
+
+/// GET /api/courses/{course_id}/coach/session-plan
+/// Готовый план сессии: просроченные повторения в порядке показа + слабые места.
+/// Новый материал сервер не планирует — контента встроенных курсов у него нет,
+/// клиент добавляет новое из бандла/юнитов в пределах дневной цели.
+pub async fn get_session_plan(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Path(course_id): Path<String>,
+    axum::extract::Query(q): axum::extract::Query<SessionPlanQuery>,
+) -> ApiResult<impl IntoResponse> {
+    let user_id = uid(&user.sub)?;
+    let due_limit = q.due_limit.unwrap_or(30).clamp(1, 100) as usize;
+    let weak_limit = q.weak_limit.unwrap_or(5).clamp(0, 20) as usize;
+    let days = q.days.unwrap_or(30).clamp(1, 365);
+
+    // Просроченные повторения (с запасом до лимита interleaving-а).
+    let due_rows = sqlx::query(
+        "SELECT unit_id, exercise_id, state, due
+         FROM course_exercise_reviews
+         WHERE user_id = $1 AND course_id = $2 AND due <= NOW()
+         ORDER BY due ASC
+         LIMIT 200"
+    )
+    .bind(user_id)
+    .bind(&course_id)
+    .fetch_all(&pool)
+    .await
+    .map_err(db_err)?;
+
+    let due_total = sqlx::query(
+        "SELECT COUNT(*) AS n FROM course_exercise_reviews
+         WHERE user_id = $1 AND course_id = $2 AND due <= NOW()"
+    )
+    .bind(user_id)
+    .bind(&course_id)
+    .fetch_one(&pool)
+    .await
+    .map_err(db_err)?
+    .get::<i64, _>("n");
+
+    let entries: Vec<DuePlanEntry> = due_rows.into_iter().map(|r| {
+        let due: chrono::DateTime<chrono::Utc> = r.get("due");
+        DuePlanEntry {
+            unit_id: r.get("unit_id"),
+            exercise_id: r.get("exercise_id"),
+            state: r.get::<i16, _>("state") as u8,
+            due: due.to_rfc3339(),
+        }
+    }).collect();
+    let due = interleave_by_unit(entries, due_limit);
+
+    // Слабые места за окно: >= 4 попыток и >= 35% ошибок («Снова» + полвеса «Трудно»).
+    // Пороги согласованы с картой навыков (memora-web skillMastery.ts).
+    let weak_rows = sqlx::query(
+        "SELECT unit_id, exercise_id,
+                COUNT(*) AS attempts,
+                (COUNT(*) FILTER (WHERE rating = 1) + 0.5 * COUNT(*) FILTER (WHERE rating = 2))::float8
+                  / COUNT(*) AS error_rate
+         FROM course_review_logs
+         WHERE user_id = $1 AND course_id = $2
+           AND review_time >= NOW() - ($3 || ' days')::interval
+         GROUP BY unit_id, exercise_id
+         HAVING COUNT(*) >= 4
+            AND (COUNT(*) FILTER (WHERE rating = 1) + 0.5 * COUNT(*) FILTER (WHERE rating = 2))::float8
+                  / COUNT(*) >= 0.35
+         ORDER BY error_rate DESC
+         LIMIT 40"
+    )
+    .bind(user_id)
+    .bind(&course_id)
+    .bind(days.to_string())
+    .fetch_all(&pool)
+    .await
+    .map_err(db_err)?;
+
+    // Не дублируем то, что и так в сегодняшних повторениях.
+    let due_keys: std::collections::HashSet<String> =
+        due.iter().map(|d| format!("{}::{}", d.unit_id, d.exercise_id)).collect();
+    let weak: Vec<WeakPlanEntry> = weak_rows.into_iter()
+        .map(|r| WeakPlanEntry {
+            unit_id: r.get("unit_id"),
+            exercise_id: r.get("exercise_id"),
+            attempts: r.get("attempts"),
+            error_rate: r.get("error_rate"),
+        })
+        .filter(|w| !due_keys.contains(&format!("{}::{}", w.unit_id, w.exercise_id)))
+        .take(weak_limit)
+        .collect();
+
+    Ok((StatusCode::OK, Json(SessionPlanResponse { due, due_total, weak })))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn entry(unit: &str, ex: &str) -> DuePlanEntry {
+        DuePlanEntry { unit_id: unit.to_string(), exercise_id: ex.to_string(), state: 2, due: String::new() }
+    }
+
+    #[test]
+    fn interleave_alternates_units_and_respects_limit() {
+        let entries = vec![
+            entry("u1", "a"), entry("u1", "b"), entry("u1", "c"),
+            entry("u2", "d"), entry("u2", "e"),
+            entry("u3", "f"),
+        ];
+        let out = interleave_by_unit(entries, 10);
+        let ids: Vec<&str> = out.iter().map(|e| e.exercise_id.as_str()).collect();
+        // Раунды: (a,d,f), (b,e), (c) — юниты чередуются, порядок внутри юнита сохранён.
+        assert_eq!(ids, ["a", "d", "f", "b", "e", "c"]);
+
+        let out = interleave_by_unit(vec![entry("u1", "a"), entry("u2", "b"), entry("u1", "c")], 2);
+        assert_eq!(out.len(), 2);
+        assert_eq!(out[0].exercise_id, "a");
+        assert_eq!(out[1].exercise_id, "b");
+    }
+
+    #[test]
+    fn interleave_single_unit_keeps_due_order() {
+        let out = interleave_by_unit(vec![entry("u1", "a"), entry("u1", "b")], 10);
+        let ids: Vec<&str> = out.iter().map(|e| e.exercise_id.as_str()).collect();
+        assert_eq!(ids, ["a", "b"]);
+    }
+}
+
+#[derive(Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct MarkKnownRequest {
     pub unit_id: String,

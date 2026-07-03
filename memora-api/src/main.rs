@@ -148,6 +148,7 @@ async fn main() {
         .route("/api/courses/{course_id}/coach/review", post(handlers::coach::record_coach_review))
         .route("/api/courses/{course_id}/coach/stats", get(handlers::coach::get_coach_stats))
         .route("/api/courses/{course_id}/coach/rating-stats", get(handlers::coach::get_rating_stats))
+        .route("/api/courses/{course_id}/coach/session-plan", get(handlers::coach::get_session_plan))
         .route("/api/courses/{course_id}/coach/mark-known", post(handlers::coach::mark_known))
         // Классы v2: кабинеты преподавателя/ученика, задания, сообщения, подписки
         .route("/api/classes/mine", get(handlers::classroom::my_classes_all))
