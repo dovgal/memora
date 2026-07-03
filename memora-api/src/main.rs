@@ -1,7 +1,9 @@
 mod domain;
 mod handlers;
 mod live_ws;
+mod llm;
 mod middleware;
+mod subjects;
 
 use axum::{
     extract::{DefaultBodyLimit, State},

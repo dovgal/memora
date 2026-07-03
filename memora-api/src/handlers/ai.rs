@@ -5,13 +5,13 @@ use axum::{
 };
 use futures::{stream, StreamExt, stream::Stream};
 use futures::stream::BoxStream;
-use reqwest::Client;
 use serde::{Deserialize, Serialize};
-use std::{convert::Infallible, env, sync::Arc};
+use std::{convert::Infallible, sync::Arc};
 use std::time::Duration;
 use governor::{Quota, RateLimiter};
 use std::num::NonZeroU32;
 
+use crate::llm::{self, ChatMessage, ChatRequest, ResponseFormat, Task};
 use crate::middleware::{auth::AuthenticatedUser, rate_limiter::AppRateLimiter};
 use crate::domain::dtos::{
     QChatRequest,
@@ -19,15 +19,49 @@ use crate::domain::dtos::{
 };
 use sqlx::{PgPool, Row};
 
-/// Модель Ollama настраивается переменной OLLAMA_MODEL.
-/// По умолчанию gpt-oss:120b — доступна на бесплатном тарифе Ollama Cloud
-/// (qwen3.5 и deepseek требуют платной подписки).
-fn get_ollama_model() -> String {
-    env::var("OLLAMA_MODEL").unwrap_or_else(|_| "gpt-oss:120b".to_string())
+/// Переводит ошибку LLM-клиента в HTTP-ответ AI-шлюза.
+fn llm_err(e: llm::LlmError) -> (StatusCode, Json<AiGatewayError>) {
+    let status = match e {
+        llm::LlmError::Upstream(_) => StatusCode::BAD_GATEWAY,
+        llm::LlmError::Config(_) | llm::LlmError::Protocol(_) => StatusCode::INTERNAL_SERVER_ERROR,
+    };
+    (status, Json(AiGatewayError { error: e.to_string() }))
 }
 
-fn get_ollama_url() -> String {
-    env::var("OLLAMA_BASE_URL").unwrap_or_else(|_| "http://localhost:11434/api/chat".to_string())
+/// Нестриминговый вызов LLM с маппингом ошибки в HTTP-ответ.
+async fn llm_text(
+    task: Task,
+    messages: Vec<ChatMessage>,
+    max_tokens: u32,
+    format: ResponseFormat,
+) -> Result<String, (StatusCode, Json<AiGatewayError>)> {
+    llm::chat_text(ChatRequest { task, messages, max_tokens, format }).await.map_err(llm_err)
+}
+
+/// Оборачивает поток LLM-чанков в SSE: data-события с контентом, событие "done"
+/// по нормальном завершении, событие "error" при обрыве (без "done" после ошибки).
+fn sse_from_llm(
+    llm_stream: BoxStream<'static, Result<String, llm::LlmError>>,
+) -> Sse<impl Stream<Item = Result<Event, Infallible>>> {
+    let stream = async_stream::stream! {
+        let mut llm_stream = llm_stream;
+        let mut failed = false;
+        while let Some(item) = llm_stream.next().await {
+            match item {
+                Ok(content) => yield Ok::<_, Infallible>(Event::default().data(content)),
+                Err(e) => {
+                    eprintln!("LLM stream error: {}", e);
+                    yield Ok::<_, Infallible>(Event::default().event("error").data("Stream connection dropped"));
+                    failed = true;
+                    break;
+                }
+            }
+        }
+        if !failed {
+            yield Ok::<_, Infallible>(Event::default().event("done").data("[DONE]"));
+        }
+    };
+    Sse::new(stream).keep_alive(axum::response::sse::KeepAlive::new().interval(Duration::from_secs(15)).text("keep-alive"))
 }
 
 /// Общая проверка rate limit для всех AI-эндпоинтов.
@@ -92,143 +126,36 @@ pub struct AiGatewayError {
     pub error: String,
 }
 
-#[derive(Serialize)]
-struct OllamaRequest {
-    model: String,
-    messages: Vec<OllamaMessage>,
-    stream: bool,
-    options: Option<OllamaOptions>,
-}
-
-#[derive(Serialize)]
-struct OllamaOptions {
-    num_predict: u32,
-}
-
-#[derive(Serialize)]
-struct OllamaMessage {
-    role: String,
-    content: String,
-    images: Option<Vec<String>>,
-}
-
-#[derive(Deserialize, Debug)]
-struct OllamaStreamChunk {
-    message: Option<OllamaDelta>,
-    done: bool,
-}
-
-#[derive(Deserialize, Debug)]
-struct OllamaDelta {
-    content: Option<String>,
-}
-
 pub async fn generate_flashcards_stream(
     State(rate_limiter): State<AppRateLimiter>,
     AuthenticatedUser(user): AuthenticatedUser,
     Json(payload): Json<AiGenerateRequest>,
 ) -> Result<Sse<impl Stream<Item = Result<Event, Infallible>>>, (StatusCode, Json<AiGatewayError>)> {
-    
-    // 1. Enforce Rate Limits
     check_rate_limit(&rate_limiter, &user.sub)?;
 
-    // 2. Fetch API Key
-    let api_key = match env::var("OLLAMA_API_KEY") {
-        Ok(k) => k,
-        Err(_) => return Err((StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: "Ollama API Key not configured".to_string() })))
-    };
+    let system = ChatMessage::system(
+        "You are Memora's core flashcard generation engine. Output ONLY raw JSON. You must extract key knowledge from the provided text or image into a JSON array of objects, where each object has a 'term' string and a 'definition' string. Do not include markdown blocks like ```json."
+    );
 
-    // 3. Construct Request to Ollama
-    let mut messages = vec![
-        OllamaMessage {
-            role: "system".to_string(),
-            content: "You are Memora's core flashcard generation engine. Output ONLY raw JSON. You must extract key knowledge from the provided text or image into a JSON array of objects, where each object has a 'term' string and a 'definition' string. Do not include markdown blocks like ```json.".to_string(),
-            images: None,
-        }
-    ];
-
-    let mut images = None;
+    let mut user_msg = ChatMessage::user(payload.prompt);
     if let Some(img_url) = payload.image_url {
-        // Ollama expects base64 without the data:image/... prefix if it's passed as a string in the images array
+        // Провайдеры ждут base64 без префикса data:image/...;base64, — префикс убираем здесь.
         let base64_data = if img_url.starts_with("data:image") {
             img_url.split(',').nth(1).unwrap_or(&img_url).to_string()
         } else {
             img_url
         };
-        images = Some(vec![base64_data]);
+        user_msg.images = Some(vec![base64_data]);
     }
 
-    messages.push(OllamaMessage {
-        role: "user".to_string(),
-        content: payload.prompt,
-        images,
-    });
+    let llm_stream = llm::chat_stream(ChatRequest {
+        task: Task::Generation,
+        messages: vec![system, user_msg],
+        max_tokens: 1500,
+        format: ResponseFormat::Text,
+    }).await.map_err(llm_err)?;
 
-    let client = Client::new();
-    let ollama_body = OllamaRequest {
-        model: get_ollama_model(),
-        messages,
-        stream: true,
-        options: Some(OllamaOptions { num_predict: 1500 }),
-    };
-
-    let response = match client.post(&get_ollama_url())
-        .header("Authorization", format!("Bearer {}", api_key))
-        .header("Content-Type", "application/json")
-        .json(&ollama_body)
-        .send()
-        .await 
-    {
-        Ok(res) => res,
-        Err(e) => return Err((StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: format!("Upstream AI Provider Error: {}", e) })))
-    };
-
-    if !response.status().is_success() {
-        let err_text = response.text().await.unwrap_or_else(|_| "Unknown error".to_string());
-        return Err((StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: format!("Ollama rejected request: {}", err_text) })));
-    }
-
-    // 4. Map the upstream chunk stream to Axum SSE Events
-    let mut byte_stream = response.bytes_stream();
-
-    let stream = async_stream::stream! {
-        // Буфер для неполных строк: чанк может разорвать JSON-строку посередине.
-        let mut line_buf = String::new();
-        while let Some(chunk_result) = futures::StreamExt::next(&mut byte_stream).await {
-            let result: Result<bytes::Bytes, reqwest::Error> = chunk_result;
-            match result {
-                Ok(b) => {
-                    line_buf.push_str(&String::from_utf8_lossy(&b));
-                    // Ollama sends one JSON object per line in stream mode.
-                    // Обрабатываем только завершённые строки, хвост остаётся в буфере.
-                    while let Some(pos) = line_buf.find('\n') {
-                        let line: String = line_buf.drain(..=pos).collect();
-                        let line = line.trim();
-                        if line.is_empty() { continue; }
-
-                        if let Ok(parsed) = serde_json::from_str::<OllamaStreamChunk>(line) {
-                            if let Some(msg) = parsed.message {
-                                if let Some(content) = msg.content {
-                                    yield Ok::<_, Infallible>(Event::default().data(content));
-                                }
-                            }
-                            if parsed.done {
-                                yield Ok::<_, Infallible>(Event::default().event("done").data("[DONE]"));
-                                break;
-                            }
-                        }
-                    }
-                }
-                Err(e) => {
-                    eprintln!("Error reading from stream: {}", e);
-                    yield Ok::<_, Infallible>(Event::default().event("error").data("Stream connection dropped"));
-                    break;
-                }
-            }
-        }
-    };
-
-    Ok(Sse::new(stream).keep_alive(axum::response::sse::KeepAlive::new().interval(Duration::from_secs(15)).text("keep-alive")))
+    Ok(sse_from_llm(llm_stream))
 }
 
 pub async fn qchat_stream(
@@ -238,7 +165,7 @@ pub async fn qchat_stream(
     Path(set_id_str): Path<String>,
     Json(payload): Json<QChatRequest>,
 ) -> Result<Sse<impl Stream<Item = Result<Event, Infallible>>>, (StatusCode, Json<AiGatewayError>)> {
-    
+
     let user_uuid = check_rate_limit(&rate_limiter, &user.sub)?;
 
     let set_id = match uuid::Uuid::parse_str(&set_id_str) {
@@ -276,88 +203,19 @@ pub async fn qchat_stream(
          context_string
     );
 
-    let api_key = match env::var("OLLAMA_API_KEY") {
-        Ok(k) => k,
-        Err(_) => return Err((StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: "Ollama API Key not configured".to_string() })))
-    };
-
-    let mut ollama_messages = vec![
-        OllamaMessage {
-            role: "system".to_string(),
-            content: system_instructions,
-            images: None,
-        }
-    ];
-
+    let mut messages = vec![ChatMessage::system(system_instructions)];
     for msg in payload.messages {
-        ollama_messages.push(OllamaMessage {
-            role: msg.role,
-            content: msg.content,
-            images: None,
-        });
+        messages.push(ChatMessage::new(msg.role, msg.content));
     }
 
-    let client = Client::new();
-    let ollama_body = OllamaRequest {
-        model: get_ollama_model(),
-        messages: ollama_messages,
-        stream: true,
-        options: Some(OllamaOptions { num_predict: 1000 }),
-    };
+    let llm_stream = llm::chat_stream(ChatRequest {
+        task: Task::Chat,
+        messages,
+        max_tokens: 1000,
+        format: ResponseFormat::Text,
+    }).await.map_err(llm_err)?;
 
-    let response = match client.post(&get_ollama_url())
-        .header("Authorization", format!("Bearer {}", api_key))
-        .header("Content-Type", "application/json")
-        .json(&ollama_body)
-        .send()
-        .await 
-    {
-        Ok(res) => res,
-        Err(e) => return Err((StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: format!("Upstream AI Provider Error: {}", e) })))
-    };
-
-    if !response.status().is_success() {
-        let err_text = response.text().await.unwrap_or_else(|_| "Unknown error".to_string());
-        return Err((StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: format!("Ollama rejected request: {}", err_text) })));
-    }
-
-    let mut byte_stream = response.bytes_stream();
-
-    let stream = async_stream::stream! {
-        // Буфер для неполных строк: чанк может разорвать JSON-строку посередине.
-        let mut line_buf = String::new();
-        while let Some(chunk_result) = futures::StreamExt::next(&mut byte_stream).await {
-            let result: Result<bytes::Bytes, reqwest::Error> = chunk_result;
-            match result {
-                Ok(b) => {
-                    line_buf.push_str(&String::from_utf8_lossy(&b));
-                    while let Some(pos) = line_buf.find('\n') {
-                        let line: String = line_buf.drain(..=pos).collect();
-                        let line = line.trim();
-                        if line.is_empty() { continue; }
-                        if let Ok(parsed) = serde_json::from_str::<OllamaStreamChunk>(line) {
-                            if let Some(msg) = parsed.message {
-                                if let Some(content) = msg.content {
-                                    yield Ok::<_, Infallible>(Event::default().data(content));
-                                }
-                            }
-                            if parsed.done {
-                                yield Ok::<_, Infallible>(Event::default().event("done").data("[DONE]"));
-                                break;
-                            }
-                        }
-                    }
-                }
-                Err(e) => {
-                    eprintln!("Error reading from stream: {}", e);
-                    yield Ok::<_, Infallible>(Event::default().event("error").data("Stream connection dropped"));
-                    break;
-                }
-            }
-        }
-    };
-
-    Ok(Sse::new(stream).keep_alive(axum::response::sse::KeepAlive::new().interval(Duration::from_secs(15)).text("keep-alive")))
+    Ok(sse_from_llm(llm_stream))
 }
 
 pub async fn generate_image(
@@ -365,7 +223,7 @@ pub async fn generate_image(
     AuthenticatedUser(_user): AuthenticatedUser,
     Json(_payload): Json<AiImageGenerateRequest>,
 ) -> Result<Json<AiImageGenerateResponse>, (StatusCode, Json<AiGatewayError>)> {
-    // Ollama Cloud currently does not support image generation models (DALL-E style)
+    // Текущие LLM-провайдеры Memora не поддерживают генерацию изображений (DALL-E style)
     Err((StatusCode::NOT_IMPLEMENTED, Json(AiGatewayError { error: "Image generation is currently not supported with the Ollama backend.".to_string() })))
 }
 
@@ -378,11 +236,6 @@ pub async fn generate_exercises(
     let user_uuid = match check_rate_limit(&rate_limiter, &user.sub) {
         Ok(u) => u,
         Err((_, Json(e))) => return Sse::new(stream::once(async move { Ok(Event::default().data(format!("Error: {}", e.error))) }).boxed()),
-    };
-
-    let api_key = match env::var("OLLAMA_API_KEY") {
-        Ok(key) => key,
-        Err(_) => return Sse::new(stream::once(async { Ok(Event::default().data("Error: API Key not set")) }).boxed()),
     };
 
     let set_id = match uuid::Uuid::parse_str(&payload.set_id) {
@@ -445,38 +298,19 @@ pub async fn generate_exercises(
         set_info.title, set_info.fields_schema, cards_json
     );
 
-    let client = Client::new();
-    let response = match client.post(&get_ollama_url())
-        .header("Authorization", format!("Bearer {}", api_key))
-        .json(&OllamaRequest {
-            model: get_ollama_model(),
-            messages: vec![OllamaMessage {
-                role: "system".to_string(),
-                content: system_prompt,
-                images: None,
-            }],
-            stream: true,
-            options: Some(OllamaOptions { num_predict: 8192 }),
-        })
-        .send()
-        .await
-    {
-        Ok(res) => res,
+    let llm_stream = match llm::chat_stream(ChatRequest {
+        task: Task::Generation,
+        messages: vec![ChatMessage::system(system_prompt)],
+        max_tokens: 8192,
+        format: ResponseFormat::Text,
+    }).await {
+        Ok(s) => s,
         Err(e) => return Sse::new(stream::once(async move { Ok(Event::default().data(format!("Error: {}", e))) }).boxed()),
     };
 
-    let byte_stream = response.bytes_stream();
-    let event_stream = byte_stream.map(|chunk_result: reqwest::Result<bytes::Bytes>| {
-        match chunk_result {
-            Ok(bytes) => {
-                let text = String::from_utf8_lossy(&bytes);
-                if let Ok(value) = serde_json::from_str::<serde_json::Value>(&text) {
-                    if let Some(content) = value.get("message").and_then(|m| m.get("content")).and_then(|c| c.as_str()) {
-                        return Ok::<Event, Infallible>(Event::default().data(content));
-                    }
-                }
-                Ok::<Event, Infallible>(Event::default())
-            },
+    let event_stream = llm_stream.map(|item| {
+        match item {
+            Ok(content) => Ok::<Event, Infallible>(Event::default().data(content)),
             Err(e) => Ok::<Event, Infallible>(Event::default().data(format!("Error: {}", e))),
         }
     });
@@ -491,11 +325,10 @@ pub async fn grade_answer(
     Json(payload): Json<AIGradeRequest>,
 ) -> Result<Json<AIGradeResponse>, (StatusCode, Json<AiGatewayError>)> {
     check_rate_limit(&rate_limiter, &user.sub)?;
-    let api_key = env::var("OLLAMA_API_KEY")
-        .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: "API Key not set".to_string() })))?;
 
-    let system_prompt = "You are an AI Judge. Evaluate the user's answer semantically. 
-        Output ONLY raw JSON object: { is_correct: bool, score: float (0.0-1.0), explanation: string, correct_answer: string }.
+    // Ключи в camelCase — так их ждёт AIGradeResponse (serde rename_all = camelCase).
+    let system_prompt = "You are an AI Judge. Evaluate the user's answer semantically.
+        Output ONLY raw JSON object: { \"isCorrect\": bool, \"score\": float (0.0-1.0), \"explanation\": string, \"correctAnswer\": string }.
         Be fair: ignore minor typos or casing, but ensure meaning is preserved.
         Explanation should be in Russian.";
 
@@ -504,34 +337,25 @@ pub async fn grade_answer(
         payload.question_text, payload.question_type, payload.user_answer
     );
 
-    let client = Client::new();
-    let response = client.post(&get_ollama_url())
-        .header("Authorization", format!("Bearer {}", api_key))
-        .json(&OllamaRequest {
-            model: get_ollama_model(),
-            messages: vec![
-                OllamaMessage { role: "system".to_string(), content: system_prompt.to_string(), images: None },
-                OllamaMessage { role: "user".to_string(), content: user_prompt, images: None }
-            ],
-            stream: false,
-            options: Some(OllamaOptions { num_predict: 500 }),
-        })
-        .send()
-        .await
-        .map_err(|e| (StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: e.to_string() })))?;
+    let schema = serde_json::json!({
+        "type": "object",
+        "properties": {
+            "isCorrect": { "type": "boolean" },
+            "score": { "type": "number" },
+            "explanation": { "type": "string" },
+            "correctAnswer": { "type": "string" }
+        },
+        "required": ["isCorrect", "score", "explanation", "correctAnswer"]
+    });
 
-    let body = response.text().await.unwrap_or_default();
-    
-    #[derive(Deserialize)]
-    struct OllamaResponse {
-        message: OllamaDelta,
-    }
-    
-    let parsed: OllamaResponse = serde_json::from_str(&body)
-        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Ollama JSON Error: {} - Body: {}", e, body) })))?;
+    let content = llm_text(
+        Task::Grading,
+        vec![ChatMessage::system(system_prompt), ChatMessage::user(user_prompt)],
+        500,
+        ResponseFormat::JsonSchema(schema),
+    ).await?;
 
-    let content = parsed.message.content.unwrap_or_default();
-    let grade: AIGradeResponse = serde_json::from_str(&content)
+    let grade: AIGradeResponse = serde_json::from_str(extract_json_object(&content))
         .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Grade Parse Error: {} - Content: {}", e, content) })))?;
 
     Ok(Json(grade))
@@ -546,49 +370,29 @@ pub async fn analyze_content(
         return Sse::new(stream::once(async move { Ok(Event::default().data(format!("Error: {}", e.error))) }).boxed());
     }
 
-    let api_key = match env::var("OLLAMA_API_KEY") {
-        Ok(key) => key,
-        Err(_) => return Sse::new(stream::once(async { Ok(Event::default().data("Error: API Key not set")) }).boxed()),
-    };
-
-    let system_prompt = "You are an AI Content Analyst for Memora. 
+    let system_prompt = "You are an AI Content Analyst for Memora.
         Analyze the provided text (books, subtitles, podcasts) and extract structured flashcards.
         User Objective: {}.
         Output ONLY raw JSON object: { proposedTitle: string, proposedDescription: string, cards: Vec<{ term: string, definition: string, fieldsData: Value }> }.
         Extract at least 10-15 high-quality cards.
         Do not use markdown blocks.";
 
-    let client = Client::new();
-    let response = match client.post(&get_ollama_url())
-        .header("Authorization", format!("Bearer {}", api_key))
-        .json(&OllamaRequest {
-            model: get_ollama_model(),
-            messages: vec![
-                OllamaMessage { role: "system".to_string(), content: system_prompt.replace("{}", &payload.user_objective), images: None },
-                OllamaMessage { role: "user".to_string(), content: payload.content, images: None }
-            ],
-            stream: true, // Switched to true
-            options: Some(OllamaOptions { num_predict: 8192 }),
-        })
-        .send()
-        .await
-    {
-        Ok(res) => res,
+    let llm_stream = match llm::chat_stream(ChatRequest {
+        task: Task::Generation,
+        messages: vec![
+            ChatMessage::system(system_prompt.replace("{}", &payload.user_objective)),
+            ChatMessage::user(payload.content),
+        ],
+        max_tokens: 8192,
+        format: ResponseFormat::Text,
+    }).await {
+        Ok(s) => s,
         Err(e) => return Sse::new(stream::once(async move { Ok(Event::default().data(format!("Error: {}", e))) }).boxed()),
     };
 
-    let byte_stream = response.bytes_stream();
-    let event_stream = byte_stream.map(|chunk_result: reqwest::Result<bytes::Bytes>| {
-        match chunk_result {
-            Ok(bytes) => {
-                let text = String::from_utf8_lossy(&bytes);
-                if let Ok(value) = serde_json::from_str::<serde_json::Value>(&text) {
-                    if let Some(content) = value.get("message").and_then(|m| m.get("content")).and_then(|c| c.as_str()) {
-                        return Ok::<Event, Infallible>(Event::default().data(content));
-                    }
-                }
-                Ok::<Event, Infallible>(Event::default())
-            },
+    let event_stream = llm_stream.map(|item| {
+        match item {
+            Ok(content) => Ok::<Event, Infallible>(Event::default().data(content)),
             Err(e) => Ok::<Event, Infallible>(Event::default().data(format!("Error: {}", e))),
         }
     });
@@ -616,25 +420,14 @@ pub struct GeneratedQuestion {
 }
 
 /// POST /api/ai/a2/generate-questions
-/// Генерирует НОВЫЕ задания уровня A2 по указанным слабым темам через Ollama.
+/// Генерирует НОВЫЕ задания уровня A2 по указанным слабым темам через LLM.
 /// Возвращает массив GeneratedQuestion (для бесконечного «Моего плана»).
 pub async fn generate_a2_questions(
     State(rate_limiter): State<AppRateLimiter>,
     AuthenticatedUser(user): AuthenticatedUser,
     Json(payload): Json<GenerateA2Request>,
 ) -> Result<Json<Vec<GeneratedQuestion>>, (StatusCode, Json<AiGatewayError>)> {
-    // rate limit
-    let user_uuid = uuid::Uuid::parse_str(&user.sub)
-        .map_err(|_| (StatusCode::UNAUTHORIZED, Json(AiGatewayError { error: "Invalid User UUID".to_string() })))?;
-    let limiter = rate_limiter.entry(user_uuid).or_insert_with(|| {
-        Arc::new(RateLimiter::direct(Quota::per_minute(NonZeroU32::new(5).unwrap())))
-    });
-    if limiter.check().is_err() {
-        return Err((StatusCode::TOO_MANY_REQUESTS, Json(AiGatewayError { error: "Rate limit exceeded. Try again in a minute.".to_string() })));
-    }
-
-    let api_key = env::var("OLLAMA_API_KEY")
-        .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: "API Key not set".to_string() })))?;
+    check_rate_limit(&rate_limiter, &user.sub)?;
 
     let count = payload.count.unwrap_or(8).min(15);
     let topics = if payload.topics.is_empty() {
@@ -655,81 +448,39 @@ pub async fn generate_a2_questions(
          Французский — корректный, объяснения краткие и понятные. Не добавляй ничего кроме JSON-массива."
     );
 
-    let client = Client::new();
-    let response = client.post(&get_ollama_url())
-        .header("Authorization", format!("Bearer {}", api_key))
-        .json(&OllamaRequest {
-            model: get_ollama_model(),
-            messages: vec![
-                OllamaMessage { role: "system".to_string(), content: system_prompt, images: None },
-                OllamaMessage { role: "user".to_string(), content: "Сгенерируй задания сейчас.".to_string(), images: None },
-            ],
-            stream: false,
-            options: Some(OllamaOptions { num_predict: 3000 }),
-        })
-        .send()
-        .await
-        .map_err(|e| (StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: e.to_string() })))?;
-
-    let body = response.text().await.unwrap_or_default();
-
-    #[derive(Deserialize)]
-    struct OllamaResponse { message: OllamaDelta }
-    let parsed: OllamaResponse = serde_json::from_str(&body)
-        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Ollama JSON Error: {}", e) })))?;
-    let content = parsed.message.content.unwrap_or_default();
-
-    // Иногда модель оборачивает в ```json ... ``` — вырежем массив по первым [ и последним ].
-    let trimmed = {
-        let start = content.find('[');
-        let end = content.rfind(']');
-        match (start, end) {
-            (Some(s), Some(e)) if e > s => &content[s..=e],
-            _ => content.as_str(),
+    let schema = serde_json::json!({
+        "type": "array",
+        "items": {
+            "type": "object",
+            "properties": {
+                "topic": { "type": "string" },
+                "type": { "type": "string", "enum": ["mc", "text"] },
+                "prompt": { "type": "string" },
+                "options": { "type": ["array", "null"], "items": { "type": "string" } },
+                "answer_index": { "type": ["integer", "null"] },
+                "accept": { "type": ["array", "null"], "items": { "type": "string" } },
+                "speak": { "type": "string" },
+                "explanation": { "type": "string" }
+            },
+            "required": ["topic", "type", "prompt", "speak", "explanation"]
         }
-    };
+    });
 
-    let questions: Vec<GeneratedQuestion> = serde_json::from_str(trimmed)
+    let content = llm_text(
+        Task::Generation,
+        vec![
+            ChatMessage::system(system_prompt),
+            ChatMessage::user("Сгенерируй задания сейчас."),
+        ],
+        3000,
+        ResponseFormat::JsonSchema(schema),
+    ).await?;
+
+    // Страховка: модель может обернуть в ```json ... ``` — вырежем массив по первым [ и последним ].
+    let questions: Vec<GeneratedQuestion> = serde_json::from_str(extract_json_array(&content))
         .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Parse Error: {} - Content: {}", e, content) })))?;
 
     Ok(Json(questions))
-}
-
-/// Нестриминговый запрос к Ollama, возвращает текст ответа модели.
-async fn ollama_chat(
-    messages: Vec<OllamaMessage>,
-    num_predict: u32,
-) -> Result<String, (StatusCode, Json<AiGatewayError>)> {
-    let api_key = env::var("OLLAMA_API_KEY")
-        .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: "API Key not set".to_string() })))?;
-
-    let client = Client::new();
-    let response = client.post(&get_ollama_url())
-        .header("Authorization", format!("Bearer {}", api_key))
-        .json(&OllamaRequest {
-            model: get_ollama_model(),
-            messages,
-            stream: false,
-            options: Some(OllamaOptions { num_predict }),
-        })
-        .send()
-        .await
-        .map_err(|e| (StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: e.to_string() })))?;
-
-    let body = response.text().await.unwrap_or_default();
-
-    // Ollama может вернуть {"error": "..."} (например, модель требует подписки) — показываем как есть.
-    #[derive(Deserialize)]
-    struct OllamaErr { error: String }
-    if let Ok(err) = serde_json::from_str::<OllamaErr>(&body) {
-        return Err((StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: format!("Ollama: {}", err.error) })));
-    }
-
-    #[derive(Deserialize)]
-    struct OllamaResp { message: OllamaDelta }
-    let parsed: OllamaResp = serde_json::from_str(&body)
-        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Ollama JSON Error: {}", e) })))?;
-    Ok(parsed.message.content.unwrap_or_default())
 }
 
 /// Вырезает первый JSON-объект из ответа модели (модель может обернуть его текстом/markdown).
@@ -788,10 +539,12 @@ pub async fn explain_exercise(
         Если есть ответ учащегося — разбери его ошибку доброжелательно. \
         Не используй markdown-заголовки, пиши 1-3 абзаца обычным текстом.";
 
-    let content = ollama_chat(vec![
-        OllamaMessage { role: "system".to_string(), content: system.to_string(), images: None },
-        OllamaMessage { role: "user".to_string(), content: user_block, images: None },
-    ], 800).await?;
+    let content = llm_text(
+        Task::Chat,
+        vec![ChatMessage::system(system), ChatMessage::user(user_block)],
+        800,
+        ResponseFormat::Text,
+    ).await?;
 
     Ok(Json(ExplainResponse { explanation: content.trim().to_string() }))
 }
@@ -834,10 +587,15 @@ pub async fn generate_practice(
          Выведи ТОЛЬКО валидный JSON-массив упражнений без markdown. id вида practice-1, practice-2..."
     );
 
-    let content = ollama_chat(vec![
-        OllamaMessage { role: "system".to_string(), content: system, images: None },
-        OllamaMessage { role: "user".to_string(), content: "Сгенерируй упражнения сейчас.".to_string(), images: None },
-    ], 6000).await?;
+    // Схема свободная (упражнения гетерогенны), но гарантирует массив объектов.
+    let schema = serde_json::json!({ "type": "array", "items": { "type": "object" } });
+
+    let content = llm_text(
+        Task::Generation,
+        vec![ChatMessage::system(system), ChatMessage::user("Сгенерируй упражнения сейчас.")],
+        6000,
+        ResponseFormat::JsonSchema(schema),
+    ).await?;
 
     let exercises: serde_json::Value = serde_json::from_str(extract_json_array(&content))
         .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Parse Error: {} - Content: {}", e, content) })))?;
@@ -894,19 +652,25 @@ pub async fn converse(
          \"correction\": \"разбор ошибок по-русски\" | null}}"
     );
 
-    let mut messages = vec![OllamaMessage { role: "system".to_string(), content: system, images: None }];
+    let mut messages = vec![ChatMessage::system(system)];
     // Ограничим историю последними 16 сообщениями.
     let recent = payload.messages.iter().rev().take(16).collect::<Vec<_>>().into_iter().rev();
     for m in recent {
         let role = if m.role == "assistant" { "assistant" } else { "user" };
-        messages.push(OllamaMessage {
-            role: role.to_string(),
-            content: m.content.chars().take(1000).collect(),
-            images: None,
-        });
+        messages.push(ChatMessage::new(role, m.content.chars().take(1000).collect::<String>()));
     }
 
-    let content = ollama_chat(messages, 700).await?;
+    let schema = serde_json::json!({
+        "type": "object",
+        "properties": {
+            "reply": { "type": "string" },
+            "translation": { "type": "string" },
+            "correction": { "type": ["string", "null"] }
+        },
+        "required": ["reply", "translation", "correction"]
+    });
+
+    let content = llm_text(Task::Chat, messages, 700, ResponseFormat::JsonSchema(schema)).await?;
     let parsed: ConverseResponse = serde_json::from_str(extract_json_object(&content))
         .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Parse Error: {} - Content: {}", e, content) })))?;
 
@@ -957,10 +721,22 @@ pub async fn generate_story(
          {{\"title\": \"заголовок на изучаемом языке\", \"story\": \"текст истории\", \"translation\": \"перевод на русский\"}}"
     );
 
-    let content = ollama_chat(vec![
-        OllamaMessage { role: "system".to_string(), content: system, images: None },
-        OllamaMessage { role: "user".to_string(), content: "Напиши историю сейчас.".to_string(), images: None },
-    ], 2000).await?;
+    let schema = serde_json::json!({
+        "type": "object",
+        "properties": {
+            "title": { "type": "string" },
+            "story": { "type": "string" },
+            "translation": { "type": "string" }
+        },
+        "required": ["title", "story", "translation"]
+    });
+
+    let content = llm_text(
+        Task::Generation,
+        vec![ChatMessage::system(system), ChatMessage::user("Напиши историю сейчас.")],
+        2000,
+        ResponseFormat::JsonSchema(schema),
+    ).await?;
 
     let parsed: StoryResponse = serde_json::from_str(extract_json_object(&content))
         .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Parse Error: {} - Content: {}", e, content) })))?;
@@ -992,9 +768,6 @@ pub async fn generate_course_unit(
     Json(payload): Json<GenerateUnitRequest>,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<AiGatewayError>)> {
     check_rate_limit(&rate_limiter, &user.sub)?;
-
-    let api_key = env::var("OLLAMA_API_KEY")
-        .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: "API Key not set".to_string() })))?;
 
     let language = payload.language.unwrap_or_else(|| "французский".to_string());
     let level = payload.level.unwrap_or_else(|| "A1".to_string());
@@ -1030,41 +803,24 @@ pub async fn generate_course_unit(
          id упражнений уникальны (ex-1, ex-2, ...). Никакого текста вне JSON."
     );
 
-    let client = Client::new();
-    let response = client.post(&get_ollama_url())
-        .header("Authorization", format!("Bearer {}", api_key))
-        .json(&OllamaRequest {
-            model: get_ollama_model(),
-            messages: vec![
-                OllamaMessage { role: "system".to_string(), content: system_prompt, images: None },
-                OllamaMessage { role: "user".to_string(), content: "Сгенерируй юнит сейчас.".to_string(), images: None },
-            ],
-            stream: false,
-            options: Some(OllamaOptions { num_predict: 8192 }),
-        })
-        .send()
-        .await
-        .map_err(|e| (StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: e.to_string() })))?;
+    // Схема верхнего уровня; структура упражнений гетерогенна и остаётся на промпте.
+    let schema = serde_json::json!({
+        "type": "object",
+        "properties": {
+            "vocabulary": { "type": "array", "items": { "type": "object" } },
+            "exercises": { "type": "array", "items": { "type": "object" } }
+        },
+        "required": ["vocabulary", "exercises"]
+    });
 
-    let body = response.text().await.unwrap_or_default();
+    let content = llm_text(
+        Task::Generation,
+        vec![ChatMessage::system(system_prompt), ChatMessage::user("Сгенерируй юнит сейчас.")],
+        8192,
+        ResponseFormat::JsonSchema(schema),
+    ).await?;
 
-    #[derive(Deserialize)]
-    struct OllamaResponse { message: OllamaDelta }
-    let parsed: OllamaResponse = serde_json::from_str(&body)
-        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Ollama JSON Error: {}", e) })))?;
-    let content = parsed.message.content.unwrap_or_default();
-
-    // Модель может обернуть ответ в ```json ... ``` — вырежем объект по первой { и последней }.
-    let trimmed = {
-        let start = content.find('{');
-        let end = content.rfind('}');
-        match (start, end) {
-            (Some(s), Some(e)) if e > s => &content[s..=e],
-            _ => content.as_str(),
-        }
-    };
-
-    let unit: serde_json::Value = serde_json::from_str(trimmed)
+    let unit: serde_json::Value = serde_json::from_str(extract_json_object(&content))
         .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Parse Error: {} - Content: {}", e, content) })))?;
 
     Ok(Json(unit))
@@ -1073,7 +829,7 @@ pub async fn generate_course_unit(
 // ============================================================================
 // Voltaire-метод: регенерация варианта упражнения на повторе.
 // Каждый повтор по FSRS возвращает ТО ЖЕ правило в НОВОМ предложении,
-// сгенерированном Ollama, — чтобы тренировать навык применения правила,
+// сгенерированном LLM, — чтобы тренировать навык применения правила,
 // а не заучивать конкретный текст. Планирование остаётся на правиле
 // (exercise_id), эту логику в coach.rs не трогаем.
 // ============================================================================
@@ -1223,15 +979,28 @@ pub async fn regenerate_variant(
     );
     let user_msg = format!("Эталонное упражнение (JSON): {seed_json}. Сгенерируй вариант сейчас.");
 
+    let schema = serde_json::json!({
+        "type": "object",
+        "properties": {
+            "sentence": { "type": "string" },
+            "errorIndex": { "type": ["integer", "null"] },
+            "correction": { "type": ["string", "null"] },
+            "explanation": { "type": "string" }
+        },
+        "required": ["sentence", "errorIndex", "correction", "explanation"]
+    });
+
     // До 3 попыток получить валидный вариант.
     let mut produced: Option<ErrorHuntVariant> = None;
     for _ in 0..3 {
-        let content = match ollama_chat(vec![
-            OllamaMessage { role: "system".to_string(), content: system.clone(), images: None },
-            OllamaMessage { role: "user".to_string(), content: user_msg.clone(), images: None },
-        ], 700).await {
+        let content = match llm::chat_text(ChatRequest {
+            task: Task::Generation,
+            messages: vec![ChatMessage::system(system.clone()), ChatMessage::user(user_msg.clone())],
+            max_tokens: 700,
+            format: ResponseFormat::JsonSchema(schema.clone()),
+        }).await {
             Ok(c) => c,
-            Err(_) => break, // Ollama недоступна — выходим к фолбэку
+            Err(_) => break, // LLM недоступна — выходим к фолбэку
         };
         if let Ok(v) = serde_json::from_str::<ErrorHuntVariant>(extract_json_object(&content)) {
             if validate_error_hunt(&v, &avoid_norm) {
