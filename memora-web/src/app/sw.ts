@@ -67,3 +67,28 @@ const serwist = new Serwist({
 });
 
 serwist.addEventListeners();
+
+// --- Push-напоминания ---
+// Сервер шлёт ПУСТОЙ push (без payload — см. memora-api/src/pushsvc.rs):
+// текст уведомления живёт здесь. Пустой пуш не требует шифрования aes128gcm.
+self.addEventListener('push', (event) => {
+    event.waitUntil(
+        self.registration.showNotification('Memora', {
+            body: 'Пора повторять — упражнения ждут 📚',
+            icon: '/icon-192x192.png',
+            badge: '/icon-192x192.png',
+            tag: 'memora-reminder', // повторные напоминания заменяют, а не копятся
+        })
+    );
+});
+
+self.addEventListener('notificationclick', (event) => {
+    event.notification.close();
+    event.waitUntil(
+        self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clients) => {
+            const existing = clients.find((c) => 'focus' in c);
+            if (existing) return (existing as WindowClient).focus();
+            return self.clients.openWindow('/cabinet');
+        })
+    );
+});

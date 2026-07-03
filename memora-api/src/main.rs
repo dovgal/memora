@@ -4,6 +4,7 @@ mod live_ws;
 mod llm;
 mod mathsvc;
 mod middleware;
+mod pushsvc;
 mod subjects;
 mod workers;
 
@@ -63,6 +64,9 @@ async fn main() {
 
     // Фоновая прегенерация вариантов упражнений (см. workers::variant_pregen).
     workers::variant_pregen::spawn(pool.clone());
+
+    // Ежедневные push-напоминания о повторениях (см. workers::push_reminder).
+    workers::push_reminder::spawn(pool.clone());
 
     // Initialize Rate Limiter for AI Gateway
     let rate_limiter = middleware::rate_limiter::initialize_rate_limiter();
@@ -172,6 +176,10 @@ async fn main() {
         .route("/api/check/symbolic", post(handlers::checks::check_symbolic))
         .route("/api/family/board", get(handlers::family::get_board))
         .route("/api/family/member/{user_id}/courses", get(handlers::family::get_member_courses))
+        .route("/api/push/public-key", get(handlers::push::get_public_key))
+        .route("/api/push/subscribe", post(handlers::push::subscribe))
+        .route("/api/push/unsubscribe", post(handlers::push::unsubscribe))
+        .route("/api/push/test", post(handlers::push::send_test))
         .route("/api/courses/{course_id}/coach/mark-known", post(handlers::coach::mark_known))
         // Классы v2: кабинеты преподавателя/ученика, задания, сообщения, подписки
         .route("/api/classes/mine", get(handlers::classroom::my_classes_all))
