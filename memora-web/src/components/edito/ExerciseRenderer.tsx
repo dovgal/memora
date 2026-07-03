@@ -19,10 +19,31 @@ interface ExerciseRendererProps {
   onComplete?: (id: string, result?: ExerciseResult) => void;
 }
 
+/**
+ * Маппинг нового формата (answer.kind, Subject Packs) на существующие рендереры.
+ * Упражнение с answer.kind, но без известного type, рендерится legacy-компонентом.
+ */
+const KIND_TO_TYPE: Record<string, EditoExercise['type']> = {
+  'error-hunt': 'error-hunt',
+  'mcq': 'grammar-quiz',
+  'cloze': 'fill-blank',
+};
+
+const RENDERABLE_TYPES = new Set<string>([
+  'theory', 'grammar-quiz', 'gender-quiz', 'number-quiz', 'fill-blank',
+  'dialogue', 'sentence-builder', 'listening', 'video', 'error-hunt',
+]);
+
 export function ExerciseRenderer({ exercise, onComplete }: ExerciseRendererProps) {
   const handleComplete = (result?: ExerciseResult) => onComplete?.(exercise.id, result);
 
-  switch (exercise.type) {
+  // Старый формат — по type; новый (Subject Packs) — по answer.kind,
+  // если type отсутствует или рендереру неизвестен.
+  const effectiveType = RENDERABLE_TYPES.has(exercise.type)
+    ? exercise.type
+    : (exercise.answer ? KIND_TO_TYPE[exercise.answer.kind] : undefined);
+
+  switch (effectiveType) {
     case 'theory':
       return <Theory exercise={exercise} />;
     case 'grammar-quiz':

@@ -9,9 +9,10 @@ import {
 } from 'lucide-react';
 import type { EditoExercise, VocabularyItem } from '@/lib/courses/edito-a1';
 import {
-  getUnit, updateUnit, generateUnitWithAI,
-  type UnitDetail,
+  getCourse, getUnit, updateUnit, generateUnitWithAI,
+  type CourseDetail, type UnitDetail,
 } from '@/lib/courses/customCoursesApi';
+import { langMeta } from '@/lib/courses/langMeta';
 import { ExerciseEditor, EXERCISE_TYPE_LABELS } from '@/components/courses/ExerciseEditor';
 
 const inputCls = 'w-full bg-qz-bg border border-border rounded-xl px-3 py-2.5 text-sm text-foreground outline-none focus:border-[#4255ff]/60';
@@ -38,6 +39,7 @@ export default function UnitEditPage({ params }: { params: Promise<{ courseId: s
   const idToken = session?.id_token as string | undefined;
 
   const [unit, setUnit] = useState<UnitDetail | null>(null);
+  const [course, setCourse] = useState<CourseDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [savedAt, setSavedAt] = useState<number | null>(null);
@@ -52,6 +54,8 @@ export default function UnitEditPage({ params }: { params: Promise<{ courseId: s
   useEffect(() => {
     if (!idToken) return;
     getUnit(courseId, unitId, idToken).then(setUnit).catch(e => setError(e.message));
+    // Метаданные курса нужны ИИ-генерации (язык/уровень/предмет); ошибка не критична.
+    getCourse(courseId, idToken).then(setCourse).catch(() => {});
   }, [courseId, unitId, idToken]);
 
   const patch = (p: Partial<UnitDetail>) => {
@@ -87,6 +91,11 @@ export default function UnitEditPage({ params }: { params: Promise<{ courseId: s
       const generated = await generateUnitWithAI({
         topic: aiTopic.trim(),
         sourceText: aiSource.trim() || undefined,
+        // Язык/уровень/предмет курса — чтобы генерация шла в правильном предметном паке
+        // (без этого сервер по умолчанию генерирует французский A1).
+        language: course ? langMeta(course.language).label : undefined,
+        level: course?.level || undefined,
+        subject: course?.subject,
       }, idToken);
       // Дозаполняем: новый контент добавляется к существующему.
       const exercises = (generated.exercises ?? []).map((ex, i) => ({

@@ -173,9 +173,14 @@ use serde::Deserialize;
 pub struct SynthesizeParams {
     pub text: String,
     pub voice: Option<String>,
+    /// Язык курса (код 'fr'/'en'/… или название) — выбирает голос через предметный пак,
+    /// если явный `voice` не передан.
+    pub language: Option<String>,
+    /// Предметный домен курса ('language' по умолчанию).
+    pub subject: Option<String>,
 }
 
-/// GET /api/tts?text=...&voice=Alain
+/// GET /api/tts?text=...&voice=Alain (или ...&language=en — голос из предметного пака)
 /// Озвучивание ПРОИЗВОЛЬНОГО текста ТОЛЬКО через Inworld.ai (с кэшем в БД).
 /// Используется тестами/упражнениями курса, где нет карточки в БД.
 /// Требует авторизации: Inworld — платный API, нельзя оставлять открытым.
@@ -191,7 +196,12 @@ pub async fn synthesize_tts(
     if text.chars().count() > 600 {
         return Err(ApiError::response(StatusCode::BAD_REQUEST, "Text too long"));
     }
-    let voice_id = params.voice.unwrap_or_else(|| "Alain".to_string()); // голос для французского по умолчанию
+    // Голос: явный параметр > голос предметного пака (по subject/language) > FR-пак ('Alain').
+    let voice_id = params.voice.unwrap_or_else(|| {
+        let subject = params.subject.as_deref().unwrap_or("language");
+        let lang = params.language.as_deref().and_then(crate::subjects::normalize_language);
+        crate::subjects::pack_for(subject, lang).tts_voice.default.to_string()
+    });
 
     // Ключ кэша = sha256("voice|text")
     use sha2::{Digest, Sha256};

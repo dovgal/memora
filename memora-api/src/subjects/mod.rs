@@ -106,6 +106,20 @@ pub fn pack_for(subject: &str, language: Option<&str>) -> &'static SubjectPack {
     }
 }
 
+/// Нормализует подсказку языка к коду пака: понимает коды (`fr`/`en`/…) и
+/// человекочитаемые названия, которыми фронтенд/промпты описывают язык
+/// («французский», "english", "anglais"). Неизвестное → `None` (фолбэк FR в `pack_for`).
+pub fn normalize_language(hint: &str) -> Option<&'static str> {
+    match hint.trim().to_lowercase().as_str() {
+        "fr" | "французский" | "french" | "français" | "francais" => Some("fr"),
+        "en" | "английский" | "english" | "anglais" => Some("en"),
+        "de" | "немецкий" | "german" | "deutsch" | "allemand" => Some("de"),
+        "es" | "испанский" | "spanish" | "español" | "espanol" | "espagnol" => Some("es"),
+        "ru" | "русский" | "russian" | "russe" => Some("ru"),
+        _ => None,
+    }
+}
+
 /// Подбор пака для встроенного курса по его строковому id.
 /// Встроенные курсы (`edito-a1` и т.п.) не лежат в `custom_courses`, поэтому мапятся по id.
 pub fn pack_for_course_id(course_id: &str) -> &'static SubjectPack {
@@ -140,6 +154,16 @@ mod tests {
         assert_eq!(pack_for("", None).id, "language-fr");
         assert_eq!(pack_for("language", Some("de")).id, "language-fr");
         assert_eq!(pack_for("math", None).id, "language-fr");
+    }
+
+    #[test]
+    fn normalize_language_understands_codes_and_names() {
+        assert_eq!(normalize_language("fr"), Some("fr"));
+        assert_eq!(normalize_language("Французский"), Some("fr"));
+        assert_eq!(normalize_language("en"), Some("en"));
+        assert_eq!(normalize_language("английский"), Some("en"));
+        assert_eq!(normalize_language("English"), Some("en"));
+        assert_eq!(normalize_language("klingon"), None);
     }
 
     #[test]

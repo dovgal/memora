@@ -29,6 +29,8 @@ export interface CourseSummary {
   description: string;
   language: string;
   level: string;
+  /** Предметный домен: 'language' | 'math' | 'physics' | 'history' | … */
+  subject: string;
   isPublished: boolean;
   isOwner: boolean;
   unitCount: number;
@@ -49,6 +51,8 @@ export interface CourseDetail {
   description: string;
   language: string;
   level: string;
+  /** Предметный домен: 'language' | 'math' | 'physics' | 'history' | … */
+  subject: string;
   isPublished: boolean;
   isOwner: boolean;
   units: UnitSummary[];
@@ -69,6 +73,8 @@ export interface UpsertCoursePayload {
   description?: string;
   language?: string;
   level?: string;
+  /** Предметный домен ('language' по умолчанию на сервере). */
+  subject?: string;
   isPublished?: boolean;
 }
 
@@ -307,7 +313,7 @@ export interface GeneratedUnitContent {
 }
 
 export async function generateUnitWithAI(
-  params: { topic: string; sourceText?: string; language?: string; level?: string; count?: number },
+  params: { topic: string; sourceText?: string; language?: string; level?: string; count?: number; subject?: string },
   idToken?: string,
 ): Promise<GeneratedUnitContent> {
   return ok(await fetch('/api/ai/course/generate-unit', {

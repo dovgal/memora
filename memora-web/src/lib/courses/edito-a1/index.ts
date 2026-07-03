@@ -35,6 +35,34 @@ export const EDITO_A1_UNITS: Record<string, EditoUnit> = {
 export const UNIT_ORDER = ['1','2','3','4','5','6','7','8','9','10','11'];
 export const SPECIAL_MODULES = ['genre', 'numeros', 'phonetique', 'delf'];
 
+/**
+ * Типизированный ответ упражнения (Subject Packs, фаза 1).
+ * `kind` задаёт стратегию проверки; поля зависят от kind (errorIndex/correction
+ * для error-hunt, correctOption для mcq и т.д.). Старые упражнения без `answer`
+ * продолжают работать по `type` — обратная совместимость обязательна.
+ */
+export interface ExerciseAnswer {
+  kind: 'error-hunt' | 'mcq' | 'cloze' | 'short-text' | 'ordering' | 'numeric' | 'symbolic' | 'reaction' | 'open-rubric';
+  [key: string]: unknown;
+}
+
+export interface ExerciseRule {
+  id?: string;
+  skill?: string;
+  point?: string;
+  trap?: string;
+  examplesCorrect?: string[];
+  /** Уровень правила (CEFR для языков, класс для школьных предметов). */
+  level?: string;
+  /** Legacy-алиас level для старого контента — читать через ruleLevel(). */
+  cefr?: string;
+}
+
+/** Уровень правила с фолбэком на legacy-поле cefr. */
+export function ruleLevel(ex: EditoExercise): string | undefined {
+  return ex.rule?.level ?? ex.rule?.cefr;
+}
+
 export interface EditoExercise {
   id: string;
   type: 'theory' | 'grammar-quiz' | 'sentence-builder' | 'gender-quiz' | 'dialogue' | 'fill-blank' | 'number-quiz' | 'listening' | 'video' | 'error-hunt';
@@ -44,8 +72,10 @@ export interface EditoExercise {
   errorIndex?: number | null;
   correction?: string;
   explanation?: string;
+  /** Типизированный ответ (новый формат) — опционален, старый контент живёт без него. */
+  answer?: ExerciseAnswer;
   // Метаданные правила и политика регенерации варианта на повторе (Voltaire).
-  rule?: { id?: string; skill?: string; point?: string; trap?: string; examplesCorrect?: string[]; cefr?: string };
+  rule?: ExerciseRule;
   variantPolicy?: { regenerateOnRepeat?: boolean; format?: 'error-hunt' | 'preserve'; avoidLastN?: number };
   // theory
   content?: string;

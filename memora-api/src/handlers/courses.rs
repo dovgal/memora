@@ -111,9 +111,14 @@ pub struct UpsertCourseRequest {
     pub level: String,
     #[serde(default)]
     pub is_published: bool,
+    /// Предметный домен курса: 'language' (по умолчанию) | 'math' | 'physics' | 'history' | …
+    /// Для языковых курсов конкретный язык по-прежнему в `language`.
+    #[serde(default = "default_subject")]
+    pub subject: String,
 }
 
 fn default_language() -> String { "fr".to_string() }
+fn default_subject() -> String { "language".to_string() }
 
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -123,6 +128,7 @@ pub struct CourseSummary {
     pub description: String,
     pub language: String,
     pub level: String,
+    pub subject: String,
     pub is_published: bool,
     pub is_owner: bool,
     pub unit_count: i64,
@@ -147,6 +153,7 @@ pub struct CourseDetail {
     pub description: String,
     pub language: String,
     pub level: String,
+    pub subject: String,
     pub is_published: bool,
     pub is_owner: bool,
     pub units: Vec<UnitSummary>,
@@ -190,7 +197,7 @@ pub async fn list_courses(
     let user_id = uid(&user.sub)?;
     let rows = sqlx::query(
         r#"
-        SELECT c.id, c.title, c.description, c.language, c.level, c.is_published,
+        SELECT c.id, c.title, c.description, c.language, c.level, c.subject, c.is_published,
                c.owner_id, c.updated_at, COUNT(u.id) AS unit_count
         FROM custom_courses c
         LEFT JOIN custom_course_units u ON u.course_id = c.id
@@ -213,6 +220,7 @@ pub async fn list_courses(
             description: r.get("description"),
             language: r.get("language"),
             level: r.get("level"),
+            subject: r.get("subject"),
             is_published: r.get("is_published"),
             is_owner: owner == user_id,
             unit_count: r.get("unit_count"),
@@ -236,8 +244,8 @@ pub async fn create_course(
     }
 
     let row = sqlx::query(
-        "INSERT INTO custom_courses (owner_id, title, description, language, level, is_published)
-         VALUES ($1, $2, $3, $4, $5, $6) RETURNING id"
+        "INSERT INTO custom_courses (owner_id, title, description, language, level, is_published, subject)
+         VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id"
     )
     .bind(user_id)
     .bind(title)
@@ -245,6 +253,7 @@ pub async fn create_course(
     .bind(&payload.language)
     .bind(&payload.level)
     .bind(payload.is_published)
+    .bind(&payload.subject)
     .fetch_one(&pool)
     .await
     .map_err(db_err)?;
@@ -263,7 +272,7 @@ pub async fn get_course(
     let course_id = parse_id(&id)?;
 
     let row = sqlx::query(
-        "SELECT id, owner_id, title, description, language, level, is_published
+        "SELECT id, owner_id, title, description, language, level, subject, is_published
          FROM custom_courses WHERE id = $1"
     )
     .bind(course_id)
@@ -304,6 +313,7 @@ pub async fn get_course(
         description: row.get("description"),
         language: row.get("language"),
         level: row.get("level"),
+        subject: row.get("subject"),
         is_published,
         is_owner,
         units,
@@ -330,13 +340,14 @@ pub async fn update_course(
 
     sqlx::query(
         "UPDATE custom_courses SET title = $1, description = $2, language = $3, level = $4,
-         is_published = $5, updated_at = NOW() WHERE id = $6"
+         is_published = $5, subject = $6, updated_at = NOW() WHERE id = $7"
     )
     .bind(title)
     .bind(&payload.description)
     .bind(&payload.language)
     .bind(&payload.level)
     .bind(payload.is_published)
+    .bind(&payload.subject)
     .bind(course_id)
     .execute(&pool)
     .await

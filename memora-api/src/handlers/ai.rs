@@ -757,6 +757,8 @@ pub struct GenerateUnitRequest {
     pub level: Option<String>,
     /// Сколько упражнений сгенерировать (по умолчанию 6, максимум 12)
     pub count: Option<u32>,
+    /// Предметный домен курса ('language' по умолчанию) — выбирает предметный пак.
+    pub subject: Option<String>,
 }
 
 /// POST /api/ai/course/generate-unit
@@ -783,8 +785,19 @@ pub async fn generate_course_unit(
         source_block = format!("\nИспользуй этот исходный материал как основу:\n---\n{}\n---", truncated);
     }
 
+    // Персона генератора и разрешённые типы — из предметного пака (по subject/language).
+    // Для французского пак повторяет прежний захардкоженный промпт 1:1.
+    let subject = payload.subject.as_deref().unwrap_or("language");
+    let pack = crate::subjects::pack_for(subject, crate::subjects::normalize_language(&language));
+    let persona = pack.generation_persona;
+    let interactive_types: Vec<&str> = ["grammar-quiz", "fill-blank", "sentence-builder", "dialogue"]
+        .into_iter()
+        .filter(|t| pack.allowed_types.contains(t))
+        .collect();
+    let interactive_types = interactive_types.join(", ");
+
     let system_prompt = format!(
-        "Ты — методист образовательной платформы Memora. Создай учебный юнит по теме «{topic}» \
+        "Ты — {persona}. Создай учебный юнит по теме «{topic}» \
          (язык: {language}, уровень: {level}).{source_block}\n\
          Выведи ТОЛЬКО валидный JSON-объект без markdown, строго такой структуры:\n\
          {{\n\
@@ -798,7 +811,7 @@ pub async fn generate_course_unit(
            ]\n\
          }}\n\
          Сгенерируй 10-20 словарных единиц и ровно {count} упражнений: первое — theory с понятным объяснением темы, \
-         остальные — разнообразные интерактивные (grammar-quiz, fill-blank, sentence-builder, dialogue). \
+         остальные — разнообразные интерактивные ({interactive_types}). \
          Все объяснения и заголовки — по-русски, учебный контент — на изучаемом языке. \
          id упражнений уникальны (ex-1, ex-2, ...). Никакого текста вне JSON."
     );
