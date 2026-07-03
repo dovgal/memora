@@ -19,7 +19,7 @@ CAS-микросервис (SymPy/FastAPI) для Memora: эквивалентн
 ```bash
 cd memora-math
 pip install -r requirements.txt
-MATH_SERVICE_TOKEN=dev uvicorn main:app --port 8090
+MATH_SERVICE_TOKEN=dev uvicorn main:app --port 8090  # локально
 curl -s -X POST localhost:8090/check-equivalence \
   -H 'Authorization: Bearer dev' -H 'Content-Type: application/json' \
   -d '{"expected": "2*x + 2", "given": "2(x+1)"}'
