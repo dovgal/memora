@@ -4,7 +4,7 @@
 import { use, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import { ChevronLeft, Pencil, Loader2, Brain, CheckCircle2, MessagesSquare, BookOpenText, BarChart3, GraduationCap } from 'lucide-react';
+import { ChevronLeft, Pencil, Loader2, Brain, CheckCircle2, MessagesSquare, BookOpenText, BarChart3, GraduationCap, AudioLines } from 'lucide-react';
 import {
   getCourse, getCourseProgress,
   type CourseDetail, type ProgressEntry,
@@ -81,6 +81,12 @@ export default function CustomCoursePage({ params }: { params: Promise<{ courseI
                 className="inline-flex items-center gap-2 border border-border hover:border-[#ffcd1f]/50 text-foreground font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
               >
                 <BookOpenText className="w-4 h-4" /> Чтение
+              </Link>
+              <Link
+                href={`/courses/${courseId}/shadow`}
+                className="inline-flex items-center gap-2 border border-border hover:border-emerald-500/50 text-foreground font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
+              >
+                <AudioLines className="w-4 h-4" /> Shadowing
               </Link>
               <Link
                 href={`/courses/${courseId}/stats`}

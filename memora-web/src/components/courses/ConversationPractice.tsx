@@ -3,34 +3,19 @@
 // - диалог на изучаемом языке с учётом уровня;
 // - голосовой ввод через Web Speech API (микрофон);
 // - озвучка реплик собеседника через Inworld TTS;
-// - мягкий разбор ошибок по-русски после каждой реплики учащегося.
+// - мягкий разбор ошибок по-русски после каждой реплики учащегося;
+// - голосовой режим (hands-free): сказал → отправилось → собеседник дозвучал →
+//   микрофон открылся снова. Полный разговорный цикл без клавиатуры.
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import {
-  ChevronLeft, Send, Mic, MicOff, Volume2, Loader2, MessagesSquare, Eye, EyeOff, RefreshCw,
+  ChevronLeft, Send, Mic, MicOff, Volume2, Loader2, MessagesSquare, Eye, EyeOff, RefreshCw, Headphones,
 } from 'lucide-react';
 import { converse, type ConverseTurn } from '@/lib/courses/customCoursesApi';
-import { speakInworld } from '@/lib/courses/ttsInworld';
-
-// Минимальная типизация Web Speech API (нет в стандартных типах TS)
-interface SpeechRecognitionLike {
-  lang: string;
-  interimResults: boolean;
-  maxAlternatives: number;
-  onresult: ((event: { results: ArrayLike<ArrayLike<{ transcript: string }>> }) => void) | null;
-  onend: (() => void) | null;
-  onerror: (() => void) | null;
-  start: () => void;
-  stop: () => void;
-}
-
-function getSpeechRecognition(): (new () => SpeechRecognitionLike) | null {
-  if (typeof window === 'undefined') return null;
-  const w = window as unknown as Record<string, unknown>;
-  return (w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null) as (new () => SpeechRecognitionLike) | null;
-}
+import { speakInworld, speakInworldAndWait } from '@/lib/courses/ttsInworld';
+import { getSpeechRecognition, type SpeechRecognitionLike } from '@/lib/speech';
 
 interface ChatMessage extends ConverseTurn {
   translation?: string;
@@ -71,6 +56,9 @@ export function ConversationPractice({ title, backHref, language, level, speechL
   const [error, setError] = useState<string | null>(null);
   const [listening, setListening] = useState(false);
   const [showTranslations, setShowTranslations] = useState(false);
+  // Голосовой режим: авто-отправка распознанного и переоткрытие микрофона после реплики.
+  const [voiceMode, setVoiceMode] = useState(false);
+  const voiceModeRef = useRef(false);
 
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -88,6 +76,7 @@ export function ConversationPractice({ title, backHref, language, level, speechL
     const history: ChatMessage[] = [...messages, { role: 'user', content: clean }];
     setMessages(history);
     setBusy(true);
+    let reply: string | null = null;
     try {
       const res = await converse(
         history.map(m => ({ role: m.role, content: m.content })),
@@ -100,20 +89,23 @@ export function ConversationPractice({ title, backHref, language, level, speechL
         translation: res.translation,
         correction: res.correction,
       }]);
-      speakInworld(res.reply, voice).catch(() => {});
+      reply = res.reply;
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Ошибка. Попробуйте ещё раз.');
     } finally {
       setBusy(false);
     }
+    if (!reply) return;
+    if (voiceModeRef.current) {
+      // Голосовой цикл: дождаться конца озвучки и снова открыть микрофон.
+      try { await speakInworldAndWait(reply, voice); } catch { /* озвучка не критична */ }
+      if (voiceModeRef.current) startListening();
+    } else {
+      speakInworld(reply, voice).catch(() => {});
+    }
   };
 
-  const toggleMic = () => {
-    if (listening) {
-      recognitionRef.current?.stop();
-      setListening(false);
-      return;
-    }
+  const startListening = () => {
     const SR = getSpeechRecognition();
     if (!SR) return;
     const rec = new SR();
@@ -122,13 +114,40 @@ export function ConversationPractice({ title, backHref, language, level, speechL
     rec.maxAlternatives = 1;
     rec.onresult = (event) => {
       const transcript = event.results[0]?.[0]?.transcript ?? '';
-      if (transcript) setInput(prev => (prev ? prev + ' ' : '') + transcript);
+      if (!transcript) return;
+      if (voiceModeRef.current) {
+        void send(transcript); // hands-free: сказал — отправилось
+      } else {
+        setInput(prev => (prev ? prev + ' ' : '') + transcript);
+      }
     };
     rec.onend = () => setListening(false);
     rec.onerror = () => setListening(false);
     recognitionRef.current = rec;
     setListening(true);
     rec.start();
+  };
+
+  const toggleMic = () => {
+    if (listening) {
+      recognitionRef.current?.stop();
+      setListening(false);
+      return;
+    }
+    startListening();
+  };
+
+  const toggleVoiceMode = () => {
+    const next = !voiceMode;
+    setVoiceMode(next);
+    voiceModeRef.current = next;
+    if (next && !listening && !busy) {
+      startListening();
+    }
+    if (!next && listening) {
+      recognitionRef.current?.stop();
+      setListening(false);
+    }
   };
 
   const restart = () => {
@@ -165,6 +184,18 @@ export function ConversationPractice({ title, backHref, language, level, speechL
             {showTranslations ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
             {showTranslations ? 'Скрыть переводы' : 'Показать переводы'}
           </button>
+          {speechSupported && (
+            <button
+              onClick={toggleVoiceMode}
+              className={`inline-flex items-center gap-1.5 text-xs font-semibold transition-colors ${
+                voiceMode ? 'text-emerald-400' : 'text-qz-text-muted hover:text-foreground'
+              }`}
+              title="Разговор без клавиатуры: сказал — собеседник ответил — микрофон открылся снова"
+            >
+              <Headphones className="w-4 h-4" />
+              {voiceMode ? 'Голосовой режим: вкл' : 'Голосовой режим'}
+            </button>
+          )}
           {messages.length > 0 && (
             <button onClick={restart} className="inline-flex items-center gap-1.5 text-qz-text-muted hover:text-foreground text-xs font-semibold transition-colors">
               <RefreshCw className="w-4 h-4" /> Начать заново
@@ -253,7 +284,7 @@ export function ConversationPractice({ title, backHref, language, level, speechL
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => { if (e.key === 'Enter') send(input); }}
-            placeholder={listening ? 'Говорите…' : 'Напишите на изучаемом языке…'}
+            placeholder={listening ? (voiceMode ? 'Говорите — отправится само…' : 'Говорите…') : 'Напишите на изучаемом языке…'}
             className="flex-1 bg-qz-bg border border-border rounded-xl px-4 py-3 text-sm text-foreground outline-none focus:border-[#4255ff]/60"
           />
           <button

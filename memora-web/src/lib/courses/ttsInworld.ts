@@ -24,12 +24,7 @@ async function getAuthHeaders(): Promise<Record<string, string>> {
   return cachedToken ? { Authorization: `Bearer ${cachedToken}` } : {};
 }
 
-/**
- * Озвучить произвольный французский текст через Inworld.
- * @param text  фраза на французском
- * @param voice голос Inworld (по умолчанию Alain — французский)
- */
-export async function speakInworld(text: string, voice = "Alain"): Promise<void> {
+async function playInworld(text: string, voice: string, waitEnd: boolean): Promise<void> {
   const clean = (text || "").trim();
   if (!clean) return;
   try {
@@ -46,10 +41,35 @@ export async function speakInworld(text: string, voice = "Alain"): Promise<void>
     if (blob.size === 0) return;
     const audio = new Audio(URL.createObjectURL(blob));
     currentAudio = audio;
-    await audio.play();
+    if (waitEnd) {
+      // Резолвимся по КОНЦУ воспроизведения (или прерыванию) — нужно голосовому
+      // режиму, чтобы включать микрофон только после того, как реплика дозвучала.
+      await new Promise<void>((resolve) => {
+        audio.onended = () => resolve();
+        audio.onerror = () => resolve();
+        audio.onpause = () => resolve(); // прервали другой озвучкой — не висим
+        audio.play().catch(() => resolve());
+      });
+    } else {
+      await audio.play();
+    }
   } catch (e) {
     console.warn("Inworld TTS error:", e);
   }
+}
+
+/**
+ * Озвучить произвольный текст через Inworld (резолв — на старте воспроизведения).
+ * @param text  фраза на изучаемом языке
+ * @param voice голос Inworld (по умолчанию Alain — французский)
+ */
+export async function speakInworld(text: string, voice = "Alain"): Promise<void> {
+  return playInworld(text, voice, false);
+}
+
+/** То же, но промис резолвится по ОКОНЧАНИИ воспроизведения (для голосового диалога). */
+export async function speakInworldAndWait(text: string, voice = "Alain"): Promise<void> {
+  return playInworld(text, voice, true);
 }
 
 /** Озвучить карточку лексики из сид-набора (Inworld по UUID карты), с fallback на /api/tts. */
