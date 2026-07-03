@@ -85,6 +85,26 @@ pub static LANGUAGE_EN: SubjectPack = SubjectPack {
     tts_voice: TtsVoice { default: "Clive", roles: None },
 };
 
+/// `language-de` — фаза 2. Голос `Josef` — тот же дефолт, что у озвучки карточек (audio.rs).
+pub static LANGUAGE_DE: SubjectPack = SubjectPack {
+    id: "language-de",
+    display_name: "Deutsch",
+    level_scheme: LevelScheme::Cefr,
+    allowed_types: LANGUAGE_EXERCISE_TYPES,
+    generation_persona: "методист по немецкому языку образовательной платформы Memora",
+    tts_voice: TtsVoice { default: "Josef", roles: None },
+};
+
+/// `language-es` — фаза 2. Голос `Carmen` — тот же дефолт, что у озвучки карточек (audio.rs).
+pub static LANGUAGE_ES: SubjectPack = SubjectPack {
+    id: "language-es",
+    display_name: "Español",
+    level_scheme: LevelScheme::Cefr,
+    allowed_types: LANGUAGE_EXERCISE_TYPES,
+    generation_persona: "методист по испанскому языку образовательной платформы Memora",
+    tts_voice: TtsVoice { default: "Carmen", roles: None },
+};
+
 /// Подбор пака по домену и языку курса.
 ///
 /// `subject` — домен (`language`/`math`/…). Для языков конкретный язык задаётся `language`
@@ -97,11 +117,13 @@ pub fn pack_for(subject: &str, language: Option<&str>) -> &'static SubjectPack {
     match subject {
         "language" | "" => match language {
             Some("en") => &LANGUAGE_EN,
+            Some("de") => &LANGUAGE_DE,
+            Some("es") => &LANGUAGE_ES,
             Some("fr") | None => &LANGUAGE_FR,
-            // Прочие языки (de/es/…) появятся в фазе 2 — пока безопасный фолбэк на FR.
+            // Неизвестные языки — безопасный фолбэк на FR.
             _ => &LANGUAGE_FR,
         },
-        // STEM/история — фаза 6+; до их появления безопасный фолбэк на FR.
+        // STEM/история — фаза 3 плана; до их появления безопасный фолбэк на FR.
         _ => &LANGUAGE_FR,
     }
 }
@@ -149,10 +171,18 @@ mod tests {
     }
 
     #[test]
+    fn de_es_packs_resolve() {
+        assert_eq!(pack_for("language", Some("de")).id, "language-de");
+        assert_eq!(pack_for("language", Some("de")).tts_voice.default, "Josef");
+        assert_eq!(pack_for("language", Some("es")).id, "language-es");
+        assert_eq!(pack_for("language", Some("es")).tts_voice.default, "Carmen");
+    }
+
+    #[test]
     fn unknown_subject_or_language_falls_back_to_fr() {
         assert_eq!(pack_for("language", None).id, "language-fr");
         assert_eq!(pack_for("", None).id, "language-fr");
-        assert_eq!(pack_for("language", Some("de")).id, "language-fr");
+        assert_eq!(pack_for("language", Some("it")).id, "language-fr");
         assert_eq!(pack_for("math", None).id, "language-fr");
     }
 
