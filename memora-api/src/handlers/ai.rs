@@ -899,6 +899,62 @@ pub async fn generate_course_unit(
     let subject = payload.subject.as_deref().unwrap_or("language");
     let pack = crate::subjects::pack_for(subject, crate::subjects::normalize_language(&language));
     let persona = pack.generation_persona;
+
+    // Школьные предметы (Grade-схема) — отдельный шаблон: контент на французском
+    // (программа школы Франции), объяснения по-русски, обязательная разметка rule
+    // (trap = misconception — топливо машинерии слабых мест).
+    if pack.level_scheme == crate::subjects::LevelScheme::Grade {
+        let interactive: Vec<&str> = pack.allowed_types.iter().copied().filter(|t| *t != "theory").collect();
+        let interactive = interactive.join(", ");
+        let fill_blank_example = if pack.allowed_types.contains(&"fill-blank") {
+            ",\n             {\"id\": \"ex-5\", \"type\": \"fill-blank\", \"title\": \"...\", \"text\": \"La Révolution française commence en ___.\", \"blanks\": [{\"correctAnswer\": \"1789\", \"options\": [\"1789\",\"1799\",\"1815\"], \"explanation\": \"по-русски\"}], \"rule\": {\"skill\": \"...\", \"point\": \"...\", \"trap\": \"...\"}}"
+        } else { "" };
+
+        let system_prompt = format!(
+            "Ты — {persona}. Создай учебный юнит по теме «{topic}» (classe de {level}, programme scolaire français).{source_block}\n\
+             Выведи ТОЛЬКО валидный JSON-объект без markdown, строго такой структуры:\n\
+             {{\n\
+               \"vocabulary\": [{{\"fr\": \"термин на французском\", \"ru\": \"перевод и краткое пояснение по-русски\", \"type\": \"word\"}}],\n\
+               \"exercises\": [\n\
+                 {{\"id\": \"ex-1\", \"type\": \"theory\", \"title\": \"...\", \"content\": \"объяснение темы по-русски (ключевые термины дублируй по-французски), можно **markdown**\"}},\n\
+                 {{\"id\": \"ex-2\", \"type\": \"grammar-quiz\", \"title\": \"...\", \"questions\": [{{\"question\": \"вопрос на французском\", \"options\": [\"a\",\"b\",\"c\",\"d\"], \"correctAnswer\": \"a\", \"explanation\": \"по-русски\"}}], \"rule\": {{\"skill\": \"stable-skill-key\", \"point\": \"правило/формула\", \"trap\": \"типичное заблуждение ученика\"}}}},\n\
+                 {{\"id\": \"ex-3\", \"type\": \"numeric\", \"title\": \"...\", \"prompt\": \"условие задачи на французском\", \"numericAnswer\": 7.5, \"tolerance\": 0.01, \"unit\": \"m²\", \"explanation\": \"разбор решения по-русски\", \"rule\": {{\"skill\": \"...\", \"point\": \"...\", \"trap\": \"...\"}}}},\n\
+                 {{\"id\": \"ex-4\", \"type\": \"ordering\", \"title\": \"...\", \"prompt\": \"задание на французском\", \"orderItems\": [\"élément 1\", \"élément 2\", \"élément 3\"], \"explanation\": \"по-русски\", \"rule\": {{\"skill\": \"...\", \"point\": \"...\", \"trap\": \"...\"}}}}{fill_blank_example}\n\
+               ]\n\
+             }}\n\
+             Сгенерируй 8-15 терминов и ровно {count} упражнений: первое — theory с понятным объяснением, \
+             остальные — ТОЛЬКО типы из списка: {interactive}. \
+             Вопросы и условия задач — НА ФРАНЦУЗСКОМ (это школьная программа Франции), \
+             объяснения, explanation и theory.content — по-русски. \
+             У каждого интерактивного упражнения ОБЯЗАТЕЛЬНО поле rule: skill (стабильный ключ латиницей через дефис), \
+             point (правило/формула/факт), trap (типичное заблуждение — с ним будет работать тренажёр слабых мест). \
+             Для numeric: numericAnswer — число (проверь арифметику дважды!), tolerance — допуск, unit — единица измерения, если уместна. \
+             Для ordering: orderItems строго в правильном порядке (ученику покажутся перемешанными). \
+             id упражнений уникальны (ex-1, ex-2, ...). Никакого текста вне JSON."
+        );
+
+        let schema = serde_json::json!({
+            "type": "object",
+            "properties": {
+                "vocabulary": { "type": "array", "items": { "type": "object" } },
+                "exercises": { "type": "array", "items": { "type": "object" } }
+            },
+            "required": ["vocabulary", "exercises"]
+        });
+
+        let content = llm_text(
+            Task::Generation,
+            vec![ChatMessage::system(system_prompt), ChatMessage::user("Сгенерируй юнит сейчас.")],
+            8192,
+            ResponseFormat::JsonSchema(schema),
+        ).await?;
+
+        let unit: serde_json::Value = serde_json::from_str(extract_json_object(&content))
+            .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Parse Error: {} - Content: {}", e, content) })))?;
+
+        return Ok(Json(unit));
+    }
+
     let interactive_types: Vec<&str> = ["grammar-quiz", "fill-blank", "sentence-builder", "dialogue", "dictation"]
         .into_iter()
         .filter(|t| pack.allowed_types.contains(t))

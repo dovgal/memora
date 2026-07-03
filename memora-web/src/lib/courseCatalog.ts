@@ -125,3 +125,12 @@ export function subjectForLanguage(code?: string): { subject: string; topic: str
   if (code && topics[code]) return { subject: 'Языки', topic: topics[code] };
   return { subject: 'Другое', topic: 'Разное' };
 }
+
+/** Рубрика каталога с учётом предметного домена (Subject Packs). */
+export function subjectForCourse(subject?: string, language?: string): { subject: string; topic: string } {
+  const school: Record<string, string> = {
+    math: 'Математика', physics: 'Физика и химия', history: 'История',
+  };
+  if (subject && school[subject]) return { subject: 'Школа', topic: school[subject] };
+  return subjectForLanguage(language);
+}

@@ -23,6 +23,17 @@ const LANGUAGES = [
   { value: 'other', label: 'Другое' },
 ];
 
+// Предметные домены (Subject Packs). Школьные предметы — французская программа,
+// контент на французском, уровень = класс (см. FRENCH_GRADES).
+const SUBJECTS = [
+  { value: 'language', label: 'Иностранный язык' },
+  { value: 'math', label: 'Математика' },
+  { value: 'physics', label: 'Физика и химия' },
+  { value: 'history', label: 'История' },
+];
+
+const FRENCH_GRADES = ['6e', '5e', '4e', '3e', '2nde', '1re', 'Terminale'];
+
 export default function CourseEditPage({ params }: { params: Promise<{ courseId: string }> }) {
   const { courseId } = use(params);
   const { data: session } = useSession();
@@ -39,6 +50,7 @@ export default function CourseEditPage({ params }: { params: Promise<{ courseId:
   const [description, setDescription] = useState('');
   const [language, setLanguage] = useState('fr');
   const [level, setLevel] = useState('');
+  const [subject, setSubject] = useState('language');
   const [isPublished, setIsPublished] = useState(false);
 
   const reload = useCallback(() => {
@@ -50,6 +62,7 @@ export default function CourseEditPage({ params }: { params: Promise<{ courseId:
         setDescription(c.description);
         setLanguage(c.language);
         setLevel(c.level);
+        setSubject(c.subject || 'language');
         setIsPublished(c.isPublished);
       })
       .catch(e => setError(e.message));
@@ -63,7 +76,7 @@ export default function CourseEditPage({ params }: { params: Promise<{ courseId:
     setError(null);
     try {
       await updateCourse(courseId, {
-        title, description, language, level,
+        title, description, language, level, subject,
         isPublished: overrides?.isPublished ?? isPublished,
       }, idToken);
       if (overrides?.isPublished !== undefined) setIsPublished(overrides.isPublished);
@@ -207,26 +220,60 @@ export default function CourseEditPage({ params }: { params: Promise<{ courseId:
               placeholder="Чему научит этот курс?"
             />
           </div>
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs text-qz-text-muted mb-1.5">Язык</label>
+              <label className="block text-xs text-qz-text-muted mb-1.5">Предмет</label>
               <select
-                value={language}
-                onChange={e => setLanguage(e.target.value)}
+                value={subject}
+                onChange={e => {
+                  const next = e.target.value;
+                  setSubject(next);
+                  if (next !== 'language') {
+                    // Школьные предметы — французская программа: язык фиксируем,
+                    // уровень переводим на шкалу классов.
+                    setLanguage('fr');
+                    if (!FRENCH_GRADES.includes(level)) setLevel(FRENCH_GRADES[0]);
+                  }
+                }}
                 className="w-full bg-qz-bg border border-border rounded-xl px-3 py-2.5 text-sm text-foreground outline-none focus:border-[#4255ff]/60"
               >
-                {LANGUAGES.map(l => <option key={l.value} value={l.value}>{l.label}</option>)}
+                {SUBJECTS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
               </select>
             </div>
-            <div>
-              <label className="block text-xs text-qz-text-muted mb-1.5">Уровень</label>
-              <input
-                value={level}
-                onChange={e => setLevel(e.target.value)}
-                className="w-full bg-qz-bg border border-border rounded-xl px-3 py-2.5 text-sm text-foreground outline-none focus:border-[#4255ff]/60"
-                placeholder="A1, A2, B1…"
-              />
-            </div>
+            {subject === 'language' ? (
+              <>
+                <div>
+                  <label className="block text-xs text-qz-text-muted mb-1.5">Язык</label>
+                  <select
+                    value={language}
+                    onChange={e => setLanguage(e.target.value)}
+                    className="w-full bg-qz-bg border border-border rounded-xl px-3 py-2.5 text-sm text-foreground outline-none focus:border-[#4255ff]/60"
+                  >
+                    {LANGUAGES.map(l => <option key={l.value} value={l.value}>{l.label}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs text-qz-text-muted mb-1.5">Уровень</label>
+                  <input
+                    value={level}
+                    onChange={e => setLevel(e.target.value)}
+                    className="w-full bg-qz-bg border border-border rounded-xl px-3 py-2.5 text-sm text-foreground outline-none focus:border-[#4255ff]/60"
+                    placeholder="A1, A2, B1…"
+                  />
+                </div>
+              </>
+            ) : (
+              <div>
+                <label className="block text-xs text-qz-text-muted mb-1.5">Класс (programme français)</label>
+                <select
+                  value={level}
+                  onChange={e => setLevel(e.target.value)}
+                  className="w-full bg-qz-bg border border-border rounded-xl px-3 py-2.5 text-sm text-foreground outline-none focus:border-[#4255ff]/60"
+                >
+                  {FRENCH_GRADES.map(g => <option key={g} value={g}>{g}</option>)}
+                </select>
+              </div>
+            )}
           </div>
           <div className="flex items-center justify-between">
             <button

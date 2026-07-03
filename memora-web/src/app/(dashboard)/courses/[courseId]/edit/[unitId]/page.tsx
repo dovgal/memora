@@ -24,6 +24,13 @@ const inputCls = 'w-full bg-qz-bg border border-border rounded-xl px-3 py-2.5 te
 /** Типы только для школьных предметов — в палитре языковых курсов не показываются. */
 const STEM_ONLY_TYPES = new Set<string>(['numeric', 'ordering']);
 
+/** Палитра по предмету — зеркало allowed_types серверных паков (subjects/mod.rs). */
+const PALETTE_BY_SUBJECT: Record<string, string[]> = {
+  math: ['theory', 'grammar-quiz', 'numeric', 'ordering'],
+  physics: ['theory', 'grammar-quiz', 'numeric', 'ordering'],
+  history: ['theory', 'grammar-quiz', 'ordering', 'fill-blank'],
+};
+
 function newExercise(type: EditoExercise['type'], index: number): EditoExercise {
   const base = { id: `ex-${Date.now()}-${index}`, type, title: EXERCISE_TYPE_LABELS[type] ?? type };
   switch (type) {
@@ -363,9 +370,13 @@ export default function UnitEditPage({ params }: { params: Promise<{ courseId: s
             <p className="text-xs text-qz-text-muted mb-3">Добавить упражнение:</p>
             <div className="flex flex-wrap gap-2">
               {(Object.keys(EXERCISE_TYPE_LABELS) as EditoExercise['type'][])
-                // Числовые задачи и упорядочивание — для школьных предметов;
-                // языковым курсам их сервер не примет (allowed_types пака).
-                .filter(type => course?.subject !== 'language' || !STEM_ONLY_TYPES.has(type))
+                // Палитра по предмету: серверные паки отвергают чужие типы,
+                // незачем их показывать (языковой курс — без numeric, math — без диалогов).
+                .filter(type => {
+                  const allowed = course && PALETTE_BY_SUBJECT[course.subject];
+                  if (allowed) return allowed.includes(type);
+                  return !STEM_ONLY_TYPES.has(type);
+                })
                 .map(type => (
                 <button
                   key={type}

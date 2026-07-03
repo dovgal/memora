@@ -109,6 +109,43 @@ pub static LANGUAGE_ES: SubjectPack = SubjectPack {
     tts_voice: TtsVoice { default: "Carmen", roles: None },
 };
 
+// ---------- Школьные предметы (фаза 3): французская программа, контент на французском ----------
+
+/// Математика/физика: теория, MCQ (рендерер grammar-quiz), числовые задачи, упорядочивание.
+/// `numeric` проверяется детерминированно на клиенте — LLM в пути проверки нет.
+const MATH_EXERCISE_TYPES: &[&str] = &["theory", "grammar-quiz", "numeric", "ordering"];
+
+/// История: MCQ, хронология (ordering), пропуски дат/терминов (fill-blank).
+const HISTORY_EXERCISE_TYPES: &[&str] = &["theory", "grammar-quiz", "ordering", "fill-blank"];
+
+/// Голос STEM-паков — французский (Alain): контент на языке школьной программы.
+pub static MATH_FR: SubjectPack = SubjectPack {
+    id: "math",
+    display_name: "Mathématiques",
+    level_scheme: LevelScheme::Grade,
+    allowed_types: MATH_EXERCISE_TYPES,
+    generation_persona: "опытный преподаватель математики французской школы (programme scolaire français)",
+    tts_voice: TtsVoice { default: "Alain", roles: None },
+};
+
+pub static PHYSICS_FR: SubjectPack = SubjectPack {
+    id: "physics",
+    display_name: "Physique-chimie",
+    level_scheme: LevelScheme::Grade,
+    allowed_types: MATH_EXERCISE_TYPES,
+    generation_persona: "опытный преподаватель физики и химии французской школы (programme scolaire français)",
+    tts_voice: TtsVoice { default: "Alain", roles: None },
+};
+
+pub static HISTORY_FR: SubjectPack = SubjectPack {
+    id: "history",
+    display_name: "Histoire",
+    level_scheme: LevelScheme::Grade,
+    allowed_types: HISTORY_EXERCISE_TYPES,
+    generation_persona: "опытный преподаватель истории французской школы (programme scolaire français)",
+    tts_voice: TtsVoice { default: "Alain", roles: None },
+};
+
 /// Подбор пака по домену и языку курса.
 ///
 /// `subject` — домен (`language`/`math`/…). Для языков конкретный язык задаётся `language`
@@ -127,7 +164,10 @@ pub fn pack_for(subject: &str, language: Option<&str>) -> &'static SubjectPack {
             // Неизвестные языки — безопасный фолбэк на FR.
             _ => &LANGUAGE_FR,
         },
-        // STEM/история — фаза 3 плана; до их появления безопасный фолбэк на FR.
+        "math" => &MATH_FR,
+        "physics" | "physique" | "physique-chimie" => &PHYSICS_FR,
+        "history" | "histoire" => &HISTORY_FR,
+        // Неизвестный домен — безопасный фолбэк на FR.
         _ => &LANGUAGE_FR,
     }
 }
@@ -183,11 +223,30 @@ mod tests {
     }
 
     #[test]
+    fn school_subject_packs_resolve() {
+        let math = pack_for("math", None);
+        assert_eq!(math.id, "math");
+        assert_eq!(math.level_scheme, LevelScheme::Grade);
+        assert!(math.allowed_types.contains(&"numeric"));
+        assert!(math.allowed_types.contains(&"ordering"));
+        assert!(!math.allowed_types.contains(&"fill-blank"));
+
+        assert_eq!(pack_for("physics", Some("fr")).id, "physics");
+        assert_eq!(pack_for("physique-chimie", None).id, "physics");
+
+        let history = pack_for("history", None);
+        assert_eq!(history.id, "history");
+        assert!(history.allowed_types.contains(&"ordering"));
+        assert!(history.allowed_types.contains(&"fill-blank"));
+        assert!(!history.allowed_types.contains(&"numeric"));
+    }
+
+    #[test]
     fn unknown_subject_or_language_falls_back_to_fr() {
         assert_eq!(pack_for("language", None).id, "language-fr");
         assert_eq!(pack_for("", None).id, "language-fr");
         assert_eq!(pack_for("language", Some("it")).id, "language-fr");
-        assert_eq!(pack_for("math", None).id, "language-fr");
+        assert_eq!(pack_for("biology", None).id, "language-fr");
     }
 
     #[test]

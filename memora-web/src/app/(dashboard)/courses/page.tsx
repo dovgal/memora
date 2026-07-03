@@ -10,7 +10,7 @@ import {
   BookOpen, Plus, Pencil, Globe2, Lock, Loader2, GraduationCap, Search, Star, Library,
 } from 'lucide-react';
 import { listCourses, createCourse, type CourseSummary } from '@/lib/courses/customCoursesApi';
-import { BUILTIN_COURSES, subjectForLanguage, type CatalogCourse } from '@/lib/courseCatalog';
+import { BUILTIN_COURSES, subjectForCourse, type CatalogCourse } from '@/lib/courseCatalog';
 import { getSubscriptions, subscribeCourse, unsubscribeCourse } from '@/lib/classroomApi';
 
 interface CardData extends CatalogCourse {
@@ -50,7 +50,7 @@ export default function CoursesCatalogPage() {
   // Все карточки: встроенные + пользовательские
   const allCards: CardData[] = useMemo(() => {
     const customCards: CardData[] = custom.map(c => {
-      const st = subjectForLanguage(c.language);
+      const st = subjectForCourse(c.subject, c.language);
       return {
         id: c.id,
         href: `/courses/${c.id}`,
