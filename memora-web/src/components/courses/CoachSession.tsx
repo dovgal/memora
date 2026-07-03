@@ -67,6 +67,9 @@ const RATINGS: Array<{ value: Rating; label: string; hint: string; cls: string }
   { value: 4, label: 'Легко', hint: 'без усилий', cls: 'border-[#4255ff]/40 text-[#4255ff] hover:bg-[#4255ff]/10' },
 ];
 
+/** Типы, для которых сервер умеет генерировать вариант того же правила. */
+const VARIANT_TYPES = new Set<string>(['error-hunt', 'grammar-quiz', 'fill-blank', 'sentence-builder']);
+
 function autoRating(result: ExerciseResult): Rating {
   if (result.total <= 0) return 3;
   const pct = result.correct / result.total;
@@ -206,15 +209,20 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
     return { due, weak, fresh };
   }, [plan, pools, allItems, newGoal]);
 
-  // Voltaire: на повторе (isReview) генерируем НОВЫЙ вариант того же правила —
-  // какографию «найди ошибку», чтобы тренировать навык, а не заучивать текст.
-  // Первый показ правила — эталон. Опт-ин: variantPolicy.regenerateOnRepeat или type 'error-hunt'.
+  // Voltaire: на повторе (isReview) генерируем НОВЫЙ вариант того же правила,
+  // чтобы тренировать навык, а не заучивать текст. Первый показ правила — эталон.
+  // Кто получает вариант: error-hunt всегда; grammar-quiz / fill-blank /
+  // sentence-builder — если упражнение размечено правилом (rule.skill/point);
+  // variantPolicy.regenerateOnRepeat явно включает (true) или выключает (false).
   useEffect(() => {
     setVariant(null);
     const item = queue[index];
     if (!item || item.kind !== 'exercise' || !item.exercise || item.ephemeral) return;
     const ex = item.exercise;
-    const wants = ex.variantPolicy?.regenerateOnRepeat === true || ex.type === 'error-hunt';
+    const policy = ex.variantPolicy?.regenerateOnRepeat;
+    const hasRule = !!(ex.rule?.skill || ex.rule?.point);
+    const wants = policy === true
+      || (policy !== false && (ex.type === 'error-hunt' || (hasRule && VARIANT_TYPES.has(ex.type))));
     if (!wants || !item.isReview || !idToken) return;
 
     const key = `${item.unitId}::${item.trackId}`;
@@ -226,7 +234,7 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
       unitId: item.unitId,
       exerciseId: item.trackId,
       seedExercise: ex,
-      format: 'error-hunt',
+      format: ex.variantPolicy?.format ?? (ex.type === 'error-hunt' ? 'error-hunt' : 'preserve'),
       avoidSentences: avoid,
       rulePoint: ex.rule?.point,
       ruleTrap: ex.rule?.trap,

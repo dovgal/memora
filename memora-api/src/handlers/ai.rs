@@ -856,7 +856,8 @@ pub struct RegenerateVariantRequest {
     pub exercise_id: String,
     /// Эталонное упражнение (EditoExercise) — задаёт смысл правила.
     pub seed_exercise: serde_json::Value,
-    /// 'error-hunt' (по умолчанию) | 'preserve'.
+    /// 'error-hunt' (по умолчанию) | 'preserve' (сохранить формат эталона:
+    /// grammar-quiz / fill-blank / sentence-builder; прочие типы — фолбэк на эталон).
     pub format: Option<String>,
     /// Последние показанные предложения — чтобы не повторяться.
     pub avoid_sentences: Option<Vec<String>>,
@@ -930,8 +931,295 @@ fn build_variant_exercise(rule_id: &str, seed_title: &str, v: &ErrorHuntVariant)
     })
 }
 
+// ---------- Обобщение вариантов на другие форматы упражнений ----------
+// Формат = промпт + JSON-схема + детерминированная валидация + сборка EditoExercise.
+// Ответ модели принимается только если проходит валидацию формата и анти-повтор;
+// иначе — ещё попытка, затем фолбэк (кэш вариантов / эталон).
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct GrammarQuizVariant {
+    questions: Vec<GrammarQuizQuestion>,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct GrammarQuizQuestion {
+    question: String,
+    options: Vec<String>,
+    correct_answer: String,
+    #[serde(default)]
+    explanation: Option<String>,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct FillBlankVariant {
+    text: String,
+    blanks: Vec<FillBlankSlot>,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct FillBlankSlot {
+    correct_answer: String,
+    #[serde(default)]
+    options: Option<Vec<String>>,
+    #[serde(default)]
+    explanation: Option<String>,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct SentenceBuilderVariant {
+    sentences: Vec<SentenceBuilderSentence>,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct SentenceBuilderSentence {
+    words: Vec<String>,
+    ru: String,
+}
+
+/// Считает пропуски в тексте fill-blank: участки из 3+ подчёркиваний подряд
+/// (модель может выдать и ___, и ____).
+fn blank_slots(text: &str) -> usize {
+    let mut count = 0;
+    let mut run = 0;
+    for ch in text.chars() {
+        if ch == '_' {
+            run += 1;
+        } else {
+            if run >= 3 { count += 1; }
+            run = 0;
+        }
+    }
+    if run >= 3 { count += 1; }
+    count
+}
+
+/// Валидация grammar-quiz: у каждого вопроса непустой текст, 2-6 уникальных вариантов,
+/// correctAnswer дословно среди options. Возвращает подпись анти-повтора.
+fn validate_grammar_quiz(v: &GrammarQuizVariant, avoid_norm: &[String]) -> Option<String> {
+    if v.questions.is_empty() || v.questions.len() > 5 { return None; }
+    for q in &v.questions {
+        if q.question.trim().is_empty() { return None; }
+        if q.options.len() < 2 || q.options.len() > 6 { return None; }
+        let mut seen = std::collections::HashSet::new();
+        for o in &q.options {
+            if o.trim().is_empty() || !seen.insert(normalize_sentence(o)) { return None; }
+        }
+        if !q.options.iter().any(|o| o == &q.correct_answer) { return None; }
+    }
+    let signature = normalize_sentence(
+        &v.questions.iter().map(|q| q.question.as_str()).collect::<Vec<_>>().join(" | ")
+    );
+    if avoid_norm.contains(&signature) { return None; }
+    Some(signature)
+}
+
+/// Валидация fill-blank: число пропусков в тексте равно числу blanks,
+/// каждый ответ непуст и (если есть options) содержится в них.
+fn validate_fill_blank(v: &FillBlankVariant, avoid_norm: &[String]) -> Option<String> {
+    if v.text.trim().is_empty() || v.blanks.is_empty() || v.blanks.len() > 8 { return None; }
+    if blank_slots(&v.text) != v.blanks.len() { return None; }
+    for b in &v.blanks {
+        if b.correct_answer.trim().is_empty() { return None; }
+        if let Some(opts) = &b.options {
+            if opts.len() < 2 || !opts.iter().any(|o| o == &b.correct_answer) { return None; }
+        }
+    }
+    let signature = normalize_sentence(&v.text);
+    if avoid_norm.contains(&signature) { return None; }
+    Some(signature)
+}
+
+/// Валидация sentence-builder: 1-4 предложения, в каждом 3-16 непустых слов и перевод.
+fn validate_sentence_builder(v: &SentenceBuilderVariant, avoid_norm: &[String]) -> Option<String> {
+    if v.sentences.is_empty() || v.sentences.len() > 4 { return None; }
+    for s in &v.sentences {
+        if s.words.len() < 3 || s.words.len() > 16 { return None; }
+        if s.words.iter().any(|w| w.trim().is_empty()) { return None; }
+        if s.ru.trim().is_empty() { return None; }
+    }
+    let signature = normalize_sentence(&v.sentences[0].words.join(" "));
+    if avoid_norm.contains(&signature) { return None; }
+    Some(signature)
+}
+
+/// Целевой формат варианта: 'error-hunt' (по умолчанию) или 'preserve' → формат эталона.
+/// None — формат эталона регенерировать не умеем, сразу фолбэк на эталон.
+fn resolve_variant_format(requested: Option<&str>, seed_type: &str) -> Option<&'static str> {
+    match requested.unwrap_or("error-hunt") {
+        "preserve" => match seed_type {
+            "grammar-quiz" => Some("grammar-quiz"),
+            "fill-blank" => Some("fill-blank"),
+            "sentence-builder" => Some("sentence-builder"),
+            "error-hunt" => Some("error-hunt"),
+            _ => None,
+        },
+        // Явный (или любой неизвестный) запрос — какография, как раньше.
+        _ => Some("error-hunt"),
+    }
+}
+
+/// Системный промпт и JSON-схема генерации для формата варианта.
+fn variant_prompt(
+    target: &'static str,
+    seed_exercise: &serde_json::Value,
+    rule_point: &str,
+    rule_trap: &str,
+    level: &str,
+    language: &str,
+    avoid_block: &str,
+) -> (String, serde_json::Value) {
+    let rule_block = format!(
+        "Правило: {rule_point}. Типичная ловушка: {rule_trap}. Уровень: {level}. Язык контента: {language}. \
+         Не повторяй эти формулировки: {avoid_block}."
+    );
+    match target {
+        "grammar-quiz" => {
+            let n = seed_exercise.get("questions").and_then(|q| q.as_array()).map(|a| a.len()).unwrap_or(1).clamp(1, 3);
+            let system = format!(
+                "Ты — методист языковой платформы Memora. Сгенерируй НОВЫЙ тест (grammar-quiz) из {n} вопросов, \
+                 проверяющий ТО ЖЕ правило, что и эталонное упражнение, но с другими формулировками и лексикой. \
+                 {rule_block} \
+                 У каждого вопроса 4 варианта ответа, ровно один правильный; correctAnswer дословно совпадает \
+                 с одним из options. explanation — по-русски, кратко. \
+                 Верни ТОЛЬКО валидный JSON без markdown: \
+                 {{\"questions\": [{{\"question\": string, \"options\": [string], \"correctAnswer\": string, \"explanation\": string}}]}}"
+            );
+            let schema = serde_json::json!({
+                "type": "object",
+                "properties": {
+                    "questions": { "type": "array", "items": { "type": "object", "properties": {
+                        "question": { "type": "string" },
+                        "options": { "type": "array", "items": { "type": "string" } },
+                        "correctAnswer": { "type": "string" },
+                        "explanation": { "type": "string" }
+                    }, "required": ["question", "options", "correctAnswer", "explanation"] } }
+                },
+                "required": ["questions"]
+            });
+            (system, schema)
+        }
+        "fill-blank" => {
+            let system = format!(
+                "Ты — методист языковой платформы Memora. Сгенерируй НОВОЕ упражнение на пропуски (fill-blank), \
+                 проверяющее ТО ЖЕ правило, что и эталонное упражнение, но с другим текстом и лексикой. \
+                 {rule_block} \
+                 Каждый пропуск в тексте обозначь ровно тремя подчёркиваниями ___. Число элементов blanks \
+                 строго равно числу пропусков в text. options (3-4 варианта) обязательно включают correctAnswer. \
+                 explanation — по-русски, кратко. \
+                 Верни ТОЛЬКО валидный JSON без markdown: \
+                 {{\"text\": string, \"blanks\": [{{\"correctAnswer\": string, \"options\": [string], \"explanation\": string}}]}}"
+            );
+            let schema = serde_json::json!({
+                "type": "object",
+                "properties": {
+                    "text": { "type": "string" },
+                    "blanks": { "type": "array", "items": { "type": "object", "properties": {
+                        "correctAnswer": { "type": "string" },
+                        "options": { "type": "array", "items": { "type": "string" } },
+                        "explanation": { "type": "string" }
+                    }, "required": ["correctAnswer", "options", "explanation"] } }
+                },
+                "required": ["text", "blanks"]
+            });
+            (system, schema)
+        }
+        "sentence-builder" => {
+            let n = seed_exercise.get("sentences").and_then(|s| s.as_array()).map(|a| a.len()).unwrap_or(1).clamp(1, 3);
+            let system = format!(
+                "Ты — методист языковой платформы Memora. Сгенерируй {n} НОВЫХ предложений для сборки \
+                 (sentence-builder), тренирующих ТО ЖЕ правило, что и эталонное упражнение, но с другой лексикой. \
+                 {rule_block} \
+                 words — слова предложения в правильном порядке (каждое слово отдельным элементом), \
+                 ru — перевод предложения на русский. \
+                 Верни ТОЛЬКО валидный JSON без markdown: \
+                 {{\"sentences\": [{{\"words\": [string], \"ru\": string}}]}}"
+            );
+            let schema = serde_json::json!({
+                "type": "object",
+                "properties": {
+                    "sentences": { "type": "array", "items": { "type": "object", "properties": {
+                        "words": { "type": "array", "items": { "type": "string" } },
+                        "ru": { "type": "string" }
+                    }, "required": ["words", "ru"] } }
+                },
+                "required": ["sentences"]
+            });
+            (system, schema)
+        }
+        // error-hunt — прежний промпт Voltaire, дословно.
+        _ => {
+            let system = format!(
+                "Ты — методист по французскому языку (метод Projet Voltaire). \
+                 Сгенерируй ОДНО новое упражнение типа «найди ошибку» (cacographie), проверяющее ТО ЖЕ правило, \
+                 что и эталон, но на ДРУГОМ предложении и другой лексике. \
+                 Правило: {rule_point}. Типичная ловушка: {rule_trap}. Уровень: {level}. Язык контента: {language}. \
+                 Французский — безупречный и естественный. В предложении должна быть РОВНО ОДНА целевая ошибка \
+                 ИЛИ ни одной (иногда корректное предложение — чтобы тренировать и вариант «нет ошибки»). \
+                 Не повторяй эти предложения: {avoid_block}. \
+                 Верни ТОЛЬКО валидный JSON без markdown: \
+                 {{\"sentence\": string, \"errorIndex\": number|null, \"correction\": string|null, \"explanation\": string}}. \
+                 errorIndex — индекс слова с ошибкой при разбиении sentence по пробелам (0-based); null если ошибки нет. \
+                 correction — правильное написание слова (или null). explanation — по-русски, кратко: правило и почему."
+            );
+            let schema = serde_json::json!({
+                "type": "object",
+                "properties": {
+                    "sentence": { "type": "string" },
+                    "errorIndex": { "type": ["integer", "null"] },
+                    "correction": { "type": ["string", "null"] },
+                    "explanation": { "type": "string" }
+                },
+                "required": ["sentence", "errorIndex", "correction", "explanation"]
+            });
+            (system, schema)
+        }
+    }
+}
+
+/// Разбирает и валидирует ответ модели. Возвращает (готовый EditoExercise, подпись анти-повтора).
+fn try_build_variant(
+    target: &str,
+    content: &str,
+    rule_id: &str,
+    seed_title: &str,
+    avoid_norm: &[String],
+) -> Option<(serde_json::Value, String)> {
+    let json = extract_json_object(content);
+    let id = format!("{}::variant", rule_id);
+    match target {
+        "grammar-quiz" => {
+            let v: GrammarQuizVariant = serde_json::from_str(json).ok()?;
+            let sig = validate_grammar_quiz(&v, avoid_norm)?;
+            Some((serde_json::json!({ "id": id, "type": "grammar-quiz", "title": seed_title, "questions": v.questions }), sig))
+        }
+        "fill-blank" => {
+            let v: FillBlankVariant = serde_json::from_str(json).ok()?;
+            let sig = validate_fill_blank(&v, avoid_norm)?;
+            Some((serde_json::json!({ "id": id, "type": "fill-blank", "title": seed_title, "text": v.text.trim(), "blanks": v.blanks }), sig))
+        }
+        "sentence-builder" => {
+            let v: SentenceBuilderVariant = serde_json::from_str(json).ok()?;
+            let sig = validate_sentence_builder(&v, avoid_norm)?;
+            Some((serde_json::json!({ "id": id, "type": "sentence-builder", "title": seed_title, "sentences": v.sentences }), sig))
+        }
+        _ => {
+            let v: ErrorHuntVariant = serde_json::from_str(json).ok()?;
+            if !validate_error_hunt(&v, avoid_norm) { return None; }
+            let sig = normalize_sentence(&v.sentence);
+            Some((build_variant_exercise(rule_id, seed_title, &v), sig))
+        }
+    }
+}
+
 /// POST /api/ai/course/regenerate-variant
-/// Генерирует НОВЫЙ вариант того же правила (какография) на лету при повторе.
+/// Генерирует НОВЫЙ вариант того же правила на лету при повторе. Формат:
+/// какография (по умолчанию) или формат эталона ('preserve').
 pub async fn regenerate_variant(
     State(pool): State<PgPool>,
     State(rate_limiter): State<AppRateLimiter>,
@@ -977,54 +1265,35 @@ pub async fn regenerate_variant(
         avoid.iter().take(8).map(|s| format!("«{}»", s)).collect::<Vec<_>>().join("; ")
     };
 
-    let system = format!(
-        "Ты — методист по французскому языку (метод Projet Voltaire). \
-         Сгенерируй ОДНО новое упражнение типа «найди ошибку» (cacographie), проверяющее ТО ЖЕ правило, \
-         что и эталон, но на ДРУГОМ предложении и другой лексике. \
-         Правило: {rule_point}. Типичная ловушка: {rule_trap}. Уровень: {level}. Язык контента: {language}. \
-         Французский — безупречный и естественный. В предложении должна быть РОВНО ОДНА целевая ошибка \
-         ИЛИ ни одной (иногда корректное предложение — чтобы тренировать и вариант «нет ошибки»). \
-         Не повторяй эти предложения: {avoid_block}. \
-         Верни ТОЛЬКО валидный JSON без markdown: \
-         {{\"sentence\": string, \"errorIndex\": number|null, \"correction\": string|null, \"explanation\": string}}. \
-         errorIndex — индекс слова с ошибкой при разбиении sentence по пробелам (0-based); null если ошибки нет. \
-         correction — правильное написание слова (или null). explanation — по-русски, кратко: правило и почему."
-    );
+    // Целевой формат: какография (по умолчанию) или формат эталона ('preserve').
+    // Неподдерживаемый формат эталона — сразу эталон, без трат на LLM.
+    let seed_type = payload.seed_exercise.get("type").and_then(|t| t.as_str()).unwrap_or("");
+    let Some(target) = resolve_variant_format(payload.format.as_deref(), seed_type) else {
+        return Ok(Json(RegenerateVariantResponse { variant: payload.seed_exercise, rule_id: payload.exercise_id, fallback: true }));
+    };
+
+    let (system, schema) = variant_prompt(target, &payload.seed_exercise, &rule_point, &rule_trap, &level, &language, &avoid_block);
     let user_msg = format!("Эталонное упражнение (JSON): {seed_json}. Сгенерируй вариант сейчас.");
 
-    let schema = serde_json::json!({
-        "type": "object",
-        "properties": {
-            "sentence": { "type": "string" },
-            "errorIndex": { "type": ["integer", "null"] },
-            "correction": { "type": ["string", "null"] },
-            "explanation": { "type": "string" }
-        },
-        "required": ["sentence", "errorIndex", "correction", "explanation"]
-    });
-
-    // До 3 попыток получить валидный вариант.
-    let mut produced: Option<ErrorHuntVariant> = None;
+    // До 3 попыток получить вариант, проходящий детерминированную валидацию формата.
+    let mut produced: Option<(serde_json::Value, String)> = None;
     for _ in 0..3 {
         let content = match llm::chat_text(ChatRequest {
             task: Task::Generation,
             messages: vec![ChatMessage::system(system.clone()), ChatMessage::user(user_msg.clone())],
-            max_tokens: 700,
+            max_tokens: 1200,
             format: ResponseFormat::JsonSchema(schema.clone()),
         }).await {
             Ok(c) => c,
             Err(_) => break, // LLM недоступна — выходим к фолбэку
         };
-        if let Ok(v) = serde_json::from_str::<ErrorHuntVariant>(extract_json_object(&content)) {
-            if validate_error_hunt(&v, &avoid_norm) {
-                produced = Some(v);
-                break;
-            }
+        if let Some(built) = try_build_variant(target, &content, &payload.exercise_id, &seed_title, &avoid_norm) {
+            produced = Some(built);
+            break;
         }
     }
 
-    if let Some(v) = produced {
-        let variant = build_variant_exercise(&payload.exercise_id, &seed_title, &v);
+    if let Some((variant, signature)) = produced {
         let payload_text = serde_json::to_string(&variant).unwrap_or_else(|_| "{}".to_string());
         let _ = sqlx::query(
             "INSERT INTO course_exercise_variants
@@ -1036,9 +1305,9 @@ pub async fn regenerate_variant(
         .bind(&payload.unit_id)
         .bind(&payload.exercise_id)
         .bind(&payload.rule_point)
-        .bind(payload.format.clone().unwrap_or_else(|| "error-hunt".to_string()))
+        .bind(target)
         .bind(&payload_text)
-        .bind(v.sentence.trim())
+        .bind(&signature)
         .execute(&pool)
         .await;
 
@@ -1060,4 +1329,99 @@ pub async fn regenerate_variant(
 
     // Фолбэк 2: вернуть эталон (учащийся хотя бы повторит правило).
     Ok(Json(RegenerateVariantResponse { variant: payload.seed_exercise, rule_id: payload.exercise_id, fallback: true }))
+}
+
+#[cfg(test)]
+mod variant_tests {
+    use super::*;
+
+    #[test]
+    fn resolve_format_defaults_and_preserve() {
+        assert_eq!(resolve_variant_format(None, "grammar-quiz"), Some("error-hunt"));
+        assert_eq!(resolve_variant_format(Some("error-hunt"), "fill-blank"), Some("error-hunt"));
+        assert_eq!(resolve_variant_format(Some("preserve"), "grammar-quiz"), Some("grammar-quiz"));
+        assert_eq!(resolve_variant_format(Some("preserve"), "fill-blank"), Some("fill-blank"));
+        assert_eq!(resolve_variant_format(Some("preserve"), "sentence-builder"), Some("sentence-builder"));
+        assert_eq!(resolve_variant_format(Some("preserve"), "error-hunt"), Some("error-hunt"));
+        // Неподдерживаемые типы под preserve — фолбэк на эталон (None).
+        assert_eq!(resolve_variant_format(Some("preserve"), "dialogue"), None);
+        assert_eq!(resolve_variant_format(Some("preserve"), "video"), None);
+    }
+
+    #[test]
+    fn blank_slots_counts_underscore_runs() {
+        assert_eq!(blank_slots("Je ___ Paul."), 1);
+        assert_eq!(blank_slots("Je ____ et tu ___."), 2);
+        assert_eq!(blank_slots("pas de trous"), 0);
+        assert_eq!(blank_slots("a _ b __ c"), 0); // меньше 3 подчёркиваний — не пропуск
+    }
+
+    #[test]
+    fn grammar_quiz_validation() {
+        let ok: GrammarQuizVariant = serde_json::from_str(
+            r#"{"questions":[{"question":"Je ... Paul","options":["suis","es","est","sont"],"correctAnswer":"suis","explanation":"1л ед.ч."}]}"#
+        ).unwrap();
+        assert!(validate_grammar_quiz(&ok, &[]).is_some());
+
+        // correctAnswer не входит в options — брак.
+        let bad: GrammarQuizVariant = serde_json::from_str(
+            r#"{"questions":[{"question":"Q","options":["a","b"],"correctAnswer":"c","explanation":"e"}]}"#
+        ).unwrap();
+        assert!(validate_grammar_quiz(&bad, &[]).is_none());
+
+        // Дубликаты вариантов — брак.
+        let dup: GrammarQuizVariant = serde_json::from_str(
+            r#"{"questions":[{"question":"Q","options":["a","a"],"correctAnswer":"a","explanation":"e"}]}"#
+        ).unwrap();
+        assert!(validate_grammar_quiz(&dup, &[]).is_none());
+
+        // Анти-повтор: подпись уже показывалась.
+        let sig = validate_grammar_quiz(&ok, &[]).unwrap();
+        assert!(validate_grammar_quiz(&ok, &[sig]).is_none());
+    }
+
+    #[test]
+    fn fill_blank_validation() {
+        let ok: FillBlankVariant = serde_json::from_str(
+            r#"{"text":"Je ___ Paul.","blanks":[{"correctAnswer":"suis","options":["suis","es","est"],"explanation":"e"}]}"#
+        ).unwrap();
+        assert!(validate_fill_blank(&ok, &[]).is_some());
+
+        // Число пропусков не совпадает с числом blanks — брак.
+        let mismatch: FillBlankVariant = serde_json::from_str(
+            r#"{"text":"Je ___ et tu ___.","blanks":[{"correctAnswer":"suis"}]}"#
+        ).unwrap();
+        assert!(validate_fill_blank(&mismatch, &[]).is_none());
+
+        // options без correctAnswer — брак.
+        let bad_opts: FillBlankVariant = serde_json::from_str(
+            r#"{"text":"Je ___.","blanks":[{"correctAnswer":"suis","options":["es","est"]}]}"#
+        ).unwrap();
+        assert!(validate_fill_blank(&bad_opts, &[]).is_none());
+    }
+
+    #[test]
+    fn sentence_builder_validation() {
+        let ok: SentenceBuilderVariant = serde_json::from_str(
+            r#"{"sentences":[{"words":["Je","suis","Paul"],"ru":"Я — Поль"}]}"#
+        ).unwrap();
+        assert!(validate_sentence_builder(&ok, &[]).is_some());
+
+        // Слишком короткое предложение — брак.
+        let short: SentenceBuilderVariant = serde_json::from_str(
+            r#"{"sentences":[{"words":["Je","suis"],"ru":"Я есть"}]}"#
+        ).unwrap();
+        assert!(validate_sentence_builder(&short, &[]).is_none());
+    }
+
+    #[test]
+    fn try_build_variant_produces_typed_exercise() {
+        let content = r#"{"questions":[{"question":"Tu ... Marie","options":["es","suis","est","sont"],"correctAnswer":"es","explanation":"2л"}]}"#;
+        let (variant, sig) = try_build_variant("grammar-quiz", content, "rule-1", "Спряжение être", &[]).unwrap();
+        assert_eq!(variant["type"], "grammar-quiz");
+        assert_eq!(variant["id"], "rule-1::variant");
+        assert_eq!(variant["title"], "Спряжение être");
+        assert_eq!(variant["questions"][0]["correctAnswer"], "es");
+        assert!(!sig.is_empty());
+    }
 }
