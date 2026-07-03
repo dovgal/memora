@@ -183,14 +183,15 @@ export interface CoachReviewResult {
   scheduledDays: number;
 }
 
-/** rating: 1=Снова, 2=Трудно, 3=Хорошо, 4=Легко */
+/** rating: 1=Снова, 2=Трудно, 3=Хорошо, 4=Легко. answerGiven — неверные ответы попытки. */
 export async function recordCoachReview(
   courseId: string, unitId: string, exerciseId: string, rating: 1 | 2 | 3 | 4, idToken?: string,
+  answerGiven?: string,
 ): Promise<CoachReviewResult> {
   return ok(await fetch(`/api/courses/${courseId}/coach/review`, {
     method: 'POST',
     headers: headers(idToken),
-    body: JSON.stringify({ unitId, exerciseId, rating }),
+    body: JSON.stringify({ unitId, exerciseId, rating, answerGiven }),
   }));
 }
 
@@ -279,13 +280,22 @@ export async function explainExercise(
   }));
 }
 
+/** Прицельная проработка навыка: focus передаёт навык, правило и курс (для умных дистракторов). */
+export interface PracticeFocus {
+  skill?: string;
+  rulePoint?: string;
+  ruleTrap?: string;
+  courseId?: string;
+}
+
 export async function generatePractice(
   weakExercises: unknown[], language?: string, level?: string, count?: number, idToken?: string,
+  focus?: PracticeFocus,
 ): Promise<{ exercises: EditoExercise[] }> {
   return ok(await fetch('/api/ai/course/generate-practice', {
     method: 'POST',
     headers: headers(idToken),
-    body: JSON.stringify({ weakExercises, language, level, count }),
+    body: JSON.stringify({ weakExercises, language, level, count, ...focus }),
   }));
 }
 

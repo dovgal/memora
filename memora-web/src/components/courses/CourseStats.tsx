@@ -194,6 +194,14 @@ export function CourseStats({ courseId, courseTitle, units, backHref }: Props) {
                     <p className="text-qz-text-muted text-xs">
                       {s.learned} / {s.exercises} усвоено
                       {s.attempts > 0 && <> · ошибок {Math.round(s.errorRate * 100)}%</>}
+                      {s.status === 'weak' && (
+                        <>
+                          {' · '}
+                          <Link href={`${backHref}/coach`} className="text-amber-500 hover:underline font-semibold">
+                            проработать в коуче →
+                          </Link>
+                        </>
+                      )}
                     </p>
                   </div>
                 );

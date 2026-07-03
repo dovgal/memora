@@ -22,9 +22,10 @@ import { ExerciseRenderer } from '@/components/edito/ExerciseRenderer';
 import { VocabQuiz } from '@/components/courses/VocabQuiz';
 import {
   getCoachReviews, recordCoachReview, getCoachStats, explainExercise, generatePractice,
-  regenerateVariant, getSessionPlan,
-  type CoachReviewEntry, type CoachStats, type SessionPlan,
+  regenerateVariant, getSessionPlan, getCoachRatingStats,
+  type CoachReviewEntry, type CoachStats, type SessionPlan, type ExerciseRatingStats,
 } from '@/lib/courses/customCoursesApi';
+import { computeSkillMastery, type SkillMastery } from '@/lib/courses/skillMastery';
 
 export interface CoachUnit {
   id: string;
@@ -87,6 +88,8 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
   const [stats, setStats] = useState<CoachStats | null>(null);
   // Серверный план сессии: порядок повторений и слабые места. null — фолбэк на локальную очередь.
   const [plan, setPlan] = useState<SessionPlan | null>(null);
+  // Статистика оценок — для карты слабых навыков на стартовом экране.
+  const [ratingStats, setRatingStats] = useState<ExerciseRatingStats[]>([]);
   const [queue, setQueue] = useState<QueueItem[]>([]);
   const [index, setIndex] = useState(0);
   const [phase, setPhase] = useState<'loading' | 'start' | 'session' | 'done'>('loading');
@@ -177,10 +180,12 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
       getCoachReviews(courseId, idToken),
       getCoachStats(courseId, idToken),
       getSessionPlan(courseId, idToken),
-    ]).then(([revRes, statRes, planRes]) => {
+      getCoachRatingStats(courseId, idToken),
+    ]).then(([revRes, statRes, planRes, rsRes]) => {
       setReviews(revRes.status === 'fulfilled' ? revRes.value : []);
       if (statRes.status === 'fulfilled') setStats(statRes.value);
       if (planRes.status === 'fulfilled') setPlan(planRes.value);
+      if (rsRes.status === 'fulfilled') setRatingStats(rsRes.value);
       setPhase('start');
     });
   }, [idToken, courseId]);
@@ -211,6 +216,14 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
     const fresh = pools.fresh.slice(0, newGoal);
     return { due, weak, fresh };
   }, [plan, pools, allItems, newGoal]);
+
+  // Слабые навыки курса (те же пороги, что на карте навыков) — для кнопки «Проработать».
+  const weakSkills = useMemo(
+    () => reviews
+      ? computeSkillMastery(units, reviews, ratingStats).filter(s => s.status === 'weak').slice(0, 3)
+      : [],
+    [units, reviews, ratingStats],
+  );
 
   // Voltaire: на повторе (isReview) генерируем НОВЫЙ вариант того же правила,
   // чтобы тренировать навык, а не заучивать текст. Первый показ правила — эталон.
@@ -302,7 +315,11 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
 
     if (!current.ephemeral) {
       try {
-        await recordCoachReview(courseId, current.unitId, current.trackId, rating, idToken);
+        // Неверные ответы попытки — в журнал (сырьё для умных дистракторов).
+        const answerGiven = lastResult?.wrongAnswers?.length
+          ? lastResult.wrongAnswers.slice(0, 5).join('; ')
+          : undefined;
+        await recordCoachReview(courseId, current.unitId, current.trackId, rating, idToken, answerGiven);
       } catch { /* офлайн — продолжаем */ }
     }
 
@@ -345,6 +362,56 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
     }
   };
 
+  /** Прицельная проработка слабого навыка: свежие упражнения строго на этот навык,
+   *  с нарастающей сложностью и дистракторами из ошибок ученика. Ephemeral — FSRS не трогает. */
+  const startSkillPractice = async (skill: SkillMastery) => {
+    if (!idToken || practiceBusy) return;
+    setPracticeBusy(true);
+    setPracticeError(null);
+    try {
+      const seed = allItems
+        .filter(it => it.kind === 'exercise' && it.exercise?.rule?.skill === skill.skill)
+        .map(it => it.exercise)
+        .filter((ex): ex is EditoExercise => !!ex)
+        .slice(0, 6);
+      if (seed.length === 0) {
+        setPracticeError('Не нашлось упражнений этого навыка.');
+        return;
+      }
+      const { exercises } = await generatePractice(seed, language, level, 5, idToken, {
+        skill: skill.skill,
+        rulePoint: skill.point ?? seed[0].rule?.point,
+        ruleTrap: seed[0].rule?.trap,
+        courseId,
+      });
+      const bonus: QueueItem[] = (exercises ?? [])
+        .filter(ex => ex && ex.id && ex.type)
+        .map(ex => ({
+          unitId: 'practice',
+          unitTitle: `Проработка · ${skill.point ?? skill.skill}`,
+          kind: 'exercise' as const,
+          exercise: ex,
+          trackId: ex.id,
+          isReview: false,
+          ephemeral: true,
+        }));
+      if (bonus.length === 0) {
+        setPracticeError('Не удалось сгенерировать практику. Попробуйте ещё раз.');
+        return;
+      }
+      setQueue(bonus);
+      setIndex(0);
+      setSessionStats({ completed: 0, again: 0 });
+      setWeakTrackIds(new Set());
+      resetItemState();
+      setPhase('session');
+    } catch (e) {
+      setPracticeError(e instanceof Error ? e.message : 'Ошибка генерации');
+    } finally {
+      setPracticeBusy(false);
+    }
+  };
+
   const startPractice = async () => {
     if (!idToken || practiceBusy) return;
     setPracticeBusy(true);
@@ -366,7 +433,7 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
         return;
       }
 
-      const { exercises } = await generatePractice(weakExercises, language, level, 4, idToken);
+      const { exercises } = await generatePractice(weakExercises, language, level, 4, idToken, { courseId });
       const bonus: QueueItem[] = (exercises ?? [])
         .filter(ex => ex && ex.id && ex.type)
         .map(ex => ({
@@ -486,6 +553,32 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
               </p>
             )}
           </div>
+
+          {/* Прицельная проработка слабых навыков */}
+          {weakSkills.length > 0 && (
+            <div className="bg-amber-500/5 border border-amber-500/30 rounded-2xl p-5 mb-6">
+              <p className="text-foreground text-sm font-semibold mb-3">Слабые навыки — прицельная проработка</p>
+              <div className="space-y-2.5">
+                {weakSkills.map(s => (
+                  <div key={s.skill} className="flex items-center justify-between gap-3">
+                    <span className="text-qz-text-muted text-sm line-clamp-1">
+                      {s.point ?? s.skill.replace(/-/g, ' ')}
+                      <span className="text-amber-400 text-xs"> · ошибок {Math.round(s.errorRate * 100)}%</span>
+                    </span>
+                    <button
+                      onClick={() => startSkillPractice(s)}
+                      disabled={practiceBusy}
+                      className="inline-flex items-center gap-1.5 border border-amber-500/40 text-amber-400 hover:bg-amber-500/10 disabled:opacity-50 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors shrink-0"
+                    >
+                      {practiceBusy ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}
+                      Проработать
+                    </button>
+                  </div>
+                ))}
+              </div>
+              {practiceError && <p className="text-red-400 text-xs mt-2">{practiceError}</p>}
+            </div>
+          )}
 
           {planned === 0 ? (
             <div className="text-center py-6">

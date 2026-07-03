@@ -584,16 +584,27 @@ pub struct GeneratePracticeRequest {
     pub level: Option<String>,
     /// Сколько новых упражнений сгенерировать (по умолчанию 4, максимум 8)
     pub count: Option<u32>,
+    /// Прицельная проработка: ключ слабого навыка (rule.skill).
+    pub skill: Option<String>,
+    /// Формулировка правила навыка.
+    pub rule_point: Option<String>,
+    /// Типичная ловушка навыка.
+    pub rule_trap: Option<String>,
+    /// Курс — для выборки недавних неверных ответов учащегося (умные дистракторы).
+    pub course_id: Option<String>,
 }
 
 /// POST /api/ai/course/generate-practice
 /// Бесконечная практика: новые упражнения по слабым местам учащегося.
+/// С параметром skill — прицельная проработка навыка: нарастающая сложность,
+/// разметка rule на выходе и дистракторы из недавних неверных ответов.
 pub async fn generate_practice(
+    State(pool): State<PgPool>,
     State(rate_limiter): State<AppRateLimiter>,
     AuthenticatedUser(user): AuthenticatedUser,
     Json(payload): Json<GeneratePracticeRequest>,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<AiGatewayError>)> {
-    check_rate_limit(&rate_limiter, &user.sub)?;
+    let user_uuid = check_rate_limit(&rate_limiter, &user.sub)?;
 
     if payload.weak_exercises.is_empty() {
         return Err((StatusCode::BAD_REQUEST, Json(AiGatewayError { error: "weak_exercises is empty".to_string() })));
@@ -605,9 +616,54 @@ pub async fn generate_practice(
     let weak_json: String = serde_json::to_string(&payload.weak_exercises).unwrap_or_default()
         .chars().take(12000).collect();
 
+    // Умные дистракторы: недавние неверные ответы учащегося по этим упражнениям.
+    let mut wrong_answers: Vec<String> = Vec::new();
+    if let Some(course_id) = payload.course_id.as_deref() {
+        let exercise_ids: Vec<String> = payload.weak_exercises.iter()
+            .filter_map(|e| e.get("id").and_then(|i| i.as_str()).map(str::to_string))
+            .collect();
+        if !exercise_ids.is_empty() {
+            wrong_answers = sqlx::query(
+                "SELECT DISTINCT answer_given FROM course_review_logs
+                 WHERE user_id = $1 AND course_id = $2 AND exercise_id = ANY($3)
+                   AND answer_given IS NOT NULL
+                   AND review_time >= NOW() - interval '60 days'
+                 LIMIT 12"
+            )
+            .bind(user_uuid)
+            .bind(course_id)
+            .bind(&exercise_ids)
+            .fetch_all(&pool)
+            .await
+            .unwrap_or_default()
+            .iter()
+            .filter_map(|r| r.try_get::<Option<String>, _>("answer_given").ok().flatten())
+            .collect();
+        }
+    }
+
+    // Прицельный блок: навык, нарастающая сложность, разметка rule на выходе.
+    let mut focus_block = String::new();
+    if let Some(skill) = payload.skill.as_deref() {
+        let point = payload.rule_point.as_deref().unwrap_or("выведи правило из входных упражнений");
+        let trap = payload.rule_trap.as_deref().unwrap_or("—");
+        focus_block = format!(
+            "\nЭто ПРИЦЕЛЬНАЯ проработка слабого навыка «{skill}». Правило: {point}. Типичная ловушка: {trap}. \
+             Все упражнения — строго на этот навык. Выстрой их с нарастающей сложностью: от простого случая к каверзному. \
+             У КАЖДОГО упражнения добавь поле \"rule\": {{\"skill\": \"{skill}\", \"point\": \"{point}\"}}."
+        );
+    }
+    if !wrong_answers.is_empty() {
+        let list = wrong_answers.iter().take(12).map(|a| format!("«{}»", a)).collect::<Vec<_>>().join(", ");
+        focus_block.push_str(&format!(
+            "\nВ вариантах ответов (options) используй как дистракторы ТИПИЧНЫЕ ОШИБКИ этого учащегося: {list} — \
+             там, где они грамматически уместны."
+        ));
+    }
+
     let system = format!(
         "Ты — методист платформы Memora. Учащийся ({language}, уровень {level}) ошибается в этих упражнениях:\n{weak_json}\n\
-         Сгенерируй {count} НОВЫХ упражнений на ТЕ ЖЕ грамматические темы и лексику, но с другими примерами — для закрепления. \
+         Сгенерируй {count} НОВЫХ упражнений на ТЕ ЖЕ грамматические темы и лексику, но с другими примерами — для закрепления.{focus_block} \
          Используй типы grammar-quiz и fill-blank (формат как во входных данных, с полями id, type, title, questions/text+blanks, \
          у каждого вопроса options, correctAnswer и explanation по-русски). \
          Выведи ТОЛЬКО валидный JSON-массив упражнений без markdown. id вида practice-1, practice-2..."

@@ -4,12 +4,14 @@ import { CheckCircle2, XCircle, ChevronRight, RotateCcw } from 'lucide-react';
 import { EditoExercise } from '@/lib/courses/edito-a1';
 import { AudioButton } from './AudioButton';
 
-export function GrammarQuiz({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: (result?: { correct: number; total: number }) => void }) {
+export function GrammarQuiz({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: (result?: { correct: number; total: number; wrongAnswers?: string[] }) => void }) {
   const questions = exercise.questions || [];
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
+  // Выбранные неверные варианты — уходят в журнал коуча (умные дистракторы).
+  const [wrong, setWrong] = useState<string[]>([]);
 
   const q = questions[current];
   const isCorrect = selected === q?.correctAnswer;
@@ -18,6 +20,7 @@ export function GrammarQuiz({ exercise, onComplete }: { exercise: EditoExercise;
     if (selected) return;
     setSelected(opt);
     if (opt === q.correctAnswer) setScore(s => s + 1);
+    else setWrong(w => [...w, opt]);
   };
 
   const handleNext = () => {
@@ -26,7 +29,7 @@ export function GrammarQuiz({ exercise, onComplete }: { exercise: EditoExercise;
       setSelected(null);
     } else {
       setFinished(true);
-      onComplete?.({ correct: score, total: questions.length });
+      onComplete?.({ correct: score, total: questions.length, wrongAnswers: wrong.length ? wrong : undefined });
     }
   };
 
@@ -35,6 +38,7 @@ export function GrammarQuiz({ exercise, onComplete }: { exercise: EditoExercise;
     setSelected(null);
     setScore(0);
     setFinished(false);
+    setWrong([]);
   };
 
   if (finished) {

@@ -4,7 +4,7 @@ import { CheckCircle2, XCircle, ChevronRight } from 'lucide-react';
 import { EditoExercise, BlankItem } from '@/lib/courses/edito-a1';
 import { AudioButton } from './AudioButton';
 
-export function FillBlank({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: (result?: { correct: number; total: number }) => void }) {
+export function FillBlank({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: (result?: { correct: number; total: number; wrongAnswers?: string[] }) => void }) {
   const blanks: BlankItem[] = exercise.blanks || [];
   const parts = useMemo(() => (exercise.text || '').split('___'), [exercise.text]);
 
@@ -36,7 +36,13 @@ export function FillBlank({ exercise, onComplete }: { exercise: EditoExercise; o
       setChecked(false);
     } else {
       setFinished(true);
-      onComplete?.({ correct: results.filter(r => r.correct).length, total: blanks.length });
+      // Введённые неверные ответы — в журнал коуча (умные дистракторы).
+      const wrongAnswers = results.filter(r => !r.correct).map(r => r.given);
+      onComplete?.({
+        correct: results.filter(r => r.correct).length,
+        total: blanks.length,
+        wrongAnswers: wrongAnswers.length ? wrongAnswers : undefined,
+      });
     }
   };
 

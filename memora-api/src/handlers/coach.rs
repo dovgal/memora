@@ -84,6 +84,8 @@ pub struct CoachReviewRequest {
     pub exercise_id: String,
     /// 1=Again, 2=Hard, 3=Good, 4=Easy
     pub rating: u8,
+    /// Неверные ответы учащегося в этой попытке (для умных дистракторов).
+    pub answer_given: Option<String>,
 }
 
 #[derive(Serialize)]
@@ -193,16 +195,21 @@ pub async fn record_coach_review(
     .await
     .map_err(db_err)?;
 
-    // Журнал повторений — для streak и аналитики.
+    // Журнал повторений — для streak, аналитики и умных дистракторов (answer_given).
+    let answer_given: Option<String> = payload.answer_given
+        .as_deref()
+        .map(|a| a.trim().chars().take(300).collect::<String>())
+        .filter(|a| !a.is_empty());
     let _ = sqlx::query(
-        "INSERT INTO course_review_logs (user_id, course_id, unit_id, exercise_id, rating)
-         VALUES ($1, $2, $3, $4, $5)"
+        "INSERT INTO course_review_logs (user_id, course_id, unit_id, exercise_id, rating, answer_given)
+         VALUES ($1, $2, $3, $4, $5, $6)"
     )
     .bind(user_id)
     .bind(&course_id)
     .bind(&payload.unit_id)
     .bind(&payload.exercise_id)
     .bind(payload.rating as i16)
+    .bind(&answer_given)
     .execute(&pool)
     .await;
 

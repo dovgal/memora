@@ -148,6 +148,8 @@ export interface BlankItem {
 export interface ExerciseResult {
   correct: number;
   total: number;
+  /** Неверные ответы учащегося (для умных дистракторов в генерации практики). */
+  wrongAnswers?: string[];
 }
 
 export interface VocabularyItem {
