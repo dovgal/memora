@@ -15,6 +15,7 @@ export default function EditoA2ReadingPage() {
       level="A2"
       voice="Alain"
       vocabulary={vocabulary}
+      courseId="edito-a2"
     />
   );
 }

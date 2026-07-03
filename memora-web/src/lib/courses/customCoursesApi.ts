@@ -312,15 +312,36 @@ export async function converse(
   }));
 }
 
-export interface GeneratedStory { title: string; story: string; translation: string }
+export interface GlossaryItem { word: string; ru: string }
+
+export interface GeneratedStory {
+  title: string;
+  story: string;
+  translation: string;
+  /** Ключевые слова истории с переводом (кликабельное чтение + cloze-проверка). */
+  glossary?: GlossaryItem[];
+}
 
 export async function generateStory(
-  vocabulary: VocabularyItem[], opts: { language?: string; level?: string; topic?: string }, idToken?: string,
+  vocabulary: VocabularyItem[],
+  opts: { language?: string; level?: string; topic?: string; difficulty?: 'easier' | 'harder' },
+  idToken?: string,
 ): Promise<GeneratedStory> {
   return ok(await fetch('/api/ai/course/story', {
     method: 'POST',
     headers: headers(idToken),
     body: JSON.stringify({ vocabulary, ...opts }),
+  }));
+}
+
+/** Добавить слово в личный словарь курса (набор «Словарь · {курс}», FSRS-цикл наборов). */
+export async function addToDictionary(
+  courseId: string, term: string, definition: string, idToken?: string,
+): Promise<{ setId: string; alreadyExists: boolean }> {
+  return ok(await fetch(`/api/courses/${courseId}/dictionary`, {
+    method: 'POST',
+    headers: headers(idToken),
+    body: JSON.stringify({ term, definition }),
   }));
 }
 

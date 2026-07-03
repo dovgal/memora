@@ -187,6 +187,111 @@ pub struct UpsertUnitRequest {
 
 fn empty_array() -> serde_json::Value { serde_json::Value::Array(vec![]) }
 
+// ---------- Словарь курса («в словарь» из чтения/историй) ----------
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AddToDictionaryRequest {
+    /// Слово/фраза на изучаемом языке.
+    pub term: String,
+    /// Перевод.
+    pub definition: String,
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AddToDictionaryResponse {
+    pub set_id: String,
+    /// true — карточка уже была в словаре, дубль не создан.
+    pub already_exists: bool,
+}
+
+/// POST /api/courses/{course_id}/dictionary
+/// Добавляет слово в личный словарь курса — набор карточек «Словарь · {курс}»
+/// (создаётся при первом слове). Карточки живут в обычном FSRS-цикле наборов.
+pub async fn add_to_dictionary(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Path(course_id): Path<String>,
+    Json(payload): Json<AddToDictionaryRequest>,
+) -> ApiResult<impl IntoResponse> {
+    let user_id = uid(&user.sub)?;
+    let term: String = payload.term.trim().chars().take(200).collect();
+    let definition: String = payload.definition.trim().chars().take(500).collect();
+    if term.is_empty() || definition.is_empty() {
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "term and definition are required"));
+    }
+
+    // Название набора: по заголовку курса (пользовательские) или по id (встроенные).
+    let course_title: String = match Uuid::parse_str(&course_id) {
+        Ok(cid) => sqlx::query("SELECT title FROM custom_courses WHERE id = $1")
+            .bind(cid)
+            .fetch_optional(&pool)
+            .await
+            .map_err(db_err)?
+            .map(|r| r.get("title"))
+            .unwrap_or_else(|| course_id.clone()),
+        Err(_) => course_id.clone(),
+    };
+    let set_title: String = format!("Словарь · {}", course_title).chars().take(120).collect();
+
+    let mut tx = pool.begin().await.map_err(db_err)?;
+
+    let set_id: Uuid = match sqlx::query("SELECT id FROM sets WHERE creator_id = $1 AND title = $2")
+        .bind(user_id)
+        .bind(&set_title)
+        .fetch_optional(&mut *tx)
+        .await
+        .map_err(db_err)?
+    {
+        Some(r) => r.get("id"),
+        None => {
+            let r = sqlx::query(
+                "INSERT INTO sets (creator_id, title, description, is_public, fields_schema)
+                 VALUES ($1, $2, $3, FALSE, '[]'::jsonb) RETURNING id"
+            )
+            .bind(user_id)
+            .bind(&set_title)
+            .bind("Слова, добавленные из историй и чтения курса")
+            .fetch_one(&mut *tx)
+            .await
+            .map_err(db_err)?;
+            r.get("id")
+        }
+    };
+
+    // Дубликаты не плодим: то же слово (без учёта регистра) уже в словаре — выходим тихо.
+    let exists = sqlx::query("SELECT 1 AS x FROM flashcards WHERE set_id = $1 AND LOWER(term) = LOWER($2)")
+        .bind(set_id)
+        .bind(&term)
+        .fetch_optional(&mut *tx)
+        .await
+        .map_err(db_err)?
+        .is_some();
+
+    if !exists {
+        sqlx::query(
+            "INSERT INTO flashcards (set_id, term, definition, order_index, fields_data)
+             VALUES ($1, $2, $3,
+                     (SELECT COALESCE(MAX(order_index) + 1, 0) FROM flashcards WHERE set_id = $1),
+                     '{}'::jsonb)"
+        )
+        .bind(set_id)
+        .bind(&term)
+        .bind(&definition)
+        .execute(&mut *tx)
+        .await
+        .map_err(db_err)?;
+    }
+
+    tx.commit().await.map_err(db_err)?;
+
+    Ok((StatusCode::OK, Json(AddToDictionaryResponse {
+        set_id: set_id.to_string(),
+        already_exists: exists,
+    })))
+}
+
 // ---------- Course CRUD ----------
 
 /// GET /api/courses — мои курсы + опубликованные курсы других пользователей.

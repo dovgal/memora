@@ -29,6 +29,7 @@ export default function LevelReadingPage({ params }: { params: Promise<{ levelId
       level={course.level}
       voice="Alain"
       vocabulary={vocabulary}
+      courseId={`niveau-${levelId}`}
     />
   );
 }

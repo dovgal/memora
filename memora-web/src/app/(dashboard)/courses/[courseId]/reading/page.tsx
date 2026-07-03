@@ -49,6 +49,7 @@ export default function CourseReadingPage({ params }: { params: Promise<{ course
       level={course.level || 'A1'}
       voice={meta.voice}
       vocabulary={vocab}
+      courseId={courseId}
     />
   );
 }

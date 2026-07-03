@@ -767,6 +767,17 @@ pub struct StoryRequest {
     pub language: Option<String>,
     pub level: Option<String>,
     pub topic: Option<String>,
+    /// 'easier' | 'harder' — сдвиг сложности относительно уровня курса.
+    pub difficulty: Option<String>,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GlossaryItem {
+    /// Слово/выражение из истории (как в тексте).
+    pub word: String,
+    /// Перевод на русский.
+    pub ru: String,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -777,6 +788,9 @@ pub struct StoryResponse {
     pub story: String,
     /// Перевод истории на русский
     pub translation: String,
+    /// Ключевые слова истории с переводом — для кликабельного чтения и cloze-проверки.
+    #[serde(default)]
+    pub glossary: Option<Vec<GlossaryItem>>,
 }
 
 /// POST /api/ai/course/story — короткая история из лексики курса для контекстного чтения.
@@ -794,13 +808,22 @@ pub async fn generate_story(
     let vocab_json: String = serde_json::to_string(&payload.vocabulary).unwrap_or_default()
         .chars().take(6000).collect();
 
+    // Сдвиг сложности относительно уровня курса (по выбору учащегося).
+    let difficulty_block = match payload.difficulty.as_deref() {
+        Some("easier") => " Сделай текст ЧУТЬ ПРОЩЕ уровня: короткие предложения, самая частотная лексика.",
+        Some("harder") => " Сделай текст ЧУТЬ СЛОЖНЕЕ уровня: более длинные предложения, пара конструкций следующего уровня.",
+        _ => "",
+    };
+
     let system = format!(
         "Ты — автор учебных текстов платформы Memora. Напиши КОРОТКУЮ историю (6-10 предложений) \
-         на языке: {language}, строго уровня {level}, тема: {topic}. \
+         на языке: {language}, строго уровня {level}, тема: {topic}.{difficulty_block} \
          Обязательно используй слова из словаря учащегося: {vocab_json}. \
          Простые конструкции, живой сюжет. \
          Выведи ТОЛЬКО валидный JSON без markdown: \
-         {{\"title\": \"заголовок на изучаемом языке\", \"story\": \"текст истории\", \"translation\": \"перевод на русский\"}}"
+         {{\"title\": \"заголовок на изучаемом языке\", \"story\": \"текст истории\", \"translation\": \"перевод на русский\", \
+         \"glossary\": [{{\"word\": \"ключевое слово/выражение ИЗ ТЕКСТА истории (дословно)\", \"ru\": \"перевод\"}}]}}. \
+         В glossary — 8-12 самых полезных слов и выражений истории."
     );
 
     let schema = serde_json::json!({
@@ -808,9 +831,13 @@ pub async fn generate_story(
         "properties": {
             "title": { "type": "string" },
             "story": { "type": "string" },
-            "translation": { "type": "string" }
+            "translation": { "type": "string" },
+            "glossary": { "type": "array", "items": { "type": "object", "properties": {
+                "word": { "type": "string" },
+                "ru": { "type": "string" }
+            }, "required": ["word", "ru"] } }
         },
-        "required": ["title", "story", "translation"]
+        "required": ["title", "story", "translation", "glossary"]
     });
 
     let content = llm_text(
