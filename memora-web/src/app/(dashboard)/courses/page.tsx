@@ -35,9 +35,10 @@ export default function CoursesCatalogPage() {
   const [subject, setSubject] = useState<string>('Все');
   const [topic, setTopic] = useState<string>('Все');
 
+  // loading=true с инициализации; синхронный setLoading в эффекте запрещён
+  // (react-hooks/set-state-in-effect) и не нужен — сбрасываем по завершении загрузки.
   const reload = useCallback(() => {
     if (!idToken) return;
-    setLoading(true);
     Promise.allSettled([listCourses(idToken), getSubscriptions(idToken)]).then(([c, s]) => {
       if (c.status === 'fulfilled') setCustom(c.value);
       if (s.status === 'fulfilled') setSubs(new Set(s.value.map(x => x.courseId)));

@@ -55,8 +55,8 @@ pub fn spawn(pool: PgPool) {
         loop {
             match run_once(&pool).await {
                 Ok(0) => {}
-                Ok(n) => println!("variant-pregen: generated {} variant(s)", n),
-                Err(e) => eprintln!("variant-pregen: pass failed: {}", e),
+                Ok(n) => println!("variant-pregen: generated {n} variant(s)"),
+                Err(e) => eprintln!("variant-pregen: pass failed: {e}"),
             }
             tokio::time::sleep(Duration::from_secs(interval_min * 60)).await;
         }
@@ -232,7 +232,7 @@ async fn pregenerate_one(
     .collect();
 
     let avoid_block = if avoid_norm.is_empty() { "—".to_string() } else {
-        avoid_norm.iter().take(8).map(|s| format!("«{}»", s)).collect::<Vec<_>>().join("; ")
+        avoid_norm.iter().take(8).map(|s| format!("«{s}»")).collect::<Vec<_>>().join("; ")
     };
     let rule_point = seed.rule_point.clone().unwrap_or_else(|| "выведи правило из эталонного упражнения".to_string());
     let rule_trap = seed.rule_trap.clone().unwrap_or_else(|| "—".to_string());
@@ -254,7 +254,7 @@ async fn pregenerate_one(
         }).await {
             Ok(c) => c,
             Err(e) => {
-                eprintln!("variant-pregen: llm error for {}/{}: {}", course_id, exercise_id, e);
+                eprintln!("variant-pregen: llm error for {course_id}/{exercise_id}: {e}");
                 return false;
             }
         };

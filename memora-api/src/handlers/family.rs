@@ -19,7 +19,7 @@ use super::errors::ApiError;
 type ApiResult<T> = Result<T, (StatusCode, Json<ApiError>)>;
 
 fn db_err(e: sqlx::Error) -> (StatusCode, Json<ApiError>) {
-    ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {}", e))
+    ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {e}"))
 }
 
 #[derive(Deserialize)]
@@ -65,7 +65,7 @@ async fn streak_all_courses(pool: &PgPool, user_id: Uuid, offset_min: i32) -> i6
     for d in &days {
         if *d == expected {
             streak += 1;
-            expected = expected - chrono::Duration::days(1);
+            expected -= chrono::Duration::days(1);
         } else if streak == 0 && *d == today - chrono::Duration::days(1) {
             streak += 1;
             expected = *d - chrono::Duration::days(1);

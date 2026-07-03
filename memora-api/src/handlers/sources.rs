@@ -22,7 +22,7 @@ fn uid(sub: &str) -> ApiResult<Uuid> {
 }
 
 fn db_err(e: sqlx::Error) -> (StatusCode, Json<ApiError>) {
-    ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {}", e))
+    ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {e}"))
 }
 
 async fn ensure_owner(pool: &PgPool, document_id: Uuid, user_id: Uuid) -> ApiResult<()> {
@@ -117,13 +117,13 @@ pub async fn upload_source(
         return Err(ApiError::response(StatusCode::BAD_REQUEST, "Title is required"));
     }
     if payload.chunks.is_empty() || payload.chunks.len() > MAX_CHUNKS {
-        return Err(ApiError::response(StatusCode::BAD_REQUEST, format!("Chunks: 1..{}", MAX_CHUNKS)));
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, format!("Chunks: 1..{MAX_CHUNKS}")));
     }
     let mut total = 0usize;
     for (i, c) in payload.chunks.iter().enumerate() {
         let len = c.content.chars().count();
         if len == 0 || len > MAX_CHUNK_CHARS {
-            return Err(ApiError::response(StatusCode::BAD_REQUEST, format!("chunks[{}]: content must be 1..{} chars", i, MAX_CHUNK_CHARS)));
+            return Err(ApiError::response(StatusCode::BAD_REQUEST, format!("chunks[{i}]: content must be 1..{MAX_CHUNK_CHARS} chars")));
         }
         total += len;
     }

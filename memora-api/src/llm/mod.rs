@@ -95,9 +95,9 @@ pub enum LlmError {
 impl std::fmt::Display for LlmError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            LlmError::Config(m) => write!(f, "LLM config error: {}", m),
-            LlmError::Upstream(m) => write!(f, "LLM provider error: {}", m),
-            LlmError::Protocol(m) => write!(f, "LLM protocol error: {}", m),
+            LlmError::Config(m) => write!(f, "LLM config error: {m}"),
+            LlmError::Upstream(m) => write!(f, "LLM provider error: {m}"),
+            LlmError::Protocol(m) => write!(f, "LLM protocol error: {m}"),
         }
     }
 }
@@ -241,13 +241,13 @@ async fn try_send(provider: &Provider, req: &ChatRequest, stream: bool) -> Resul
         request = request.header("Authorization", format!("Bearer {}", provider.api_key));
     }
     let response = request.send().await
-        .map_err(|e| LlmError::Upstream(format!("Upstream AI Provider Error: {}", e)))?;
+        .map_err(|e| LlmError::Upstream(format!("Upstream AI Provider Error: {e}")))?;
 
     if !response.status().is_success() {
         let status = response.status();
         let text = response.text().await.unwrap_or_else(|_| "Unknown error".to_string());
         let text: String = text.chars().take(500).collect();
-        return Err(LlmError::Upstream(format!("provider rejected request ({}): {}", status, text)));
+        return Err(LlmError::Upstream(format!("provider rejected request ({status}): {text}")));
     }
     Ok(response)
 }
@@ -259,11 +259,11 @@ async fn send(req: &ChatRequest, stream: bool) -> Result<(reqwest::Response, Dia
         Ok(resp) => Ok((resp, primary.dialect)),
         Err(primary_err) => {
             let Some(fallback) = fallback_provider(req.task) else { return Err(primary_err) };
-            eprintln!("LLM primary failed, trying fallback: {}", primary_err);
+            eprintln!("LLM primary failed, trying fallback: {primary_err}");
             match try_send(&fallback, req, stream).await {
                 Ok(resp) => Ok((resp, fallback.dialect)),
                 Err(fallback_err) => Err(LlmError::Upstream(format!(
-                    "{}; fallback: {}", primary_err, fallback_err
+                    "{primary_err}; fallback: {fallback_err}"
                 ))),
             }
         }
@@ -330,7 +330,7 @@ fn parse_stream_line(line: &str, dialect: Dialect) -> (Option<String>, bool) {
 pub async fn chat_text(req: ChatRequest) -> Result<String, LlmError> {
     let (response, dialect) = send(&req, false).await?;
     let body = response.text().await
-        .map_err(|e| LlmError::Upstream(format!("failed to read provider response: {}", e)))?;
+        .map_err(|e| LlmError::Upstream(format!("failed to read provider response: {e}")))?;
     parse_completion(&body, dialect)
 }
 
@@ -358,7 +358,7 @@ pub async fn chat_stream(req: ChatRequest) -> Result<BoxStream<'static, Result<S
                     }
                 }
                 Err(e) => {
-                    yield Err(LlmError::Upstream(format!("stream read error: {}", e)));
+                    yield Err(LlmError::Upstream(format!("stream read error: {e}")));
                     break;
                 }
             }

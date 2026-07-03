@@ -15,6 +15,12 @@ use crate::domain::dtos::{
 use crate::middleware::auth::AuthenticatedUser;
 use super::errors::ApiError;
 
+/// GET /api/sets/{id} — набор по id, включая непубличные.
+///
+/// ОСОЗНАННОЕ РЕШЕНИЕ (аудит июня-2026, подтверждено в слайсе 19): UUID набора
+/// работает как capability-ссылка — «поделиться по ссылке» без публикации.
+/// UUID не перебираются, инсталляция семейная. Если появится настоящая
+/// приватность — добавить проверку is_public || owner здесь.
 pub async fn get_public_set(
     State(pool): State<PgPool>,
     optional_user: crate::middleware::auth::OptionalAuthenticatedUser,
@@ -87,7 +93,7 @@ pub async fn get_public_set(
                         audio_field_ids.push(id.to_string());
                     }
                     if is_tts_enabled {
-                        audio_field_ids.push(format!("{}_audio", id));
+                        audio_field_ids.push(format!("{id}_audio"));
                     }
                 }
             }
@@ -126,7 +132,7 @@ pub async fn get_public_set(
                                 .bind(audio_bytes)
                                 .execute(&pool)
                                 .await {
-                                    eprintln!("Failed to migrate audio for card {} field {}: {}", record_id, field_id, e);
+                                    eprintln!("Failed to migrate audio for card {record_id} field {field_id}: {e}");
                                 } else {
                                     modified_in_db = true;
                                 }
@@ -248,7 +254,7 @@ pub async fn create_set(
         .bind(&fields_data) // Saved WITHOUT audio
         .fetch_one(&mut *tx)
         .await
-        .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed adding flashcard: {}", e)))?;
+        .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed adding flashcard: {e}")))?;
 
         let fc_id: Uuid = fc_record.get("id");
 
@@ -262,7 +268,7 @@ pub async fn create_set(
             .bind(audio_bytes)
             .execute(&mut *tx)
             .await
-            .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed saving audio: {}", e)))?;
+            .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed saving audio: {e}")))?;
         }
 
         response_flashcards.push(FlashcardResponse {

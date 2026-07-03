@@ -8,7 +8,7 @@ mod subjects;
 mod workers;
 
 use axum::{
-    extract::{DefaultBodyLimit, State},
+    extract::DefaultBodyLimit,
     routing::{get, post, patch, delete},
     Router,
 };
@@ -76,8 +76,17 @@ async fn main() {
         room_registry,
     };
 
+    // CORS: только доверенные origin-ы (браузер и так ходит через Next-прокси same-origin,
+    // прямые кросс-доменные запросы разрешаем только фронтенду). Список — через env.
+    let allowed_origins = env::var("FRONTEND_ORIGINS").unwrap_or_else(|_| {
+        "https://memora-web-production.up.railway.app,http://localhost:3000".to_string()
+    });
+    let origins: Vec<axum::http::HeaderValue> = allowed_origins
+        .split(',')
+        .filter_map(|o| o.trim().parse().ok())
+        .collect();
     let cors = CorsLayer::new()
-        .allow_origin(Any)
+        .allow_origin(origins)
         .allow_methods(Any)
         .allow_headers(Any);
 
@@ -187,31 +196,18 @@ async fn main() {
         .route("/api/ai/course/converse", post(handlers::ai::converse))
         .route("/api/ai/course/story", post(handlers::ai::generate_story))
         .route("/api/ai/course/regenerate-variant", post(handlers::ai::regenerate_variant))
-        // Diagnostics (Temporary). Только для авторизованных пользователей.
-        .route("/api/diag/db", get(|_user: middleware::auth::AuthenticatedUser, State(pool): State<sqlx::PgPool>| async move {
-            let audio_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM flashcard_audio").fetch_one(&pool).await.unwrap_or((-1,));
-            let card_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM flashcards").fetch_one(&pool).await.unwrap_or((-1,));
-            let legacy_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM flashcards WHERE fields_data::text LIKE '%audio/mpeg;base64%'").fetch_one(&pool).await.unwrap_or((-1,));
-            let marker_count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM flashcards WHERE fields_data::text LIKE '%__AUDIO_ON_SERVER__%'").fetch_one(&pool).await.unwrap_or((-1,));
-            let inworld_auth_set = std::env::var("INWORLD_AUTH").is_ok();
-            
-            format!(
-                "Audio Rows: {}\nTotal Cards: {}\nLegacy (Base64) Cards: {}\nMarker Cards: {}\nINWORLD_AUTH Set: {}",
-                audio_count.0, card_count.0, legacy_count.0, marker_count.0, inworld_auth_set
-            )
-        }))
         .layer(cors)
 
         .layer(DefaultBodyLimit::max(20 * 1024 * 1024))
         .with_state(app_state);
 
     let port = std::env::var("PORT").unwrap_or_else(|_| "8000".to_string());
-    let addr = format!("0.0.0.0:{}", port);
+    let addr = format!("0.0.0.0:{port}");
 
     let listener = tokio::net::TcpListener::bind(&addr)
         .await
         .unwrap();
 
-    println!("Server running on http://{}", addr);
+    println!("Server running on http://{addr}");
     axum::serve(listener, app).await.unwrap();
 }

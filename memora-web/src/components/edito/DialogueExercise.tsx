@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { CheckCircle2, XCircle, ChevronRight } from 'lucide-react';
 import { EditoExercise, DialogueExchange } from '@/lib/courses/edito-a1';
 import { AudioButton } from './AudioButton';
@@ -37,11 +37,11 @@ export function DialogueExercise({ exercise, onComplete }: { exercise: EditoExer
   // Guard against a fast double-click on "Далее" landing on the next
   // blank's options grid, which renders in the same screen position and
   // would otherwise auto-submit an answer the user never chose.
-  useEffect(() => {
+  // Лок ставится в обработчике перехода (не в эффекте — react-hooks/set-state-in-effect).
+  const lockOptionsBriefly = () => {
     setOptionsLocked(true);
-    const t = setTimeout(() => setOptionsLocked(false), 350);
-    return () => clearTimeout(t);
-  }, [activeBlankIdx]);
+    window.setTimeout(() => setOptionsLocked(false), 350);
+  };
 
   const currentBlankExchangeIdx = (() => {
     let blankCount = -1;
@@ -66,6 +66,7 @@ export function DialogueExercise({ exercise, onComplete }: { exercise: EditoExer
     if (optionsLocked) return;
     setOptionsLocked(true);
     if (activeBlankIdx < blanks.length - 1) {
+      lockOptionsBriefly();
       setActiveBlankIdx(i => i + 1);
     } else {
       setFinished(true);

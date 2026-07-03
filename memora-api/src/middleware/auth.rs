@@ -119,6 +119,23 @@ where
     }
 }
 
+pub struct OptionalAuthenticatedUser(pub Option<Claims>);
+
+impl<S> FromRequestParts<S> for OptionalAuthenticatedUser
+where
+    S: Send + Sync,
+{
+    type Rejection = std::convert::Infallible;
+
+    async fn from_request_parts(parts: &mut Parts, state: &S) -> Result<Self, Self::Rejection> {
+        let auth_result = AuthenticatedUser::from_request_parts(parts, state).await;
+        match auth_result {
+            Ok(AuthenticatedUser(claims)) => Ok(OptionalAuthenticatedUser(Some(claims))),
+            Err(_) => Ok(OptionalAuthenticatedUser(None)),
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -148,7 +165,7 @@ mod tests {
         .unwrap();
 
         let req = Request::builder()
-            .header("Authorization", format!("Bearer {}", token))
+            .header("Authorization", format!("Bearer {token}"))
             .body(())
             .unwrap();
         
@@ -173,23 +190,6 @@ mod tests {
         match result.unwrap_err() {
             AuthError::MissingToken => (),
             _ => panic!("Expected MissingToken error"),
-        }
-    }
-}
-
-pub struct OptionalAuthenticatedUser(pub Option<Claims>);
-
-impl<S> FromRequestParts<S> for OptionalAuthenticatedUser
-where
-    S: Send + Sync,
-{
-    type Rejection = std::convert::Infallible;
-
-    async fn from_request_parts(parts: &mut Parts, state: &S) -> Result<Self, Self::Rejection> {
-        let auth_result = AuthenticatedUser::from_request_parts(parts, state).await;
-        match auth_result {
-            Ok(AuthenticatedUser(claims)) => Ok(OptionalAuthenticatedUser(Some(claims))),
-            Err(_) => Ok(OptionalAuthenticatedUser(None)),
         }
     }
 }

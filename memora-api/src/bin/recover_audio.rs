@@ -38,7 +38,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 // We only care about keys that are markers but missing from binary storage, 
                 // OR keys that should have been TTS (ending in _audio) but are missing.
                 if obj_map.get(&key).and_then(|v| v.as_str()) == Some("__AUDIO_ON_SERVER__") || key.ends_with("_audio") {
-                    let field_to_check = if key.ends_with("_audio") { &key } else { &key }; // Actually always 'key'
+                    let field_to_check = &key;
                     
                     let exists: bool = sqlx::query_scalar("SELECT EXISTS(SELECT 1 FROM flashcard_audio WHERE flashcard_id = $1 AND field_id = $2)")
                         .bind(id)
@@ -48,7 +48,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
                     if !exists {
                         let clean_field_id = key.trim_end_matches("_audio");
-                        println!("Card {} field {} is BROKEN. Attempting recovery...", id, key);
+                        println!("Card {id} field {key} is BROKEN. Attempting recovery...");
                         
                         // 1. Text to speak
                         let text = if key == "term_audio" {
@@ -85,7 +85,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                             }
                         }
 
-                        println!("  Generating TTS: Voice={}, Text='{}'", voice_id, text_to_speak);
+                        println!("  Generating TTS: Voice={voice_id}, Text='{text_to_speak}'");
                         
                         let res = client.post("https://api.inworld.ai/tts/v1/voice")
                             .header("Authorization", &auth_header)
@@ -108,7 +108,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                                         .bind(bytes)
                                         .execute(&pool)
                                         .await?;
-                                    println!("  RECOVERED card {} field {}", id, key);
+                                    println!("  RECOVERED card {id} field {key}");
                                 }
                             }
                         } else {

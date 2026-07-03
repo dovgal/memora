@@ -26,7 +26,7 @@ fn parse_id(s: &str) -> ApiResult<Uuid> {
 }
 
 fn db_err(e: sqlx::Error) -> (StatusCode, Json<ApiError>) {
-    ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {}", e))
+    ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {e}"))
 }
 
 /// Лёгкая валидация формата упражнений: массив объектов с id/type/title,
@@ -42,14 +42,14 @@ fn validate_exercises(exercises: &serde_json::Value, allowed_types: &[&str]) -> 
     }
     for (i, ex) in arr.iter().enumerate() {
         let obj = ex.as_object()
-            .ok_or_else(|| ApiError::response(StatusCode::BAD_REQUEST, format!("exercises[{}] must be an object", i)))?;
+            .ok_or_else(|| ApiError::response(StatusCode::BAD_REQUEST, format!("exercises[{i}] must be an object")))?;
         let id = obj.get("id").and_then(|v| v.as_str()).unwrap_or("");
         let ex_type = obj.get("type").and_then(|v| v.as_str()).unwrap_or("");
         if id.is_empty() {
-            return Err(ApiError::response(StatusCode::BAD_REQUEST, format!("exercises[{}] is missing 'id'", i)));
+            return Err(ApiError::response(StatusCode::BAD_REQUEST, format!("exercises[{i}] is missing 'id'")));
         }
         if !allowed_types.contains(&ex_type) {
-            return Err(ApiError::response(StatusCode::BAD_REQUEST, format!("exercises[{}] has unsupported type '{}'", i, ex_type)));
+            return Err(ApiError::response(StatusCode::BAD_REQUEST, format!("exercises[{i}] has unsupported type '{ex_type}'")));
         }
     }
     Ok(())
@@ -233,7 +233,7 @@ pub async fn add_to_dictionary(
             .unwrap_or_else(|| course_id.clone()),
         Err(_) => course_id.clone(),
     };
-    let set_title: String = format!("Словарь · {}", course_title).chars().take(120).collect();
+    let set_title: String = format!("Словарь · {course_title}").chars().take(120).collect();
 
     let mut tx = pool.begin().await.map_err(db_err)?;
 

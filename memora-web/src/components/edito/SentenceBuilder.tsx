@@ -1,5 +1,5 @@
 'use client';
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { CheckCircle2, XCircle, RotateCcw } from 'lucide-react';
 import { EditoExercise } from '@/lib/courses/edito-a1';
 import { AudioButton } from './AudioButton';
@@ -15,7 +15,8 @@ function shuffle<T>(arr: T[]): T[] {
 
 function SentenceItem({ words, ru, onDone }: { words: string[]; ru: string; onDone: () => void }) {
   const correct = words.join(' ');
-  const shuffled = useMemo(() => shuffle(words.map((w, i) => ({ word: w, id: i }))), []);
+  // Перемешиваем один раз при монтировании (ленивый useState вместо useMemo-с-пустыми-deps).
+  const [shuffled] = useState(() => shuffle(words.map((w, i) => ({ word: w, id: i }))));
   const [selected, setSelected] = useState<string[]>([]);
   const [available, setAvailable] = useState(shuffled);
   const [checked, setChecked] = useState(false);

@@ -26,16 +26,16 @@ async fn post(path: &str, body: serde_json::Value) -> Result<serde_json::Value, 
 
     let mut req = client.post(&url).json(&body);
     if let Some(token) = env_nonempty("MATH_SERVICE_TOKEN") {
-        req = req.header("Authorization", format!("Bearer {}", token));
+        req = req.header("Authorization", format!("Bearer {token}"));
     }
 
-    let resp = req.send().await.map_err(|e| format!("math service unreachable: {}", e))?;
+    let resp = req.send().await.map_err(|e| format!("math service unreachable: {e}"))?;
     if !resp.status().is_success() {
         let status = resp.status();
         let text = resp.text().await.unwrap_or_default();
         return Err(format!("math service {}: {}", status, text.chars().take(200).collect::<String>()));
     }
-    resp.json().await.map_err(|e| format!("math service bad response: {}", e))
+    resp.json().await.map_err(|e| format!("math service bad response: {e}"))
 }
 
 /// Численное значение выражения («3,5*2» → 7.0).

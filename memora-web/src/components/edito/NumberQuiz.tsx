@@ -16,9 +16,9 @@ function shuffle<T>(arr: T[]): T[] {
 export function NumberQuiz({ exercise, onComplete }: { exercise: EditoExercise; onComplete?: (result?: { correct: number; total: number }) => void }) {
   const mode = exercise.mode || 'digit-to-word';
   const allItems = exercise.items as NumberItem[] || [];
-  const initialItems = useMemo(() => shuffle(allItems), []);
-
-  const [sessionItems, setSessionItems] = useState(initialItems);
+  // Перемешиваем один раз при монтировании: ленивый инициализатор вместо
+  // useMemo-с-пустыми-deps (React Compiler такой мемоизации не доверяет).
+  const [sessionItems, setSessionItems] = useState(() => shuffle(allItems));
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
@@ -39,7 +39,7 @@ export function NumberQuiz({ exercise, onComplete }: { exercise: EditoExercise; 
       label: mode === 'digit-to-word' ? it.french : String(it.number),
       correct: it.number === item.number,
     }));
-  }, [current, sessionItems, mode]);
+  }, [item, allItems, mode]);
 
   const question = mode === 'digit-to-word' ? String(item?.number) : item?.french;
   const questionLabel = mode === 'digit-to-word' ? 'Как написать по-французски?' : 'Какое число?';

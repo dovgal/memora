@@ -54,11 +54,15 @@ jobs:
         working-directory: ./memora-api
         run: cargo check
 
-      # Clippy — информационно, не блокирует сборку (в проекте могут быть warnings).
-      - name: Clippy (non-blocking)
+      # Clippy — блокирующий: база вычищена до нуля предупреждений (слайс 19).
+      - name: Clippy
         working-directory: ./memora-api
-        continue-on-error: true
-        run: cargo clippy --all-targets
+        run: cargo clippy --all-targets -- -D warnings
+
+      # Юнит-тесты бэкенда (llm, subjects, coach, варианты, валидаторы).
+      - name: Test API (cargo test)
+        working-directory: ./memora-api
+        run: cargo test
 
       # --- Синхронизация типов Rust -> TypeScript ---
       - name: Generate Types
@@ -69,10 +73,9 @@ jobs:
         working-directory: ./memora-web
         run: npm install
 
-      # ESLint — информационно, не блокирует сборку.
-      - name: Lint web (non-blocking)
+      # ESLint — блокирующий по ошибкам (ошибки вычищены в слайсе 19; warnings не валят).
+      - name: Lint web
         working-directory: ./memora-web
-        continue-on-error: true
         run: npm run lint
 
       - name: Build Web

@@ -24,7 +24,7 @@ fn parse_id(s: &str) -> ApiResult<Uuid> {
     Uuid::parse_str(s).map_err(|_| ApiError::response(StatusCode::BAD_REQUEST, "Invalid ID"))
 }
 fn db_err(e: sqlx::Error) -> (StatusCode, Json<ApiError>) {
-    ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {}", e))
+    ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {e}"))
 }
 
 /// teacher | member | none

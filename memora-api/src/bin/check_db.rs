@@ -16,11 +16,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         
     println!("Tables in DB:");
     for (name,) in &tables {
-        println!("  - {}", name);
+        println!("  - {name}");
     }
     
     let has_audio_table = tables.iter().any(|(n,)| n == "flashcard_audio");
-    println!("\nflashcard_audio table exists: {}", has_audio_table);
+    println!("\nflashcard_audio table exists: {has_audio_table}");
     
     if has_audio_table {
         let count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM flashcard_audio")

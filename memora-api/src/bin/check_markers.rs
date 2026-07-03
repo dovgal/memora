@@ -14,7 +14,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let sample: Vec<(uuid::Uuid, String)> = sqlx::query_as("SELECT id, fields_data::text FROM flashcards WHERE fields_data::text LIKE '%__AUDIO_ON_SERVER__%' LIMIT 5").fetch_all(&pool).await?;
     for (id, data) in sample {
-        println!("{}: {}", id, data);
+        println!("{id}: {data}");
     }
     Ok(())
 }

@@ -52,7 +52,7 @@ pub async fn finish_onboarding(
 
     let response = UserResponse {
         id: user_id.to_string(),
-        email: format!("mock-{}@example.com", user_id),
+        email: format!("mock-{user_id}@example.com"),
         role: "student".to_string(), // In a real app, you might fetch the actual role from DB
     };
 

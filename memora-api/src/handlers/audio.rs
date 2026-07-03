@@ -76,7 +76,7 @@ pub async fn get_flashcard_audio(
 
                     let text_to_speak = match text {
                         Some(t) if !t.trim().is_empty() => t,
-                        _ => return Err(ApiError::response(StatusCode::BAD_REQUEST, format!("Text for field '{}' is empty, cannot generate TTS", field_id))),
+                        _ => return Err(ApiError::response(StatusCode::BAD_REQUEST, format!("Text for field '{field_id}' is empty, cannot generate TTS"))),
                     };
 
                     // B. Determine Voice ID from schema
@@ -108,8 +108,7 @@ pub async fn get_flashcard_audio(
                         }
                     }
 
-                    println!("INFO: Generating TTS on-the-fly: Card={}, Field={}, Voice={}, Text='{}'", 
-                        flashcard_uuid, field_id, voice_id, text_to_speak);
+                    println!("INFO: Generating TTS on-the-fly: Card={flashcard_uuid}, Field={field_id}, Voice={voice_id}, Text='{text_to_speak}'");
                     
                     let client = Client::new();
                     // SECURITY: never hardcode credentials. INWORLD_AUTH must come from the environment.
@@ -125,10 +124,10 @@ pub async fn get_flashcard_audio(
                         }))
                         .send()
                         .await
-                        .map_err(|e| ApiError::response(StatusCode::BAD_GATEWAY, format!("Inworld API Request Failed: {}", e)))?;
+                        .map_err(|e| ApiError::response(StatusCode::BAD_GATEWAY, format!("Inworld API Request Failed: {e}")))?;
 
                     if res.status().is_success() {
-                        let json: Value = res.json().await.map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to parse Inworld JSON: {}", e)))?;
+                        let json: Value = res.json().await.map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to parse Inworld JSON: {e}")))?;
                         if let Some(base64) = json.get("audioContent").and_then(|v| v.as_str()) {
                             if let Ok(bytes) = general_purpose::STANDARD.decode(base64) {
                                 // Save it for future requests
@@ -153,15 +152,15 @@ pub async fn get_flashcard_audio(
                     } else {
                         let err_status = res.status();
                         let err_text = res.text().await.unwrap_or_default();
-                        eprintln!("ERROR: Inworld TTS failed ({}): {}", err_status, err_text);
-                        return Err(ApiError::response(StatusCode::BAD_GATEWAY, format!("Inworld API Error ({}): {}", err_status, err_text)));
+                        eprintln!("ERROR: Inworld TTS failed ({err_status}): {err_text}");
+                        return Err(ApiError::response(StatusCode::BAD_GATEWAY, format!("Inworld API Error ({err_status}): {err_text}")));
                     }
                 } else {
-                    return Err(ApiError::response(StatusCode::NOT_FOUND, format!("Flashcard {} not found", flashcard_uuid)));
+                    return Err(ApiError::response(StatusCode::NOT_FOUND, format!("Flashcard {flashcard_uuid} not found")));
                 }
             }
             
-            Err(ApiError::response(StatusCode::NOT_FOUND, format!("Audio not found for field '{}'", field_id)))
+            Err(ApiError::response(StatusCode::NOT_FOUND, format!("Audio not found for field '{field_id}'")))
         },
     }
 }
@@ -206,7 +205,7 @@ pub async fn synthesize_tts(
     // Ключ кэша = sha256("voice|text")
     use sha2::{Digest, Sha256};
     let mut hasher = Sha256::new();
-    hasher.update(format!("{}|{}", voice_id, text).as_bytes());
+    hasher.update(format!("{voice_id}|{text}").as_bytes());
     let cache_key = format!("{:x}", hasher.finalize());
 
     // 1. Пытаемся отдать из кэша
@@ -237,21 +236,21 @@ pub async fn synthesize_tts(
         }))
         .send()
         .await
-        .map_err(|e| ApiError::response(StatusCode::BAD_GATEWAY, format!("Inworld API Request Failed: {}", e)))?;
+        .map_err(|e| ApiError::response(StatusCode::BAD_GATEWAY, format!("Inworld API Request Failed: {e}")))?;
 
     if !res.status().is_success() {
         let st = res.status();
         let body = res.text().await.unwrap_or_default();
-        eprintln!("ERROR: Inworld TTS failed ({}): {}", st, body);
-        return Err(ApiError::response(StatusCode::BAD_GATEWAY, format!("Inworld API Error ({}): {}", st, body)));
+        eprintln!("ERROR: Inworld TTS failed ({st}): {body}");
+        return Err(ApiError::response(StatusCode::BAD_GATEWAY, format!("Inworld API Error ({st}): {body}")));
     }
 
     let json: Value = res.json().await
-        .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to parse Inworld JSON: {}", e)))?;
+        .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to parse Inworld JSON: {e}")))?;
     let base64 = json.get("audioContent").and_then(|v| v.as_str())
         .ok_or_else(|| ApiError::response(StatusCode::BAD_GATEWAY, "Inworld response missing audioContent"))?;
     let bytes = general_purpose::STANDARD.decode(base64)
-        .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("base64 decode: {}", e)))?;
+        .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("base64 decode: {e}")))?;
 
     // 3. Кэшируем
     let _ = sqlx::query(

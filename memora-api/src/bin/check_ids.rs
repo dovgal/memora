@@ -16,7 +16,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?;
 
     for (field_id, count) in rows {
-        println!("{}: {}", field_id, count);
+        println!("{field_id}: {count}");
     }
 
     Ok(())

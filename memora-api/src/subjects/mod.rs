@@ -275,7 +275,7 @@ mod tests {
             "dialogue", "fill-blank", "number-quiz", "listening", "video",
         ];
         for t in legacy {
-            assert!(LANGUAGE_FR.allowed_types.contains(&t), "legacy type '{}' must stay allowed", t);
+            assert!(LANGUAGE_FR.allowed_types.contains(&t), "legacy type '{t}' must stay allowed");
         }
         assert!(LANGUAGE_FR.allowed_types.contains(&"dictation"));
         // error-hunt пока вне списка (follow-up).

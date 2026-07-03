@@ -24,7 +24,7 @@ pub async fn register(
 
     // Hash the password
     let hashed_password = hash(password, DEFAULT_COST)
-        .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to hash password: {}", e)))?;
+        .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to hash password: {e}")))?;
 
     // Insert user
     let user_id = Uuid::new_v4();
@@ -50,7 +50,7 @@ pub async fn register(
             Err(ApiError::response(StatusCode::CONFLICT, "User with this email already exists"))
         },
         Err(e) => {
-            Err(ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to create user: {}", e)))
+            Err(ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to create user: {e}")))
         }
     }
 }
@@ -68,12 +68,12 @@ pub async fn login(
     )
     .fetch_optional(&pool)
     .await
-    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {}", e)))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {e}")))?;
 
     if let Some(user) = user_record {
         if let Some(hash) = user.password_hash {
             let is_valid = verify(&payload.password, &hash)
-                .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to verify password: {}", e)))?;
+                .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to verify password: {e}")))?;
 
             if is_valid {
                 let response = UserResponse {
@@ -115,7 +115,7 @@ pub async fn oauth_google(
     )
     .fetch_optional(&pool)
     .await
-    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {}", e)))?;
+    .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {e}")))?;
 
     if let Some(user) = existing_user {
         let response = UserResponse {
@@ -142,7 +142,7 @@ pub async fn oauth_google(
 
     if let Err(e) = insert_user_result {
         let _ = tx.rollback().await;
-        return Err(ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to create user: {}", e)));
+        return Err(ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to create user: {e}")));
     }
 
     let insert_profile_result = sqlx::query!(
@@ -157,7 +157,7 @@ pub async fn oauth_google(
 
     if let Err(e) = insert_profile_result {
         let _ = tx.rollback().await;
-        return Err(ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to create profile: {}", e)));
+        return Err(ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to create profile: {e}")));
     }
 
     tx.commit().await.map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
