@@ -14,6 +14,10 @@ import {
 } from '@/lib/courses/customCoursesApi';
 import { langMeta } from '@/lib/courses/langMeta';
 import { ExerciseEditor, EXERCISE_TYPE_LABELS } from '@/components/courses/ExerciseEditor';
+import {
+  listSources, getSource, getChunkContent,
+  type SourceDocument, type SourceChunkSummary,
+} from '@/lib/sourcesApi';
 
 const inputCls = 'w-full bg-qz-bg border border-border rounded-xl px-3 py-2.5 text-sm text-foreground outline-none focus:border-[#4255ff]/60';
 
@@ -50,6 +54,12 @@ export default function UnitEditPage({ params }: { params: Promise<{ courseId: s
   const [aiOpen, setAiOpen] = useState(false);
   const [aiTopic, setAiTopic] = useState('');
   const [aiSource, setAiSource] = useState('');
+  // Выбор главы учебника как основы для генерации (страница /sources).
+  const [sourceDocs, setSourceDocs] = useState<SourceDocument[] | null>(null);
+  const [pickedDoc, setPickedDoc] = useState('');
+  const [docChunks, setDocChunks] = useState<SourceChunkSummary[]>([]);
+  const [pickedChunk, setPickedChunk] = useState('');
+  const [chunkBusy, setChunkBusy] = useState(false);
   const [aiBusy, setAiBusy] = useState(false);
 
   useEffect(() => {
@@ -210,6 +220,68 @@ export default function UnitEditPage({ params }: { params: Promise<{ courseId: s
                 className={`${inputCls} resize-y`}
                 placeholder="Необязательно: вставьте исходный текст (страницу учебника, статью) — ИИ построит юнит на его основе"
               />
+
+              {/* Грунт из загруженного учебника (страница «Учебники») */}
+              <div className="flex items-center gap-2 flex-wrap">
+                <select
+                  value={pickedDoc}
+                  onChange={async e => {
+                    const id = e.target.value;
+                    setPickedDoc(id);
+                    setPickedChunk('');
+                    setDocChunks([]);
+                    if (id && idToken) {
+                      try { setDocChunks((await getSource(id, idToken)).chunks); } catch { /* список недоступен */ }
+                    }
+                  }}
+                  onFocus={() => {
+                    if (sourceDocs === null && idToken) {
+                      listSources(idToken).then(setSourceDocs).catch(() => setSourceDocs([]));
+                    }
+                  }}
+                  className="bg-qz-bg border border-border rounded-xl px-3 py-2 text-sm text-foreground outline-none focus:border-[#4255ff]/60 max-w-[240px]"
+                >
+                  <option value="">Из учебника…</option>
+                  {(sourceDocs ?? []).map(d => <option key={d.id} value={d.id}>{d.title}</option>)}
+                </select>
+                {pickedDoc && (
+                  <select
+                    value={pickedChunk}
+                    onChange={e => setPickedChunk(e.target.value)}
+                    className="bg-qz-bg border border-border rounded-xl px-3 py-2 text-sm text-foreground outline-none focus:border-[#4255ff]/60 max-w-[220px]"
+                  >
+                    <option value="">Фрагмент…</option>
+                    {docChunks.map(c => (
+                      <option key={c.id} value={c.id}>
+                        {c.title || `Фрагмент ${c.position + 1}`} · {Math.round(c.chars / 100) / 10}k
+                      </option>
+                    ))}
+                  </select>
+                )}
+                {pickedDoc && pickedChunk && (
+                  <button
+                    onClick={async () => {
+                      if (!idToken || chunkBusy) return;
+                      setChunkBusy(true);
+                      try {
+                        const { content } = await getChunkContent(pickedDoc, pickedChunk, idToken);
+                        setAiSource(prev => (prev.trim() ? prev + '\n\n' : '') + content);
+                      } catch { /* фрагмент недоступен */ }
+                      finally { setChunkBusy(false); }
+                    }}
+                    disabled={chunkBusy}
+                    className="inline-flex items-center gap-1.5 text-[#4255ff] hover:underline text-xs font-semibold disabled:opacity-50"
+                  >
+                    {chunkBusy ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
+                    Вставить как основу
+                  </button>
+                )}
+                {sourceDocs !== null && sourceDocs.length === 0 && (
+                  <span className="text-qz-text-muted text-xs">
+                    Нет источников — загрузите на странице <Link href="/sources" className="text-[#4255ff] hover:underline">Учебники</Link>.
+                  </span>
+                )}
+              </div>
               <button
                 onClick={runAI}
                 disabled={aiBusy || !aiTopic.trim()}

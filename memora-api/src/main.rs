@@ -154,6 +154,11 @@ async fn main() {
         .route("/api/courses/{course_id}/coach/rating-stats", get(handlers::coach::get_rating_stats))
         .route("/api/courses/{course_id}/coach/session-plan", get(handlers::coach::get_session_plan))
         .route("/api/courses/{course_id}/dictionary", post(handlers::courses::add_to_dictionary))
+        // Источники (учебники): search раньше {id}, иначе 'search' матчится как UUID.
+        .route("/api/sources/search", get(handlers::sources::search_sources))
+        .route("/api/sources", get(handlers::sources::list_sources).post(handlers::sources::upload_source))
+        .route("/api/sources/{id}", get(handlers::sources::get_source).delete(handlers::sources::delete_source))
+        .route("/api/sources/{id}/chunks/{chunk_id}", get(handlers::sources::get_chunk))
         .route("/api/courses/{course_id}/coach/mark-known", post(handlers::coach::mark_known))
         // Классы v2: кабинеты преподавателя/ученика, задания, сообщения, подписки
         .route("/api/classes/mine", get(handlers::classroom::my_classes_all))

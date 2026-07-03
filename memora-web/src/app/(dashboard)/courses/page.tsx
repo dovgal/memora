@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import {
-  BookOpen, Plus, Pencil, Globe2, Lock, Loader2, GraduationCap, Search, Star,
+  BookOpen, Plus, Pencil, Globe2, Lock, Loader2, GraduationCap, Search, Star, Library,
 } from 'lucide-react';
 import { listCourses, createCourse, type CourseSummary } from '@/lib/courses/customCoursesApi';
 import { BUILTIN_COURSES, subjectForLanguage, type CatalogCourse } from '@/lib/courseCatalog';
@@ -127,14 +127,22 @@ export default function CoursesCatalogPage() {
               Нажмите ⭐, чтобы добавить курс в «Мой кабинет».
             </p>
           </div>
-          <button
-            onClick={handleCreate}
-            disabled={creating || !idToken}
-            className="inline-flex items-center gap-2 bg-[#4255ff] hover:bg-[#3344ee] disabled:opacity-50 text-white font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
-          >
-            {creating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
-            Создать курс
-          </button>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/sources"
+              className="inline-flex items-center gap-2 border border-border hover:border-[#4255ff]/50 text-foreground font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
+            >
+              <Library className="w-4 h-4" /> Учебники
+            </Link>
+            <button
+              onClick={handleCreate}
+              disabled={creating || !idToken}
+              className="inline-flex items-center gap-2 bg-[#4255ff] hover:bg-[#3344ee] disabled:opacity-50 text-white font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
+            >
+              {creating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
+              Создать курс
+            </button>
+          </div>
         </div>
 
         {error && <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-sm rounded-xl px-4 py-3">{error}</div>}
