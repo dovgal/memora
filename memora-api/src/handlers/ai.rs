@@ -1143,6 +1143,23 @@ struct DictationVariant {
     explanation: Option<String>,
 }
 
+/// Вариант числовой задачи. solutionExpression — арифметическое выражение решения:
+/// его вычисляет CAS-сервис (memora-math), и вариант принимается только если
+/// значение сходится с numericAnswer. LLM-арифметике без верификации не доверяем.
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct NumericVariant {
+    prompt: String,
+    numeric_answer: f64,
+    #[serde(default)]
+    tolerance: Option<f64>,
+    #[serde(default)]
+    unit: Option<String>,
+    solution_expression: String,
+    #[serde(default)]
+    explanation: Option<String>,
+}
+
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase")]
 struct SentenceBuilderVariant {
@@ -1218,6 +1235,18 @@ fn validate_dictation(v: &DictationVariant, avoid_norm: &[String]) -> Option<Str
     Some(signature)
 }
 
+/// Детерминированная часть валидации numeric-варианта (арифметику сверяет CAS отдельно).
+fn validate_numeric_variant(v: &NumericVariant, avoid_norm: &[String]) -> Option<String> {
+    let words = v.prompt.split_whitespace().count();
+    if !(4..=120).contains(&words) { return None; }
+    if !v.numeric_answer.is_finite() { return None; }
+    if v.tolerance.map(|t| !t.is_finite() || t < 0.0).unwrap_or(false) { return None; }
+    if v.solution_expression.trim().is_empty() || v.solution_expression.chars().count() > 200 { return None; }
+    let signature = normalize_sentence(&v.prompt);
+    if avoid_norm.contains(&signature) { return None; }
+    Some(signature)
+}
+
 /// Валидация sentence-builder: 1-4 предложения, в каждом 3-16 непустых слов и перевод.
 fn validate_sentence_builder(v: &SentenceBuilderVariant, avoid_norm: &[String]) -> Option<String> {
     if v.sentences.is_empty() || v.sentences.len() > 4 { return None; }
@@ -1240,6 +1269,8 @@ pub(crate) fn resolve_variant_format(requested: Option<&str>, seed_type: &str) -
             "fill-blank" => Some("fill-blank"),
             "sentence-builder" => Some("sentence-builder"),
             "dictation" => Some("dictation"),
+            // numeric дополнительно гейтится наличием CAS-сервиса (mathsvc::configured).
+            "numeric" => Some("numeric"),
             "error-hunt" => Some("error-hunt"),
             _ => None,
         },
@@ -1336,6 +1367,32 @@ pub(crate) fn variant_prompt(
             });
             (system, schema)
         }
+        "numeric" => {
+            let system = format!(
+                "Ты — преподаватель точных наук французской школы. Сгенерируй ОДНУ новую задачу \
+                 с числовым ответом, проверяющую ТО ЖЕ правило/приём, что и эталонное упражнение, \
+                 но с другими числами и другим сюжетом. {rule_block} \
+                 Условие — на французском (programme scolaire français), explanation — по-русски. \
+                 solutionExpression — арифметическое выражение, вычисляющее ответ (например (3.5*2)/7): \
+                 оно будет проверено системой компьютерной алгебры, считай внимательно. \
+                 Верни ТОЛЬКО валидный JSON без markdown: \
+                 {{\"prompt\": string, \"numericAnswer\": number, \"tolerance\": number, \
+                 \"unit\": string|null, \"solutionExpression\": string, \"explanation\": string}}"
+            );
+            let schema = serde_json::json!({
+                "type": "object",
+                "properties": {
+                    "prompt": { "type": "string" },
+                    "numericAnswer": { "type": "number" },
+                    "tolerance": { "type": "number" },
+                    "unit": { "type": ["string", "null"] },
+                    "solutionExpression": { "type": "string" },
+                    "explanation": { "type": "string" }
+                },
+                "required": ["prompt", "numericAnswer", "tolerance", "unit", "solutionExpression", "explanation"]
+            });
+            (system, schema)
+        }
         "dictation" => {
             let system = format!(
                 "Ты — методист языковой платформы Memora. Сгенерируй ОДНУ новую фразу для диктанта (dictée), \
@@ -1428,12 +1485,38 @@ pub(crate) fn try_build_variant(
                 "sentence": v.sentence.trim(), "translation": v.translation, "explanation": v.explanation,
             }), sig))
         }
+        "numeric" => {
+            let v: NumericVariant = serde_json::from_str(json).ok()?;
+            let sig = validate_numeric_variant(&v, avoid_norm)?;
+            // solutionExpression остаётся в payload: по нему CAS сверяет арифметику
+            // (verify_numeric_variant), а тьютор может показать ход решения.
+            Some((serde_json::json!({
+                "id": id, "type": "numeric", "title": seed_title,
+                "prompt": v.prompt.trim(), "numericAnswer": v.numeric_answer,
+                "tolerance": v.tolerance.unwrap_or(0.0), "unit": v.unit,
+                "solutionExpression": v.solution_expression.trim(), "explanation": v.explanation,
+            }), sig))
+        }
         _ => {
             let v: ErrorHuntVariant = serde_json::from_str(json).ok()?;
             if !validate_error_hunt(&v, avoid_norm) { return None; }
             let sig = normalize_sentence(&v.sentence);
             Some((build_variant_exercise(rule_id, seed_title, &v), sig))
         }
+    }
+}
+
+/// CAS-верификация numeric-варианта: solutionExpression должно вычисляться
+/// в numericAnswer (с учётом tolerance). Для остальных форматов — всегда true.
+/// Ошибка сервиса = брак варианта: без верификации арифметику не принимаем.
+pub(crate) async fn verify_numeric_variant(target: &str, variant: &serde_json::Value) -> bool {
+    if target != "numeric" { return true; }
+    let Some(expr) = variant.get("solutionExpression").and_then(|v| v.as_str()) else { return false };
+    let Some(answer) = variant.get("numericAnswer").and_then(|v| v.as_f64()) else { return false };
+    let tolerance = variant.get("tolerance").and_then(|v| v.as_f64()).unwrap_or(0.0).max(1e-9);
+    match crate::mathsvc::evaluate(expr).await {
+        Ok(value) => (value - answer).abs() <= tolerance,
+        Err(_) => false,
     }
 }
 
@@ -1491,6 +1574,10 @@ pub async fn regenerate_variant(
     let Some(target) = resolve_variant_format(payload.format.as_deref(), seed_type) else {
         return Ok(Json(RegenerateVariantResponse { variant: payload.seed_exercise, rule_id: payload.exercise_id, fallback: true }));
     };
+    // numeric-варианты возможны только с CAS-верификацией (memora-math).
+    if target == "numeric" && !crate::mathsvc::configured() {
+        return Ok(Json(RegenerateVariantResponse { variant: payload.seed_exercise, rule_id: payload.exercise_id, fallback: true }));
+    }
 
     // Быстрый путь: прегенерированный запас (фоновый воркер). Свежий неиспользованный
     // вариант нужного формата отдаём мгновенно, без обращения к LLM.
@@ -1539,6 +1626,9 @@ pub async fn regenerate_variant(
             Err(_) => break, // LLM недоступна — выходим к фолбэку
         };
         if let Some(built) = try_build_variant(target, &content, &payload.exercise_id, &seed_title, &avoid_norm) {
+            if !verify_numeric_variant(target, &built.0).await {
+                continue; // арифметика LLM не сошлась с CAS — пробуем ещё раз
+            }
             produced = Some(built);
             break;
         }

@@ -22,6 +22,7 @@ export const EXERCISE_TYPE_LABELS: Record<string, string> = {
   'dictation': 'Диктант',
   'numeric': 'Числовая задача',
   'ordering': 'Расставь по порядку',
+  'symbolic': 'Выражение (CAS)',
 };
 
 interface Props {
@@ -209,6 +210,24 @@ function TypeFields({ exercise, set }: { exercise: EditoExercise; set: (p: Parti
               <label className={labelCls}>Единица (необязательно)</label>
               <input value={exercise.unit ?? ''} onChange={e => set({ unit: e.target.value || undefined })} className={inputCls} placeholder="m²" />
             </div>
+          </div>
+          <div>
+            <label className={labelCls}>Пояснение (необязательно)</label>
+            <textarea value={exercise.explanation ?? ''} onChange={e => set({ explanation: e.target.value })} rows={2} className={`${inputCls} resize-y`} />
+          </div>
+        </div>
+      );
+
+    case 'symbolic':
+      return (
+        <div className="space-y-3">
+          <div>
+            <label className={labelCls}>Задание</label>
+            <textarea value={exercise.prompt ?? ''} onChange={e => set({ prompt: e.target.value })} rows={2} className={`${inputCls} resize-y`} placeholder="Développe : 2(x+1)" />
+          </div>
+          <div>
+            <label className={labelCls}>Ответ-выражение (эквивалентные формы засчитываются CAS-сервисом)</label>
+            <input value={exercise.expectedExpression ?? ''} onChange={e => set({ expectedExpression: e.target.value })} className={`${inputCls} font-mono`} placeholder="2*x + 2" />
           </div>
           <div>
             <label className={labelCls}>Пояснение (необязательно)</label>

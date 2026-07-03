@@ -22,12 +22,12 @@ import {
 const inputCls = 'w-full bg-qz-bg border border-border rounded-xl px-3 py-2.5 text-sm text-foreground outline-none focus:border-[#4255ff]/60';
 
 /** Типы только для школьных предметов — в палитре языковых курсов не показываются. */
-const STEM_ONLY_TYPES = new Set<string>(['numeric', 'ordering']);
+const STEM_ONLY_TYPES = new Set<string>(['numeric', 'ordering', 'symbolic']);
 
 /** Палитра по предмету — зеркало allowed_types серверных паков (subjects/mod.rs). */
 const PALETTE_BY_SUBJECT: Record<string, string[]> = {
-  math: ['theory', 'grammar-quiz', 'numeric', 'ordering'],
-  physics: ['theory', 'grammar-quiz', 'numeric', 'ordering'],
+  math: ['theory', 'grammar-quiz', 'numeric', 'ordering', 'symbolic'],
+  physics: ['theory', 'grammar-quiz', 'numeric', 'ordering', 'symbolic'],
   history: ['theory', 'grammar-quiz', 'ordering', 'fill-blank'],
 };
 
@@ -46,6 +46,7 @@ function newExercise(type: EditoExercise['type'], index: number): EditoExercise 
     case 'dictation': return { ...base, sentence: '', translation: '', explanation: '' };
     case 'numeric': return { ...base, prompt: '', numericAnswer: undefined, tolerance: 0, unit: '', explanation: '' };
     case 'ordering': return { ...base, prompt: '', orderItems: [], explanation: '' };
+    case 'symbolic': return { ...base, prompt: '', expectedExpression: '', explanation: '' };
     default: return base;
   }
 }

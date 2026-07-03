@@ -14,4 +14,5 @@ pub mod courses;
 pub mod coach;
 pub mod classroom;
 pub mod sources;
+pub mod checks;
 

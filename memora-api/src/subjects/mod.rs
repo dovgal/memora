@@ -111,9 +111,10 @@ pub static LANGUAGE_ES: SubjectPack = SubjectPack {
 
 // ---------- Школьные предметы (фаза 3): французская программа, контент на французском ----------
 
-/// Математика/физика: теория, MCQ (рендерер grammar-quiz), числовые задачи, упорядочивание.
+/// Математика/физика: теория, MCQ (рендерер grammar-quiz), числовые задачи,
+/// упорядочивание, символьные выражения (CAS-проверка через memora-math).
 /// `numeric` проверяется детерминированно на клиенте — LLM в пути проверки нет.
-const MATH_EXERCISE_TYPES: &[&str] = &["theory", "grammar-quiz", "numeric", "ordering"];
+const MATH_EXERCISE_TYPES: &[&str] = &["theory", "grammar-quiz", "numeric", "ordering", "symbolic"];
 
 /// История: MCQ, хронология (ordering), пропуски дат/терминов (fill-blank).
 const HISTORY_EXERCISE_TYPES: &[&str] = &["theory", "grammar-quiz", "ordering", "fill-blank"];

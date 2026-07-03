@@ -334,6 +334,17 @@ export async function generateStory(
   }));
 }
 
+/** CAS-проверка символьного ответа: «2(x+1)» эквивалентно «2x+2». 503 — сервис не настроен. */
+export async function checkSymbolic(
+  expected: string, given: string, idToken?: string,
+): Promise<{ correct: boolean }> {
+  return ok(await fetch('/api/check/symbolic', {
+    method: 'POST',
+    headers: headers(idToken),
+    body: JSON.stringify({ expected, given }),
+  }));
+}
+
 /** Добавить слово в личный словарь курса (набор «Словарь · {курс}», FSRS-цикл наборов). */
 export async function addToDictionary(
   courseId: string, term: string, definition: string, idToken?: string,

@@ -68,8 +68,9 @@ const RATINGS: Array<{ value: Rating; label: string; hint: string; cls: string }
   { value: 4, label: 'Легко', hint: 'без усилий', cls: 'border-[#4255ff]/40 text-[#4255ff] hover:bg-[#4255ff]/10' },
 ];
 
-/** Типы, для которых сервер умеет генерировать вариант того же правила. */
-const VARIANT_TYPES = new Set<string>(['error-hunt', 'grammar-quiz', 'fill-blank', 'sentence-builder', 'dictation']);
+/** Типы, для которых сервер умеет генерировать вариант того же правила.
+ *  numeric дополнительно требует CAS-сервис на бэкенде (иначе тихий фолбэк на эталон). */
+const VARIANT_TYPES = new Set<string>(['error-hunt', 'grammar-quiz', 'fill-blank', 'sentence-builder', 'dictation', 'numeric']);
 
 function autoRating(result: ExerciseResult): Rating {
   if (result.total <= 0) return 3;

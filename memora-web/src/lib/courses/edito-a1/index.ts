@@ -65,8 +65,11 @@ export function ruleLevel(ex: EditoExercise): string | undefined {
 
 export interface EditoExercise {
   id: string;
-  type: 'theory' | 'grammar-quiz' | 'sentence-builder' | 'gender-quiz' | 'dialogue' | 'fill-blank' | 'number-quiz' | 'listening' | 'video' | 'error-hunt' | 'dictation' | 'numeric' | 'ordering';
+  type: 'theory' | 'grammar-quiz' | 'sentence-builder' | 'gender-quiz' | 'dialogue' | 'fill-blank' | 'number-quiz' | 'listening' | 'video' | 'error-hunt' | 'dictation' | 'numeric' | 'ordering' | 'symbolic';
   title: string;
+  // symbolic (математика): ответ — выражение; эквивалентность проверяет CAS-сервис
+  // (POST /api/check/symbolic): «2(x+1)» засчитывается как «2x+2».
+  expectedExpression?: string;
   // numeric (STEM): задача с числовым ответом. Проверка детерминированная —
   // допуск (tolerance) + единицы измерения (unit / acceptedUnits с множителями).
   prompt?: string;

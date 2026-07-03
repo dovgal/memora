@@ -13,6 +13,7 @@ import { ErrorHunt } from './ErrorHunt';
 import { DictationExercise } from './DictationExercise';
 import { NumericExercise } from './NumericExercise';
 import { OrderingExercise } from './OrderingExercise';
+import { SymbolicExercise } from './SymbolicExercise';
 
 export type { ExerciseResult };
 
@@ -33,12 +34,13 @@ const KIND_TO_TYPE: Record<string, EditoExercise['type']> = {
   'dictation': 'dictation',
   'numeric': 'numeric',
   'ordering': 'ordering',
+  'symbolic': 'symbolic',
 };
 
 const RENDERABLE_TYPES = new Set<string>([
   'theory', 'grammar-quiz', 'gender-quiz', 'number-quiz', 'fill-blank',
   'dialogue', 'sentence-builder', 'listening', 'video', 'error-hunt', 'dictation',
-  'numeric', 'ordering',
+  'numeric', 'ordering', 'symbolic',
 ]);
 
 export function ExerciseRenderer({ exercise, onComplete }: ExerciseRendererProps) {
@@ -77,6 +79,8 @@ export function ExerciseRenderer({ exercise, onComplete }: ExerciseRendererProps
       return <NumericExercise exercise={exercise} onComplete={handleComplete} />;
     case 'ordering':
       return <OrderingExercise exercise={exercise} onComplete={handleComplete} />;
+    case 'symbolic':
+      return <SymbolicExercise exercise={exercise} onComplete={handleComplete} />;
     default:
       return null;
   }

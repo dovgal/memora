@@ -21,7 +21,7 @@ use std::time::Duration;
 
 use sqlx::{PgPool, Row};
 
-use crate::handlers::ai::{resolve_variant_format, try_build_variant, variant_prompt};
+use crate::handlers::ai::{resolve_variant_format, try_build_variant, variant_prompt, verify_numeric_variant};
 use crate::llm::{self, ChatMessage, ChatRequest, ResponseFormat, Task};
 
 fn env_u64(key: &str, default: u64, min: u64, max: u64) -> u64 {
@@ -157,6 +157,8 @@ async fn resolve_seed(
         let requested = policy.and_then(|p| p.get("format")).and_then(|f| f.as_str())
             .unwrap_or(if ex_type == "error-hunt" { "error-hunt" } else { "preserve" });
         let format = resolve_variant_format(Some(requested), ex_type)?;
+        // numeric — только с CAS-верификацией (memora-math).
+        if format == "numeric" && !crate::mathsvc::configured() { return None; }
 
         let language_code: String = row.get("language");
         let level: String = row.get("level");
@@ -257,6 +259,9 @@ async fn pregenerate_one(
             }
         };
         if let Some((variant, signature)) = try_build_variant(seed.format, &content, exercise_id, &seed_title, &avoid_norm) {
+            if !verify_numeric_variant(seed.format, &variant).await {
+                continue; // арифметика не сошлась с CAS — следующая попытка
+            }
             let payload_text = serde_json::to_string(&variant).unwrap_or_else(|_| "{}".to_string());
             let inserted = sqlx::query(
                 "INSERT INTO course_exercise_variants
