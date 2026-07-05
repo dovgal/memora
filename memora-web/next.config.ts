@@ -80,6 +80,31 @@ const nextConfig: NextConfig = {
         source: "/api/live/:path*",
         destination: `${rustApiUrl}/api/live/:path*`,
       },
+      // Источники/учебники (slice 13). Bare-путь отдельной записью — /api/sources
+      // (GET list / POST upload) вызывается без подпути.
+      {
+        source: "/api/sources/:path*",
+        destination: `${rustApiUrl}/api/sources/:path*`,
+      },
+      {
+        source: "/api/sources",
+        destination: `${rustApiUrl}/api/sources`,
+      },
+      // Символьная проверка (CAS, slice 17).
+      {
+        source: "/api/check/:path*",
+        destination: `${rustApiUrl}/api/check/:path*`,
+      },
+      // Семейное табло (slice 18).
+      {
+        source: "/api/family/:path*",
+        destination: `${rustApiUrl}/api/family/:path*`,
+      },
+      // Push-подписки (slice 20).
+      {
+        source: "/api/push/:path*",
+        destination: `${rustApiUrl}/api/push/:path*`,
+      },
     ];
   },
 };
