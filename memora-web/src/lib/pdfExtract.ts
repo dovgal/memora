@@ -15,7 +15,11 @@ export async function extractPdfText(
   ).toString();
 
   const data = await file.arrayBuffer();
-  const doc = await pdfjs.getDocument({ data }).promise;
+  // pdfjs 6: держим ссылку на loadingTask — destroy() переехал на него
+  // (у PDFDocumentProxy его больше нет); loadingTask.destroy() рвёт worker
+  // и освобождает ресурсы, как прежний doc.destroy().
+  const loadingTask = pdfjs.getDocument({ data });
+  const doc = await loadingTask.promise;
   const pages: string[] = [];
   for (let i = 1; i <= doc.numPages; i++) {
     const page = await doc.getPage(i);
@@ -28,7 +32,7 @@ export async function extractPdfText(
     pages.push(text);
     onProgress?.(i, doc.numPages);
   }
-  await doc.destroy();
+  await loadingTask.destroy();
   return pages;
 }
 
