@@ -282,7 +282,8 @@ mod tests {
         let mut hasher = Sha256::new();
         hasher.update("Alain|Bonjour".as_bytes());
         let key: String = hasher.finalize().iter().map(|b| format!("{b:02x}")).collect();
-        assert_eq!(key, "76825d5d77ca8a729d171c23eedeab8c6e5024e7caf473df0317e3481dca0962");
+        // gitleaks:allow — это эталонный sha256 «Alain|Bonjour», а не секрет.
+        assert_eq!(key, "76825d5d77ca8a729d171c23eedeab8c6e5024e7caf473df0317e3481dca0962"); // gitleaks:allow
         assert_eq!(key.len(), 64); // 32 байта × 2 hex-символа
     }
 }
