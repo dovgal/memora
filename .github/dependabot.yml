@@ -19,6 +19,13 @@ updates:
     groups:
       web-minor-patch:
         update-types: ["minor", "patch"]
+    ignore:
+      # TypeScript 7 (нативный компилятор) не поддерживается Next.js 16.2:
+      # чистый tsc проходит, но Next не резолвит tsconfig-алиасы @/* через TS-7 API,
+      # и сборка падает (см. закрытый PR #12). Остаёмся на 5.x до поддержки TS 7 в Next;
+      # 5.x minor/patch продолжают прилетать. Убрать эту строку, когда Next добавит TS 7.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
 
   # Бэкенд (Cargo).
   - package-ecosystem: "cargo"
