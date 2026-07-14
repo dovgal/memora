@@ -91,7 +91,7 @@ pub async fn get_board(
         "SELECT u.id,
                 COALESCE(NULLIF(TRIM(CONCAT(p.first_name, ' ', COALESCE(p.last_name, ''))), ''),
                          split_part(u.email, '@', 1)) AS name,
-                COALESCE(x.xp, 0) + COALESCE(a.xp, 0) AS xp,
+                (COALESCE(x.xp, 0) + COALESCE(a.xp, 0))::bigint AS xp,
                 (SELECT COUNT(*) FROM course_review_logs l WHERE l.user_id = u.id) AS total_reviews,
                 (SELECT COUNT(*) FROM course_review_logs l WHERE l.user_id = u.id
                    AND (l.review_time + ($1 || ' minutes')::interval)::date
