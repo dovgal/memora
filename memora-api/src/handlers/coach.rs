@@ -123,7 +123,11 @@ pub async fn record_coach_review(
     .map_err(db_err)?;
 
     let now = chrono::Utc::now();
-    let fsrs = fsrs::FSRS::new(None)
+    // FSRS 6: new(&Parameters); пустой слайс → дефолтные параметры FSRS-6
+    // (эквивалент прежнего v5 FSRS::new(None)). next_states / MemoryState /
+    // ItemState.interval совместимы по API; существующие stability/difficulty
+    // остаются валидными входами планировщика.
+    let fsrs = fsrs::FSRS::new(&[])
         .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let mut current_memory = None;
@@ -594,6 +598,34 @@ mod tests {
         let out = interleave_by_unit(vec![entry("u1", "a"), entry("u1", "b")], 10);
         let ids: Vec<&str> = out.iter().map(|e| e.exercise_id.as_str()).collect();
         assert_eq!(ids, ["a", "b"]);
+    }
+
+    // Проверка планировщика после апгрейда FSRS 5 → 6: интервалы монотонны по рейтингу
+    // (again ≤ hard ≤ good ≤ easy) и валидны, а состояния из эпохи FSRS-5 (stability/
+    // difficulty из БД) корректно планируются без паники под FSRS-6.
+    #[test]
+    fn fsrs6_scheduling_is_sane_for_new_and_existing_states() {
+        let fsrs = fsrs::FSRS::new(&[]).expect("FSRS-6 default parameters");
+
+        // Новая карточка.
+        let ns = fsrs.next_states(None, 0.9, 0).expect("next_states for new card");
+        for s in [&ns.again, &ns.hard, &ns.good, &ns.easy] {
+            assert!(s.interval.is_finite() && s.interval >= 0.0, "interval sane");
+            assert!(s.memory.stability > 0.0 && s.memory.difficulty > 0.0, "memory sane");
+        }
+        assert!(ns.again.interval <= ns.hard.interval);
+        assert!(ns.hard.interval <= ns.good.interval);
+        assert!(ns.good.interval <= ns.easy.interval);
+
+        // Существующее состояние (типичные значения из БД, посчитанные под FSRS-5).
+        let existing = fsrs::MemoryState { stability: 15.0, difficulty: 5.0 };
+        let ns2 = fsrs.next_states(Some(existing), 0.9, 10).expect("next_states for existing");
+        for s in [&ns2.again, &ns2.hard, &ns2.good, &ns2.easy] {
+            assert!(s.interval.is_finite() && s.interval >= 0.0);
+        }
+        assert!(ns2.again.interval <= ns2.easy.interval);
+        // Успешный повтор зрелой карточки даёт заметный интервал (дни), а не ноль.
+        assert!(ns2.good.interval >= 1.0, "good interval grows for a mature card");
     }
 }
 

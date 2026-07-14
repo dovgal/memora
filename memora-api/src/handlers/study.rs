@@ -145,7 +145,8 @@ pub async fn fsrs_review(
     .map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let now = chrono::Utc::now();
-    let fsrs = fsrs::FSRS::new(None).map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    // FSRS 6: пустой слайс → дефолтные параметры FSRS-6 (было FSRS::new(None) в v5).
+    let fsrs = fsrs::FSRS::new(&[]).map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
     
     let mut current_memory = None;
     let mut elapsed_days = 0;
