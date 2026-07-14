@@ -203,7 +203,10 @@ pub async fn synthesize_tts(
     use sha2::{Digest, Sha256};
     let mut hasher = Sha256::new();
     hasher.update(format!("{voice_id}|{text}").as_bytes());
-    let cache_key = format!("{:x}", hasher.finalize());
+    // sha2 0.11: finalize() -> Array<u8, _>, у которого нет LowerHex.
+    // Собираем hex вручную — тот же lowercase-формат, что давал прежний {:x}
+    // (иначе ключи tts_cache перестали бы совпадать).
+    let cache_key: String = hasher.finalize().iter().map(|b| format!("{b:02x}")).collect();
 
     // 1. Пытаемся отдать из кэша
     use sqlx::Row;
@@ -265,4 +268,22 @@ pub async fn synthesize_tts(
         [(header::CONTENT_TYPE, "audio/mpeg"), (header::CACHE_CONTROL, "public, max-age=31536000")],
         bytes,
     ))
+}
+
+#[cfg(test)]
+mod tests {
+    use sha2::{Digest, Sha256};
+
+    /// Ключ TTS-кэша под sha2 0.11 должен давать ТОТ ЖЕ lowercase-hex, что и прежний
+    /// format!("{:x}", finalize) под 0.10 — иначе существующие записи tts_cache
+    /// перестанут находиться. Эталон — hashlib.sha256("Alain|Bonjour").
+    #[test]
+    fn cache_key_hex_matches_reference() {
+        let mut hasher = Sha256::new();
+        hasher.update("Alain|Bonjour".as_bytes());
+        let key: String = hasher.finalize().iter().map(|b| format!("{b:02x}")).collect();
+        // gitleaks:allow — это эталонный sha256 «Alain|Bonjour», а не секрет.
+        assert_eq!(key, "76825d5d77ca8a729d171c23eedeab8c6e5024e7caf473df0317e3481dca0962"); // gitleaks:allow
+        assert_eq!(key.len(), 64); // 32 байта × 2 hex-символа
+    }
 }
