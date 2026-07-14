@@ -11,6 +11,27 @@ use uuid::Uuid;
 use crate::domain::dtos::{AuthRequest, UserResponse};
 use super::errors::ApiError;
 
+/// Проверка email по списку allowlist (чистая логика — для тестов).
+/// Пустой список = allowlist отключён (регистрация открыта).
+fn email_in_allowlist(list: &str, email: &str) -> bool {
+    if list.trim().is_empty() {
+        return true; // не настроен — открыто (обратная совместимость)
+    }
+    let email = email.trim().to_lowercase();
+    list.split(',')
+        .map(|e| e.trim().to_lowercase())
+        .filter(|e| !e.is_empty())
+        .any(|allowed| allowed == email)
+}
+
+/// Разрешена ли регистрация этого email. `REGISTRATION_ALLOWLIST` — email через запятую;
+/// если задан, создание аккаунтов (и по паролю, и через Google SSO) разрешено только им.
+/// Если не задан — регистрация открыта (не ломаем существующий деплой).
+fn registration_allowed(email: &str) -> bool {
+    let list = std::env::var("REGISTRATION_ALLOWLIST").unwrap_or_default();
+    email_in_allowlist(&list, email)
+}
+
 pub async fn register(
     State(pool): State<PgPool>,
     Json(payload): Json<AuthRequest>,
@@ -20,6 +41,10 @@ pub async fn register(
 
     if email.is_empty() || password.len() < 6 {
         return Err(ApiError::response(StatusCode::BAD_REQUEST, "Email required and password must be at least 6 characters"));
+    }
+
+    if !registration_allowed(&email) {
+        return Err(ApiError::response(StatusCode::FORBIDDEN, "Registration is restricted on this instance"));
     }
 
     // Hash the password
@@ -125,7 +150,13 @@ pub async fn oauth_google(
         return Ok((StatusCode::OK, Json(response)));
     }
 
-    // 3. User does not exist, create a new one without a password
+    // 3. User does not exist — это регистрация нового аккаунта через Google SSO,
+    // поэтому здесь тоже действует allowlist (иначе любой Google-аккаунт создаётся).
+    // Уже существующие пользователи возвращаются выше и не блокируются.
+    if !registration_allowed(&email) {
+        return Err(ApiError::response(StatusCode::FORBIDDEN, "Registration is restricted on this instance"));
+    }
+
     let mut tx = pool.begin().await.map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
     let user_id = Uuid::new_v4();
@@ -168,4 +199,30 @@ pub async fn oauth_google(
     };
 
     Ok((StatusCode::CREATED, Json(response)))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::email_in_allowlist;
+
+    #[test]
+    fn empty_allowlist_is_open() {
+        assert!(email_in_allowlist("", "anyone@example.com"));
+        assert!(email_in_allowlist("   ", "anyone@example.com"));
+    }
+
+    #[test]
+    fn allowlist_matches_case_and_space_insensitively() {
+        let list = " Mom@Family.com , kid@family.com ";
+        assert!(email_in_allowlist(list, "mom@family.com"));
+        assert!(email_in_allowlist(list, "KID@FAMILY.COM"));
+        assert!(email_in_allowlist(list, "  kid@family.com  "));
+    }
+
+    #[test]
+    fn allowlist_rejects_outsiders() {
+        let list = "mom@family.com,kid@family.com";
+        assert!(!email_in_allowlist(list, "stranger@evil.com"));
+        assert!(!email_in_allowlist(list, ""));
+    }
 }

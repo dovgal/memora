@@ -84,9 +84,13 @@ pub async fn get_board(
 ) -> ApiResult<impl IntoResponse> {
     let offset_min = q.tz_offset_min.unwrap_or(0).clamp(-840, 840);
 
+    // Приватность: полный email в ответ НЕ отдаём. Имя — из профиля; если его нет,
+    // показываем только локальную часть email (хэндл до «@»), а не адрес целиком —
+    // так посторонний, зарегистрировавшийся на инстансе, не выкачает контакты семьи.
     let rows = sqlx::query(
-        "SELECT u.id, u.email,
-                COALESCE(NULLIF(TRIM(CONCAT(p.first_name, ' ', COALESCE(p.last_name, ''))), ''), u.email) AS name,
+        "SELECT u.id,
+                COALESCE(NULLIF(TRIM(CONCAT(p.first_name, ' ', COALESCE(p.last_name, ''))), ''),
+                         split_part(u.email, '@', 1)) AS name,
                 COALESCE(x.xp, 0) + COALESCE(a.xp, 0) AS xp,
                 (SELECT COUNT(*) FROM course_review_logs l WHERE l.user_id = u.id) AS total_reviews,
                 (SELECT COUNT(*) FROM course_review_logs l WHERE l.user_id = u.id
