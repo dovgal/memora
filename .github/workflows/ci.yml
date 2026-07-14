@@ -46,7 +46,7 @@ jobs:
       # Кэш бинарника typeshare-cli, чтобы не собирать его каждый раз (~минуты).
       - name: Cache typeshare-cli
         id: cache-typeshare
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cargo/bin/typeshare
           key: typeshare-cli-${{ runner.os }}
