@@ -1,0 +1,23 @@
+# Конфиг gitleaks для CI. Сканируем РАБОЧЕЕ ДЕРЕВО (gitleaks detect --no-git),
+# а НЕ историю: в истории уже лежат старые утёкшие секреты (.env, захардкоженный
+# Inworld) — они ротируются отдельно, и скан истории делал бы CI вечно красным.
+# Задача этого гейта — не пропустить НОВЫЙ секрет в свежем коммите.
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Заведомо безопасные плейсхолдеры и локальные dev-фикстуры (фейковые секреты)."
+paths = [
+  # Шаблон переменных окружения — только плейсхолдеры, реальных значений нет.
+  '''memora-api/\.env\.example''',
+  # Локальные отладочные скрипты: фейковый NEXTAUTH_SECRET ("super-secret-jwt-key"),
+  # localhost-подключения. Не идут в прод. (Кандидаты на удаление — это dev-мусор.)
+  '''memora-web/test\.sh''',
+  '''memora-web/test_auth\.js''',
+  '''memora-web/test_qchat\.js''',
+  '''memora-web/test-fetch\.js''',
+  '''test_db\.js''',
+  # README math-сервиса: примеры с токеном "dev".
+  '''memora-math/README\.md''',
+]

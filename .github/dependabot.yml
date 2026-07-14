@@ -1,0 +1,38 @@
+# Автообновление зависимостей + алерты по уязвимостям.
+# Раз в неделю, minor/patch сгруппированы в один PR (меньше шума),
+# major — отдельными PR (требуют внимания). Лимиты скромные — семейный проект.
+version: 2
+updates:
+  # GitHub Actions (версии в .github/workflows).
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+  # Фронтенд (npm).
+  - package-ecosystem: "npm"
+    directory: "/memora-web"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      web-minor-patch:
+        update-types: ["minor", "patch"]
+
+  # Бэкенд (Cargo).
+  - package-ecosystem: "cargo"
+    directory: "/memora-api"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      api-minor-patch:
+        update-types: ["minor", "patch"]
+
+  # CAS-микросервис (pip).
+  - package-ecosystem: "pip"
+    directory: "/memora-math"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5

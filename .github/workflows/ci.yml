@@ -13,6 +13,19 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
+  # Сканер секретов: рабочее дерево (не история — см. .gitleaks.toml).
+  # Отдельный быстрый job, идёт параллельно со сборкой.
+  gitleaks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run gitleaks (working tree only)
+        run: |
+          VERSION=8.30.1
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${VERSION}/gitleaks_${VERSION}_linux_x64.tar.gz" \
+            | tar -xz gitleaks
+          ./gitleaks detect --no-git --redact -c .gitleaks.toml --exit-code 1 -v
+
   build:
     runs-on: ubuntu-latest
 
