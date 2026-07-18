@@ -171,6 +171,8 @@ export interface VocabularyItem {
   fr: string;
   ru: string;
   type?: string; // 'word' | 'phrase'
+  /** Фонетическая транскрипция МФА (без квадратных скобок), напр. "bɔ̃ʒuʁ". */
+  ipa?: string;
 }
 
 export interface EditoUnit {

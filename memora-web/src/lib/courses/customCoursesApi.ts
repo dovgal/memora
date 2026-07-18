@@ -134,6 +134,23 @@ export async function deleteUnit(courseId: string, unitId: string, idToken?: str
   return ok(await fetch(`/api/courses/${courseId}/units/${unitId}`, { method: 'DELETE', headers: headers(idToken) }));
 }
 
+// ---------- Экспорт лексики курса в набор на повторение ----------
+
+export interface VocabularySetResult {
+  setId: string;
+  /** Добавлено этим вызовом (дубли пропущены). */
+  added: number;
+  /** Всего карточек в наборе. */
+  total: number;
+}
+
+/** Собрать лексику всех юнитов курса в личный набор «Лексика · {курс}» (идемпотентно). */
+export async function exportVocabularySet(courseId: string, idToken?: string): Promise<VocabularySetResult> {
+  return ok(await fetch(`/api/courses/${courseId}/vocabulary-set`, {
+    method: 'POST', headers: headers(idToken),
+  }));
+}
+
 // ---------- Прогресс (универсальный, как у Édito A1) ----------
 
 export interface ProgressEntry {

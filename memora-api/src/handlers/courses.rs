@@ -292,6 +292,131 @@ pub async fn add_to_dictionary(
     })))
 }
 
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct VocabularySetResponse {
+    pub set_id: String,
+    /// Сколько карточек добавлено этим вызовом (дубликаты пропущены).
+    pub added: i64,
+    /// Всего карточек в наборе после экспорта.
+    pub total: i64,
+}
+
+/// POST /api/courses/{course_id}/vocabulary-set
+/// Собирает лексику ВСЕХ юнитов курса в личный набор «Лексика · {курс}»
+/// для интервального повторения. Идемпотентен: повторный вызов доливает только
+/// новые слова (сравнение term без учёта регистра), прогресс FSRS не трогает.
+pub async fn export_vocabulary_set(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Path(course_id): Path<String>,
+) -> ApiResult<impl IntoResponse> {
+    let user_id = uid(&user.sub)?;
+    let cid = parse_id(&course_id)?;
+
+    let row = sqlx::query("SELECT owner_id, title, is_published FROM custom_courses WHERE id = $1")
+        .bind(cid)
+        .fetch_optional(&pool)
+        .await
+        .map_err(db_err)?
+        .ok_or_else(|| ApiError::response(StatusCode::NOT_FOUND, "Course not found"))?;
+    let owner: Uuid = row.get("owner_id");
+    let is_published: bool = row.get("is_published");
+    if owner != user_id && !is_published {
+        return Err(ApiError::response(StatusCode::FORBIDDEN, "This course is not published"));
+    }
+    let course_title: String = row.get("title");
+    let set_title: String = format!("Лексика · {course_title}").chars().take(120).collect();
+
+    let unit_rows = sqlx::query(
+        "SELECT vocabulary FROM custom_course_units WHERE course_id = $1 ORDER BY position ASC, created_at ASC"
+    )
+    .bind(cid)
+    .fetch_all(&pool)
+    .await
+    .map_err(db_err)?;
+
+    // (term, definition) в порядке юнитов; дубли между юнитами схлопываем сразу.
+    let mut seen = std::collections::HashSet::new();
+    let mut cards: Vec<(String, String)> = Vec::new();
+    for r in unit_rows {
+        let vocab: serde_json::Value = r.get("vocabulary");
+        let Some(items) = vocab.as_array() else { continue };
+        for item in items {
+            let term = item.get("fr").and_then(|v| v.as_str()).unwrap_or("").trim();
+            let ru = item.get("ru").and_then(|v| v.as_str()).unwrap_or("").trim();
+            if term.is_empty() || ru.is_empty() { continue }
+            // IPA-транскрипция (если есть) едет в определение — на обороте карточки.
+            let ipa = item.get("ipa").and_then(|v| v.as_str()).unwrap_or("").trim();
+            let definition = if ipa.is_empty() { ru.to_string() } else { format!("[{ipa}] {ru}") };
+            if seen.insert(term.to_lowercase()) {
+                cards.push((term.chars().take(200).collect(), definition.chars().take(500).collect()));
+            }
+        }
+    }
+    if cards.is_empty() {
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "Course has no vocabulary to export"));
+    }
+
+    let mut tx = pool.begin().await.map_err(db_err)?;
+
+    let set_id: Uuid = match sqlx::query("SELECT id FROM sets WHERE creator_id = $1 AND title = $2")
+        .bind(user_id)
+        .bind(&set_title)
+        .fetch_optional(&mut *tx)
+        .await
+        .map_err(db_err)?
+    {
+        Some(r) => r.get("id"),
+        None => {
+            let r = sqlx::query(
+                "INSERT INTO sets (creator_id, title, description, is_public, fields_schema)
+                 VALUES ($1, $2, $3, FALSE, '[]'::jsonb) RETURNING id"
+            )
+            .bind(user_id)
+            .bind(&set_title)
+            .bind("Слова и фразы курса — для интервального повторения")
+            .fetch_one(&mut *tx)
+            .await
+            .map_err(db_err)?;
+            r.get("id")
+        }
+    };
+
+    let mut added = 0i64;
+    for (term, definition) in &cards {
+        let inserted = sqlx::query(
+            "INSERT INTO flashcards (set_id, term, definition, order_index, fields_data)
+             SELECT $1, $2, $3,
+                    (SELECT COALESCE(MAX(order_index) + 1, 0) FROM flashcards WHERE set_id = $1),
+                    '{}'::jsonb
+             WHERE NOT EXISTS (SELECT 1 FROM flashcards WHERE set_id = $1 AND LOWER(term) = LOWER($2))"
+        )
+        .bind(set_id)
+        .bind(term)
+        .bind(definition)
+        .execute(&mut *tx)
+        .await
+        .map_err(db_err)?;
+        added += inserted.rows_affected() as i64;
+    }
+
+    let total: i64 = sqlx::query("SELECT COUNT(*) AS n FROM flashcards WHERE set_id = $1")
+        .bind(set_id)
+        .fetch_one(&mut *tx)
+        .await
+        .map_err(db_err)?
+        .get("n");
+
+    tx.commit().await.map_err(db_err)?;
+
+    Ok((StatusCode::OK, Json(VocabularySetResponse {
+        set_id: set_id.to_string(),
+        added,
+        total,
+    })))
+}
+
 // ---------- Course CRUD ----------
 
 /// GET /api/courses — мои курсы + опубликованные курсы других пользователей.

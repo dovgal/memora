@@ -55,10 +55,10 @@ pub struct SubjectPack {
     pub tts_voice: TtsVoice,
 }
 
-/// Типы упражнений языковых паков: legacy-список из `handlers/courses.rs`
-/// + `dictation` (слайс 10) + `error-hunt` (какография Voltaire; включён при создании
-/// курса Le français.ru — рендерер, редактор и вариантный конвейер поддерживали его
-/// всегда, не пускала только серверная валидация юнитов).
+/// Типы упражнений языковых паков: legacy-список из `handlers/courses.rs`,
+/// плюс `dictation` (слайс 10) и `error-hunt` (какография Voltaire; включён при
+/// создании курса Le français.ru — рендерер, редактор и вариантный конвейер
+/// поддерживали его всегда, не пускала только серверная валидация юнитов).
 const LANGUAGE_EXERCISE_TYPES: &[&str] = &[
     "theory", "grammar-quiz", "sentence-builder", "gender-quiz",
     "dialogue", "fill-blank", "number-quiz", "listening", "video",

@@ -5,10 +5,11 @@
 import { use, useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import { ChevronLeft, CheckCircle2, Loader2, SkipForward } from 'lucide-react';
+import { ChevronLeft, CheckCircle2, Loader2, SkipForward, Volume2 } from 'lucide-react';
 import { ExerciseRenderer } from '@/components/edito/ExerciseRenderer';
+import { speakInworldLanguage } from '@/lib/courses/ttsInworld';
 import {
-  getUnit, getCourseProgress, recordExerciseProgress, markUnitKnown,
+  getUnit, getCourse, getCourseProgress, recordExerciseProgress, markUnitKnown,
   type UnitDetail,
 } from '@/lib/courses/customCoursesApi';
 
@@ -18,6 +19,7 @@ export default function CustomUnitPage({ params }: { params: Promise<{ courseId:
   const idToken = session?.id_token as string | undefined;
 
   const [unit, setUnit] = useState<UnitDetail | null>(null);
+  const [language, setLanguage] = useState('fr');
   const [error, setError] = useState<string | null>(null);
   const [completed, setCompleted] = useState<Record<string, boolean>>({});
 
@@ -27,6 +29,9 @@ export default function CustomUnitPage({ params }: { params: Promise<{ courseId:
     getUnit(courseId, unitId, idToken)
       .then(u => { if (!cancelled) setUnit(u); })
       .catch(e => { if (!cancelled) setError(e.message); });
+    getCourse(courseId, idToken)
+      .then(c => { if (!cancelled && c.language) setLanguage(c.language); })
+      .catch(() => {});
     getCourseProgress(courseId, idToken).then(entries => {
       if (cancelled) return;
       const persisted: Record<string, boolean> = {};
@@ -127,15 +132,23 @@ export default function CustomUnitPage({ params }: { params: Promise<{ courseId:
           </div>
         )}
 
-        {/* Словарь юнита */}
+        {/* Словарь юнита: озвучка по клику + транскрипция МФА */}
         {unit.vocabulary.length > 0 && (
           <div className="bg-qz-card border border-border rounded-xl p-4 mb-6">
             <h2 className="text-foreground text-sm font-semibold mb-3">Лексика юнита</h2>
             <div className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5">
               {unit.vocabulary.map((v, i) => (
-                <div key={i} className="flex items-baseline justify-between gap-3 text-sm">
-                  <span className="text-foreground font-medium">{v.fr}</span>
-                  <span className="text-qz-text-muted text-xs text-right">{v.ru}</span>
+                <div key={i} className="flex items-center justify-between gap-3 text-sm">
+                  <button
+                    onClick={() => speakInworldLanguage(v.fr, language)}
+                    className="flex items-center gap-1.5 min-w-0 text-left group"
+                    title="Прослушать произношение"
+                  >
+                    <Volume2 className="w-3.5 h-3.5 shrink-0 text-qz-text-muted group-hover:text-[#4255ff] transition-colors" />
+                    <span className="text-foreground font-medium group-hover:text-[#4255ff] transition-colors">{v.fr}</span>
+                    {v.ipa && <span className="text-qz-text-muted text-xs font-mono shrink-0">[{v.ipa}]</span>}
+                  </button>
+                  <span className="text-qz-text-muted text-xs text-right shrink-0">{v.ru}</span>
                 </div>
               ))}
             </div>

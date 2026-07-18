@@ -168,6 +168,7 @@ async fn main() {
         .route("/api/courses/{course_id}/coach/rating-stats", get(handlers::coach::get_rating_stats))
         .route("/api/courses/{course_id}/coach/session-plan", get(handlers::coach::get_session_plan))
         .route("/api/courses/{course_id}/dictionary", post(handlers::courses::add_to_dictionary))
+        .route("/api/courses/{course_id}/vocabulary-set", post(handlers::courses::export_vocabulary_set))
         // Источники (учебники): search раньше {id}, иначе 'search' матчится как UUID.
         .route("/api/sources/search", get(handlers::sources::search_sources))
         .route("/api/sources", get(handlers::sources::list_sources).post(handlers::sources::upload_source))

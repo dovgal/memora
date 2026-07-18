@@ -1,12 +1,13 @@
 'use client';
 // Страница курса (плеер): список юнитов с прогрессом + вход в коуч-режим.
 
-import { use, useEffect, useState } from 'react';
+import { use, useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { ChevronLeft, Pencil, Loader2, Brain, CheckCircle2, MessagesSquare, BookOpenText, BarChart3, GraduationCap, AudioLines } from 'lucide-react';
+import { ChevronLeft, Pencil, Loader2, Brain, CheckCircle2, MessagesSquare, BookOpenText, BarChart3, GraduationCap, AudioLines, Layers } from 'lucide-react';
 import {
-  getCourse, getCourseProgress,
+  getCourse, getCourseProgress, exportVocabularySet,
   type CourseDetail, type ProgressEntry,
 } from '@/lib/courses/customCoursesApi';
 
@@ -15,15 +16,33 @@ export default function CustomCoursePage({ params }: { params: Promise<{ courseI
   const { data: session } = useSession();
   const idToken = session?.id_token as string | undefined;
 
+  const router = useRouter();
   const [course, setCourse] = useState<CourseDetail | null>(null);
   const [progress, setProgress] = useState<ProgressEntry[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [exporting, setExporting] = useState(false);
 
   useEffect(() => {
     if (!idToken) return;
     getCourse(courseId, idToken).then(setCourse).catch(e => setError(e.message));
     getCourseProgress(courseId, idToken).then(setProgress).catch(() => {});
   }, [courseId, idToken]);
+
+  // Лексика всех юнитов → личный набор «Лексика · {курс}» (study/FSRS).
+  const handleExportVocabulary = useCallback(async () => {
+    if (exporting) return;
+    setExporting(true);
+    try {
+      const r = await exportVocabularySet(courseId, idToken);
+      alert(r.added > 0
+        ? `Добавлено ${r.added} карточек (всего в наборе: ${r.total}). Открываю набор.`
+        : `Все слова курса уже в наборе (${r.total} карточек). Открываю набор.`);
+      router.push(`/set/${r.setId}`);
+    } catch (e) {
+      alert(`Не удалось создать набор: ${e instanceof Error ? e.message : e}`);
+    }
+    setExporting(false);
+  }, [courseId, idToken, exporting, router]);
 
   if (error) {
     return (
@@ -94,6 +113,14 @@ export default function CustomCoursePage({ params }: { params: Promise<{ courseI
               >
                 <BarChart3 className="w-4 h-4" /> Прогресс
               </Link>
+              <button
+                onClick={handleExportVocabulary}
+                disabled={exporting}
+                title="Собрать слова и фразы всех юнитов в набор карточек для повторения"
+                className="inline-flex items-center gap-2 border border-border hover:border-[#ffcd1f]/50 text-foreground font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors disabled:opacity-60"
+              >
+                {exporting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Layers className="w-4 h-4" />} Слова на повторение
+              </button>
               {course.isOwner && (
                 <Link
                   href={`/courses/${courseId}/edit`}

@@ -24,13 +24,16 @@ async function getAuthHeaders(): Promise<Record<string, string>> {
   return cachedToken ? { Authorization: `Bearer ${cachedToken}` } : {};
 }
 
-async function playInworld(text: string, voice: string, waitEnd: boolean): Promise<void> {
+async function playInworld(text: string, voice: string, waitEnd: boolean, language?: string): Promise<void> {
   const clean = (text || "").trim();
   if (!clean) return;
   try {
     // остановим предыдущее воспроизведение
     if (currentAudio) { currentAudio.pause(); currentAudio = null; }
-    const url = `/api/tts?text=${encodeURIComponent(clean)}&voice=${encodeURIComponent(voice)}`;
+    // language задан — голос выбирает предметный пак на бэкенде; иначе явный voice.
+    const url = language
+      ? `/api/tts?text=${encodeURIComponent(clean)}&language=${encodeURIComponent(language)}`
+      : `/api/tts?text=${encodeURIComponent(clean)}&voice=${encodeURIComponent(voice)}`;
     const headers = await getAuthHeaders();
     const res = await fetch(url, { cache: "force-cache", headers });
     if (!res.ok) {
@@ -70,6 +73,14 @@ export async function speakInworld(text: string, voice = "Alain"): Promise<void>
 /** То же, но промис резолвится по ОКОНЧАНИИ воспроизведения (для голосового диалога). */
 export async function speakInworldAndWait(text: string, voice = "Alain"): Promise<void> {
   return playInworld(text, voice, true);
+}
+
+/**
+ * Озвучить текст голосом изучаемого языка курса ('fr'/'en'/'de'/'es'…) —
+ * конкретный голос выбирает предметный пак на бэкенде.
+ */
+export async function speakInworldLanguage(text: string, language: string): Promise<void> {
+  return playInworld(text, "", false, language || undefined);
 }
 
 /** Озвучить карточку лексики из сид-набора (Inworld по UUID карты), с fallback на /api/tts. */
