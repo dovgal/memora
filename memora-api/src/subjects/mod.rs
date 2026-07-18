@@ -56,15 +56,13 @@ pub struct SubjectPack {
 }
 
 /// Типы упражнений языковых паков: legacy-список из `handlers/courses.rs`
-/// + `dictation` (диктант, слайс 10 плана июля-2026).
-///
-/// ПРИМЕЧАНИЕ: `error-hunt` сознательно НЕ включён — он отсутствовал в исходном
-/// серверном списке (хотя рендерер и генератор вариантов его поддерживают).
-/// Включение `error-hunt` в allowed_types — отдельный follow-up.
+/// + `dictation` (слайс 10) + `error-hunt` (какография Voltaire; включён при создании
+/// курса Le français.ru — рендерер, редактор и вариантный конвейер поддерживали его
+/// всегда, не пускала только серверная валидация юнитов).
 const LANGUAGE_EXERCISE_TYPES: &[&str] = &[
     "theory", "grammar-quiz", "sentence-builder", "gender-quiz",
     "dialogue", "fill-blank", "number-quiz", "listening", "video",
-    "dictation",
+    "dictation", "error-hunt",
 ];
 
 /// `language-fr` — эталон обратной совместимости. ДОЛЖЕН повторять текущее поведение
@@ -278,7 +276,8 @@ mod tests {
             assert!(LANGUAGE_FR.allowed_types.contains(&t), "legacy type '{t}' must stay allowed");
         }
         assert!(LANGUAGE_FR.allowed_types.contains(&"dictation"));
-        // error-hunt пока вне списка (follow-up).
-        assert!(!LANGUAGE_FR.allowed_types.contains(&"error-hunt"));
+        // error-hunt включён (июльский follow-up закрыт): рендерер, редактор и
+        // вариантный конвейер поддерживали его всегда — не пускала только валидация.
+        assert!(LANGUAGE_FR.allowed_types.contains(&"error-hunt"));
     }
 }
