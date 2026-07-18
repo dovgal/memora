@@ -274,3 +274,99 @@ export function generateTest(allCards: FlashcardResponse[], config: TestConfig):
 
     return testQuestions;
 }
+
+// ---------- Умная проверка письменных ответов ----------
+
+// Русские числительные для эквивалентности «7 часов» == «семь часов».
+const RU_NUMBERS: Record<string, string> = {
+    '0': 'ноль', '1': 'один', '2': 'два', '3': 'три', '4': 'четыре', '5': 'пять',
+    '6': 'шесть', '7': 'семь', '8': 'восемь', '9': 'девять', '10': 'десять',
+    '11': 'одиннадцать', '12': 'двенадцать', '13': 'тринадцать', '14': 'четырнадцать',
+    '15': 'пятнадцать', '16': 'шестнадцать', '17': 'семнадцать', '18': 'восемнадцать',
+    '19': 'девятнадцать', '20': 'двадцать', '30': 'тридцать', '40': 'сорок',
+    '50': 'пятьдесят', '60': 'шестьдесят', '70': 'семьдесят', '80': 'восемьдесят',
+    '90': 'девяносто', '100': 'сто',
+};
+
+function normalizeAnswer(s: string): string {
+    return s
+        .toLowerCase()
+        .replace(/ё/g, 'е')
+        // терминальная и «декоративная» пунктуация не влияет на смысл
+        .replace(/[.,!?;:«»"„“”…]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+        // одиночные числа заменяем словами (только точные ключи из словаря)
+        .split(' ')
+        .map(w => RU_NUMBERS[w] ?? w)
+        .join(' ');
+}
+
+function levenshtein(a: string, b: string): number {
+    if (a === b) return 0;
+    const m = a.length, n = b.length;
+    if (m === 0) return n;
+    if (n === 0) return m;
+    let prev = Array.from({ length: n + 1 }, (_, i) => i);
+    for (let i = 1; i <= m; i++) {
+        const cur = [i];
+        for (let j = 1; j <= n; j++) {
+            cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+        }
+        prev = cur;
+    }
+    return prev[n];
+}
+
+/**
+ * Эталон карточки → список допустимых ответов:
+ * - ведущая транскрипция «[bɔ̃ʒuʁ] привет» отбрасывается;
+ * - альтернативы через « / » или «;» — каждая засчитывается отдельно;
+ * - текст в скобках опционален: «привет (неформально)» ≈ «привет».
+ */
+export function acceptableAnswers(correct: string): string[] {
+    const noIpa = correct.trim().replace(/^\[[^\]]*\]\s*/, '');
+    const variants = noIpa.split(/\s*[/;]\s*/).filter(Boolean);
+
+    // Запятая в словарном переводе обычно тоже разделяет синонимы
+    // («здравствуйте, добрый день»). Но только если каждая часть короткая —
+    // предложения с запятыми («Спасибо, я приду завтра утром») не режем.
+    const commaExpanded: string[] = [];
+    for (const v of variants) {
+        commaExpanded.push(v);
+        const parts = v.split(',').map(p => p.trim()).filter(Boolean);
+        if (parts.length > 1 && parts.every(p => p.split(/\s+/).length <= 3)) {
+            commaExpanded.push(...parts);
+        }
+    }
+
+    const out = new Set<string>();
+    for (const v of commaExpanded) {
+        out.add(normalizeAnswer(v));
+        const noParens = v.replace(/\s*\([^)]*\)\s*/g, ' ');
+        if (noParens !== v) out.add(normalizeAnswer(noParens));
+    }
+    out.delete('');
+    return [...out];
+}
+
+/**
+ * Проверка письменного ответа с учётом режима оценивания.
+ * strict — точное совпадение после нормализации (регистр/пунктуация/скобки/числа);
+ * soft — дополнительно прощает 1 опечатку в слове от 5 букв (2 — от 9 букв).
+ */
+export function checkWrittenAnswer(userAnswer: string, correctAnswer: string, mode: 'soft' | 'moderate' | 'strict' = 'strict'): boolean {
+    const user = normalizeAnswer(userAnswer);
+    if (!user) return false;
+    const targets = acceptableAnswers(correctAnswer);
+    if (targets.includes(user)) return true;
+    if (mode === 'strict') return false;
+
+    // Мягкий/умеренный режим: допускаем небольшие опечатки.
+    for (const t of targets) {
+        const dist = levenshtein(user, t);
+        const allowed = t.length >= 9 ? 2 : t.length >= 5 ? 1 : 0;
+        if (dist <= allowed) return true;
+    }
+    return false;
+}

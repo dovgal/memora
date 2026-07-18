@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { SetResponse, FlashcardResponse, FlashcardProgressRequest, FieldSchema, AIExercise, AIGradeResponse } from "@/types/schema"
-import { generateLearnQueue, createMultipleChoiceQuestion, TestQuestion, getCardText, getCardSingleField } from "@/lib/studyUtils"
+import { generateLearnQueue, createMultipleChoiceQuestion, TestQuestion, getCardText, getCardSingleField, checkWrittenAnswer } from "@/lib/studyUtils"
+import { speakInworld } from "@/lib/courses/ttsInworld"
 import { X, CheckCircle, XCircle, Loader2, ChevronRight, GraduationCap, Settings, Edit2, Volume2, Shuffle, Star, ChevronDown, ChevronUp, Mic } from "lucide-react"
 import { QChatProvider, WhyWrongButton } from "@/components/QChat"
 import Image from "next/image"
@@ -13,7 +14,7 @@ import Image from "next/image"
 export default function LearnModePage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = React.use(params);
     const router = useRouter()
-    const { data: session } = useSession()
+    const { data: session, status: sessionStatus } = useSession()
     const [set, setSet] = useState<SetResponse | null>(null)
 
     // Quiz State
@@ -33,7 +34,9 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
     
     // AI-Pro State
     const [isAiPro, setIsAiPro] = useState(true)
-    const [aiExercises, setAiExercises] = useState<AIExercise[]>([])
+    // Выровнено по индексам queue: aiExercises[i] относится к карточке queue[i]
+    // (undefined — для этой позиции AI-упражнения нет, работает локальный вопрос).
+    const [aiExercises, setAiExercises] = useState<(AIExercise | undefined)[]>([])
     const [aiFeedback, setAiFeedback] = useState<AIGradeResponse | null>(null)
     const [, setIsGrading] = useState(false)
     const [isRecording, setIsRecording] = useState(false)
@@ -45,14 +48,15 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
     const [showImages, setShowImages] = useState({ questions: true, options: false })
     const [gradingOption, setGradingOption] = useState<'soft' | 'moderate' | 'strict'>('strict')
     const [requireRetype, setRequireRetype] = useState(false)
-    const [ttsEnabled, setTtsEnabled] = useState(false)
+    const [ttsEnabled, setTtsEnabled] = useState(true)
 
     // Accordion State
     const [openAccordion, setOpenAccordion] = useState<string | null>('gradingOptions')
 
-    // TTS Function
-    const playQuestionAudio = (question: TestQuestion) => {
-        if (!ttsEnabled && document.getElementById('tts-toggle')) return;
+    // TTS Function. manual=true — клик по динамику (играет всегда),
+    // manual=false — автоозвучка нового вопроса (только при включённом тумблере).
+    const playQuestionAudio = (question: TestQuestion, manual = false) => {
+        if (!manual && !ttsEnabled) return;
         const currentCard = question.flashcard;
 
         let promptSide: 'front' | 'back' = 'front';
@@ -72,7 +76,19 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
             }
         }
 
-        if (audioUrls.length === 0) return;
+        if (audioUrls.length === 0) {
+            // Записанного аудио нет — синтезируем текст вопроса через Inworld.
+            // Озвучиваем только текст на изучаемом языке (латиница); русский
+            // перевод голосом Alain звучал бы бессмысленно.
+            const aiQuestion = isAiPro ? aiExercises[currentIndex]?.question : undefined;
+            const text = (question.type === 'WRITTEN' && aiQuestion)
+                ? aiQuestion
+                : getCardText(currentCard, promptSide, set?.fieldsSchema, false);
+            if (text && /[a-zà-öø-ÿœæ]/i.test(text) && !/[а-яё]/i.test(text)) {
+                speakInworld(text);
+            }
+            return;
+        }
         let audioIndex = 0;
         const playNext = () => {
             if (audioIndex < audioUrls.length) {
@@ -136,14 +152,63 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
         });
     }
 
+    // Защита от повторной полной загрузки: useSession меняет идентичность session
+    // при гидратации, а падение AI-генерации не должно перезапускать весь фетч.
+    const startedForId = useRef<string | null>(null)
+
     useEffect(() => {
+        // Ждём окончания загрузки сессии, чтобы AI-запрос ушёл сразу с токеном.
+        if (sessionStatus === 'loading') return;
+        if (startedForId.current === id) return;
+        startedForId.current = id;
+
+        const idToken = session?.id_token as string | undefined;
+
+        // Фоновая AI-генерация. НЕ блокирует первый вопрос: страница играбельна
+        // сразу на локальной очереди, AI-варианты подключаются по мере готовности.
+        const generateAiInBackground = async (initialQueue: TestQuestion[]) => {
+            try {
+                const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+                if (idToken) headers['Authorization'] = `Bearer ${idToken}`;
+
+                const response = await fetch('/api/ai/learn/generate', {
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify({ setId: id, exerciseCount: Math.min(40, initialQueue.length) })
+                });
+                if (!response.ok) throw new Error(`AI Generation failed: ${response.status}`);
+
+                const reader = response.body?.getReader();
+                if (!reader) throw new Error("No response body");
+                const decoder = new TextDecoder();
+                let accumulated = "";
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    const chunk = decoder.decode(value, { stream: true });
+                    for (const line of chunk.split("\n")) {
+                        if (line.startsWith("data: ")) accumulated += line.slice(6);
+                    }
+                }
+                const exercises: AIExercise[] = JSON.parse(accumulated);
+
+                // Выравниваем по очереди: упражнение попадает на позицию СВОЕЙ карточки,
+                // иначе вопрос от одной карты грейдится ответом другой.
+                const byCard = new Map<string, AIExercise[]>();
+                for (const ex of exercises) {
+                    const arr = byCard.get(ex.cardId) ?? [];
+                    arr.push(ex);
+                    byCard.set(ex.cardId, arr);
+                }
+                setAiExercises(initialQueue.map(q => byCard.get(q.flashcard.id)?.shift()));
+            } catch (e) {
+                console.error("AI Generation failed, falling back to local questions", e);
+                setIsAiPro(false);
+            }
+        };
+
         const fetchSetAndProgress = async () => {
             try {
-                // Use relative Next.js API routes (it will proxy to Rust and attach JWT cleanly via cookies/session)
-                // However, our proxy expects Authorization header since it reads it, OR it reads getServerSession.
-                // Our Next.js API route reads getServerSession, so we don't strictly need to attach headers,
-                // but doing so prevents errors if Next.js drops session.
-                // if (activeSession?.id_token) headers["Authorization"] = `Bearer ${activeSession.id_token}`;
                 const resSet = await Promise.all([
                     fetch(`/api/sets/${id}`),
                     fetch(`/api/sets/${id}/progress`)
@@ -152,59 +217,12 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                 if (resSet[0].ok) {
                     const setData: SetResponse = await resSet[0].json()
                     setSet(setData)
-                    
-                    if (isAiPro) {
-                        try {
-                            const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-                            if (session?.id_token) {
-                                headers['Authorization'] = `Bearer ${session.id_token}`;
-                            }
-
-                            const response = await fetch('/api/ai/learn/generate', {
-                                method: 'POST',
-                                headers,
-                                body: JSON.stringify({ setId: id, exerciseCount: 100 })
-                            });
-
-                            if (!response.ok) {
-                                throw new Error("AI Generation failed");
-                            }
-
-                            const reader = response.body?.getReader();
-                            const decoder = new TextDecoder();
-                            let accumulated = "";
-
-                            if (reader) {
-                                while (true) {
-                                    const { done, value } = await reader.read();
-                                    if (done) break;
-                                    
-                                    const chunk = decoder.decode(value, { stream: true });
-                                    const lines = chunk.split("\n");
-                                    for (const line of lines) {
-                                        if (line.startsWith("data: ")) {
-                                            accumulated += line.slice(6);
-                                        }
-                                    }
-                                }
-                                
-                                try {
-                                    const exercises: AIExercise[] = JSON.parse(accumulated);
-                                    setAiExercises(exercises);
-                                } catch (e) {
-                                    console.error("Failed to parse AI exercises JSON", e, accumulated);
-                                    setIsAiPro(false);
-                                }
-                            }
-                        } catch (e) {
-                            console.error("AI Generation failed, falling back", e);
-                            setIsAiPro(false);
-                        }
-                    }
 
                     const rawQueue = generateLearnQueue(setData.flashcards, new Set())
                     const initialQueue = regenerateQueue(rawQueue, { mcq: true, written: true, flashcards: false }, { term: true, definition: true }, setData.flashcards, setData.fieldsSchema)
                     setQueue(initialQueue)
+
+                    generateAiInBackground(initialQueue);
                 } else {
                     router.push('/404')
                 }
@@ -216,7 +234,36 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
         }
 
         fetchSetAndProgress()
-    }, [id, session, router, isAiPro])
+    }, [id, session, sessionStatus, router])
+
+    // Фиксирует результат по карточке и планирует автопереход при верном ответе.
+    const recordResult = (flashcardId: string, isCorrect: boolean, advanceDelayMs: number) => {
+        setIsWrongAnswer(!isCorrect)
+        const newProgress = [...progress]
+        const existingIndex = newProgress.findIndex(p => p.flashcardId === flashcardId)
+        if (existingIndex >= 0) {
+            newProgress[existingIndex].isKnown = isCorrect
+        } else {
+            newProgress.push({ flashcardId, isKnown: isCorrect })
+        }
+        setProgress(newProgress)
+        progressRef.current = newProgress
+        if (isCorrect) {
+            setTimeout(() => advanceOrFinish(newProgress), advanceDelayMs)
+        }
+    }
+
+    // Умная локальная проверка: альтернативы через «/», опциональные скобки,
+    // транскрипция в [скобках], цифры ↔ числительные, режим оценивания.
+    const checkLocally = (question: TestQuestion, answer: number | string): boolean => {
+        if (question.type === 'MULTIPLE_CHOICE' && question.mcqData) {
+            return (answer as number) === question.mcqData.correctIndex
+        }
+        if (question.type === 'WRITTEN' && question.writtenData) {
+            return checkWrittenAnswer(answer as string, question.writtenData.correctAnswer, gradingOption)
+        }
+        return false
+    }
 
     const handleAnswer = async (answer: number | string) => {
         if (showResult || !set) return
@@ -225,9 +272,13 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
         setAiFeedback(null)
 
         const currentQuestion = queue[currentIndex]
-        const currentAiEx = isAiPro ? aiExercises[currentIndex] : null;
+        if (currentQuestion.type === 'MULTIPLE_CHOICE') setSelectedAnswer(answer as number)
 
-        if (isAiPro && currentAiEx) {
+        // AI-грейдинг — только для письменных вопросов с AI-заданием;
+        // варианты выбора мгновенно проверяются локально.
+        const currentAiEx = isAiPro && currentQuestion.type === 'WRITTEN' ? aiExercises[currentIndex] : null;
+
+        if (currentAiEx) {
             setIsGrading(true);
             try {
                 const headers: Record<string, string> = { 'Content-Type': 'application/json' };
@@ -246,58 +297,21 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                         questionText: currentAiEx.question
                     })
                 });
-                if (res.ok) {
-                    const feedback: AIGradeResponse = await res.json();
-                    setAiFeedback(feedback);
-                    const isCorrect = feedback.isCorrect;
-                    setIsWrongAnswer(!isCorrect);
-                    
-                    // Record Progress
-                    const newProgress = [...progress];
-                    const existingIndex = newProgress.findIndex(p => p.flashcardId === currentAiEx.cardId);
-                    if (existingIndex >= 0) newProgress[existingIndex].isKnown = isCorrect;
-                    else newProgress.push({ flashcardId: currentAiEx.cardId, isKnown: isCorrect });
-                    setProgress(newProgress);
-                    progressRef.current = newProgress;
-
-                    if (isCorrect) {
-                        setTimeout(() => advanceOrFinish(newProgress), 2000);
-                    }
-                }
+                if (!res.ok) throw new Error(`Grade failed: ${res.status}`);
+                const feedback: AIGradeResponse = await res.json();
+                setAiFeedback(feedback);
+                recordResult(currentAiEx.cardId, feedback.isCorrect, 2000);
             } catch (e) {
-                console.error("Grading failed", e);
+                // Судья недоступен — не подвешиваем вопрос, оцениваем локально.
+                console.error("Grading failed, falling back to local check", e);
+                recordResult(currentQuestion.flashcard.id, checkLocally(currentQuestion, answer), 1200);
             } finally {
                 setIsGrading(false);
             }
             return;
         }
 
-        let isCorrect = false
-        if (currentQuestion.type === 'MULTIPLE_CHOICE' && currentQuestion.mcqData) {
-            setSelectedAnswer(answer as number)
-            isCorrect = (answer as number) === currentQuestion.mcqData.correctIndex
-        } else if (currentQuestion.type === 'WRITTEN' && currentQuestion.writtenData) {
-            const normalizedUser = (answer as string).trim().toLowerCase()
-            const normalizedCorrect = currentQuestion.writtenData.correctAnswer.trim().toLowerCase()
-            isCorrect = normalizedUser === normalizedCorrect
-        }
-
-        setIsWrongAnswer(!isCorrect)
-
-        // Record Result
-        const newProgress = [...progress]
-        const existingIndex = newProgress.findIndex(p => p.flashcardId === currentQuestion.flashcard.id)
-        if (existingIndex >= 0) {
-            newProgress[existingIndex].isKnown = isCorrect
-        } else {
-            newProgress.push({ flashcardId: currentQuestion.flashcard.id, isKnown: isCorrect })
-        }
-        setProgress(newProgress)
-        progressRef.current = newProgress
-
-        if (isCorrect) {
-            setTimeout(() => advanceOrFinish(newProgress), 1200)
-        }
+        recordResult(currentQuestion.flashcard.id, checkLocally(currentQuestion, answer), 1200)
     }
 
     const recordPronunciation = () => {
@@ -769,7 +783,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                     <button className="hover:text-qz-text transition-colors"><Edit2 size={18} /></button>
                                     <button
                                         className="hover:text-qz-text transition-colors"
-                                        onClick={() => playQuestionAudio(currentQuestion)}
+                                        onClick={() => playQuestionAudio(currentQuestion, true)}
                                     >
                                         <Volume2 size={18} />
                                     </button>
@@ -780,17 +794,17 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                     </div>
                                 )}
                                 <p className={`text-2xl md:text-3xl font-medium leading-relaxed text-qz-text text-center ${currentQuestion.flashcard.imageUrl ? '' : 'mt-4'}`}>
-                                    {isAiPro && aiExercises[currentIndex] 
-                                        ? aiExercises[currentIndex].question 
+                                    {isAiPro && currentQuestion.type === 'WRITTEN' && aiExercises[currentIndex]
+                                        ? aiExercises[currentIndex]!.question
                                         : (currentQuestion.type === 'MULTIPLE_CHOICE' ? currentQuestion.mcqData?.prompt : currentQuestion.writtenData?.prompt)
                                     }
                                 </p>
-                                {isAiPro && aiExercises[currentIndex]?.context && (
+                                {isAiPro && currentQuestion.type === 'WRITTEN' && aiExercises[currentIndex]?.context && (
                                     <p className="mt-4 text-sm text-qz-text-muted italic text-center">
-                                        Context: {aiExercises[currentIndex].context}
+                                        Context: {aiExercises[currentIndex]!.context}
                                     </p>
                                 )}
-                                {isAiPro && aiExercises[currentIndex]?.type === 'speech' && (
+                                {isAiPro && currentQuestion.type === 'WRITTEN' && aiExercises[currentIndex]?.type === 'speech' && (
                                     <div className="mt-8 flex justify-center">
                                         <button 
                                             onClick={recordPronunciation}
@@ -889,7 +903,9 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                             {isWrongAnswer && (
                                                 <div className="mt-4">
                                                     <div className="text-sm text-qz-text-muted font-bold uppercase mb-1">Правильный ответ:</div>
-                                                    <div className="text-lg text-qz-text mb-4 whitespace-pre-wrap">{currentQuestion.writtenData.correctAnswer}</div>
+                                                    <div className="text-lg text-qz-text mb-4 whitespace-pre-wrap">
+                                                        {aiFeedback?.correctAnswer || currentQuestion.writtenData.correctAnswer.replace(/^\[[^\]]*\]\s*/, '')}
+                                                    </div>
 
                                                     <div className="text-sm text-qz-text-muted font-bold uppercase mb-1">Ваш ответ:</div>
                                                     <div className="text-lg text-red-300 opacity-80 whitespace-pre-wrap">{writtenInput}</div>

@@ -285,8 +285,12 @@ pub async fn generate_exercises(
         Err(e) => return Sse::new(stream::once(async move { Ok(Event::default().data(format!("Error: {e}"))) }).boxed()),
     };
 
+    // Количество просит клиент (обычно = длине очереди); зажимаем, чтобы не ждать
+    // генерацию сотни упражнений перед первым вопросом.
+    let exercise_count = payload.exercise_count.clamp(5, 40);
+
     let system_prompt = format!(
-        "You are an expert educational content generator. Create 100 diverse exercises for this study set: '{}'.
+        "You are an expert educational content generator. Create {} diverse exercises for this study set: '{}'.
         The fields schema is: {}.
         Available cards: {}.
         Output ONLY a raw JSON array of AIExercise objects.
@@ -294,7 +298,7 @@ pub async fn generate_exercises(
         Types: 'grammar' (change tense/person), 'negation', 'translation', 'listening' (write what you hear), 'context' (fill in blank).
         Shuffle fields: if a card has multiple fields, query different ones randomly.
         Do not use markdown blocks.",
-        set_info.title, set_info.fields_schema, cards_json
+        exercise_count, set_info.title, set_info.fields_schema, cards_json
     );
 
     let llm_stream = match llm::chat_stream(ChatRequest {
@@ -318,22 +322,42 @@ pub async fn generate_exercises(
 }
 
 pub async fn grade_answer(
-    State(_pool): State<PgPool>,
+    State(pool): State<PgPool>,
     State(rate_limiter): State<AppRateLimiter>,
     AuthenticatedUser(user): AuthenticatedUser,
     Json(payload): Json<AIGradeRequest>,
 ) -> Result<Json<AIGradeResponse>, (StatusCode, Json<AiGatewayError>)> {
     check_rate_limit(&rate_limiter, &user.sub)?;
 
+    // Эталон берём из самой карточки — без него судья гадает, что считать верным.
+    let reference = match uuid::Uuid::parse_str(&payload.card_id) {
+        Ok(card_id) => sqlx::query("SELECT term, definition FROM flashcards WHERE id = $1")
+            .bind(card_id)
+            .fetch_optional(&pool)
+            .await
+            .ok()
+            .flatten()
+            .map(|c| {
+                use sqlx::Row;
+                format!("term: {} | definition: {}", c.get::<String, _>("term"), c.get::<String, _>("definition"))
+            })
+            .unwrap_or_default(),
+        Err(_) => String::new(),
+    };
+
     // Ключи в camelCase — так их ждёт AIGradeResponse (serde rename_all = camelCase).
-    let system_prompt = "You are an AI Judge. Evaluate the user's answer semantically.
+    let system_prompt = "You are an AI Judge. Evaluate the user's answer semantically against the reference flashcard.
         Output ONLY raw JSON object: { \"isCorrect\": bool, \"score\": float (0.0-1.0), \"explanation\": string, \"correctAnswer\": string }.
-        Be fair: ignore minor typos or casing, but ensure meaning is preserved.
+        Be fair: ignore minor typos, casing and final punctuation.
+        The reference may list alternatives separated by '/' — ANY one of them is a fully correct answer.
+        Ignore phonetic transcription in [brackets] — the user never has to type it.
+        Digits and spelled-out numbers are equivalent ('7 часов' == 'семь часов').
+        correctAnswer must be the clean expected answer (no [transcription]).
         Explanation should be in Russian.";
 
     let user_prompt = format!(
-        "Question: {}\nType: {}\nUser Answer: {}\nGrade this answer.",
-        payload.question_text, payload.question_type, payload.user_answer
+        "Reference flashcard: {}\nQuestion: {}\nType: {}\nUser Answer: {}\nGrade this answer.",
+        reference, payload.question_text, payload.question_type, payload.user_answer
     );
 
     let schema = serde_json::json!({
