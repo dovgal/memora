@@ -151,7 +151,7 @@ export default function MettreUnitPage({ params }: { params: Promise<{ unitId: s
           </Link>
           <div className="flex items-center gap-4">
             <Link href={`/dashboard/student/courses/mettre/exam/${unitId}`}
-              className="text-[#ffcd1f] hover:underline text-sm font-semibold">
+              className="text-qz-accent hover:underline text-sm font-semibold">
               🎓 Экзамен модуля
             </Link>
             {pct === 100 && (

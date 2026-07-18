@@ -128,7 +128,7 @@ export function ShadowingPractice({ title, backHref, phrases, speechLang, voice 
     return (
       <div className="min-h-screen bg-qz-card text-qz-text flex items-center justify-center px-4">
         <div className="text-center max-w-sm">
-          <Trophy className="w-10 h-10 text-[#ffcd1f] mx-auto mb-3" />
+          <Trophy className="w-10 h-10 text-qz-accent mx-auto mb-3" />
           <p className="text-foreground font-bold text-lg mb-1">Shadowing завершён!</p>
           <p className="text-qz-text-muted text-sm mb-4">
             {phrases.length} фраз · средняя точность {avgScore}%

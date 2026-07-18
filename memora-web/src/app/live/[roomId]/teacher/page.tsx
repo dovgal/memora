@@ -132,7 +132,7 @@ export default function TeacherLobbyPage({ params }: TeacherLobbyPageProps) {
                 <div className="flex flex-col items-center gap-8">
                     <JoinCodeDisplay code={joinCode} />
                     <p className="text-zinc-500 text-sm text-center max-w-[220px]">
-                        Students navigate to <span className="text-[#ffcd1f] font-mono">memora.app/live/join</span> and enter this code
+                        Students navigate to <span className="text-qz-accent font-mono">memora.app/live/join</span> and enter this code
                     </p>
                 </div>
 
@@ -143,7 +143,7 @@ export default function TeacherLobbyPage({ params }: TeacherLobbyPageProps) {
                 <div className="flex flex-col items-center gap-8">
                     <div className="flex flex-col items-center gap-3">
                         <div className="w-20 h-20 rounded-2xl bg-[#4255ff]/10 border border-indigo-500/20 flex items-center justify-center">
-                            <Users className="w-9 h-9 text-[#ffcd1f]" />
+                            <Users className="w-9 h-9 text-qz-accent" />
                         </div>
                         <div className="text-7xl font-semibold text-qz-text tabular-nums animate-in fade-in duration-300" key={studentCount}>
                             {studentCount}

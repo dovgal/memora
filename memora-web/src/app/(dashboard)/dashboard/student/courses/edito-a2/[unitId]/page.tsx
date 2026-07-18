@@ -160,7 +160,7 @@ export default function EditoA2UnitPage({ params }: { params: Promise<{ unitId: 
           </Link>
           <div className="flex items-center gap-4">
             <Link href={`/dashboard/student/courses/edito-a2/exam/${unitId}`}
-              className="text-[#ffcd1f] hover:underline text-sm font-semibold">
+              className="text-qz-accent hover:underline text-sm font-semibold">
               🎓 Экзамен юнита
             </Link>
             {pct === 100 && (

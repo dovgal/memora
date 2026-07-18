@@ -159,7 +159,7 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
                 <>
                     <button
                         onClick={() => router.push(`/set/${setId}/edit`)}
-                        className="flex items-center justify-center w-10 h-10 bg-qz-card/50 border border-indigo-500/30 hover:border-indigo-500 rounded-lg transition-colors text-[#ffcd1f]"
+                        className="flex items-center justify-center w-10 h-10 bg-qz-card/50 border border-indigo-500/30 hover:border-indigo-500 rounded-lg transition-colors text-qz-accent"
                         title="Редактировать"
                     >
                         <Edit2 size={18} />
@@ -192,7 +192,7 @@ export default function SetActionsBar({ setId, token, flashcards, fieldsSchema, 
                                     setIsMenuOpen(false);
                                     router.push(`/set/${setId}/edit`);
                                 }}
-                                className="w-full text-left px-4 py-2.5 text-sm hover:bg-qz-card flex items-center gap-3 text-[#ffcd1f] font-semibold"
+                                className="w-full text-left px-4 py-2.5 text-sm hover:bg-qz-card flex items-center gap-3 text-qz-accent font-semibold"
                             >
                                 <Edit2 size={16} /> Редактировать
                             </button>

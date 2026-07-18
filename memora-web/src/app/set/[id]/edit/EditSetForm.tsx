@@ -218,7 +218,7 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
                         <button
                             type="button"
                             onClick={() => setIsTemplateEditorOpen(true)}
-                            className="flex items-center gap-2 bg-qz-bg hover:bg-qz-card text-[#ffcd1f] font-semibold py-3 px-6 rounded-xl transition-all border border-indigo-500/30 hover:border-indigo-500 shadow-sm"
+                            className="flex items-center gap-2 bg-qz-bg hover:bg-qz-card text-qz-accent font-semibold py-3 px-6 rounded-xl transition-all border border-indigo-500/30 hover:border-indigo-500 shadow-sm"
                         >
                             <Settings2 size={20} />
                             <span className="hidden sm:inline">Параметры карточек</span>
@@ -373,7 +373,7 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
                         <button
                             type="button"
                             onClick={() => append({ term: "", definition: "" })}
-                            className="group flex items-center justify-center gap-2 w-full md:w-auto bg-qz-bg border-2 border-dashed border-qz-border hover:border-indigo-500 text-qz-text-muted hover:text-[#ffcd1f] font-bold py-6 px-12 rounded-2xl transition-all"
+                            className="group flex items-center justify-center gap-2 w-full md:w-auto bg-qz-bg border-2 border-dashed border-qz-border hover:border-indigo-500 text-qz-text-muted hover:text-qz-accent font-bold py-6 px-12 rounded-2xl transition-all"
                         >
                             <Plus size={24} className="group-hover:scale-110 transition-transform" />
                             ДОБАВИТЬ КАРТОЧКУ
@@ -390,7 +390,7 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
                         <div className="p-6 border-b border-white/5 flex items-center justify-between bg-qz-bg/50">
                             <div>
                                 <h2 className="text-2xl font-bold text-qz-text flex items-center gap-3">
-                                    <FileDown className="text-[#ffcd1f]" /> Импортировать данные
+                                    <FileDown className="text-qz-accent" /> Импортировать данные
                                 </h2>
                                 <p className="text-zinc-500 text-sm mt-1">Скопируйте и вставьте свои данные (из Word, Excel, Google Docs и т.п.)</p>
                             </div>
@@ -437,7 +437,7 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
                                                     onClick={() => setTermSeparator(opt.value)}
                                                     className={`py-3 px-4 rounded-xl text-sm font-bold transition-all border ${
                                                         termSeparator === opt.value
-                                                            ? 'bg-[#4255ff]/20 border-indigo-500 text-[#ffcd1f] shadow-[0_0_15px_rgba(99,102,241,0.2)]'
+                                                            ? 'bg-[#4255ff]/20 border-indigo-500 text-qz-accent shadow-[0_0_15px_rgba(99,102,241,0.2)]'
                                                             : 'bg-white/5 border-transparent text-qz-text-muted hover:bg-white/10'
                                                     }`}
                                                 >
@@ -470,7 +470,7 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
                                                     onClick={() => setCardSeparator(opt.value)}
                                                     className={`py-3 px-4 rounded-xl text-sm font-bold transition-all border ${
                                                         cardSeparator === opt.value
-                                                            ? 'bg-[#4255ff]/20 border-indigo-500 text-[#ffcd1f] shadow-[0_0_15px_rgba(99,102,241,0.2)]'
+                                                            ? 'bg-[#4255ff]/20 border-indigo-500 text-qz-accent shadow-[0_0_15px_rgba(99,102,241,0.2)]'
                                                             : 'bg-white/5 border-transparent text-qz-text-muted hover:bg-white/10'
                                                     }`}
                                                 >
@@ -498,7 +498,7 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
                                             <div className="space-y-3 max-h-[250px] overflow-y-auto pr-2 custom-scrollbar">
                                                 {parsedImportPreview.slice(0, 5).map((card, i) => (
                                                     <div key={i} className="p-3 bg-white/5 rounded-xl border border-white/5 hover:border-indigo-500/30 transition-colors">
-                                                        <div className="flex items-center gap-2 text-xs font-bold text-[#ffcd1f] mb-1">
+                                                        <div className="flex items-center gap-2 text-xs font-bold text-qz-accent mb-1">
                                                             <span className="opacity-50">#{i + 1}</span>
                                                             {card.term || <span className="text-zinc-600 italic">Пусто</span>}
                                                         </div>
@@ -524,7 +524,7 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
                                     <div className="bg-[#4255ff]/10 border border-indigo-500/20 p-4 rounded-2xl flex items-center justify-between">
                                         <div className="flex flex-col">
                                             <span className="text-2xl font-semibold text-qz-text">{parsedImportPreview.length}</span>
-                                            <span className="text-[10px] font-bold text-[#ffcd1f] uppercase tracking-tighter">Будет добавлено</span>
+                                            <span className="text-[10px] font-bold text-qz-accent uppercase tracking-tighter">Будет добавлено</span>
                                         </div>
                                         <ChevronRight size={24} className="text-[#4255ff]" />
                                     </div>

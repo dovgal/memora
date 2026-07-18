@@ -123,10 +123,10 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
                 {/* Horizontal Study Modes Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-8">
                     <Link href={`/set/${id}/flashcards`} className="bg-qz-card hover:bg-qz-card text-qz-text font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors border border-qz-border-light">
-                        <BookOpen size={18} className="text-[#ffcd1f]" /> Карточки
+                        <BookOpen size={18} className="text-qz-accent" /> Карточки
                     </Link>
                     <Link href={`/set/${id}/learn`} className="bg-qz-card hover:bg-qz-card text-qz-text font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors border border-qz-border-light">
-                        <GraduationCap size={18} className="text-[#ffcd1f]" /> Заучивание
+                        <GraduationCap size={18} className="text-qz-accent" /> Заучивание
                     </Link>
                     <Link href={`/set/${id}/test`} className="bg-qz-card hover:bg-qz-card text-qz-text font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors border border-qz-border-light">
                         <BookOpen size={18} className="text-orange-400" /> Тест
@@ -190,7 +190,7 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
                                                 return (
                                                     <div key={field.id} className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 w-full">
                                                         {textFields.length > 1 && (
-                                                            <span className="text-[10px] text-[#ffcd1f]/80 font-bold uppercase tracking-widest shrink-0 sm:w-1/4 sm:text-right">
+                                                            <span className="text-[10px] text-qz-accent/80 font-bold uppercase tracking-widest shrink-0 sm:w-1/4 sm:text-right">
                                                                 {field.name}
                                                             </span>
                                                         )}
@@ -221,7 +221,7 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
                                                 <button className="text-qz-text-muted hover:text-amber-400 transition-colors" title="Добавить в избранное">
                                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                                                 </button>
-                                                <button className="text-qz-text-muted hover:text-[#ffcd1f] transition-colors" title="Редактировать">
+                                                <button className="text-qz-text-muted hover:text-qz-accent transition-colors" title="Редактировать">
                                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
                                                 </button>
                                             </div>
@@ -274,7 +274,7 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
                             <div className="bg-qz-card border border-qz-border-light p-6 rounded-2xl sticky top-6">
                                 <h3 className="text-qz-text-muted text-xs font-bold uppercase tracking-widest mb-4">Ваш прогресс</h3>
                                 <div className="flex items-center gap-4 mb-3">
-                                    <div className="text-4xl font-semibold text-[#ffcd1f]">{progress.masteryPercentage}%</div>
+                                    <div className="text-4xl font-semibold text-qz-accent">{progress.masteryPercentage}%</div>
                                 </div>
                                 <div className="w-full bg-qz-bg rounded-full h-2 mb-4 overflow-hidden border border-qz-border-light">
                                     <div

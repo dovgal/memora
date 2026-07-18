@@ -17,8 +17,8 @@ export default function EditoA1CoursePage() {
         {/* Header */}
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <Sparkles className="w-5 h-5 text-[#ffcd1f]" />
-            <span className="text-xs font-bold uppercase tracking-wider text-[#ffcd1f]">Уровень A1 · Édito A1</span>
+            <Sparkles className="w-5 h-5 text-qz-accent" />
+            <span className="text-xs font-bold uppercase tracking-wider text-qz-accent">Уровень A1 · Édito A1</span>
           </div>
           <h1 className="text-3xl font-bold text-foreground mb-2">Тренажер Édito A1</h1>
           <p className="text-qz-text-muted max-w-xl mb-4">

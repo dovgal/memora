@@ -201,7 +201,7 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                 <div className="flex-1 border-r border-white/5 flex flex-col">
                     <div className="p-6 border-b border-white/5 flex justify-between items-center bg-qz-card">
                         <h2 className="text-xl font-bold text-qz-text flex items-center gap-2">
-                            <Settings2 className="text-[#ffcd1f]" /> Шаблон Карточки
+                            <Settings2 className="text-qz-accent" /> Шаблон Карточки
                         </h2>
                         <button onClick={onClose} className="p-2 bg-white/5 hover:bg-white/10 rounded-full transition-colors text-qz-text-muted cursor-pointer lg:hidden">
                             <X size={20} />

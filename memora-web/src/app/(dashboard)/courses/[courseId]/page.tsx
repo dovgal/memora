@@ -170,7 +170,7 @@ export default function CustomCoursePage({ params }: { params: Promise<{ courseI
                         <span
                           role="link"
                           onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.location.href = `/courses/${courseId}/exam/${u.id}`; }}
-                          className="mt-2.5 inline-flex items-center gap-1 text-[#ffcd1f] hover:underline text-xs font-semibold w-max"
+                          className="mt-2.5 inline-flex items-center gap-1 text-qz-accent hover:underline text-xs font-semibold w-max"
                         >
                           <GraduationCap className="w-3.5 h-3.5" /> Экзамен юнита
                         </span>

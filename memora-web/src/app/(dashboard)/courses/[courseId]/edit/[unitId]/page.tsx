@@ -214,7 +214,7 @@ export default function UnitEditPage({ params }: { params: Promise<{ courseId: s
         {/* ИИ-генерация */}
         <section className="border border-[#ffcd1f]/30 bg-[#ffcd1f]/5 rounded-2xl p-5">
           <button onClick={() => setAiOpen(o => !o)} className="flex items-center gap-2 text-sm font-semibold text-foreground w-full">
-            <Sparkles className="w-4 h-4 text-[#ffcd1f]" />
+            <Sparkles className="w-4 h-4 text-qz-accent" />
             Сгенерировать контент с помощью ИИ
             <span className="ml-auto text-qz-text-muted text-xs">{aiOpen ? 'Свернуть' : 'Развернуть'}</span>
           </button>

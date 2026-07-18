@@ -109,7 +109,7 @@ export default function LoginPage() {
 
                     <div className="text-center pt-4">
                         <p className="text-qz-text-muted text-sm">
-                            Don&apos;t have an account? <Link href="/register" className="text-qz-text hover:text-[#ffcd1f] transition-colors font-medium">Register</Link>
+                            Don&apos;t have an account? <Link href="/register" className="text-qz-text hover:text-qz-accent transition-colors font-medium">Register</Link>
                         </p>
                     </div>
                 </form>

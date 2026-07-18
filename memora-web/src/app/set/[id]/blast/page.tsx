@@ -554,7 +554,7 @@ export default function BlastModePage({ params }: { params: Promise<{ id: string
                         </div>
 
                         <div className="flex flex-col gap-1 w-48 items-end">
-                            <div className="font-bold text-[#ffcd1f]">
+                            <div className="font-bold text-qz-accent">
                                 Серия x{currentMultiplier.toFixed(1)}
                             </div>
                             <div className="w-full h-3 flex gap-1 justify-end">

@@ -114,7 +114,7 @@ export default function ClassPage({ params }: { params: Promise<{ classId: strin
           <div className="flex items-center justify-between gap-3 flex-wrap">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-[#4255ff]/20 flex items-center justify-center">
-                {isTeacher ? <GraduationCap className="w-6 h-6 text-[#ffcd1f]" /> : <Users className="w-6 h-6 text-emerald-400" />}
+                {isTeacher ? <GraduationCap className="w-6 h-6 text-qz-accent" /> : <Users className="w-6 h-6 text-emerald-400" />}
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-foreground">{detail.name}</h1>
@@ -229,7 +229,7 @@ export default function ClassPage({ params }: { params: Promise<{ classId: strin
                 {messages.length === 0 && <p className="text-qz-text-muted text-xs text-center pt-8">Сообщений пока нет. Напишите первым!</p>}
                 {[...messages].reverse().map(m => (
                   <div key={m.id} className={`rounded-xl px-3 py-2 text-sm ${m.mine ? 'bg-[#4255ff]/15 ml-4' : 'bg-muted mr-4'}`}>
-                    <p className={`text-xs font-semibold mb-0.5 ${m.isTeacher ? 'text-[#ffcd1f]' : 'text-emerald-400'}`}>
+                    <p className={`text-xs font-semibold mb-0.5 ${m.isTeacher ? 'text-qz-accent' : 'text-emerald-400'}`}>
                       {m.isTeacher ? '👨‍🏫 ' : ''}{m.author}
                     </p>
                     <p className="text-foreground whitespace-pre-wrap">{m.body}</p>

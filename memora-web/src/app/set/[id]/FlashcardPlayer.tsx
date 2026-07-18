@@ -413,8 +413,8 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                                     {/* Row 5 */}
                                     <div className="flex flex-col py-6 border-b border-white/10">
                                         <div className="flex items-center justify-between cursor-pointer group" onClick={() => setShowShortcuts(!showShortcuts)}>
-                                            <p className="font-bold text-base text-qz-text group-hover:text-[#ffcd1f] transition-colors">Сочетания клавиш</p>
-                                            <button className="flex items-center gap-2 text-sm font-semibold text-qz-text group-hover:text-[#ffcd1f] transition-colors">
+                                            <p className="font-bold text-base text-qz-text group-hover:text-qz-accent transition-colors">Сочетания клавиш</p>
+                                            <button className="flex items-center gap-2 text-sm font-semibold text-qz-text group-hover:text-qz-accent transition-colors">
                                                 {showShortcuts ? 'Скрыть' : 'Просмотреть'} <ChevronDownIcon className={`w-4 h-4 transition-transform ${showShortcuts ? 'rotate-180' : ''}`} />
                                             </button>
                                         </div>
@@ -578,10 +578,10 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                     </div>
 
                     <div className="flex items-center gap-3 text-qz-text-muted">
-                        <button onClick={() => setIsAutoPlaying(!isAutoPlaying)} className={`w-10 h-10 flex items-center justify-center rounded-full hover:bg-qz-card transition-colors ${isAutoPlaying ? 'text-[#ffcd1f]' : ''}`} title="Автовоспроизведение">
+                        <button onClick={() => setIsAutoPlaying(!isAutoPlaying)} className={`w-10 h-10 flex items-center justify-center rounded-full hover:bg-qz-card transition-colors ${isAutoPlaying ? 'text-qz-accent' : ''}`} title="Автовоспроизведение">
                             {isAutoPlaying ? <Pause className="w-5 h-5 fill-current" /> : <Play className="w-5 h-5 fill-current" />}
                         </button>
-                        <button onClick={() => setIsShuffled(!isShuffled)} className={`w-10 h-10 flex items-center justify-center rounded-full hover:bg-qz-card transition-colors ${isShuffled ? 'text-[#ffcd1f]' : ''}`} title="Перемешать">
+                        <button onClick={() => setIsShuffled(!isShuffled)} className={`w-10 h-10 flex items-center justify-center rounded-full hover:bg-qz-card transition-colors ${isShuffled ? 'text-qz-accent' : ''}`} title="Перемешать">
                             <Shuffle className="w-5 h-5" />
                         </button>
                         <button onClick={() => setShowSettings(true)} className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-qz-card transition-colors" title="Параметры">
@@ -607,7 +607,7 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCH
                         <div className="p-6 flex flex-col gap-6 bg-qz-card overflow-y-auto max-h-[60vh]">
                             {fieldsSchema.sort((a, b) => a.order - b.order).map(field => (
                                 <div key={field.id}>
-                                    <label className="text-xs font-bold text-[#ffcd1f] mb-2 block uppercase tracking-wider">{field.name}</label>
+                                    <label className="text-xs font-bold text-qz-accent mb-2 block uppercase tracking-wider">{field.name}</label>
                                     {field.id === 'term' || field.id === 'definition' ? (
                                         field.id === 'term' ? (
                                             <input

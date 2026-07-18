@@ -132,7 +132,7 @@ export default function LibraryClient({ initialSets, initialFolders, token }: Li
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {initialFolders.map(folder => (
                                 <Link href={`/folder/${folder.id}`} key={folder.id} className="block p-6 flex flex-col items-center justify-center text-center rounded-2xl bg-qz-card border border-qz-border-light hover:border-indigo-500/50 transition-all group group/card min-h-[160px]">
-                                    <Folder className="w-10 h-10 text-qz-text-muted group-hover/card:text-[#ffcd1f] mb-3 transition-colors" />
+                                    <Folder className="w-10 h-10 text-qz-text-muted group-hover/card:text-qz-accent mb-3 transition-colors" />
                                     <h3 className="text-lg font-bold text-qz-text mb-1 group-hover/card:text-indigo-300 transition-colors line-clamp-1">{folder.name}</h3>
                                     <p className="text-zinc-500 text-sm">{folder.setCount} sets</p>
                                 </Link>

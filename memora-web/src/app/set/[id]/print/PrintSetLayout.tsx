@@ -159,7 +159,7 @@ export default function PrintSetLayout({ set }: { set: SetResponse }) {
             <div className="min-h-screen bg-qz-bg text-qz-text overflow-hidden flex flex-col items-center">
                 {/* Header */}
                 <header className="w-full max-w-[1400px] mx-auto p-4 flex items-center justify-between">
-                    <Link href={`/set/${set.id}`} className="inline-flex items-center gap-2 text-[#ffcd1f] hover:text-indigo-300 transition-colors font-medium">
+                    <Link href={`/set/${set.id}`} className="inline-flex items-center gap-2 text-qz-accent hover:text-indigo-300 transition-colors font-medium">
                         <ChevronLeft size={20} /> Назад к модулю
                     </Link>
                 </header>

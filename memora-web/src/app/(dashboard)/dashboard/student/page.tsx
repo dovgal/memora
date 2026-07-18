@@ -70,8 +70,8 @@ export default async function StudentDashboard() {
                                 <div className="absolute top-[-20%] right-[-5%] w-[45%] h-[80%] bg-[#4255ff]/10 rounded-full blur-[50px]" />
                                 <div className="relative z-10">
                                     <div className="flex items-center gap-2 mb-2">
-                                        <Sparkles className="w-5 h-5 text-[#ffcd1f]" />
-                                        <span className="text-xs font-bold uppercase tracking-wider text-[#ffcd1f]">Уровень A1</span>
+                                        <Sparkles className="w-5 h-5 text-qz-accent" />
+                                        <span className="text-xs font-bold uppercase tracking-wider text-qz-accent">Уровень A1</span>
                                     </div>
                                     <h3 className="text-xl font-bold mb-1">Французский — A1</h3>
                                     <p className="text-[#8e95ae] text-sm mb-4">100 заданий с объяснениями, озвучиванием, проверкой произношения и ИИ-проверкой.</p>
@@ -103,7 +103,7 @@ export default async function StudentDashboard() {
                     {sets.length === 0 ? (
                         <div className="bg-qz-card border border-[#262c40] rounded-3xl p-12 text-center shadow-lg">
                             <div className="w-20 h-20 bg-qz-card rounded-2xl flex items-center justify-center mx-auto mb-6">
-                                <Layers className="w-10 h-10 text-[#ffcd1f]" />
+                                <Layers className="w-10 h-10 text-qz-accent" />
                             </div>
                             <h3 className="text-2xl font-bold mb-2">Welcome to Memora</h3>
                             <p className="text-[#8e95ae] mb-6 max-w-sm mx-auto">You don&apos;t have any study sets yet. Open your Library or Sidebar to create one.</p>
@@ -204,7 +204,7 @@ export default async function StudentDashboard() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {otherSets.map(set => (
                                 <Link href={`/set/${set.id}`} key={set.id} className="flex items-center gap-6 p-5 rounded-2xl bg-qz-card border border-transparent hover:border-[#262c40] hover:bg-qz-card transition-all group cursor-pointer shadow-sm hover:shadow-md">
-                                    <div className="w-12 h-12 bg-qz-card rounded-xl flex items-center justify-center text-[#8e95ae] group-hover:bg-[#4255ff]/20 group-hover:text-[#ffcd1f] transition-colors shrink-0">
+                                    <div className="w-12 h-12 bg-qz-card rounded-xl flex items-center justify-center text-[#8e95ae] group-hover:bg-[#4255ff]/20 group-hover:text-qz-accent transition-colors shrink-0">
                                         <Layers className="w-6 h-6" />
                                     </div>
                                     <div>

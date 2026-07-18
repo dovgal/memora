@@ -528,7 +528,7 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
               <p className="text-qz-text-muted text-xs">нового</p>
             </div>
             <div className="bg-qz-card border border-border rounded-2xl p-4 text-center">
-              <GraduationCap className="w-5 h-5 text-[#ffcd1f] mx-auto mb-1" />
+              <GraduationCap className="w-5 h-5 text-qz-accent mx-auto mb-1" />
               <p className="text-2xl font-bold text-foreground">{masteryPct}%</p>
               <p className="text-qz-text-muted text-xs">усвоено</p>
             </div>
@@ -583,7 +583,7 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
 
           {planned === 0 ? (
             <div className="text-center py-6">
-              <Trophy className="w-10 h-10 text-[#ffcd1f] mx-auto mb-3" />
+              <Trophy className="w-10 h-10 text-qz-accent mx-auto mb-3" />
               <p className="text-foreground font-semibold mb-1">Всё повторено!</p>
               <p className="text-qz-text-muted text-sm mb-4">
                 Нет материала к изучению — тренер позовёт вас, когда придёт срок повторения.
@@ -672,7 +672,7 @@ export function CoachSession({ courseId, courseTitle, units, backHref, language,
           <div className="flex items-center justify-between mb-2">
             <span className="text-foreground text-sm font-medium flex items-center gap-2">
               {current?.ephemeral
-                ? <><Sparkles className="w-4 h-4 text-[#ffcd1f]" /> Доп. практика</>
+                ? <><Sparkles className="w-4 h-4 text-qz-accent" /> Доп. практика</>
                 : current?.isReview
                   ? <><Flame className="w-4 h-4 text-amber-400" /> Повторение</>
                   : <>Новый материал</>}

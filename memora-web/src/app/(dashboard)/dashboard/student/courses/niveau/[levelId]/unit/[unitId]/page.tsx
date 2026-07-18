@@ -141,7 +141,7 @@ export default function LevelUnitPage({ params }: { params: Promise<{ levelId: s
               <button
                 onClick={handleVocabToSet}
                 disabled={savingVocab}
-                className="inline-flex items-center gap-1.5 border border-border hover:border-[#ffcd1f]/50 text-qz-text-muted hover:text-[#ffcd1f] text-xs font-semibold px-3 py-1.5 rounded-xl transition-colors"
+                className="inline-flex items-center gap-1.5 border border-border hover:border-[#ffcd1f]/50 text-qz-text-muted hover:text-qz-accent text-xs font-semibold px-3 py-1.5 rounded-xl transition-colors"
                 title="Добавить слова юнита в личный набор карточек"
               >
                 {savingVocab ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Star className="w-3.5 h-3.5" />}
@@ -182,7 +182,7 @@ export default function LevelUnitPage({ params }: { params: Promise<{ levelId: s
           </Link>
           <div className="flex items-center gap-4">
             <Link href={`${base}/exam/${unitId}`}
-              className="text-[#ffcd1f] hover:underline text-sm font-semibold">
+              className="text-qz-accent hover:underline text-sm font-semibold">
               🎓 Экзамен юнита
             </Link>
             {pct === 100 && (

@@ -129,7 +129,7 @@ export function CourseStats({ courseId, courseTitle, units, backHref }: Props) {
         {/* Сводка */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <div className="bg-qz-card border border-border rounded-2xl p-4 text-center">
-            <GraduationCap className="w-5 h-5 text-[#ffcd1f] mx-auto mb-1" />
+            <GraduationCap className="w-5 h-5 text-qz-accent mx-auto mb-1" />
             <p className="text-2xl font-bold text-foreground">{masteryPct}%</p>
             <p className="text-qz-text-muted text-xs">усвоено</p>
           </div>

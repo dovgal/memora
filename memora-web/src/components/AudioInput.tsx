@@ -133,7 +133,7 @@ export default function AudioInput({ value, onChange }: Props) {
 
                     <div className="flex-1 flex flex-col">
                         <span className="text-sm font-semibold text-qz-text-muted flex items-center gap-1">
-                            <FileAudio size={14} className="text-[#ffcd1f]" /> Аудиозапись
+                            <FileAudio size={14} className="text-qz-accent" /> Аудиозапись
                         </span>
                         <span className="text-xs text-zinc-500">
                             {isPlaying ? "Воспроизведение..." : "Готово к прослушиванию"}

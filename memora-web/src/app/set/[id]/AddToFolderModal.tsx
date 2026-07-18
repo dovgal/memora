@@ -71,7 +71,7 @@ export default function AddToFolderModal({ setId, token }: AddToFolderModalProps
         <>
             <button
                 onClick={() => setIsOpen(true)}
-                className="flex items-center gap-1 cursor-pointer hover:text-[#ffcd1f] transition-colors"
+                className="flex items-center gap-1 cursor-pointer hover:text-qz-accent transition-colors"
             >
                 <FolderPlus size={14} /> Add to Folder
             </button>
@@ -111,10 +111,10 @@ export default function AddToFolderModal({ setId, token }: AddToFolderModalProps
                                                 }`}
                                         >
                                             <div className="flex items-center gap-3">
-                                                <Folder size={20} className={isAdded ? "text-[#ffcd1f]" : "text-zinc-500"} />
+                                                <Folder size={20} className={isAdded ? "text-qz-accent" : "text-zinc-500"} />
                                                 <span className="font-medium truncate max-w-[200px]">{folder.name}</span>
                                             </div>
-                                            {isAdded && <Check size={20} className="text-[#ffcd1f]" />}
+                                            {isAdded && <Check size={20} className="text-qz-accent" />}
                                         </button>
                                     )
                                 })}

@@ -394,7 +394,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
         return (
             <div className="min-h-screen bg-qz-bg text-qz-text flex flex-col items-center justify-center">
                 <p>Not enough flashcards to start Learn mode.</p>
-                <button onClick={closeSession} className="mt-4 text-[#ffcd1f]">Return to Set</button>
+                <button onClick={closeSession} className="mt-4 text-qz-accent">Return to Set</button>
             </div>
         )
     }
@@ -412,7 +412,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                 <header className="flex justify-between items-center px-6 py-4 z-10 w-full max-w-5xl mx-auto">
                     <div className="flex items-center gap-4">
                         <h1 className="text-lg font-bold text-qz-text flex items-center gap-2">
-                            <GraduationCap className="text-[#ffcd1f]" size={20} />
+                            <GraduationCap className="text-qz-accent" size={20} />
                             Заучивание
                         </h1>
                     </div>
@@ -869,7 +869,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                 <div className="w-full">
                                     <p className="text-sm font-semibold text-qz-text-muted mb-4 px-2">
                                         {currentQuestion.writtenData.targetFieldName
-                                            ? <>Введите <span className="text-[#ffcd1f] font-bold">{currentQuestion.writtenData.targetFieldName}</span></>
+                                            ? <>Введите <span className="text-qz-accent font-bold">{currentQuestion.writtenData.targetFieldName}</span></>
                                             : <>Введите правильный {currentQuestion.writtenData.answerType === 'term' ? 'термин' : 'ответ'}</>
                                         }
                                     </p>
@@ -914,7 +914,7 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                                             
                                             {isAiPro && aiFeedback && (
                                                 <div className="mt-6 border-t border-white/10 pt-4 animate-in slide-in-from-top-2">
-                                                    <div className="text-sm font-bold text-[#ffcd1f] uppercase tracking-widest mb-2 flex items-center gap-2">
+                                                    <div className="text-sm font-bold text-qz-accent uppercase tracking-widest mb-2 flex items-center gap-2">
                                                         <GraduationCap size={16} /> AI Разбор
                                                     </div>
                                                     <p className="text-qz-text-muted leading-relaxed text-sm italic">

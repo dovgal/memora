@@ -148,7 +148,7 @@ export default function RegisterPage() {
 
                     <div className="text-center pt-4">
                         <p className="text-qz-text-muted text-sm">
-                            Already have an account? <Link href="/login" className="text-qz-text hover:text-[#ffcd1f] transition-colors font-medium">Sign in</Link>
+                            Already have an account? <Link href="/login" className="text-qz-text hover:text-qz-accent transition-colors font-medium">Sign in</Link>
                         </p>
                     </div>
                 </form>

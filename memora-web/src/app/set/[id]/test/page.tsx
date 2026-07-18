@@ -244,7 +244,7 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
         return (
             <div className="min-h-screen bg-qz-bg text-qz-text flex flex-col items-center justify-center">
                 <p>Not enough flashcards to generate a test.</p>
-                <button onClick={closeTest} className="mt-4 text-[#ffcd1f]">Return to Set</button>
+                <button onClick={closeTest} className="mt-4 text-qz-accent">Return to Set</button>
             </div>
         )
     }
@@ -434,11 +434,11 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
                                     <div className="flex justify-between items-start mb-6 border-b border-qz-border-light pb-6">
                                         <h3 className="text-xl md:text-2xl font-semibold leading-relaxed">
                                             {question.type === "TRUE_FALSE" && question.tfData
-                                                ? <span className="text-qz-text">Правда или ложь, что <span className="font-bold text-[#ffcd1f] px-1">{question.flashcard.term}</span> означает <span className="font-bold text-[#ffcd1f] px-1">&quot;{question.tfData.statement}&quot;</span>?</span>
+                                                ? <span className="text-qz-text">Правда или ложь, что <span className="font-bold text-qz-accent px-1">{question.flashcard.term}</span> означает <span className="font-bold text-qz-accent px-1">&quot;{question.tfData.statement}&quot;</span>?</span>
                                                 : question.type === "MULTIPLE_CHOICE" && question.mcqData
-                                                    ? <span className="text-qz-text">Выберите правильный вариант для: <br /><span className="font-bold text-[#ffcd1f] inline-block mt-2 whitespace-pre-wrap">{question.mcqData.prompt}</span></span>
+                                                    ? <span className="text-qz-text">Выберите правильный вариант для: <br /><span className="font-bold text-qz-accent inline-block mt-2 whitespace-pre-wrap">{question.mcqData.prompt}</span></span>
                                                     : question.type === "WRITTEN" && question.writtenData
-                                                        ? <span className="text-qz-text">Введите {question.writtenData.answerType === 'term' ? 'термин' : 'определение'} для: <br /><span className="font-bold text-[#ffcd1f] inline-block mt-2 whitespace-pre-wrap">{question.writtenData.prompt}</span></span>
+                                                        ? <span className="text-qz-text">Введите {question.writtenData.answerType === 'term' ? 'термин' : 'определение'} для: <br /><span className="font-bold text-qz-accent inline-block mt-2 whitespace-pre-wrap">{question.writtenData.prompt}</span></span>
                                                         : question.type === "MATCHING"
                                                             ? <span className="text-qz-text">Сопоставьте термины и определения:</span>
                                                             : <span className="text-qz-text">{question.flashcard.term}</span>

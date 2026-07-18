@@ -114,7 +114,7 @@ export default function TTSInput({ value, onChange, lang = "en" }: Props) {
 
                     <div className="flex-1 flex flex-col overflow-hidden">
                         <span className="text-sm font-semibold text-qz-text-muted flex items-center gap-1">
-                            <Volume2 size={14} className="text-[#ffcd1f]" /> ИИ Озвучка
+                            <Volume2 size={14} className="text-qz-accent" /> ИИ Озвучка
                         </span>
                         <span className="text-xs text-zinc-500 truncate">
                             &quot;{currentText}&quot;

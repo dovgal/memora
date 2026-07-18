@@ -9,6 +9,7 @@
   --color-qz-border-light: var(--qz-border-light);
   --color-qz-text: var(--qz-text);
   --color-qz-text-muted: var(--qz-text-muted);
+  --color-qz-accent: var(--qz-accent);
 }
 
 :root {
@@ -18,6 +19,10 @@
   --qz-border-light: #edeff4;
   --qz-text: #1a1d28;
   --qz-text-muted: #586380;
+  /* Акцент как ТЕКСТ: фирменный жёлтый #ffcd1f нечитаем на белом (контраст
+     ~1.5:1), поэтому в светлой теме — янтарный с контрастом 4.8:1 (WCAG AA).
+     Для ФОНА кнопок жёлтый остаётся захардкоженным — там тёмный текст. */
+  --qz-accent: #b45309;
   
   --background: #ffffff;
   --foreground: #09090b;
@@ -47,6 +52,7 @@
   --qz-border-light: #2e3856;
   --qz-text: #ffffff;
   --qz-text-muted: #939bb4;
+  --qz-accent: #ffcd1f;
 
   --background: #09090b;
   --foreground: #fafafa;

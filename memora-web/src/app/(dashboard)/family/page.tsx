@@ -61,7 +61,7 @@ export default function FamilyPage() {
 
         <div className="flex items-center gap-3 mb-6">
           <div className="w-12 h-12 rounded-2xl bg-[#ffcd1f]/15 flex items-center justify-center">
-            <Trophy className="w-6 h-6 text-[#ffcd1f]" />
+            <Trophy className="w-6 h-6 text-qz-accent" />
           </div>
           <div>
             <h1 className="text-2xl font-bold text-foreground">Семейное табло</h1>

@@ -66,7 +66,7 @@ export default function RoleSelectionPage() {
                         disabled={isSubmitting}
                         className="group relative bg-qz-bg border border-qz-border hover:border-indigo-500 rounded-2xl p-8 text-left transition-all duration-300 hover:shadow-[0_0_30px_rgba(99,102,241,0.2)] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        <div className="w-16 h-16 bg-[#4255ff]/10 text-[#ffcd1f] rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#4255ff] group-hover:text-white transition-colors duration-300">
+                        <div className="w-16 h-16 bg-[#4255ff]/10 text-qz-accent rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#4255ff] group-hover:text-white transition-colors duration-300">
                             <GraduationCap className="w-8 h-8" />
                         </div>
                         <h2 className="text-2xl font-bold text-qz-text mb-3">I&apos;m a Student</h2>
@@ -81,7 +81,7 @@ export default function RoleSelectionPage() {
                         disabled={isSubmitting}
                         className="group relative bg-qz-bg border border-qz-border hover:border-purple-500 rounded-2xl p-8 text-left transition-all duration-300 hover:shadow-[0_0_30px_rgba(168,85,247,0.2)] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        <div className="w-16 h-16 bg-[#4255ff]/10 text-[#ffcd1f] rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#4255ff] group-hover:text-white transition-colors duration-300">
+                        <div className="w-16 h-16 bg-[#4255ff]/10 text-qz-accent rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#4255ff] group-hover:text-white transition-colors duration-300">
                             <BookOpen className="w-8 h-8" />
                         </div>
                         <h2 className="text-2xl font-bold text-qz-text mb-3">I&apos;m a Teacher</h2>

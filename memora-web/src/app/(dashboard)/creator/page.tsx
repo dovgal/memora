@@ -181,7 +181,7 @@ export default function CreatorPage() {
             <div className="flex-1 flex flex-col items-center justify-center p-6 text-center min-h-[80vh]">
                 <div className="relative mb-8">
                     <div className="absolute inset-0 bg-[#4255ff] rounded-full blur-3xl opacity-20 animate-pulse" />
-                    <BrainCircuit size={80} className="text-[#ffcd1f] relative animate-bounce" />
+                    <BrainCircuit size={80} className="text-qz-accent relative animate-bounce" />
                 </div>
                 <h2 className="text-3xl font-bold mb-4">Магия в процессе...</h2>
                 <div className="bg-qz-bg/50 border border-white/5 rounded-2xl p-6 mb-4 w-full max-w-2xl text-left font-mono text-sm overflow-hidden h-40 relative">
@@ -221,7 +221,7 @@ export default function CreatorPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {analysis.cards.map((card, i) => (
                         <div key={i} className="bg-qz-bg/50 border border-white/5 p-6 rounded-2xl flex flex-col gap-2 hover:border-indigo-500/30 transition-colors group">
-                            <span className="text-xs font-bold text-[#ffcd1f] uppercase tracking-tighter">Карточка {i+1}</span>
+                            <span className="text-xs font-bold text-qz-accent uppercase tracking-tighter">Карточка {i+1}</span>
                             <div className="text-xl font-bold group-hover:text-qz-text transition-colors">{card.term}</div>
                             <div className="text-zinc-500 group-hover:text-qz-text-muted transition-colors">{card.definition}</div>
                         </div>
@@ -234,7 +234,7 @@ export default function CreatorPage() {
     return (
         <div className="max-w-4xl mx-auto w-full p-6 py-12">
             <div className="mb-12 text-center">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#4255ff]/10 border border-indigo-500/20 text-[#ffcd1f] text-sm font-bold mb-6">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#4255ff]/10 border border-indigo-500/20 text-qz-accent text-sm font-bold mb-6">
                     <Sparkles size={16} /> AI Content Creator
                 </div>
                 <h1 className="text-5xl font-semibold mb-6 tracking-tight">Создавайте за секунды.</h1>
@@ -261,7 +261,7 @@ export default function CreatorPage() {
                                 onChange={handleFileUpload}
                             />
                             {fileName ? (
-                                <div className="flex items-center gap-2 px-3 py-1.5 bg-[#4255ff]/20 border border-indigo-500/30 rounded-full text-xs font-bold text-[#ffcd1f] animate-in zoom-in-95">
+                                <div className="flex items-center gap-2 px-3 py-1.5 bg-[#4255ff]/20 border border-indigo-500/30 rounded-full text-xs font-bold text-qz-accent animate-in zoom-in-95">
                                     <File size={14} /> {fileName}
                                     <button onClick={removeFile} className="hover:text-qz-text"><X size={14} /></button>
                                 </div>
@@ -324,7 +324,7 @@ export default function CreatorPage() {
             <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[
                     { icon: <FileText className="text-blue-400" />, title: "PDF & Docs", desc: "Поддержка учебников и конспектов" },
-                    { icon: <BrainCircuit className="text-[#ffcd1f]" />, title: "Smart Extraction", desc: "AI находит самые важные мысли" },
+                    { icon: <BrainCircuit className="text-qz-accent" />, title: "Smart Extraction", desc: "AI находит самые важные мысли" },
                     { icon: <Sparkles className="text-amber-400" />, title: "Instant Sets", desc: "Готовый модуль за 15 секунд" }
                 ].map((feature, i) => (
                     <div key={i} className="p-6 bg-white/5 border border-white/5 rounded-2xl">

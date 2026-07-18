@@ -260,7 +260,7 @@ export function StoryReading({ title, backHref, language, level, voice, vocabula
           <Link href={backHref} className="inline-flex items-center gap-1.5 text-qz-text-muted hover:text-foreground text-sm transition-colors">
             <ChevronLeft className="w-4 h-4" /> {title}
           </Link>
-          <span className="inline-flex items-center gap-1.5 text-[#ffcd1f] text-sm font-semibold">
+          <span className="inline-flex items-center gap-1.5 text-qz-accent text-sm font-semibold">
             <BookOpenText className="w-4 h-4" /> Чтение
           </span>
         </div>

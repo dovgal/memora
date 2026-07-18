@@ -123,7 +123,7 @@ export default function FrenchA2CoursePage() {
         {game && lvl && (
           <div className="bg-qz-card border border-border rounded-2xl px-4 py-3 space-y-3">
             <div className="flex items-center gap-4 flex-wrap">
-              <div className="flex items-center gap-1.5"><Trophy className="w-5 h-5 text-[#ffcd1f]" /><span className="font-semibold text-sm">Ур. {lvl.level} · {lvl.title}</span></div>
+              <div className="flex items-center gap-1.5"><Trophy className="w-5 h-5 text-qz-accent" /><span className="font-semibold text-sm">Ур. {lvl.level} · {lvl.title}</span></div>
               <div className="flex items-center gap-1.5"><Zap className="w-5 h-5 text-[#4255ff]" /><span className="text-sm">{game.xp} XP</span></div>
               <div className="flex items-center gap-1.5"><Flame className={`w-5 h-5 ${game.streak > 0 ? "text-orange-500" : "text-qz-text-muted"}`} /><span className="text-sm">{game.streak} дн. подряд</span></div>
               {game.badges.length > 0 && <div className="flex items-center gap-1 ml-auto"><Award className="w-4 h-4 text-emerald-500" /><span className="text-sm">{game.badges.length} бейджей</span></div>}
@@ -795,7 +795,7 @@ function ClassicExam({ session, setMode }: { session: ReturnType<typeof useSessi
     <div className="space-y-4">
       <div className="grid sm:grid-cols-2 gap-4">
         <div className="bg-qz-card border border-border rounded-2xl p-6 text-center">
-          <Award className="w-10 h-10 mx-auto text-[#ffcd1f] mb-2" />
+          <Award className="w-10 h-10 mx-auto text-qz-accent mb-2" />
           <h3 className="font-bold mb-1">Épreuve blanche (классика)</h3>
           <p className="text-qz-text-muted text-sm mb-4">100 случайных заданий из банка 400+, таймер, порог 60%. Бейдж + 50 XP.</p>
           <button onClick={start} className="px-5 py-2.5 rounded-xl bg-[#ffcd1f] text-[#1a1d28] font-bold flex items-center gap-2 mx-auto"><Clock className="w-4 h-4" /> Начать</button>
@@ -1284,11 +1284,11 @@ function ProgressTab() {
 
       {/* Таблица лидеров */}
       <div className="bg-qz-card border border-border rounded-2xl p-5">
-        <div className="flex items-center gap-2 font-semibold mb-3"><Trophy className="w-5 h-5 text-[#ffcd1f]" /> Таблица лидеров {realBoard ? "класса" : "(демо)"}</div>
+        <div className="flex items-center gap-2 font-semibold mb-3"><Trophy className="w-5 h-5 text-qz-accent" /> Таблица лидеров {realBoard ? "класса" : "(демо)"}</div>
         <div className="space-y-1.5">
           {board.map((row, i) => (
             <div key={i} className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm ${row.me ? "bg-[#4255ff]/10 font-semibold" : "bg-background"}`}>
-              <span className={`w-6 text-center ${i === 0 ? "text-[#ffcd1f]" : "text-qz-text-muted"}`}>{i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : i + 1}</span>
+              <span className={`w-6 text-center ${i === 0 ? "text-qz-accent" : "text-qz-text-muted"}`}>{i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : i + 1}</span>
               <span className="flex-1">{row.name}{row.me && " (вы)"}</span>
               <span className="flex items-center gap-1"><Zap className="w-3.5 h-3.5 text-[#4255ff]" /> {row.xp}</span>
             </div>

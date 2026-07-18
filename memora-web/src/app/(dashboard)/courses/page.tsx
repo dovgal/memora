@@ -203,7 +203,7 @@ export default function CoursesCatalogPage() {
                     className="absolute top-3 right-3 p-1.5 rounded-full hover:bg-muted transition-colors"
                     title={subs.has(c.id) ? 'Убрать из моих курсов' : 'В мои курсы'}
                   >
-                    <Star className={`w-4 h-4 ${subs.has(c.id) ? 'text-[#ffcd1f] fill-[#ffcd1f]' : 'text-qz-text-muted'}`} />
+                    <Star className={`w-4 h-4 ${subs.has(c.id) ? 'text-qz-accent fill-[#ffcd1f]' : 'text-qz-text-muted'}`} />
                   </button>
                   <div className="text-2xl mb-3">{c.emoji}</div>
                   <h3 className="text-foreground font-semibold text-sm mb-1 pr-6 line-clamp-1">{c.title}</h3>

@@ -42,7 +42,7 @@ function AudioPlayer({ src, label, icon: Icon }: { src: string, label: string, i
             </div>
             <div className="flex-1 min-w-0">
                 <span className="text-sm font-semibold text-qz-text-muted flex items-center gap-1">
-                    <Icon size={14} className="text-[#ffcd1f] shrink-0" /> {label}
+                    <Icon size={14} className="text-qz-accent shrink-0" /> {label}
                 </span>
                 <span className="text-xs text-zinc-500 block truncate">
                     {isPlaying ? "Воспроизведение..." : "Нажмите, чтобы прослушать"}
@@ -87,7 +87,7 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
                         return (
                             <div key={field.id} className="flex flex-col items-center gap-2 w-full max-w-4xl mx-auto">
                                 <div className="flex items-center gap-3">
-                                    <span className="text-[10px] md:text-sm text-[#ffcd1f] font-bold uppercase tracking-[0.2em] opacity-80">
+                                    <span className="text-[10px] md:text-sm text-qz-accent font-bold uppercase tracking-[0.2em] opacity-80">
                                         {field.name}
                                     </span>
                                     {field.settings?.ttsEnabled && (
@@ -97,7 +97,7 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
                                                 const audio = new Audio(`/api/audio/${card.id}/${field.id}_audio`);
                                                 audio.play().catch(err => console.warn("Audio playback failed", err));
                                             }}
-                                            className="text-[#4255ff] hover:text-[#ffcd1f] p-2 bg-[#4255ff]/10 hover:bg-[#4255ff]/20 rounded-full transition-all hover:scale-110 active:scale-90"
+                                            className="text-[#4255ff] hover:text-qz-accent p-2 bg-[#4255ff]/10 hover:bg-[#4255ff]/20 rounded-full transition-all hover:scale-110 active:scale-90"
                                             title="Озвучить"
                                         >
                                             <Volume2 size={16} />

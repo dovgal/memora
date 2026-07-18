@@ -88,7 +88,7 @@ export default async function DashboardLayout({
                             <span className="absolute top-2 left-6 w-2 h-2 bg-pink-500 rounded-full"></span>
                             Notifications
                         </Link>
-                        <Link href="/creator" className="flex items-center gap-3 px-3 py-2.5 bg-[#4255ff]/10 text-[#ffcd1f] hover:bg-[#4255ff]/20 rounded-xl transition-all font-bold border border-indigo-500/20 group">
+                        <Link href="/creator" className="flex items-center gap-3 px-3 py-2.5 bg-[#4255ff]/10 text-qz-accent hover:bg-[#4255ff]/20 rounded-xl transition-all font-bold border border-indigo-500/20 group">
                             <Sparkles className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                             AI Creator
                         </Link>
@@ -102,13 +102,13 @@ export default async function DashboardLayout({
                             ) : (
                                 folders.map(folder => (
                                     <Link key={folder.id} href={`/folder/${folder.id}`} className="flex items-center gap-3 px-3 py-2 hover:bg-qz-card rounded-lg transition-colors text-sm group">
-                                        <Folder className="w-4 h-4 text-zinc-500 group-hover:text-[#ffcd1f] transition-colors shrink-0" />
+                                        <Folder className="w-4 h-4 text-zinc-500 group-hover:text-qz-accent transition-colors shrink-0" />
                                         <span className="truncate">{folder.name}</span>
                                     </Link>
                                 ))
                             )}
                         </nav>
-                        <Link href="/library" className="flex items-center gap-2 px-3 py-2 mt-2 text-sm text-[#ffcd1f] hover:text-indigo-300 font-medium w-full text-left">
+                        <Link href="/library" className="flex items-center gap-2 px-3 py-2 mt-2 text-sm text-qz-accent hover:text-indigo-300 font-medium w-full text-left">
                             <Plus className="w-4 h-4" /> New Folder
                         </Link>
                     </div>

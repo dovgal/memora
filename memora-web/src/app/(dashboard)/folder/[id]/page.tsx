@@ -53,7 +53,7 @@ export default async function FolderPage({ params }: { params: Promise<{ id: str
 
                 <header className="mb-12 border-b border-qz-border-light pb-8 flex flex-col md:flex-row md:justify-between md:items-start gap-6">
                     <div className="flex items-start gap-6">
-                        <div className="bg-[#4255ff]/10 text-[#ffcd1f] p-4 rounded-2xl">
+                        <div className="bg-[#4255ff]/10 text-qz-accent p-4 rounded-2xl">
                             <Folder size={48} />
                         </div>
                         <div>

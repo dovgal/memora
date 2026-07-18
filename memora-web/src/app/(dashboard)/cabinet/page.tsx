@@ -92,7 +92,7 @@ export default function CabinetPage() {
               <h1 className="text-xl font-bold text-foreground">{session?.user?.email ?? 'Мой кабинет'}</h1>
               <p className="text-qz-text-muted text-sm flex items-center gap-1.5">
                 {role === 'teacher'
-                  ? <><GraduationCap className="w-4 h-4 text-[#ffcd1f]" /> Преподаватель</>
+                  ? <><GraduationCap className="w-4 h-4 text-qz-accent" /> Преподаватель</>
                   : <><BookOpen className="w-4 h-4 text-emerald-400" /> Ученик</>}
               </p>
             </div>
@@ -125,7 +125,7 @@ export default function CabinetPage() {
             <div className="grid sm:grid-cols-2 gap-2">
               {subs.map(s => (
                 <div key={s.courseId} className="bg-qz-card border border-border rounded-xl px-4 py-3 flex items-center gap-3">
-                  <Star className="w-4 h-4 text-[#ffcd1f] shrink-0" />
+                  <Star className="w-4 h-4 text-qz-accent shrink-0" />
                   <Link href={s.href} className="flex-1 text-foreground text-sm font-medium hover:text-[#4255ff] line-clamp-1">
                     {s.title}
                   </Link>
@@ -209,7 +209,7 @@ export default function CabinetPage() {
                   {classes.teaching.map(c => (
                     <Link key={c.id} href={`/classes/${c.id}`}>
                       <div className="bg-qz-card border border-border rounded-xl px-4 py-3 hover:border-[#4255ff]/40 transition-colors flex items-center gap-3 group">
-                        <GraduationCap className="w-4 h-4 text-[#ffcd1f] shrink-0" />
+                        <GraduationCap className="w-4 h-4 text-qz-accent shrink-0" />
                         <div className="flex-1 min-w-0">
                           <p className="text-foreground text-sm font-semibold line-clamp-1">{c.name}</p>
                           <p className="text-qz-text-muted text-xs">Код: <span className="font-mono">{c.joinCode}</span> · {c.members} уч.</p>

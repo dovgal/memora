@@ -51,7 +51,7 @@ export default function FlashcardsStudyPage({ params }: { params: Promise<{ id: 
         return (
             <div className="min-h-screen bg-qz-bg text-qz-text flex flex-col items-center justify-center">
                 <p>No flashcards found in this set.</p>
-                <button onClick={closeSession} className="mt-4 text-[#ffcd1f]">Return to Set</button>
+                <button onClick={closeSession} className="mt-4 text-qz-accent">Return to Set</button>
             </div>
         )
     }

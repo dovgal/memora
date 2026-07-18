@@ -41,7 +41,7 @@ export default async function TeacherDashboard() {
                         <p className="text-qz-text-muted text-sm">Классы, диагностики учеников, назначение планов и аналитика ошибок.</p>
                     </Link>
                     <Link href="/dashboard/generate" className="block p-6 rounded-2xl bg-qz-card border border-qz-border-light hover:border-indigo-500/50 hover:bg-qz-card/50 transition-all group">
-                        <div className="h-12 w-12 rounded-xl bg-[#4255ff]/10 text-[#ffcd1f] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <div className="h-12 w-12 rounded-xl bg-[#4255ff]/10 text-qz-accent flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                             <Sparkles className="w-6 h-6" />
                         </div>
                         <h3 className="text-lg font-semibold mb-2 text-qz-text">Generate with AI</h3>
@@ -49,7 +49,7 @@ export default async function TeacherDashboard() {
                     </Link>
 
                     <Link href="/create" className="block p-6 rounded-2xl bg-qz-card border border-qz-border-light hover:border-indigo-500/50 hover:bg-qz-card/50 transition-all group">
-                        <div className="h-12 w-12 rounded-xl bg-[#4255ff]/10 text-[#ffcd1f] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <div className="h-12 w-12 rounded-xl bg-[#4255ff]/10 text-qz-accent flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                             <UploadCloud className="w-6 h-6" />
                         </div>
                         <h3 className="text-lg font-semibold mb-2 text-qz-text">Import Flashcards</h3>
@@ -61,7 +61,7 @@ export default async function TeacherDashboard() {
             <section>
                 <div className="flex items-center justify-between mb-4">
                     <h2 className="text-xl font-semibold text-qz-text-muted">Your Recent Sets</h2>
-                    <Link href="/library" className="text-sm font-medium text-[#ffcd1f] hover:text-indigo-300 transition-colors">View Library</Link>
+                    <Link href="/library" className="text-sm font-medium text-qz-accent hover:text-indigo-300 transition-colors">View Library</Link>
                 </div>
                 {sets.length === 0 ? (
                     <div className="bg-qz-card/50 border border-qz-border-light rounded-2xl p-8 text-center">

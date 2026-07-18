@@ -98,7 +98,7 @@ export function ExamSession({ courseId, unitId, unitTitle, exercises, backHref }
           </Link>
           <div className="text-center">
             <div className="w-14 h-14 rounded-2xl bg-[#ffcd1f]/15 flex items-center justify-center mx-auto mb-4">
-              <GraduationCap className="w-7 h-7 text-[#ffcd1f]" />
+              <GraduationCap className="w-7 h-7 text-qz-accent" />
             </div>
             <h1 className="text-2xl font-bold text-foreground mb-2">Экзамен: {unitTitle}</h1>
             <p className="text-qz-text-muted text-sm max-w-md mx-auto mb-6">
@@ -122,7 +122,7 @@ export function ExamSession({ courseId, unitId, unitTitle, exercises, backHref }
       <div className="min-h-screen bg-qz-card text-qz-text">
         <div className="max-w-2xl mx-auto px-4 py-12 text-center">
           {passed ? (
-            <Award className="w-14 h-14 text-[#ffcd1f] mx-auto mb-4" />
+            <Award className="w-14 h-14 text-qz-accent mx-auto mb-4" />
           ) : (
             <XCircle className="w-14 h-14 text-red-400 mx-auto mb-4" />
           )}
@@ -165,7 +165,7 @@ export function ExamSession({ courseId, unitId, unitTitle, exercises, backHref }
     <div className="min-h-screen bg-qz-card text-qz-text">
       <div className="max-w-3xl mx-auto px-4 py-6 md:py-8">
         <div className="flex items-center justify-between mb-6">
-          <span className="inline-flex items-center gap-1.5 text-[#ffcd1f] text-sm font-semibold">
+          <span className="inline-flex items-center gap-1.5 text-qz-accent text-sm font-semibold">
             <GraduationCap className="w-4 h-4" /> Экзамен · {unitTitle}
           </span>
           <span className="inline-flex items-center gap-1.5 text-qz-text-muted text-sm font-mono">

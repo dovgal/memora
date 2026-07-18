@@ -70,7 +70,7 @@ export default function ResultsPage({ params }: ResultsPageProps) {
                     </button>
                     <button
                         onClick={() => router.back()}
-                        className="flex items-center gap-1.5 text-xs text-[#ffcd1f] hover:text-indigo-300 px-3 py-1.5 rounded-lg border border-indigo-500/30 hover:border-indigo-500/60 transition-colors"
+                        className="flex items-center gap-1.5 text-xs text-qz-accent hover:text-indigo-300 px-3 py-1.5 rounded-lg border border-indigo-500/30 hover:border-indigo-500/60 transition-colors"
                     >
                         <RotateCcw className="w-3.5 h-3.5" /> Play Again
                     </button>

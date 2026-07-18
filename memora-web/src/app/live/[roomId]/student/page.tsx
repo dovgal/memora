@@ -117,7 +117,7 @@ export default function StudentLobbyPage({ params }: StudentLobbyPageProps) {
                         {/* Join code display */}
                         <div className="bg-qz-bg/60 border border-qz-border-light rounded-2xl px-8 py-5 text-center">
                             <p className="text-xs uppercase tracking-widest text-zinc-500 mb-2">Game Code</p>
-                            <p className="text-4xl font-semibold tracking-[0.3em] text-[#ffcd1f] tabular-nums">{joinCode}</p>
+                            <p className="text-4xl font-semibold tracking-[0.3em] text-qz-accent tabular-nums">{joinCode}</p>
                         </div>
 
                         {/* Animated waiting dots */}
