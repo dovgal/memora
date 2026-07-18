@@ -48,10 +48,19 @@ async fn main() {
     // Load environment variables from .env
     dotenvy::dotenv().ok();
 
-    // Set up database connection pool
+    // Set up database connection pool.
+    // Размер настраивается через DB_MAX_CONNECTIONS. По умолчанию 20: Railway
+    // Postgres даёт max_connections=100, а пул в 5 упирался в лимит под
+    // параллельными запросами страниц («pool timed out waiting for connection»).
+    // acquire_timeout 5s — быстрый отказ вместо 30-секундного зависания хендлера.
     let db_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+    let max_connections: u32 = env::var("DB_MAX_CONNECTIONS")
+        .ok()
+        .and_then(|v| v.parse().ok())
+        .unwrap_or(20);
     let pool = PgPoolOptions::new()
-        .max_connections(5)
+        .max_connections(max_connections)
+        .acquire_timeout(std::time::Duration::from_secs(5))
         .connect(&db_url)
         .await
         .expect("Failed to connect to PostgreSQL");
