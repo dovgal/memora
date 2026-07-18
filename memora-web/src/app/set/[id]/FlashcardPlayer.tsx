@@ -17,7 +17,12 @@ interface FlashcardPlayerProps {
     setId?: string;
 }
 
-export default function FlashcardPlayer({ flashcards, fieldsSchema = DEFAULT_SCHEMA, setId }: FlashcardPlayerProps) {
+export default function FlashcardPlayer({ flashcards, fieldsSchema: fieldsSchemaProp, setId }: FlashcardPlayerProps) {
+    // Наборы, созданные API (экспорт лексики курса, словарь курса), хранят
+    // fieldsSchema = [] — это «обычные» term/definition-карточки. Пустой массив
+    // не triggers дефолт параметра, поэтому явный фолбэк, иначе плеер показывал
+    // «Нет полей для отображения» при 150 живых карточках.
+    const fieldsSchema = fieldsSchemaProp?.length ? fieldsSchemaProp : DEFAULT_SCHEMA;
     const containerRef = React.useRef<HTMLDivElement>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isFlipped, setIsFlipped] = useState(false);
