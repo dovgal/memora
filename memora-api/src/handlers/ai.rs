@@ -519,16 +519,16 @@ pub fn extract_json(content: &str) -> &str {
     extract_json_object(content)
 }
 
-/// Нестриминговый перевод: строгий JSON по схеме. Используется переводом юнитов.
+/// Нестриминговый перевод: просим валидный JSON-объект (format:"json").
+/// Лёгкая констрейнт-схема надёжнее полного JSON-schema на длинном вводе.
 pub async fn llm_translate(
     messages: Vec<ChatMessage>,
-    schema: serde_json::Value,
 ) -> Result<String, llm::LlmError> {
     llm::chat_text(ChatRequest {
         task: Task::Generation,
         messages,
         max_tokens: 8192,
-        format: ResponseFormat::JsonSchema(schema),
+        format: ResponseFormat::JsonObject,
     }).await
 }
 

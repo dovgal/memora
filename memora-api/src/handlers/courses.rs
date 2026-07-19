@@ -922,22 +922,17 @@ async fn translate_strings(strings: &[String], lang: &str) -> ApiResult<HashMap<
         .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("serialize: {e}")))?;
 
     let system = format!(
-        "You are a professional translator for an educational app. Translate each string in the input JSON array into {lang_name}. \
-         Rules: (1) Return ONLY a JSON object {{\"t\": [...]}} whose array has EXACTLY the same length and order as the input. \
+        "You are a professional translator for an educational app. You receive a JSON array of strings and translate each into {lang_name}. \
+         Rules: (1) Return ONLY a JSON object of the form {{\"t\": [...]}} whose array has EXACTLY the same length and order as the input array. \
          (2) Preserve all HTML tags, attributes and inline styles untouched — translate only the visible text between tags. \
          (3) Preserve every '___' placeholder exactly (same count and position). \
          (4) Keep proper nouns, dates, numbers, phonetic transcriptions in [brackets], and text already in {lang_name} unchanged. \
          (5) Natural, correct {lang_name}. Do not add or remove array elements."
     );
-    let schema = serde_json::json!({
-        "type": "object",
-        "properties": { "t": { "type": "array", "items": { "type": "string" } } },
-        "required": ["t"]
-    });
+    let user = format!("Input array to translate into {lang_name}:\n{input}");
 
     let content = crate::handlers::ai::llm_translate(
-        vec![crate::llm::ChatMessage::system(system), crate::llm::ChatMessage::user(input)],
-        schema,
+        vec![crate::llm::ChatMessage::system(system), crate::llm::ChatMessage::user(user)],
     ).await.map_err(|e| ApiError::response(StatusCode::BAD_GATEWAY, format!("Translation failed: {e}")))?;
 
     let parsed: serde_json::Value = serde_json::from_str(crate::handlers::ai::extract_json(&content))
