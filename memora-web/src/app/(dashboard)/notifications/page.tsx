@@ -22,12 +22,17 @@ export default function NotificationsPage() {
   const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
+    let done = false;
+    const finish = (s: PushState) => { if (!done) { done = true; setState(s); } };
+    // Страховка: что бы ни случилось с SW-API, не зависаем на 'loading'.
+    const guard = setTimeout(() => finish('off'), 6000);
     (async () => {
-      if (!pushSupported()) { setState('unsupported'); return; }
-      if (Notification.permission === 'denied') { setState('denied'); return; }
+      if (!pushSupported()) { finish('unsupported'); return; }
+      if (Notification.permission === 'denied') { finish('denied'); return; }
       const sub = await getCurrentSubscription().catch(() => null);
-      setState(sub ? 'on' : 'off');
-    })();
+      finish(sub ? 'on' : 'off');
+    })().finally(() => clearTimeout(guard));
+    return () => clearTimeout(guard);
   }, []);
 
   const enable = async () => {

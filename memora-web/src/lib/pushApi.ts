@@ -34,9 +34,36 @@ export function pushSupported(): boolean {
     && 'Notification' in window;
 }
 
+const PUSH_SW_URL = '/push-sw.js';
+
+/**
+ * Регистрация нашего push-SW и ожидание его активации.
+ *
+ * ВАЖНО: НЕ используем `navigator.serviceWorker.ready` — он висит вечно, если
+ * ни один SW не зарегистрирован (serwist отключён), из-за чего страница
+ * уведомлений раньше грузилась бесконечно. Здесь работаем с конкретной
+ * регистрацией и ждём именно её активации.
+ */
+async function ensurePushRegistration(): Promise<ServiceWorkerRegistration> {
+  const existing = await navigator.serviceWorker.getRegistration(PUSH_SW_URL);
+  const reg = existing ?? await navigator.serviceWorker.register(PUSH_SW_URL);
+  if (reg.active) return reg;
+  // Ждём перехода installing/waiting → activated (с страховочным таймаутом).
+  await new Promise<void>((resolve) => {
+    const worker = reg.installing || reg.waiting;
+    if (!worker) { resolve(); return; }
+    const done = () => { if (worker.state === 'activated') resolve(); };
+    worker.addEventListener('statechange', done);
+    setTimeout(resolve, 5000);
+  });
+  return reg;
+}
+
 export async function getCurrentSubscription(): Promise<PushSubscription | null> {
   if (!pushSupported()) return null;
-  const reg = await navigator.serviceWorker.ready;
+  // getRegistration резолвится сразу (undefined, если SW нет) — без зависания.
+  const reg = await navigator.serviceWorker.getRegistration(PUSH_SW_URL);
+  if (!reg) return null;
   return reg.pushManager.getSubscription();
 }
 
@@ -49,7 +76,7 @@ export async function enablePush(idToken?: string): Promise<void> {
     await fetch('/api/push/public-key', { headers: headers(idToken) })
   );
 
-  const reg = await navigator.serviceWorker.ready;
+  const reg = await ensurePushRegistration();
   const sub = await reg.pushManager.subscribe({
     userVisibleOnly: true,
     applicationServerKey: urlBase64ToUint8Array(publicKey) as BufferSource,
