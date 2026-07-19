@@ -911,14 +911,39 @@ pub async fn get_unit_translated(
     Ok((StatusCode::OK, Json(detail)))
 }
 
-/// Переводит список уникальных строк на `lang` через LLM, возвращает словарь
-/// исходная → перевод. HTML-теги и плейсхолдеры `___` сохраняются.
+/// Переводит список уникальных строк на `lang`, возвращает словарь исходная →
+/// перевод. Строки бьются на небольшие батчи (~1200 символов): каждый вызов
+/// LLM остаётся компактным, как рабочий grade, — большой вывод одним запросом
+/// reasoning-модель отдавала пустым. HTML-теги и `___` сохраняются.
 async fn translate_strings(strings: &[String], lang: &str) -> ApiResult<HashMap<String, String>> {
+    const MAX_BATCH_CHARS: usize = 1200;
+    let mut dict = HashMap::new();
+    let mut batch: Vec<String> = Vec::new();
+    let mut batch_chars = 0usize;
+
+    for s in strings {
+        let len = s.chars().count();
+        if !batch.is_empty() && batch_chars + len > MAX_BATCH_CHARS {
+            translate_batch(&batch, lang, &mut dict).await?;
+            batch.clear();
+            batch_chars = 0;
+        }
+        batch.push(s.clone());
+        batch_chars += len;
+    }
+    if !batch.is_empty() {
+        translate_batch(&batch, lang, &mut dict).await?;
+    }
+    Ok(dict)
+}
+
+/// Один батч перевода: компактный LLM-вызов, результат вливается в `dict`.
+async fn translate_batch(batch: &[String], lang: &str, dict: &mut HashMap<String, String>) -> ApiResult<()> {
     let lang_name = match lang {
         "fr" => "French", "en" => "English", "de" => "German",
         "es" => "Spanish", "ru" => "Russian", other => other,
     };
-    let input = serde_json::to_string(strings)
+    let input = serde_json::to_string(batch)
         .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("serialize: {e}")))?;
 
     let system = format!(
@@ -931,10 +956,8 @@ async fn translate_strings(strings: &[String], lang: &str) -> ApiResult<HashMap<
     );
     let user = format!("Input array to translate into {lang_name}:\n{input}");
 
-    // Бюджет вывода ~ размеру ввода в символах (перевод сопоставимой длины +
-    // запас на reasoning-токены), с потолком 4096: слишком большой num_predict
-    // отвергается провайдером (быстрый 502), а перевыделение риска не создаёт.
-    let max_tokens = (input.chars().count().clamp(1024, 4096)) as u32;
+    // Небольшой батч → скромный, но достаточный бюджет вывода.
+    let max_tokens = (input.chars().count() * 2).clamp(512, 3072) as u32;
 
     let content = crate::handlers::ai::llm_translate(
         vec![crate::llm::ChatMessage::system(system), crate::llm::ChatMessage::user(user)],
@@ -947,13 +970,12 @@ async fn translate_strings(strings: &[String], lang: &str) -> ApiResult<HashMap<
         .ok_or_else(|| ApiError::response(StatusCode::BAD_GATEWAY, "Translation: missing 't' array"))?;
 
     // Сопоставляем по индексу; при расхождении длины оставляем оригинал.
-    let mut dict = HashMap::new();
-    for (i, orig) in strings.iter().enumerate() {
+    for (i, orig) in batch.iter().enumerate() {
         if let Some(t) = arr.get(i).and_then(|v| v.as_str()) {
             dict.insert(orig.clone(), t.to_string());
         }
     }
-    Ok(dict)
+    Ok(())
 }
 
 /// PUT /api/courses/{id}/units/{unit_id} — обновить юнит (только владелец).
