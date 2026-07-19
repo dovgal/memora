@@ -251,6 +251,7 @@ async fn pregenerate_one(
             messages: vec![ChatMessage::system(system.clone()), ChatMessage::user(user_msg.clone())],
             max_tokens: 1200,
             format: ResponseFormat::JsonSchema(schema.clone()),
+        think: None,
         }).await {
             Ok(c) => c,
             Err(e) => {

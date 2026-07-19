@@ -1006,8 +1006,9 @@ async fn translate_batch(batch: &[String], lang: &str, dict: &mut HashMap<String
     );
     let user = format!("Input array to translate into {lang_name}:\n{input}");
 
-    // Небольшой батч → скромный, но достаточный бюджет вывода.
-    let max_tokens = (input.chars().count() * 2).clamp(512, 3072) as u32;
+    // Бюджет вывода: перевод сопоставим по длине со входом + запас на
+    // low-thinking; 6000 проверено против Ollama Cloud (8192 отбивался).
+    let max_tokens = (input.chars().count() * 2).clamp(1024, 6000) as u32;
 
     let content = crate::handlers::ai::llm_translate(
         vec![crate::llm::ChatMessage::system(system), crate::llm::ChatMessage::user(user)],

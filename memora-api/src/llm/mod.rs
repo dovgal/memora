@@ -80,6 +80,10 @@ pub struct ChatRequest {
     /// Лимит генерации: `options.num_predict` (Ollama) / `max_tokens` (OpenAI).
     pub max_tokens: u32,
     pub format: ResponseFormat,
+    /// Уровень рассуждений reasoning-моделей (Ollama `think`: "low"/"medium"/"high").
+    /// None — по умолчанию модели. Для механических задач (перевод) ставим "low",
+    /// иначе размышления съедают бюджет num_predict и вывод обрезается.
+    pub think: Option<String>,
 }
 
 #[derive(Debug)]
@@ -182,6 +186,9 @@ fn build_body(provider: &Provider, req: &ChatRequest, stream: bool) -> Value {
                 "stream": stream,
                 "options": { "num_predict": req.max_tokens },
             });
+            if let Some(level) = &req.think {
+                body["think"] = json!(level);
+            }
             if structured_outputs_enabled() {
                 match &req.format {
                     ResponseFormat::Text => {}

@@ -35,7 +35,7 @@ async fn llm_text(
     max_tokens: u32,
     format: ResponseFormat,
 ) -> Result<String, (StatusCode, Json<AiGatewayError>)> {
-    llm::chat_text(ChatRequest { task, messages, max_tokens, format }).await.map_err(llm_err)
+    llm::chat_text(ChatRequest { task, messages, max_tokens, format, think: None }).await.map_err(llm_err)
 }
 
 /// Оборачивает поток LLM-чанков в SSE: data-события с контентом, событие "done"
@@ -153,6 +153,7 @@ pub async fn generate_flashcards_stream(
         messages: vec![system, user_msg],
         max_tokens: 1500,
         format: ResponseFormat::Text,
+        think: None,
     }).await.map_err(llm_err)?;
 
     Ok(sse_from_llm(llm_stream))
@@ -212,6 +213,7 @@ pub async fn qchat_stream(
         messages,
         max_tokens: 1000,
         format: ResponseFormat::Text,
+        think: None,
     }).await.map_err(llm_err)?;
 
     Ok(sse_from_llm(llm_stream))
@@ -306,6 +308,7 @@ pub async fn generate_exercises(
         messages: vec![ChatMessage::system(system_prompt)],
         max_tokens: 8192,
         format: ResponseFormat::Text,
+        think: None,
     }).await {
         Ok(s) => s,
         Err(e) => return Sse::new(stream::once(async move { Ok(Event::default().data(format!("Error: {e}"))) }).boxed()),
@@ -408,6 +411,7 @@ pub async fn analyze_content(
         ],
         max_tokens: 8192,
         format: ResponseFormat::Text,
+        think: None,
     }).await {
         Ok(s) => s,
         Err(e) => return Sse::new(stream::once(async move { Ok(Event::default().data(format!("Error: {e}"))) }).boxed()),
@@ -520,7 +524,9 @@ pub fn extract_json(content: &str) -> &str {
 }
 
 /// Нестриминговый перевод. JSON-schema {t:[string]} принуждает reasoning-модель
-/// выдать массив напрямую (как в grade), иначе с format:"json" вывод пустой.
+/// выдать массив напрямую, think:"low" ограничивает рассуждения — иначе они
+/// съедали num_predict и content приходил пустым/обрезанным (проверено против
+/// Ollama Cloud: medium ≈ 1.7k символов thinking, low ≈ 0.3k).
 pub async fn llm_translate(
     messages: Vec<ChatMessage>,
     max_tokens: u32,
@@ -535,6 +541,7 @@ pub async fn llm_translate(
         messages,
         max_tokens,
         format: ResponseFormat::JsonSchema(schema),
+        think: Some("low".to_string()),
     }).await
 }
 
@@ -1664,6 +1671,7 @@ pub async fn regenerate_variant(
             messages: vec![ChatMessage::system(system.clone()), ChatMessage::user(user_msg.clone())],
             max_tokens: 1200,
             format: ResponseFormat::JsonSchema(schema.clone()),
+        think: None,
         }).await {
             Ok(c) => c,
             Err(_) => break, // LLM недоступна — выходим к фолбэку
