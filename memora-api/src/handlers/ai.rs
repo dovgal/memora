@@ -519,17 +519,22 @@ pub fn extract_json(content: &str) -> &str {
     extract_json_object(content)
 }
 
-/// Нестриминговый перевод: просим валидный JSON-объект (format:"json").
-/// Лёгкая констрейнт-схема надёжнее полного JSON-schema на длинном вводе.
+/// Нестриминговый перевод. JSON-schema {t:[string]} принуждает reasoning-модель
+/// выдать массив напрямую (как в grade), иначе с format:"json" вывод пустой.
 pub async fn llm_translate(
     messages: Vec<ChatMessage>,
     max_tokens: u32,
 ) -> Result<String, llm::LlmError> {
+    let schema = serde_json::json!({
+        "type": "object",
+        "properties": { "t": { "type": "array", "items": { "type": "string" } } },
+        "required": ["t"]
+    });
     llm::chat_text(ChatRequest {
         task: Task::Generation,
         messages,
         max_tokens,
-        format: ResponseFormat::JsonObject,
+        format: ResponseFormat::JsonSchema(schema),
     }).await
 }
 

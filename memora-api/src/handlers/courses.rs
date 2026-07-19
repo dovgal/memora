@@ -931,10 +931,10 @@ async fn translate_strings(strings: &[String], lang: &str) -> ApiResult<HashMap<
     );
     let user = format!("Input array to translate into {lang_name}:\n{input}");
 
-    // Бюджет вывода ~ размеру ввода (перевод сопоставимой длины) с запасом,
-    // но с потолком: слишком большой num_predict отвергается провайдером,
-    // а перевыделение риска не создаёт.
-    let max_tokens = ((input.chars().count() / 2).clamp(512, 4096)) as u32;
+    // Бюджет вывода ~ размеру ввода в символах (перевод сопоставимой длины +
+    // запас на reasoning-токены), с потолком 4096: слишком большой num_predict
+    // отвергается провайдером (быстрый 502), а перевыделение риска не создаёт.
+    let max_tokens = (input.chars().count().clamp(1024, 4096)) as u32;
 
     let content = crate::handlers::ai::llm_translate(
         vec![crate::llm::ChatMessage::system(system), crate::llm::ChatMessage::user(user)],
