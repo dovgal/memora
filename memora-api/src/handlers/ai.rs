@@ -523,11 +523,12 @@ pub fn extract_json(content: &str) -> &str {
 /// Лёгкая констрейнт-схема надёжнее полного JSON-schema на длинном вводе.
 pub async fn llm_translate(
     messages: Vec<ChatMessage>,
+    max_tokens: u32,
 ) -> Result<String, llm::LlmError> {
     llm::chat_text(ChatRequest {
         task: Task::Generation,
         messages,
-        max_tokens: 8192,
+        max_tokens,
         format: ResponseFormat::JsonObject,
     }).await
 }

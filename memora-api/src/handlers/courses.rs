@@ -931,8 +931,14 @@ async fn translate_strings(strings: &[String], lang: &str) -> ApiResult<HashMap<
     );
     let user = format!("Input array to translate into {lang_name}:\n{input}");
 
+    // Бюджет вывода ~ размеру ввода (перевод сопоставимой длины) с запасом,
+    // но с потолком: слишком большой num_predict отвергается провайдером,
+    // а перевыделение риска не создаёт.
+    let max_tokens = ((input.chars().count() / 2).clamp(512, 4096)) as u32;
+
     let content = crate::handlers::ai::llm_translate(
         vec![crate::llm::ChatMessage::system(system), crate::llm::ChatMessage::user(user)],
+        max_tokens,
     ).await.map_err(|e| ApiError::response(StatusCode::BAD_GATEWAY, format!("Translation failed: {e}")))?;
 
     let parsed: serde_json::Value = serde_json::from_str(crate::handlers::ai::extract_json(&content))
