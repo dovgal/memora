@@ -2,7 +2,7 @@
 // Прохождение юнита пользовательского курса.
 // Использует те же компоненты упражнений, что и Édito A1 (ExerciseRenderer).
 
-import { use, useState, useEffect, useCallback } from 'react';
+import { use, useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { ChevronLeft, CheckCircle2, Loader2, SkipForward, Volume2 } from 'lucide-react';
@@ -10,16 +10,21 @@ import { ExerciseRenderer } from '@/components/edito/ExerciseRenderer';
 import { speakInworldLanguage } from '@/lib/courses/ttsInworld';
 import {
   getUnit, getCourse, getCourseProgress, recordExerciseProgress, markUnitKnown,
-  type UnitDetail,
+  getTranslatedUnit, type UnitDetail,
 } from '@/lib/courses/customCoursesApi';
+import { UnitLangToggle } from '@/components/courses/UnitLangToggle';
 
 export default function CustomUnitPage({ params }: { params: Promise<{ courseId: string; unitId: string }> }) {
   const { courseId, unitId } = use(params);
   const { data: session } = useSession();
   const idToken = session?.id_token as string | undefined;
 
+  const [baseUnit, setBaseUnit] = useState<UnitDetail | null>(null);
   const [unit, setUnit] = useState<UnitDetail | null>(null);
   const [language, setLanguage] = useState('fr');
+  const [uiLang, setUiLang] = useState('orig');
+  const [translating, setTranslating] = useState(false);
+  const transCache = useRef<Record<string, UnitDetail>>({});
   const [error, setError] = useState<string | null>(null);
   const [completed, setCompleted] = useState<Record<string, boolean>>({});
 
@@ -27,7 +32,7 @@ export default function CustomUnitPage({ params }: { params: Promise<{ courseId:
     if (!idToken) return;
     let cancelled = false;
     getUnit(courseId, unitId, idToken)
-      .then(u => { if (!cancelled) setUnit(u); })
+      .then(u => { if (!cancelled) { setBaseUnit(u); setUnit(u); } })
       .catch(e => { if (!cancelled) setError(e.message); });
     getCourse(courseId, idToken)
       .then(c => { if (!cancelled && c.language) setLanguage(c.language); })
@@ -48,6 +53,25 @@ export default function CustomUnitPage({ params }: { params: Promise<{ courseId:
     });
     recordExerciseProgress(courseId, unitId, exerciseId, idToken);
   }, [courseId, unitId, idToken]);
+
+  // Переключение языка интерфейса юнита: 'orig' — как есть, 'fr' — перевод (с кэшем).
+  const switchLang = useCallback(async (lang: string) => {
+    if (lang === uiLang || !baseUnit) return;
+    if (lang === 'orig') { setUiLang('orig'); setUnit(baseUnit); return; }
+    setUiLang(lang);
+    const cached = transCache.current[lang];
+    if (cached) { setUnit(cached); return; }
+    setTranslating(true);
+    try {
+      const t = await getTranslatedUnit(courseId, unitId, lang, idToken);
+      transCache.current[lang] = t;
+      setUnit(t);
+    } catch {
+      setUiLang('orig'); setUnit(baseUnit);
+      alert('Не удалось перевести юнит. Попробуйте ещё раз.');
+    }
+    setTranslating(false);
+  }, [uiLang, baseUnit, courseId, unitId, idToken]);
 
   const [markingKnown, setMarkingKnown] = useState(false);
   const handleMarkKnown = useCallback(async () => {
@@ -103,15 +127,18 @@ export default function CustomUnitPage({ params }: { params: Promise<{ courseId:
               <h1 className="text-2xl font-bold text-foreground mb-1">{unit.title}</h1>
               <p className="text-qz-text-muted text-sm">{unit.description}</p>
             </div>
-            <button
-              onClick={handleMarkKnown}
-              disabled={markingKnown}
-              className="inline-flex items-center gap-1.5 border border-border hover:border-emerald-500/50 text-qz-text-muted hover:text-emerald-400 text-xs font-semibold px-3 py-2 rounded-xl transition-colors"
-              title="Коуч пометит материал юнита усвоенным"
-            >
-              {markingKnown ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <SkipForward className="w-3.5 h-3.5" />}
-              Я уже это знаю
-            </button>
+            <div className="flex items-center gap-2 flex-wrap">
+              <UnitLangToggle uiLang={uiLang} target={language} onSwitch={switchLang} loading={translating} />
+              <button
+                onClick={handleMarkKnown}
+                disabled={markingKnown}
+                className="inline-flex items-center gap-1.5 border border-border hover:border-emerald-500/50 text-qz-text-muted hover:text-emerald-400 text-xs font-semibold px-3 py-2 rounded-xl transition-colors"
+                title="Коуч пометит материал юнита усвоенным"
+              >
+                {markingKnown ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <SkipForward className="w-3.5 h-3.5" />}
+                Я уже это знаю
+              </button>
+            </div>
           </div>
         </div>
 

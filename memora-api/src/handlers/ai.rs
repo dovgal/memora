@@ -514,6 +514,24 @@ fn extract_json_object(content: &str) -> &str {
     }
 }
 
+/// Публичная обёртка `extract_json_object` для других модулей (перевод юнитов).
+pub fn extract_json(content: &str) -> &str {
+    extract_json_object(content)
+}
+
+/// Нестриминговый перевод: строгий JSON по схеме. Используется переводом юнитов.
+pub async fn llm_translate(
+    messages: Vec<ChatMessage>,
+    schema: serde_json::Value,
+) -> Result<String, llm::LlmError> {
+    llm::chat_text(ChatRequest {
+        task: Task::Generation,
+        messages,
+        max_tokens: 8192,
+        format: ResponseFormat::JsonSchema(schema),
+    }).await
+}
+
 fn extract_json_array(content: &str) -> &str {
     match (content.find('['), content.rfind(']')) {
         (Some(s), Some(e)) if e > s => &content[s..=e],

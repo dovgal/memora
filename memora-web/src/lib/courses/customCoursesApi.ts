@@ -124,6 +124,15 @@ export async function getUnit(courseId: string, unitId: string, idToken?: string
   return ok(await fetch(`/api/courses/${courseId}/units/${unitId}`, { headers: headers(idToken) }));
 }
 
+/**
+ * Юнит с интерфейсом, переведённым на `lang` (fr/en/…): подписи, теория,
+ * вопросы и объяснения переводятся LLM (с кэшем на сервере). Изучаемый язык
+ * (fr-термины, error-hunt) не трогается. Первый вызов может занять пару секунд.
+ */
+export async function getTranslatedUnit(courseId: string, unitId: string, lang: string, idToken?: string): Promise<UnitDetail> {
+  return ok(await fetch(`/api/courses/${courseId}/units/${unitId}/translated?lang=${encodeURIComponent(lang)}`, { headers: headers(idToken) }));
+}
+
 export async function updateUnit(courseId: string, unitId: string, payload: UpsertUnitPayload, idToken?: string): Promise<void> {
   return ok(await fetch(`/api/courses/${courseId}/units/${unitId}`, {
     method: 'PUT', headers: headers(idToken), body: JSON.stringify(payload),

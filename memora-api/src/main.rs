@@ -170,6 +170,10 @@ async fn main() {
                 .put(handlers::courses::update_unit)
                 .delete(handlers::courses::delete_unit)
         )
+        .route(
+            "/api/courses/{course_id}/units/{unit_id}/translated",
+            get(handlers::courses::get_unit_translated)
+        )
         // Коуч-режим: интервальное повторение упражнений курса (FSRS)
         .route("/api/courses/{course_id}/coach/reviews", get(handlers::coach::get_coach_reviews))
         .route("/api/courses/{course_id}/coach/review", post(handlers::coach::record_coach_review))

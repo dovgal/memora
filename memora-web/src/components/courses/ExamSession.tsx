@@ -21,6 +21,8 @@ interface Props {
   unitTitle: string;
   exercises: EditoExercise[];
   backHref: string;
+  /** Опциональный переключатель языка (показывается на стартовом экране экзамена). */
+  langToggle?: React.ReactNode;
 }
 
 function fmtTime(totalSec: number): string {
@@ -29,7 +31,7 @@ function fmtTime(totalSec: number): string {
   return `${m}:${String(s).padStart(2, '0')}`;
 }
 
-export function ExamSession({ courseId, unitId, unitTitle, exercises, backHref }: Props) {
+export function ExamSession({ courseId, unitId, unitTitle, exercises, backHref, langToggle }: Props) {
   const { data: session } = useSession();
   const idToken = session?.id_token as string | undefined;
 
@@ -93,9 +95,12 @@ export function ExamSession({ courseId, unitId, unitTitle, exercises, backHref }
     return (
       <div className="min-h-screen bg-qz-card text-qz-text">
         <div className="max-w-2xl mx-auto px-4 py-10">
-          <Link href={backHref} className="inline-flex items-center gap-1.5 text-qz-text-muted hover:text-foreground text-sm transition-colors mb-8">
-            <ChevronLeft className="w-4 h-4" /> Назад
-          </Link>
+          <div className="flex items-center justify-between mb-8">
+            <Link href={backHref} className="inline-flex items-center gap-1.5 text-qz-text-muted hover:text-foreground text-sm transition-colors">
+              <ChevronLeft className="w-4 h-4" /> Назад
+            </Link>
+            {langToggle}
+          </div>
           <div className="text-center">
             <div className="w-14 h-14 rounded-2xl bg-[#ffcd1f]/15 flex items-center justify-center mx-auto mb-4">
               <GraduationCap className="w-7 h-7 text-qz-accent" />

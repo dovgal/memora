@@ -3,11 +3,12 @@
 // в формате EditoUnit — фронтенд рендерит их существующим ExerciseRenderer.
 
 use axum::{
-    extract::{Path, State},
+    extract::{Path, Query, State},
     http::StatusCode,
     response::IntoResponse,
     Json,
 };
+use std::collections::{HashMap, HashSet};
 use serde::{Deserialize, Serialize};
 use sqlx::{PgPool, Row};
 use uuid::Uuid;
@@ -705,6 +706,253 @@ pub async fn get_unit(
     };
 
     Ok((StatusCode::OK, Json(detail)))
+}
+
+// ---------- Перевод юнита на язык интерфейса ----------
+
+/// Ключи, значения которых — человекочитаемый текст, подлежащий переводу.
+/// Намеренно НЕ переводим: id/type/skill/level; `sentence`/`correction`
+/// (error-hunt/dictée зависят от индекса слова — перевод сломал бы `errorIndex`);
+/// `fr`/`ipa`/`article`/`emoji`/`french`/`words` (изучаемый язык, не подписи).
+const TRANSLATABLE_KEYS: &[&str] = &[
+    "title", "description", "content", "question", "correctAnswer",
+    "explanation", "text", "context", "prompt", "hint", "ru", "speaker",
+];
+
+/// Собирает уникальные переводимые строки в порядке первого появления.
+/// Дедупликация гарантирует консистентность ответа: `correctAnswer` и
+/// совпадающий с ним вариант `options` получают ОДИН перевод.
+fn collect_translatable(v: &serde_json::Value, key: Option<&str>, seen: &mut HashSet<String>, out: &mut Vec<String>) {
+    match v {
+        serde_json::Value::String(s) => {
+            if let Some(k) = key
+                && TRANSLATABLE_KEYS.contains(&k)
+                && !s.trim().is_empty()
+                && seen.insert(s.clone())
+            {
+                out.push(s.clone());
+            }
+        }
+        serde_json::Value::Array(arr) => {
+            if key == Some("options") {
+                for e in arr {
+                    if let serde_json::Value::String(s) = e
+                        && !s.trim().is_empty()
+                        && seen.insert(s.clone())
+                    {
+                        out.push(s.clone());
+                    }
+                }
+            } else {
+                for e in arr {
+                    collect_translatable(e, None, seen, out);
+                }
+            }
+        }
+        serde_json::Value::Object(map) => {
+            for (k, val) in map {
+                collect_translatable(val, Some(k.as_str()), seen, out);
+            }
+        }
+        _ => {}
+    }
+}
+
+/// Заменяет переводимые строки по словарю (тот же обход, что и сбор).
+fn replace_translatable(v: &mut serde_json::Value, key: Option<&str>, dict: &HashMap<String, String>) {
+    match v {
+        serde_json::Value::String(s) => {
+            if let Some(k) = key
+                && TRANSLATABLE_KEYS.contains(&k)
+                && let Some(t) = dict.get(s)
+            {
+                *s = t.clone();
+            }
+        }
+        serde_json::Value::Array(arr) => {
+            if key == Some("options") {
+                for e in arr.iter_mut() {
+                    if let serde_json::Value::String(s) = e
+                        && let Some(t) = dict.get(s)
+                    {
+                        *s = t.clone();
+                    }
+                }
+            } else {
+                for e in arr.iter_mut() {
+                    replace_translatable(e, None, dict);
+                }
+            }
+        }
+        serde_json::Value::Object(map) => {
+            for (_k, val) in map.iter_mut() {
+                let k = _k.clone();
+                replace_translatable(val, Some(k.as_str()), dict);
+            }
+        }
+        _ => {}
+    }
+}
+
+fn short_hash(s: &str) -> String {
+    use sha2::{Digest, Sha256};
+    let digest = Sha256::digest(s.as_bytes());
+    digest.iter().map(|b| format!("{b:02x}")).collect()
+}
+
+#[derive(Deserialize)]
+pub struct TranslateQuery {
+    #[serde(default = "default_lang")]
+    pub lang: String,
+}
+fn default_lang() -> String { "fr".to_string() }
+
+/// GET /api/courses/{id}/units/{unit_id}/translated?lang=fr
+/// Возвращает юнит, где все подписи/объяснения/вопросы переведены на `lang`
+/// силами LLM. Результат кэшируется в `unit_translations` (инвалидация по
+/// хешу исходного контента). Изучаемый язык (fr-термины, error-hunt) не трогаем.
+pub async fn get_unit_translated(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Path((id, unit_id)): Path<(String, String)>,
+    Query(q): Query<TranslateQuery>,
+) -> ApiResult<impl IntoResponse> {
+    let user_id = uid(&user.sub)?;
+    let course_id = parse_id(&id)?;
+    let unit_uuid = parse_id(&unit_id)?;
+    let lang: String = q.lang.trim().to_lowercase().chars().take(8).collect();
+    if lang.is_empty() {
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "lang is required"));
+    }
+
+    let course = sqlx::query("SELECT owner_id, is_published FROM custom_courses WHERE id = $1")
+        .bind(course_id)
+        .fetch_optional(&pool)
+        .await
+        .map_err(db_err)?
+        .ok_or_else(|| ApiError::response(StatusCode::NOT_FOUND, "Course not found"))?;
+    let owner: Uuid = course.get("owner_id");
+    let is_published: bool = course.get("is_published");
+    if owner != user_id && !is_published {
+        return Err(ApiError::response(StatusCode::FORBIDDEN, "This course is not published"));
+    }
+
+    let row = sqlx::query(
+        "SELECT id, course_id, position, title, description, vocabulary, exercises
+         FROM custom_course_units WHERE id = $1 AND course_id = $2"
+    )
+    .bind(unit_uuid)
+    .bind(course_id)
+    .fetch_optional(&pool)
+    .await
+    .map_err(db_err)?
+    .ok_or_else(|| ApiError::response(StatusCode::NOT_FOUND, "Unit not found"))?;
+
+    let position: i32 = row.get("position");
+    let course_id_str = row.get::<Uuid, _>("course_id").to_string();
+    let id_str = row.get::<Uuid, _>("id").to_string();
+
+    // Исходный переводимый payload (без служебных id/position).
+    let source = serde_json::json!({
+        "title": row.get::<String, _>("title"),
+        "description": row.get::<String, _>("description"),
+        "vocabulary": row.get::<serde_json::Value, _>("vocabulary"),
+        "exercises": row.get::<serde_json::Value, _>("exercises"),
+    });
+    let src_hash = short_hash(&format!("{lang}:{source}"));
+
+    // Кэш?
+    let cached = sqlx::query("SELECT src_hash, payload FROM unit_translations WHERE unit_id = $1 AND lang = $2")
+        .bind(unit_uuid)
+        .bind(&lang)
+        .fetch_optional(&pool)
+        .await
+        .map_err(db_err)?;
+
+    let translated: serde_json::Value = if let Some(c) = cached.filter(|c| c.get::<String, _>("src_hash") == src_hash) {
+        c.get("payload")
+    } else {
+        let mut seen = HashSet::new();
+        let mut strings = Vec::new();
+        collect_translatable(&source, None, &mut seen, &mut strings);
+
+        let payload = if strings.is_empty() {
+            source.clone()
+        } else {
+            let dict = translate_strings(&strings, &lang).await?;
+            let mut out = source.clone();
+            replace_translatable(&mut out, None, &dict);
+            out
+        };
+
+        sqlx::query(
+            "INSERT INTO unit_translations (unit_id, lang, src_hash, payload) VALUES ($1,$2,$3,$4)
+             ON CONFLICT (unit_id, lang) DO UPDATE SET src_hash = $3, payload = $4, created_at = NOW()"
+        )
+        .bind(unit_uuid)
+        .bind(&lang)
+        .bind(&src_hash)
+        .bind(&payload)
+        .execute(&pool)
+        .await
+        .map_err(db_err)?;
+        payload
+    };
+
+    let detail = UnitDetail {
+        id: id_str,
+        course_id: course_id_str,
+        position,
+        title: translated.get("title").and_then(|v| v.as_str()).unwrap_or("").to_string(),
+        description: translated.get("description").and_then(|v| v.as_str()).unwrap_or("").to_string(),
+        vocabulary: translated.get("vocabulary").cloned().unwrap_or_else(|| serde_json::json!([])),
+        exercises: translated.get("exercises").cloned().unwrap_or_else(|| serde_json::json!([])),
+    };
+    Ok((StatusCode::OK, Json(detail)))
+}
+
+/// Переводит список уникальных строк на `lang` через LLM, возвращает словарь
+/// исходная → перевод. HTML-теги и плейсхолдеры `___` сохраняются.
+async fn translate_strings(strings: &[String], lang: &str) -> ApiResult<HashMap<String, String>> {
+    let lang_name = match lang {
+        "fr" => "French", "en" => "English", "de" => "German",
+        "es" => "Spanish", "ru" => "Russian", other => other,
+    };
+    let input = serde_json::to_string(strings)
+        .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("serialize: {e}")))?;
+
+    let system = format!(
+        "You are a professional translator for an educational app. Translate each string in the input JSON array into {lang_name}. \
+         Rules: (1) Return ONLY a JSON object {{\"t\": [...]}} whose array has EXACTLY the same length and order as the input. \
+         (2) Preserve all HTML tags, attributes and inline styles untouched — translate only the visible text between tags. \
+         (3) Preserve every '___' placeholder exactly (same count and position). \
+         (4) Keep proper nouns, dates, numbers, phonetic transcriptions in [brackets], and text already in {lang_name} unchanged. \
+         (5) Natural, correct {lang_name}. Do not add or remove array elements."
+    );
+    let schema = serde_json::json!({
+        "type": "object",
+        "properties": { "t": { "type": "array", "items": { "type": "string" } } },
+        "required": ["t"]
+    });
+
+    let content = crate::handlers::ai::llm_translate(
+        vec![crate::llm::ChatMessage::system(system), crate::llm::ChatMessage::user(input)],
+        schema,
+    ).await.map_err(|e| ApiError::response(StatusCode::BAD_GATEWAY, format!("Translation failed: {e}")))?;
+
+    let parsed: serde_json::Value = serde_json::from_str(crate::handlers::ai::extract_json(&content))
+        .map_err(|e| ApiError::response(StatusCode::BAD_GATEWAY, format!("Translation parse error: {e}")))?;
+    let arr = parsed.get("t").and_then(|v| v.as_array())
+        .ok_or_else(|| ApiError::response(StatusCode::BAD_GATEWAY, "Translation: missing 't' array"))?;
+
+    // Сопоставляем по индексу; при расхождении длины оставляем оригинал.
+    let mut dict = HashMap::new();
+    for (i, orig) in strings.iter().enumerate() {
+        if let Some(t) = arr.get(i).and_then(|v| v.as_str()) {
+            dict.insert(orig.clone(), t.to_string());
+        }
+    }
+    Ok(dict)
 }
 
 /// PUT /api/courses/{id}/units/{unit_id} — обновить юнит (только владелец).
