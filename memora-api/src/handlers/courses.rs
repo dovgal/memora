@@ -808,15 +808,18 @@ pub struct TranslateQuery {
 fn default_lang() -> String { "fr".to_string() }
 
 /// GET /api/courses/{id}/units/{unit_id}/translated?lang=fr
-/// Возвращает юнит, где все подписи/объяснения/вопросы переведены на `lang`
-/// силами LLM. Результат кэшируется в `unit_translations` (инвалидация по
-/// хешу исходного контента). Изучаемый язык (fr-термины, error-hunt) не трогаем.
+/// Юнит с подписями/теорией/вопросами, переведёнными на `lang` силами LLM.
+/// Перевод медленный (несколько батч-вызовов), поэтому АСИНХРОННЫЙ: при
+/// первом обращении запускается фоновая задача и возвращается 202; клиент
+/// опрашивает эндпоинт до 200. Результат кэшируется в `unit_translations`
+/// (инвалидация по хешу исходника). Изучаемый язык (fr-термины, error-hunt)
+/// не трогаем.
 pub async fn get_unit_translated(
     State(pool): State<PgPool>,
     AuthenticatedUser(user): AuthenticatedUser,
     Path((id, unit_id)): Path<(String, String)>,
     Query(q): Query<TranslateQuery>,
-) -> ApiResult<impl IntoResponse> {
+) -> ApiResult<axum::response::Response> {
     let user_id = uid(&user.sub)?;
     let course_id = parse_id(&id)?;
     let unit_uuid = parse_id(&unit_id)?;
@@ -861,42 +864,52 @@ pub async fn get_unit_translated(
     });
     let src_hash = short_hash(&format!("{lang}:{source}"));
 
-    // Кэш?
-    let cached = sqlx::query("SELECT src_hash, payload FROM unit_translations WHERE unit_id = $1 AND lang = $2")
+    let cached = sqlx::query("SELECT src_hash, status, payload FROM unit_translations WHERE unit_id = $1 AND lang = $2")
         .bind(unit_uuid)
         .bind(&lang)
         .fetch_optional(&pool)
         .await
         .map_err(db_err)?;
 
-    let translated: serde_json::Value = if let Some(c) = cached.filter(|c| c.get::<String, _>("src_hash") == src_hash) {
+    // Актуальный готовый перевод?
+    let ready = cached.as_ref().filter(|c| {
+        c.get::<String, _>("src_hash") == src_hash && c.get::<String, _>("status") == "ready"
+    });
+    let translated: serde_json::Value = if let Some(c) = ready {
         c.get("payload")
     } else {
-        let mut seen = HashSet::new();
-        let mut strings = Vec::new();
-        collect_translatable(&source, None, &mut seen, &mut strings);
+        let pending = cached.as_ref().is_some_and(|c| {
+            c.get::<String, _>("src_hash") == src_hash && c.get::<String, _>("status") == "pending"
+        });
+        if !pending {
+            // Стартуем фоновую задачу и помечаем pending (атомарно на конфликте).
+            sqlx::query(
+                "INSERT INTO unit_translations (unit_id, lang, src_hash, payload, status)
+                 VALUES ($1,$2,$3,'{}'::jsonb,'pending')
+                 ON CONFLICT (unit_id, lang) DO UPDATE SET src_hash = $3, payload = '{}'::jsonb, status = 'pending', created_at = NOW()"
+            )
+            .bind(unit_uuid)
+            .bind(&lang)
+            .bind(&src_hash)
+            .execute(&pool)
+            .await
+            .map_err(db_err)?;
 
-        let payload = if strings.is_empty() {
-            source.clone()
-        } else {
-            let dict = translate_strings(&strings, &lang).await?;
-            let mut out = source.clone();
-            replace_translatable(&mut out, None, &dict);
-            out
-        };
-
-        sqlx::query(
-            "INSERT INTO unit_translations (unit_id, lang, src_hash, payload) VALUES ($1,$2,$3,$4)
-             ON CONFLICT (unit_id, lang) DO UPDATE SET src_hash = $3, payload = $4, created_at = NOW()"
-        )
-        .bind(unit_uuid)
-        .bind(&lang)
-        .bind(&src_hash)
-        .bind(&payload)
-        .execute(&pool)
-        .await
-        .map_err(db_err)?;
-        payload
+            let pool2 = pool.clone();
+            let lang2 = lang.clone();
+            let src_hash2 = src_hash.clone();
+            let source2 = source.clone();
+            tokio::spawn(async move {
+                if let Err(e) = build_unit_translation(&pool2, unit_uuid, &lang2, &src_hash2, source2).await {
+                    eprintln!("WARN: unit translation failed (unit={unit_uuid}, lang={lang2}): {e}");
+                    // Убираем pending, чтобы следующий запрос повторил попытку.
+                    let _ = sqlx::query("DELETE FROM unit_translations WHERE unit_id = $1 AND lang = $2 AND status = 'pending'")
+                        .bind(unit_uuid).bind(&lang2).execute(&pool2).await;
+                }
+            });
+        }
+        // Идёт перевод — 202, клиент опрашивает.
+        return Ok((StatusCode::ACCEPTED, Json(serde_json::json!({"status":"processing"}))).into_response());
     };
 
     let detail = UnitDetail {
@@ -908,7 +921,44 @@ pub async fn get_unit_translated(
         vocabulary: translated.get("vocabulary").cloned().unwrap_or_else(|| serde_json::json!([])),
         exercises: translated.get("exercises").cloned().unwrap_or_else(|| serde_json::json!([])),
     };
-    Ok((StatusCode::OK, Json(detail)))
+    Ok((StatusCode::OK, Json(detail)).into_response())
+}
+
+/// Фоновая сборка перевода юнита: собрать строки → перевести батчами →
+/// подставить → пометить кэш готовым. Живёт в tokio::spawn — время не
+/// ограничено таймаутом HTTP-прокси.
+async fn build_unit_translation(
+    pool: &PgPool,
+    unit_id: Uuid,
+    lang: &str,
+    src_hash: &str,
+    source: serde_json::Value,
+) -> Result<(), String> {
+    let mut seen = HashSet::new();
+    let mut strings = Vec::new();
+    collect_translatable(&source, None, &mut seen, &mut strings);
+
+    let payload = if strings.is_empty() {
+        source.clone()
+    } else {
+        let dict = translate_strings(&strings, lang).await.map_err(|(_, e)| e.0.error.clone())?;
+        let mut out = source.clone();
+        replace_translatable(&mut out, None, &dict);
+        out
+    };
+
+    sqlx::query(
+        "UPDATE unit_translations SET payload = $1, status = 'ready', created_at = NOW()
+         WHERE unit_id = $2 AND lang = $3 AND src_hash = $4"
+    )
+    .bind(&payload)
+    .bind(unit_id)
+    .bind(lang)
+    .bind(src_hash)
+    .execute(pool)
+    .await
+    .map_err(|e| e.to_string())?;
+    Ok(())
 }
 
 /// Переводит список уникальных строк на `lang`, возвращает словарь исходная →

@@ -127,10 +127,21 @@ export async function getUnit(courseId: string, unitId: string, idToken?: string
 /**
  * Юнит с интерфейсом, переведённым на `lang` (fr/en/…): подписи, теория,
  * вопросы и объяснения переводятся LLM (с кэшем на сервере). Изучаемый язык
- * (fr-термины, error-hunt) не трогается. Первый вызов может занять пару секунд.
+ * (fr-термины, error-hunt) не трогается.
+ *
+ * Первый перевод генерируется в фоне: сервер отвечает 202 и мы опрашиваем
+ * его, пока не придёт 200 (обычно 1–3 минуты на большой юнит). Повторные
+ * запросы отдаются из кэша мгновенно.
  */
 export async function getTranslatedUnit(courseId: string, unitId: string, lang: string, idToken?: string): Promise<UnitDetail> {
-  return ok(await fetch(`/api/courses/${courseId}/units/${unitId}/translated?lang=${encodeURIComponent(lang)}`, { headers: headers(idToken) }));
+  const url = `/api/courses/${courseId}/units/${unitId}/translated?lang=${encodeURIComponent(lang)}`;
+  const deadline = Date.now() + 5 * 60_000;
+  for (;;) {
+    const r = await fetch(url, { headers: headers(idToken) });
+    if (r.status !== 202) return ok(r);
+    if (Date.now() > deadline) throw new Error('Перевод ещё готовится — попробуйте чуть позже.');
+    await new Promise(res => setTimeout(res, 4000));
+  }
 }
 
 export async function updateUnit(courseId: string, unitId: string, payload: UpsertUnitPayload, idToken?: string): Promise<void> {
