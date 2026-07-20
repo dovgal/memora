@@ -384,23 +384,33 @@ pub async fn export_vocabulary_set(
         }
     };
 
-    let mut added = 0i64;
-    for (term, definition) in &cards {
-        let inserted = sqlx::query(
-            "INSERT INTO flashcards (set_id, term, definition, order_index, fields_data)
-             SELECT $1, $2, $3,
-                    (SELECT COALESCE(MAX(order_index) + 1, 0) FROM flashcards WHERE set_id = $1),
-                    '{}'::jsonb
-             WHERE NOT EXISTS (SELECT 1 FROM flashcards WHERE set_id = $1 AND LOWER(term) = LOWER($2))"
-        )
-        .bind(set_id)
-        .bind(term)
-        .bind(definition)
-        .execute(&mut *tx)
-        .await
-        .map_err(db_err)?;
-        added += inserted.rows_affected() as i64;
-    }
+    // Один bulk-INSERT через UNNEST вместо INSERT-на-слово: при сотнях карточек
+    // N последовательных round-trip'ов не укладывались в таймаут прокси (~30s).
+    // Анти-джойн отбрасывает уже существующие слова (без учёта регистра),
+    // order_index продолжает нумерацию от текущего максимума.
+    let terms: Vec<String> = cards.iter().map(|(t, _)| t.clone()).collect();
+    let defs: Vec<String> = cards.iter().map(|(_, d)| d.clone()).collect();
+    let added: i64 = sqlx::query(
+        "WITH base AS (SELECT COALESCE(MAX(order_index) + 1, 0) AS start FROM flashcards WHERE set_id = $1),
+              incoming AS (
+                SELECT t.term, t.def, t.ord
+                FROM unnest($2::text[], $3::text[]) WITH ORDINALITY AS t(term, def, ord)
+              )
+         INSERT INTO flashcards (set_id, term, definition, order_index, fields_data)
+         SELECT $1, i.term, i.def,
+                (SELECT start FROM base) + row_number() OVER (ORDER BY i.ord) - 1,
+                '{}'::jsonb
+         FROM incoming i
+         WHERE NOT EXISTS (
+                SELECT 1 FROM flashcards f WHERE f.set_id = $1 AND LOWER(f.term) = LOWER(i.term))"
+    )
+    .bind(set_id)
+    .bind(&terms)
+    .bind(&defs)
+    .execute(&mut *tx)
+    .await
+    .map_err(db_err)?
+    .rows_affected() as i64;
 
     let total: i64 = sqlx::query("SELECT COUNT(*) AS n FROM flashcards WHERE set_id = $1")
         .bind(set_id)
