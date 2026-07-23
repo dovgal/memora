@@ -10,7 +10,7 @@ import {
 import { speakInworld } from '@/lib/courses/ttsInworld';
 import { checkDictation, type DictationCheck } from '@/lib/courses/dictation';
 import { DiffChips } from '@/components/edito/DiffChips';
-import { getSpeechRecognition, ensureMicPermission, type SpeechRecognitionLike } from '@/lib/speech';
+import { getSpeechRecognition, hasMediaDevices, type SpeechRecognitionLike } from '@/lib/speech';
 import { rulesForWord, READING_RULES, type ReadingRule } from '@/lib/courses/frenchReadingRules';
 
 export interface LectureItem {
@@ -51,9 +51,17 @@ export function LectureTrainer({ items, voice = 'Alain', speechLang = 'fr-FR', o
   const [ruleErrors, setRuleErrors] = useState<Record<string, number>>({});
   const [finished, setFinished] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [recording, setRecording] = useState(false);
+  const [selfUrl, setSelfUrl] = useState<string | null>(null);
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
   const gotResultRef = useRef(false);
+  const mediaRecRef = useRef<MediaRecorder | null>(null);
+  const chunksRef = useRef<Blob[]>([]);
+  const streamRef = useRef<MediaStream | null>(null);
 
+  // Запись микрофона поддерживается почти везде (в т.ч. Comet); Web Speech —
+  // не всегда (в некоторых Chromium-форках облачный бэкенд распознавания молчит).
+  const recorderSupported = hasMediaDevices() && typeof window !== 'undefined' && 'MediaRecorder' in window;
   const speechSupported = !!getSpeechRecognition();
   const item = items[index];
   const issues = useMemo(() => (check ? collectIssues(check) : []), [check]);
@@ -76,80 +84,118 @@ export function LectureTrainer({ items, voice = 'Alain', speechLang = 'fr-FR', o
     step();
   };
 
-  const ERR: Record<string, string> = {
-    'not-allowed': 'Нет доступа к микрофону. Разрешите его для сайта: значок 🔒/микрофон в адресной строке → «Разрешить», затем перезагрузите страницу.',
-    'service-not-allowed': 'Браузер заблокировал распознавание речи. Разрешите доступ к микрофону в настройках сайта.',
-    'no-speech': 'Речь не распознана — говорите чуть громче и ближе к микрофону, затем нажмите «Читать вслух» снова.',
-    'audio-capture': 'Микрофон не найден. Проверьте, что он подключён и выбран в системе.',
-    'network': 'Нет связи с сервисом распознавания. Проверьте интернет (Web Speech требует онлайн).',
-    'mic-denied': 'Доступ к микрофону не выдан. Нажмите «Разрешить» в запросе браузера или включите его в настройках сайта.',
+  const applyTranscript = (transcript: string) => {
+    gotResultRef.current = true;
+    const result = checkDictation(item.text, transcript);
+    setHeard(transcript);
+    setCheck(result);
+    const pct = result.total > 0 ? Math.round((result.correct / result.total) * 100) : 0;
+    setScores(prev => [...prev, pct]);
+    setRuleErrors(prev => {
+      const next = { ...prev };
+      for (const issue of collectIssues(result)) {
+        for (const r of issue.rules) next[r.id] = (next[r.id] ?? 0) + 1;
+      }
+      return next;
+    });
   };
 
-  const listen = async () => {
-    if (listening) { recognitionRef.current?.stop(); setListening(false); return; }
-    const SR = getSpeechRecognition();
-    if (!SR) return;
+  // Запускаем запись микрофона (надёжно вызывает системный запрос доступа) и
+  // ПАРАЛЛЕЛЬНО — распознавание речи (best-effort: где облачный STT работает,
+  // будет автооценка; где нет — останется запись для самопроверки).
+  const startListening = async () => {
     setError(null);
+    if (selfUrl) { URL.revokeObjectURL(selfUrl); setSelfUrl(null); }
+    if (!recorderSupported) { setError('Этот браузер не поддерживает запись с микрофона.'); return; }
 
-    // Явно запрашиваем микрофон — так системный запрос точно появляется,
-    // а отказ виден сразу понятным сообщением, а не молчаливым сбоем.
-    const allowed = await ensureMicPermission();
-    if (!allowed) { setError(ERR['mic-denied']); return; }
+    let stream: MediaStream;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch (e) {
+      const name = (e as { name?: string })?.name ?? '';
+      setError(name === 'NotFoundError' || name === 'DevicesNotFoundError'
+        ? 'Микрофон не найден. Проверьте, что он подключён и выбран в системе.'
+        : 'Доступ к микрофону не выдан. Нажмите «Разрешить» в запросе браузера, а если запроса нет — откройте настройки сайта (значок слева в адресной строке) и включите микрофон, затем перезагрузите страницу. В macOS также проверьте: Системные настройки → Конфиденциальность → Микрофон.');
+      return;
+    }
+    streamRef.current = stream;
 
-    const rec = new SR();
-    rec.lang = speechLang;
-    rec.interimResults = false;
-    rec.maxAlternatives = 1;
+    // MediaRecorder — реальная запись, доступна и в Comet.
+    chunksRef.current = [];
+    try {
+      const mr = new MediaRecorder(stream);
+      mr.ondataavailable = (ev) => { if (ev.data.size > 0) chunksRef.current.push(ev.data); };
+      mr.onstop = () => {
+        const blob = new Blob(chunksRef.current, { type: chunksRef.current[0]?.type || 'audio/webm' });
+        if (blob.size > 0) setSelfUrl(URL.createObjectURL(blob));
+        streamRef.current?.getTracks().forEach(t => t.stop());
+        streamRef.current = null;
+      };
+      mediaRecRef.current = mr;
+      mr.start();
+    } catch {
+      stream.getTracks().forEach(t => t.stop());
+      setError('Не удалось начать запись. Попробуйте другой браузер (Chrome/Safari).');
+      return;
+    }
+
+    // Параллельно — распознавание (может не сработать в некоторых браузерах).
     gotResultRef.current = false;
-    rec.onresult = (event) => {
-      const transcript = event.results[0]?.[0]?.transcript ?? '';
-      if (!transcript) return;
-      gotResultRef.current = true;
-      const result = checkDictation(item.text, transcript);
-      setHeard(transcript);
-      setCheck(result);
-      const pct = result.total > 0 ? Math.round((result.correct / result.total) * 100) : 0;
-      setScores(prev => [...prev, pct]);
-      // копим статистику проблемных правил для итогового экрана
-      setRuleErrors(prev => {
-        const next = { ...prev };
-        for (const issue of collectIssues(result)) {
-          for (const r of issue.rules) next[r.id] = (next[r.id] ?? 0) + 1;
-        }
-        return next;
-      });
-    };
-    rec.onend = () => {
-      setListening(false);
-      // распознавание завершилось без результата — подсказываем повторить
-      if (!gotResultRef.current) setError(ERR['no-speech']);
-    };
-    rec.onerror = (event) => {
-      setListening(false);
-      setError(ERR[event?.error ?? ''] ?? 'Не удалось распознать речь. Попробуйте ещё раз.');
-    };
-    recognitionRef.current = rec;
+    const SR = getSpeechRecognition();
+    if (SR) {
+      try {
+        const rec = new SR();
+        rec.lang = speechLang;
+        rec.interimResults = false;
+        rec.maxAlternatives = 1;
+        rec.onresult = (event) => {
+          const transcript = event.results[0]?.[0]?.transcript ?? '';
+          if (transcript) applyTranscript(transcript);
+        };
+        rec.onend = () => {};
+        rec.onerror = () => {};
+        recognitionRef.current = rec;
+        rec.start();
+      } catch { /* распознавание недоступно — останется запись */ }
+    }
+
+    setRecording(true);
     setListening(true);
-    try { rec.start(); }
-    catch { setListening(false); setError('Распознавание уже идёт — подождите пару секунд и попробуйте снова.'); }
   };
 
+  const stopListening = () => {
+    try { recognitionRef.current?.stop(); } catch { /* noop */ }
+    try { mediaRecRef.current?.stop(); } catch { /* noop */ }
+    setRecording(false);
+    setListening(false);
+    // Дадим распознаванию мгновение доотдать результат; если нет — подсказка.
+    setTimeout(() => {
+      if (!gotResultRef.current) {
+        setError('Автопроверка произношения недоступна в этом браузере. Прослушайте свою запись ниже и сравните с образцом и транскрипцией. Для автоматической оценки откройте курс в Chrome или Safari.');
+      }
+    }, 700);
+  };
+
+  const toggleListen = () => { if (recording) stopListening(); else void startListening(); };
+  const playSelf = () => { if (selfUrl) void new Audio(selfUrl).play().catch(() => {}); };
+
+  const clearSelf = () => { if (selfUrl) { URL.revokeObjectURL(selfUrl); setSelfUrl(null); } };
   const next = () => {
     if (index + 1 >= items.length) { setFinished(true); return; }
     setIndex(i => i + 1);
-    setCheck(null); setHeard(null); setError(null);
+    setCheck(null); setHeard(null); setError(null); clearSelf();
   };
-  const retry = () => { setCheck(null); setHeard(null); setError(null); };
+  const retry = () => { setCheck(null); setHeard(null); setError(null); clearSelf(); };
   const restart = () => {
-    setIndex(0); setCheck(null); setHeard(null); setScores([]); setRuleErrors({}); setFinished(false);
+    setIndex(0); setCheck(null); setHeard(null); setScores([]); setRuleErrors({}); setFinished(false); clearSelf();
   };
 
-  if (!speechSupported) {
+  if (!recorderSupported) {
     return (
       <div className="text-center max-w-sm mx-auto py-16">
         <Mic className="w-10 h-10 text-qz-text-muted mx-auto mb-3" />
-        <p className="text-foreground font-semibold mb-1">Распознавание речи недоступно</p>
-        <p className="text-qz-text-muted text-sm">Ваш браузер не поддерживает Web Speech API. Попробуйте Chrome или Safari.</p>
+        <p className="text-foreground font-semibold mb-1">Микрофон недоступен</p>
+        <p className="text-qz-text-muted text-sm">Этот браузер не поддерживает запись с микрофона. Откройте курс по HTTPS в Chrome или Safari.</p>
       </div>
     );
   }
@@ -231,13 +277,23 @@ export function LectureTrainer({ items, voice = 'Alain', speechLang = 'fr-FR', o
           <button onClick={playSlow} className="inline-flex items-center gap-1.5 border border-border hover:border-[#4255ff]/50 text-foreground text-sm font-semibold px-3.5 py-2 rounded-xl transition-colors">
             <Turtle className="w-4 h-4" /> Медленно
           </button>
-          <button onClick={listen}
+          <button onClick={toggleListen}
             className={`inline-flex items-center gap-1.5 text-sm font-bold px-4 py-2 rounded-xl transition-colors ${
-              listening ? 'bg-red-500 text-white animate-pulse' : 'bg-[#4255ff] hover:bg-[#3144e0] text-white'}`}>
-            {listening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
-            {listening ? 'Говорите… (нажмите, чтобы остановить)' : 'Читать вслух'}
+              recording ? 'bg-red-500 text-white animate-pulse' : 'bg-[#4255ff] hover:bg-[#3144e0] text-white'}`}>
+            {recording ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+            {recording ? 'Идёт запись… (нажмите, чтобы остановить)' : 'Читать вслух'}
           </button>
+          {selfUrl && (
+            <button onClick={playSelf} className="inline-flex items-center gap-1.5 border border-emerald-500/40 text-emerald-600 dark:text-emerald-400 text-sm font-semibold px-3.5 py-2 rounded-xl transition-colors">
+              <Volume2 className="w-4 h-4" /> Прослушать себя
+            </button>
+          )}
         </div>
+        {!speechSupported && (
+          <p className="mt-2 text-qz-text-muted text-xs">
+            Автооценка произношения работает в Chrome и Safari. Здесь можно записать себя и сравнить с образцом и транскрипцией.
+          </p>
+        )}
 
         {error && (
           <div className="mt-4 flex items-start gap-2 bg-amber-500/10 border border-amber-500/30 rounded-xl p-3">
