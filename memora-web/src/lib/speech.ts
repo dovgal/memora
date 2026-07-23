@@ -6,6 +6,8 @@ export interface SpeechRecognitionLike {
   lang: string;
   interimResults: boolean;
   maxAlternatives: number;
+  /** Не останавливаться после первой фразы — копить речь до ручной остановки. */
+  continuous?: boolean;
   onresult: ((event: { results: ArrayLike<ArrayLike<{ transcript: string }>> }) => void) | null;
   onend: (() => void) | null;
   // event.error: 'not-allowed' | 'service-not-allowed' | 'no-speech' | 'audio-capture' | 'network' | …

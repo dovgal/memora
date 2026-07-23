@@ -58,6 +58,8 @@ export function LectureTrainer({ items, voice = 'Alain', speechLang = 'fr-FR', o
   const mediaRecRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const streamRef = useRef<MediaStream | null>(null);
+  const transcriptRef = useRef('');       // накопленная речь за сессию чтения
+  const recordingRef = useRef(false);     // синхронный флаг записи (state async)
 
   // Запись микрофона поддерживается почти везде (в т.ч. Comet); Web Speech —
   // не всегда (в некоторых Chromium-форках облачный бэкенд распознавания молчит).
@@ -139,41 +141,51 @@ export function LectureTrainer({ items, voice = 'Alain', speechLang = 'fr-FR', o
       return;
     }
 
-    // Параллельно — распознавание (может не сработать в некоторых браузерах).
+    // Параллельно — распознавание. НЕПРЕРЫВНЫЙ режим: копим всю речь и выносим
+    // вердикт ТОЛЬКО после ручной остановки, чтобы не оборвать на первой паузе.
     gotResultRef.current = false;
+    transcriptRef.current = '';
     const SR = getSpeechRecognition();
     if (SR) {
       try {
         const rec = new SR();
         rec.lang = speechLang;
         rec.interimResults = false;
+        rec.continuous = true;
         rec.maxAlternatives = 1;
         rec.onresult = (event) => {
-          const transcript = event.results[0]?.[0]?.transcript ?? '';
-          if (transcript) applyTranscript(transcript);
+          // Собираем полный текст из всех финальных сегментов (continuous).
+          let full = '';
+          const results = event.results;
+          for (let i = 0; i < results.length; i++) full += (results[i]?.[0]?.transcript ?? '') + ' ';
+          transcriptRef.current = full.trim();
         };
-        rec.onend = () => {};
+        // В continuous-режиме движок может завершиться по длинной тишине —
+        // пока пользователь не остановил запись, перезапускаем распознавание.
+        rec.onend = () => { if (recordingRef.current) { try { rec.start(); } catch { /* noop */ } } };
         rec.onerror = () => {};
         recognitionRef.current = rec;
         rec.start();
       } catch { /* распознавание недоступно — останется запись */ }
     }
 
+    recordingRef.current = true;
     setRecording(true);
     setListening(true);
   };
 
   const stopListening = () => {
+    recordingRef.current = false; // чтобы onend распознавания больше не перезапускался
     try { recognitionRef.current?.stop(); } catch { /* noop */ }
     try { mediaRecRef.current?.stop(); } catch { /* noop */ }
     setRecording(false);
     setListening(false);
-    // Дадим распознаванию мгновение доотдать результат; если нет — подсказка.
+    // Даём распознаванию время доотдать финальные сегменты, затем оцениваем ОДИН раз.
     setTimeout(() => {
-      if (!gotResultRef.current) {
-        setError('Автопроверка произношения недоступна в этом браузере. Прослушайте свою запись ниже и сравните с образцом и транскрипцией. Для автоматической оценки откройте курс в Chrome или Safari.');
-      }
-    }, 700);
+      const transcript = transcriptRef.current.trim();
+      if (transcript) applyTranscript(transcript);
+      else setError('Автопроверка произношения недоступна в этом браузере. Прослушайте свою запись ниже и сравните с образцом и транскрипцией. Для автоматической оценки откройте курс в Chrome или Safari.');
+    }, 1200);
   };
 
   const toggleListen = () => { if (recording) stopListening(); else void startListening(); };
