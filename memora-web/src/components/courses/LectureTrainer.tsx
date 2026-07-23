@@ -10,7 +10,7 @@ import {
 import { speakInworld } from '@/lib/courses/ttsInworld';
 import { checkDictation, type DictationCheck } from '@/lib/courses/dictation';
 import { DiffChips } from '@/components/edito/DiffChips';
-import { getSpeechRecognition, type SpeechRecognitionLike } from '@/lib/speech';
+import { getSpeechRecognition, ensureMicPermission, type SpeechRecognitionLike } from '@/lib/speech';
 import { rulesForWord, READING_RULES, type ReadingRule } from '@/lib/courses/frenchReadingRules';
 
 export interface LectureItem {
@@ -50,7 +50,9 @@ export function LectureTrainer({ items, voice = 'Alain', speechLang = 'fr-FR', o
   const [scores, setScores] = useState<number[]>([]);
   const [ruleErrors, setRuleErrors] = useState<Record<string, number>>({});
   const [finished, setFinished] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
+  const gotResultRef = useRef(false);
 
   const speechSupported = !!getSpeechRecognition();
   const item = items[index];
@@ -74,17 +76,35 @@ export function LectureTrainer({ items, voice = 'Alain', speechLang = 'fr-FR', o
     step();
   };
 
-  const listen = () => {
+  const ERR: Record<string, string> = {
+    'not-allowed': 'Нет доступа к микрофону. Разрешите его для сайта: значок 🔒/микрофон в адресной строке → «Разрешить», затем перезагрузите страницу.',
+    'service-not-allowed': 'Браузер заблокировал распознавание речи. Разрешите доступ к микрофону в настройках сайта.',
+    'no-speech': 'Речь не распознана — говорите чуть громче и ближе к микрофону, затем нажмите «Читать вслух» снова.',
+    'audio-capture': 'Микрофон не найден. Проверьте, что он подключён и выбран в системе.',
+    'network': 'Нет связи с сервисом распознавания. Проверьте интернет (Web Speech требует онлайн).',
+    'mic-denied': 'Доступ к микрофону не выдан. Нажмите «Разрешить» в запросе браузера или включите его в настройках сайта.',
+  };
+
+  const listen = async () => {
     if (listening) { recognitionRef.current?.stop(); setListening(false); return; }
     const SR = getSpeechRecognition();
     if (!SR) return;
+    setError(null);
+
+    // Явно запрашиваем микрофон — так системный запрос точно появляется,
+    // а отказ виден сразу понятным сообщением, а не молчаливым сбоем.
+    const allowed = await ensureMicPermission();
+    if (!allowed) { setError(ERR['mic-denied']); return; }
+
     const rec = new SR();
     rec.lang = speechLang;
     rec.interimResults = false;
     rec.maxAlternatives = 1;
+    gotResultRef.current = false;
     rec.onresult = (event) => {
       const transcript = event.results[0]?.[0]?.transcript ?? '';
       if (!transcript) return;
+      gotResultRef.current = true;
       const result = checkDictation(item.text, transcript);
       setHeard(transcript);
       setCheck(result);
@@ -99,19 +119,27 @@ export function LectureTrainer({ items, voice = 'Alain', speechLang = 'fr-FR', o
         return next;
       });
     };
-    rec.onend = () => setListening(false);
-    rec.onerror = () => setListening(false);
+    rec.onend = () => {
+      setListening(false);
+      // распознавание завершилось без результата — подсказываем повторить
+      if (!gotResultRef.current) setError(ERR['no-speech']);
+    };
+    rec.onerror = (event) => {
+      setListening(false);
+      setError(ERR[event?.error ?? ''] ?? 'Не удалось распознать речь. Попробуйте ещё раз.');
+    };
     recognitionRef.current = rec;
     setListening(true);
-    rec.start();
+    try { rec.start(); }
+    catch { setListening(false); setError('Распознавание уже идёт — подождите пару секунд и попробуйте снова.'); }
   };
 
   const next = () => {
     if (index + 1 >= items.length) { setFinished(true); return; }
     setIndex(i => i + 1);
-    setCheck(null); setHeard(null);
+    setCheck(null); setHeard(null); setError(null);
   };
-  const retry = () => { setCheck(null); setHeard(null); };
+  const retry = () => { setCheck(null); setHeard(null); setError(null); };
   const restart = () => {
     setIndex(0); setCheck(null); setHeard(null); setScores([]); setRuleErrors({}); setFinished(false);
   };
@@ -210,6 +238,13 @@ export function LectureTrainer({ items, voice = 'Alain', speechLang = 'fr-FR', o
             {listening ? 'Говорите… (нажмите, чтобы остановить)' : 'Читать вслух'}
           </button>
         </div>
+
+        {error && (
+          <div className="mt-4 flex items-start gap-2 bg-amber-500/10 border border-amber-500/30 rounded-xl p-3">
+            <MicOff className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+            <p className="text-amber-600 dark:text-amber-300 text-sm">{error}</p>
+          </div>
+        )}
       </div>
 
       {/* Результат */}
