@@ -114,6 +114,12 @@ export default function CustomCoursePage({ params }: { params: Promise<{ courseI
                 <BookOpenCheck className="w-4 h-4" /> Чтение вслух
               </Link>
               <Link
+                href={`/courses/${courseId}/sounds`}
+                className="inline-flex items-center gap-2 border border-border hover:border-[#4255ff]/50 text-foreground font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
+              >
+                <AudioLines className="w-4 h-4" /> Звуки
+              </Link>
+              <Link
                 href={`/courses/${courseId}/stats`}
                 className="inline-flex items-center gap-2 border border-border hover:border-[#4255ff]/50 text-foreground font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
               >
