@@ -270,6 +270,181 @@ pub async fn synthesize_tts(
     ))
 }
 
+/// Голос для поля из его settings: явный ttsVoice (с историческим маппингом
+/// снятых голосов) → иначе дефолт по языку. Совпадает с логикой recovery в
+/// get_flashcard_audio, чтобы предгенерация и генерация «на лету» звучали одинаково.
+fn resolve_tts_voice(settings: &serde_json::Map<String, Value>) -> String {
+    if let Some(v_id) = settings.get("ttsVoice").and_then(|v| v.as_str()) {
+        return match v_id {
+            "Nolan" => "Carter",
+            "Abby" => "Aria",
+            other => other,
+        }.to_string();
+    }
+    let lang = settings.get("language").and_then(|v| v.as_str()).unwrap_or("en");
+    match lang {
+        "ru" => "Tatiana",
+        "fr" => "Alain",
+        "de" => "Josef",
+        "es" => "Carmen",
+        _ => "Clive",
+    }.to_string()
+}
+
+/// Синтез TTS с использованием кэша tts_cache: сначала ищем по ключу
+/// sha256("voice|text"), при промахе — зовём Inworld и кладём в кэш. Возвращает
+/// mp3-байты. Тот же ключ и формат, что в synthesize_tts (иначе кэш разъедется).
+pub async fn get_or_synthesize_tts(pool: &PgPool, voice_id: &str, text: &str) -> Result<Vec<u8>, String> {
+    let text = text.trim();
+    if text.is_empty() {
+        return Err("empty text".to_string());
+    }
+    if text.chars().count() > 600 {
+        return Err("text too long".to_string());
+    }
+
+    use sha2::{Digest, Sha256};
+    let mut hasher = Sha256::new();
+    hasher.update(format!("{voice_id}|{text}").as_bytes());
+    let cache_key: String = hasher.finalize().iter().map(|b| format!("{b:02x}")).collect();
+
+    use sqlx::Row;
+    if let Ok(Some(row)) = sqlx::query("SELECT audio_data FROM tts_cache WHERE cache_key = $1")
+        .bind(&cache_key)
+        .fetch_optional(pool)
+        .await
+    {
+        return Ok(row.get("audio_data"));
+    }
+
+    let client = Client::new();
+    let auth_header = std::env::var("INWORLD_AUTH").map_err(|_| "INWORLD_AUTH not configured".to_string())?;
+    let res = client.post("https://api.inworld.ai/tts/v1/voice")
+        .header("Authorization", auth_header)
+        .json(&serde_json::json!({
+            "text": text,
+            "voiceId": voice_id,
+            "modelId": "inworld-tts-1.5-max"
+        }))
+        .send()
+        .await
+        .map_err(|e| format!("Inworld request failed: {e}"))?;
+
+    if !res.status().is_success() {
+        let st = res.status();
+        let body = res.text().await.unwrap_or_default();
+        return Err(format!("Inworld error ({st}): {body}"));
+    }
+
+    let json: Value = res.json().await.map_err(|e| format!("parse Inworld JSON: {e}"))?;
+    let base64 = json.get("audioContent").and_then(|v| v.as_str())
+        .ok_or_else(|| "Inworld response missing audioContent".to_string())?;
+    let bytes = general_purpose::STANDARD.decode(base64).map_err(|e| format!("base64 decode: {e}"))?;
+
+    let _ = sqlx::query(
+        "INSERT INTO tts_cache (cache_key, voice_id, text, audio_data) VALUES ($1, $2, $3, $4)
+         ON CONFLICT (cache_key) DO NOTHING"
+    )
+    .bind(&cache_key)
+    .bind(voice_id)
+    .bind(text)
+    .bind(&bytes)
+    .execute(pool)
+    .await;
+
+    Ok(bytes)
+}
+
+/// Фоновая предгенерация озвучки для всех текстовых полей набора с ttsEnabled.
+/// Запускается ПОСЛЕ коммита сохранения (tokio::spawn), не блокируя ответ —
+/// иначе набор из сотен карточек упёрся бы в 30-секундный таймаут прокси.
+/// Идемпотентна: перезаписывает flashcard_audio, а неизменный текст берётся из
+/// tts_cache без обращения к Inworld (поэтому дешева и на повторных сохранениях,
+/// и корректно обновляет звук, если текст карточки изменился).
+pub async fn pregenerate_set_tts(pool: PgPool, set_id: Uuid) {
+    use sqlx::Row;
+
+    let schema_row = match sqlx::query("SELECT fields_schema FROM sets WHERE id = $1")
+        .bind(set_id)
+        .fetch_optional(&pool)
+        .await
+    {
+        Ok(Some(r)) => r,
+        _ => return,
+    };
+    let fields_schema: Value = schema_row.get("fields_schema");
+    let schema = match fields_schema.as_array() {
+        Some(a) => a,
+        None => return,
+    };
+
+    // Текстовые поля с озвучкой: (field_id, voice_id).
+    let mut tts_fields: Vec<(String, String)> = Vec::new();
+    for f in schema {
+        let is_text = f.get("type").and_then(|v| v.as_str()) == Some("text");
+        let settings = f.get("settings").and_then(|v| v.as_object());
+        let enabled = settings.and_then(|s| s.get("ttsEnabled")).and_then(|v| v.as_bool()) == Some(true);
+        if is_text && enabled
+            && let (Some(id), Some(s)) = (f.get("id").and_then(|v| v.as_str()), settings) {
+                tts_fields.push((id.to_string(), resolve_tts_voice(s)));
+            }
+    }
+    if tts_fields.is_empty() {
+        return;
+    }
+
+    let cards = match sqlx::query("SELECT id, term, definition, fields_data FROM flashcards WHERE set_id = $1")
+        .bind(set_id)
+        .fetch_all(&pool)
+        .await
+    {
+        Ok(c) => c,
+        Err(e) => { eprintln!("pregen TTS: load cards failed for set {set_id}: {e}"); return; }
+    };
+
+    let mut ok = 0u32;
+    let mut failed = 0u32;
+    for card in &cards {
+        let card_id: Uuid = card.get("id");
+        let term: String = card.get("term");
+        let definition: String = card.get("definition");
+        let fields_data: Value = card.get("fields_data");
+
+        for (fid, voice) in &tts_fields {
+            let text = if fid == "term" {
+                term.clone()
+            } else if fid == "definition" {
+                definition.clone()
+            } else {
+                fields_data.get(fid).and_then(|v| v.as_str()).unwrap_or("").to_string()
+            };
+            if text.trim().is_empty() {
+                continue;
+            }
+            let audio_field = format!("{fid}_audio");
+            match get_or_synthesize_tts(&pool, voice, &text).await {
+                Ok(bytes) => {
+                    let _ = sqlx::query(
+                        "INSERT INTO flashcard_audio (flashcard_id, field_id, audio_data) VALUES ($1, $2, $3)
+                         ON CONFLICT (flashcard_id, field_id) DO UPDATE SET audio_data = $3"
+                    )
+                    .bind(card_id)
+                    .bind(&audio_field)
+                    .bind(&bytes)
+                    .execute(&pool)
+                    .await;
+                    ok += 1;
+                }
+                Err(e) => {
+                    failed += 1;
+                    eprintln!("pregen TTS failed card={card_id} field={audio_field}: {e}");
+                }
+            }
+        }
+    }
+    println!("INFO: TTS pre-generation done for set {set_id}: {ok} ok, {failed} failed");
+}
+
 #[cfg(test)]
 mod tests {
     use sha2::{Digest, Sha256};

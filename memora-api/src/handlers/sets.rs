@@ -284,6 +284,12 @@ pub async fn create_set(
     // Commit transaction
     tx.commit().await.map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
 
+    // Фоновая предгенерация озвучки для полей с ttsEnabled (не блокирует ответ:
+    // сотни карточек упёрлись бы в 30-секундный таймаут прокси). До готовности
+    // клиент подстрахован генерацией «на лету».
+    let audio_pool = pool.clone();
+    tokio::spawn(async move { crate::handlers::audio::pregenerate_set_tts(audio_pool, new_set_id).await; });
+
     let response = SetResponse {
         id: new_set_id.to_string(),
         title: payload.title,
@@ -511,6 +517,12 @@ pub async fn update_set(
     }
 
     tx.commit().await.map_err(|e: sqlx::Error| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+
+    // Фоновая предгенерация озвучки: перезаписывает flashcard_audio, так что
+    // изменённый текст карточки получает свежий звук, а неизменный берётся из
+    // tts_cache без обращения к Inworld.
+    let audio_pool = pool.clone();
+    tokio::spawn(async move { crate::handlers::audio::pregenerate_set_tts(audio_pool, set_id).await; });
 
     let response = SetResponse {
         id: set_id.to_string(),
