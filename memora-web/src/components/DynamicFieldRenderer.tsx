@@ -31,6 +31,34 @@ export default function DynamicFieldRenderer({ field, index, register, errors: _
         ? `flashcards.${index}.${field.id}`
         : (isLegacyImg ? `flashcards.${index}.imageUrl` : `flashcards.${index}.fieldsData.${field.id}`);
 
+    // Записать (или очистить) изображение в правильный путь формы:
+    // legacy-поле → imageUrl, кастомное image-поле → fieldsData[id] (вложенно, как аудио).
+    const setImage = (dataUrl: string | null) => {
+        if (!update) return;
+        const currentCard = (getValues(`flashcards.${index}`) as AnyFieldValues) || {};
+        if (isLegacyImg) {
+            update(index, { ...currentCard, imageUrl: dataUrl });
+        } else {
+            update(index, { ...currentCard, fieldsData: { ...(currentCard.fieldsData as AnyFieldValues || {}), [field.id]: dataUrl } });
+        }
+    };
+
+    const handleImageFile = (file?: File | null) => {
+        if (!file) return;
+        if (!file.type.startsWith('image/')) {
+            alert('Пожалуйста, загрузите изображение (jpg, png, webp…).');
+            return;
+        }
+        if (file.size > 5 * 1024 * 1024) {
+            alert('Размер изображения не должен превышать 5 МБ.');
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = (e) => { if (typeof e.target?.result === 'string') setImage(e.target.result); };
+        reader.onerror = () => alert('Не удалось прочитать файл изображения.');
+        reader.readAsDataURL(file);
+    };
+
     const renderInput = () => {
         switch (field.type) {
             case 'text':
@@ -41,8 +69,7 @@ export default function DynamicFieldRenderer({ field, index, register, errors: _
                         placeholder={`Enter ${field.name.toLowerCase()}`}
                     />
                 );
-            case 'image':
-                // We'll manage image later through specific UI, for now just show upload placeholder
+            case 'image': {
                 const currentImg = getValues(formPath);
                 return (
                     <div className="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-qz-border rounded-xl overflow-hidden relative group min-h-[100px] bg-qz-card/30 w-full mt-2">
@@ -51,7 +78,7 @@ export default function DynamicFieldRenderer({ field, index, register, errors: _
                                 <NextImage src={currentImg as string} alt="Field image" width={400} height={300} className="w-full h-full object-cover" />
                                 <button
                                     type="button"
-                                    onClick={() => update && update(index, { ...(getValues(`flashcards.${index}`) as AnyFieldValues), [isLegacyImg ? 'imageUrl' : `fieldsData.${field.id}`]: null })}
+                                    onClick={() => setImage(null)}
                                     className="absolute top-2 right-2 bg-qz-bg/70 p-1.5 rounded-md text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500"
                                 >
                                     <Trash2 size={14} />
@@ -61,11 +88,18 @@ export default function DynamicFieldRenderer({ field, index, register, errors: _
                             <label className="flex-1 w-full h-full flex flex-col items-center justify-center gap-2 py-4 text-qz-text-muted hover:text-qz-text hover:bg-[#586380]/50 transition-all cursor-pointer">
                                 <ImageIcon size={20} />
                                 <span className="text-xs font-bold text-center leading-tight">Добавить фото</span>
-                                {/* Note: we actually need a file handler here. We'll wire this in the parent. */}
+                                <span className="text-[10px] text-zinc-500 leading-tight">клик, перетаскивание или вставка · до 5 МБ</span>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    className="hidden"
+                                    onChange={(e) => { handleImageFile(e.target.files?.[0]); e.target.value = ''; }}
+                                />
                             </label>
                         )}
                     </div>
                 );
+            }
             case 'audio': {
                 const audioValue = getValues(formPath) as string | null | undefined;
                 const resolvedAudioValue = audioValue === "__AUDIO_ON_SERVER__"
