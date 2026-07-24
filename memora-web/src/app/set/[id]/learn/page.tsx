@@ -7,6 +7,7 @@ import Link from "next/link"
 import { SetResponse, FlashcardResponse, FlashcardProgressRequest, FieldSchema, AIExercise, AIGradeResponse } from "@/types/schema"
 import { generateLearnQueue, createMultipleChoiceQuestion, TestQuestion, getCardText, getCardSingleField, checkWrittenAnswer } from "@/lib/studyUtils"
 import { speakInworld } from "@/lib/courses/ttsInworld"
+import { fetchAuthedAudioUrl } from "@/lib/authedAudio"
 import { X, CheckCircle, XCircle, Loader2, ChevronRight, GraduationCap, Settings, Edit2, Volume2, Shuffle, Star, ChevronDown, ChevronUp, Mic } from "lucide-react"
 import { QChatProvider, WhyWrongButton } from "@/components/QChat"
 import Image from "next/image"
@@ -72,7 +73,13 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
         for (const field of fieldsForSide) {
             if (field.type === 'text') {
                 const d = currentCard.fieldsData?.[`${field.id}_audio`];
-                if (typeof d === 'string') audioUrls.push(d);
+                if (typeof d === 'string' && d.startsWith('data:')) {
+                    // Загруженное аудио прямо в данных карточки.
+                    audioUrls.push(d);
+                } else if (field.settings?.ttsEnabled) {
+                    // TTS: значение — маркер «__AUDIO_ON_SERVER__», а не URL. Берём с эндпоинта.
+                    audioUrls.push(`/api/audio/${currentCard.id}/${field.id}_audio`);
+                }
             }
         }
 
@@ -90,14 +97,20 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
             return;
         }
         let audioIndex = 0;
-        const playNext = () => {
-            if (audioIndex < audioUrls.length) {
-                const audio = new Audio(audioUrls[audioIndex]);
-                audio.onended = () => { audioIndex++; playNext(); }
-                audio.play().catch(console.error);
+        const playNext = async () => {
+            if (audioIndex >= audioUrls.length) return;
+            try {
+                const objUrl = await fetchAuthedAudioUrl(audioUrls[audioIndex]);
+                const audio = new Audio(objUrl);
+                audio.onended = () => { URL.revokeObjectURL(objUrl); audioIndex++; void playNext(); }
+                await audio.play();
+            } catch (e) {
+                console.warn("Audio playback failed", e);
+                audioIndex++;
+                void playNext();
             }
         }
-        playNext();
+        void playNext();
     }
 
     // Auto-play TTS when a new question starts

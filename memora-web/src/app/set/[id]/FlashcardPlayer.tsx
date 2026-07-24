@@ -5,6 +5,7 @@ import Link from "next/link"
 import { FlashcardResponse, FieldSchema } from "@/types/schema"
 import { ChevronLeft, ChevronRight, Settings, Play, Pause, Maximize, Edit2, Volume2, VolumeX, Star, Shuffle } from "lucide-react"
 import FlashcardRender from "@/components/FlashcardRender"
+import { fetchAuthedAudioUrl } from "@/lib/authedAudio"
 
 const DEFAULT_SCHEMA: FieldSchema[] = [
     { id: 'term', name: 'ТЕРМИН', type: 'text', side: 'front', order: 1, settings: { language: 'default' } },
@@ -201,18 +202,23 @@ export default function FlashcardPlayer({ flashcards, fieldsSchema: fieldsSchema
         if (audioUrls.length === 0) return;
 
         let audioIndex = 0;
-        const playNext = () => {
-            if (audioIndex < audioUrls.length) {
-                const audio = new Audio(audioUrls[audioIndex]);
-                audio.onended = () => {
-                    audioIndex++;
-                    playNext();
-                };
-                audio.play().catch(e => console.warn("Autoplay prevented:", e.message));
+        const playNext = async () => {
+            if (audioIndex >= audioUrls.length) return;
+            try {
+                // Через авторизованный fetch: серверная генерация TTS «на лету»
+                // отвечает только на запросы с bearer-токеном (тег <audio> его не шлёт).
+                const objUrl = await fetchAuthedAudioUrl(audioUrls[audioIndex]);
+                const audio = new Audio(objUrl);
+                audio.onended = () => { URL.revokeObjectURL(objUrl); audioIndex++; void playNext(); };
+                await audio.play();
+            } catch (e) {
+                console.warn("Autoplay prevented:", e);
+                audioIndex++;
+                void playNext();
             }
         };
 
-        playNext();
+        void playNext();
     }, [currentIndex, activeCards, fieldsSchema, visibleSide]);
 
     // Auto-play TTS on card flip/change

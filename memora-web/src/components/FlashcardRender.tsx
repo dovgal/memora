@@ -1,9 +1,50 @@
 "use client";
 
 import { FlashcardResponse, FieldSchema } from "@/types/schema";
-import { Play, Square, FileAudio, Volume2 } from "lucide-react";
+import { Play, Square, FileAudio, Volume2, Loader2 } from "lucide-react";
 import React, { useState, useRef } from "react";
+import { fetchAuthedAudioUrl } from "@/lib/authedAudio";
 import Image from "next/image";
+
+/**
+ * Кнопка озвучки TTS-поля на карточке. Тянет /api/audio/{id}/{field}_audio
+ * ЧЕРЕЗ fetch с bearer-токеном: озвучка генерится на бэкенде «на лету» только
+ * для авторизованных запросов, а обычный <audio src> токен не шлёт. Поэтому
+ * без этого при просмотре карточек звука не было.
+ */
+function TtsFieldButton({ url }: { url: string }) {
+    const [loading, setLoading] = useState(false);
+    const audioRef = useRef<HTMLAudioElement | null>(null);
+
+    const play = async (e: React.MouseEvent) => {
+        e.stopPropagation(); // не переворачивать карточку
+        if (loading) return;
+        setLoading(true);
+        try {
+            const objUrl = await fetchAuthedAudioUrl(url);
+            if (audioRef.current) audioRef.current.pause();
+            const audio = new Audio(objUrl);
+            audioRef.current = audio;
+            audio.onended = () => URL.revokeObjectURL(objUrl);
+            await audio.play();
+        } catch (err) {
+            console.warn("TTS playback failed", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <button
+            onClick={play}
+            disabled={loading}
+            className="text-[#4255ff] hover:text-qz-accent p-2 bg-[#4255ff]/10 hover:bg-[#4255ff]/20 rounded-full transition-all hover:scale-110 active:scale-90 disabled:opacity-60"
+            title="Озвучить"
+        >
+            {loading ? <Loader2 size={16} className="animate-spin" /> : <Volume2 size={16} />}
+        </button>
+    );
+}
 
 interface FlashcardRenderProps {
     card: FlashcardResponse;
@@ -102,17 +143,7 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
                                         {field.name}
                                     </span>
                                     {field.settings?.ttsEnabled && (
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                const audio = new Audio(`/api/audio/${card.id}/${field.id}_audio`);
-                                                audio.play().catch(err => console.warn("Audio playback failed", err));
-                                            }}
-                                            className="text-[#4255ff] hover:text-qz-accent p-2 bg-[#4255ff]/10 hover:bg-[#4255ff]/20 rounded-full transition-all hover:scale-110 active:scale-90"
-                                            title="Озвучить"
-                                        >
-                                            <Volume2 size={16} />
-                                        </button>
+                                        <TtsFieldButton url={`/api/audio/${card.id}/${field.id}_audio`} />
                                     )}
                                 </div>
                                 <p className={`${textSizeClass} text-center font-semibold tracking-tight break-words leading-tight text-qz-text`}>
