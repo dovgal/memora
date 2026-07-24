@@ -277,6 +277,25 @@ export default function SetTemplateEditor({ fields, onChange, onClose }: Props) 
                                     </div>
                                 </div>
 
+                                <div>
+                                    <label className="block text-sm font-semibold text-qz-text-muted mb-2 uppercase tracking-wider">Раскладка на карточке</label>
+                                    <div className="flex bg-qz-bg rounded-xl overflow-hidden border border-qz-border-light">
+                                        <button
+                                            onClick={() => handleUpdateField(editingField.id, { settings: { ...editingField.settings, width: 'full' } })}
+                                            className={`flex-1 p-3 text-center font-bold transition-colors ${(editingField.settings.width ?? 'full') === 'full' ? 'bg-[#4255ff] text-white' : 'text-zinc-500 hover:bg-qz-card'}`}
+                                        >
+                                            На всю ширину
+                                        </button>
+                                        <button
+                                            onClick={() => handleUpdateField(editingField.id, { settings: { ...editingField.settings, width: 'half' } })}
+                                            className={`flex-1 p-3 text-center font-bold transition-colors ${editingField.settings.width === 'half' ? 'bg-[#4255ff] text-white' : 'text-zinc-500 hover:bg-qz-card'}`}
+                                        >
+                                            Половина (в ряд)
+                                        </button>
+                                    </div>
+                                    <p className="text-xs text-zinc-500 mt-2">Два поля «в половину» на одной стороне встанут рядом — слева и справа (например, картинка + текст). Порядок полей задаёт, что слева, что справа.</p>
+                                </div>
+
                                 {editingField.type === 'text' && (
                                     <div className="animate-in fade-in slide-in-from-bottom-4 space-y-6 border-t border-qz-border-light pt-6 mt-6">
                                         <h4 className="font-bold text-qz-text text-lg">Дополнительные опции</h4>

@@ -3,6 +3,7 @@
 import { FieldSchema } from "@/types/schema";
 import { Calculator, Image as ImageIcon, Trash2 } from "lucide-react";
 import AudioInput from "./AudioInput";
+import TtsPreviewButton from "./TtsPreviewButton";
 import NextImage from "next/image";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -63,11 +64,22 @@ export default function DynamicFieldRenderer({ field, index, register, errors: _
         switch (field.type) {
             case 'text':
                 return (
-                    <textarea
-                        {...register(formPath)}
-                        className="bg-transparent border-b-2 border-qz-border p-2 focus:outline-none focus:border-indigo-500 transition-colors text-lg resize-y min-h-[44px] w-full"
-                        placeholder={`Enter ${field.name.toLowerCase()}`}
-                    />
+                    <div className="flex flex-col gap-1 w-full">
+                        {field.settings?.ttsEnabled && (
+                            <div className="flex justify-end -mb-1">
+                                <TtsPreviewButton
+                                    getText={() => (getValues(formPath) as string) || ""}
+                                    voice={typeof field.settings.ttsVoice === 'string' ? field.settings.ttsVoice : undefined}
+                                    lang={typeof field.settings.language === 'string' ? field.settings.language : undefined}
+                                />
+                            </div>
+                        )}
+                        <textarea
+                            {...register(formPath)}
+                            className="bg-transparent border-b-2 border-qz-border p-2 focus:outline-none focus:border-indigo-500 transition-colors text-lg resize-y min-h-[44px] w-full"
+                            placeholder={`Enter ${field.name.toLowerCase()}`}
+                        />
+                    </div>
                 );
             case 'image': {
                 const currentImg = getValues(formPath);

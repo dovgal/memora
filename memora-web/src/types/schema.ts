@@ -15,6 +15,8 @@ export interface FieldSettings {
 	language?: string;
 	ttsEnabled?: boolean;
 	ttsVoice?: string;
+	/** Ширина поля в раскладке карточки: 'full' (на всю строку) или 'half' (половина — можно ставить поля в ряд слева/справа). По умолчанию 'full'. */
+	width?: 'full' | 'half';
 	[key: string]: string | boolean | undefined;
 }
 

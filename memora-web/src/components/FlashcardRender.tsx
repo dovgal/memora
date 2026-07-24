@@ -70,8 +70,12 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
         'text-4xl md:text-4xl lg:text-5xl';
     const gapClass = textFieldCount >= 3 ? 'gap-2' : 'gap-4';
 
+    // Есть ли на стороне поля «в половину» — тогда раскладываем в ряд (слева/справа),
+    // иначе оставляем классический вертикальный стек.
+    const hasHalf = fieldsForSide.some(f => f.settings?.width === 'half');
+
     return (
-        <div className={`flex flex-col items-center ${gapClass} w-full text-qz-text p-3`}>
+        <div className={`flex flex-row flex-wrap items-center justify-center ${gapClass} w-full text-qz-text p-3`}>
             {fieldsForSide.map((field) => {
                 // Determine field value
                 let value: string | null | undefined = null;
@@ -82,10 +86,17 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
 
                 if (!value) return null;
 
+                // Ширина обёртки: 'half' → половина строки (в ряд), иначе вся ширина.
+                const isHalf = field.settings?.width === 'half';
+                const wrapWidth = isHalf ? 'w-full sm:w-[calc(50%-0.75rem)]' : 'w-full';
+                // Для стека без «половинок» держим прежний max-w у текста; в ряду — растягиваем.
+                const wrapClass = `flex flex-col items-center justify-center ${wrapWidth} ${!hasHalf && field.type === 'text' ? 'max-w-4xl mx-auto' : ''}`;
+
+                let content: React.ReactNode = null;
                 switch (field.type) {
                     case 'text':
-                        return (
-                            <div key={field.id} className="flex flex-col items-center gap-2 w-full max-w-4xl mx-auto">
+                        content = (
+                            <div className="flex flex-col items-center gap-2 w-full">
                                 <div className="flex items-center gap-3">
                                     <span className="text-[10px] md:text-sm text-qz-accent font-bold uppercase tracking-[0.2em] opacity-80">
                                         {field.name}
@@ -103,47 +114,48 @@ export default function FlashcardRender({ card, fieldsSchema, side }: FlashcardR
                                             <Volume2 size={16} />
                                         </button>
                                     )}
-
                                 </div>
                                 <p className={`${textSizeClass} text-center font-semibold tracking-tight break-words leading-tight text-qz-text`}>
                                     {value}
                                 </p>
                             </div>
                         );
+                        break;
                     case 'image':
-                        return (
+                        content = (
                             <Image
-                                key={field.id}
                                 src={value}
                                 alt={field.name}
                                 width={400}
                                 height={200}
-                                className="max-h-[200px] object-contain rounded-lg shadow-lg"
+                                className="max-h-[200px] w-auto object-contain rounded-lg shadow-lg"
                             />
                         );
-                    case 'audio':
-                        const src = value === "__AUDIO_ON_SERVER__" 
-                            ? `/api/audio/${card.id}/${field.id}` 
+                        break;
+                    case 'audio': {
+                        const src = value === "__AUDIO_ON_SERVER__"
+                            ? `/api/audio/${card.id}/${field.id}`
                             : value;
-                        return (
-                            <AudioPlayer
-                                key={field.id}
-                                src={src}
-                                label={field.name}
-                                icon={FileAudio}
-                            />
-                        );
-
+                        content = <AudioPlayer src={src} label={field.name} icon={FileAudio} />;
+                        break;
+                    }
                     case 'math':
                         // Fallback to text if KaTeX is not fully implemented, but use mono and smaller size
-                        return (
-                            <div key={field.id} className="font-mono text-xl md:text-2xl text-indigo-300 bg-qz-bg/50 p-4 rounded-xl border border-qz-border-light text-center inline-block">
+                        content = (
+                            <div className="font-mono text-xl md:text-2xl text-indigo-300 bg-qz-bg/50 p-4 rounded-xl border border-qz-border-light text-center inline-block">
                                 {value}
                             </div>
                         );
+                        break;
                     default:
                         return null;
                 }
+
+                return (
+                    <div key={field.id} className={wrapClass}>
+                        {content}
+                    </div>
+                );
             })}
         </div>
     );
