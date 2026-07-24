@@ -11,7 +11,7 @@ import {
 import { speakInworld } from '@/lib/courses/ttsInworld';
 import { checkDictation, type DictationCheck } from '@/lib/courses/dictation';
 import { DiffChips } from '@/components/edito/DiffChips';
-import { getSpeechRecognition, type SpeechRecognitionLike } from '@/lib/speech';
+import { getSpeechRecognition, hasMediaDevices, type SpeechRecognitionLike } from '@/lib/speech';
 
 export interface ShadowPhrase {
   text: string;
@@ -36,8 +36,17 @@ export function ShadowingPractice({ title, backHref, phrases, speechLang, voice 
   const [revealed, setRevealed] = useState(false);
   const [scores, setScores] = useState<number[]>([]);
   const [finished, setFinished] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [selfUrl, setSelfUrl] = useState<string | null>(null);
 
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
+  const mediaRecRef = useRef<MediaRecorder | null>(null);
+  const chunksRef = useRef<Blob[]>([]);
+  const streamRef = useRef<MediaStream | null>(null);
+  const transcriptRef = useRef('');
+  const recordingRef = useRef(false);
+
+  const recorderSupported = hasMediaDevices() && typeof window !== 'undefined' && 'MediaRecorder' in window;
   const speechSupported = !!getSpeechRecognition();
   const phrase = phrases[index];
 
@@ -55,34 +64,93 @@ export function ShadowingPractice({ title, backHref, phrases, speechLang, voice 
     };
     step();
   };
+  const playSelf = () => { if (selfUrl) void new Audio(selfUrl).play().catch(() => {}); };
+  const clearSelf = () => { if (selfUrl) { URL.revokeObjectURL(selfUrl); setSelfUrl(null); } };
 
-  const listen = () => {
-    if (listening) {
-      recognitionRef.current?.stop();
-      setListening(false);
+  const applyTranscript = (transcript: string) => {
+    const result = checkDictation(phrase.text, transcript);
+    setHeard(transcript);
+    setCheck(result);
+    const pct = result.total > 0 ? Math.round((result.correct / result.total) * 100) : 0;
+    setScores(prev => [...prev, pct]);
+  };
+
+  // Запись микрофона (надёжно вызывает запрос доступа) + непрерывное
+  // распознавание, которое копит речь и оценивается ТОЛЬКО по ручной остановке.
+  const startListening = async () => {
+    setError(null);
+    clearSelf();
+    if (!recorderSupported) { setError('Этот браузер не поддерживает запись с микрофона.'); return; }
+
+    let stream: MediaStream;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch (e) {
+      const name = (e as { name?: string })?.name ?? '';
+      setError(name === 'NotFoundError' || name === 'DevicesNotFoundError'
+        ? 'Микрофон не найден. Проверьте, что он подключён и выбран в системе.'
+        : 'Доступ к микрофону не выдан. Разрешите его в запросе браузера (или в настройках сайта — значок слева в адресной строке) и перезагрузите страницу. В macOS также: Системные настройки → Конфиденциальность → Микрофон.');
       return;
     }
+    streamRef.current = stream;
+
+    chunksRef.current = [];
+    try {
+      const mr = new MediaRecorder(stream);
+      mr.ondataavailable = (ev) => { if (ev.data.size > 0) chunksRef.current.push(ev.data); };
+      mr.onstop = () => {
+        const blob = new Blob(chunksRef.current, { type: chunksRef.current[0]?.type || 'audio/webm' });
+        if (blob.size > 0) setSelfUrl(URL.createObjectURL(blob));
+        streamRef.current?.getTracks().forEach(t => t.stop());
+        streamRef.current = null;
+      };
+      mediaRecRef.current = mr;
+      mr.start();
+    } catch {
+      stream.getTracks().forEach(t => t.stop());
+      setError('Не удалось начать запись. Попробуйте Chrome или Safari.');
+      return;
+    }
+
+    transcriptRef.current = '';
     const SR = getSpeechRecognition();
-    if (!SR) return;
-    const rec = new SR();
-    rec.lang = speechLang;
-    rec.interimResults = false;
-    rec.maxAlternatives = 1;
-    rec.onresult = (event) => {
-      const transcript = event.results[0]?.[0]?.transcript ?? '';
-      if (!transcript) return;
-      const result = checkDictation(phrase.text, transcript);
-      setHeard(transcript);
-      setCheck(result);
-      const pct = result.total > 0 ? Math.round((result.correct / result.total) * 100) : 0;
-      setScores(prev => [...prev, pct]);
-    };
-    rec.onend = () => setListening(false);
-    rec.onerror = () => setListening(false);
-    recognitionRef.current = rec;
+    if (SR) {
+      try {
+        const rec = new SR();
+        rec.lang = speechLang;
+        rec.interimResults = false;
+        rec.continuous = true;
+        rec.maxAlternatives = 1;
+        rec.onresult = (event) => {
+          let full = '';
+          const results = event.results;
+          for (let i = 0; i < results.length; i++) full += (results[i]?.[0]?.transcript ?? '') + ' ';
+          transcriptRef.current = full.trim();
+        };
+        rec.onend = () => { if (recordingRef.current) { try { rec.start(); } catch { /* noop */ } } };
+        rec.onerror = () => {};
+        recognitionRef.current = rec;
+        rec.start();
+      } catch { /* распознавание недоступно — останется запись */ }
+    }
+
+    recordingRef.current = true;
     setListening(true);
-    rec.start();
   };
+
+  const stopListening = () => {
+    recordingRef.current = false;
+    try { recognitionRef.current?.stop(); } catch { /* noop */ }
+    try { mediaRecRef.current?.stop(); } catch { /* noop */ }
+    setListening(false);
+    setTimeout(() => {
+      const transcript = transcriptRef.current.trim();
+      if (transcript) applyTranscript(transcript);
+      else setError('Автопроверка недоступна в этом браузере. Прослушайте свою запись и сравните с образцом. Для автооценки откройте курс в Chrome или Safari.');
+    }, 1200);
+  };
+
+  const toggleListen = () => { if (listening) stopListening(); else void startListening(); };
 
   const next = () => {
     if (index + 1 >= phrases.length) {
@@ -93,6 +161,8 @@ export function ShadowingPractice({ title, backHref, phrases, speechLang, voice 
     setCheck(null);
     setHeard(null);
     setRevealed(false);
+    setError(null);
+    clearSelf();
   };
 
   const restart = () => {
@@ -102,21 +172,25 @@ export function ShadowingPractice({ title, backHref, phrases, speechLang, voice 
     setRevealed(false);
     setScores([]);
     setFinished(false);
+    setError(null);
+    clearSelf();
   };
 
   const retryPhrase = () => {
     setCheck(null);
     setHeard(null);
+    setError(null);
+    clearSelf();
   };
 
-  if (!speechSupported) {
+  if (!recorderSupported) {
     return (
       <div className="min-h-screen bg-qz-card text-qz-text flex items-center justify-center px-4">
         <div className="text-center max-w-sm">
           <Mic className="w-10 h-10 text-qz-text-muted mx-auto mb-3" />
-          <p className="text-foreground font-semibold mb-1">Распознавание речи недоступно</p>
+          <p className="text-foreground font-semibold mb-1">Микрофон недоступен</p>
           <p className="text-qz-text-muted text-sm mb-4">
-            Ваш браузер не поддерживает Web Speech API. Попробуйте Chrome или Safari.
+            Этот браузер не поддерживает запись с микрофона. Откройте курс по HTTPS в Chrome или Safari.
           </p>
           <Link href={backHref} className="text-[#4255ff] hover:underline text-sm">← Вернуться к курсу</Link>
         </div>
@@ -193,16 +267,34 @@ export function ShadowingPractice({ title, backHref, phrases, speechLang, voice 
           </div>
 
           {!check ? (
-            <button
-              onClick={listen}
-              className={`w-full inline-flex items-center justify-center gap-2 font-bold text-base px-6 py-4 rounded-2xl transition-colors ${
-                listening
-                  ? 'bg-red-500/15 border border-red-500/50 text-red-400 animate-pulse'
-                  : 'bg-emerald-600 hover:bg-emerald-500 text-white'
-              }`}
-            >
-              {listening ? <><MicOff className="w-5 h-5" /> Говорите… (нажмите, чтобы остановить)</> : <><Mic className="w-5 h-5" /> Повторить вслух</>}
-            </button>
+            <>
+              <button
+                onClick={toggleListen}
+                className={`w-full inline-flex items-center justify-center gap-2 font-bold text-base px-6 py-4 rounded-2xl transition-colors ${
+                  listening
+                    ? 'bg-red-500/15 border border-red-500/50 text-red-400 animate-pulse'
+                    : 'bg-emerald-600 hover:bg-emerald-500 text-white'
+                }`}
+              >
+                {listening ? <><MicOff className="w-5 h-5" /> Идёт запись… (нажмите, чтобы остановить)</> : <><Mic className="w-5 h-5" /> Повторить вслух</>}
+              </button>
+              {selfUrl && (
+                <button onClick={playSelf} className="mt-3 w-full inline-flex items-center justify-center gap-2 border border-emerald-500/40 text-emerald-600 dark:text-emerald-400 text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors">
+                  <Volume2 className="w-4 h-4" /> Прослушать себя
+                </button>
+              )}
+              {!speechSupported && (
+                <p className="mt-2 text-qz-text-muted text-xs text-center">
+                  Автооценка работает в Chrome и Safari. Здесь можно записать себя и сравнить с образцом.
+                </p>
+              )}
+              {error && (
+                <div className="mt-3 flex items-start gap-2 bg-amber-500/10 border border-amber-500/30 rounded-xl p-3">
+                  <MicOff className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                  <p className="text-amber-600 dark:text-amber-300 text-sm">{error}</p>
+                </div>
+              )}
+            </>
           ) : (
             <div className="space-y-4">
               <div>
@@ -212,14 +304,21 @@ export function ShadowingPractice({ title, backHref, phrases, speechLang, voice 
                 <DiffChips ops={check.ops} />
                 {heard && <p className="text-qz-text-muted text-xs mt-2">Услышано: «{heard}»</p>}
               </div>
-              <div className="flex items-center justify-end gap-3">
-                <button onClick={retryPhrase} className="inline-flex items-center gap-1.5 text-qz-text-muted hover:text-foreground text-sm transition-colors">
-                  <RotateCcw className="w-4 h-4" /> Ещё раз
-                </button>
-                <button onClick={next} className="inline-flex items-center gap-1.5 px-5 py-2 rounded-xl bg-[#4255ff] text-white text-sm font-semibold hover:bg-[#3144e0] transition-colors">
-                  {index + 1 >= phrases.length ? 'Результат' : 'Дальше'}
-                  <ChevronRight className="w-4 h-4" />
-                </button>
+              <div className="flex items-center justify-between gap-3">
+                {selfUrl ? (
+                  <button onClick={playSelf} className="inline-flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 text-sm font-semibold transition-colors">
+                    <Volume2 className="w-4 h-4" /> Прослушать себя
+                  </button>
+                ) : <span />}
+                <div className="flex items-center gap-3">
+                  <button onClick={retryPhrase} className="inline-flex items-center gap-1.5 text-qz-text-muted hover:text-foreground text-sm transition-colors">
+                    <RotateCcw className="w-4 h-4" /> Ещё раз
+                  </button>
+                  <button onClick={next} className="inline-flex items-center gap-1.5 px-5 py-2 rounded-xl bg-[#4255ff] text-white text-sm font-semibold hover:bg-[#3144e0] transition-colors">
+                    {index + 1 >= phrases.length ? 'Результат' : 'Дальше'}
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             </div>
           )}
