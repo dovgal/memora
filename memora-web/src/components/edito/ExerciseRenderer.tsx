@@ -21,6 +21,8 @@ interface ExerciseRendererProps {
   exercise: EditoExercise;
   /** result передаётся компонентами, которые считают ошибки (квизы, пропуски, диалоги). */
   onComplete?: (id: string, result?: ExerciseResult) => void;
+  /** Голос TTS курса (для озвучки примеров в теории). По умолчанию французский. */
+  voice?: string;
 }
 
 /**
@@ -43,7 +45,7 @@ const RENDERABLE_TYPES = new Set<string>([
   'numeric', 'ordering', 'symbolic',
 ]);
 
-export function ExerciseRenderer({ exercise, onComplete }: ExerciseRendererProps) {
+export function ExerciseRenderer({ exercise, onComplete, voice }: ExerciseRendererProps) {
   const handleComplete = (result?: ExerciseResult) => onComplete?.(exercise.id, result);
 
   // Старый формат — по type; новый (Subject Packs) — по answer.kind,
@@ -54,7 +56,7 @@ export function ExerciseRenderer({ exercise, onComplete }: ExerciseRendererProps
 
   switch (effectiveType) {
     case 'theory':
-      return <Theory exercise={exercise} />;
+      return <Theory exercise={exercise} voice={voice} />;
     case 'grammar-quiz':
       return <GrammarQuiz exercise={exercise} onComplete={handleComplete} />;
     case 'gender-quiz':

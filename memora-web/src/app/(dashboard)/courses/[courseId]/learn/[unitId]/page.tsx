@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react';
 import { ChevronLeft, CheckCircle2, Loader2, SkipForward, Volume2 } from 'lucide-react';
 import { ExerciseRenderer } from '@/components/edito/ExerciseRenderer';
 import { speakInworldLanguage } from '@/lib/courses/ttsInworld';
+import { langMeta } from '@/lib/courses/langMeta';
 import {
   getUnit, getCourse, getCourseProgress, recordExerciseProgress, markUnitKnown,
   getTranslatedUnit, type UnitDetail,
@@ -190,7 +191,7 @@ export default function CustomUnitPage({ params }: { params: Promise<{ courseId:
                   <CheckCircle2 className="w-3 h-3" /> Выполнено
                 </div>
               )}
-              <ExerciseRenderer exercise={ex} onComplete={handleExerciseComplete} />
+              <ExerciseRenderer exercise={ex} onComplete={handleExerciseComplete} voice={langMeta(language).voice} />
             </div>
           ))}
         </div>
