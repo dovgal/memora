@@ -41,7 +41,12 @@ async function playInworld(text: string, voice: string, waitEnd: boolean, langua
       ? `/api/tts?text=${encodeURIComponent(clean)}&language=${encodeURIComponent(language)}`
       : `/api/tts?text=${encodeURIComponent(clean)}&voice=${encodeURIComponent(voice)}`;
     const headers = await getAuthHeaders();
-    const res = await fetch(url, { cache: "force-cache", headers });
+    // ВАЖНО: не force-cache. Он отдаёт запись из кэша независимо от свежести, и
+    // однажды закэшированный пустой/битый ответ (например, когда на бэкенде
+    // слетал ключ Inworld) залипал навсегда — озвучка «пропадала» молча, и её
+    // не чинили ни передеплой, ни перезагрузка. Обычный кэш работает и так:
+    // бэкенд отдаёт Cache-Control: public, max-age=31536000.
+    let res = await fetch(url, { headers });
     if (!res.ok) {
       const detail = res.status === 401
         ? "нужно войти заново (сессия истекла)"
@@ -51,8 +56,15 @@ async function playInworld(text: string, voice: string, waitEnd: boolean, langua
       console.warn("Inworld TTS unavailable:", res.status);
       return { ok: false, error: detail };
     }
-    const blob = await res.blob();
-    if (blob.size === 0) return { ok: false, error: "пустой аудиоответ" };
+    let blob = await res.blob();
+    if (blob.size === 0) {
+      // Пустое тело почти всегда означает отравленную запись в кэше браузера —
+      // перезапрашиваем в обход кэша, чтобы не залипнуть в тишине.
+      res = await fetch(url, { cache: "reload", headers });
+      if (!res.ok) return { ok: false, error: `сервер ответил ${res.status}` };
+      blob = await res.blob();
+      if (blob.size === 0) return { ok: false, error: "пустой аудиоответ" };
+    }
     const audio = new Audio(URL.createObjectURL(blob));
     currentAudio = audio;
     if (waitEnd) {
@@ -154,7 +166,7 @@ export async function speakCardInworld(cardUuid: string, text: string, voice = "
   try {
     if (currentAudio) { currentAudio.pause(); currentAudio = null; }
     const headers = await getAuthHeaders();
-    const res = await fetch(`/api/audio/${cardUuid}/term_audio`, { cache: "force-cache", headers });
+    const res = await fetch(`/api/audio/${cardUuid}/term_audio`, { headers });
     if (res.ok) {
       const blob = await res.blob();
       if (blob.size > 0) { const a = new Audio(URL.createObjectURL(blob)); currentAudio = a; await a.play(); return; }
