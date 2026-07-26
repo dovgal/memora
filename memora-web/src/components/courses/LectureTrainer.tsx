@@ -7,7 +7,7 @@ import { useMemo, useRef, useState } from 'react';
 import {
   Mic, MicOff, Volume2, Turtle, ChevronRight, RotateCcw, BookOpenCheck, Trophy, Lightbulb,
 } from 'lucide-react';
-import { speakInworld } from '@/lib/courses/ttsInworld';
+import { speakInworld, speakInworldAndWait } from '@/lib/courses/ttsInworld';
 import { checkDictation, type DictationCheck } from '@/lib/courses/dictation';
 import { DiffChips } from '@/components/edito/DiffChips';
 import { getSpeechRecognition, hasMediaDevices, type SpeechRecognitionLike } from '@/lib/speech';
@@ -77,14 +77,21 @@ export function LectureTrainer({ items, voice = 'Alain', speechLang = 'fr-FR', o
     [item],
   );
 
-  const play = () => { void speakInworld(item.text, voice); };
-  const playSlow = () => {
+  // Озвучка эталона. Раньше сбой TTS гасился в console.warn — пользователь видел
+  // просто тишину; теперь причина показывается в баннере ошибки.
+  const play = async () => {
+    const r = await speakInworld(item.text, voice);
+    if (!r.ok) setError(`Не удалось озвучить фразу: ${r.error}.`);
+    else setError(null);
+  };
+  const playSlow = async () => {
     const words = item.text.split(/\s+/).filter(Boolean);
-    let i = 0;
-    const step = () => {
-      if (i < words.length) { void speakInworld(words[i], voice); i++; setTimeout(step, 1100); }
-    };
-    step();
+    for (const w of words) {
+      const r = await speakInworldAndWait(w, voice);
+      if (!r.ok) { setError(`Не удалось озвучить фразу: ${r.error}.`); return; }
+      await new Promise(res => setTimeout(res, 250));
+    }
+    setError(null);
   };
 
   const applyTranscript = (transcript: string) => {
@@ -294,10 +301,10 @@ export function LectureTrainer({ items, voice = 'Alain', speechLang = 'fr-FR', o
         )}
 
         <div className="mt-5 flex items-center gap-2 flex-wrap">
-          <button onClick={play} className="inline-flex items-center gap-1.5 border border-border hover:border-[#4255ff]/50 text-foreground text-sm font-semibold px-3.5 py-2 rounded-xl transition-colors">
+          <button onClick={() => void play()} className="inline-flex items-center gap-1.5 border border-border hover:border-[#4255ff]/50 text-foreground text-sm font-semibold px-3.5 py-2 rounded-xl transition-colors">
             <Volume2 className="w-4 h-4" /> Прослушать
           </button>
-          <button onClick={playSlow} className="inline-flex items-center gap-1.5 border border-border hover:border-[#4255ff]/50 text-foreground text-sm font-semibold px-3.5 py-2 rounded-xl transition-colors">
+          <button onClick={() => void playSlow()} className="inline-flex items-center gap-1.5 border border-border hover:border-[#4255ff]/50 text-foreground text-sm font-semibold px-3.5 py-2 rounded-xl transition-colors">
             <Turtle className="w-4 h-4" /> Медленно
           </button>
           <button onClick={toggleListen}

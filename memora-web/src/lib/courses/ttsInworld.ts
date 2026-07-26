@@ -27,9 +27,12 @@ async function getAuthHeaders(): Promise<Record<string, string>> {
   return cachedToken ? { Authorization: `Bearer ${cachedToken}` } : {};
 }
 
-async function playInworld(text: string, voice: string, waitEnd: boolean, language?: string): Promise<void> {
+/** Результат озвучки: ok=false + причина, чтобы UI мог показать её вместо тишины. */
+export interface SpeakResult { ok: boolean; error?: string }
+
+async function playInworld(text: string, voice: string, waitEnd: boolean, language?: string): Promise<SpeakResult> {
   const clean = (text || "").trim();
-  if (!clean) return;
+  if (!clean) return { ok: true };
   try {
     // остановим предыдущее воспроизведение
     if (currentAudio) { currentAudio.pause(); currentAudio = null; }
@@ -40,11 +43,16 @@ async function playInworld(text: string, voice: string, waitEnd: boolean, langua
     const headers = await getAuthHeaders();
     const res = await fetch(url, { cache: "force-cache", headers });
     if (!res.ok) {
+      const detail = res.status === 401
+        ? "нужно войти заново (сессия истекла)"
+        : res.status === 400
+          ? "текст слишком длинный для одного запроса"
+          : `сервер ответил ${res.status}`;
       console.warn("Inworld TTS unavailable:", res.status);
-      return; // тихо выходим — браузерный синтез не используем
+      return { ok: false, error: detail };
     }
     const blob = await res.blob();
-    if (blob.size === 0) return;
+    if (blob.size === 0) return { ok: false, error: "пустой аудиоответ" };
     const audio = new Audio(URL.createObjectURL(blob));
     currentAudio = audio;
     if (waitEnd) {
@@ -59,8 +67,12 @@ async function playInworld(text: string, voice: string, waitEnd: boolean, langua
     } else {
       await audio.play();
     }
+    return { ok: true };
   } catch (e) {
     console.warn("Inworld TTS error:", e);
+    // Частая причина здесь — автоплей заблокирован до жеста пользователя.
+    const name = (e as { name?: string })?.name ?? "";
+    return { ok: false, error: name === "NotAllowedError" ? "браузер заблокировал воспроизведение" : "не удалось воспроизвести звук" };
   }
 }
 
@@ -69,13 +81,13 @@ async function playInworld(text: string, voice: string, waitEnd: boolean, langua
  * @param text  фраза на изучаемом языке
  * @param voice голос Inworld (по умолчанию Alain — французский)
  */
-export async function speakInworld(text: string, voice = "Alain"): Promise<void> {
+export async function speakInworld(text: string, voice = "Alain"): Promise<SpeakResult> {
   speakSeq++; // прерываем многочастную читку, если она шла
   return playInworld(text, voice, false);
 }
 
 /** То же, но промис резолвится по ОКОНЧАНИИ воспроизведения (для голосового диалога). */
-export async function speakInworldAndWait(text: string, voice = "Alain"): Promise<void> {
+export async function speakInworldAndWait(text: string, voice = "Alain"): Promise<SpeakResult> {
   return playInworld(text, voice, true);
 }
 
@@ -133,7 +145,7 @@ export async function speakInworldLong(text: string, voice = "Alain"): Promise<v
  * Озвучить текст голосом изучаемого языка курса ('fr'/'en'/'de'/'es'…) —
  * конкретный голос выбирает предметный пак на бэкенде.
  */
-export async function speakInworldLanguage(text: string, language: string): Promise<void> {
+export async function speakInworldLanguage(text: string, language: string): Promise<SpeakResult> {
   return playInworld(text, "", false, language || undefined);
 }
 
