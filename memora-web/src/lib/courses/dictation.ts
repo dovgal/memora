@@ -37,15 +37,38 @@ function norm(word: string): string {
   return word.toLowerCase().replace(/’/g, "'");
 }
 
+// Числительные словами ↔ цифрами. Движки распознавания речи почти всегда отдают
+// числа цифрами («trois» → «3»), и без этого чтение вслух засчитывалось бы как
+// ошибка, сколько ни перечитывай. Для диктанта (ввод с клавиатуры) это НЕ
+// применяется: там написание числительного словом — предмет проверки.
+const NUMERALS_FR: Record<string, string> = {
+  zéro: '0', zero: '0', un: '1', une: '1', deux: '2', trois: '3', quatre: '4', cinq: '5',
+  six: '6', sept: '7', huit: '8', neuf: '9', dix: '10', onze: '11', douze: '12',
+  treize: '13', quatorze: '14', quinze: '15', seize: '16', vingt: '20', trente: '30',
+  quarante: '40', cinquante: '50', soixante: '60', cent: '100', mille: '1000',
+};
+
+/** Приводит числительные к цифрам, чтобы «trois» и «3» считались одним словом. */
+function normSpoken(word: string): string {
+  const w = norm(word);
+  return NUMERALS_FR[w] ?? w;
+}
+
 /**
  * Пословное сравнение через LCS: совпавшие слова — ok, замены — wrong,
  * пропущенные — missing, лишние — extra. Предложения короткие, DP-таблица дёшева.
  */
-export function checkDictation(expectedText: string, givenText: string): DictationCheck {
+export function checkDictation(
+  expectedText: string,
+  givenText: string,
+  /** true — проверка речи (распознавание): числительные словом = цифрой. */
+  opts: { spoken?: boolean } = {},
+): DictationCheck {
   const expected = tokenize(expectedText);
   const given = tokenize(givenText);
-  const e = expected.map(norm);
-  const g = given.map(norm);
+  const normalize = opts.spoken ? normSpoken : norm;
+  const e = expected.map(normalize);
+  const g = given.map(normalize);
 
   // LCS DP
   const n = e.length, m = g.length;

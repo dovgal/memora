@@ -59,6 +59,7 @@ export function LectureTrainer({ items, voice = 'Alain', speechLang = 'fr-FR', o
   const chunksRef = useRef<Blob[]>([]);
   const streamRef = useRef<MediaStream | null>(null);
   const transcriptRef = useRef('');       // накопленная речь за сессию чтения
+  const sessionBaseRef = useRef('');      // речь, зафиксированная до авто-перезапуска STT
   const recordingRef = useRef(false);     // синхронный флаг записи (state async)
 
   // Запись микрофона поддерживается почти везде (в т.ч. Comet); Web Speech —
@@ -88,7 +89,8 @@ export function LectureTrainer({ items, voice = 'Alain', speechLang = 'fr-FR', o
 
   const applyTranscript = (transcript: string) => {
     gotResultRef.current = true;
-    const result = checkDictation(item.text, transcript);
+    // spoken: распознавание отдаёт числа цифрами («trois» → «3») — не ошибка чтения.
+    const result = checkDictation(item.text, transcript, { spoken: true });
     setHeard(transcript);
     setCheck(result);
     const pct = result.total > 0 ? Math.round((result.correct / result.total) * 100) : 0;
@@ -145,6 +147,7 @@ export function LectureTrainer({ items, voice = 'Alain', speechLang = 'fr-FR', o
     // вердикт ТОЛЬКО после ручной остановки, чтобы не оборвать на первой паузе.
     gotResultRef.current = false;
     transcriptRef.current = '';
+    sessionBaseRef.current = '';
     const SR = getSpeechRecognition();
     if (SR) {
       try {
@@ -154,15 +157,23 @@ export function LectureTrainer({ items, voice = 'Alain', speechLang = 'fr-FR', o
         rec.continuous = true;
         rec.maxAlternatives = 1;
         rec.onresult = (event) => {
-          // Собираем полный текст из всех финальных сегментов (continuous).
+          // Собираем полный текст из всех финальных сегментов ТЕКУЩЕЙ сессии
+          // распознавания и склеиваем с накопленным за прошлые (после
+          // авто-перезапуска нумерация results начинается заново).
           let full = '';
           const results = event.results;
           for (let i = 0; i < results.length; i++) full += (results[i]?.[0]?.transcript ?? '') + ' ';
-          transcriptRef.current = full.trim();
+          transcriptRef.current = `${sessionBaseRef.current} ${full}`.trim();
         };
         // В continuous-режиме движок может завершиться по длинной тишине —
         // пока пользователь не остановил запись, перезапускаем распознавание.
-        rec.onend = () => { if (recordingRef.current) { try { rec.start(); } catch { /* noop */ } } };
+        // Накопленное фиксируем в базе, иначе новая сессия затрёт прошлую речь.
+        rec.onend = () => {
+          if (recordingRef.current) {
+            sessionBaseRef.current = transcriptRef.current;
+            try { rec.start(); } catch { /* noop */ }
+          }
+        };
         rec.onerror = () => {};
         recognitionRef.current = rec;
         rec.start();

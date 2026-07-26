@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import type { VocabularyItem } from '@/lib/courses/edito-a1';
 import { generateStory, addToDictionary, type GeneratedStory } from '@/lib/courses/customCoursesApi';
-import { speakInworld } from '@/lib/courses/ttsInworld';
+import { speakInworld, speakInworldLong } from '@/lib/courses/ttsInworld';
 
 const TOPICS = [
   'повседневная жизнь',
@@ -311,7 +311,7 @@ export function StoryReading({ title, backHref, language, level, voice, vocabula
             <div className="flex items-start justify-between gap-3 mb-4">
               <h1 className="text-xl font-bold text-foreground">{story.title}</h1>
               <button
-                onClick={() => speakInworld(story.story, voice)}
+                onClick={() => void speakInworldLong(story.story, voice)}
                 className="p-2 rounded-full bg-[#4255ff]/15 text-[#4255ff] hover:bg-[#4255ff]/25 transition-colors shrink-0"
                 title="Озвучить всю историю"
               >
