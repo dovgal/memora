@@ -136,13 +136,12 @@ export const LESSON_1: PhoneticsLesson = {
       lesson: 1,
       ipa: '[t] · [p] · [k] · [d]',
       title: 'Нет придыхания и нет палатализации',
-      problem: 'Две привычки сразу: английское придыхание после p, t, k («тх», «пх») и русское смягчение согласной перед e, i («тьераpия»). Французский не делает ни того, ни другого.',
+      problem: 'Две привычки сразу: английское придыхание после p, t, k («тх», «пх») и русское смягчение согласной перед e, i («тьерапия»). Французский не делает ни того, ни другого.',
       howTo: 'Согласная произносится сухо и коротко, без выдоха-«х» после неё. И она не смягчается даже перед é, i, e — язык не подтягивается к нёбу. th читается просто как [t]: thérapie = [teʁapi].',
       words: [
         'littérature', 'thérapie', 'téléréalité', 'panthéon', 'tempête',
         'pédant', 'Théophile', 'Théodore', 'témoignage',
       ],
-      twister: 'Les nez des poupées de Pépé sont cassés.',
     },
     {
       id: 'gn',
@@ -151,7 +150,11 @@ export const LESSON_1: PhoneticsLesson = {
       title: 'GN = [ɲ] — единый мягкий звук',
       problem: 'Читают по буквам «гн», получается два звука вместо одного.',
       howTo: 'Спинка языка прижимается к твёрдому нёбу — выходит единый звук, похожий на «нь» в слове «конья́к», произнесённый слитно.',
-      words: ['magnifique', 'ligne', 'épargne', 'magnanime', 'mignon', 'agneau'],
+      words: [
+        'magnifique', 'ligne', 'épargne', 'magnanime', 'mignon', 'agneau',
+        // Вторая группа из урока: здесь gn читается раздельно, как [ɡn].
+        'cognitif', 'cognition', 'stagner', 'diagnostic', 'gnome',
+      ],
       exceptions: [
         'В словах учёного происхождения gn читается раздельно, как [gn]: cognitif, cognition, stagner, diagnostic, gnome.',
       ],
@@ -168,7 +171,21 @@ export const LESSON_1: PhoneticsLesson = {
         'le sable', 'outre', 'il montre', 'le ventre', "l'ours", 'juste', 'la table', 'le monde',
         'la cage', 'la rage', 'le chômage', 'le garage', 'ma petite sœur', 'mon frère', 'la classe commence',
       ],
-      twister: 'Quatre plats plats dans quatre plats creux et quatre plats creux dans quatre plats plats.',
+    },
+    {
+      id: 'l1-virelangues',
+      lesson: 1,
+      ipa: 'virelangues',
+      title: 'Скороговорки урока',
+      problem: 'Скороговорку пытаются сразу читать быстро — и закрепляют ошибку вместе со скоростью.',
+      howTo: 'Сначала по словам, затем медленно целиком, и только потом в темпе. Скороговорка — не проверка на скорость, а тренажёр точности: как только звук поплыл, сбавляйте темп.',
+      words: [],
+      phrases: [
+        'Les nez des poupées de Pépé sont cassés.',
+        "Ursule étudie une multitude d'inutilités.",
+        'Quatre plats plats dans quatre plats creux et quatre plats creux dans quatre plats plats.',
+        'Rat vit rôt, rat mit patte à rôt, rôt brûla patte à rat, rat quitta rôt.',
+      ],
     },
   ],
 };
