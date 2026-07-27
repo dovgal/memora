@@ -14,6 +14,21 @@ import { rulesForWord, type ReadingRule } from '@/lib/courses/frenchReadingRules
 import { useSpeechAttempt } from '@/lib/courses/useSpeechAttempt';
 import { PASS_SCORE } from '@/lib/courses/phonetics/mastery';
 
+/** Голоса Inworld по языку — ученик может выбрать диктора, который ему понятнее. */
+const VOICES: Record<string, { code: string; label: string }[]> = {
+  'fr-FR': [
+    { code: 'Alain', label: 'Alain — мужской, глубокий' },
+    { code: 'Étienne', label: 'Étienne — мужской, чёткий' },
+    { code: 'Mathieu', label: 'Mathieu — мужской, звучный' },
+    { code: 'Hélène', label: 'Hélène — женский, выразительный' },
+  ],
+  'en-US': [{ code: 'Clive', label: 'Clive' }, { code: 'Aria', label: 'Aria' }],
+  'de-DE': [{ code: 'Josef', label: 'Josef' }, { code: 'Johanna', label: 'Johanna' }],
+  'es-ES': [{ code: 'Diego', label: 'Diego' }, { code: 'Carmen', label: 'Carmen' }],
+  'ru-RU': [{ code: 'Maxim', label: 'Maxim' }, { code: 'Tatiana', label: 'Tatiana' }],
+};
+const VOICE_KEY = 'memora.tts.voice';
+
 const KIND_LABEL: Record<NonNullable<PronunciationItem['kind']>, string> = {
   word: 'Слово',
   phrase: 'Фраза',
@@ -48,6 +63,14 @@ export function PronunciationExercise({ exercise, onComplete, voice = 'Alain', s
   /** Индекс строки, которая сейчас записывается (запись всегда одна). */
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
 
+  // Выбранный диктор запоминается: если синтез конкретного голоса режет слух,
+  // ученик переключается один раз и дальше слышит его во всех упражнениях.
+  const [chosenVoice, setChosenVoice] = useState<string>(() => {
+    if (typeof window === 'undefined') return voice;
+    return window.localStorage.getItem(VOICE_KEY) || voice;
+  });
+  const voiceList = VOICES[speechLang] ?? [];
+
   const speech = useSpeechAttempt(speechLang);
   const total = items.length;
   const passedCount = useMemo(
@@ -55,13 +78,13 @@ export function PronunciationExercise({ exercise, onComplete, voice = 'Alain', s
     [attempts],
   );
 
-  const play = async (text: string) => {
-    const r = await speakInworld(text, voice);
+  const play = async (it: PronunciationItem) => {
+    const r = await speakInworld(it.ttsText ?? it.text, chosenVoice);
     if (!r.ok) speech.setError(`Не удалось озвучить: ${r.error}.`);
   };
-  const playSlow = async (text: string) => {
-    for (const w of text.split(/\s+/).filter(Boolean)) {
-      const r = await speakInworldAndWait(w, voice);
+  const playSlow = async (it: PronunciationItem) => {
+    for (const w of (it.ttsText ?? it.text).split(/\s+/).filter(Boolean)) {
+      const r = await speakInworldAndWait(w, chosenVoice);
       if (!r.ok) { speech.setError(`Не удалось озвучить: ${r.error}.`); return; }
       await new Promise(res => setTimeout(res, 250));
     }
@@ -111,6 +134,21 @@ export function PronunciationExercise({ exercise, onComplete, voice = 'Alain', s
           ? 'Всё произнесено чисто. Можно перепроверить любую строку ещё раз.'
           : 'Проверьте произношение каждой строки — в любом порядке и сколько угодно раз.'}
       </p>
+      {voiceList.length > 1 && (
+        <div className="flex items-center gap-2 mb-3">
+          <label className="text-xs text-qz-text-muted">Диктор:</label>
+          <select
+            value={chosenVoice}
+            onChange={e => {
+              setChosenVoice(e.target.value);
+              try { window.localStorage.setItem(VOICE_KEY, e.target.value); } catch { /* приватный режим */ }
+            }}
+            className="bg-background border border-border rounded-lg px-2 py-1 text-xs text-foreground outline-none focus:border-[#4255ff]"
+          >
+            {voiceList.map(v => <option key={v.code} value={v.code}>{v.label}</option>)}
+          </select>
+        </div>
+      )}
       <div className="h-1.5 bg-muted rounded-full mb-4">
         <div className="h-full bg-emerald-500 rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
       </div>
@@ -156,14 +194,14 @@ export function PronunciationExercise({ exercise, onComplete, voice = 'Alain', s
 
                 <div className="flex items-center gap-1.5 shrink-0">
                   <button
-                    onClick={() => void play(it.text)}
+                    onClick={() => void play(it)}
                     title="Прослушать образец"
                     className="p-2 rounded-lg border border-border hover:border-[#4255ff]/50 text-qz-text-muted hover:text-[#4255ff] transition-colors"
                   >
                     <Volume2 className="w-4 h-4" />
                   </button>
                   <button
-                    onClick={() => void playSlow(it.text)}
+                    onClick={() => void playSlow(it)}
                     title="Медленно, по словам"
                     className="p-2 rounded-lg border border-border hover:border-[#4255ff]/50 text-qz-text-muted hover:text-[#4255ff] transition-colors"
                   >
