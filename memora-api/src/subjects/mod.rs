@@ -56,13 +56,13 @@ pub struct SubjectPack {
 }
 
 /// Типы упражнений языковых паков: legacy-список из `handlers/courses.rs`,
-/// плюс `dictation` (слайс 10) и `error-hunt` (какография Voltaire; включён при
-/// создании курса Le français.ru — рендерер, редактор и вариантный конвейер
-/// поддерживали его всегда, не пускала только серверная валидация юнитов).
+/// плюс `dictation` (слайс 10), `error-hunt` (какография Voltaire; включён при
+/// создании курса Le français.ru) и `pronunciation` (проверка произношения
+/// каждого слова/фразы/скороговорки через микрофон — курс фонетики).
 const LANGUAGE_EXERCISE_TYPES: &[&str] = &[
     "theory", "grammar-quiz", "sentence-builder", "gender-quiz",
     "dialogue", "fill-blank", "number-quiz", "listening", "video",
-    "dictation", "error-hunt",
+    "dictation", "error-hunt", "pronunciation",
 ];
 
 /// `language-fr` — эталон обратной совместимости. ДОЛЖЕН повторять текущее поведение

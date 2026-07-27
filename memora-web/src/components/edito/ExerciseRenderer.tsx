@@ -14,6 +14,7 @@ import { DictationExercise } from './DictationExercise';
 import { NumericExercise } from './NumericExercise';
 import { OrderingExercise } from './OrderingExercise';
 import { SymbolicExercise } from './SymbolicExercise';
+import { PronunciationExercise } from './PronunciationExercise';
 
 export type { ExerciseResult };
 
@@ -23,6 +24,8 @@ interface ExerciseRendererProps {
   onComplete?: (id: string, result?: ExerciseResult) => void;
   /** Голос TTS курса (для озвучки примеров в теории). По умолчанию французский. */
   voice?: string;
+  /** Код распознавания речи курса (для упражнений на произношение). */
+  speechLang?: string;
 }
 
 /**
@@ -42,10 +45,10 @@ const KIND_TO_TYPE: Record<string, EditoExercise['type']> = {
 const RENDERABLE_TYPES = new Set<string>([
   'theory', 'grammar-quiz', 'gender-quiz', 'number-quiz', 'fill-blank',
   'dialogue', 'sentence-builder', 'listening', 'video', 'error-hunt', 'dictation',
-  'numeric', 'ordering', 'symbolic',
+  'numeric', 'ordering', 'symbolic', 'pronunciation',
 ]);
 
-export function ExerciseRenderer({ exercise, onComplete, voice }: ExerciseRendererProps) {
+export function ExerciseRenderer({ exercise, onComplete, voice, speechLang }: ExerciseRendererProps) {
   const handleComplete = (result?: ExerciseResult) => onComplete?.(exercise.id, result);
 
   // Старый формат — по type; новый (Subject Packs) — по answer.kind,
@@ -83,6 +86,8 @@ export function ExerciseRenderer({ exercise, onComplete, voice }: ExerciseRender
       return <OrderingExercise exercise={exercise} onComplete={handleComplete} />;
     case 'symbolic':
       return <SymbolicExercise exercise={exercise} onComplete={handleComplete} />;
+    case 'pronunciation':
+      return <PronunciationExercise exercise={exercise} onComplete={() => handleComplete()} voice={voice} speechLang={speechLang} />;
     default:
       return null;
   }

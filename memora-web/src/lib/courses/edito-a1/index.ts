@@ -65,7 +65,7 @@ export function ruleLevel(ex: EditoExercise): string | undefined {
 
 export interface EditoExercise {
   id: string;
-  type: 'theory' | 'grammar-quiz' | 'sentence-builder' | 'gender-quiz' | 'dialogue' | 'fill-blank' | 'number-quiz' | 'listening' | 'video' | 'error-hunt' | 'dictation' | 'numeric' | 'ordering' | 'symbolic';
+  type: 'theory' | 'grammar-quiz' | 'sentence-builder' | 'gender-quiz' | 'dialogue' | 'fill-blank' | 'number-quiz' | 'listening' | 'video' | 'error-hunt' | 'dictation' | 'numeric' | 'ordering' | 'symbolic' | 'pronunciation';
   title: string;
   // symbolic (математика): ответ — выражение; эквивалентность проверяет CAS-сервис
   // (POST /api/check/symbolic): «2(x+1)» засчитывается как «2x+2».
@@ -114,9 +114,20 @@ export interface EditoExercise {
   audioFile?: string;
   source?: string;
   transcript?: string;
+  // pronunciation: каждая единица произносится в микрофон и сверяется с эталоном.
+  pronItems?: PronunciationItem[];
   // video
   videoFile?: string;
   description?: string;
+}
+
+/** Единица отработки произношения: слово, фраза, ступень лесенки или скороговорка. */
+export interface PronunciationItem {
+  text: string;
+  ipa?: string;
+  ru?: string;
+  hint?: string;
+  kind?: 'word' | 'phrase' | 'ladder' | 'twister';
 }
 
 export interface GrammarQuestion {

@@ -191,7 +191,7 @@ export default function CustomUnitPage({ params }: { params: Promise<{ courseId:
                   <CheckCircle2 className="w-3 h-3" /> Выполнено
                 </div>
               )}
-              <ExerciseRenderer exercise={ex} onComplete={handleExerciseComplete} voice={langMeta(language).voice} />
+              <ExerciseRenderer exercise={ex} onComplete={handleExerciseComplete} voice={langMeta(language).voice} speechLang={langMeta(language).speechLang} />
             </div>
           ))}
         </div>
