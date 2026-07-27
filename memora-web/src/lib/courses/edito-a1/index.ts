@@ -124,12 +124,6 @@ export interface EditoExercise {
 /** Единица отработки произношения: слово, фраза, ступень лесенки или скороговорка. */
 export interface PronunciationItem {
   text: string;
-  /**
-   * Текст, который отправляется в TTS, если движок неверно читает написание.
-   * Показывается всегда `text`; озвучивается `ttsText`. Нужен для слов вроде
-   * cognition, где синтез применяет правило gn = [ɲ] вопреки исключению.
-   */
-  ttsText?: string;
   ipa?: string;
   ru?: string;
   hint?: string;
