@@ -8,7 +8,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { Mic, MicOff, Volume2, Turtle, RotateCcw, Check, ChevronRight, Lightbulb } from 'lucide-react';
 import { EditoExercise, PronunciationItem } from '@/lib/courses/edito-a1';
 import { speakInworld, speakInworldAndWait } from '@/lib/courses/ttsInworld';
-import { checkDictation, type DictationCheck } from '@/lib/courses/dictation';
+import { checkDictation, bestTranscript, type DictationCheck } from '@/lib/courses/dictation';
 import { DiffChips } from '@/components/edito/DiffChips';
 import { rulesForWord, type ReadingRule } from '@/lib/courses/frenchReadingRules';
 import { useSpeechAttempt } from '@/lib/courses/useSpeechAttempt';
@@ -72,9 +72,11 @@ export function PronunciationExercise({ exercise, onComplete, voice = 'Alain', s
       speech.setError('Речь не распознана. Прослушайте свою запись и сравните с образцом — либо откройте курс в Chrome или Safari для автооценки.');
       return;
     }
-    const result = checkDictation(current.text, transcript, { spoken: true });
+    // Из нескольких гипотез движка берём фонетически ближайшую к эталону.
+    const heardBest = bestTranscript(current.text, transcript, speech.alternatives());
+    const result = checkDictation(current.text, heardBest, { spoken: true });
     const pct = result.total > 0 ? Math.round((result.correct / result.total) * 100) : 0;
-    setHeard(transcript); setCheck(result); setScore(pct);
+    setHeard(heardBest); setCheck(result); setScore(pct);
   }, [speech, current]);
 
   const advance = useCallback(() => {

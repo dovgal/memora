@@ -4,6 +4,8 @@
 // и есть предмет проверки (é/è, ou/où, a/à). Снимается только пунктуация по
 // краям слова и регистр.
 
+import { phoneticKey } from './frenchPhoneticKey';
+
 export type DiffOpType = 'ok' | 'wrong' | 'missing' | 'extra';
 
 export interface DiffOp {
@@ -48,8 +50,16 @@ const NUMERALS_FR: Record<string, string> = {
   quarante: '40', cinquante: '50', soixante: '60', cent: '100', mille: '1000',
 };
 
-/** Приводит числительные к цифрам, чтобы «trois» и «3» считались одним словом. */
+/**
+ * Нормализация для проверки РЕЧИ: сравниваем звучание, а не написание.
+ * Распознавание возвращает орфографию, и правильно произнесённое слово могло
+ * быть записано омофоном («la mer» → «la mère»). Приводим к фонетическому
+ * ключу — омофоны совпадают, а реальные ошибки ([u] вместо [y]) расходятся.
+ * Числительные ключ обрабатывает сам («trois» ↔ «3»).
+ */
 function normSpoken(word: string): string {
+  const key = phoneticKey(word);
+  if (key) return key;
   const w = norm(word);
   return NUMERALS_FR[w] ?? w;
 }
@@ -108,4 +118,38 @@ export function checkDictation(
     .filter(Boolean);
 
   return { ops, correct, total: expected.length, wrongGiven };
+}
+
+/**
+ * Выбирает лучшую расшифровку из гипотез движка распознавания.
+ *
+ * Движок нередко ставит верный вариант не первым: сказанное «tu» может уйти
+ * в «tous», а вторая гипотеза при этом верна. Эталон нам известен, поэтому для
+ * каждого сегмента берём ту гипотезу, чьи слова фонетически ближе к эталону.
+ * Это честно: мы не подставляем эталон, а лишь выбираем среди того, что движок
+ * реально услышал, — неверное произношение не попадёт в гипотезы вообще.
+ */
+export function bestTranscript(target: string, primary: string, alts: string[][]): string {
+  if (!alts || alts.length === 0) return primary;
+  const targetKeys = new Set(tokenize(target).map(phoneticKey).filter(Boolean));
+  if (targetKeys.size === 0) return primary;
+
+  const parts = alts.map(seg => {
+    if (seg.length <= 1) return seg[0] ?? '';
+    let best = seg[0];
+    let bestScore = -Infinity;
+    for (const cand of seg) {
+      const words = tokenize(cand);
+      let matched = 0;
+      for (const w of words) if (targetKeys.has(phoneticKey(w))) matched++;
+      // Совпадения в плюс, лишние слова — небольшой штраф, чтобы не выигрывала
+      // длинная гипотеза, случайно захватившая нужное слово.
+      const score = matched - 0.1 * (words.length - matched);
+      if (score > bestScore) { bestScore = score; best = cand; }
+    }
+    return best;
+  });
+
+  const joined = parts.join(' ').replace(/\s+/g, ' ').trim();
+  return joined || primary;
 }

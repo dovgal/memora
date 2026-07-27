@@ -27,6 +27,8 @@ export interface SpeechAttempt {
   start: () => Promise<void>;
   /** Остановить и получить распознанный текст (пустая строка — не распознано). */
   stop: () => Promise<string>;
+  /** Альтернативные гипотезы движка по сегментам — для выбора лучшей по эталону. */
+  alternatives: () => string[][];
   /** Сбросить запись перед новой попыткой. */
   reset: () => void;
 }
@@ -41,6 +43,7 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
   const chunksRef = useRef<Blob[]>([]);
   const streamRef = useRef<MediaStream | null>(null);
   const transcriptRef = useRef('');
+  const altsRef = useRef<string[][]>([]);
   const sessionBaseRef = useRef('');
   const recordingRef = useRef(false);
 
@@ -89,6 +92,7 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
 
     transcriptRef.current = '';
     sessionBaseRef.current = '';
+    altsRef.current = [];
     const SR = getSpeechRecognition();
     if (SR) {
       try {
@@ -96,12 +100,25 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
         rec.lang = speechLang;
         rec.interimResults = false;
         rec.continuous = true;
-        rec.maxAlternatives = 1;
+        // Просим несколько гипотез: движок часто ставит верный вариант вторым
+        // или третьим. Лучшую из них выбирает вызывающий — он знает эталон.
+        rec.maxAlternatives = 5;
         rec.onresult = event => {
           let full = '';
           const results = event.results;
-          for (let i = 0; i < results.length; i++) full += (results[i]?.[0]?.transcript ?? '') + ' ';
+          const alts: string[][] = [];
+          for (let i = 0; i < results.length; i++) {
+            const r = results[i];
+            full += (r?.[0]?.transcript ?? '') + ' ';
+            const seg: string[] = [];
+            for (let a = 0; a < (r?.length ?? 0); a++) {
+              const t = r[a]?.transcript;
+              if (t) seg.push(t);
+            }
+            alts.push(seg);
+          }
           transcriptRef.current = `${sessionBaseRef.current} ${full}`.trim();
+          altsRef.current = alts;
         };
         rec.onend = () => {
           if (recordingRef.current) {
@@ -129,5 +146,7 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
     return transcriptRef.current.trim();
   }, []);
 
-  return { recording, selfUrl, error, setError, recorderSupported, speechSupported, start, stop, reset };
+  const alternatives = useCallback(() => altsRef.current, []);
+
+  return { recording, selfUrl, error, setError, recorderSupported, speechSupported, start, stop, alternatives, reset };
 }

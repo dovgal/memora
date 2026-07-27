@@ -12,7 +12,7 @@ import {
   Dumbbell, Check, ArrowRight, Repeat,
 } from 'lucide-react';
 import { speakInworld, speakInworldAndWait } from '@/lib/courses/ttsInworld';
-import { checkDictation, type DictationCheck } from '@/lib/courses/dictation';
+import { checkDictation, bestTranscript, type DictationCheck } from '@/lib/courses/dictation';
 import { DiffChips } from '@/components/edito/DiffChips';
 import { rulesForWord, type ReadingRule } from '@/lib/courses/frenchReadingRules';
 import { useSpeechAttempt } from '@/lib/courses/useSpeechAttempt';
@@ -86,10 +86,12 @@ export function PhoneticsCoach({ drill, articulation, voice = 'Alain', speechLan
       speech.setError('Речь не распознана. Прослушайте свою запись и сравните с образцом — либо откройте курс в Chrome или Safari для автооценки.');
       return;
     }
-    // spoken: распознавание отдаёт числа цифрами — для чтения это не ошибка.
-    const result = checkDictation(targetText, transcript, { spoken: true });
+    // Из нескольких гипотез движка берём фонетически ближайшую к эталону,
+    // затем сравниваем по звучанию (spoken), а не по написанию.
+    const heardBest = bestTranscript(targetText, transcript, speech.alternatives());
+    const result = checkDictation(targetText, heardBest, { spoken: true });
     const pct = result.total > 0 ? Math.round((result.correct / result.total) * 100) : 0;
-    setHeard(transcript);
+    setHeard(heardBest);
     setCheck(result);
     setScore(pct);
     setAttempts(a => a + 1);

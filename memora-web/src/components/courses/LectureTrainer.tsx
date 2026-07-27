@@ -8,7 +8,7 @@ import {
   Mic, MicOff, Volume2, Turtle, ChevronRight, RotateCcw, BookOpenCheck, Trophy, Lightbulb,
 } from 'lucide-react';
 import { speakInworld, speakInworldAndWait } from '@/lib/courses/ttsInworld';
-import { checkDictation, type DictationCheck } from '@/lib/courses/dictation';
+import { checkDictation, bestTranscript, type DictationCheck } from '@/lib/courses/dictation';
 import { DiffChips } from '@/components/edito/DiffChips';
 import { getSpeechRecognition, hasMediaDevices, type SpeechRecognitionLike } from '@/lib/speech';
 import { rulesForWord, READING_RULES, type ReadingRule } from '@/lib/courses/frenchReadingRules';
@@ -59,6 +59,7 @@ export function LectureTrainer({ items, voice = 'Alain', speechLang = 'fr-FR', o
   const chunksRef = useRef<Blob[]>([]);
   const streamRef = useRef<MediaStream | null>(null);
   const transcriptRef = useRef('');       // накопленная речь за сессию чтения
+  const altsRef = useRef<string[][]>([]); // альтернативные гипотезы движка
   const sessionBaseRef = useRef('');      // речь, зафиксированная до авто-перезапуска STT
   const recordingRef = useRef(false);     // синхронный флаг записи (state async)
 
@@ -96,9 +97,11 @@ export function LectureTrainer({ items, voice = 'Alain', speechLang = 'fr-FR', o
 
   const applyTranscript = (transcript: string) => {
     gotResultRef.current = true;
-    // spoken: распознавание отдаёт числа цифрами («trois» → «3») — не ошибка чтения.
-    const result = checkDictation(item.text, transcript, { spoken: true });
-    setHeard(transcript);
+    // Из гипотез движка берём фонетически ближайшую к эталону, затем сравниваем
+    // по звучанию: омофоны и цифры вместо числительных — не ошибка чтения.
+    const heardBest = bestTranscript(item.text, transcript, altsRef.current);
+    const result = checkDictation(item.text, heardBest, { spoken: true });
+    setHeard(heardBest);
     setCheck(result);
     const pct = result.total > 0 ? Math.round((result.correct / result.total) * 100) : 0;
     setScores(prev => [...prev, pct]);
@@ -155,6 +158,7 @@ export function LectureTrainer({ items, voice = 'Alain', speechLang = 'fr-FR', o
     gotResultRef.current = false;
     transcriptRef.current = '';
     sessionBaseRef.current = '';
+    altsRef.current = [];
     const SR = getSpeechRecognition();
     if (SR) {
       try {
@@ -162,15 +166,24 @@ export function LectureTrainer({ items, voice = 'Alain', speechLang = 'fr-FR', o
         rec.lang = speechLang;
         rec.interimResults = false;
         rec.continuous = true;
-        rec.maxAlternatives = 1;
+        // Несколько гипотез: верный вариант часто не первый, выбираем по эталону.
+        rec.maxAlternatives = 5;
         rec.onresult = (event) => {
           // Собираем полный текст из всех финальных сегментов ТЕКУЩЕЙ сессии
           // распознавания и склеиваем с накопленным за прошлые (после
           // авто-перезапуска нумерация results начинается заново).
           let full = '';
           const results = event.results;
-          for (let i = 0; i < results.length; i++) full += (results[i]?.[0]?.transcript ?? '') + ' ';
+          const alts: string[][] = [];
+          for (let i = 0; i < results.length; i++) {
+            const r = results[i];
+            full += (r?.[0]?.transcript ?? '') + ' ';
+            const seg: string[] = [];
+            for (let a = 0; a < (r?.length ?? 0); a++) { const t = r[a]?.transcript; if (t) seg.push(t); }
+            alts.push(seg);
+          }
           transcriptRef.current = `${sessionBaseRef.current} ${full}`.trim();
+          altsRef.current = alts;
         };
         // В continuous-режиме движок может завершиться по длинной тишине —
         // пока пользователь не остановил запись, перезапускаем распознавание.
