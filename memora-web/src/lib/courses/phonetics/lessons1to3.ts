@@ -150,13 +150,23 @@ export const LESSON_1: PhoneticsLesson = {
       title: 'GN = [ɲ] — единый мягкий звук',
       problem: 'Читают по буквам «гн», получается два звука вместо одного.',
       howTo: 'Спинка языка прижимается к твёрдому нёбу — выходит единый звук, похожий на «нь» в слове «конья́к», произнесённый слитно.',
-      words: [
-        'magnifique', 'ligne', 'épargne', 'magnanime', 'mignon', 'agneau',
-        // Вторая группа из урока: здесь gn читается раздельно, как [ɡn].
-        'cognitif', 'cognition', 'stagner', 'diagnostic', 'gnome',
-      ],
+      words: ['magnifique', 'ligne', 'épargne', 'magnanime', 'mignon', 'agneau'],
       exceptions: [
-        'В словах учёного происхождения gn читается раздельно, как [gn]: cognitif, cognition, stagner, diagnostic, gnome.',
+        'В словах учёного происхождения gn читается раздельно, как [ɡn], — они вынесены в отдельный блок ниже.',
+      ],
+    },
+    {
+      id: 'gn-separate',
+      lesson: 1,
+      ipa: '[ɡn]',
+      title: 'Исключения: gn читается раздельно',
+      problem: 'Выучив правило gn = [ɲ], его применяют ко всем словам подряд — и «диагностик» превращается в «дианьостик».',
+      howTo: 'В словах учёного происхождения (из греческого и латыни) g и n принадлежат разным морфемам и произносятся ПО ОТДЕЛЬНОСТИ: cognition = [kɔɡnisjɔ̃], а не [kɔɲisjɔ̃]. Сначала звучит [ɡ], затем [n] — так же, как в русском «когнитивный».',
+      spellings: ['gn = [ɡn] в учёных словах: cogni-, diagno-, stagn-, gnom-'],
+      words: ['cognitif', 'cognition', 'stagner', 'diagnostic', 'gnome'],
+      pairs: [
+        { a: 'mignon', b: 'cognition', hint: '[miɲɔ̃] единый [ɲ] ↔ [kɔɡnisjɔ̃] раздельные [ɡ]+[n]' },
+        { a: 'ligne', b: 'stagner', hint: '[liɲ] ↔ [staɡne]' },
       ],
     },
     {

@@ -18,6 +18,13 @@ const NUMERALS: Record<string, string> = {
   '100': 'cent', '1000': 'mille',
 };
 
+/**
+ * Слова учёного происхождения, где gn читается РАЗДЕЛЬНО, как [ɡn]:
+ * cognition = [kɔɡnisjɔ̃], а не [kɔɲisjɔ̃]. Без этого списка проверка
+ * засчитывала бы правильное [ɡn] как ошибку и наоборот.
+ */
+const GN_SEPARATE = /^(cogn|diagn|stagn|gnom|gnos|agnos|wagn|magnum|igné)/;
+
 /** Слова, где конечная согласная вопреки правилу звучит. */
 const FINAL_SOUNDS = new Set(['six', 'dix', 'sud', 'ours', 'fils', 'sens', 'mars', 'bus', 'plus']);
 
@@ -51,8 +58,11 @@ export function phoneticKey(raw: string): string {
   w = w.replace(/g([eiyéèê])/g, 'Z$1');
   w = w.replace(/j/g, 'Z');
 
-  // 3. Диграфы согласных.
+  // 3. Диграфы согласных. В учёных словах gn — это [ɡ]+[n], а не [ɲ]:
+  //    прячем такую пару под G, чтобы общее правило её не съело.
+  if (GN_SEPARATE.test(w)) w = w.replace(/gn/g, 'Gn');
   w = w.replace(/ch/g, 'S').replace(/ph/g, 'f').replace(/gn/g, 'Ñ').replace(/th/g, 't');
+  w = w.replace(/G/g, 'g');
   w = w.replace(/x/g, 'ks').replace(/h/g, '');
 
   // 4. Носовые: гласный + n/m, если дальше не гласная и не та же согласная.
