@@ -1,4 +1,4 @@
-// 🐘 SQL-трек «Детектив данных» — 8 игровых уроков по SQL и PostgreSQL.
+// 🐘 SQL-трек «Детектив данных» — 11 игровых уроков по SQL и PostgreSQL.
 // Все запросы выполняются в настоящем PostgreSQL (PGlite/WASM) прямо в браузере.
 
 import type { Track } from "./types";
@@ -38,6 +38,40 @@ INSERT INTO podozrevaemye (id, imya, rost, lyubit, alibi) VALUES
   (5, 'Лиса Алиса',    50, 'сыр',      'неизвестно');
 `;
 
+// Вторая таблица зоопарка — кормление, для JOIN и представлений (VIEW).
+const KORMLENIE_SEED = `
+CREATE TABLE kormlenie (
+  id INT PRIMARY KEY,
+  zver_id INT NOT NULL,
+  eda TEXT NOT NULL,
+  kg_v_den INT NOT NULL
+);
+INSERT INTO kormlenie (id, zver_id, eda, kg_v_den) VALUES
+  (1, 1, 'уголь',   50),
+  (2, 2, 'ягоды',    1),
+  (3, 3, 'рыба',    10),
+  (4, 4, 'радуга',   2),
+  (5, 5, 'уголь',    8),
+  (6, 6, 'ягоды',    1),
+  (7, 7, 'рыба',     4);
+`;
+
+// Клуб юных детективов — рейтинг с намеренными повторами очков, чтобы
+// показать разницу между ROW_NUMBER и RANK на оконных функциях.
+const DETEKTIVY_SEED = `
+CREATE TABLE detektivy (
+  id INT PRIMARY KEY,
+  imya TEXT NOT NULL,
+  ochki INT NOT NULL
+);
+INSERT INTO detektivy (id, imya, ochki) VALUES
+  (1, 'Аня', 90),
+  (2, 'Боря', 90),
+  (3, 'Вера', 75),
+  (4, 'Гоша', 60),
+  (5, 'Даня', 60);
+`;
+
 export const sqlTrack: Track = {
   id: "sql",
   emoji: "🐘",
@@ -47,7 +81,7 @@ export const sqlTrack: Track = {
   intro: [
     "База данных — это огромный умный шкаф с таблицами, где хранится всё на свете: игроки в играх, товары в магазинах, оценки в школе. А SQL (читается «эс-ку-эль») — язык, на котором мы задаём шкафу вопросы.",
     "Ты — новый детектив в агентстве «Данные не врут». Твой инструмент — настоящая база PostgreSQL, которая работает прямо в браузере (да, это не понарошку — тот самый PostgreSQL, которым пользуются взрослые программисты!).",
-    "9 дел — 9 уроков. За раскрытые дела — опыт, уровни и звание Мастера данных. Начнём допрос!",
+    "11 дел — 11 уроков. За раскрытые дела — опыт, уровни и звание Мастера данных. Начнём допрос!",
   ],
   finalBadge: { id: "track-sql", emoji: "🕵️", title: "Главный детектив данных: весь трек пройден!" },
   lessons: [
@@ -1013,25 +1047,8 @@ export const sqlTrack: Track = {
       id: "join-final",
       emoji: "🔗",
       title: "Дело №9: Соедини улики!",
-      subtitle: "JOIN — связываем две таблицы. Финальное расследование",
-      seedSql:
-        ZOO_SEED +
-        `
-CREATE TABLE kormlenie (
-  id INT PRIMARY KEY,
-  zver_id INT NOT NULL,
-  eda TEXT NOT NULL,
-  kg_v_den INT NOT NULL
-);
-INSERT INTO kormlenie (id, zver_id, eda, kg_v_den) VALUES
-  (1, 1, 'уголь',   50),
-  (2, 2, 'ягоды',    1),
-  (3, 3, 'рыба',    10),
-  (4, 4, 'радуга',   2),
-  (5, 5, 'уголь',    8),
-  (6, 6, 'ягоды',    1),
-  (7, 7, 'рыба',     4);
-`,
+      subtitle: "JOIN — связываем две таблицы",
+      seedSql: ZOO_SEED + KORMLENIE_SEED,
       blocks: [
         {
           kind: "theory",
@@ -1103,9 +1120,9 @@ INSERT INTO kormlenie (id, zver_id, eda, kg_v_den) VALUES
         {
           kind: "sql-task",
           id: "z3",
-          title: "Финал: кто объедает зоопарк?",
+          title: "Кто объедает зоопарк?",
           story: [
-            "Финальное расследование! Директор подозревает, что кто-то ест слишком много. Выведи `imya` и `kg_v_den` зверей, которые съедают БОЛЬШЕ 5 кг в день, отсортировав от самого прожорливого.",
+            "Директор подозревает, что кто-то ест слишком много. Выведи `imya` и `kg_v_den` зверей, которые съедают БОЛЬШЕ 5 кг в день, отсортировав от самого прожорливого.",
             "Понадобится всё: JOIN, WHERE и ORDER BY … DESC. Ты справишься, детектив!",
           ],
           starterCode: "-- JOIN + WHERE + ORDER BY DESC\n",
@@ -1132,7 +1149,7 @@ INSERT INTO kormlenie (id, zver_id, eda, kg_v_den) VALUES
         {
           kind: "quiz",
           id: "q1",
-          title: "Экзамен детектива",
+          title: "Проверь себя",
           xp: 15,
           questions: [
             {
@@ -1157,6 +1174,277 @@ INSERT INTO kormlenie (id, zver_id, eda, kg_v_den) VALUES
               correctIndex: 0,
               explain: "Именно так: выбери → откуда → с каким фильтром → как отсортировать. Дело закрыто, детектив! 🕵️",
             },
+          ],
+        },
+      ],
+    },
+    // ────────────────────────────────────────────────────────── Урок 10
+    {
+      id: "predstavleniya",
+      emoji: "🗃️",
+      title: "Дело №10: Секретное досье",
+      subtitle: "VIEW — сохрани сложный запрос под именем",
+      seedSql: ZOO_SEED + KORMLENIE_SEED,
+      blocks: [
+        {
+          kind: "theory",
+          id: "t1",
+          title: "Что такое представление (VIEW)",
+          text: [
+            "Запрос с JOIN из прошлого дела длинный, и переписывать его каждый раз — скучно. `CREATE VIEW имя AS ...` сохраняет запрос под именем — представление (view) — и потом с ним работают, как с обычной таблицей.",
+            "Важно: представление не хранит копию данных! Каждый раз, когда к нему обращаются, PostgreSQL заново выполняет сохранённый запрос — поэтому оно всегда показывает свежие данные.",
+          ],
+          code:
+            "CREATE VIEW menu_zoo AS\nSELECT zveri.imya, zveri.vid, zveri.ves, kormlenie.eda\nFROM zveri\nJOIN kormlenie ON zveri.id = kormlenie.zver_id;\n\nSELECT * FROM menu_zoo;",
+          codeNote: "Первая команда один раз описывает досье menu_zoo. Вторая — просто SELECT * FROM menu_zoo, как из обычной таблицы!",
+        },
+        {
+          kind: "theory",
+          id: "t2",
+          title: "Представление можно фильтровать и сортировать",
+          text: [
+            "К представлению применяются `WHERE`, `ORDER BY`, `LIMIT` — все команды, которые ты уже знаешь, работают точно так же, как с обычной таблицей.",
+          ],
+          code: "SELECT * FROM menu_zoo WHERE ves > 100;",
+          codeNote: "Отфильтровали тяжеловесов прямо из готового досье — без единого JOIN в ЭТОМ запросе!",
+        },
+        {
+          kind: "sql-task",
+          id: "z1",
+          title: "Создай секретное досье",
+          story: [
+            "Детектив устал переписывать JOIN заново каждый раз. Сохрани запрос из примера как представление `menu_zoo` (столбцы: `imya`, `vid`, `ves` зверя и `eda` из `kormlenie`), а затем выведи из него ВСЕ строки.",
+          ],
+          starterCode: "-- CREATE VIEW menu_zoo AS ...; затем SELECT * FROM menu_zoo;\n",
+          check: {
+            codeContains: ["create view", "menu_zoo"],
+            expected: {
+              rows: [
+                ["Пушок", "дракон", "900", "уголь"],
+                ["Искорка", "феникс", "4", "ягоды"],
+                ["Гоша", "грифон", "250", "рыба"],
+                ["Мила", "единорог", "400", "радуга"],
+                ["Зубастик", "дракон", "150", "уголь"],
+                ["Соня", "феникс", "3", "ягоды"],
+                ["Барсик", "грифон", "80", "рыба"],
+              ],
+            },
+          },
+          hints: [
+            "`CREATE VIEW menu_zoo AS SELECT zveri.imya, zveri.vid, zveri.ves, kormlenie.eda FROM zveri JOIN kormlenie ON zveri.id = kormlenie.zver_id;`",
+            "Вторая команда после точки с запятой: `SELECT * FROM menu_zoo;`",
+          ],
+          solution:
+            "CREATE VIEW menu_zoo AS\nSELECT zveri.imya, zveri.vid, zveri.ves, kormlenie.eda\nFROM zveri\nJOIN kormlenie ON zveri.id = kormlenie.zver_id;\n\nSELECT * FROM menu_zoo;",
+          xp: 25,
+        },
+        {
+          kind: "sql-task",
+          id: "z2",
+          title: "Только тяжеловесы в досье",
+          story: [
+            "Пересоздай досье `menu_zoo` (как в прошлой задаче), а затем выведи из него только зверей с `ves > 100` — без единого JOIN в запросе фильтрации!",
+          ],
+          starterCode: "-- CREATE VIEW menu_zoo AS ...; затем SELECT * FROM menu_zoo WHERE ...;\n",
+          check: {
+            codeContains: ["create view", "menu_zoo", "where"],
+            expected: {
+              rows: [
+                ["Пушок", "дракон", "900", "уголь"],
+                ["Гоша", "грифон", "250", "рыба"],
+                ["Мила", "единорог", "400", "радуга"],
+                ["Зубастик", "дракон", "150", "уголь"],
+              ],
+            },
+          },
+          hints: [
+            "Сначала та же `CREATE VIEW menu_zoo AS ...`, что и в прошлой задаче.",
+            "Потом: `SELECT * FROM menu_zoo WHERE ves > 100;`",
+          ],
+          solution:
+            "CREATE VIEW menu_zoo AS\nSELECT zveri.imya, zveri.vid, zveri.ves, kormlenie.eda\nFROM zveri\nJOIN kormlenie ON zveri.id = kormlenie.zver_id;\n\nSELECT * FROM menu_zoo WHERE ves > 100;",
+          xp: 25,
+        },
+        {
+          kind: "sql-task",
+          id: "z3",
+          title: "Сколько разных видов в досье",
+          story: [
+            "Пересоздай досье `menu_zoo` и посчитай, сколько РАЗНЫХ видов (`vid`) в нём встречается — используй `COUNT(DISTINCT vid)`, назови столбец `skolko_vidov`.",
+          ],
+          starterCode: "-- CREATE VIEW menu_zoo AS ...; затем SELECT COUNT(DISTINCT vid) ...\n",
+          check: {
+            codeContains: ["create view", "count", "distinct"],
+            expected: { columns: ["skolko_vidov"], rows: [["4"]] },
+          },
+          hints: [
+            "Сначала та же `CREATE VIEW menu_zoo AS ...`.",
+            "Потом: `SELECT COUNT(DISTINCT vid) AS skolko_vidov FROM menu_zoo;`",
+          ],
+          solution:
+            "CREATE VIEW menu_zoo AS\nSELECT zveri.imya, zveri.vid, zveri.ves, kormlenie.eda\nFROM zveri\nJOIN kormlenie ON zveri.id = kormlenie.zver_id;\n\nSELECT COUNT(DISTINCT vid) AS skolko_vidov FROM menu_zoo;",
+          xp: 25,
+        },
+        {
+          kind: "quiz",
+          id: "q1",
+          title: "Проверь себя",
+          xp: 10,
+          questions: [
+            {
+              question: "Что делает `CREATE VIEW имя AS SELECT ...`?",
+              options: [
+                "Сохраняет запрос под именем — как виртуальную таблицу",
+                "Копирует данные в новую таблицу навсегда",
+                "Удаляет исходные таблицы",
+                "Всегда ускоряет запрос",
+              ],
+              correctIndex: 0,
+              explain: "VIEW — это именованный запрос, а не копия данных.",
+            },
+            {
+              question: "Хранит ли представление (VIEW) собственную копию данных?",
+              options: [
+                "Нет — оно выполняет сохранённый запрос заново при каждом обращении",
+                "Да, отдельную копию, которая никогда не обновляется",
+                "Только первые 10 строк",
+                "Да, но лишь один раз при создании",
+              ],
+              correctIndex: 0,
+              explain: "Поэтому VIEW всегда показывает свежие данные из исходных таблиц.",
+            },
+            {
+              question: "Можно ли применить WHERE к представлению?",
+              options: [
+                "Да, как к обычной таблице",
+                "Нет, только к настоящим таблицам",
+                "Только если представление пустое",
+                "Только вместе с JOIN",
+              ],
+              correctIndex: 0,
+              explain: "`SELECT * FROM view_name WHERE ...` работает точно так же, как с таблицей.",
+            },
+          ],
+        },
+      ],
+    },
+    // ────────────────────────────────────────────────────────── Урок 11
+    {
+      id: "okonnye-funktsii",
+      emoji: "🏅",
+      title: "Дело №11: Рейтинг сыщиков",
+      subtitle: "Оконные функции ROW_NUMBER и RANK — считаем места, не теряя строк",
+      seedSql: DETEKTIVY_SEED,
+      blocks: [
+        {
+          kind: "theory",
+          id: "t1",
+          title: "ROW_NUMBER — пронумеруй результат",
+          text: [
+            "`GROUP BY` склеивает строки в группы, и отдельные строки исчезают. А если нужно оставить ВСЕ строки, но пронумеровать их по порядку? Для этого — оконные функции: `ROW_NUMBER() OVER (ORDER BY ...)`.",
+            "`OVER` объясняет, как считать номер: `(ORDER BY ochki DESC)` — сортируй по очкам от большего к меньшему и нумеруй по порядку.",
+          ],
+          code:
+            "SELECT imya, ochki,\n  ROW_NUMBER() OVER (ORDER BY ochki DESC, imya) AS mesto\nFROM detektivy;",
+          codeNote: "Каждая строка юного детектива получила своё место в рейтинге — и ни одна строка не потерялась, в отличие от GROUP BY.",
+        },
+        {
+          kind: "theory",
+          id: "t2",
+          title: "RANK — если очки совпали, место тоже совпадает",
+          text: [
+            "У `ROW_NUMBER` места всегда идут строго подряд: 1, 2, 3… — даже если у двух сыщиков одинаковые очки, кто-то из них получит место 1, а другой 2. Не очень справедливо!",
+            "`RANK() OVER (ORDER BY ...)` честнее: при одинаковых очках оба получают ОДИНАКОВОЕ место, а следующее место «перепрыгивает» — например, 1, 1, 3 (а не 1, 1, 2).",
+          ],
+          code: "SELECT imya, ochki,\n  RANK() OVER (ORDER BY ochki DESC) AS mesto\nFROM detektivy;",
+          codeNote: "Аня и Боря — оба на 90 очках, оба получают 1-е место, а Вера с 75 очками — сразу 3-е (не 2-е).",
+        },
+        {
+          kind: "sql-task",
+          id: "z1",
+          title: "Пронумеруй рейтинг",
+          story: [
+            "В клубе юных детективов пять учеников с очками в таблице `detektivy`. Пронумеруй ВСЕХ по очкам от большего к меньшему через `ROW_NUMBER() OVER (ORDER BY ochki DESC, imya)`, столбец назови `mesto`.",
+          ],
+          starterCode: "-- SELECT imya, ochki, ROW_NUMBER() OVER (ORDER BY ochki DESC, imya) AS mesto FROM detektivy;\n",
+          check: {
+            codeContains: ["row_number", "over", "order by"],
+            expected: {
+              orderMatters: true,
+              rows: [
+                ["Аня", "90", "1"],
+                ["Боря", "90", "2"],
+                ["Вера", "75", "3"],
+                ["Гоша", "60", "4"],
+                ["Даня", "60", "5"],
+              ],
+            },
+          },
+          hints: [
+            "`SELECT imya, ochki, ROW_NUMBER() OVER (ORDER BY ochki DESC, imya) AS mesto FROM detektivy;`",
+            "Второе условие сортировки (`, imya`) нужно, чтобы при равных очках порядок был предсказуемым.",
+          ],
+          solution:
+            "SELECT imya, ochki, ROW_NUMBER() OVER (ORDER BY ochki DESC, imya) AS mesto\nFROM detektivy;",
+          xp: 30,
+        },
+        {
+          kind: "sql-task",
+          id: "z2",
+          title: "Честные места с RANK",
+          story: [
+            "Двое сыщиков набрали одинаковые очки — несправедливо давать им разные места! Выведи `imya`, `ochki` и место через `RANK() OVER (ORDER BY ochki DESC)`, столбец назови `mesto`, и отсортируй результат по очкам (а при равенстве — по имени).",
+          ],
+          starterCode: "-- SELECT imya, ochki, RANK() OVER (ORDER BY ochki DESC) AS mesto FROM detektivy ORDER BY ...;\n",
+          check: {
+            codeContains: ["rank()", "over", "order by"],
+            expected: {
+              orderMatters: true,
+              rows: [
+                ["Аня", "90", "1"],
+                ["Боря", "90", "1"],
+                ["Вера", "75", "3"],
+                ["Гоша", "60", "4"],
+                ["Даня", "60", "4"],
+              ],
+            },
+          },
+          hints: [
+            "`SELECT imya, ochki, RANK() OVER (ORDER BY ochki DESC) AS mesto FROM detektivy`",
+            "Для аккуратного вывода добавь `ORDER BY ochki DESC, imya;` в конце.",
+          ],
+          solution:
+            "SELECT imya, ochki, RANK() OVER (ORDER BY ochki DESC) AS mesto\nFROM detektivy\nORDER BY ochki DESC, imya;",
+          xp: 30,
+        },
+        {
+          kind: "quiz",
+          id: "q1",
+          title: "Выпускной экзамен детектива",
+          xp: 15,
+          questions: [
+            {
+              question: "Чем оконная функция (например, ROW_NUMBER) отличается от GROUP BY?",
+              options: [
+                "Она не склеивает строки в группы — каждая строка остаётся, просто получает новый столбец",
+                "Это то же самое, что GROUP BY",
+                "Она удаляет повторы",
+                "Она работает только с текстом",
+              ],
+              correctIndex: 0,
+              explain: "GROUP BY схлопывает строки в группы, а оконная функция считает и добавляет столбец, не теряя ни одной строки.",
+            },
+            {
+              question: "Как поведут себя ROW_NUMBER и RANK, если у двух строк одинаковое значение сортировки?",
+              options: [
+                "ROW_NUMBER даст им разные номера подряд, а RANK — одинаковое место",
+                "Оба всегда дают одинаковое место",
+                "Оба всегда дают разные места",
+                "Это вызовет ошибку",
+              ],
+              correctIndex: 0,
+              explain: "ROW_NUMBER всегда нумерует строго подряд, а RANK честно уравнивает места при равенстве.",
+            },
             {
               question: "Ты выучил SQL для настоящей базы PostgreSQL. Это правда?",
               options: [
@@ -1166,7 +1454,7 @@ INSERT INTO kormlenie (id, zver_id, eda, kg_v_den) VALUES
                 "SQL работает только в браузере",
               ],
               correctIndex: 0,
-              explain: "Чистая правда: все твои запросы выполнял настоящий PostgreSQL. Эти же команды работают на взрослых серверах!",
+              explain: "Чистая правда: все твои запросы выполнял настоящий PostgreSQL. Эти же команды работают на взрослых серверах! Дело всего курса закрыто, главный детектив данных! 🕵️",
             },
           ],
         },
