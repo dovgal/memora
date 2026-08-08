@@ -2,7 +2,7 @@
 // Контент живёт в коде фронтенда (см. python-course.ts / sql-course.ts),
 // прогресс — в localStorage (см. lib/coding/progress.ts).
 
-export type TrackId = "python" | "sql";
+export type TrackId = "python" | "sql" | "data-analyst" | "oop";
 
 /** Блок теории: короткое объяснение простым языком, с примером кода. */
 export interface TheoryBlock {
@@ -118,7 +118,7 @@ export interface Track {
   tagline: string;
   /** Вступление на странице трека. */
   intro: string[];
-  color: "green" | "blue";
+  color: "green" | "blue" | "purple" | "orange";
   lessons: Lesson[];
   /** Бейдж за прохождение всего трека. */
   finalBadge: { id: string; emoji: string; title: string };
