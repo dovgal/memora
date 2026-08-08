@@ -651,6 +651,295 @@ export const oopTrack: Track = {
     },
     // ────────────────────────────────────────────────────────── Урок 8
     {
+      id: "atributy-klassa-i-metody",
+      emoji: "🏷️",
+      title: "Атрибуты класса, classmethod и staticmethod",
+      subtitle: "Не всё в классе принадлежит конкретному объекту",
+      blocks: [
+        {
+          kind: "theory",
+          id: "t1",
+          title: "Атрибут класса — общий для всех объектов",
+          text: [
+            "Если объявить переменную прямо в теле класса (без `self`, не в `__init__`), это атрибут КЛАССА — один общий для всех объектов, а не свой у каждого. Удобно, например, для счётчика: сколько всего героев создано.",
+            "Обратиться к нему можно и через объект (`self.total_created`), и через сам класс (`Hero.total_created`) — но менять его стоит именно через класс, чтобы не создать случайно отдельный атрибут объекта с тем же именем.",
+          ],
+          code:
+            'class Hero:\n    total_created = 0\n\n    def __init__(self, name, hp):\n        self.name = name\n        self.hp = hp\n        Hero.total_created += 1\n\nh1 = Hero("Мила", 100)\nh2 = Hero("Глеб", 90)\nprint(Hero.total_created)',
+          codeNote: "total_created — общий счётчик, а не свойство конкретного героя. После создания двух героев он равен 2.",
+        },
+        {
+          kind: "theory",
+          id: "t2",
+          title: "classmethod и staticmethod",
+          text: [
+            "`@classmethod` — метод, который получает первым параметром не `self` (конкретный объект), а `cls` (сам класс). Удобно для «альтернативных конструкторов» — способов создать объект не совсем обычным способом.",
+            "`@staticmethod` — метод, который вообще не получает ни `self`, ни `cls`. Это просто обычная функция, которую логично держать внутри класса, потому что она с ним тематически связана.",
+          ],
+          code:
+            'class Hero:\n    def __init__(self, name, hp):\n        self.name = name\n        self.hp = hp\n\n    @classmethod\n    def from_string(cls, s):\n        name, hp = s.split(",")\n        return cls(name, int(hp))\n\n    @staticmethod\n    def is_valid_name(name):\n        return len(name) > 0 and name[0].isupper()\n\nh = Hero.from_string("Мила,100")\nprint(h.name)\nprint(Hero.is_valid_name("мила"))',
+          codeNote: "from_string — способ создать героя из строки (например, из файла). is_valid_name вообще не трогает self — просто удобная функция «в контексте» класса.",
+        },
+        {
+          kind: "py-task",
+          id: "z1",
+          title: "Сколько героев мы создали?",
+          story: [
+            "Добавь классу `Hero` атрибут класса `total_created = 0` и увеличивай его на 1 внутри `__init__` при создании каждого героя (через `Hero.total_created += 1`). Создай трёх героев и напечатай `Hero.total_created`.",
+          ],
+          starterCode:
+            "class Hero:\n    # добавь total_created как атрибут класса\n\n    def __init__(self, name, hp):\n        self.name = name\n        self.hp = hp\n        # увеличь Hero.total_created\n\n# создай трёх героев и напечатай Hero.total_created\n",
+          check: { expectedOutput: "3", codeContains: ["total_created"] },
+          hints: [
+            "Атрибут класса объявляется прямо в теле класса, без self: `total_created = 0`, на уровне с `def __init__`.",
+            "Внутри __init__: `Hero.total_created += 1` — через имя класса, а не через self.",
+          ],
+          solution:
+            'class Hero:\n    total_created = 0\n\n    def __init__(self, name, hp):\n        self.name = name\n        self.hp = hp\n        Hero.total_created += 1\n\nh1 = Hero("Мила", 100)\nh2 = Hero("Глеб", 90)\nh3 = Hero("Рекс", 80)\nprint(Hero.total_created)',
+          xp: 30,
+        },
+        {
+          kind: "py-task",
+          id: "z2",
+          title: "Альтернативный конструктор из строки",
+          story: [
+            "Добавь классу `Hero` метод `@classmethod from_string(cls, s)`, который принимает строку вида `\"Мила,100\"`, разбивает её по запятой и создаёт героя. Создай героя через `Hero.from_string(\"Мила,100\")` и напечатай его имя, потом здоровье.",
+          ],
+          starterCode:
+            'class Hero:\n    def __init__(self, name, hp):\n        self.name = name\n        self.hp = hp\n\n    # добавь classmethod from_string\n\nh = Hero.from_string("Мила,100")\nprint(h.name)\nprint(h.hp)\n',
+          check: { expectedOutput: "Мила\n100", codeContains: ["@classmethod", "cls"] },
+          hints: [
+            "`@classmethod` пишется прямо перед методом, первый параметр — `cls` (класс), а не `self`.",
+            '`name, hp = s.split(","); return cls(name, int(hp))` — не забудь превратить hp в число.',
+          ],
+          solution:
+            'class Hero:\n    def __init__(self, name, hp):\n        self.name = name\n        self.hp = hp\n\n    @classmethod\n    def from_string(cls, s):\n        name, hp = s.split(",")\n        return cls(name, int(hp))\n\nh = Hero.from_string("Мила,100")\nprint(h.name)\nprint(h.hp)',
+          xp: 25,
+        },
+        {
+          kind: "quiz",
+          id: "q1",
+          title: "Проверь себя",
+          xp: 10,
+          questions: [
+            {
+              question: "Чем атрибут класса отличается от атрибута объекта (self.x)?",
+              options: [
+                "Атрибут класса общий для ВСЕХ объектов, а self.x — своё значение у каждого объекта",
+                "Атрибут класса нельзя изменить",
+                "Разницы нет, это два названия одного и того же",
+                "Атрибут класса работает только со строками",
+              ],
+              correctIndex: 0,
+              explain: "Атрибут класса живёт «на уровне класса» и делится между всеми экземплярами — в отличие от self.x, своего у каждого объекта.",
+            },
+            {
+              question: "Что получает classmethod первым параметром вместо self?",
+              options: [
+                "cls — сам класс, а не конкретный объект",
+                "Ничего, у classmethod нет параметров",
+                "Список всех созданных объектов",
+                "Строку с именем метода",
+              ],
+              correctIndex: 0,
+              explain: "cls позволяет внутри метода создавать новые объекты именно этого класса — например, через cls(...).",
+            },
+          ],
+        },
+      ],
+    },
+    // ────────────────────────────────────────────────────────── Урок 9
+    {
+      id: "sobstvennye-iskliucheniya",
+      emoji: "🚨",
+      title: "Собственные исключения",
+      subtitle: "raise и класс ошибки, который сам придумываешь",
+      blocks: [
+        {
+          kind: "theory",
+          id: "t1",
+          title: "Своё исключение — это просто класс",
+          text: [
+            "`raise` поднимает («выбрасывает») ошибку прямо во время выполнения программы. Встроенные ошибки (`ValueError`, `TypeError`...) — это классы, унаследованные от `Exception`. Своя ошибка — точно такой же класс, только придуманный тобой.",
+            "Перехватить её можно через `try` / `except ИмяОшибки as e` — точно так же, как встроенную. `e` хранит саму ошибку, а `print(e)` покажет сообщение, с которым её создали.",
+          ],
+          code:
+            'class NotEnoughManaError(Exception):\n    pass\n\nclass Mage:\n    def __init__(self, name, mana):\n        self.name = name\n        self.mana = mana\n\n    def cast_spell(self, cost):\n        if cost > self.mana:\n            raise NotEnoughManaError(f"{self.name}: не хватает маны!")\n        self.mana -= cost\n\nm = Mage("Лея", 30)\ntry:\n    m.cast_spell(50)\nexcept NotEnoughManaError as e:\n    print(e)',
+          codeNote: "class NotEnoughManaError(Exception): pass — вот и всё определение своей ошибки, дальше она ведёт себя как обычная.",
+        },
+        {
+          kind: "py-task",
+          id: "z1",
+          title: "Заклинание без маны",
+          story: [
+            "Определи `class NotEnoughManaError(Exception): pass`. У класса `Mage(name, mana)` метод `cast_spell(self, cost)`: если `cost > self.mana` — выбрасывает `NotEnoughManaError` с сообщением `\"Имя: не хватает маны!\"`, иначе уменьшает `self.mana` на `cost` и печатает `\"Имя использует заклинание за cost маны\"`.",
+            "Создай мага `Лея` с маной `30`. Вызови `cast_spell(20)` (получится), затем в `try/except` вызови `cast_spell(50)` (не хватит) и напечатай пойманную ошибку. В конце напечатай остаток `mana`.",
+          ],
+          starterCode:
+            "class NotEnoughManaError(Exception):\n    pass\n\nclass Mage:\n    def __init__(self, name, mana):\n        self.name = name\n        self.mana = mana\n\n    # добавь cast_spell\n\nm = Mage(\"Лея\", 30)\n# cast_spell(20), потом try/except cast_spell(50), потом print(m.mana)\n",
+          check: {
+            expectedOutput: "Лея использует заклинание за 20 маны\nЛея: не хватает маны!\n10",
+            codeContains: ["raise NotEnoughManaError", "except NotEnoughManaError"],
+          },
+          hints: [
+            'В cast_spell: `if cost > self.mana: raise NotEnoughManaError(f"{self.name}: не хватает маны!")`, иначе `self.mana -= cost` и print.',
+            "`try:\\n    m.cast_spell(50)\\nexcept NotEnoughManaError as e:\\n    print(e)`",
+          ],
+          solution:
+            'class NotEnoughManaError(Exception):\n    pass\n\nclass Mage:\n    def __init__(self, name, mana):\n        self.name = name\n        self.mana = mana\n\n    def cast_spell(self, cost):\n        if cost > self.mana:\n            raise NotEnoughManaError(f"{self.name}: не хватает маны!")\n        self.mana -= cost\n        print(f"{self.name} использует заклинание за {cost} маны")\n\nm = Mage("Лея", 30)\nm.cast_spell(20)\ntry:\n    m.cast_spell(50)\nexcept NotEnoughManaError as e:\n    print(e)\nprint(m.mana)',
+          xp: 30,
+        },
+        {
+          kind: "py-task",
+          id: "z2",
+          title: "Инвентарь с ограничением",
+          story: [
+            "Определи `class InventoryFullError(Exception): pass`. У класса `Inventory(capacity)` метод `add_item(self, item)`: если предметов уже `capacity` штук — выбрасывает `InventoryFullError(\"Инвентарь полон!\")`, иначе добавляет предмет.",
+            "Создай инвентарь на `2` места, добавь `\"Меч\"` и `\"Щит\"` (получится), затем в `try/except` попробуй добавить `\"Зелье\"` (не влезет) — напечатай сначала `type(e).__name__`, потом сам текст ошибки `e`.",
+          ],
+          starterCode:
+            'class InventoryFullError(Exception):\n    pass\n\nclass Inventory:\n    def __init__(self, capacity):\n        self.capacity = capacity\n        self.items = []\n\n    # добавь add_item\n\ninv = Inventory(2)\ninv.add_item("Меч")\ninv.add_item("Щит")\n# try/except add_item("Зелье") — напечатай type(e).__name__ и e\n',
+          check: { expectedOutput: "InventoryFullError\nИнвентарь полон!", codeContains: ["raise InventoryFullError", "except InventoryFullError"] },
+          hints: [
+            "`if len(self.items) >= self.capacity: raise InventoryFullError(\"Инвентарь полон!\")`, иначе `self.items.append(item)`.",
+            "`type(e).__name__` — имя класса ошибки как строка, без всякого импорта.",
+          ],
+          solution:
+            'class InventoryFullError(Exception):\n    pass\n\nclass Inventory:\n    def __init__(self, capacity):\n        self.capacity = capacity\n        self.items = []\n\n    def add_item(self, item):\n        if len(self.items) >= self.capacity:\n            raise InventoryFullError("Инвентарь полон!")\n        self.items.append(item)\n\ninv = Inventory(2)\ninv.add_item("Меч")\ninv.add_item("Щит")\ntry:\n    inv.add_item("Зелье")\nexcept InventoryFullError as e:\n    print(type(e).__name__)\n    print(e)',
+          xp: 25,
+        },
+        {
+          kind: "quiz",
+          id: "q1",
+          title: "Проверь себя",
+          xp: 10,
+          questions: [
+            {
+              question: "Как объявить своё исключение?",
+              options: [
+                "Создать класс, наследующийся от Exception (или его подкласса)",
+                "Написать функцию с именем error",
+                "Использовать только встроенные ValueError и TypeError",
+                "Добавить декоратор @exception к обычному классу",
+              ],
+              correctIndex: 0,
+              explain: "`class MyError(Exception): pass` — и всё, дальше MyError можно raise и except как любую другую ошибку.",
+            },
+            {
+              question: "Что делает `except NotEnoughManaError as e`?",
+              options: [
+                "Перехватывает исключение именно этого типа и сохраняет его в переменную e",
+                "Игнорирует все ошибки без разбора",
+                "Создаёт новый экземпляр NotEnoughManaError",
+                "Останавливает программу немедленно",
+              ],
+              correctIndex: 0,
+              explain: "После перехвата e хранит саму ошибку — например, print(e) покажет сообщение, с которым её создали через raise.",
+            },
+          ],
+        },
+      ],
+    },
+    // ────────────────────────────────────────────────────────── Урок 10
+    {
+      id: "abstraktnye-klassy",
+      emoji: "📜",
+      title: "Абстрактные классы: обязательный контракт",
+      subtitle: "Гарантируем, что у каждого наследника метод точно есть",
+      blocks: [
+        {
+          kind: "theory",
+          id: "t1",
+          title: "ABC — класс, который нельзя создать «просто так»",
+          text: [
+            "`from abc import ABC, abstractmethod`. Если класс наследуется от `ABC` и у него есть метод с `@abstractmethod`, это означает: «у КАЖДОГО наследника этот метод должен быть реализован — иначе он не имеет права существовать».",
+            "Полиморфизм из прошлого урока работал и без этого — но `ABC` превращает договорённость («у каждого героя должен быть attack») из простого пожелания в правило, которое Python проверяет сам.",
+          ],
+          code:
+            'from abc import ABC, abstractmethod\n\nclass Enemy(ABC):\n    def __init__(self, name):\n        self.name = name\n\n    @abstractmethod\n    def attack(self):\n        pass\n\nclass Dragon(Enemy):\n    def attack(self):\n        print(f"{self.name} дышит огнём!")\n\nclass Goblin(Enemy):\n    def attack(self):\n        print(f"{self.name} бьёт дубиной!")\n\nfor e in [Dragon("Смауг"), Goblin("Грок")]:\n    e.attack()',
+          codeNote: "И Dragon, и Goblin ОБЯЗАНЫ реализовать attack — иначе Python не даст создать их объекты.",
+        },
+        {
+          kind: "theory",
+          id: "t2",
+          title: "Абстрактный класс нельзя создать напрямую",
+          text: [
+            "Если попытаться создать объект самого `Enemy` (у которого `attack` так и остался нереализованным), Python выбросит `TypeError`. Это и есть смысл контракта: недоделанный класс не должен превращаться в рабочий объект.",
+          ],
+          code:
+            'from abc import ABC, abstractmethod\n\nclass Enemy(ABC):\n    @abstractmethod\n    def attack(self):\n        pass\n\ntry:\n    e = Enemy()\nexcept TypeError as ex:\n    print(type(ex).__name__)',
+          codeNote: "Печатает TypeError — Python не позволяет создать объект класса с нереализованным abstractmethod.",
+        },
+        {
+          kind: "py-task",
+          id: "z1",
+          title: "Контракт для врагов",
+          story: [
+            "Создай абстрактный класс `Enemy(ABC)` с абстрактным методом `attack(self)`. Создай `Dragon(Enemy)`, у которого `attack` печатает `\"Имя дышит огнём!\"`, и `Goblin(Enemy)`, у которого `attack` печатает `\"Имя бьёт дубиной!\"`. Собери список из дракона `Смауг` и гоблина `Грок`, и вызови `attack()` у каждого циклом.",
+          ],
+          starterCode:
+            "from abc import ABC, abstractmethod\n\n# class Enemy(ABC) с abstractmethod attack\n\n# class Dragon(Enemy) и class Goblin(Enemy)\n\n# собери список и вызови attack() у каждого\n",
+          check: {
+            expectedOutput: "Смауг дышит огнём!\nГрок бьёт дубиной!",
+            codeContains: ["ABC", "abstractmethod", "class Dragon(Enemy)", "class Goblin(Enemy)"],
+          },
+          hints: [
+            "`class Enemy(ABC): def __init__(self, name): self.name = name` и отдельно `@abstractmethod def attack(self): pass`.",
+            "У Dragon и Goblin — свой __init__ не нужен, если хватает того же, что у Enemy: достаточно переопределить только attack.",
+          ],
+          solution:
+            'from abc import ABC, abstractmethod\n\nclass Enemy(ABC):\n    def __init__(self, name):\n        self.name = name\n\n    @abstractmethod\n    def attack(self):\n        pass\n\nclass Dragon(Enemy):\n    def attack(self):\n        print(f"{self.name} дышит огнём!")\n\nclass Goblin(Enemy):\n    def attack(self):\n        print(f"{self.name} бьёт дубиной!")\n\nenemies = [Dragon("Смауг"), Goblin("Грок")]\nfor e in enemies:\n    e.attack()',
+          xp: 30,
+        },
+        {
+          kind: "py-task",
+          id: "z2",
+          title: "Голого врага не бывает",
+          story: [
+            "Тот же `Enemy(ABC)` с абстрактным `attack` — но без реализации в самом `Enemy`. Попробуй создать `Enemy()` напрямую внутри `try/except TypeError` и напечатай `type(ex).__name__`, доказав, что Python не даст этого сделать.",
+          ],
+          starterCode:
+            "from abc import ABC, abstractmethod\n\nclass Enemy(ABC):\n    @abstractmethod\n    def attack(self):\n        pass\n\n# try: создать Enemy() / except TypeError: напечатать type(ex).__name__\n",
+          check: { expectedOutput: "TypeError", codeContains: ["abstractmethod", "except TypeError"] },
+          hints: ["`try:\\n    e = Enemy()\\nexcept TypeError as ex:\\n    print(type(ex).__name__)`"],
+          solution:
+            'from abc import ABC, abstractmethod\n\nclass Enemy(ABC):\n    @abstractmethod\n    def attack(self):\n        pass\n\ntry:\n    e = Enemy()\nexcept TypeError as ex:\n    print(type(ex).__name__)',
+          xp: 25,
+        },
+        {
+          kind: "quiz",
+          id: "q1",
+          title: "Проверь себя",
+          xp: 10,
+          questions: [
+            {
+              question: "Что произойдёт при попытке создать объект абстрактного класса с нереализованным abstractmethod?",
+              options: [
+                "Python вызовет TypeError",
+                "Объект создастся, но без атрибутов",
+                "Метод attack автоматически станет пустым",
+                "Ничего особенного не произойдёт",
+              ],
+              correctIndex: 0,
+              explain: "Это и есть смысл ABC — недоделанный класс не должен превращаться в рабочий объект.",
+            },
+            {
+              question: "Зачем нужны абстрактные классы, если полиморфизм работает и без них?",
+              options: [
+                "Чтобы гарантировать: каждый наследник ОБЯЗАН реализовать нужный метод, а не просто «может»",
+                "Чтобы ускорить выполнение кода",
+                "Абстрактные классы работают только с числами",
+                "Без них Python не умеет наследование",
+              ],
+              correctIndex: 0,
+              explain: "ABC превращает договорённость об общем методе в правило, которое сам Python проверяет при создании объекта.",
+            },
+          ],
+        },
+      ],
+    },
+    // ────────────────────────────────────────────────────────── Урок 11
+    {
       id: "final-proekt-inventar",
       emoji: "🎒",
       title: "Финальный проект: инвентарь героя",

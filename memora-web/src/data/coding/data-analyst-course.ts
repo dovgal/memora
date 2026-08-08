@@ -34,6 +34,37 @@ INSERT INTO sales (id, sale_date, region, category, amount) VALUES
   (15, '2024-03-29', 'Казань',     'Одежда',       700);
 `;
 
+// Таблица менеджеров по регионам — для урока про JOIN. Петербург намеренно
+// без менеджера, чтобы показать разницу между INNER JOIN и LEFT JOIN.
+const MANAGERS_SEED = `
+CREATE TABLE managers (
+  region TEXT PRIMARY KEY,
+  manager_name TEXT NOT NULL
+);
+INSERT INTO managers (region, manager_name) VALUES
+  ('Москва', 'Ирина Соколова'),
+  ('Казань', 'Олег Петров');
+`;
+
+// «Грязные» отзывы покупателей — для урока про HAVING и очистку текста:
+// разный регистр/пробелы у одного имени и пропущенные email (NULL).
+const FEEDBACK_SEED = `
+CREATE TABLE feedback (
+  id INT PRIMARY KEY,
+  customer_name TEXT NOT NULL,
+  email TEXT,
+  rating INT NOT NULL,
+  comment TEXT NOT NULL
+);
+INSERT INTO feedback (id, customer_name, email, rating, comment) VALUES
+  (1, '  Анна  ', 'anna@mail.ru', 5, 'Отличный сервис, всё быстро!'),
+  (2, 'борис', NULL, 2, 'Долго ждал доставку'),
+  (3, 'Анна', 'anna@mail.ru', 4, 'В целом хорошо'),
+  (4, 'Вера', 'vera@mail.ru', 1, 'Товар пришёл повреждённым'),
+  (5, 'АННА', NULL, 5, 'Закажу ещё раз'),
+  (6, 'Глеб', 'gleb@mail.ru', 3, 'Нормально, но долго ждал');
+`;
+
 export const dataAnalystTrack: Track = {
   id: "data-analyst",
   emoji: "📊",
@@ -747,6 +778,356 @@ export const dataAnalystTrack: Track = {
       ],
     },
     // ────────────────────────────────────────────────────────── Урок 8
+    {
+      id: "join-tablic",
+      emoji: "🔗",
+      title: "JOIN двух таблиц: когда одной не хватает",
+      subtitle: "Настоящие данные почти всегда лежат в разных таблицах",
+      seedSql: SALES_SEED + MANAGERS_SEED,
+      blocks: [
+        {
+          kind: "theory",
+          id: "t1",
+          title: "JOIN соединяет строки по совпадению",
+          text: [
+            "На практике данные редко лежат в одной таблице: продажи — в одной, менеджеры регионов — в другой, товары — в третьей. `JOIN` соединяет строки двух таблиц там, где совпадает указанное условие (`ON ...`).",
+            "У каждой таблицы в запросе можно дать короткий псевдоним (`sales s`, `managers m`) — дальше на столбцы ссылаются как `s.amount`, `m.manager_name`.",
+          ],
+          code:
+            "SELECT s.region, s.amount, m.manager_name\nFROM sales s\nJOIN managers m ON s.region = m.region\nORDER BY s.id\nLIMIT 3;",
+          codeNote: "Для каждой продажи подставилось имя менеджера того региона, где эта продажа произошла.",
+        },
+        {
+          kind: "theory",
+          id: "t2",
+          title: "INNER JOIN теряет строки без пары, LEFT JOIN — нет",
+          text: [
+            "Обычный `JOIN` (он же `INNER JOIN`) оставляет только строки, для которых совпадение НАШЛОСЬ в обеих таблицах. Если у какого-то региона нет менеджера — продажи этого региона просто пропадут из результата.",
+            "`LEFT JOIN` — мягче: оставляет ВСЕ строки левой таблицы, а там, где пары справа не нашлось, подставляет `NULL` вместо значений правой таблицы.",
+          ],
+          code:
+            "-- INNER JOIN: регион без менеджера исчезает из результата\nSELECT DISTINCT region FROM sales s JOIN managers m ON s.region = m.region;\n\n-- LEFT JOIN: показывает все регионы, даже без менеджера (NULL)\nSELECT DISTINCT region FROM sales s LEFT JOIN managers m ON s.region = m.region;",
+          codeNote: "В таблице managers нет строки для Петербурга — первый запрос его не покажет, второй покажет с NULL.",
+        },
+        {
+          kind: "sql-task",
+          id: "z1",
+          title: "Выручка по менеджерам",
+          story: [
+            "В таблице `managers` у каждого региона есть ответственный менеджер (кроме Петербурга — там пока никого не назначили). Посчитай суммарную выручку (`amount`) по каждому менеджеру: соедини `sales` и `managers` по `region`, сгруппируй по `manager_name`. Столбцы — `manager_name` и `total`, отсортируй по имени менеджера.",
+          ],
+          starterCode: "-- JOIN sales и managers по region, GROUP BY manager_name\n",
+          check: {
+            codeContains: ["join", "sum("],
+            expected: {
+              orderMatters: true,
+              columns: ["manager_name", "total"],
+              rows: [
+                ["Ирина Соколова", "5390"],
+                ["Олег Петров", "3780"],
+              ],
+            },
+          },
+          hints: [
+            "`FROM sales s JOIN managers m ON s.region = m.region` — соединение по совпадающему региону.",
+            "Дальше как обычно: `GROUP BY m.manager_name ORDER BY m.manager_name;`. Обрати внимание — Петербурга в результате не будет: у него нет менеджера, а обычный JOIN такие строки отбрасывает.",
+          ],
+          solution:
+            "SELECT m.manager_name, SUM(s.amount) AS total\nFROM sales s\nJOIN managers m ON s.region = m.region\nGROUP BY m.manager_name\nORDER BY m.manager_name;",
+          xp: 30,
+        },
+        {
+          kind: "sql-task",
+          id: "z2",
+          title: "Все регионы, даже без менеджера",
+          story: [
+            "Теперь выведи ВСЕ регионы, которые встречаются в продажах, вместе с именем менеджера — а если менеджера нет, пусть в результате будет `NULL`. Используй `LEFT JOIN`, выведи различающиеся (`DISTINCT`) `region` и `manager_name`, отсортировав по `region`.",
+          ],
+          starterCode: "-- LEFT JOIN sales и managers, DISTINCT region\n",
+          check: {
+            codeContains: ["left join", "distinct"],
+            expected: {
+              orderMatters: true,
+              columns: ["region", "manager_name"],
+              rows: [
+                ["Казань", "Олег Петров"],
+                ["Москва", "Ирина Соколова"],
+                ["Петербург", "NULL"],
+              ],
+            },
+          },
+          hints: [
+            "`SELECT DISTINCT s.region, m.manager_name FROM sales s LEFT JOIN managers m ON s.region = m.region`.",
+            "`ORDER BY s.region;` в конце — и не забудь DISTINCT, иначе строк будет больше (по одной на каждую продажу, а не на регион).",
+          ],
+          solution:
+            "SELECT DISTINCT s.region, m.manager_name\nFROM sales s\nLEFT JOIN managers m ON s.region = m.region\nORDER BY s.region;",
+          xp: 30,
+        },
+        {
+          kind: "quiz",
+          id: "q1",
+          title: "Проверь себя",
+          xp: 10,
+          questions: [
+            {
+              question: "Что произойдёт со строкой левой таблицы при INNER JOIN, если для неё не нашлось пары в правой?",
+              options: [
+                "Она пропадёт из результата",
+                "Она останется, но с NULL вместо значений правой таблицы",
+                "Запрос завершится ошибкой",
+                "Она продублируется",
+              ],
+              correctIndex: 0,
+              explain: "INNER JOIN (обычный JOIN) оставляет только строки, у которых совпадение нашлось в обеих таблицах.",
+            },
+            {
+              question: "Чем LEFT JOIN отличается от INNER JOIN?",
+              options: [
+                "LEFT JOIN сохраняет все строки левой таблицы, подставляя NULL, если пары справа не нашлось",
+                "LEFT JOIN работает только с числами",
+                "Разницы нет, это синонимы",
+                "LEFT JOIN всегда возвращает меньше строк, чем INNER JOIN",
+              ],
+              correctIndex: 0,
+              explain: "Это и есть смысл LEFT JOIN — «не терять» строки левой таблицы, даже без пары справа.",
+            },
+          ],
+        },
+      ],
+    },
+    // ────────────────────────────────────────────────────────── Урок 9
+    {
+      id: "lag-lead-rost",
+      emoji: "📈",
+      title: "LAG и LEAD: сравниваем период с предыдущим",
+      subtitle: "Оконная функция, которая «смотрит» на соседнюю строку",
+      seedSql: SALES_SEED,
+      blocks: [
+        {
+          kind: "theory",
+          id: "t1",
+          title: "LAG — значение из предыдущей строки окна",
+          text: [
+            "`LAG(столбец) OVER (ORDER BY ...)` возвращает значение того же столбца, но из предыдущей строки (по заданному порядку). Это ровно то, что нужно, чтобы сравнить текущий месяц с прошлым, не выгружая данные в Excel.",
+            "У `LEAD(столбец) OVER (...)` то же самое, но в обратную сторону — она «заглядывает» в СЛЕДУЮЩУЮ строку.",
+          ],
+          code:
+            "WITH monthly AS (\n  SELECT DATE_TRUNC('month', sale_date) AS month, SUM(amount) AS total\n  FROM sales GROUP BY month\n)\nSELECT month, total,\n  LAG(total) OVER (ORDER BY month) AS prev_month\nFROM monthly\nORDER BY month;",
+          codeNote: "У первого месяца prev_month — NULL: строки перед ним просто не существует.",
+        },
+        {
+          kind: "theory",
+          id: "t2",
+          title: "Процент роста относительно прошлого периода",
+          text: [
+            "Комбинируя `LAG` с обычной арифметикой, легко получить любимую метрику любого отчёта — процент роста: `(текущий − прошлый) / прошлый * 100`.",
+          ],
+          code:
+            "SELECT month, total,\n  ROUND(100.0 * (total - LAG(total) OVER (ORDER BY month)) / LAG(total) OVER (ORDER BY month), 1) AS growth_pct\nFROM monthly\nORDER BY month;",
+          codeNote: "У первого месяца growth_pct тоже NULL — не с чем сравнивать, прошлого периода не существует.",
+        },
+        {
+          kind: "sql-task",
+          id: "z1",
+          title: "Выручка месяц к месяцу",
+          story: [
+            "Для каждого месяца выведи суммарную выручку (`total`) и выручку предыдущего месяца (`prev_month`) с помощью `LAG`. Столбцы: `month`, `total`, `prev_month`.",
+          ],
+          starterCode:
+            "-- WITH monthly AS (...) SELECT month, total, LAG(total) OVER (ORDER BY month) AS prev_month FROM monthly ORDER BY month;\nWITH monthly AS (\n  SELECT DATE_TRUNC('month', sale_date) AS month, SUM(amount) AS total\n  FROM sales GROUP BY month\n)\nSELECT month, total,\n  LAG(total) OVER (ORDER BY month) AS prev_month\nFROM monthly\nORDER BY month;\n",
+          check: {
+            codeContains: ["lag("],
+            expected: {
+              orderMatters: true,
+              columns: ["month", "total", "prev_month"],
+              rows: [
+                ["2024-01-01", "2840", "NULL"],
+                ["2024-02-01", "3640", "2840"],
+                ["2024-03-01", "4650", "3640"],
+              ],
+            },
+          },
+          hints: [
+            "Заготовка кода уже готова — просто запусти её и посмотри на результат!",
+            "LAG(total) OVER (ORDER BY month) на каждой строке подставляет total из предыдущей строки этого же результата.",
+          ],
+          solution:
+            "WITH monthly AS (\n  SELECT DATE_TRUNC('month', sale_date) AS month, SUM(amount) AS total\n  FROM sales GROUP BY month\n)\nSELECT month, total,\n  LAG(total) OVER (ORDER BY month) AS prev_month\nFROM monthly\nORDER BY month;",
+          xp: 30,
+        },
+        {
+          kind: "sql-task",
+          id: "z2",
+          title: "Процент роста по месяцам",
+          story: [
+            "Теперь посчитай `growth_pct` — процент роста выручки относительно предыдущего месяца, округлённый до одного знака: `ROUND(100.0 * (total - prev) / prev, 1)`, где `prev` — это `LAG(total) OVER (ORDER BY month)`. Столбцы: `month`, `total`, `growth_pct`.",
+          ],
+          starterCode: "-- WITH monthly AS (...) + ROUND(100.0 * (total - LAG(total) OVER (...)) / LAG(total) OVER (...), 1)\n",
+          check: {
+            codeContains: ["lag(", "round("],
+            expected: {
+              orderMatters: true,
+              columns: ["month", "total", "growth_pct"],
+              rows: [
+                ["2024-01-01", "2840", "NULL"],
+                ["2024-02-01", "3640", "28.2"],
+                ["2024-03-01", "4650", "27.7"],
+              ],
+            },
+          },
+          hints: [
+            "LAG(total) OVER (ORDER BY month) придётся написать два раза — один раз в числителе разности, один раз в знаменателе.",
+            "У первого месяца growth_pct будет NULL — это нормально, прошлого периода для него не существует.",
+          ],
+          solution:
+            "WITH monthly AS (\n  SELECT DATE_TRUNC('month', sale_date) AS month, SUM(amount) AS total\n  FROM sales GROUP BY month\n)\nSELECT month, total,\n  ROUND(100.0 * (total - LAG(total) OVER (ORDER BY month)) / LAG(total) OVER (ORDER BY month), 1) AS growth_pct\nFROM monthly\nORDER BY month;",
+          xp: 35,
+        },
+        {
+          kind: "quiz",
+          id: "q1",
+          title: "Проверь себя",
+          xp: 10,
+          questions: [
+            {
+              question: "Что вернёт LAG(total) OVER (ORDER BY month) для самой первой строки?",
+              options: [
+                "NULL — предыдущей строки не существует",
+                "0",
+                "Значение последней строки",
+                "Ошибку выполнения",
+              ],
+              correctIndex: 0,
+              explain: "Для первой строки в заданном порядке предыдущей строки просто нет — LAG честно возвращает NULL.",
+            },
+            {
+              question: "Чем LEAD отличается от LAG?",
+              options: [
+                "LEAD смотрит на следующую строку окна, LAG — на предыдущую",
+                "LEAD работает только с текстом",
+                "Это два названия одной и той же функции",
+                "LEAD нельзя использовать с ORDER BY",
+              ],
+              correctIndex: 0,
+              explain: "LAG и LEAD — зеркальные функции: одна оглядывается назад, другая заглядывает вперёд.",
+            },
+          ],
+        },
+      ],
+    },
+    // ────────────────────────────────────────────────────────── Урок 10
+    {
+      id: "having-i-ochistka",
+      emoji: "🧹",
+      title: "HAVING и очистка данных: TRIM, LOWER, COALESCE",
+      subtitle: "Настоящие данные почти всегда «грязные»",
+      seedSql: FEEDBACK_SEED,
+      blocks: [
+        {
+          kind: "theory",
+          id: "t1",
+          title: "Один человек — три разных строки",
+          text: [
+            "В таблице `feedback` один и тот же покупатель может встречаться как `'Анна'`, `'  Анна  '` (с пробелами) и `'АННА'` (другой регистр) — это НЕ три разных человека, а один, просто данные ввели по-разному.",
+            "`TRIM(текст)` убирает пробелы по краям, `LOWER(текст)` приводит к нижнему регистру. Вместе они «нормализуют» текст перед сравнением или группировкой.",
+            "`HAVING` — это `WHERE`, но для ПОСЛЕ группировки: в нём, в отличие от `WHERE`, можно использовать агрегатные функции вроде `COUNT(*)`.",
+          ],
+          code:
+            "SELECT TRIM(LOWER(customer_name)) AS name, COUNT(*) AS reviews\nFROM feedback\nGROUP BY TRIM(LOWER(customer_name))\nHAVING COUNT(*) > 1\nORDER BY name;",
+          codeNote: "«  Анна  », «Анна» и «АННА» после нормализации — одна и та же строка 'анна', поэтому склеились в одну группу.",
+        },
+        {
+          kind: "theory",
+          id: "t2",
+          title: "COALESCE — замена NULL на значение по умолчанию",
+          text: [
+            "`COALESCE(значение, запасное_значение)` возвращает первое НЕ-NULL из списка. Проще говоря: «если значение есть — верни его, если NULL — верни вот это вместо него».",
+          ],
+          code:
+            "SELECT customer_name, COALESCE(email, 'нет email') AS email\nFROM feedback\nORDER BY id;",
+          codeNote: "Там, где email указан — он и выводится. Там, где в базе NULL — подставляется текст 'нет email'.",
+        },
+        {
+          kind: "sql-task",
+          id: "z1",
+          title: "Кто написал больше одного отзыва?",
+          story: [
+            "Найди покупателей, оставивших больше одного отзыва — учитывая, что имя может быть записано с разным регистром и пробелами. Сгруппируй по `TRIM(LOWER(customer_name))` и оставь через `HAVING` только тех, у кого `COUNT(*) > 1`. Столбцы: `name`, `reviews`.",
+          ],
+          starterCode: "-- GROUP BY TRIM(LOWER(customer_name)) + HAVING COUNT(*) > 1\n",
+          check: {
+            codeContains: ["having", "trim", "lower"],
+            expected: { columns: ["name", "reviews"], rows: [["анна", "3"]] },
+          },
+          hints: [
+            "Группируй именно по нормализованному выражению: `GROUP BY TRIM(LOWER(customer_name))`.",
+            "`HAVING COUNT(*) > 1` — фильтр применяется уже к посчитанным группам, а не к отдельным строкам.",
+          ],
+          solution:
+            "SELECT TRIM(LOWER(customer_name)) AS name, COUNT(*) AS reviews\nFROM feedback\nGROUP BY TRIM(LOWER(customer_name))\nHAVING COUNT(*) > 1\nORDER BY name;",
+          xp: 30,
+        },
+        {
+          kind: "sql-task",
+          id: "z2",
+          title: "Покупатели без почты",
+          story: [
+            "Найди все отзывы, где `email` не указан (`NULL`). Вместо `NULL` выведи через `COALESCE` текст `'нет email'`. Столбцы: `name` (имя через `TRIM`, без пробелов по краям) и `email`, отсортировав по `id`.",
+          ],
+          starterCode: "-- WHERE email IS NULL + COALESCE(email, 'нет email')\n",
+          check: {
+            codeContains: ["coalesce", "is null"],
+            expected: {
+              orderMatters: true,
+              columns: ["name", "email"],
+              rows: [
+                ["борис", "нет email"],
+                ["АННА", "нет email"],
+              ],
+            },
+          },
+          hints: [
+            "`WHERE email IS NULL` — сравнение с NULL через `=` не работает, нужно именно `IS NULL`.",
+            "`SELECT TRIM(customer_name) AS name, COALESCE(email, 'нет email') AS email FROM feedback WHERE email IS NULL ORDER BY id;`",
+          ],
+          solution:
+            "SELECT TRIM(customer_name) AS name, COALESCE(email, 'нет email') AS email\nFROM feedback\nWHERE email IS NULL\nORDER BY id;",
+          xp: 25,
+        },
+        {
+          kind: "quiz",
+          id: "q1",
+          title: "Проверь себя",
+          xp: 10,
+          questions: [
+            {
+              question: "Почему TRIM(LOWER(customer_name)) склеивает «Анна», «  Анна  » и «АННА» в одну группу?",
+              options: [
+                "После обрезки пробелов и приведения к нижнему регистру все три строки становятся одинаковыми",
+                "SQL сам определяет, что это один человек, по смыслу",
+                "Это работает только с именами длиннее 5 символов",
+                "На самом деле группа не склеивается, это ошибка",
+              ],
+              correctIndex: 0,
+              explain: "TRIM убирает пробелы, LOWER убирает разницу в регистре — после этого строки текстово совпадают.",
+            },
+            {
+              question: "Чем HAVING отличается от WHERE?",
+              options: [
+                "HAVING фильтрует ПОСЛЕ группировки и может использовать агрегатные функции (COUNT, SUM...)",
+                "HAVING работает только с датами",
+                "Это два названия одного и того же",
+                "WHERE может использовать COUNT(*), а HAVING — нет",
+              ],
+              correctIndex: 0,
+              explain: "WHERE отсекает строки до GROUP BY, а агрегаты в нём ещё не посчитаны — поэтому фильтр по ним ставят в HAVING.",
+            },
+          ],
+        },
+      ],
+    },
+    // ────────────────────────────────────────────────────────── Урок 11
     {
       id: "final-keys-analitika",
       emoji: "🏁",
