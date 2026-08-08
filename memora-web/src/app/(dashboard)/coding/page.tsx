@@ -17,6 +17,10 @@ const TRACK_STYLE: Record<Track["color"], { border: string; bar: string }> = {
   blue: { border: "hover:border-sky-500/50", bar: "bg-gradient-to-r from-sky-400 to-sky-600" },
   purple: { border: "hover:border-purple-500/50", bar: "bg-gradient-to-r from-purple-400 to-purple-600" },
   orange: { border: "hover:border-orange-500/50", bar: "bg-gradient-to-r from-orange-400 to-orange-600" },
+  teal: { border: "hover:border-teal-500/50", bar: "bg-gradient-to-r from-teal-400 to-teal-600" },
+  pink: { border: "hover:border-pink-500/50", bar: "bg-gradient-to-r from-pink-400 to-pink-600" },
+  cyan: { border: "hover:border-cyan-500/50", bar: "bg-gradient-to-r from-cyan-400 to-cyan-600" },
+  amber: { border: "hover:border-amber-500/50", bar: "bg-gradient-to-r from-amber-400 to-amber-600" },
 };
 
 export default function CodingHubPage() {
