@@ -27,7 +27,7 @@ export interface LevelInfo {
   emoji: string;
 }
 
-// Пороги растянуты на суммарный опыт всех треков (~2000 XP при полном
+// Пороги растянуты на суммарный опыт всех треков (~2385 XP при полном
 // прохождении Python + SQL + аналитики данных + ООП), чтобы верхний уровень
 // оставался стоящей целью, а не открывался на середине первого трека.
 export const LEVELS: LevelInfo[] = [
@@ -40,6 +40,8 @@ export const LEVELS: LevelInfo[] = [
   { level: 7, title: "Архитектор классов", minXp: 1300, emoji: "🏛️" },
   { level: 8, title: "Гуру алгоритмов", minXp: 1600, emoji: "🦉" },
   { level: 9, title: "Легенда кода", minXp: 1900, emoji: "🐉" },
+  { level: 10, title: "Повелитель кода", minXp: 2200, emoji: "🔥" },
+  { level: 11, title: "Легенда курса Memora", minXp: 2350, emoji: "👑" },
 ];
 
 export function levelForXp(xp: number): { current: LevelInfo; next: LevelInfo | null } {
