@@ -114,7 +114,7 @@ export default async function StudentDashboard() {
                                         <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">С нуля · для детей и взрослых</span>
                                     </div>
                                     <h3 className="text-xl font-bold mb-1">Python — Академия юных кодеров</h3>
-                                    <p className="text-[#8e95ae] text-sm mb-4">10 игровых уроков: от первой команды до своей игры. Код запускается прямо в браузере.</p>
+                                    <p className="text-[#8e95ae] text-sm mb-4">14 игровых уроков: от первой команды до своей игры. Код запускается прямо в браузере.</p>
                                     <span className="inline-block px-4 py-2 rounded-xl bg-emerald-600 text-white text-sm font-semibold group-hover:bg-emerald-500 transition-colors">Начать →</span>
                                 </div>
                             </div>
@@ -128,7 +128,7 @@ export default async function StudentDashboard() {
                                         <span className="text-xs font-bold uppercase tracking-wider text-sky-400">SQL · настоящий PostgreSQL</span>
                                     </div>
                                     <h3 className="text-xl font-bold mb-1">SQL — Детектив данных</h3>
-                                    <p className="text-[#8e95ae] text-sm mb-4">8 дел-уроков: SELECT, WHERE, GROUP BY, JOIN. Запросы выполняет Postgres в браузере.</p>
+                                    <p className="text-[#8e95ae] text-sm mb-4">9 дел-уроков: SELECT, WHERE, GROUP BY, JOIN. Запросы выполняет Postgres в браузере.</p>
                                     <span className="inline-block px-4 py-2 rounded-xl bg-sky-600 text-white text-sm font-semibold group-hover:bg-sky-500 transition-colors">Начать →</span>
                                 </div>
                             </div>
