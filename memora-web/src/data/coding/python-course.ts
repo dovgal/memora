@@ -80,6 +80,23 @@ export const pythonTrack: Track = {
           xp: 15,
         },
         {
+          kind: "py-task",
+          id: "z3",
+          title: "Перекличка роботов",
+          story: [
+            "Три робота знакомятся по очереди. Напечатай ровно три строки:",
+            "`Я робот Бип!` затем `Я робот Боп!` затем `Я робот Зип!`",
+          ],
+          starterCode: "# три команды print — три робота\n",
+          check: { expectedOutput: "Я робот Бип!\nЯ робот Боп!\nЯ робот Зип!" },
+          hints: [
+            "Как в прошлой задаче — три отдельные команды `print()`, каждая со своим текстом в кавычках.",
+            "Порядок и восклицательные знаки должны совпасть точь-в-точь.",
+          ],
+          solution: 'print("Я робот Бип!")\nprint("Я робот Боп!")\nprint("Я робот Зип!")',
+          xp: 15,
+        },
+        {
           kind: "quiz",
           id: "q1",
           title: "Проверь себя",
@@ -170,6 +187,22 @@ export const pythonTrack: Track = {
           xp: 20,
         },
         {
+          kind: "py-task",
+          id: "z3",
+          title: "Мороженое для друзей",
+          story: [
+            "У тебя было 5 шариков мороженого. Друг поделился и добавил ещё 3. Создай переменную `morozhenoe` равную 5, положи в неё новое значение `morozhenoe + 3` и напечатай итог.",
+          ],
+          starterCode: "morozhenoe = 5\n# добавь 3 шарика и напечатай итог\n",
+          check: { expectedOutput: "8", codeContains: ["morozhenoe"] },
+          hints: [
+            "Точно так же, как с сундуком золота: `morozhenoe = morozhenoe + 3`.",
+            "В конце: `print(morozhenoe)`.",
+          ],
+          solution: "morozhenoe = 5\nmorozhenoe = morozhenoe + 3\nprint(morozhenoe)",
+          xp: 20,
+        },
+        {
           kind: "quiz",
           id: "q1",
           title: "Проверь себя",
@@ -240,6 +273,23 @@ export const pythonTrack: Track = {
             "Итого: `print(3 * 2 ** 5)`.",
           ],
           solution: "print(3 * 2 ** 5)",
+          xp: 20,
+        },
+        {
+          kind: "py-task",
+          id: "z3",
+          title: "Порядок действий важен",
+          story: [
+            "Три друга испекли по 8 кусочков торта каждый, и ещё 4 кусочка остались с прошлого раза. Python, как и в школьной математике, сначала умножает, потом складывает — можно не расставлять скобки!",
+            "Напечатай общее количество кусочков ОДНОЙ командой: `3 * 8 + 4`.",
+          ],
+          starterCode: "# 3 друга по 8 кусочков + 4 старых — одной командой\n",
+          check: { expectedOutput: "28", codeContains: ["*", "+"] },
+          hints: [
+            "Умножение выполнится первым само по себе, скобки не нужны: `print(3 * 8 + 4)`.",
+            "Если хочешь проверить себя — попробуй посчитать в уме и сравнить с ответом Python.",
+          ],
+          solution: "print(3 * 8 + 4)",
           xp: 20,
         },
         {
@@ -316,6 +366,34 @@ export const pythonTrack: Track = {
           xp: 20,
         },
         {
+          kind: "theory",
+          id: "t2b",
+          title: "У текста тоже есть свои заклинания",
+          text: [
+            "Текст (по-научному — строка, англ. string) умеет не только жить в переменной, но и превращаться. `.upper()` делает ВСЕ БУКВЫ большими — как будто текст кричит. `.lower()` — наоборот, все маленькие, как шёпот.",
+            "А `len(text)` — не заклинание текста, а отдельная команда: она считает, сколько букв в слове (len — от английского length, «длина»).",
+          ],
+          code: 'slovo = "Привет"\nprint(slovo.upper())\nprint(slovo.lower())\nprint(len(slovo))',
+          codeNote: "Выведет: ПРИВЕТ, привет, 6 — большими буквами, маленькими буквами и количество букв.",
+        },
+        {
+          kind: "py-task",
+          id: "z3",
+          title: "Кричим и шепчем",
+          story: [
+            "Создай переменную `imya` со значением `Тим`. Напечатай её громким голосом (заглавными буквами), потом тихим шёпотом (маленькими буквами), а в конце — сколько букв в этом имени.",
+          ],
+          starterCode: 'imya = "Тим"\n# напечатай ГРОМКО, потом тихо, потом длину\n',
+          check: { expectedOutput: "ТИМ\nтим\n3", codeContains: [".upper()", ".lower()", "len("] },
+          hints: [
+            "Громко: `print(imya.upper())`.",
+            "Тихо: `print(imya.lower())`.",
+            "Длина: `print(len(imya))`.",
+          ],
+          solution: 'imya = "Тим"\nprint(imya.upper())\nprint(imya.lower())\nprint(len(imya))',
+          xp: 20,
+        },
+        {
           kind: "quiz",
           id: "q1",
           title: "Проверь себя",
@@ -337,6 +415,12 @@ export const pythonTrack: Track = {
               ],
               correctIndex: 0,
               explain: "Без f строка — просто текст, и `{n}` останется фигурными скобками.",
+            },
+            {
+              question: "Что выведет `print(len(\"кот\"))`?",
+              options: ["3", "кот", "КОТ", "ошибку"],
+              correctIndex: 0,
+              explain: "len() считает буквы в слове «кот» — их три.",
             },
           ],
         },
@@ -408,6 +492,36 @@ export const pythonTrack: Track = {
           xp: 25,
         },
         {
+          kind: "theory",
+          id: "t3",
+          title: "and и or — два условия в одном if",
+          text: [
+            "Иногда нужно проверить НЕСКОЛЬКО условий сразу. `and` (по-английски «и») пропускает дальше, только если ОБА условия верны. `or` («или») пропускает, если верно ХОТЯ БЫ ОДНО.",
+            "Это работает точь-в-точь как AND/OR в SQL, если ты уже успел с ним познакомиться — только пишется маленькими буквами и без базы данных вокруг.",
+          ],
+          code:
+            'vozrast = 12\nest_bilet = True\nif vozrast >= 10 and est_bilet:\n    print("Проходи на аттракцион!")\nelse:\n    print("Извини, нельзя")',
+          codeNote: "Оба условия верны (возраст ≥ 10 И есть билет) — значит, пропускаем.",
+        },
+        {
+          kind: "py-task",
+          id: "z3",
+          title: "Клуб юных волшебников",
+          story: [
+            "В клуб пускают только тех, кому есть 10 лет И у кого есть волшебная палочка. Переменная `vozrast` равна `12`, переменная `est_palochka` равна `True`. Проверь оба условия через `and` и напечатай `Проходи, волшебник!`, если можно войти, иначе — `Ещё подрасти`.",
+          ],
+          starterCode:
+            "vozrast = 12\nest_palochka = True\n# if ... and ...: ... else: ...\n",
+          check: { expectedOutput: "Проходи, волшебник!", codeContains: ["and", "if", "else"] },
+          hints: [
+            "`if vozrast >= 10 and est_palochka:` — оба условия соединены через `and`.",
+            "Не забудь `else:` с альтернативной фразой.",
+          ],
+          solution:
+            'vozrast = 12\nest_palochka = True\nif vozrast >= 10 and est_palochka:\n    print("Проходи, волшебник!")\nelse:\n    print("Ещё подрасти")',
+          xp: 25,
+        },
+        {
           kind: "quiz",
           id: "q1",
           title: "Проверь себя",
@@ -429,6 +543,17 @@ export const pythonTrack: Track = {
               options: ["двоеточие `:`", "точка", "точка с запятой", "ничего"],
               correctIndex: 0,
               explain: "После условия всегда ставится `:` — а следующая строка идёт с отступом.",
+            },
+            {
+              question: "Когда `if a and b:` пропустит выполнение кода дальше?",
+              options: [
+                "Только когда И a, И b верны одновременно",
+                "Когда верно хотя бы одно из двух",
+                "Когда оба неверны",
+                "Всегда",
+              ],
+              correctIndex: 0,
+              explain: "`and` — самый строгий вариант: пропускает только если ОБА условия верны.",
             },
           ],
         },
@@ -500,6 +625,32 @@ export const pythonTrack: Track = {
           xp: 20,
         },
         {
+          kind: "theory",
+          id: "t3",
+          title: "in — «а есть ли это в списке?»",
+          text: [
+            "Не всегда нужно знать НОМЕР ячейки — иногда важно просто узнать, есть ли что-то в списке вообще. Слово `in` («в») проверяет это и отвечает `True` (да) или `False` (нет).",
+          ],
+          code: 'ryukzak = ["меч", "щит", "яблоко"]\nprint("меч" in ryukzak)\nprint("лопата" in ryukzak)',
+          codeNote: "Выведет True (меч есть) и False (лопаты нет).",
+        },
+        {
+          kind: "py-task",
+          id: "z3",
+          title: "Список гостей",
+          story: [
+            "На праздник приглашены: `Аня`, `Боря`, `Вера`. Создай список `gosti` с этими именами и проверь через `in`, пришёл ли на праздник `Боря`.",
+          ],
+          starterCode: "# создай список gosti и проверь Боря in gosti\n",
+          check: { expectedOutput: "True", codeContains: ["in", "gosti"] },
+          hints: [
+            'Список: `gosti = ["Аня", "Боря", "Вера"]`',
+            '`print("Боря" in gosti)`',
+          ],
+          solution: 'gosti = ["Аня", "Боря", "Вера"]\nprint("Боря" in gosti)',
+          xp: 20,
+        },
+        {
           kind: "quiz",
           id: "q1",
           title: "Проверь себя",
@@ -521,6 +672,12 @@ export const pythonTrack: Track = {
               ],
               correctIndex: 0,
               explain: "len — от английского length, «длина».",
+            },
+            {
+              question: "Что вернёт `\"кот\" in [\"пёс\", \"хомяк\"]`?",
+              options: ["False", "True", "0", "ошибку"],
+              correctIndex: 0,
+              explain: "«кот» в этом списке нет, поэтому `in` отвечает False.",
             },
           ],
         },
@@ -607,6 +764,22 @@ export const pythonTrack: Track = {
           xp: 25,
         },
         {
+          kind: "py-task",
+          id: "z4",
+          title: "Пирамида из звёздочек",
+          story: [
+            "У текста есть свой фокус: `\"*\" * 3` — это не число «умножить», а текст `***`, повторенный 3 раза! Используй цикл `for i in range(1, 5)` и на каждом круге печатай `\"*\" * i` — получится растущая пирамида.",
+          ],
+          starterCode: "# for i in range(1, 5): print(\"*\" * i)\n",
+          check: { expectedOutput: "*\n**\n***\n****", codeContains: ["for", "range", '"*"'] },
+          hints: [
+            "`for i in range(1, 5):` — i пробежит по 1, 2, 3, 4.",
+            "Внутри цикла: `print(\"*\" * i)` — звёздочка, умноженная на номер круга.",
+          ],
+          solution: 'for i in range(1, 5):\n    print("*" * i)',
+          xp: 25,
+        },
+        {
           kind: "quiz",
           id: "q1",
           title: "Проверь себя",
@@ -623,6 +796,12 @@ export const pythonTrack: Track = {
               options: ["Сделать им отступ (4 пробела)", "Взять в скобки", "Написать слово repeat", "Никак"],
               correctIndex: 0,
               explain: "Отступ — священное правило Python: он показывает, что «внутри» цикла.",
+            },
+            {
+              question: "Что выведет `print(\"ку\" * 3)`?",
+              options: ["кукуку", "ку3", "9", "ошибку"],
+              correctIndex: 0,
+              explain: "Умножение текста на число повторяет текст нужное количество раз.",
             },
           ],
         },
@@ -687,6 +866,27 @@ export const pythonTrack: Track = {
           ],
           solution:
             'kopilka = 0\nnedelya = 0\nwhile kopilka < 60:\n    kopilka = kopilka + 25\n    nedelya = nedelya + 1\nprint(f"Накопил за {nedelya} недели!")',
+          xp: 25,
+        },
+        {
+          kind: "py-task",
+          id: "z3",
+          title: "Жизни в игре",
+          story: [
+            "У героя видеоигры 3 жизни. Пока жизней больше 0 — печатай `Жизней осталось: число` и отнимай одну жизнь. Начни с `zhizni = 3`. После цикла напечатай `Игра окончена!`",
+          ],
+          starterCode: "zhizni = 3\n# пока zhizni > 0: печатай и отнимай жизнь\n",
+          check: {
+            expectedOutput: "Жизней осталось: 3\nЖизней осталось: 2\nЖизней осталось: 1\nИгра окончена!",
+            codeContains: ["while"],
+          },
+          hints: [
+            "Условие: `while zhizni > 0:`",
+            "Внутри: сначала `print(f\"Жизней осталось: {zhizni}\")`, потом `zhizni = zhizni - 1`.",
+            "Финальный print — после цикла, без отступа.",
+          ],
+          solution:
+            'zhizni = 3\nwhile zhizni > 0:\n    print(f"Жизней осталось: {zhizni}")\n    zhizni = zhizni - 1\nprint("Игра окончена!")',
           xp: 25,
         },
         {
@@ -787,6 +987,24 @@ export const pythonTrack: Track = {
           xp: 25,
         },
         {
+          kind: "py-task",
+          id: "z3",
+          title: "Заклинанию можно дать два параметра",
+          story: [
+            "Заклинания умеют принимать НЕСКОЛЬКО параметров сразу — просто перечисли их через запятую в скобках. Напиши функцию `pozdorovaisya(imya1, imya2)`, которая печатает `Привет, имя1 и имя2!`. Вызови её для `Аня` и `Боря`.",
+          ],
+          starterCode: "# def pozdorovaisya(imya1, imya2): ...\n",
+          check: { expectedOutput: "Привет, Аня и Боря!", codeContains: ["def", "imya1", "imya2"] },
+          hints: [
+            "`def pozdorovaisya(imya1, imya2):` — два параметра через запятую.",
+            'Внутри: `print(f"Привет, {imya1} и {imya2}!")`',
+            'Вызов: `pozdorovaisya("Аня", "Боря")`',
+          ],
+          solution:
+            'def pozdorovaisya(imya1, imya2):\n    print(f"Привет, {imya1} и {imya2}!")\n\npozdorovaisya("Аня", "Боря")',
+          xp: 25,
+        },
+        {
           kind: "quiz",
           id: "q1",
           title: "Проверь себя",
@@ -808,6 +1026,17 @@ export const pythonTrack: Track = {
               ],
               correctIndex: 0,
               explain: "return отдаёт результат — его можно положить в переменную или напечатать.",
+            },
+            {
+              question: "Можно ли у функции быть больше одного параметра?",
+              options: [
+                "Да, их перечисляют через запятую в скобках",
+                "Нет, только один",
+                "Только два, не больше",
+                "Только если оба — числа",
+              ],
+              correctIndex: 0,
+              explain: "`def f(a, b, c):` — сколько угодно параметров через запятую.",
             },
           ],
         },
@@ -872,6 +1101,25 @@ export const pythonTrack: Track = {
           solution:
             'otvety = [4, 10, 7]\npravilnye = [4, 9, 7]\nochki = 0\nfor i in range(3):\n    if otvety[i] == pravilnye[i]:\n        ochki = ochki + 10\nprint(f"Итог: {ochki} очков")',
           xp: 35,
+        },
+        {
+          kind: "py-task",
+          id: "z3",
+          title: "Шаг 3: итоговая оценка",
+          story: [
+            "Экзамен окончен, у ученика `ochki = 20`. Пора выставить оценку: если очков 20 или больше — печатай `Отлично!`, если 10 или больше — `Хорошо`, иначе — `Попробуй ещё раз`.",
+            "Используй `if`/`elif`/`else` — ты уже собрал в этом финальном проекте переменные, циклы, условия и f-строки. Осталось соединить всё в одну оценку!",
+          ],
+          starterCode: "ochki = 20\n# выставь оценку через if/elif/else\n",
+          check: { expectedOutput: "Отлично!", codeContains: ["if", "elif", "else"] },
+          hints: [
+            "Первая проверка: `if ochki >= 20:`",
+            "Вторая: `elif ochki >= 10:`",
+            "Последняя ветка `else:` — без условия, на все остальные случаи.",
+          ],
+          solution:
+            'ochki = 20\nif ochki >= 20:\n    print("Отлично!")\nelif ochki >= 10:\n    print("Хорошо")\nelse:\n    print("Попробуй ещё раз")',
+          xp: 30,
         },
         {
           kind: "quiz",
