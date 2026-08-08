@@ -6,6 +6,18 @@ import Link from "next/link";
 import { Code2, FlaskConical, ChevronRight, Award, Sparkles } from "lucide-react";
 import { tracks } from "@/data/coding";
 import { useCodingProgress, levelForXp, blockKey } from "@/lib/coding/progress";
+import type { Track } from "@/data/coding/types";
+
+// Полные литералы классов на каждый цвет трека — Tailwind ищет классы
+// статическим сканированием исходников, поэтому собирать имя класса из
+// строки на лету (`border-${accent}-500`) ненадёжно: такой класс может не
+// попасть в итоговый CSS. Здесь все варианты выписаны буквально.
+const TRACK_STYLE: Record<Track["color"], { border: string; bar: string }> = {
+  green: { border: "hover:border-emerald-500/50", bar: "bg-gradient-to-r from-emerald-400 to-emerald-600" },
+  blue: { border: "hover:border-sky-500/50", bar: "bg-gradient-to-r from-sky-400 to-sky-600" },
+  purple: { border: "hover:border-purple-500/50", bar: "bg-gradient-to-r from-purple-400 to-purple-600" },
+  orange: { border: "hover:border-orange-500/50", bar: "bg-gradient-to-r from-orange-400 to-orange-600" },
+};
 
 export default function CodingHubPage() {
   const { progress, ready } = useCodingProgress();
@@ -65,12 +77,12 @@ export default function CodingHubPage() {
           );
           const doneCount = graded.filter((k) => progress.done.includes(k)).length;
           const pct = graded.length ? Math.round((doneCount / graded.length) * 100) : 0;
-          const accent = track.color === "green" ? "emerald" : "sky";
+          const style = TRACK_STYLE[track.color];
           return (
             <Link
               key={track.id}
               href={`/coding/${track.id}`}
-              className={`group bg-card border border-border rounded-2xl p-6 shadow-sm hover:shadow-lg hover:border-${accent}-500/50 transition-all`}
+              className={`group bg-card border border-border rounded-2xl p-6 shadow-sm hover:shadow-lg ${style.border} transition-all`}
             >
               <div className="flex items-start justify-between">
                 <span className="text-5xl">{track.emoji}</span>
@@ -81,11 +93,7 @@ export default function CodingHubPage() {
               <div className="mt-4 flex items-center gap-3">
                 <div className="flex-1 h-2.5 bg-secondary rounded-full overflow-hidden">
                   <div
-                    className={`h-full rounded-full transition-all duration-500 ${
-                      track.color === "green"
-                        ? "bg-gradient-to-r from-emerald-400 to-emerald-600"
-                        : "bg-gradient-to-r from-sky-400 to-sky-600"
-                    }`}
+                    className={`h-full rounded-full transition-all duration-500 ${style.bar}`}
                     style={{ width: `${pct}%` }}
                   />
                 </div>
