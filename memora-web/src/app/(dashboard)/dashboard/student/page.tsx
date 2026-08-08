@@ -96,6 +96,46 @@ export default async function StudentDashboard() {
                     </div>
                 </section>
 
+                {/* Программирование: Python и SQL с песочницами в браузере */}
+                <section>
+                    <div className="flex items-center justify-between mb-6">
+                        <h2 className="text-xl font-bold text-qz-text tracking-wide">Программирование</h2>
+                        <Link href="/coding" className="text-sm font-semibold text-[#4255ff] hover:underline">
+                            Все треки →
+                        </Link>
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-4">
+                        <Link href="/coding/python" className="block group">
+                            <div className="relative h-full overflow-hidden rounded-3xl border border-[#262c40] bg-gradient-to-br from-emerald-900/40 via-lime-900/20 to-transparent p-7 transition-all duration-300 hover:scale-[1.01] hover:border-emerald-500/50">
+                                <div className="absolute top-[-20%] right-[-5%] w-[45%] h-[80%] bg-emerald-500/10 rounded-full blur-[50px]" />
+                                <div className="relative z-10">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <span className="text-lg">🐍</span>
+                                        <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">С нуля · для детей и взрослых</span>
+                                    </div>
+                                    <h3 className="text-xl font-bold mb-1">Python — Академия юных кодеров</h3>
+                                    <p className="text-[#8e95ae] text-sm mb-4">10 игровых уроков: от первой команды до своей игры. Код запускается прямо в браузере.</p>
+                                    <span className="inline-block px-4 py-2 rounded-xl bg-emerald-600 text-white text-sm font-semibold group-hover:bg-emerald-500 transition-colors">Начать →</span>
+                                </div>
+                            </div>
+                        </Link>
+                        <Link href="/coding/sql" className="block group">
+                            <div className="relative h-full overflow-hidden rounded-3xl border border-[#262c40] bg-gradient-to-br from-sky-900/40 via-blue-900/20 to-transparent p-7 transition-all duration-300 hover:scale-[1.01] hover:border-sky-500/50">
+                                <div className="absolute top-[-20%] right-[-5%] w-[45%] h-[80%] bg-sky-500/10 rounded-full blur-[50px]" />
+                                <div className="relative z-10">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <span className="text-lg">🐘</span>
+                                        <span className="text-xs font-bold uppercase tracking-wider text-sky-400">SQL · настоящий PostgreSQL</span>
+                                    </div>
+                                    <h3 className="text-xl font-bold mb-1">SQL — Детектив данных</h3>
+                                    <p className="text-[#8e95ae] text-sm mb-4">8 дел-уроков: SELECT, WHERE, GROUP BY, JOIN. Запросы выполняет Postgres в браузере.</p>
+                                    <span className="inline-block px-4 py-2 rounded-xl bg-sky-600 text-white text-sm font-semibold group-hover:bg-sky-500 transition-colors">Начать →</span>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
+                </section>
+
                 {/* Jump back in Section (Big Interactive Carousel Cards) */}
                 <section>
                     <h2 className="text-xl font-bold mb-6 text-qz-text tracking-wide">Jump back in</h2>

@@ -46,3 +46,6 @@ public/sw.js.map
 public/workbox-*.js
 /public/sw.js
 /public/sw.js.map
+
+# ассеты песочниц Python/SQL — копируются из node_modules скриптом prebuild
+/public/sandbox/
