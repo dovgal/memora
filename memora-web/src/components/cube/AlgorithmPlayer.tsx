@@ -4,11 +4,11 @@
 // поэтому видно связь «запись → движение».
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Play, Pause, SkipForward, RotateCcw, Repeat, Shuffle } from 'lucide-react';
+import { Play, Pause, SkipForward, RotateCcw, Repeat, Shuffle, Sparkles } from 'lucide-react';
 import { Cube3D, type TurnAnim } from './Cube3D';
 import {
   applyMove, applySequence, layerOf, parseMoves, solvedCube, scramble as makeScramble,
-  FACE_AXIS, type CubeState, type Move,
+  affectedPositions, affectedFaces, FACE_AXIS, FACE_RU, type CubeState, type Move,
 } from '@/lib/cube/model';
 
 const SPEEDS = [
@@ -37,9 +37,16 @@ export function AlgorithmPlayer({ algorithm, setup = '', title, loop = false, al
   const [turn, setTurn] = useState<TurnAnim | null>(null);
   const [speed, setSpeed] = useState(1);
   const [rot, setRot] = useState({ x: -24, y: -32 });
+  // Подсветка зоны действия: какие детали алгоритм тронет. Включена до старта,
+  // чтобы сначала увидеть «что изменится», а потом уже смотреть само движение.
+  const [showZone, setShowZone] = useState(true);
   const busy = useRef(false);
 
   const ms = SPEEDS[speed].ms;
+
+  // Считаем от исходного положения — зона одна и та же на всём проигрывании.
+  const zone = useMemo(() => affectedPositions(start(), algorithm), [start, algorithm]);
+  const faces = useMemo(() => affectedFaces(start(), algorithm), [start, algorithm]);
 
   const reset = useCallback(() => {
     setPlaying(false); setTurn(null); busy.current = false;
@@ -98,7 +105,8 @@ export function AlgorithmPlayer({ algorithm, setup = '', title, loop = false, al
 
       <div className="flex flex-col sm:flex-row items-center gap-5">
         <div className="shrink-0">
-          <Cube3D state={state} rotX={rot.x} rotY={rot.y} turn={turn} scale={0.9} />
+          <Cube3D state={state} rotX={rot.x} rotY={rot.y} turn={turn} scale={0.9}
+            highlight={showZone ? zone : null} />
           <div className="flex justify-center gap-1 mt-2">
             <button onClick={() => setRot(r => ({ ...r, y: r.y - 45 }))}
               className="px-2 py-1 text-xs border border-border rounded-lg text-qz-text-muted hover:text-foreground">◀ повернуть</button>
@@ -153,6 +161,14 @@ export function AlgorithmPlayer({ algorithm, setup = '', title, loop = false, al
                 <Shuffle className="w-4 h-4" /> Перемешать
               </button>
             )}
+            <button
+              onClick={() => setShowZone(v => !v)}
+              title="Подсветить детали, которые изменит алгоритм"
+              className={`inline-flex items-center gap-1.5 text-sm font-semibold px-3 py-2 rounded-xl transition-colors border ${
+                showZone ? 'border-[#4255ff] text-[#4255ff] bg-[#4255ff]/10' : 'border-border text-qz-text-muted hover:text-foreground'}`}
+            >
+              <Sparkles className="w-4 h-4" /> Что изменится
+            </button>
             <select
               value={speed}
               onChange={e => setSpeed(Number(e.target.value))}
@@ -166,6 +182,13 @@ export function AlgorithmPlayer({ algorithm, setup = '', title, loop = false, al
             Ход {Math.min(idx + (done ? 0 : 1), moves.length)} из {moves.length}
             {setup && ' · куб заранее приведён в нужное положение'}
           </p>
+          {showZone && (
+            <p className="text-xs mt-2 text-[#4255ff]">
+              Синим обведены {zone.size} детал{zone.size % 10 === 1 && zone.size !== 11 ? 'ь' : zone.size % 10 >= 2 && zone.size % 10 <= 4 && (zone.size < 12 || zone.size > 14) ? 'и' : 'ей'},
+              которые изменятся. Затронутые грани: {faces.map(f => FACE_RU[f]).join(', ')}.
+              Остальное останется на месте.
+            </p>
+          )}
         </div>
       </div>
     </div>

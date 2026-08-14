@@ -164,3 +164,38 @@ export function isSolved(state: CubeState): boolean {
     return new Set(colors).size === 1;
   });
 }
+
+/** Ключ позиции кубика — для сравнения «до» и «после». */
+export function posKey(c: Cubie): string { return `${c.x},${c.y},${c.z}`; }
+
+/**
+ * Какие места куба изменятся после выполнения последовательности.
+ * Сравниваем состояние до и после по позициям: если на месте оказался
+ * другой набор цветов — деталь затронута. Нужно, чтобы заранее показать
+ * ученику зону действия алгоритма, а не заставлять угадывать.
+ */
+export function affectedPositions(state: CubeState, seq: string): Set<string> {
+  const after = applySequence(state, seq);
+  const byPos = new Map(after.map(c => [posKey(c), c]));
+  const out = new Set<string>();
+  for (const before of state) {
+    const a = byPos.get(posKey(before));
+    if (!a) continue;
+    const faces: Face[] = ['U', 'D', 'L', 'R', 'F', 'B'];
+    if (faces.some(f => before.colors[f] !== a.colors[f])) out.add(posKey(before));
+  }
+  return out;
+}
+
+/** Какие грани куба меняются последовательностью — для подписи словами. */
+export function affectedFaces(state: CubeState, seq: string): Face[] {
+  const after = applySequence(state, seq);
+  const faces: Face[] = ['U', 'D', 'L', 'R', 'F', 'B'];
+  const key = (st: CubeState, f: Face) =>
+    st.filter(c => c.colors[f]).map(c => `${posKey(c)}:${c.colors[f]}`).sort().join('|');
+  return faces.filter(f => key(state, f) !== key(after, f));
+}
+
+export const FACE_RU: Record<Face, string> = {
+  U: 'верхняя', D: 'нижняя', L: 'левая', R: 'правая', F: 'передняя', B: 'задняя',
+};

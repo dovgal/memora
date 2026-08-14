@@ -4,7 +4,7 @@
 // то же движение, что и рукой, поэтому глазу понятно, что именно повернулось.
 
 import { useMemo } from 'react';
-import type { Axis, CubeState, Cubie, Face } from '@/lib/cube/model';
+import { posKey, type Axis, type CubeState, type Cubie, type Face } from '@/lib/cube/model';
 
 const SIZE = 46;      // ребро кубика, px
 const GAP = 2;        // зазор между кубиками
@@ -19,7 +19,16 @@ const FACE_TRANSFORM: Record<Face, string> = {
   D: `rotateX(-90deg) translateZ(${SIZE / 2}px)`,
 };
 
-function CubieBox({ c }: { c: Cubie }) {
+/**
+ * Цвет корпуса. Раньше внутренние стороны красились почти в чёрный, и при
+ * повороте слоя в кадре появлялись «дыры». Настоящий кубик внутри — серый
+ * пластик, а цвет несёт наклейка; так и сделано: корпус одинаковый со всех
+ * сторон, наклейка — вставка чуть меньшего размера поверх него.
+ */
+const PLASTIC = '#3a3f4b';
+const STICKER_INSET = 5;
+
+function CubieBox({ c, highlight = false }: { c: Cubie; highlight?: boolean }) {
   return (
     <div
       style={{
@@ -38,13 +47,26 @@ function CubieBox({ c }: { c: Cubie }) {
             position: 'absolute',
             width: SIZE, height: SIZE,
             transform: FACE_TRANSFORM[f],
-            background: c.colors[f] ?? '#15161a',
-            border: '2px solid #0b0c0f',
-            borderRadius: 8,
-            boxShadow: c.colors[f] ? 'inset 0 0 12px rgba(0,0,0,.25)' : undefined,
+            background: PLASTIC,
+            borderRadius: 9,
             backfaceVisibility: 'hidden',
+            boxShadow: 'inset 0 0 6px rgba(0,0,0,.45)',
           }}
-        />
+        >
+          {c.colors[f] && (
+            <div
+              style={{
+                position: 'absolute',
+                inset: STICKER_INSET,
+                background: c.colors[f] as string,
+                borderRadius: 6,
+                boxShadow: highlight
+                  ? '0 0 0 3px #4255ff, 0 0 14px 2px rgba(66,85,255,.9)'
+                  : 'inset 0 0 10px rgba(0,0,0,.18)',
+              }}
+            />
+          )}
+        </div>
       ))}
     </div>
   );
@@ -60,12 +82,14 @@ export interface TurnAnim {
   ms: number;
 }
 
-export function Cube3D({ state, rotX = -24, rotY = -32, turn, scale = 1 }: {
+export function Cube3D({ state, rotX = -24, rotY = -32, turn, scale = 1, highlight }: {
   state: CubeState;
   rotX?: number;
   rotY?: number;
   turn?: TurnAnim | null;
   scale?: number;
+  /** Позиции («x,y,z»), которые нужно подсветить — зона действия алгоритма. */
+  highlight?: Set<string> | null;
 }) {
   const [moving, still] = useMemo(() => {
     if (!turn) return [[] as CubeState, state];
@@ -95,7 +119,7 @@ export function Cube3D({ state, rotX = -24, rotY = -32, turn, scale = 1 }: {
           transition: 'transform .35s ease',
         }}
       >
-        {still.map((c, i) => <CubieBox key={`s${i}-${c.x}${c.y}${c.z}`} c={c} />)}
+        {still.map((c, i) => <CubieBox key={`s${i}-${c.x}${c.y}${c.z}`} c={c} highlight={!!highlight?.has(posKey(c))} />)}
 
         {turn && (
           <div
@@ -108,7 +132,7 @@ export function Cube3D({ state, rotX = -24, rotY = -32, turn, scale = 1 }: {
               transition: turn.ms > 0 ? `transform ${turn.ms}ms cubic-bezier(.4,0,.2,1)` : 'none',
             }}
           >
-            {moving.map((c, i) => <CubieBox key={`m${i}-${c.x}${c.y}${c.z}`} c={c} />)}
+            {moving.map((c, i) => <CubieBox key={`m${i}-${c.x}${c.y}${c.z}`} c={c} highlight={!!highlight?.has(posKey(c))} />)}
           </div>
         )}
       </div>
