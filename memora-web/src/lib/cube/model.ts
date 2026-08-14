@@ -18,6 +18,12 @@ export const COLORS: Record<Face, string> = {
 };
 
 export interface Cubie {
+  /**
+   * Постоянный номер детали. Координаты меняются на каждом ходу, поэтому
+   * ключом React они быть не могут: узлы пересоздавались бы на каждом
+   * повороте — отсюда рывки анимации. Идентификатор живёт с деталью.
+   */
+  id: number;
   /** Координаты от -1 до 1. x — вправо, y — вверх, z — на зрителя. */
   x: number; y: number; z: number;
   /** Цвет каждой стороны кубика; null — внутренняя, невидимая сторона. */
@@ -29,11 +35,13 @@ export type CubeState = Cubie[];
 /** Собранный куб. */
 export function solvedCube(): CubeState {
   const out: CubeState = [];
+  let id = 0;
   for (let x = -1; x <= 1; x++)
     for (let y = -1; y <= 1; y++)
       for (let z = -1; z <= 1; z++) {
         if (x === 0 && y === 0 && z === 0) continue; // центр не виден
         out.push({
+          id: id++,
           x, y, z,
           colors: {
             U: y === 1 ? COLORS.U : null,
@@ -93,7 +101,7 @@ function rotateCubie(c: Cubie, axis: Axis, dir: number): Cubie {
     if (dir > 0) { n.U = colors.L; n.L = colors.D; n.D = colors.R; n.R = colors.U; }
     else { n.U = colors.R; n.R = colors.D; n.D = colors.L; n.L = colors.U; }
   }
-  return { x: nx, y: ny, z: nz, colors: n };
+  return { id: c.id, x: nx, y: ny, z: nz, colors: n };
 }
 
 /** Один ход в нотации: R, R', R2, U, U'… */

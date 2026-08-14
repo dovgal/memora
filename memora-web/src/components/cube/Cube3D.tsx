@@ -49,7 +49,9 @@ function CubieBox({ c, highlight = false }: { c: Cubie; highlight?: boolean }) {
             transform: FACE_TRANSFORM[f],
             background: PLASTIC,
             borderRadius: 9,
-            backfaceVisibility: 'hidden',
+            // ВАЖНО: без backfaceVisibility:'hidden'. С ним грань, повёрнутая
+            // к камере изнанкой, исчезала — и сквозь кубик была видна пустота,
+            // которая читалась как чёрные дыры при повороте слоя.
             boxShadow: 'inset 0 0 6px rgba(0,0,0,.45)',
           }}
         >
@@ -72,6 +74,52 @@ function CubieBox({ c, highlight = false }: { c: Cubie; highlight?: boolean }) {
   );
 }
 
+/** Стрелка на грани: показывает, что и в какую сторону сейчас повернётся. */
+export interface FaceArrow {
+  face: Face;
+  /** 1 — по часовой (снаружи), -1 — против, 2 — на 180°. */
+  dir: 1 | -1 | 2;
+}
+
+const ARROW_DIST = STEP + SIZE / 2 + 10;
+const ARROW_TRANSFORM: Record<Face, string> = {
+  F: `translateZ(${ARROW_DIST}px)`,
+  B: `rotateY(180deg) translateZ(${ARROW_DIST}px)`,
+  R: `rotateY(90deg) translateZ(${ARROW_DIST}px)`,
+  L: `rotateY(-90deg) translateZ(${ARROW_DIST}px)`,
+  U: `rotateX(90deg) translateZ(${ARROW_DIST}px)`,
+  D: `rotateX(-90deg) translateZ(${ARROW_DIST}px)`,
+};
+
+/** Изогнутая стрелка поверх грани — рисуем SVG, чтобы направление читалось. */
+function TurnArrow({ face, dir }: FaceArrow) {
+  const box = STEP * 3;
+  const ccw = dir === -1;
+  return (
+    <div
+      style={{
+        position: 'absolute', left: '50%', top: '50%',
+        width: box, height: box, marginLeft: -box / 2, marginTop: -box / 2,
+        transform: ARROW_TRANSFORM[face],
+        pointerEvents: 'none',
+      }}
+    >
+      <svg viewBox="0 0 100 100" width={box} height={box}
+        style={{ transform: ccw ? 'scaleX(-1)' : undefined, filter: 'drop-shadow(0 0 6px rgba(0,0,0,.55))' }}>
+        <path
+          d="M 22 66 A 34 34 0 1 1 74 68"
+          fill="none" stroke="#ffffff" strokeWidth="9" strokeLinecap="round" opacity="0.95"
+        />
+        <path d="M 74 68 l -3 -19 l 19 6 z" fill="#ffffff" opacity="0.95" />
+        {dir === 2 && (
+          <text x="50" y="60" textAnchor="middle" fontSize="26" fontWeight="700" fill="#ffffff"
+            transform={ccw ? 'scale(-1,1) translate(-100,0)' : undefined}>×2</text>
+        )}
+      </svg>
+    </div>
+  );
+}
+
 export interface TurnAnim {
   /** Какие кубики крутятся. */
   inLayer: (c: Cubie) => boolean;
@@ -82,7 +130,7 @@ export interface TurnAnim {
   ms: number;
 }
 
-export function Cube3D({ state, rotX = -24, rotY = -32, turn, scale = 1, highlight }: {
+export function Cube3D({ state, rotX = -24, rotY = -32, turn, scale = 1, highlight, arrow }: {
   state: CubeState;
   rotX?: number;
   rotY?: number;
@@ -90,6 +138,8 @@ export function Cube3D({ state, rotX = -24, rotY = -32, turn, scale = 1, highlig
   scale?: number;
   /** Позиции («x,y,z»), которые нужно подсветить — зона действия алгоритма. */
   highlight?: Set<string> | null;
+  /** Стрелка предстоящего поворота. */
+  arrow?: FaceArrow | null;
 }) {
   const [moving, still] = useMemo(() => {
     if (!turn) return [[] as CubeState, state];
@@ -119,7 +169,9 @@ export function Cube3D({ state, rotX = -24, rotY = -32, turn, scale = 1, highlig
           transition: 'transform .35s ease',
         }}
       >
-        {still.map((c, i) => <CubieBox key={`s${i}-${c.x}${c.y}${c.z}`} c={c} highlight={!!highlight?.has(posKey(c))} />)}
+        {still.map(c => <CubieBox key={c.id} c={c} highlight={!!highlight?.has(posKey(c))} />)}
+
+        {arrow && <TurnArrow face={arrow.face} dir={arrow.dir} />}
 
         {turn && (
           <div
@@ -130,9 +182,10 @@ export function Cube3D({ state, rotX = -24, rotY = -32, turn, scale = 1, highlig
               // иначе анимация крутилась бы в сторону, обратную самому ходу.
               transform: `rotate3d(${axisVec}, ${turn.axis === 'y' ? -turn.angle : turn.angle}deg)`,
               transition: turn.ms > 0 ? `transform ${turn.ms}ms cubic-bezier(.4,0,.2,1)` : 'none',
+              willChange: 'transform',
             }}
           >
-            {moving.map((c, i) => <CubieBox key={`m${i}-${c.x}${c.y}${c.z}`} c={c} highlight={!!highlight?.has(posKey(c))} />)}
+            {moving.map(c => <CubieBox key={c.id} c={c} highlight={!!highlight?.has(posKey(c))} />)}
           </div>
         )}
       </div>
