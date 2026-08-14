@@ -4,7 +4,7 @@
 // то же движение, что и рукой, поэтому глазу понятно, что именно повернулось.
 
 import { useMemo } from 'react';
-import { posKey, type Axis, type CubeState, type Cubie, type Face } from '@/lib/cube/model';
+import { posKey, type Axis, type CubeState, type Cubie, type Face, type PieceMove } from '@/lib/cube/model';
 
 const SIZE = 46;      // ребро кубика, px
 const GAP = 2;        // зазор между кубиками
@@ -120,6 +120,70 @@ function TurnArrow({ face, dir }: FaceArrow) {
   );
 }
 
+const PERSPECTIVE = 1000;
+
+/**
+ * Проекция точки куба на экран. Повторяет то, что делает браузер с
+ * `rotateX(rotX) rotateY(rotY)` и перспективой, — иначе стрелки «поплывут»
+ * относительно кубиков при повороте камеры.
+ */
+function project(x: number, y: number, z: number, rotX: number, rotY: number) {
+  const px = x * STEP, py = -y * STEP, pz = z * STEP;
+  const ry = (rotY * Math.PI) / 180, rx = (rotX * Math.PI) / 180;
+  const X = px * Math.cos(ry) + pz * Math.sin(ry);
+  const Z1 = -px * Math.sin(ry) + pz * Math.cos(ry);
+  const Y = py * Math.cos(rx) - Z1 * Math.sin(rx);
+  const Z = py * Math.sin(rx) + Z1 * Math.cos(rx);
+  const s = PERSPECTIVE / (PERSPECTIVE - Z);
+  return { x: X * s, y: Y * s, depth: Z };
+}
+
+/** Стрелки «откуда → куда» за всю последовательность, поверх куба. */
+function FlowArrows({ flow, rotX, rotY, box, scale }: {
+  flow: PieceMove[]; rotX: number; rotY: number; box: number; scale: number;
+}) {
+  const half = box / 2;
+  return (
+    <svg
+      width={box * scale} height={box * scale}
+      viewBox={`${-half} ${-half} ${box} ${box}`}
+      style={{ position: 'absolute', left: '50%', top: '50%', marginLeft: -(box * scale) / 2, marginTop: -(box * scale) / 2, pointerEvents: 'none', overflow: 'visible' }}
+    >
+      <defs>
+        <marker id="cube-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#ffd43b" />
+        </marker>
+      </defs>
+      {flow.map((m, i) => {
+        const a = project(m.from.x, m.from.y, m.from.z, rotX, rotY);
+        if (m.twistOnly) {
+          // Деталь остаётся на месте — показываем круговую стрелку разворота.
+          return (
+            <circle key={i} cx={a.x} cy={a.y} r={16} fill="none"
+              stroke="#ffd43b" strokeWidth="3.5" strokeDasharray="6 5" opacity={0.95} />
+          );
+        }
+        const b = project(m.to.x, m.to.y, m.to.z, rotX, rotY);
+        // Дуга вместо прямой: несколько стрелок сразу не сливаются в кашу.
+        const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+        const dx = b.x - a.x, dy = b.y - a.y;
+        const len = Math.hypot(dx, dy) || 1;
+        const cx = mx - (dy / len) * len * 0.22;
+        const cy = my + (dx / len) * len * 0.22;
+        return (
+          <g key={i}>
+            <path d={`M ${a.x} ${a.y} Q ${cx} ${cy} ${b.x} ${b.y}`}
+              fill="none" stroke="#ffd43b" strokeWidth="4" strokeLinecap="round"
+              markerEnd="url(#cube-arrow)" opacity={0.95}
+              style={{ filter: 'drop-shadow(0 0 4px rgba(0,0,0,.7))' }} />
+            <circle cx={a.x} cy={a.y} r={5} fill="#ffd43b" opacity={0.95} />
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
 export interface TurnAnim {
   /** Какие кубики крутятся. */
   inLayer: (c: Cubie) => boolean;
@@ -130,7 +194,7 @@ export interface TurnAnim {
   ms: number;
 }
 
-export function Cube3D({ state, rotX = -24, rotY = -32, turn, scale = 1, highlight, arrow }: {
+export function Cube3D({ state, rotX = -24, rotY = -32, turn, scale = 1, highlight, arrow, flow }: {
   state: CubeState;
   rotX?: number;
   rotY?: number;
@@ -140,6 +204,8 @@ export function Cube3D({ state, rotX = -24, rotY = -32, turn, scale = 1, highlig
   highlight?: Set<string> | null;
   /** Стрелка предстоящего поворота. */
   arrow?: FaceArrow | null;
+  /** Маршруты деталей за всю последовательность — показ «что изменится». */
+  flow?: PieceMove[] | null;
 }) {
   const [moving, still] = useMemo(() => {
     if (!turn) return [[] as CubeState, state];
@@ -154,7 +220,8 @@ export function Cube3D({ state, rotX = -24, rotY = -32, turn, scale = 1, highlig
   return (
     <div
       style={{
-        perspective: 1000,
+        position: 'relative',
+        perspective: PERSPECTIVE,
         width: box * scale,
         height: box * scale,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -189,6 +256,10 @@ export function Cube3D({ state, rotX = -24, rotY = -32, turn, scale = 1, highlig
           </div>
         )}
       </div>
+
+      {flow && flow.length > 0 && (
+        <FlowArrows flow={flow} rotX={rotX} rotY={rotY} box={box} scale={scale} />
+      )}
     </div>
   );
 }

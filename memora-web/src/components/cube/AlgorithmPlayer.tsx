@@ -8,7 +8,8 @@ import { Play, Pause, SkipForward, RotateCcw, Repeat, Shuffle, Sparkles } from '
 import { Cube3D, type TurnAnim, type FaceArrow } from './Cube3D';
 import {
   applyMove, applySequence, layerOf, parseMoves, solvedCube, scramble as makeScramble,
-  affectedPositions, affectedFaces, FACE_AXIS, FACE_RU, type CubeState, type Move,
+  affectedPositions, affectedFaces, pieceMoves, FACE_AXIS, FACE_RU,
+  type CubeState, type Move,
 } from '@/lib/cube/model';
 
 const SPEEDS = [
@@ -44,13 +45,18 @@ export function AlgorithmPlayer({ algorithm, setup = '', title, loop = false, al
 
   const ms = SPEEDS[speed].ms;
 
-  // Стрелка показывает ближайший ход: до старта — первый, дальше — текущий.
-  // Так видно не «что-то поменяется», а конкретно какая грань и куда крутится.
+  // ДО старта показываем итог всей комбинации: откуда и куда переедет каждая
+  // деталь. Пошаговая стрелка грани включается только когда пошло движение —
+  // иначе она отвечала бы на другой вопрос («что сейчас»), а не на «что будет».
+  const flow = useMemo(() => pieceMoves(start(), algorithm), [start, algorithm]);
+  const preview = idx === 0 && !playing && !turn;
+
   const arrow: FaceArrow | null = useMemo(() => {
+    if (preview) return null;
     const mv = moves[Math.min(idx, moves.length - 1)];
     if (!mv || idx >= moves.length) return null;
     return { face: mv.face, dir: mv.turns };
-  }, [moves, idx]);
+  }, [moves, idx, preview]);
 
   // Считаем от исходного положения — зона одна и та же на всём проигрывании.
   const zone = useMemo(() => affectedPositions(start(), algorithm), [start, algorithm]);
@@ -114,7 +120,8 @@ export function AlgorithmPlayer({ algorithm, setup = '', title, loop = false, al
       <div className="flex flex-col sm:flex-row items-center gap-5">
         <div className="shrink-0">
           <Cube3D state={state} rotX={rot.x} rotY={rot.y} turn={turn} scale={0.9}
-            highlight={showZone ? zone : null} arrow={arrow} />
+            highlight={showZone && !preview ? zone : null} arrow={arrow}
+            flow={preview && showZone ? flow : null} />
           <div className="flex justify-center gap-1 mt-2">
             <button onClick={() => setRot(r => ({ ...r, y: r.y - 45 }))}
               className="px-2 py-1 text-xs border border-border rounded-lg text-qz-text-muted hover:text-foreground">◀ повернуть</button>
@@ -175,7 +182,7 @@ export function AlgorithmPlayer({ algorithm, setup = '', title, loop = false, al
               className={`inline-flex items-center gap-1.5 text-sm font-semibold px-3 py-2 rounded-xl transition-colors border ${
                 showZone ? 'border-[#4255ff] text-[#4255ff] bg-[#4255ff]/10' : 'border-border text-qz-text-muted hover:text-foreground'}`}
             >
-              <Sparkles className="w-4 h-4" /> Подсветить детали
+              <Sparkles className="w-4 h-4" /> Что изменится
             </button>
             <select
               value={speed}
@@ -190,18 +197,21 @@ export function AlgorithmPlayer({ algorithm, setup = '', title, loop = false, al
             Ход {Math.min(idx + (done ? 0 : 1), moves.length)} из {moves.length}
             {setup && ' · куб заранее приведён в нужное положение'}
           </p>
-          <p className="text-xs mt-2 text-qz-text-muted">
-            {arrow
-              ? <>Белая стрелка на кубе показывает ближайший ход: <strong className="text-foreground">{FACE_RU[arrow.face]}</strong> грань,
-                  {arrow.dir === -1 ? ' против часовой стрелки' : arrow.dir === 2 ? ' на 180°' : ' по часовой стрелке'}.</>
-              : 'Алгоритм показан полностью.'}
-          </p>
-          {showZone && (
-            <p className="text-xs mt-1 text-[#4255ff]">
-              Синим обведены {zone.size} детал{zone.size % 10 === 1 && zone.size !== 11 ? 'ь' : zone.size % 10 >= 2 && zone.size % 10 <= 4 && (zone.size < 12 || zone.size > 14) ? 'и' : 'ей'},
-              которые изменятся. Затронутые грани: {faces.map(f => FACE_RU[f]).join(', ')}.
-              Остальное останется на месте.
+          {preview && showZone && (
+            <p className="text-xs mt-2 text-amber-500">
+              Жёлтые стрелки показывают <strong>итог всей комбинации</strong>: откуда и куда переедет
+              каждая деталь. Всего затронуто {flow.length}, остальное вернётся на место.
+              Грани: {faces.map(f => FACE_RU[f]).join(', ')}.
             </p>
+          )}
+          {!preview && arrow && (
+            <p className="text-xs mt-2 text-qz-text-muted">
+              Сейчас поворачивается <strong className="text-foreground">{FACE_RU[arrow.face]}</strong> грань
+              {arrow.dir === -1 ? ' против часовой стрелки' : arrow.dir === 2 ? ' на 180°' : ' по часовой стрелке'}.
+            </p>
+          )}
+          {!preview && !arrow && (
+            <p className="text-xs mt-2 text-emerald-500">Комбинация выполнена — сравните с тем, что обещали стрелки.</p>
           )}
         </div>
       </div>

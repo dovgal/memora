@@ -207,3 +207,39 @@ export function affectedFaces(state: CubeState, seq: string): Face[] {
 export const FACE_RU: Record<Face, string> = {
   U: 'верхняя', D: 'нижняя', L: 'левая', R: 'правая', F: 'передняя', B: 'задняя',
 };
+
+/** Куда уедет деталь после всей последовательности. */
+export interface PieceMove {
+  from: { x: number; y: number; z: number };
+  to: { x: number; y: number; z: number };
+  /** Деталь осталась на месте, но развернулась. */
+  twistOnly: boolean;
+}
+
+/**
+ * Маршруты деталей за ВСЮ последовательность: откуда и куда переедет каждая.
+ * Считаем по постоянным id — промежуточные ходы не важны, важен итог, потому
+ * что ученику нужно понять результат комбинации, а не следить за каждым шагом.
+ */
+export function pieceMoves(state: CubeState, seq: string): PieceMove[] {
+  const after = applySequence(state, seq);
+  const byId = new Map(after.map(c => [c.id, c]));
+  const out: PieceMove[] = [];
+  const faces: Face[] = ['U', 'D', 'L', 'R', 'F', 'B'];
+
+  for (const b of state) {
+    const a = byId.get(b.id);
+    if (!a) continue;
+    const moved = a.x !== b.x || a.y !== b.y || a.z !== b.z;
+    const twisted = faces.some(f => a.colors[f] !== b.colors[f]);
+    // Центры не двигаются и не разворачиваются заметно — их пропускаем.
+    const isCenter = [b.x, b.y, b.z].filter(v => v === 0).length === 2;
+    if (isCenter || (!moved && !twisted)) continue;
+    out.push({
+      from: { x: b.x, y: b.y, z: b.z },
+      to: { x: a.x, y: a.y, z: a.z },
+      twistOnly: !moved,
+    });
+  }
+  return out;
+}
