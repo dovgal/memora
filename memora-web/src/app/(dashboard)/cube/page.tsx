@@ -5,10 +5,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, Box, Check, ChevronRight, Lightbulb, Target } from 'lucide-react';
-import { AlgorithmPlayer } from '@/components/cube/AlgorithmPlayer';
-import { Cube3D } from '@/components/cube/Cube3D';
-import { solvedCube, applySequence } from '@/lib/cube/model';
+import { ChevronLeft, Box, Check, ChevronRight, Target } from 'lucide-react';
+import { AlgorithmDiagram } from '@/components/cube/MoveDiagram';
 import { CUBE_STEPS, NOTATION, BASIC_TURNS } from '@/data/cube/course';
 
 const DONE_KEY = 'memora.cube.done';
@@ -70,12 +68,8 @@ export default function CubeCoursePage() {
                   <p className="font-bold text-foreground text-sm">{a.name}</p>
                   <p className="text-qz-text-muted text-xs">{a.when}</p>
                 </div>
-                <AlgorithmPlayer algorithm={a.moves} setup={a.setup} loop />
-                {a.note && (
-                  <p className="text-qz-text-muted text-xs mt-2 flex items-start gap-1.5">
-                    <Lightbulb className="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5" /> {a.note}
-                  </p>
-                )}
+                <AlgorithmDiagram algorithm={a.moves} note={a.note} />
+
               </div>
             ))}
           </div>
@@ -135,10 +129,10 @@ export default function CubeCoursePage() {
             ))}
           </div>
           <p className="text-qz-text-muted text-sm mb-3">Посмотрите, как выглядит каждый поворот:</p>
-          <AlgorithmPlayer
+          <AlgorithmDiagram
             algorithm={BASIC_TURNS.map(b => b.move).join(' ')}
-            title="Все базовые ходы подряд"
-            allowScramble
+            title="Все базовые ходы: как читать схему"
+            note="Сетка — вид на переднюю грань. Стрелка показывает, какой ряд или столбец едет и в какую сторону. Круговая стрелка — поворот самой передней грани."
           />
         </section>
 
@@ -168,8 +162,7 @@ export default function CubeCoursePage() {
         </div>
 
         {/* Итоговая цель */}
-        <section className="mt-8 bg-qz-card border border-border rounded-2xl p-5 flex flex-col sm:flex-row items-center gap-5">
-          <Cube3D state={applySequence(solvedCube(), '')} scale={0.75} />
+        <section className="mt-8 bg-qz-card border border-border rounded-2xl p-5">
           <div>
             <h2 className="font-bold text-foreground mb-1">Что получится в конце</h2>
             <p className="text-qz-text-muted text-sm">
