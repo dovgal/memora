@@ -113,10 +113,19 @@ export interface Move {
   notation: string;
 }
 
+/**
+ * Русская нотация из отечественных схем сборки → международная.
+ * В — верх, Н — низ, П — право, Л — лево, Ф — фронт, З/Т — зад.
+ */
+export const RU_TO_FACE: Record<string, Face> = {
+  'В': 'U', 'Н': 'D', 'П': 'R', 'Л': 'L', 'Ф': 'F', 'З': 'B', 'Т': 'B',
+};
+
 export function parseMoves(seq: string): Move[] {
   const out: Move[] = [];
   for (const tok of seq.trim().split(/\s+/).filter(Boolean)) {
-    const f = tok[0].toUpperCase() as Face;
+    const head = tok[0].toUpperCase();
+    const f = (RU_TO_FACE[head] ?? head) as Face;
     if (!'UDLRFB'.includes(f)) continue;
     const turns: 1 | -1 | 2 = tok.includes('2') ? 2 : (tok.includes("'") || tok.includes('’')) ? -1 : 1;
     out.push({ face: f, turns, notation: tok });
