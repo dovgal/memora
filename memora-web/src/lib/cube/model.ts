@@ -5,6 +5,9 @@
 // ровно так же, как рукой в реальности.
 
 export type Face = 'U' | 'D' | 'L' | 'R' | 'F' | 'B';
+/** Средние слои: M — между L и R, E — между U и D, S — между F и B. */
+export type Slice = 'M' | 'E' | 'S';
+export type Turnable = Face | Slice;
 export type Axis = 'x' | 'y' | 'z';
 
 /** Цвета стандартной раскраски: белый верх, жёлтый низ, зелёный перед. */
@@ -56,8 +59,8 @@ export function solvedCube(): CubeState {
   return out;
 }
 
-/** Какие кубики участвуют в повороте грани. */
-export function layerOf(face: Face): (c: Cubie) => boolean {
+/** Какие кубики участвуют в повороте грани или среднего слоя. */
+export function layerOf(face: Turnable): (c: Cubie) => boolean {
   switch (face) {
     case 'U': return c => c.y === 1;
     case 'D': return c => c.y === -1;
@@ -65,17 +68,25 @@ export function layerOf(face: Face): (c: Cubie) => boolean {
     case 'L': return c => c.x === -1;
     case 'F': return c => c.z === 1;
     case 'B': return c => c.z === -1;
+    // Средние слои: та же плоскость, но координата 0.
+    case 'M': return c => c.x === 0;
+    case 'E': return c => c.y === 0;
+    case 'S': return c => c.z === 0;
   }
 }
 
 /** Ось вращения грани и знак: по часовой стрелке, если смотреть на грань снаружи. */
-export const FACE_AXIS: Record<Face, { axis: Axis; sign: number }> = {
+export const FACE_AXIS: Record<Turnable, { axis: Axis; sign: number }> = {
   U: { axis: 'y', sign: -1 },
   D: { axis: 'y', sign: 1 },
   R: { axis: 'x', sign: -1 },
   L: { axis: 'x', sign: 1 },
   F: { axis: 'z', sign: -1 },
   B: { axis: 'z', sign: 1 },
+  // Средние слои идут в сторону «своей» грани: M — как L, E — как D, S — как F.
+  M: { axis: 'x', sign: 1 },
+  E: { axis: 'y', sign: 1 },
+  S: { axis: 'z', sign: -1 },
 };
 
 /** Поворот одного кубика на 90° вокруг оси. dir=1 — по часовой (в системе экрана). */
@@ -106,7 +117,7 @@ function rotateCubie(c: Cubie, axis: Axis, dir: number): Cubie {
 
 /** Один ход в нотации: R, R', R2, U, U'… */
 export interface Move {
-  face: Face;
+  face: Turnable;
   /** 1 — по часовой, -1 — против, 2 — на 180°. */
   turns: 1 | -1 | 2;
   /** Исходная запись, для показа ученику. */
@@ -117,16 +128,18 @@ export interface Move {
  * Русская нотация из отечественных схем сборки → международная.
  * В — верх, Н — низ, П — право, Л — лево, Ф — фронт, З/Т — зад.
  */
-export const RU_TO_FACE: Record<string, Face> = {
+export const RU_TO_FACE: Record<string, Turnable> = {
   'В': 'U', 'Н': 'D', 'П': 'R', 'Л': 'L', 'Ф': 'F', 'З': 'B', 'Т': 'B',
+  // «Сн» из отечественных схем — средний слой вниз, это ход M.
+  'С': 'M',
 };
 
 export function parseMoves(seq: string): Move[] {
   const out: Move[] = [];
   for (const tok of seq.trim().split(/\s+/).filter(Boolean)) {
     const head = tok[0].toUpperCase();
-    const f = (RU_TO_FACE[head] ?? head) as Face;
-    if (!'UDLRFB'.includes(f)) continue;
+    const f = (RU_TO_FACE[head] ?? head) as Turnable;
+    if (!'UDLRFBMES'.includes(f)) continue;
     const turns: 1 | -1 | 2 = tok.includes('2') ? 2 : (tok.includes("'") || tok.includes('’')) ? -1 : 1;
     out.push({ face: f, turns, notation: tok });
   }
@@ -213,8 +226,9 @@ export function affectedFaces(state: CubeState, seq: string): Face[] {
   return faces.filter(f => key(state, f) !== key(after, f));
 }
 
-export const FACE_RU: Record<Face, string> = {
+export const FACE_RU: Record<Turnable, string> = {
   U: 'верхняя', D: 'нижняя', L: 'левая', R: 'правая', F: 'передняя', B: 'задняя',
+  M: 'средний слой (вниз)', E: 'средний слой (горизонт)', S: 'средний слой (фронт)',
 };
 
 /** Куда уедет деталь после всей последовательности. */
