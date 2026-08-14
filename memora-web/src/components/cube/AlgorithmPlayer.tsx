@@ -6,6 +6,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Play, Pause, SkipForward, RotateCcw, Repeat, Shuffle, Sparkles } from 'lucide-react';
 import { Cube3D, type TurnAnim, type FaceArrow } from './Cube3D';
+import type { Face } from '@/lib/cube/model';
 import {
   applyMove, applySequence, layerOf, parseMoves, solvedCube, scramble as makeScramble,
   affectedPositions, affectedFaces, pieceMoves, FACE_AXIS, FACE_RU,
@@ -55,7 +56,10 @@ export function AlgorithmPlayer({ algorithm, setup = '', title, loop = false, al
     if (preview) return null;
     const mv = moves[Math.min(idx, moves.length - 1)];
     if (!mv || idx >= moves.length) return null;
-    return { face: mv.face, dir: mv.turns };
+    // Стрелку рисуем только для поворотов ГРАНЕЙ: у среднего слоя нет внешней
+    // поверхности, на которую её можно положить, — там ведёт подпись словами.
+    if (!'UDLRFB'.includes(mv.face)) return null;
+    return { face: mv.face as Face, dir: mv.turns };
   }, [moves, idx, preview]);
 
   // Считаем от исходного положения — зона одна и та же на всём проигрывании.
@@ -204,13 +208,13 @@ export function AlgorithmPlayer({ algorithm, setup = '', title, loop = false, al
               Грани: {faces.map(f => FACE_RU[f]).join(', ')}.
             </p>
           )}
-          {!preview && arrow && (
+          {!preview && idx < moves.length && (
             <p className="text-xs mt-2 text-qz-text-muted">
-              Сейчас поворачивается <strong className="text-foreground">{FACE_RU[arrow.face]}</strong> грань
-              {arrow.dir === -1 ? ' против часовой стрелки' : arrow.dir === 2 ? ' на 180°' : ' по часовой стрелке'}.
+              Сейчас поворачивается <strong className="text-foreground">{FACE_RU[moves[idx].face]}</strong>
+              {moves[idx].turns === -1 ? ' против часовой стрелки' : moves[idx].turns === 2 ? ' на 180°' : ' по часовой стрелке'}.
             </p>
           )}
-          {!preview && !arrow && (
+          {!preview && idx >= moves.length && (
             <p className="text-xs mt-2 text-emerald-500">Комбинация выполнена — сравните с тем, что обещали стрелки.</p>
           )}
         </div>
