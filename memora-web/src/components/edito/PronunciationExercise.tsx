@@ -5,7 +5,7 @@
 // упражнение засчитано, когда все строки произнесены чисто.
 
 import { useCallback, useMemo, useState } from 'react';
-import { Mic, MicOff, Volume2, Turtle, Check, Lightbulb, RotateCcw } from 'lucide-react';
+import { Mic, MicOff, Volume2, Turtle, Check, Lightbulb, RotateCcw, Eye, EyeOff } from 'lucide-react';
 import { EditoExercise, PronunciationItem } from '@/lib/courses/edito-a1';
 import { speakInworld, speakInworldAndWait } from '@/lib/courses/ttsInworld';
 import { checkDictation, bestTranscript, type DictationCheck } from '@/lib/courses/dictation';
@@ -47,6 +47,9 @@ export function PronunciationExercise({ exercise, onComplete, voice = 'Alain', s
   const [attempts, setAttempts] = useState<Record<number, Attempt>>({});
   /** Индекс строки, которая сейчас записывается (запись всегда одна). */
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  /** Скрытый перевод — режим самопроверки: сначала вспомнить, потом свериться. */
+  const [hideRu, setHideRu] = useState(false);
+  const [revealed, setRevealed] = useState<Record<number, boolean>>({});
 
   const speech = useSpeechAttempt(speechLang);
   const total = items.length;
@@ -111,6 +114,14 @@ export function PronunciationExercise({ exercise, onComplete, voice = 'Alain', s
           ? 'Всё произнесено чисто. Можно перепроверить любую строку ещё раз.'
           : 'Проверьте произношение каждой строки — в любом порядке и сколько угодно раз.'}
       </p>
+      {items.some(i => i.ru) && (
+        <button
+          onClick={() => { setHideRu(v => !v); setRevealed({}); }}
+          className="inline-flex items-center gap-1.5 mb-3 border border-border hover:border-[#4255ff]/50 text-qz-text-muted hover:text-foreground text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors"
+        >
+          {hideRu ? <><EyeOff className="w-3.5 h-3.5" /> Перевод скрыт — показать</> : <><Eye className="w-3.5 h-3.5" /> Перевод показан — скрыть</>}
+        </button>
+      )}
       <div className="h-1.5 bg-muted rounded-full mb-4">
         <div className="h-full bg-emerald-500 rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
       </div>
@@ -150,7 +161,16 @@ export function PronunciationExercise({ exercise, onComplete, voice = 'Alain', s
                     {it.text}
                   </p>
                   {it.ipa && <p className="text-qz-text-muted font-mono text-xs">[{it.ipa}]</p>}
-                  {it.ru && <p className="text-qz-text-muted text-xs">{it.ru}</p>}
+                  {it.ru && (
+                    hideRu && !revealed[idx]
+                      ? <button
+                          onClick={() => setRevealed(r => ({ ...r, [idx]: true }))}
+                          className="text-qz-text-muted/60 hover:text-[#4255ff] text-xs italic underline decoration-dotted transition-colors"
+                        >
+                          показать перевод
+                        </button>
+                      : <p className="text-qz-text-muted text-xs">{it.ru}</p>
+                  )}
                   {it.hint && <p className="text-qz-text-muted text-xs italic">{it.hint}</p>}
                 </div>
 
