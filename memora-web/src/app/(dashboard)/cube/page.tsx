@@ -68,7 +68,7 @@ export default function CubeCoursePage() {
                   <p className="font-bold text-foreground text-sm">{a.name}</p>
                   <p className="text-qz-text-muted text-xs">{a.when}</p>
                 </div>
-                <AlgorithmDiagram algorithm={a.moves} note={a.note} />
+                <AlgorithmDiagram algorithm={a.moves} setup={a.setup} note={a.note} />
 
               </div>
             ))}
@@ -131,6 +131,7 @@ export default function CubeCoursePage() {
           <p className="text-qz-text-muted text-sm mb-3">Посмотрите, как выглядит каждый поворот:</p>
           <AlgorithmDiagram
             algorithm={BASIC_TURNS.map(b => b.move).join(' ')}
+            preview={false}
             title="Все базовые ходы: как читать схему"
             note="Сетка — вид на переднюю грань. Стрелка показывает, какой ряд или столбец едет и в какую сторону. Круговая стрелка — поворот самой передней грани."
           />

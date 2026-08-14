@@ -4,7 +4,8 @@
 // Повороты передней и задней граней рисуются круговой стрелкой.
 
 import { useId } from 'react';
-import { parseMoves, type Move, type Turnable } from '@/lib/cube/model';
+import { parseMoves, pieceMoves, solvedCube, applySequence, type Move, type Turnable } from '@/lib/cube/model';
+import { CubePreview } from './CubePreview';
 
 /** Международная буква → русская, как в отечественных печатных схемах. */
 const RU_LABEL: Record<Turnable, string> = {
@@ -118,20 +119,41 @@ export function MoveDiagram({ move, label }: { move: Move; label?: string }) {
 }
 
 /** Вся комбинация: ряд схем по одной на ход, как в печатной инструкции. */
-export function AlgorithmDiagram({ algorithm, title, note }: {
+export function AlgorithmDiagram({ algorithm, title, note, setup = '', preview = true }: {
   algorithm: string;
   title?: string;
   note?: string;
+  setup?: string;
+  /** Показывать объёмную схему «что изменится» слева. */
+  preview?: boolean;
 }) {
   const moves = parseMoves(algorithm);
   if (moves.length === 0) return null;
+  const flow = pieceMoves(applySequence(solvedCube(), setup), algorithm);
+  const travel = flow.filter(m => !m.twistOnly).length;
+  const twist = flow.length - travel;
+
   return (
     <div className="bg-qz-card border border-border rounded-2xl p-5">
       {title && <p className="font-bold text-foreground mb-1">{title}</p>}
       <p className="font-mono text-sm font-bold text-[#4255ff]">{ruSequence(algorithm)}</p>
       <p className="font-mono text-xs text-qz-text-muted mb-3">международная запись: {algorithm}</p>
-      <div className="flex flex-wrap gap-2">
-        {moves.map((m, i) => <MoveDiagram key={i} move={m} />)}
+
+      <div className="flex flex-col lg:flex-row gap-5">
+        {preview && (
+          <div className="shrink-0">
+            <CubePreview algorithm={algorithm} setup={setup} />
+            <p className="text-[11px] text-amber-500 mt-2 max-w-[190px] leading-snug">
+              Стрелки — итог всей комбинации: {travel > 0 && <>переезжают <strong>{travel}</strong></>}
+              {travel > 0 && twist > 0 && ', '}
+              {twist > 0 && <>разворачиваются на месте <strong>{twist}</strong></>}.
+              Приглушённые детали не меняются.
+            </p>
+          </div>
+        )}
+        <div className="flex flex-wrap gap-2 content-start">
+          {moves.map((m, i) => <MoveDiagram key={i} move={m} />)}
+        </div>
       </div>
       {note && <p className="text-qz-text-muted text-xs mt-3">{note}</p>}
     </div>
