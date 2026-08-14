@@ -11,7 +11,8 @@ import {
     GraduationCap,
     UserRound,
     Trophy,
-    Code2
+    Code2,
+    Box
 } from "lucide-react";
 import LogoutButton from "@/components/LogoutButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -79,6 +80,10 @@ export default async function DashboardLayout({
                         <Link href="/coding" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium">
                             <Code2 className="w-5 h-5" />
                             Программирование
+                        </Link>
+                        <Link href="/cube" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium">
+                            <Box className="w-5 h-5" />
+                            Кубик Рубика
                         </Link>
                         <Link href="/library" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium">
                             <Library className="w-5 h-5" />
@@ -184,6 +189,10 @@ export default async function DashboardLayout({
                     <Link href="/coding" className="flex flex-col items-center gap-0.5 py-2 px-3 text-qz-text-muted hover:text-[#4255ff] transition-colors">
                         <Code2 className="w-5 h-5" />
                         <span className="text-[10px] font-semibold">Код</span>
+                    </Link>
+                    <Link href="/cube" className="flex flex-col items-center gap-0.5 py-2 px-3 text-qz-text-muted hover:text-[#4255ff] transition-colors">
+                        <Box className="w-5 h-5" />
+                        <span className="text-[10px] font-semibold">Кубик</span>
                     </Link>
                     <Link href="/library" className="flex flex-col items-center gap-0.5 py-2 px-3 text-qz-text-muted hover:text-[#4255ff] transition-colors">
                         <Library className="w-5 h-5" />

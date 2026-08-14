@@ -136,6 +136,30 @@ export default async function StudentDashboard() {
                     </div>
                 </section>
 
+                {/* Головоломки: кубик Рубика с анимированной 3D-моделью */}
+                <section>
+                    <div className="flex items-center justify-between mb-6">
+                        <h2 className="text-xl font-bold text-qz-text tracking-wide">Головоломки</h2>
+                        <Link href="/cube" className="text-sm font-semibold text-[#4255ff] hover:underline">
+                            Открыть →
+                        </Link>
+                    </div>
+                    <Link href="/cube" className="block group">
+                        <div className="relative h-full overflow-hidden rounded-3xl border border-[#262c40] bg-gradient-to-br from-orange-900/40 via-amber-900/20 to-transparent p-7 transition-all duration-300 hover:scale-[1.01] hover:border-orange-500/50">
+                            <div className="absolute top-[-20%] right-[-5%] w-[45%] h-[80%] bg-orange-500/10 rounded-full blur-[50px]" />
+                            <div className="relative z-10">
+                                <div className="flex items-center gap-2 mb-2">
+                                    <span className="text-lg">🧩</span>
+                                    <span className="text-xs font-bold uppercase tracking-wider text-orange-400">С нуля · для детей и взрослых</span>
+                                </div>
+                                <h3 className="text-xl font-bold mb-1">Кубик Рубика — послойная сборка</h3>
+                                <p className="text-[#8e95ae] text-sm mb-4">7 этапов и 6 алгоритмов. Каждый показан на живой 3D-модели: видно, какой слой поворачивается, с покадровым шагом и выбором скорости.</p>
+                                <span className="inline-block px-4 py-2 rounded-xl bg-orange-600 text-white text-sm font-semibold group-hover:bg-orange-500 transition-colors">Начать →</span>
+                            </div>
+                        </div>
+                    </Link>
+                </section>
+
                 {/* Jump back in Section (Big Interactive Carousel Cards) */}
                 <section>
                     <h2 className="text-xl font-bold mb-6 text-qz-text tracking-wide">Jump back in</h2>
