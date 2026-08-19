@@ -1,25 +1,67 @@
 "use client"
 
-import { useState, useEffect } from "react"
+// Баннер «нет сети».
+//
+// navigator.onLine ненадёжен: он сообщает лишь о наличии сетевого интерфейса,
+// а не о доступности сервера, и в части браузеров при загрузке страницы
+// возвращает false, будучи онлайн. Прежняя версия верила ему на слово и
+// ждала события "online", которого в таком случае не приходит, — баннер висел
+// поверх работающего приложения. Поэтому статус подтверждаем настоящим
+// запросом к своему же серверу и перепроверяем, пока считаем себя офлайн.
+
+import { useCallback, useEffect, useRef, useState } from "react"
 import { WifiOff } from "lucide-react"
 
+/** Интервал перепроверки, пока связь считается потерянной. */
+const RECHECK_MS = 10_000
+
+async function serverReachable(): Promise<boolean> {
+    try {
+        // Любой ответ сервера (даже 404) доказывает, что связь есть.
+        await fetch(`/favicon.ico?ping=${Date.now()}`, { method: "HEAD", cache: "no-store" })
+        return true
+    } catch {
+        return false
+    }
+}
+
 export default function OfflineBanner() {
-    const [isOffline, setIsOffline] = useState(() =>
-        typeof window !== "undefined" ? !navigator.onLine : false
-    )
+    const [isOffline, setIsOffline] = useState(false)
+    const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+    const check = useCallback(async () => {
+        // Если браузер уверенно говорит «офлайн» — проверяем; если «онлайн»,
+        // всё равно проверяем, но только когда баннер уже показан.
+        const ok = await serverReachable()
+        setIsOffline(!ok)
+    }, [])
 
     useEffect(() => {
-        const handleOnline = () => setIsOffline(false)
-        const handleOffline = () => setIsOffline(true)
+        // Первую проверку откладываем в таймер: обновлять состояние прямо в теле
+        // эффекта нельзя — это лишний каскад рендеров.
+        const first = setTimeout(() => { void check() }, 0)
+        const onOnline = () => { void check() }
+        const onOffline = () => { void check() }
+        const onVisible = () => { if (document.visibilityState === "visible") void check() }
 
-        window.addEventListener("online", handleOnline)
-        window.addEventListener("offline", handleOffline)
-
+        window.addEventListener("online", onOnline)
+        window.addEventListener("offline", onOffline)
+        document.addEventListener("visibilitychange", onVisible)
         return () => {
-            window.removeEventListener("online", handleOnline)
-            window.removeEventListener("offline", handleOffline)
+            window.removeEventListener("online", onOnline)
+            window.removeEventListener("offline", onOffline)
+            document.removeEventListener("visibilitychange", onVisible)
+            clearTimeout(first)
+            if (timer.current) clearTimeout(timer.current)
         }
-    }, [])
+    }, [check])
+
+    // Пока считаем себя офлайн — перепроверяем, чтобы баннер ушёл сам.
+    useEffect(() => {
+        if (!isOffline) return
+        timer.current = setTimeout(() => { void check() }, RECHECK_MS)
+        return () => { if (timer.current) clearTimeout(timer.current) }
+    }, [isOffline, check])
 
     if (!isOffline) return null
 
@@ -30,9 +72,10 @@ export default function OfflineBanner() {
                     <WifiOff size={24} />
                 </div>
                 <div>
-                    <h4 className="text-qz-text font-bold text-sm">You are offline</h4>
+                    <h4 className="text-qz-text font-bold text-sm">Нет связи с сервером</h4>
                     <p className="text-qz-text-muted text-xs mt-0.5">
-                        You can still view cached study sets, but some features may be unavailable.
+                        Сохранённые наборы доступны, остальное — после восстановления связи.
+                        Проверяем автоматически.
                     </p>
                 </div>
             </div>
