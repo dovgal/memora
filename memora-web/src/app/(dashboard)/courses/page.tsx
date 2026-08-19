@@ -20,7 +20,7 @@ import { getSubscriptions, subscribeCourse, unsubscribeCourse } from '@/lib/clas
 const SUBJECT_ORDER = [
   'Французский язык', 'Английский язык', 'Немецкий язык', 'Испанский язык', 'Русский язык',
   'Программирование', 'Математика', 'Физика и химия', 'История',
-  'Электробезопасность', 'Кубик Рубика', 'Другое',
+  'Электробезопасность', 'Здоровье глаз', 'Кубик Рубика', 'Другое',
 ];
 
 interface CardData extends CatalogCourse {
