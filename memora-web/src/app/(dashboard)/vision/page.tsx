@@ -148,6 +148,22 @@ export default function VisionPage() {
           <p className="text-white/80 text-sm">{DAILY_PROGRAM.length} упражнений подряд, примерно 8 минут. Одно за другим, ничего не нужно выбирать.</p>
         </button>
 
+        {/* Инструменты */}
+        <div className="grid sm:grid-cols-2 gap-3 mb-7">
+          <Link href="/vision/screen"
+            className="rounded-2xl p-5 bg-qz-card border border-border hover:border-[#4255ff]/40 hover:bg-[#4255ff]/5 transition-all">
+            <p className="text-2xl mb-1">📱</p>
+            <p className="font-bold text-foreground text-sm mb-1">Экранный режим</p>
+            <p className="text-qz-text-muted text-xs">Таймер 20-20-20, правило локтя и напоминания об отдыхе — против того, из-за чего зрение и падает.</p>
+          </Link>
+          <Link href="/vision/chart"
+            className="rounded-2xl p-5 bg-qz-card border border-border hover:border-[#4255ff]/40 hover:bg-[#4255ff]/5 transition-all">
+            <p className="text-2xl mb-1">🖨️</p>
+            <p className="font-bold text-foreground text-sm mb-1">Таблица для печати</p>
+            <p className="text-qz-text-muted text-xs">Сивцева и Орловой, точные размеры знаков, контрольная линия для проверки масштаба печати.</p>
+          </Link>
+        </div>
+
         {/* Распорядок дня */}
         <h2 className="text-sm font-bold uppercase tracking-wider text-qz-text-muted mb-3">Когда что делать</h2>
         <div className="space-y-4 mb-8">
