@@ -72,14 +72,16 @@ export function Theory({ exercise, voice = 'Alain' }: { exercise: EditoExercise;
         // Цвета заданы явно, а не токенами темы: полупрозрачный фон сливался
         // с текстом под подсказкой. Плашка непрозрачная и намеренно перекрывает
         // строку выше — читать её в этот момент всё равно не нужно.
+        // Зелёный взят тёмный (не #10b981): с белым текстом светлый изумруд
+        // даёт контраст около 3:1, чего для мелкого шрифта недостаточно.
         <div
           role="tooltip"
           style={{
             position: 'fixed', left: tip.x, top: tip.y - 10,
             transform: 'translate(-50%, -100%)', zIndex: 60,
-            background: '#12151c', color: '#f8f9fa',
-            border: '1px solid rgba(255,255,255,.14)',
-            boxShadow: '0 10px 30px rgba(0,0,0,.45)',
+            background: '#0b7355', color: '#ffffff',
+            border: '1px solid rgba(255,255,255,.28)',
+            boxShadow: '0 10px 28px rgba(11,115,85,.45)',
           }}
           className="pointer-events-none max-w-xs rounded-xl px-3.5 py-2 text-sm font-semibold leading-snug"
         >
