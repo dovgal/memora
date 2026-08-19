@@ -13,6 +13,16 @@ import { listCourses, createCourse, type CourseSummary } from '@/lib/courses/cus
 import { BUILTIN_COURSES, subjectForCourse, type CatalogCourse } from '@/lib/courseCatalog';
 import { getSubscriptions, subscribeCourse, unsubscribeCourse } from '@/lib/classroomApi';
 
+/**
+ * Порядок рубрик в каталоге: знакомое идёт первым, «Другое» замыкает.
+ * Вынесен из компонента — это константа, а не зависимость хуков.
+ */
+const SUBJECT_ORDER = [
+  'Французский язык', 'Английский язык', 'Немецкий язык', 'Испанский язык', 'Русский язык',
+  'Программирование', 'Математика', 'Физика и химия', 'История',
+  'Электробезопасность', 'Кубик Рубика', 'Другое',
+];
+
 interface CardData extends CatalogCourse {
   isCustom?: boolean;
   isOwner?: boolean;
@@ -85,6 +95,20 @@ export default function CoursesCatalogPage() {
       return true;
     });
   }, [allCards, query, subject, topic]);
+
+  // Раскладка по рубрикам: пользователь ищет курс по предмету, поэтому
+  // показываем не общую сетку, а отдельные разделы с заголовками.
+  const grouped = useMemo(() => {
+    const by = new Map<string, CardData[]>();
+    for (const c of filtered) {
+      if (!by.has(c.subject)) by.set(c.subject, []);
+      by.get(c.subject)!.push(c);
+    }
+    return [...by.entries()].sort((a, b) => {
+      const ia = SUBJECT_ORDER.indexOf(a[0]), ib = SUBJECT_ORDER.indexOf(b[0]);
+      return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib) || a[0].localeCompare(b[0]);
+    });
+  }, [filtered]);
 
   const toggleSub = async (c: CardData, e: React.MouseEvent) => {
     e.preventDefault();
@@ -194,8 +218,15 @@ export default function CoursesCatalogPage() {
             <p className="text-qz-text-muted text-sm">Ничего не найдено. Измените запрос или фильтры.</p>
           </div>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {filtered.map(c => (
+          <div className="space-y-8">
+            {grouped.map(([groupName, cards]) => (
+            <section key={groupName}>
+              <div className="flex items-baseline gap-3 mb-3">
+                <h2 className="text-lg font-bold text-foreground">{groupName}</h2>
+                <span className="text-xs text-qz-text-muted">{cards.length} курс(ов)</span>
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {cards.map(c => (
               <Link key={`${c.isCustom ? 'u' : 'b'}-${c.id}`} href={c.href}>
                 <div className="bg-qz-card border border-border rounded-2xl p-5 hover:border-[#4255ff]/40 hover:bg-[#4255ff]/5 transition-all cursor-pointer group h-full flex flex-col relative">
                   <button
@@ -231,6 +262,9 @@ export default function CoursesCatalogPage() {
                   </div>
                 </div>
               </Link>
+            ))}
+              </div>
+            </section>
             ))}
           </div>
         )}
