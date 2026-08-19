@@ -18,7 +18,7 @@ function linkify(html: string): string {
   });
 }
 
-interface Tip { text: string; ru: string; x: number; y: number }
+interface Tip { ru: string; x: number; y: number }
 
 export function Theory({ exercise, voice = 'Alain' }: { exercise: EditoExercise; voice?: string }) {
   const html = useMemo(() => linkify(exercise.content || ''), [exercise.content]);
@@ -33,7 +33,7 @@ export function Theory({ exercise, voice = 'Alain' }: { exercise: EditoExercise;
     const ru = el.dataset.ru;
     if (!ru) { setTip(null); return; }
     const r = el.getBoundingClientRect();
-    setTip({ text: el.textContent || '', ru, x: r.left + r.width / 2, y: r.top });
+    setTip({ ru, x: r.left + r.width / 2, y: r.top });
   };
 
   const onActivate = (target: EventTarget | null) => {
@@ -69,13 +69,21 @@ export function Theory({ exercise, voice = 'Alain' }: { exercise: EditoExercise;
         dangerouslySetInnerHTML={{ __html: html }}
       />
       {tip && (
+        // Цвета заданы явно, а не токенами темы: полупрозрачный фон сливался
+        // с текстом под подсказкой. Плашка непрозрачная и намеренно перекрывает
+        // строку выше — читать её в этот момент всё равно не нужно.
         <div
           role="tooltip"
-          style={{ position: 'fixed', left: tip.x, top: tip.y - 10, transform: 'translate(-50%, -100%)', zIndex: 60 }}
-          className="pointer-events-none max-w-xs rounded-xl bg-foreground text-background px-3 py-2 shadow-xl"
+          style={{
+            position: 'fixed', left: tip.x, top: tip.y - 10,
+            transform: 'translate(-50%, -100%)', zIndex: 60,
+            background: '#12151c', color: '#f8f9fa',
+            border: '1px solid rgba(255,255,255,.14)',
+            boxShadow: '0 10px 30px rgba(0,0,0,.45)',
+          }}
+          className="pointer-events-none max-w-xs rounded-xl px-3.5 py-2 text-sm font-semibold leading-snug"
         >
-          <p className="text-[11px] opacity-70 leading-tight">{tip.text}</p>
-          <p className="text-sm font-semibold leading-snug">{tip.ru}</p>
+          {tip.ru}
         </div>
       )}
 
