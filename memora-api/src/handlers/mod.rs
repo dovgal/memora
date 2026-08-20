@@ -18,3 +18,5 @@ pub mod checks;
 pub mod family;
 pub mod push;
 
+pub mod books;
+pub mod translate;

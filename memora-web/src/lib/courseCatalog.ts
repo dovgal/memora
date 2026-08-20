@@ -156,6 +156,14 @@ export const BUILTIN_COURSES: CatalogCourse[] = [
     subject: 'Здоровье глаз', topic: 'Гимнастика для глаз', level: 'Детям', emoji: '👁️',
   },
 
+  // ---------- Чтение ----------
+  {
+    id: 'books-reader', href: '/books',
+    title: 'Чтение книг с переводом',
+    description: 'Загрузите книгу в EPUB, FB2, PDF, DOCX или TXT: перевод по наведению, подсветка незнакомых слов, чтение вслух и карточки прямо из текста.',
+    subject: 'Чтение', topic: 'Адаптивное чтение', level: 'Любой язык', emoji: '📚',
+  },
+
   // ---------- Головоломки ----------
   {
     id: 'cube-rubik', href: '/cube',

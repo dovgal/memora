@@ -10,7 +10,8 @@ import {
     Sparkles,
     GraduationCap,
     UserRound,
-    Trophy
+    Trophy,
+    BookOpen
 } from "lucide-react";
 import LogoutButton from "@/components/LogoutButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -78,6 +79,10 @@ export default async function DashboardLayout({
                         <Link href="/library" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium">
                             <Library className="w-5 h-5" />
                             Your Library
+                        </Link>
+                        <Link href="/books" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium">
+                            <BookOpen className="w-5 h-5" />
+                            Чтение книг
                         </Link>
                         <Link href="/groups" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium">
                             <Users className="w-5 h-5" />

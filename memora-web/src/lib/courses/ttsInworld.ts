@@ -98,6 +98,15 @@ export async function speakInworld(text: string, voice = "Alain"): Promise<Speak
   return playInworld(text, voice, false);
 }
 
+/**
+ * Прервать текущую озвучку. Нужна режиму чтения вслух: страница листается
+ * посреди предложения, и голос обязан замолчать сразу, а не дочитывать в пустоту.
+ */
+export function stopInworld(): void {
+  speakSeq++; // многочастная читка прекратится на следующем куске
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+}
+
 /** То же, но промис резолвится по ОКОНЧАНИИ воспроизведения (для голосового диалога). */
 export async function speakInworldAndWait(text: string, voice = "Alain"): Promise<SpeakResult> {
   return playInworld(text, voice, true);

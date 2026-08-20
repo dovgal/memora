@@ -100,6 +100,24 @@ const nextConfig: NextConfig = {
         source: "/api/family/:path*",
         destination: `${rustApiUrl}/api/family/:path*`,
       },
+      // Читалка книг: полка, главы, словарь читателя, карточки из книги.
+      {
+        source: "/api/books/:path*",
+        destination: `${rustApiUrl}/api/books/:path*`,
+      },
+      {
+        source: "/api/books",
+        destination: `${rustApiUrl}/api/books`,
+      },
+      // Перевод (DeepL с кэшем) и словарная статья для читалки.
+      {
+        source: "/api/translate",
+        destination: `${rustApiUrl}/api/translate`,
+      },
+      {
+        source: "/api/dictionary",
+        destination: `${rustApiUrl}/api/dictionary`,
+      },
       // Push-подписки (slice 20).
       {
         source: "/api/push/:path*",

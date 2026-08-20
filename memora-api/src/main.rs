@@ -187,6 +187,22 @@ async fn main() {
         .route("/api/sources", get(handlers::sources::list_sources).post(handlers::sources::upload_source))
         .route("/api/sources/{id}", get(handlers::sources::get_source).delete(handlers::sources::delete_source))
         .route("/api/sources/{id}/chunks/{chunk_id}", get(handlers::sources::get_chunk))
+        // Читалка книг: полка, главы, словарь читателя, карточки из книги.
+        .route("/api/books", get(handlers::books::list_books).post(handlers::books::create_book))
+        .route(
+            "/api/books/{id}",
+            get(handlers::books::get_book)
+                .patch(handlers::books::update_book)
+                .delete(handlers::books::delete_book)
+        )
+        .route("/api/books/{id}/chapters", post(handlers::books::add_chapters))
+        .route("/api/books/{id}/chapters/{position}", get(handlers::books::get_chapter))
+        .route("/api/books/{id}/finalize", post(handlers::books::finalize_book))
+        .route("/api/books/{id}/vocab", get(handlers::books::get_vocab).put(handlers::books::put_vocab))
+        .route("/api/books/{id}/cards", post(handlers::books::add_card))
+        // Перевод (DeepL с кэшем) и словарная статья (LLM) — для читалки.
+        .route("/api/translate", post(handlers::translate::translate_handler))
+        .route("/api/dictionary", post(handlers::translate::dictionary_handler))
         .route("/api/check/symbolic", post(handlers::checks::check_symbolic))
         .route("/api/family/board", get(handlers::family::get_board))
         .route("/api/family/member/{user_id}/courses", get(handlers::family::get_member_courses))
