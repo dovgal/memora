@@ -64,11 +64,31 @@ pub struct DictionaryRequest {
     pub target_lang: String,
 }
 
+/// Модель регулярно присылает `null` вместо строки в необязательных полях
+/// (`"example": null`). `#[serde(default)]` тут бесполезен — он срабатывает,
+/// только когда поля нет вовсе, а явный null serde всё равно пытается положить
+/// в String и падает. Разбор всей статьи из-за этого валился целиком.
+fn null_as_empty<'de, D>(d: D) -> Result<String, D::Error>
+where
+    D: serde::Deserializer<'de>,
+{
+    Ok(Option::<String>::deserialize(d)?.unwrap_or_default())
+}
+
+fn null_as_empty_vec<'de, D, T>(d: D) -> Result<Vec<T>, D::Error>
+where
+    D: serde::Deserializer<'de>,
+    T: Deserialize<'de>,
+{
+    Ok(Option::<Vec<T>>::deserialize(d)?.unwrap_or_default())
+}
+
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DictionaryMeaning {
+    #[serde(default, deserialize_with = "null_as_empty")]
     pub gloss: String,
-    #[serde(default)]
+    #[serde(default, deserialize_with = "null_as_empty")]
     pub example: String,
 }
 
@@ -76,12 +96,16 @@ pub struct DictionaryMeaning {
 #[serde(rename_all = "camelCase")]
 pub struct DictionaryEntry {
     /// Начальная форма: инфинитив, единственное число, мужской род.
+    #[serde(default, deserialize_with = "null_as_empty")]
     pub lemma: String,
+    #[serde(default, deserialize_with = "null_as_empty")]
     pub pos: String,
     /// Перевод именно в этом контексте — то, ради чего словарь и открывают.
+    #[serde(default, deserialize_with = "null_as_empty")]
     pub in_context: String,
+    #[serde(default, deserialize_with = "null_as_empty_vec")]
     pub meanings: Vec<DictionaryMeaning>,
-    #[serde(default)]
+    #[serde(default, deserialize_with = "null_as_empty")]
     pub note: String,
 }
 
@@ -454,11 +478,26 @@ pub async fn dictionary_handler(
     .await
     .map_err(|e| ApiError::response(StatusCode::BAD_GATEWAY, e.to_string()))?;
 
-    let entry: DictionaryEntry = serde_json::from_str(super::ai::extract_json(&content))
+    let mut entry: DictionaryEntry = serde_json::from_str(super::ai::extract_json(&content))
         .map_err(|e| ApiError::response(StatusCode::BAD_GATEWAY, format!("Dictionary parse error: {e}")))?;
 
-    if let Ok(raw) = serde_json::to_string(&entry) {
-        cache_put(&pool, &key, "dict", &src, &tgt, word, &raw).await;
+    // Подчищаем недоделки модели: значение без текста только мусорит панель,
+    // а статья без начальной формы выглядит сломанной.
+    entry.meanings.retain(|m| !m.gloss.trim().is_empty());
+    if entry.lemma.trim().is_empty() {
+        entry.lemma = word.to_string();
+    }
+    if entry.in_context.trim().is_empty() {
+        entry.in_context = entry.meanings.first().map(|m| m.gloss.clone()).unwrap_or_default();
+    }
+
+    // Пустую статью в кэш не кладём. Однажды закэшированный неудачный ответ
+    // не лечится ни повтором, ни перезапуском — этот урок уже был с озвучкой.
+    let worth_caching = !entry.in_context.trim().is_empty() || !entry.meanings.is_empty();
+    if worth_caching {
+        if let Ok(raw) = serde_json::to_string(&entry) {
+            cache_put(&pool, &key, "dict", &src, &tgt, word, &raw).await;
+        }
     }
     Ok((StatusCode::OK, Json(entry)))
 }
@@ -481,6 +520,32 @@ mod tests {
     fn free_key_picks_free_host() {
         assert!(deepl_endpoint("abc:fx").contains("api-free"));
         assert!(!deepl_endpoint("abc").contains("api-free"));
+    }
+
+    #[test]
+    fn dictionary_tolerates_nulls() {
+        // Ровно тот ответ, на котором падала панель разбора: null вместо строки.
+        let raw = r#"{"lemma":"dans","pos":"préposition","inContext":"в",
+                      "note":null,
+                      "meanings":[{"gloss":"в","example":null},{"gloss":"внутри"}]}"#;
+        let e: DictionaryEntry = serde_json::from_str(raw).expect("null не должен ломать разбор");
+        assert_eq!(e.note, "");
+        assert_eq!(e.meanings[0].example, "");
+        assert_eq!(e.meanings[1].gloss, "внутри");
+    }
+
+    #[test]
+    fn dictionary_survives_null_meanings() {
+        let raw = r#"{"lemma":"dans","pos":"prep","inContext":"в","meanings":null}"#;
+        let e: DictionaryEntry = serde_json::from_str(raw).expect("null-массив не должен ломать разбор");
+        assert!(e.meanings.is_empty());
+    }
+
+    #[test]
+    fn dictionary_survives_missing_fields() {
+        let e: DictionaryEntry = serde_json::from_str("{}").expect("пустой объект не должен ломать разбор");
+        assert_eq!(e.lemma, "");
+        assert!(e.meanings.is_empty());
     }
 
     #[test]
