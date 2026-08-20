@@ -135,6 +135,19 @@ async fn cache_get(pool: &PgPool, key: &str) -> Option<String> {
         .map(|r| r.get::<String, _>("translated"))
 }
 
+/// Пачка ключей одним запросом. Читалка предзагружает всю страницу разом, и
+/// полсотни отдельных SELECT'ов перед каждым листанием — лишние полсекунды.
+async fn cache_get_many(pool: &PgPool, keys: &[String]) -> std::collections::HashMap<String, String> {
+    let rows = sqlx::query("SELECT hash, translated FROM translation_cache WHERE hash = ANY($1)")
+        .bind(keys)
+        .fetch_all(pool)
+        .await
+        .unwrap_or_default();
+    rows.into_iter()
+        .map(|r| (r.get::<String, _>("hash"), r.get::<String, _>("translated")))
+        .collect()
+}
+
 async fn cache_put(pool: &PgPool, key: &str, provider: &str, src: &str, tgt: &str, text: &str, translated: &str) {
     let _ = sqlx::query(
         "INSERT INTO translation_cache (hash, provider, source_lang, target_lang, source_text, translated)
@@ -265,10 +278,11 @@ pub async fn translate_batch(
 
     // 1. Кэш. Контекст входит в ключ: одно и то же слово в разных предложениях —
     //    разные переводы, и склеивать их нельзя.
-    for (i, t) in texts.iter().enumerate() {
-        let key = cache_key(provider, source, target, context, t);
-        match cache_get(pool, &key).await {
-            Some(v) => out[i] = v,
+    let keys: Vec<String> = texts.iter().map(|t| cache_key(provider, source, target, context, t)).collect();
+    let cached = cache_get_many(pool, &keys).await;
+    for (i, key) in keys.iter().enumerate() {
+        match cached.get(key) {
+            Some(v) => out[i] = v.clone(),
             None => missing.push(i),
         }
     }
