@@ -75,35 +75,65 @@ where
     Ok(Option::<String>::deserialize(d)?.unwrap_or_default())
 }
 
-fn null_as_empty_vec<'de, D, T>(d: D) -> Result<Vec<T>, D::Error>
-where
-    D: serde::Deserializer<'de>,
-    T: Deserialize<'de>,
-{
-    Ok(Option::<Vec<T>>::deserialize(d)?.unwrap_or_default())
-}
-
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DictionaryMeaning {
-    #[serde(default, deserialize_with = "null_as_empty")]
     pub gloss: String,
-    #[serde(default, deserialize_with = "null_as_empty")]
     pub example: String,
+}
+
+/// Значение приходит то объектом `{"gloss": …}`, то просто строкой — модель
+/// решает это заново на каждый запрос. Принимаем оба вида, иначе разбор
+/// статьи зависит от настроения генерации.
+impl<'de> Deserialize<'de> for DictionaryMeaning {
+    fn deserialize<D>(d: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        #[derive(Deserialize)]
+        #[serde(untagged)]
+        enum Raw {
+            Text(String),
+            Obj {
+                #[serde(default, alias = "meaning", alias = "text", deserialize_with = "null_as_empty")]
+                gloss: String,
+                #[serde(default, deserialize_with = "null_as_empty")]
+                example: String,
+            },
+        }
+        Ok(match Raw::deserialize(d)? {
+            Raw::Text(t) => DictionaryMeaning { gloss: t, example: String::new() },
+            Raw::Obj { gloss, example } => DictionaryMeaning { gloss, example },
+        })
+    }
+}
+
+/// Список значений: поле целиком может прийти null, и отдельный элемент тоже.
+fn meanings_lenient<'de, D>(d: D) -> Result<Vec<DictionaryMeaning>, D::Error>
+where
+    D: serde::Deserializer<'de>,
+{
+    let raw = Option::<Vec<Option<DictionaryMeaning>>>::deserialize(d)?;
+    Ok(raw.unwrap_or_default().into_iter().flatten().collect())
 }
 
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DictionaryEntry {
     /// Начальная форма: инфинитив, единственное число, мужской род.
-    #[serde(default, deserialize_with = "null_as_empty")]
+    /// Псевдонимы — имена, которые модель выдумывает, когда ей не продиктовать
+    /// схему: она отвечает то `base_form`, то `part_of_speech`.
+    /// `word` в псевдонимы НЕ берём: модель присылает его вместе с `base_form`,
+    /// и serde падает на дубле полей. Потери нет — при пустой lemma
+    /// подставляется само запрошенное слово, то есть ровно то же значение.
+    #[serde(default, alias = "base_form", alias = "baseForm", deserialize_with = "null_as_empty")]
     pub lemma: String,
-    #[serde(default, deserialize_with = "null_as_empty")]
+    #[serde(default, alias = "part_of_speech", alias = "partOfSpeech", deserialize_with = "null_as_empty")]
     pub pos: String,
     /// Перевод именно в этом контексте — то, ради чего словарь и открывают.
-    #[serde(default, deserialize_with = "null_as_empty")]
+    #[serde(default, alias = "meaning_in_sentence", alias = "meaningInSentence", alias = "in_context", deserialize_with = "null_as_empty")]
     pub in_context: String,
-    #[serde(default, deserialize_with = "null_as_empty_vec")]
+    #[serde(default, alias = "common_meanings", alias = "commonMeanings", deserialize_with = "meanings_lenient")]
     pub meanings: Vec<DictionaryMeaning>,
     #[serde(default, deserialize_with = "null_as_empty")]
     pub note: String,
@@ -442,11 +472,20 @@ pub async fn dictionary_handler(
     let content = llm::chat_text(ChatRequest {
         task: Task::Grading,
         messages: vec![
+            // Имена полей приходится диктовать в самой инструкции: схема из
+            // поля `format` до модели не доезжает, и она отвечает то
+            // `base_form`, то `part_of_speech` — знакомых полей ноль, статья
+            // выходит пустой. С явным перечислением ключей ответ стабилен.
             ChatMessage::system(format!(
                 "You are a bilingual learner's dictionary for a reader of {} texts. \
-                 Explanations are written in {}. Give the dictionary (base) form, the part of speech, \
-                 the meaning the word carries in the given sentence, and up to three common meanings. \
-                 If the word is a proper name, say so in `note`. JSON only.",
+                 Reply with ONE JSON object and nothing else. Use exactly these keys:\n\
+                 {{\"lemma\": string, \"pos\": string, \"inContext\": string, \
+                 \"meanings\": [{{\"gloss\": string, \"example\": string}}], \"note\": string}}\n\
+                 lemma — the dictionary (base) form; pos — part of speech; \
+                 inContext — what the word means in THIS sentence; \
+                 meanings — up to three common meanings; \
+                 note — \"\" unless the word is a proper name. \
+                 Never use null: write \"\" or [] instead. All explanations are written in {}.",
                 lang_name(&src), lang_name(&tgt),
             )),
             ChatMessage::user(format!("Word: \"{word}\"\nSentence: \"{sentence}\"")),
@@ -532,6 +571,29 @@ mod tests {
         assert_eq!(e.note, "");
         assert_eq!(e.meanings[0].example, "");
         assert_eq!(e.meanings[1].gloss, "внутри");
+    }
+
+    #[test]
+    fn dictionary_reads_the_shape_the_model_actually_returns() {
+        // Дословный ответ gpt-oss:120b, на котором панель выходила пустой:
+        // свои имена полей и значения строками вместо объектов.
+        let raw = r#"{"word":"dans","base_form":"dans","part_of_speech":"предлог",
+                      "meaning_in_sentence":"в (место или область)",
+                      "common_meanings":["в, внутри (место)","в течение (время)"]}"#;
+        let e: DictionaryEntry = serde_json::from_str(raw).expect("импровизация модели должна читаться");
+        assert_eq!(e.lemma, "dans");
+        assert_eq!(e.pos, "предлог");
+        assert_eq!(e.in_context, "в (место или область)");
+        assert_eq!(e.meanings.len(), 2);
+        assert_eq!(e.meanings[0].gloss, "в, внутри (место)");
+        assert_eq!(e.meanings[0].example, "");
+    }
+
+    #[test]
+    fn dictionary_skips_null_inside_meanings() {
+        let raw = r#"{"lemma":"dans","meanings":[{"gloss":"в"},null,{"gloss":"внутри"}]}"#;
+        let e: DictionaryEntry = serde_json::from_str(raw).expect("null-элемент не должен ломать список");
+        assert_eq!(e.meanings.len(), 2);
     }
 
     #[test]
