@@ -98,6 +98,12 @@ export const updateBook = (id: string, patch: Partial<{
 export const deleteBook = (id: string) =>
   call<void>(`/api/books/${id}`, { method: 'DELETE' });
 
+export interface SearchHit { position: number; title: string; headline: string }
+
+/** Поиск по книге: где встречается слово или фраза. */
+export const searchBook = (id: string, q: string) =>
+  call<{ hits: SearchHit[] }>(`/api/books/${id}/search?q=${encodeURIComponent(q)}`);
+
 // ---------- Словарь ----------
 
 export const getVocab = (id: string) =>

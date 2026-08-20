@@ -420,7 +420,50 @@ pub async fn delete_book(
     Ok(StatusCode::NO_CONTENT)
 }
 
+/// GET /api/books/{id}/search?q= — где в книге встречается слово или фраза.
+pub async fn search_book(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Path(id): Path<Uuid>,
+    axum::extract::Query(params): axum::extract::Query<SearchParams>,
+) -> ApiResult<impl IntoResponse> {
+    let user_id = uid(&user.sub)?;
+    owned_book(&pool, id, user_id).await?;
+
+    let q = params.q.trim();
+    if q.is_empty() || q.chars().count() > 120 {
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "q: 1..120 chars"));
+    }
+
+    let rows = sqlx::query(
+        "SELECT position, title,
+                ts_headline('simple', content, plainto_tsquery('simple', $2),
+                            'MaxFragments=2,MinWords=4,MaxWords=12,StartSel=<b>,StopSel=</b>') AS headline
+         FROM book_chapters
+         WHERE book_id = $1 AND tsv @@ plainto_tsquery('simple', $2)
+         ORDER BY position LIMIT 40",
+    )
+    .bind(id)
+    .bind(q)
+    .fetch_all(&pool)
+    .await
+    .map_err(db_err)?;
+
+    let hits: Vec<serde_json::Value> = rows.into_iter().map(|r| json!({
+        "position": r.get::<i32, _>("position"),
+        "title": r.get::<String, _>("title"),
+        "headline": r.get::<String, _>("headline"),
+    })).collect();
+
+    Ok((StatusCode::OK, Json(json!({ "hits": hits }))))
+}
+
 // ---------- Словарь читателя ----------
+
+#[derive(Deserialize)]
+pub struct SearchParams {
+    pub q: String,
+}
 
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase")]

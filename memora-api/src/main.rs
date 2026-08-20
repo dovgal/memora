@@ -198,6 +198,7 @@ async fn main() {
         .route("/api/books/{id}/chapters", post(handlers::books::add_chapters))
         .route("/api/books/{id}/chapters/{position}", get(handlers::books::get_chapter))
         .route("/api/books/{id}/finalize", post(handlers::books::finalize_book))
+        .route("/api/books/{id}/search", get(handlers::books::search_book))
         .route("/api/books/{id}/vocab", get(handlers::books::get_vocab).put(handlers::books::put_vocab))
         .route("/api/books/{id}/cards", post(handlers::books::add_card))
         // Перевод (DeepL с кэшем) и словарная статья (LLM) — для читалки.

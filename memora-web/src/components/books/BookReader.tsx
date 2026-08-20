@@ -10,11 +10,11 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import {
   ChevronLeft, ChevronRight, Loader2, List, Play, Pause, Type, Layers,
-  BookOpen, CheckCheck, Languages,
+  BookOpen, CheckCheck, Languages, Search, X,
 } from 'lucide-react';
 import {
-  getBook, getChapter, getVocab, putVocab, updateBook, addCard, translate,
-  type BookDetail, type ChapterContent, type VocabStatus,
+  getBook, getChapter, getVocab, putVocab, updateBook, addCard, translate, searchBook,
+  type BookDetail, type ChapterContent, type VocabStatus, type SearchHit,
 } from '@/lib/books/api';
 import { splitParagraphs, paginate, uniqueWords } from '@/lib/books/tokenize';
 import { isUnknown } from '@/lib/books/vocab';
@@ -24,6 +24,19 @@ import { ReaderText, sentenceTexts } from './ReaderText';
 import { WordPanel, type Selection } from './WordPanel';
 
 const FONT_KEY = 'memora.books.font';
+
+/**
+ * Фрагмент из поиска: Postgres размечает совпадения тегами <b>. Собираем узлы
+ * сами, а не через innerHTML: текст книги — пользовательский, и вставлять его
+ * как разметку нельзя.
+ */
+function highlight(headline: string) {
+  return headline.split(/(<b>.*?<\/b>)/g).map((part, i) =>
+    part.startsWith('<b>')
+      ? <b key={i} className="text-foreground">{part.slice(3, -4)}</b>
+      : <span key={i}>{part}</span>,
+  );
+}
 
 export function BookReader({ bookId }: { bookId: string }) {
   const [detail, setDetail] = useState<BookDetail | null>(null);
@@ -42,6 +55,11 @@ export function BookReader({ bookId }: { bookId: string }) {
   const [targetLang, setTargetLang] = useState('ru');
   const [fontSize, setFontSize] = useState(19);
   const [toc, setToc] = useState(false);
+  const [query, setQuery] = useState('');
+  const [hits, setHits] = useState<SearchHit[] | null>(null);
+  const [searching, setSearching] = useState(false);
+  /** Что искать на странице после перехода по результату поиска. */
+  const [pendingFind, setPendingFind] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -134,6 +152,17 @@ export function BookReader({ bookId }: { bookId: string }) {
     })();
     return () => { alive = false; };
   }, [pageParagraphs, lang, targetLang]);
+
+  // ---------- Переход к найденному месту ----------
+  // Поиск возвращает главу, а читаем мы страницами: после загрузки главы
+  // находим страницу, где встречается запрос, и открываем сразу её.
+  useEffect(() => {
+    if (!pendingFind || pages.length === 0) return;
+    const needle = pendingFind.toLowerCase();
+    const idx = pages.findIndex(p => p.join(' ').toLowerCase().includes(needle));
+    setPendingFind(null);
+    if (idx >= 0) setPageIdx(idx);
+  }, [pendingFind, pages]);
 
   // ---------- Догрузка перевода под курсором ----------
   // Предзагрузка страницы могла не успеть или упереться в квоту — тогда слово
@@ -406,6 +435,10 @@ export function BookReader({ bookId }: { bookId: string }) {
             {TARGET_LANGS.map(l => <option key={l.code} value={l.code}>{l.name}</option>)}
           </select>
 
+          <button onClick={() => { setHits(h => (h === null ? [] : null)); setQuery(''); }} title="Поиск по книге"
+            className="p-1.5 rounded-lg border border-border text-qz-text-muted hover:text-foreground">
+            <Search className="w-4 h-4" />
+          </button>
           <button onClick={() => changeFont(-1)} title="Мельче"
             className="p-1.5 rounded-lg border border-border text-qz-text-muted hover:text-foreground">
             <Type className="w-3.5 h-3.5" />
@@ -425,6 +458,67 @@ export function BookReader({ bookId }: { bookId: string }) {
             {aloud ? 'Стоп' : 'Вслух'}
           </button>
         </div>
+
+        {/* Поиск по книге */}
+        {hits !== null && (
+          <div className="max-w-6xl mx-auto px-4 pb-3">
+            <form
+              onSubmit={async e => {
+                e.preventDefault();
+                if (!query.trim()) return;
+                setSearching(true);
+                try {
+                  const r = await searchBook(bookId, query.trim());
+                  setHits(r.hits);
+                } catch (err) {
+                  setError(err instanceof Error ? err.message : 'поиск не удался');
+                } finally {
+                  setSearching(false);
+                }
+              }}
+              className="flex items-center gap-2"
+            >
+              <input
+                autoFocus
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                placeholder="Найти слово или фразу в книге"
+                className="flex-1 bg-transparent border border-border rounded-lg px-3 py-2 text-sm text-foreground"
+              />
+              <button type="submit"
+                className="bg-[#4255ff] hover:bg-[#3144e0] text-white text-sm font-bold px-3 py-2 rounded-lg">
+                {searching ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Искать'}
+              </button>
+              <button type="button" onClick={() => { setHits(null); setQuery(''); }}
+                className="p-2 text-qz-text-muted hover:text-foreground">
+                <X className="w-4 h-4" />
+              </button>
+            </form>
+            {hits.length > 0 && (
+              <div className="mt-2 max-h-64 overflow-y-auto space-y-1">
+                {hits.map(h => (
+                  <button
+                    key={h.position}
+                    onClick={() => {
+                      stopAloud();
+                      setChapterPos(h.position);
+                      setPageIdx(0);
+                      setPendingFind(query.trim());
+                      setHits(null);
+                    }}
+                    className="block w-full text-left text-sm px-3 py-2 rounded-lg text-qz-text-muted hover:bg-muted"
+                  >
+                    <span className="font-semibold text-foreground">{h.title || `Глава ${h.position + 1}`}</span>
+                    <span className="block text-xs mt-0.5">{highlight(h.headline)}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+            {hits.length === 0 && query && !searching && (
+              <p className="text-qz-text-muted text-xs mt-2">Ничего не нашлось.</p>
+            )}
+          </div>
+        )}
 
         {/* Оглавление */}
         {toc && (
