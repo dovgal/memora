@@ -49,6 +49,8 @@ export function BookReader({ bookId }: { bookId: string }) {
   const [selTranslating, setSelTranslating] = useState(false);
   const [sentTranslation, setSentTranslation] = useState<string | null>(null);
   const [hover, setHover] = useState<{ key: string; x: number; y: number } | null>(null);
+  /** Перевод под словом по касанию: на сенсорном экране наведения нет. */
+  const [tap, setTap] = useState<{ key: string; raw: string; sentence: string; x: number; y: number } | null>(null);
   const [aloud, setAloud] = useState(false);
   const [aloudIdx, setAloudIdx] = useState<number | null>(null);
   const [cards, setCards] = useState<Set<string>>(new Set());
@@ -168,7 +170,7 @@ export function BookReader({ bookId }: { bookId: string }) {
   // Предзагрузка страницы могла не успеть или упереться в квоту — тогда слово
   // под курсором переводится отдельно. Задержка отсекает случайные пробеги мыши.
   useEffect(() => {
-    const key = hover?.key;
+    const key = hover?.key ?? tap?.key;
     if (!key || !lang || transRef.current.has(key)) return;
     let alive = true;
     const t = setTimeout(() => {
@@ -182,7 +184,7 @@ export function BookReader({ bookId }: { bookId: string }) {
       })();
     }, 220);
     return () => { alive = false; clearTimeout(t); };
-  }, [hover, lang, targetLang]);
+  }, [hover, tap, lang, targetLang]);
 
   // ---------- Сохранение позиции ----------
   useEffect(() => {
@@ -281,10 +283,21 @@ export function BookReader({ bookId }: { bookId: string }) {
     const target = (e.target as HTMLElement).closest('[data-word]') as HTMLElement | null;
     // Пользователь выделяет фразу — не перебиваем выделение открытием слова.
     if ((window.getSelection()?.toString() ?? '').trim().length > 1) return;
-    if (!target) return;
+    if (!target) { setTap(null); return; }
     const key = target.getAttribute('data-word') ?? '';
     const raw = target.getAttribute('data-raw') ?? key;
-    void openSelection({ kind: 'word', text: raw, key, sentence: sentenceOf(target) });
+    const sentence = sentenceOf(target);
+
+    // Палец или мышь — решаем по самому событию, а не по ширине экрана:
+    // на сенсорном экране наведения не существует, и подсказка не появится
+    // никогда, а открывать полный разбор ради одного слова слишком грубо.
+    const touch = (e.nativeEvent as PointerEvent).pointerType === 'touch';
+    if (touch) {
+      const r = target.getBoundingClientRect();
+      setTap({ key, raw, sentence, x: r.left + r.width / 2, y: r.bottom });
+      return;
+    }
+    void openSelection({ kind: 'word', text: raw, key, sentence });
   };
 
   const onTextOver = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -342,6 +355,7 @@ export function BookReader({ bookId }: { bookId: string }) {
   const goPage = useCallback((d: number) => {
     stopAloud();
     setSel(null);
+    setTap(null);
     setPageIdx(prev => {
       const next = prev + d;
       if (next >= 0 && next < pages.length) return next;
@@ -355,6 +369,15 @@ export function BookReader({ bookId }: { bookId: string }) {
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [pages.length, chapterPos, detail, stopAloud]);
+
+  // Пузырёк привязан к месту на экране: при прокрутке слово из-под него
+  // уезжает, поэтому закрываем.
+  useEffect(() => {
+    if (!tap) return;
+    const close = () => setTap(null);
+    window.addEventListener('scroll', close, { passive: true });
+    return () => window.removeEventListener('scroll', close);
+  }, [tap]);
 
   // ---------- Горячие клавиши ----------
   useEffect(() => {
@@ -663,6 +686,34 @@ export function BookReader({ bookId }: { bookId: string }) {
             sentenceTranslation={sentTranslation}
             onTranslateSentence={() => void translateSentence()}
           />
+        </div>
+      )}
+
+      {/* Перевод под словом по короткому касанию */}
+      {tap && (
+        <div
+          className="fixed z-50 flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold max-w-[80vw]"
+          style={{
+            left: Math.min(Math.max(tap.x, 100), (typeof window !== 'undefined' ? window.innerWidth : 1000) - 100),
+            top: tap.y + 8,
+            transform: 'translateX(-50%)',
+            background: '#0b7355',
+            color: '#ffffff',
+            border: '1px solid rgba(255,255,255,.28)',
+            boxShadow: '0 10px 28px rgba(11,115,85,.45)',
+          }}
+          data-tick={transTick}
+        >
+          <span className="truncate">{transRef.current.get(tap.key) ?? '…'}</span>
+          <button
+            onClick={() => {
+              void openSelection({ kind: 'word', text: tap.raw, key: tap.key, sentence: tap.sentence });
+              setTap(null);
+            }}
+            className="shrink-0 text-[11px] font-bold uppercase tracking-wider bg-white/20 hover:bg-white/30 px-2 py-1 rounded-lg transition-colors"
+          >
+            разбор
+          </button>
         </div>
       )}
 
