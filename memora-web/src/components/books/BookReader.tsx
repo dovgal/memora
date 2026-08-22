@@ -642,7 +642,10 @@ export function BookReader({ bookId }: { bookId: string }) {
 
       {/* Мобильная панель разбора — снизу */}
       {sel && (
-        <div className="lg:hidden fixed inset-x-0 bottom-0 z-30 bg-qz-card border-t border-border rounded-t-2xl p-4 max-h-[70vh] overflow-y-auto shadow-2xl">
+        // bottom-16 и z-50: нижняя навигация панели управления закреплена снизу
+        // с z-40 и перекрывала бы разбор слова — на телефоне это съедало кнопки
+        // статуса и «в карточки».
+        <div className="lg:hidden fixed inset-x-0 bottom-16 z-50 bg-qz-card border-t border-border rounded-t-2xl p-4 max-h-[60vh] overflow-y-auto shadow-2xl">
           <WordPanel
             key={`${sel.text}|${sel.sentence}`}
             selection={sel}
