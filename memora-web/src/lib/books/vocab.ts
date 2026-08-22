@@ -21,17 +21,24 @@ export const STATUS_HINT: Record<VocabStatus, string> = {
 };
 
 /**
- * Цвет подсветки слова. Значения подобраны так, чтобы текст поверх оставался
- * читаемым в обеих темах: заливка полупрозрачная, буквы — цвет темы.
+ * Отметка статуса — ТОЛЬКО подчёркивание, без заливки фона.
+ *
+ * Заливка на каждом втором слове забивает страницу: глаз цепляется за
+ * цветные прямоугольники, а не за текст, и читать становится нечем. Линия
+ * под словом сообщает ровно то же, но не спорит с буквами.
+ *
+ * Раз насыщенность фона больше не работает шкалой, статусы различаем
+ * цветом и характером линии: сплошная синяя — незнакомое, сплошная
+ * янтарная — в работе, пунктир — почти выучено, ничего — выучено.
  */
 export function statusStyle(status: VocabStatus | undefined): string {
   switch (status) {
     case undefined:
-    case 0:  return 'bg-[#4255ff]/15 border-b-2 border-[#4255ff]/50';
-    case 1:  return 'bg-amber-400/45 border-b-2 border-amber-500/70';
-    case 2:  return 'bg-amber-300/22 border-b-2 border-amber-400/40';
+    case 0:  return 'border-b-2 border-[#4255ff]/70';
+    case 1:  return 'border-b-2 border-amber-500/90';
+    case 2:  return 'border-b-2 border-dotted border-amber-500/70';
     case 3:  return '';
-    case 4:  return 'opacity-70';
+    case 4:  return 'opacity-60';
   }
 }
 

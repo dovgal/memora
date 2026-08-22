@@ -71,7 +71,7 @@ export const ReaderText = memo(function ReaderText({
                     data-word={t.key}
                     data-raw={t.text}
                     data-sentence={s.idx}
-                    className={`cursor-pointer rounded-[3px] transition-colors hover:brightness-95 ${
+                    className={`cursor-pointer rounded-[3px] transition-colors hover:bg-foreground/5 ${
                       statusStyle(status)
                     } ${active ? 'ring-2 ring-[#4255ff] ring-offset-1 ring-offset-transparent' : ''}`}
                   >

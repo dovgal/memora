@@ -653,8 +653,15 @@ export function BookReader({ bookId }: { bookId: string }) {
             ) : (
               <div className="text-sm text-qz-text-muted space-y-2">
                 <p className="font-bold text-foreground">Как читать</p>
-                <p><span className="inline-block w-3 h-3 rounded bg-[#4255ff]/25 border-b-2 border-[#4255ff]/50 align-middle" /> — слово, которое вы ещё не отмечали. Наведите — увидите перевод, нажмите — откроется разбор.</p>
-                <p><span className="inline-block w-3 h-3 rounded bg-amber-400/45 align-middle" /> — взято в работу. Чем светлее, тем лучше вы его знаете.</p>
+                <p>
+                  <span className="border-b-2 border-[#4255ff]/70 text-foreground">слово</span> — ещё не отмечали.
+                  Наведите — увидите перевод, нажмите — откроется разбор.
+                </p>
+                <p>
+                  <span className="border-b-2 border-amber-500/90 text-foreground">слово</span> — учу,{' '}
+                  <span className="border-b-2 border-dotted border-amber-500/70 text-foreground">слово</span> — узнаю.
+                  Выученное подчёркиваться перестаёт.
+                </p>
                 <p>Выделите несколько слов мышью — переведётся вся фраза.</p>
                 <p>Клавиши: <b>1…5</b> — статус слова, <b>←</b> и <b>→</b> — страницы.</p>
               </div>
