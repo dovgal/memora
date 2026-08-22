@@ -10,6 +10,7 @@ import { ACCEPTED, extractBook, formatOf } from '@/lib/books/extract';
 import { uploadBook } from '@/lib/books/upload';
 import type { ChapterDraft } from '@/lib/books/draft';
 import { TARGET_LANGS } from '@/lib/books/langs';
+import { BOOK_TOPICS } from '@/lib/books/topics';
 
 type Stage = 'idle' | 'parsing' | 'ready' | 'sending' | 'error';
 
@@ -22,6 +23,7 @@ export function UploadBook({ onDone }: { onDone?: () => void }) {
   const [chapters, setChapters] = useState<ChapterDraft[]>([]);
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
+  const [topic, setTopic] = useState('');
   const [language, setLanguage] = useState('');
   const [targetLanguage, setTargetLanguage] = useState('ru');
   const [format, setFormat] = useState('txt');
@@ -52,7 +54,7 @@ export function UploadBook({ onDone }: { onDone?: () => void }) {
     setError(null);
     try {
       const book = await uploadBook(
-        { title, author, language, targetLanguage, sourceFormat: format },
+        { title, author, topic, language, targetLanguage, sourceFormat: format },
         chapters,
         (done, total) => setNote(`Отправляю главы: ${done} из ${total}`),
       );
@@ -72,7 +74,8 @@ export function UploadBook({ onDone }: { onDone?: () => void }) {
       <h2 className="font-bold text-foreground mb-1">Загрузить книгу</h2>
       <p className="text-qz-text-muted text-sm mb-4">
         EPUB, FB2, TXT, PDF или DOCX. Файл разбирается прямо в браузере — на сервер
-        уходит уже готовый текст. Язык определится сам, если его нет в файле.
+        уходит уже готовый текст. Язык и рубрику определит модель, если не указать их руками.
+        Книга попадёт на общую полку: читать её смогут все, но слова и карточки у каждого свои.
       </p>
 
       <input
@@ -119,6 +122,14 @@ export function UploadBook({ onDone }: { onDone?: () => void }) {
               <span className="text-xs font-bold uppercase tracking-wider text-qz-text-muted">Автор</span>
               <input value={author} onChange={e => setAuthor(e.target.value)}
                 className="w-full mt-1 bg-transparent border border-border rounded-lg px-3 py-2 text-sm text-foreground" />
+            </label>
+            <label className="block">
+              <span className="text-xs font-bold uppercase tracking-wider text-qz-text-muted">Рубрика</span>
+              <select value={topic} onChange={e => setTopic(e.target.value)}
+                className="w-full mt-1 bg-transparent border border-border rounded-lg px-3 py-2 text-sm text-foreground">
+                <option value="">Определить автоматически</option>
+                {BOOK_TOPICS.map(t => <option key={t} value={t}>{t}</option>)}
+              </select>
             </label>
             <label className="block">
               <span className="text-xs font-bold uppercase tracking-wider text-qz-text-muted">Язык книги</span>

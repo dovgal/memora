@@ -34,18 +34,28 @@ fn db_err(e: sqlx::Error) -> (StatusCode, Json<ApiError>) {
     ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {e}"))
 }
 
-/// Проверяет владение книгой и отдаёт её язык — он нужен почти каждому хендлеру.
-async fn owned_book(pool: &PgPool, book_id: Uuid, user_id: Uuid) -> ApiResult<String> {
+/// Книга и тот, кто её загрузил. Полка общая: читать может любой вошедший,
+/// поэтому проверка на владельца отделена от простого чтения.
+async fn readable_book(pool: &PgPool, book_id: Uuid) -> ApiResult<(String, Uuid)> {
     let row = sqlx::query("SELECT owner_id, language FROM books WHERE id = $1")
         .bind(book_id)
         .fetch_optional(pool)
         .await
         .map_err(db_err)?
         .ok_or_else(|| ApiError::response(StatusCode::NOT_FOUND, "Book not found"))?;
-    if row.get::<Uuid, _>("owner_id") != user_id {
-        return Err(ApiError::response(StatusCode::FORBIDDEN, "You are not the owner of this book"));
+    Ok((row.get::<String, _>("language"), row.get::<Uuid, _>("owner_id")))
+}
+
+/// Для изменения самой книги: название, автора, тему правит только загрузивший.
+async fn owned_book(pool: &PgPool, book_id: Uuid, user_id: Uuid) -> ApiResult<String> {
+    let (language, owner) = readable_book(pool, book_id).await?;
+    if owner != user_id {
+        return Err(ApiError::response(
+            StatusCode::FORBIDDEN,
+            "Книгу может изменить только тот, кто её загрузил",
+        ));
     }
-    Ok(row.get::<String, _>("language"))
+    Ok(language)
 }
 
 // ---------- DTO ----------
@@ -56,6 +66,9 @@ pub struct CreateBookRequest {
     pub title: String,
     #[serde(default)]
     pub author: String,
+    /// Рубрика полки. Пусто — определит модель вместе с языком.
+    #[serde(default)]
+    pub topic: String,
     /// Пусто — язык определит ИИ после загрузки глав.
     #[serde(default)]
     pub language: String,
@@ -85,6 +98,7 @@ pub struct ChaptersRequest {
 pub struct UpdateBookRequest {
     pub title: Option<String>,
     pub author: Option<String>,
+    pub topic: Option<String>,
     pub language: Option<String>,
     pub target_language: Option<String>,
     pub last_chapter: Option<i32>,
@@ -97,6 +111,8 @@ pub struct BookSummary {
     pub id: String,
     pub title: String,
     pub author: String,
+    /// Рубрика для полки: «Классика», «История», «Наука»…
+    pub topic: String,
     pub language: String,
     pub target_language: String,
     pub source_format: String,
@@ -106,17 +122,22 @@ pub struct BookSummary {
     pub last_chapter: i32,
     pub last_offset: f32,
     pub status: String,
+    /// Загрузил ли книгу тот, кто её сейчас смотрит: от этого зависит право
+    /// править описание и удалять.
+    pub is_owner: bool,
     pub created_at: String,
     pub updated_at: String,
 }
 
-fn book_from_row(r: &sqlx::postgres::PgRow) -> BookSummary {
+fn book_from_row(r: &sqlx::postgres::PgRow, viewer: Uuid) -> BookSummary {
     let created: chrono::DateTime<chrono::Utc> = r.get("created_at");
     let updated: chrono::DateTime<chrono::Utc> = r.get("updated_at");
     BookSummary {
         id: r.get::<Uuid, _>("id").to_string(),
         title: r.get("title"),
         author: r.get("author"),
+        topic: r.get("topic"),
+        is_owner: r.get::<Uuid, _>("owner_id") == viewer,
         language: r.get("language"),
         target_language: r.get("target_language"),
         source_format: r.get("source_format"),
@@ -131,8 +152,17 @@ fn book_from_row(r: &sqlx::postgres::PgRow) -> BookSummary {
     }
 }
 
-const BOOK_COLUMNS: &str = "id, title, author, language, target_language, source_format, \
-     chapter_count, word_count, set_id, last_chapter, last_offset, status, created_at, updated_at";
+/// Книга плюс личное состояние читателя. Позиция, язык перевода и набор
+/// карточек живут в user_book_state, поэтому подтягиваются LEFT JOIN-ом:
+/// у того, кто книгу ещё не открывал, строки нет — отсюда COALESCE.
+const BOOK_SELECT: &str = "SELECT b.id, b.title, b.author, b.topic, b.language, b.source_format, \
+     b.chapter_count, b.word_count, b.status, b.owner_id, b.created_at, \
+     COALESCE(s.target_language, 'ru') AS target_language, \
+     COALESCE(s.last_chapter, 0) AS last_chapter, \
+     COALESCE(s.last_offset, 0::real) AS last_offset, \
+     s.set_id AS set_id, \
+     COALESCE(s.updated_at, b.updated_at) AS updated_at \
+     FROM books b LEFT JOIN user_book_state s ON s.book_id = b.id AND s.user_id = $1";
 
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -166,20 +196,34 @@ pub async fn create_book(
     let format = if payload.source_format.trim().is_empty() { "txt" } else { payload.source_format.trim() };
 
     let row = sqlx::query(
-        "INSERT INTO books (owner_id, title, author, language, target_language, source_format)
+        "INSERT INTO books (owner_id, title, author, topic, language, source_format)
          VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
     )
     .bind(user_id)
     .bind(title)
     .bind(payload.author.trim())
+    .bind(payload.topic.trim())
     .bind(payload.language.trim().to_lowercase())
-    .bind(target.to_lowercase())
     .bind(format)
     .fetch_one(&pool)
     .await
     .map_err(db_err)?;
+    let book_id: Uuid = row.get("id");
 
-    Ok((StatusCode::CREATED, Json(json!({ "id": row.get::<Uuid, _>("id").to_string() }))))
+    // Язык перевода — вещь личная, поэтому ложится не в книгу, а в состояние
+    // читателя: следующий, кто откроет её, выберет свой.
+    sqlx::query(
+        "INSERT INTO user_book_state (user_id, book_id, target_language) VALUES ($1, $2, $3)
+         ON CONFLICT (user_id, book_id) DO UPDATE SET target_language = EXCLUDED.target_language",
+    )
+    .bind(user_id)
+    .bind(book_id)
+    .bind(target.to_lowercase())
+    .execute(&pool)
+    .await
+    .map_err(db_err)?;
+
+    Ok((StatusCode::CREATED, Json(json!({ "id": book_id.to_string() }))))
 }
 
 /// POST /api/books/{id}/chapters — пачка глав. Вставка одним UNNEST-запросом:
@@ -260,10 +304,15 @@ pub async fn finalize_book(
         return Err(ApiError::response(StatusCode::BAD_REQUEST, "Book has no chapters"));
     }
 
-    // Язык не указан при загрузке — определяем по началу книги облачной моделью.
-    // Провал определения не должен ломать загрузку: язык можно выбрать руками.
+    let known = sqlx::query("SELECT title, topic FROM books WHERE id = $1")
+        .bind(id).fetch_one(&pool).await.map_err(db_err)?;
+    let title: String = known.get("title");
+    let mut topic: String = known.get("topic");
+
+    // Чего не хватает — спрашиваем у модели по началу книги. Провал определения
+    // не должен ломать загрузку: и язык, и тему владелец может выставить руками.
     let mut detected = language.clone();
-    if detected.is_empty() {
+    if detected.is_empty() || topic.is_empty() {
         let sample = sqlx::query(
             "SELECT left(content, 1500) AS s FROM book_chapters WHERE book_id = $1 ORDER BY position LIMIT 1",
         )
@@ -274,40 +323,44 @@ pub async fn finalize_book(
         .map(|r| r.get::<String, _>("s"))
         .unwrap_or_default();
 
-        match translate::detect_language(&sample).await {
-            Ok(code) => detected = code,
-            Err(e) => eprintln!("[books] language detection failed for {id}: {e}"),
+        match translate::detect_book_facts(&sample, &title).await {
+            Ok((code, guessed)) => {
+                if detected.is_empty() { detected = code; }
+                if topic.is_empty() { topic = guessed; }
+            }
+            Err(e) => eprintln!("[books] detection failed for {id}: {e}"),
         }
     }
 
-    let row = sqlx::query(
-        &format!("UPDATE books
-            SET chapter_count = $1, word_count = $2, language = $3, status = 'ready', updated_at = NOW()
-            WHERE id = $4 RETURNING {BOOK_COLUMNS}"),
+    sqlx::query(
+        "UPDATE books SET chapter_count = $1, word_count = $2, language = $3, topic = $4,
+                          status = 'ready', updated_at = NOW() WHERE id = $5",
     )
-    .bind(chapter_count)
-    .bind(word_count)
-    .bind(&detected)
-    .bind(id)
-    .fetch_one(&pool)
-    .await
-    .map_err(db_err)?;
+    .bind(chapter_count).bind(word_count).bind(&detected).bind(&topic).bind(id)
+    .execute(&pool).await.map_err(db_err)?;
 
-    Ok((StatusCode::OK, Json(book_from_row(&row))))
+    let row = sqlx::query(&format!("{BOOK_SELECT} WHERE b.id = $2"))
+        .bind(user_id).bind(id).fetch_one(&pool).await.map_err(db_err)?;
+    Ok((StatusCode::OK, Json(book_from_row(&row, user_id))))
 }
 
-/// GET /api/books — полка читателя.
+/// GET /api/books — общая полка: книги всех читателей.
+/// Недособранные книги видит только тот, кто их загружает: чужая полка не
+/// должна мигать наполовину залитыми томами.
 pub async fn list_books(
     State(pool): State<PgPool>,
     AuthenticatedUser(user): AuthenticatedUser,
 ) -> ApiResult<impl IntoResponse> {
     let user_id = uid(&user.sub)?;
-    let rows = sqlx::query(&format!("SELECT {BOOK_COLUMNS} FROM books WHERE owner_id = $1 ORDER BY updated_at DESC"))
-        .bind(user_id)
-        .fetch_all(&pool)
-        .await
-        .map_err(db_err)?;
-    let books: Vec<BookSummary> = rows.iter().map(book_from_row).collect();
+    let rows = sqlx::query(&format!(
+        "{BOOK_SELECT} WHERE b.status = 'ready' OR b.owner_id = $1
+         ORDER BY (s.updated_at IS NULL), COALESCE(s.updated_at, b.created_at) DESC"
+    ))
+    .bind(user_id)
+    .fetch_all(&pool)
+    .await
+    .map_err(db_err)?;
+    let books: Vec<BookSummary> = rows.iter().map(|r| book_from_row(r, user_id)).collect();
     Ok((StatusCode::OK, Json(books)))
 }
 
@@ -318,9 +371,10 @@ pub async fn get_book(
     Path(id): Path<Uuid>,
 ) -> ApiResult<impl IntoResponse> {
     let user_id = uid(&user.sub)?;
-    owned_book(&pool, id, user_id).await?;
+    readable_book(&pool, id).await?;
 
-    let row = sqlx::query(&format!("SELECT {BOOK_COLUMNS} FROM books WHERE id = $1"))
+    let row = sqlx::query(&format!("{BOOK_SELECT} WHERE b.id = $2"))
+        .bind(user_id)
         .bind(id)
         .fetch_one(&pool)
         .await
@@ -341,7 +395,7 @@ pub async fn get_book(
     })
     .collect();
 
-    Ok((StatusCode::OK, Json(BookDetail { book: book_from_row(&row), chapters })))
+    Ok((StatusCode::OK, Json(BookDetail { book: book_from_row(&row, user_id), chapters })))
 }
 
 /// GET /api/books/{id}/chapters/{position} — текст главы.
@@ -351,7 +405,8 @@ pub async fn get_chapter(
     Path((id, position)): Path<(Uuid, i32)>,
 ) -> ApiResult<impl IntoResponse> {
     let user_id = uid(&user.sub)?;
-    owned_book(&pool, id, user_id).await?;
+    let _ = user_id;
+    readable_book(&pool, id).await?;
 
     let row = sqlx::query(
         "SELECT position, title, content, word_count FROM book_chapters WHERE book_id = $1 AND position = $2",
@@ -371,7 +426,11 @@ pub async fn get_chapter(
     }))))
 }
 
-/// PATCH /api/books/{id} — язык перевода, позиция чтения, название.
+/// PATCH /api/books/{id} — правка делится надвое.
+///
+/// Описание книги (название, автор, тема, язык оригинала) общее для всех, и
+/// менять его вправе только тот, кто книгу загрузил. Позиция чтения и язык
+/// перевода принадлежат читателю: полка общая, но место в тексте у каждого своё.
 pub async fn update_book(
     State(pool): State<PgPool>,
     AuthenticatedUser(user): AuthenticatedUser,
@@ -379,33 +438,58 @@ pub async fn update_book(
     Json(payload): Json<UpdateBookRequest>,
 ) -> ApiResult<impl IntoResponse> {
     let user_id = uid(&user.sub)?;
-    owned_book(&pool, id, user_id).await?;
+    readable_book(&pool, id).await?;
 
-    // COALESCE вместо сборки SQL: позиция чтения сохраняется на каждом
-    // пролистывании, и отдельный запрос под каждое поле того не стоит.
-    let row = sqlx::query(&format!(
-        "UPDATE books SET
-            title = COALESCE($2, title),
-            author = COALESCE($3, author),
-            language = COALESCE($4, language),
-            target_language = COALESCE($5, target_language),
-            last_chapter = COALESCE($6, last_chapter),
-            last_offset = COALESCE($7, last_offset),
-            updated_at = NOW()
-         WHERE id = $1 RETURNING {BOOK_COLUMNS}"
-    ))
-    .bind(id)
-    .bind(payload.title.as_ref().map(|s| s.trim().chars().take(250).collect::<String>()))
-    .bind(payload.author.as_ref().map(|s| s.trim().chars().take(250).collect::<String>()))
-    .bind(payload.language.as_ref().map(|s| s.trim().to_lowercase()))
-    .bind(payload.target_language.as_ref().map(|s| s.trim().to_lowercase()))
-    .bind(payload.last_chapter)
-    .bind(payload.last_offset)
-    .fetch_one(&pool)
-    .await
-    .map_err(db_err)?;
+    let touches_book = payload.title.is_some() || payload.author.is_some()
+        || payload.topic.is_some() || payload.language.is_some();
+    if touches_book {
+        owned_book(&pool, id, user_id).await?;
+        sqlx::query(
+            "UPDATE books SET
+                title = COALESCE($2, title),
+                author = COALESCE($3, author),
+                topic = COALESCE($4, topic),
+                language = COALESCE($5, language),
+                updated_at = NOW()
+             WHERE id = $1",
+        )
+        .bind(id)
+        .bind(payload.title.as_ref().map(|s| s.trim().chars().take(250).collect::<String>()))
+        .bind(payload.author.as_ref().map(|s| s.trim().chars().take(250).collect::<String>()))
+        .bind(payload.topic.as_ref().map(|s| s.trim().chars().take(80).collect::<String>()))
+        .bind(payload.language.as_ref().map(|s| s.trim().to_lowercase()))
+        .execute(&pool)
+        .await
+        .map_err(db_err)?;
+    }
 
-    Ok((StatusCode::OK, Json(book_from_row(&row))))
+    let touches_state = payload.target_language.is_some()
+        || payload.last_chapter.is_some() || payload.last_offset.is_some();
+    if touches_state {
+        // Приведение типов у COALESCE обязательно: параметр приходит пустым
+        // (NULL), и без него Postgres не знает, какого типа значение.
+        sqlx::query(
+            "INSERT INTO user_book_state (user_id, book_id, target_language, last_chapter, last_offset)
+             VALUES ($1, $2, COALESCE($3::text, 'ru'), COALESCE($4::int, 0), COALESCE($5::real, 0))
+             ON CONFLICT (user_id, book_id) DO UPDATE SET
+                target_language = COALESCE($3::text, user_book_state.target_language),
+                last_chapter    = COALESCE($4::int, user_book_state.last_chapter),
+                last_offset     = COALESCE($5::real, user_book_state.last_offset),
+                updated_at      = NOW()",
+        )
+        .bind(user_id)
+        .bind(id)
+        .bind(payload.target_language.as_ref().map(|s| s.trim().to_lowercase()))
+        .bind(payload.last_chapter)
+        .bind(payload.last_offset)
+        .execute(&pool)
+        .await
+        .map_err(db_err)?;
+    }
+
+    let row = sqlx::query(&format!("{BOOK_SELECT} WHERE b.id = $2"))
+        .bind(user_id).bind(id).fetch_one(&pool).await.map_err(db_err)?;
+    Ok((StatusCode::OK, Json(book_from_row(&row, user_id))))
 }
 
 /// DELETE /api/books/{id} — книга и её главы; набор карточек остаётся.
@@ -428,7 +512,8 @@ pub async fn search_book(
     axum::extract::Query(params): axum::extract::Query<SearchParams>,
 ) -> ApiResult<impl IntoResponse> {
     let user_id = uid(&user.sub)?;
-    owned_book(&pool, id, user_id).await?;
+    let _ = user_id;
+    readable_book(&pool, id).await?;
 
     let q = params.q.trim();
     if q.is_empty() || q.chars().count() > 120 {
@@ -498,7 +583,7 @@ pub async fn get_vocab(
     Path(id): Path<Uuid>,
 ) -> ApiResult<impl IntoResponse> {
     let user_id = uid(&user.sub)?;
-    let language = owned_book(&pool, id, user_id).await?;
+    let (language, _) = readable_book(&pool, id).await?;
 
     let rows = sqlx::query(
         "SELECT word, status, translation FROM user_vocab WHERE user_id = $1 AND language = $2",
@@ -526,7 +611,7 @@ pub async fn put_vocab(
     Json(payload): Json<VocabRequest>,
 ) -> ApiResult<impl IntoResponse> {
     let user_id = uid(&user.sub)?;
-    let language = owned_book(&pool, id, user_id).await?;
+    let (language, _) = readable_book(&pool, id).await?;
     if payload.words.is_empty() || payload.words.len() > 500 {
         return Err(ApiError::response(StatusCode::BAD_REQUEST, "words: 1..500"));
     }
@@ -603,7 +688,7 @@ pub async fn add_card(
     Json(payload): Json<AddCardRequest>,
 ) -> ApiResult<impl IntoResponse> {
     let user_id = uid(&user.sub)?;
-    owned_book(&pool, id, user_id).await?;
+    readable_book(&pool, id).await?;
 
     let term = payload.term.trim();
     let definition = payload.definition.trim();
@@ -611,19 +696,26 @@ pub async fn add_card(
         return Err(ApiError::response(StatusCode::BAD_REQUEST, "term and definition are required"));
     }
 
-    let book = sqlx::query("SELECT title, language, target_language, set_id FROM books WHERE id = $1")
-        .bind(id)
-        .fetch_one(&pool)
-        .await
-        .map_err(db_err)?;
-    let title: String = book.get("title");
-    let language: String = book.get("language");
-    let target: String = book.get("target_language");
+    // Набор личный: книгу читают несколько человек, и складывать их слова в
+    // общую стопку нельзя — каждому нужен свой список на повторение.
+    let row = sqlx::query(
+        "SELECT b.title, b.language, COALESCE(s.target_language, 'ru') AS target_language, s.set_id
+         FROM books b LEFT JOIN user_book_state s ON s.book_id = b.id AND s.user_id = $2
+         WHERE b.id = $1",
+    )
+    .bind(id)
+    .bind(user_id)
+    .fetch_one(&pool)
+    .await
+    .map_err(db_err)?;
+    let title: String = row.get("title");
+    let language: String = row.get("language");
+    let target: String = row.get("target_language");
 
-    let set_id = match book.get::<Option<Uuid>, _>("set_id") {
+    let set_id = match row.get::<Option<Uuid>, _>("set_id") {
         Some(sid) => sid,
         None => {
-            let row = sqlx::query(
+            let created = sqlx::query(
                 "INSERT INTO sets (creator_id, title, description, is_public, fields_schema)
                  VALUES ($1, $2, $3, false, $4) RETURNING id",
             )
@@ -634,9 +726,13 @@ pub async fn add_card(
             .fetch_one(&pool)
             .await
             .map_err(db_err)?;
-            let sid: Uuid = row.get("id");
-            sqlx::query("UPDATE books SET set_id = $1, updated_at = NOW() WHERE id = $2")
-                .bind(sid).bind(id).execute(&pool).await.map_err(db_err)?;
+            let sid: Uuid = created.get("id");
+            sqlx::query(
+                "INSERT INTO user_book_state (user_id, book_id, set_id) VALUES ($1, $2, $3)
+                 ON CONFLICT (user_id, book_id) DO UPDATE SET set_id = EXCLUDED.set_id, updated_at = NOW()",
+            )
+            .bind(user_id).bind(id).bind(sid)
+            .execute(&pool).await.map_err(db_err)?;
             sid
         }
     };

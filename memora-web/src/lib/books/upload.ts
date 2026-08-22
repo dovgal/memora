@@ -11,7 +11,7 @@ const MAX_BATCH_CHARS = 600_000;
 const MAX_BATCH_ITEMS = 40;
 
 export async function uploadBook(
-  meta: { title: string; author?: string; language?: string; targetLanguage?: string; sourceFormat?: string },
+  meta: { title: string; author?: string; topic?: string; language?: string; targetLanguage?: string; sourceFormat?: string },
   chapters: ChapterDraft[],
   onProgress?: (done: number, total: number) => void,
 ): Promise<Book> {

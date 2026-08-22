@@ -1,17 +1,29 @@
 'use client';
-// Полка читателя: загруженные книги, прогресс и вход в чтение.
+// Общая полка: книги, загруженные всеми, разложенные по рубрикам.
+// Прогресс, словарь и карточки у каждого читателя свои — сервер отдаёт их
+// уже подставленными под того, кто смотрит.
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { BookOpen, Loader2, Trash2, Plus, Languages, ChevronLeft } from 'lucide-react';
+import { BookOpen, Loader2, Trash2, Plus, Languages, ChevronLeft, User } from 'lucide-react';
 import { listBooks, deleteBook, type Book } from '@/lib/books/api';
 import { langName } from '@/lib/books/langs';
+import { NO_TOPIC } from '@/lib/books/topics';
 import { UploadBook } from '@/components/books/UploadBook';
+
+type GroupBy = 'topic' | 'author' | 'language';
+
+const GROUPS: { id: GroupBy; label: string }[] = [
+  { id: 'topic', label: 'По рубрикам' },
+  { id: 'author', label: 'По авторам' },
+  { id: 'language', label: 'По языкам' },
+];
 
 export default function BooksPage() {
   const [books, setBooks] = useState<Book[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
+  const [groupBy, setGroupBy] = useState<GroupBy>('topic');
 
   const reload = useCallback(async () => {
     try {
@@ -38,7 +50,7 @@ export default function BooksPage() {
   }, []);
 
   const remove = async (b: Book) => {
-    if (!window.confirm(`Удалить «${b.title}»? Карточки, сохранённые из книги, останутся.`)) return;
+    if (!window.confirm(`Удалить «${b.title}» с общей полки? Карточки и выученные слова останутся у всех, кто её читал.`)) return;
     try {
       await deleteBook(b.id);
       await reload();
@@ -46,6 +58,28 @@ export default function BooksPage() {
       setError(e instanceof Error ? e.message : 'не удалось удалить книгу');
     }
   };
+
+  /** Книги, разложенные по выбранному признаку. Пустая рубрика уходит в конец. */
+  const groups = useMemo(() => {
+    if (!books) return [];
+    const key = (b: Book) =>
+      groupBy === 'topic' ? (b.topic || NO_TOPIC)
+      : groupBy === 'author' ? (b.author || 'Автор не указан')
+      : langName(b.language);
+
+    const map = new Map<string, Book[]>();
+    for (const b of books) {
+      const k = key(b);
+      const list = map.get(k);
+      if (list) list.push(b); else map.set(k, [b]);
+    }
+    return [...map.entries()].sort((a, b) => {
+      const aEmpty = a[0] === NO_TOPIC || a[0] === 'Автор не указан';
+      const bEmpty = b[0] === NO_TOPIC || b[0] === 'Автор не указан';
+      if (aEmpty !== bEmpty) return aEmpty ? 1 : -1;
+      return a[0].localeCompare(b[0], 'ru');
+    });
+  }, [books, groupBy]);
 
   return (
     <div className="min-h-screen bg-qz-card text-qz-text">
@@ -57,9 +91,9 @@ export default function BooksPage() {
           <BookOpen className="w-7 h-7 text-[#4255ff]" /> Чтение книг
         </h1>
         <p className="text-qz-text-muted mb-6 max-w-2xl">
-          Загрузите книгу на изучаемом языке. При чтении перевод появляется по наведению,
-          незнакомые слова подсвечены, а любое слово или фразу можно отправить в карточки
-          с интервальным повторением.
+          Полка общая: читать можно любую книгу, которую загрузил кто угодно. А вот выученные
+          слова, место в тексте и набор карточек у каждого свои — читая одну и ту же книгу,
+          вы не мешаете друг другу.
         </p>
 
         {adding ? (
@@ -84,41 +118,90 @@ export default function BooksPage() {
         ) : books.length === 0 ? (
           <p className="text-qz-text-muted text-sm">Полка пуста. Первая книга — самая полезная.</p>
         ) : (
-          <div className="grid sm:grid-cols-2 gap-3">
-            {books.map(b => {
-              const progress = b.chapterCount > 1
-                ? Math.round(((b.lastChapter + b.lastOffset) / b.chapterCount) * 100)
-                : Math.round(b.lastOffset * 100);
-              return (
-                <div key={b.id} className="bg-qz-card border border-border rounded-2xl p-4 flex flex-col">
-                  <Link href={`/books/${b.id}`} className="flex-1 group">
-                    <p className="font-bold text-foreground group-hover:text-[#4255ff] transition-colors leading-snug">{b.title}</p>
-                    {b.author && <p className="text-qz-text-muted text-xs mt-0.5">{b.author}</p>}
-                    <p className="text-qz-text-muted text-xs mt-2">
-                      {langName(b.language)} · {b.chapterCount} глав · {b.wordCount.toLocaleString('ru')} слов
-                    </p>
-                    <div className="h-1.5 bg-muted rounded-full mt-3">
-                      <div className="h-full bg-emerald-500 rounded-full transition-all" style={{ width: `${Math.min(100, progress)}%` }} />
-                    </div>
-                    <p className="text-qz-text-muted text-[11px] mt-1">прочитано {Math.min(100, progress)}%</p>
-                  </Link>
-                  <div className="flex items-center gap-2 mt-3 pt-3 border-t border-border">
-                    <Link href={`/books/${b.id}`} className="text-[#4255ff] text-xs font-bold hover:underline">Читать</Link>
-                    {b.setId && (
-                      <Link href={`/set/${b.setId}`} className="inline-flex items-center gap-1 text-qz-text-muted hover:text-foreground text-xs">
-                        <Languages className="w-3.5 h-3.5" /> карточки
-                      </Link>
-                    )}
-                    <div className="flex-1" />
-                    <button onClick={() => void remove(b)} title="Удалить книгу"
-                      className="text-qz-text-muted hover:text-red-500 transition-colors">
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
+          <>
+            <div className="flex items-center gap-1.5 mb-4 flex-wrap">
+              {GROUPS.map(g => (
+                <button
+                  key={g.id}
+                  onClick={() => setGroupBy(g.id)}
+                  className={`text-xs font-bold px-3 py-1.5 rounded-lg border transition-colors ${
+                    groupBy === g.id
+                      ? 'border-[#4255ff] text-[#4255ff] bg-[#4255ff]/10'
+                      : 'border-border text-qz-text-muted hover:text-foreground'
+                  }`}
+                >
+                  {g.label}
+                </button>
+              ))}
+              <span className="text-xs text-qz-text-muted ml-1">книг на полке: {books.length}</span>
+            </div>
+
+            {groups.map(([name, list]) => (
+              <section key={name} className="mb-6">
+                <h2 className="text-sm font-bold uppercase tracking-wider text-qz-text-muted mb-2">
+                  {name} <span className="font-normal normal-case opacity-70">· {list.length}</span>
+                </h2>
+                <div className="grid sm:grid-cols-2 gap-3">
+                  {list.map(b => <BookCard key={b.id} book={b} onRemove={remove} />)}
                 </div>
-              );
-            })}
-          </div>
+              </section>
+            ))}
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function BookCard({ book: b, onRemove }: { book: Book; onRemove: (b: Book) => void }) {
+  const progress = b.chapterCount > 1
+    ? Math.round(((b.lastChapter + b.lastOffset) / b.chapterCount) * 100)
+    : Math.round(b.lastOffset * 100);
+  const started = b.lastChapter > 0 || b.lastOffset > 0;
+
+  return (
+    <div className="bg-qz-card border border-border rounded-2xl p-4 flex flex-col">
+      <Link href={`/books/${b.id}`} className="flex-1 group">
+        <div className="flex items-start justify-between gap-2">
+          <p className="font-bold text-foreground group-hover:text-[#4255ff] transition-colors leading-snug">{b.title}</p>
+          {b.isOwner && (
+            <span title="Вы загрузили эту книгу"
+              className="shrink-0 inline-flex items-center gap-1 text-[10px] text-qz-text-muted border border-border rounded-md px-1.5 py-0.5">
+              <User className="w-3 h-3" /> моя
+            </span>
+          )}
+        </div>
+        {b.author && <p className="text-qz-text-muted text-xs mt-0.5">{b.author}</p>}
+        <p className="text-qz-text-muted text-xs mt-2">
+          {langName(b.language)} · {b.chapterCount} глав · {b.wordCount.toLocaleString('ru')} слов
+        </p>
+        {started ? (
+          <>
+            <div className="h-1.5 bg-muted rounded-full mt-3">
+              <div className="h-full bg-emerald-500 rounded-full transition-all" style={{ width: `${Math.min(100, progress)}%` }} />
+            </div>
+            <p className="text-qz-text-muted text-[11px] mt-1">прочитано {Math.min(100, progress)}%</p>
+          </>
+        ) : (
+          <p className="text-qz-text-muted text-[11px] mt-3">ещё не открывали</p>
+        )}
+      </Link>
+      <div className="flex items-center gap-2 mt-3 pt-3 border-t border-border">
+        <Link href={`/books/${b.id}`} className="text-[#4255ff] text-xs font-bold hover:underline">
+          {started ? 'Продолжить' : 'Читать'}
+        </Link>
+        {b.setId && (
+          <Link href={`/set/${b.setId}`} className="inline-flex items-center gap-1 text-qz-text-muted hover:text-foreground text-xs">
+            <Languages className="w-3.5 h-3.5" /> мои карточки
+          </Link>
+        )}
+        <div className="flex-1" />
+        {/* Удалять может только загрузивший: полка общая. */}
+        {b.isOwner && (
+          <button onClick={() => onRemove(b)} title="Удалить книгу с полки"
+            className="text-qz-text-muted hover:text-red-500 transition-colors">
+            <Trash2 className="w-4 h-4" />
+          </button>
         )}
       </div>
     </div>

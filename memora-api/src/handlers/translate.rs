@@ -375,8 +375,67 @@ pub async fn translate_batch(
     Ok((out, detected, "llm".to_string()))
 }
 
+/// Список тем для полки. Закрытый намеренно: если позволить модели придумывать
+/// формулировки, на десяти книгах выйдет десять разных рубрик и группировка
+/// потеряет смысл.
+pub const BOOK_TOPICS: [&str; 12] = [
+    "Классика", "Приключения", "Детектив", "Фантастика", "История", "Наука",
+    "Психология", "Бизнес", "Детская литература", "Поэзия", "Публицистика", "Учебник",
+];
+
+/// Язык и тема книги одним запросом: два похода к модели ради одной загрузки
+/// не нужны, а данные нужны одновременно.
+pub async fn detect_book_facts(sample: &str, title: &str) -> Result<(String, String), String> {
+    let snippet: String = sample.chars().take(1200).collect();
+    let topics = BOOK_TOPICS.join(", ");
+    let content = llm::chat_text(ChatRequest {
+        task: Task::Grading,
+        messages: vec![
+            ChatMessage::system(format!(
+                "You classify books. Reply with ONE JSON object and nothing else, using exactly \
+                 these keys: {{\"language\": string, \"topic\": string}}. \
+                 language — the ISO 639-1 two-letter code of the language the excerpt is written in. \
+                 topic — EXACTLY one value from this list, copied verbatim: {topics}. \
+                 Never use null.",
+            )),
+            ChatMessage::user(format!("Title: \"{title}\"\nExcerpt:\n\"\"\"\n{snippet}\n\"\"\"")),
+        ],
+        max_tokens: 150,
+        format: ResponseFormat::JsonSchema(json!({
+            "type": "object",
+            "properties": {
+                "language": { "type": "string" },
+                "topic": { "type": "string", "enum": BOOK_TOPICS },
+            },
+            "required": ["language", "topic"],
+        })),
+        think: Some("low".to_string()),
+    })
+    .await
+    .map_err(|e| e.to_string())?;
+
+    let v: serde_json::Value = serde_json::from_str(super::ai::extract_json(&content))
+        .map_err(|e| format!("LLM: неразборный ответ ({e})"))?;
+
+    let code: String = v.get("language").and_then(|l| l.as_str()).unwrap_or("")
+        .to_lowercase().chars().take(2).filter(|c| c.is_ascii_alphabetic()).collect();
+
+    // Тему принимаем только из списка: модель любит переформулировать.
+    let raw_topic = v.get("topic").and_then(|t| t.as_str()).unwrap_or("");
+    let topic = BOOK_TOPICS.iter()
+        .find(|t| t.eq_ignore_ascii_case(raw_topic.trim()))
+        .map(|t| t.to_string())
+        .unwrap_or_default();
+
+    if code.len() != 2 {
+        return Err("не удалось определить язык".to_string());
+    }
+    Ok((code, topic))
+}
+
 /// Определение языка текста облачной LLM: код ISO 639-1.
 /// Используется после загрузки книги, если язык не указан вручную.
+#[allow(dead_code)]
 pub async fn detect_language(sample: &str) -> Result<String, String> {
     let snippet: String = sample.chars().take(1200).collect();
     let content = llm::chat_text(ChatRequest {

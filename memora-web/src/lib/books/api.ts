@@ -44,6 +44,10 @@ export interface Book {
   id: string;
   title: string;
   author: string;
+  /** Рубрика полки: «Классика», «История», «Наука»… */
+  topic: string;
+  /** Загрузил ли книгу тот, кто её смотрит: править и удалять может только он. */
+  isOwner: boolean;
   language: string;
   targetLanguage: string;
   sourceFormat: string;
@@ -82,7 +86,8 @@ export const getChapter = (id: string, position: number) =>
   call<ChapterContent>(`/api/books/${id}/chapters/${position}`);
 
 export const createBook = (payload: {
-  title: string; author?: string; language?: string; targetLanguage?: string; sourceFormat?: string;
+  title: string; author?: string; topic?: string; language?: string;
+  targetLanguage?: string; sourceFormat?: string;
 }) => call<{ id: string }>('/api/books', { method: 'POST', body: JSON.stringify(payload) });
 
 export const addChapters = (id: string, chapters: { position: number; title: string; content: string }[]) =>
@@ -92,7 +97,8 @@ export const finalizeBook = (id: string) =>
   call<Book>(`/api/books/${id}/finalize`, { method: 'POST', body: '{}' });
 
 export const updateBook = (id: string, patch: Partial<{
-  title: string; author: string; language: string; targetLanguage: string; lastChapter: number; lastOffset: number;
+  title: string; author: string; topic: string; language: string;
+  targetLanguage: string; lastChapter: number; lastOffset: number;
 }>) => call<Book>(`/api/books/${id}`, { method: 'PATCH', body: JSON.stringify(patch) });
 
 export const deleteBook = (id: string) =>
