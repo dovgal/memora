@@ -6,9 +6,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { BookOpen, Loader2, Trash2, Plus, Languages, ChevronLeft, User } from 'lucide-react';
-import { listBooks, deleteBook, type Book } from '@/lib/books/api';
+import { listBooks, deleteBook, updateBook, type Book } from '@/lib/books/api';
 import { langName } from '@/lib/books/langs';
-import { NO_TOPIC } from '@/lib/books/topics';
+import { BOOK_TOPICS, NO_TOPIC } from '@/lib/books/topics';
 import { UploadBook } from '@/components/books/UploadBook';
 
 type GroupBy = 'topic' | 'author' | 'language';
@@ -48,6 +48,22 @@ export default function BooksPage() {
     })();
     return () => { alive = false; };
   }, []);
+
+  /**
+   * Рубрика меняется сразу на месте, не дожидаясь сервера: карточка тут же
+   * переезжает в нужную группу. Если сервер откажет — возвращаем как было,
+   * иначе полка показывала бы то, чего в базе нет.
+   */
+  const changeTopic = async (b: Book, topic: string) => {
+    const before = b.topic;
+    setBooks(prev => prev?.map(x => (x.id === b.id ? { ...x, topic } : x)) ?? prev);
+    try {
+      await updateBook(b.id, { topic });
+    } catch (e) {
+      setBooks(prev => prev?.map(x => (x.id === b.id ? { ...x, topic: before } : x)) ?? prev);
+      setError(e instanceof Error ? e.message : 'не удалось сменить рубрику');
+    }
+  };
 
   const remove = async (b: Book) => {
     if (!window.confirm(`Удалить «${b.title}» с общей полки? Карточки и выученные слова останутся у всех, кто её читал.`)) return;
@@ -142,7 +158,7 @@ export default function BooksPage() {
                   {name} <span className="font-normal normal-case opacity-70">· {list.length}</span>
                 </h2>
                 <div className="grid sm:grid-cols-2 gap-3">
-                  {list.map(b => <BookCard key={b.id} book={b} onRemove={remove} />)}
+                  {list.map(b => <BookCard key={b.id} book={b} onRemove={remove} onTopic={changeTopic} />)}
                 </div>
               </section>
             ))}
@@ -153,7 +169,11 @@ export default function BooksPage() {
   );
 }
 
-function BookCard({ book: b, onRemove }: { book: Book; onRemove: (b: Book) => void }) {
+function BookCard({ book: b, onRemove, onTopic }: {
+  book: Book;
+  onRemove: (b: Book) => void;
+  onTopic: (b: Book, topic: string) => void;
+}) {
   const progress = b.chapterCount > 1
     ? Math.round(((b.lastChapter + b.lastOffset) / b.chapterCount) * 100)
     : Math.round(b.lastOffset * 100);
@@ -186,6 +206,22 @@ function BookCard({ book: b, onRemove }: { book: Book; onRemove: (b: Book) => vo
           <p className="text-qz-text-muted text-[11px] mt-3">ещё не открывали</p>
         )}
       </Link>
+      {/* Рубрику меняет только тот, кто загрузил книгу: полка общая. */}
+      {b.isOwner && (
+        <label className="mt-3 block">
+          <span className="sr-only">Рубрика</span>
+          <select
+            value={b.topic}
+            onChange={e => onTopic(b, e.target.value)}
+            title="Рубрика на полке"
+            className="w-full bg-transparent border border-border rounded-lg px-2 py-1.5 text-xs text-qz-text-muted hover:text-foreground hover:border-[#4255ff]/40 transition-colors"
+          >
+            <option value="">{NO_TOPIC}</option>
+            {BOOK_TOPICS.map(t => <option key={t} value={t}>{t}</option>)}
+          </select>
+        </label>
+      )}
+
       <div className="flex items-center gap-2 mt-3 pt-3 border-t border-border">
         <Link href={`/books/${b.id}`} className="text-[#4255ff] text-xs font-bold hover:underline">
           {started ? 'Продолжить' : 'Читать'}
