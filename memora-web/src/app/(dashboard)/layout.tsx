@@ -2,18 +2,14 @@ import Link from "next/link";
 import {
     Home,
     Library,
-    Users,
-    Bell,
     Plus,
     Search,
-    Folder,
-    Sparkles,
     GraduationCap,
     UserRound,
-    Trophy,
     BookOpen
 } from "lucide-react";
 import LogoutButton from "@/components/LogoutButton";
+import { DashboardSidebar } from "@/components/DashboardSidebar";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
@@ -49,76 +45,7 @@ export default async function DashboardLayout({
 
     return (
         <div className="flex h-screen bg-background text-foreground font-sans overflow-hidden">
-            {/* Sidebar */}
-            <aside className="w-64 bg-card border-r border-border flex flex-col pt-6 hidden md:flex">
-                <div className="px-6 mb-8 flex items-center gap-3">
-                    <div className="w-8 h-8 bg-[#4255ff] rounded-lg flex items-center justify-center font-bold text-white">
-                        M
-                    </div>
-                    <span className="text-xl font-bold text-qz-text tracking-wide">Memora</span>
-                </div>
-
-                <div className="flex-1 overflow-y-auto px-4 space-y-6 scrollbar-thin scrollbar-thumb-zinc-800">
-                    <nav className="space-y-1">
-                        <Link href={`/dashboard/${role}`} className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card text-qz-text-muted rounded-lg font-medium transition-colors">
-                            <Home className="w-5 h-5" />
-                            Home
-                        </Link>
-                        <Link href="/courses" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium">
-                            <GraduationCap className="w-5 h-5" />
-                            Каталог курсов
-                        </Link>
-                        <Link href="/cabinet" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium">
-                            <UserRound className="w-5 h-5" />
-                            Мой кабинет
-                        </Link>
-                        <Link href="/family" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium">
-                            <Trophy className="w-5 h-5" />
-                            Семейное табло
-                        </Link>
-                        <Link href="/library" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium">
-                            <Library className="w-5 h-5" />
-                            Your Library
-                        </Link>
-                        <Link href="/books" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium">
-                            <BookOpen className="w-5 h-5" />
-                            Чтение книг
-                        </Link>
-                        <Link href="/groups" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium">
-                            <Users className="w-5 h-5" />
-                            Study Groups
-                        </Link>
-                        <Link href="/notifications" className="flex items-center gap-3 px-3 py-2.5 hover:bg-qz-card rounded-lg transition-colors font-medium relative">
-                            <Bell className="w-5 h-5" />
-                            <span className="absolute top-2 left-6 w-2 h-2 bg-pink-500 rounded-full"></span>
-                            Notifications
-                        </Link>
-                        <Link href="/creator" className="flex items-center gap-3 px-3 py-2.5 bg-[#4255ff]/10 text-qz-accent hover:bg-[#4255ff]/20 rounded-xl transition-all font-bold border border-indigo-500/20 group">
-                            <Sparkles className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-                            AI Creator
-                        </Link>
-                    </nav>
-
-                    <div className="pt-4 border-t border-qz-border-light">
-                        <h3 className="px-3 text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">Your Folders</h3>
-                        <nav className="space-y-1 max-h-[30vh] overflow-y-auto pr-1">
-                            {folders.length === 0 ? (
-                                <div className="px-3 py-2 text-sm text-zinc-500 italic">No folders yet</div>
-                            ) : (
-                                folders.map(folder => (
-                                    <Link key={folder.id} href={`/folder/${folder.id}`} className="flex items-center gap-3 px-3 py-2 hover:bg-qz-card rounded-lg transition-colors text-sm group">
-                                        <Folder className="w-4 h-4 text-zinc-500 group-hover:text-qz-accent transition-colors shrink-0" />
-                                        <span className="truncate">{folder.name}</span>
-                                    </Link>
-                                ))
-                            )}
-                        </nav>
-                        <Link href="/library" className="flex items-center gap-2 px-3 py-2 mt-2 text-sm text-qz-accent hover:text-indigo-300 font-medium w-full text-left">
-                            <Plus className="w-4 h-4" /> New Folder
-                        </Link>
-                    </div>
-                </div>
-            </aside>
+            <DashboardSidebar role={role} folders={folders.map(f => ({ id: f.id, name: f.name }))} />
 
             {/* Main Content Area */}
             <main className="flex-1 flex flex-col h-screen overflow-hidden relative min-w-0">
