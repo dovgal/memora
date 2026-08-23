@@ -11,7 +11,7 @@ import { speakInworld, speakInworldAndWait } from '@/lib/courses/ttsInworld';
 import { checkDictation, bestTranscript, type DictationCheck } from '@/lib/courses/dictation';
 import { DiffChips } from '@/components/edito/DiffChips';
 import { rulesForWord, type ReadingRule } from '@/lib/courses/frenchReadingRules';
-import { useSpeechAttempt } from '@/lib/courses/useSpeechAttempt';
+import { useSpeechAttempt, type WordScore } from '@/lib/courses/useSpeechAttempt';
 import { PASS_SCORE } from '@/lib/courses/phonetics/mastery';
 
 const KIND_LABEL: Record<NonNullable<PronunciationItem['kind']>, string> = {
@@ -25,6 +25,34 @@ interface Attempt {
   score: number;
   check: DictationCheck;
   heard: string;
+  /** Уверенность распознавания по словам — пусто у браузерного движка. */
+  scores: WordScore[];
+}
+
+/** Ниже этого порога слово считаем произнесённым невнятно. */
+const UNCLEAR_BELOW = 0.6;
+
+const bare = (w: string) =>
+  w.toLowerCase().replace(/^[^\p{L}\p{N}]+/u, '').replace(/[^\p{L}\p{N}]+$/u, '');
+
+/**
+ * Слова, которые распознались ВЕРНО, но с низкой уверенностью.
+ *
+ * Это и есть польза от уверенности: сравнение слов такие случаи пропускает —
+ * слово засчитано, а прозвучало смазанно. Слова, которых в эталоне нет,
+ * не показываем: про них и так скажет разбор расхождений.
+ */
+function unclearWords(target: string, scores: WordScore[]): WordScore[] {
+  if (scores.length === 0) return [];
+  const expected = new Set(target.split(/\s+/).map(bare).filter(Boolean));
+  const seen = new Set<string>();
+  return scores.filter(w => {
+    const key = bare(w.word);
+    if (!key || !expected.has(key) || seen.has(key)) return false;
+    if (w.probability >= UNCLEAR_BELOW) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 function issuesOf(check: DictationCheck) {
@@ -93,8 +121,9 @@ export function PronunciationExercise({ exercise, onComplete, voice = 'Alain', s
     const heard = bestTranscript(target, transcript, speech.alternatives());
     const check = checkDictation(target, heard, { spoken: true });
     const score = check.total > 0 ? Math.round((check.correct / check.total) * 100) : 0;
+    const scores = speech.wordScores();
     setAttempts(prev => {
-      const next = { ...prev, [idx]: { score, check, heard } };
+      const next = { ...prev, [idx]: { score, check, heard, scores } };
       const ok = Object.values(next).filter(a => a.score >= PASS_SCORE).length;
       if (ok >= total) onComplete?.();
       return next;
@@ -250,6 +279,22 @@ export function PronunciationExercise({ exercise, onComplete, voice = 'Alain', s
                   </div>
                   <p className="text-qz-text-muted text-[11px] mb-1.5">Распознано: «{a.heard}»</p>
                   <DiffChips ops={a.check.ops} />
+
+                  {/* Слово засчитано, но прозвучало смазанно — этого сравнение
+                      слов не видит, а уверенность распознавания показывает. */}
+                  {unclearWords(it.text, a.scores).length > 0 && (
+                    <p className="mt-2 text-[11px] text-amber-600 dark:text-amber-400">
+                      Слово узнано, но прозвучало неразборчиво:{' '}
+                      {unclearWords(it.text, a.scores).map((w, i) => (
+                        <span key={w.word}>
+                          {i > 0 && ', '}
+                          <span className="font-semibold text-foreground">{bare(w.word)}</span>
+                          {' '}({Math.round(w.probability * 100)}%)
+                        </span>
+                      ))}
+                      {' '}— повторите эти места медленнее.
+                    </p>
+                  )}
                   {!ok && issuesOf(a.check).length > 0 && (
                     <div className="mt-2 space-y-1.5">
                       {issuesOf(a.check).map((is, i) => (

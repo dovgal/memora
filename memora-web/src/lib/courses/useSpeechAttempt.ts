@@ -54,12 +54,19 @@ async function openMic(constraints: MediaStreamConstraints): Promise<MediaStream
   return winner;
 }
 
+/** Слово из распознавания и уверенность модели в нём (0…1). */
+export interface WordScore {
+  word: string;
+  probability: number;
+}
+
 /**
- * Распознать запись на своём сервисе (faster-whisper). Возвращает пустую
- * строку, если не вышло, — вызывающий откатится на браузерное распознавание.
+ * Распознать запись на своём сервисе (faster-whisper). Пустой текст означает,
+ * что не вышло, — вызывающий откатится на браузерное распознавание.
  */
-async function transcribeOnServer(blob: Blob, speechLang: string): Promise<string> {
-  if (serverStt === 'off') return '';
+async function transcribeOnServer(blob: Blob, speechLang: string): Promise<{ text: string; words: WordScore[] }> {
+  const nothing = { text: '', words: [] as WordScore[] };
+  if (serverStt === 'off') return nothing;
   try {
     const session = await getSession();
     const token = (session as { id_token?: string } | null)?.id_token;
@@ -77,13 +84,20 @@ async function transcribeOnServer(blob: Blob, speechLang: string): Promise<strin
       body: blob,
       signal: abort.signal,
     }).finally(() => clearTimeout(timer));
-    if (res.status === 503) { serverStt = 'off'; return ''; }
-    if (!res.ok) return '';
+    if (res.status === 503) { serverStt = 'off'; return nothing; }
+    if (!res.ok) return nothing;
     const data = await res.json();
     serverStt = 'ok';
-    return typeof data?.text === 'string' ? data.text.trim() : '';
+    const words: WordScore[] = Array.isArray(data?.words)
+      ? data.words
+          .filter((w: unknown): w is { word: string; probability: number } =>
+            !!w && typeof (w as { word?: unknown }).word === 'string'
+            && typeof (w as { probability?: unknown }).probability === 'number')
+          .map((w: { word: string; probability: number }) => ({ word: w.word, probability: w.probability }))
+      : [];
+    return { text: typeof data?.text === 'string' ? data.text.trim() : '', words };
   } catch {
-    return '';
+    return nothing;
   }
 }
 
@@ -103,6 +117,11 @@ export interface SpeechAttempt {
   stop: () => Promise<string>;
   /** Альтернативные гипотезы движка по сегментам — для выбора лучшей по эталону. */
   alternatives: () => string[][];
+  /**
+   * Уверенность распознавания по словам последней попытки. Пусто, если
+   * вердикт дал браузерный движок: он таких данных не сообщает.
+   */
+  wordScores: () => WordScore[];
   /** Сбросить запись перед новой попыткой. */
   reset: () => void;
   /** Микрофон, с которого ведётся ЗАПИСЬ (мы его выбираем сами). */
@@ -136,6 +155,7 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
   const streamRef = useRef<MediaStream | null>(null);
   const transcriptRef = useRef('');
   const altsRef = useRef<string[][]>([]);
+  const wordScoresRef = useRef<WordScore[]>([]);
   const sessionBaseRef = useRef('');
   const recordingRef = useRef(false);
   /** Готовая запись: MediaRecorder отдаёт её только в onstop, поэтому ждём обещание. */
@@ -237,6 +257,7 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
     transcriptRef.current = '';
     sessionBaseRef.current = '';
     altsRef.current = [];
+    wordScoresRef.current = [];
     const SR = getSpeechRecognition();
     if (SR) {
       try {
@@ -299,11 +320,12 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
     ]);
     if (blob) {
       setTranscribing(true);
-      const serverText = await transcribeOnServer(blob, speechLang);
+      const server = await transcribeOnServer(blob, speechLang);
       setTranscribing(false);
-      if (serverText) {
+      if (server.text) {
+        wordScoresRef.current = server.words;
         setLastEngine('server');
-        return serverText;
+        return server.text;
       }
     }
     setLastEngine(browserText ? 'browser' : null);
@@ -311,10 +333,11 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
   }, [speechLang]);
 
   const alternatives = useCallback(() => altsRef.current, []);
+  const wordScores = useCallback(() => wordScoresRef.current, []);
 
   return {
     recording, selfUrl, error, setError, recorderSupported, speechSupported,
-    start, stop, alternatives, reset,
+    start, stop, alternatives, wordScores, reset,
     micLabel, defaultMicLabel, defaultIsExternal, transcribing, lastEngine,
   };
 }
