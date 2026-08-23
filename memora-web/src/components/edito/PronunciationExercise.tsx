@@ -5,7 +5,7 @@
 // упражнение засчитано, когда все строки произнесены чисто.
 
 import { useCallback, useMemo, useState } from 'react';
-import { Mic, MicOff, Volume2, Turtle, Check, Lightbulb, RotateCcw, Eye, EyeOff } from 'lucide-react';
+import { Mic, MicOff, Volume2, Turtle, Check, Lightbulb, RotateCcw, Eye, EyeOff, Loader2 } from 'lucide-react';
 import { EditoExercise, PronunciationItem } from '@/lib/courses/edito-a1';
 import { speakInworld, speakInworldAndWait } from '@/lib/courses/ttsInworld';
 import { checkDictation, bestTranscript, type DictationCheck } from '@/lib/courses/dictation';
@@ -135,13 +135,21 @@ export function PronunciationExercise({ exercise, onComplete, voice = 'Alain', s
       {speech.micLabel && (
         <p className="mb-3 text-[11px] text-qz-text-muted">
           Запись идёт со встроенного микрофона: <span className="text-foreground">{speech.micLabel}</span>
+          {speech.lastEngine === 'server' && <> · распознаёт наш сервис</>}
+          {speech.lastEngine === 'browser' && <> · распознаёт движок браузера</>}
+        </p>
+      )}
+
+      {speech.transcribing && (
+        <p className="mb-3 text-[11px] text-qz-text-muted flex items-center gap-1.5">
+          <Loader2 className="w-3 h-3 animate-spin" /> распознаю запись…
         </p>
       )}
 
       {/* Распознавание берёт вход, назначенный в браузере по умолчанию, — выбрать
           его страница не может, в Web Speech API такого метода нет. Если там
           гарнитура, честнее предупредить, чем молча выдавать заниженные оценки. */}
-      {speech.defaultIsExternal && (
+      {speech.defaultIsExternal && speech.lastEngine !== 'server' && (
         <div className="mb-3 text-xs text-amber-600 dark:text-amber-400 bg-amber-500/10 border border-amber-500/30 rounded-xl p-3">
           <p className="font-bold mb-1">Оценка произношения идёт через наушники: {speech.defaultMicLabel}</p>
           <p>

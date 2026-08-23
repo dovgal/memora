@@ -11,10 +11,45 @@
 //    текст фиксируется в базе и склеивается, иначе речь до паузы теряется.
 
 import { useCallback, useRef, useState } from 'react';
+import { getSession } from 'next-auth/react';
 import {
   getSpeechRecognition, hasMediaDevices, chooseMic, listMicrophones, micLabelOf, looksExternal,
   type SpeechRecognitionLike,
 } from '@/lib/speech';
+
+/**
+ * Состояние серверного распознавания на всё приложение: 'off' ставится только
+ * при явном «не настроено» (503), чтобы не ждать впустую на каждой попытке.
+ * Временная недоступность сервиса такого решения не заслуживает.
+ */
+let serverStt: 'unknown' | 'ok' | 'off' = 'unknown';
+
+/**
+ * Распознать запись на своём сервисе (faster-whisper). Возвращает пустую
+ * строку, если не вышло, — вызывающий откатится на браузерное распознавание.
+ */
+async function transcribeOnServer(blob: Blob, speechLang: string): Promise<string> {
+  if (serverStt === 'off') return '';
+  try {
+    const session = await getSession();
+    const token = (session as { id_token?: string } | null)?.id_token;
+    const res = await fetch(`/api/audio/transcribe?language=${encodeURIComponent(speechLang.slice(0, 2))}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/octet-stream',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: blob,
+    });
+    if (res.status === 503) { serverStt = 'off'; return ''; }
+    if (!res.ok) return '';
+    const data = await res.json();
+    serverStt = 'ok';
+    return typeof data?.text === 'string' ? data.text.trim() : '';
+  } catch {
+    return '';
+  }
+}
 
 export interface SpeechAttempt {
   /** Идёт ли запись прямо сейчас. */
@@ -43,6 +78,10 @@ export interface SpeechAttempt {
   defaultMicLabel: string | null;
   /** Похоже ли устройство по умолчанию на наушники: повод предупредить. */
   defaultIsExternal: boolean;
+  /** Идёт распознавание записи на сервере. */
+  transcribing: boolean;
+  /** Кто дал вердикт: наш сервис или движок браузера. */
+  lastEngine: 'server' | 'browser' | null;
 }
 
 export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
@@ -52,6 +91,8 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
   const [micLabel, setMicLabel] = useState<string | null>(null);
   const [defaultMicLabel, setDefaultMicLabel] = useState<string | null>(null);
   const [defaultIsExternal, setDefaultIsExternal] = useState(false);
+  const [transcribing, setTranscribing] = useState(false);
+  const [lastEngine, setLastEngine] = useState<'server' | 'browser' | null>(null);
 
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
   const mediaRecRef = useRef<MediaRecorder | null>(null);
@@ -61,6 +102,9 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
   const altsRef = useRef<string[][]>([]);
   const sessionBaseRef = useRef('');
   const recordingRef = useRef(false);
+  /** Готовая запись: MediaRecorder отдаёт её только в onstop, поэтому ждём обещание. */
+  const blobRef = useRef<Promise<Blob | null> | null>(null);
+  const blobResolveRef = useRef<((b: Blob | null) => void) | null>(null);
 
   const recorderSupported = hasMediaDevices() && typeof window !== 'undefined' && 'MediaRecorder' in window;
   const speechSupported = !!getSpeechRecognition();
@@ -106,12 +150,15 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
     streamRef.current = stream;
 
     chunksRef.current = [];
+    blobRef.current = new Promise<Blob | null>(resolve => { blobResolveRef.current = resolve; });
     try {
       const mr = new MediaRecorder(stream);
       mr.ondataavailable = ev => { if (ev.data.size > 0) chunksRef.current.push(ev.data); };
       mr.onstop = () => {
         const blob = new Blob(chunksRef.current, { type: chunksRef.current[0]?.type || 'audio/webm' });
         if (blob.size > 0) setSelfUrl(URL.createObjectURL(blob));
+        blobResolveRef.current?.(blob.size > 0 ? blob : null);
+        blobResolveRef.current = null;
         streamRef.current?.getTracks().forEach(t => t.stop());
         streamRef.current = null;
       };
@@ -176,14 +223,33 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
     setRecording(false);
     // Даём движку время отдать финальные сегменты.
     await new Promise(r => setTimeout(r, 1200));
-    return transcriptRef.current.trim();
-  }, []);
+    const browserText = transcriptRef.current.trim();
+
+    // Своё распознавание точнее и, главное, слушает выбранный НАМИ микрофон.
+    // Браузерный движок остаётся страховкой: сервис может быть не настроен,
+    // не подняться после передеплоя или не успеть ответить.
+    const blob = await Promise.race([
+      blobRef.current ?? Promise.resolve(null),
+      new Promise<Blob | null>(r => setTimeout(() => r(null), 3000)),
+    ]);
+    if (blob) {
+      setTranscribing(true);
+      const serverText = await transcribeOnServer(blob, speechLang);
+      setTranscribing(false);
+      if (serverText) {
+        setLastEngine('server');
+        return serverText;
+      }
+    }
+    setLastEngine(browserText ? 'browser' : null);
+    return browserText;
+  }, [speechLang]);
 
   const alternatives = useCallback(() => altsRef.current, []);
 
   return {
     recording, selfUrl, error, setError, recorderSupported, speechSupported,
     start, stop, alternatives, reset,
-    micLabel, defaultMicLabel, defaultIsExternal,
+    micLabel, defaultMicLabel, defaultIsExternal, transcribing, lastEngine,
   };
 }

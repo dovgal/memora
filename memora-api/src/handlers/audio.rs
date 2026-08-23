@@ -180,6 +180,81 @@ pub struct SynthesizeParams {
 /// Озвучивание ПРОИЗВОЛЬНОГО текста ТОЛЬКО через Inworld.ai (с кэшем в БД).
 /// Используется тестами/упражнениями курса, где нет карточки в БД.
 /// Требует авторизации: Inworld — платный API, нельзя оставлять открытым.
+#[derive(serde::Deserialize)]
+pub struct TranscribeParams {
+    /// Код языка для распознавания: fr, en, ru…
+    #[serde(default)]
+    pub language: Option<String>,
+}
+
+/// POST /api/audio/transcribe — распознать запись ученика на своём сервисе.
+///
+/// Нужен потому, что браузерный Web Speech API не позволяет выбрать микрофон:
+/// он всегда слушает вход по умолчанию, и при Bluetooth-гарнитуре голос
+/// приходит в узкой полосе, а оценки произношения выходят ниже реальных.
+/// Здесь распознаётся та запись, которую страница сделала сама, с выбранного
+/// нами устройства.
+///
+/// Тело запроса — сам аудиофайл; парсить multipart незачем, MediaRecorder
+/// отдаёт один blob.
+pub async fn transcribe_audio(
+    _user: crate::middleware::auth::AuthenticatedUser,
+    Query(params): Query<TranscribeParams>,
+    body: axum::body::Bytes,
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
+    let base = std::env::var("WHISPER_URL")
+        .ok()
+        .filter(|v| !v.trim().is_empty())
+        .ok_or_else(|| ApiError::response(
+            StatusCode::SERVICE_UNAVAILABLE,
+            "Серверное распознавание не настроено",
+        ))?;
+
+    if body.is_empty() {
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "Empty audio"));
+    }
+    if body.len() > 12 * 1024 * 1024 {
+        return Err(ApiError::response(StatusCode::PAYLOAD_TOO_LARGE, "Audio too large"));
+    }
+
+    let language = params.language.unwrap_or_else(|| "fr".to_string());
+    let language: String = language.chars().take(5).filter(|c| c.is_ascii_alphanumeric() || *c == '-').collect();
+
+    // Таймаут больше обычного: на процессоре распознавание пятисекундной
+    // реплики занимает единицы секунд, и обрывать его на середине нет смысла.
+    let client = Client::builder()
+        .timeout(std::time::Duration::from_secs(90))
+        .build()
+        .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("client: {e}")))?;
+
+    let mut req = client
+        .post(format!("{}/transcribe?language={language}", base.trim_end_matches('/')))
+        .header("Content-Type", "application/octet-stream")
+        .body(body.to_vec());
+
+    if let Ok(token) = std::env::var("WHISPER_TOKEN") {
+        if !token.trim().is_empty() {
+            req = req.header("Authorization", format!("Bearer {}", token.trim()));
+        }
+    }
+
+    let res = req.send().await.map_err(|e| {
+        ApiError::response(StatusCode::BAD_GATEWAY, format!("Сервис распознавания недоступен: {e}"))
+    })?;
+
+    let status = res.status();
+    let text = res.text().await.unwrap_or_default();
+    if !status.is_success() {
+        eprintln!("[transcribe] whisper responded {status}: {}", text.chars().take(200).collect::<String>());
+        return Err(ApiError::response(StatusCode::BAD_GATEWAY, format!("Сервис распознавания ответил {status}")));
+    }
+
+    let value: Value = serde_json::from_str(&text)
+        .map_err(|e| ApiError::response(StatusCode::BAD_GATEWAY, format!("Неразборный ответ распознавания: {e}")))?;
+
+    Ok((StatusCode::OK, Json(value)))
+}
+
 pub async fn synthesize_tts(
     State(pool): State<PgPool>,
     _user: crate::middleware::auth::AuthenticatedUser,

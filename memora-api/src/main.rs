@@ -143,6 +143,8 @@ async fn main() {
         .route("/api/audio/{id}/{field}", get(handlers::audio::get_flashcard_audio))
         // Generic Inworld TTS for arbitrary text (course tests/exercises)
         .route("/api/tts", get(handlers::audio::synthesize_tts))
+        // Серверное распознавание речи (faster-whisper): микрофон выбираем мы.
+        .route("/api/audio/transcribe", post(handlers::audio::transcribe_audio))
         // A2 classes / leaderboard / diagnostics / teacher / analytics
         .route("/api/a2/classes", post(handlers::classes::create_class).get(handlers::classes::my_classes))
         .route("/api/a2/classes/join", post(handlers::classes::join_class))
