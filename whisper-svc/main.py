@@ -10,17 +10,21 @@ Bluetooth-наушниках голос приходит в узкой поло�
 и ломал сборку на Railway (см. примечание в memora-api/Cargo.toml).
 """
 
+import io
 import os
 import tempfile
 
 from fastapi import FastAPI, HTTPException, Request
 
 from faster_whisper import WhisperModel
+from pypdf import PdfReader
 
 MODEL_NAME = os.getenv("WHISPER_MODEL", "small")
 COMPUTE_TYPE = os.getenv("WHISPER_COMPUTE", "int8")
 SHARED_TOKEN = os.getenv("WHISPER_TOKEN", "")
 MAX_BYTES = int(os.getenv("WHISPER_MAX_BYTES", str(12 * 1024 * 1024)))
+# Книги в PDF заметно тяжелее записей голоса.
+MAX_PDF_BYTES = int(os.getenv("MAX_PDF_BYTES", str(48 * 1024 * 1024)))
 
 # Модель поднимается один раз на старте: загрузка занимает секунды, и делать
 # это на каждом запросе значило бы добавлять их к каждой попытке ученика.
@@ -29,18 +33,48 @@ model = WhisperModel(MODEL_NAME, device="cpu", compute_type=COMPUTE_TYPE)
 app = FastAPI(title="Memora speech-to-text")
 
 
+def _check_token(request: Request) -> None:
+    if not SHARED_TOKEN:
+        return
+    header = request.headers.get("authorization", "")
+    if header.removeprefix("Bearer ").strip() != SHARED_TOKEN:
+        raise HTTPException(status_code=401, detail="bad token")
+
+
 @app.get("/health")
 def health() -> dict:
     return {"ok": True, "model": MODEL_NAME, "compute": COMPUTE_TYPE}
 
 
+@app.post("/pdf-text")
+async def pdf_text(request: Request) -> dict:
+    """Текстовый слой PDF постранично.
+
+    В браузере это делает pdf.js, но на iOS шестая версия падает внутри себя —
+    в разборе одного и того же файла на компьютере всё проходит, а на телефоне
+    нет. Здесь разбор не зависит от браузера вовсе.
+    """
+    _check_token(request)
+
+    data = await request.body()
+    if not data:
+        raise HTTPException(status_code=400, detail="empty body")
+    if len(data) > MAX_PDF_BYTES:
+        raise HTTPException(status_code=413, detail="pdf too large")
+
+    try:
+        reader = PdfReader(io.BytesIO(data))
+        pages = [(page.extract_text() or "").strip() for page in reader.pages]
+    except Exception as exc:  # noqa: BLE001 — причину показываем читателю как есть
+        raise HTTPException(status_code=422, detail=f"pdf parse failed: {exc}") from exc
+
+    return {"pages": pages, "pageCount": len(pages)}
+
+
 @app.post("/transcribe")
 async def transcribe(request: Request) -> dict:
     """Тело запроса — сам аудиофайл (webm/opus от MediaRecorder), язык в query."""
-    if SHARED_TOKEN:
-        header = request.headers.get("authorization", "")
-        if header.removeprefix("Bearer ").strip() != SHARED_TOKEN:
-            raise HTTPException(status_code=401, detail="bad token")
+    _check_token(request)
 
     audio = await request.body()
     if not audio:

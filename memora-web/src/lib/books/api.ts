@@ -125,6 +125,25 @@ export const addCard = (id: string, card: { term: string; definition: string; ex
     `/api/books/${id}/cards`, { method: 'POST', body: JSON.stringify(card) },
   );
 
+// ---------- Разбор PDF на сервере ----------
+
+/**
+ * Текстовый слой PDF, вытащенный на сервере.
+ *
+ * Запасной путь для мобильных: на iOS браузерный pdf.js падает внутри себя, и
+ * один и тот же файл на компьютере разбирается, а на телефоне нет.
+ */
+export async function pdfTextOnServer(file: File): Promise<string[]> {
+  const h = await authHeaders();
+  const res = await fetch('/api/pdf/text', {
+    method: 'POST',
+    headers: { ...h, 'Content-Type': 'application/octet-stream' },
+    body: file,
+  });
+  const data = await ok<{ pages?: unknown }>(res);
+  return Array.isArray(data.pages) ? data.pages.filter((p): p is string => typeof p === 'string') : [];
+}
+
 // ---------- Перевод ----------
 
 export interface TranslateResult { translations: string[]; sourceLang: string; provider: string }

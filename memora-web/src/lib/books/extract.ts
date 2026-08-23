@@ -231,9 +231,26 @@ async function extractFb2(file: File): Promise<ExtractResult> {
 // ---------- PDF / DOCX / TXT ----------
 
 async function extractPdf(file: File, onProgress?: Progress): Promise<ExtractResult> {
-  const { extractPdfText } = await import('@/lib/pdfExtract');
-  const pages = await extractPdfText(file, (page, total) => onProgress?.(page, total, 'Читаю страницы'));
-  const text = pages.filter(Boolean).join('\n\n');
+  let text = '';
+
+  // Сначала в браузере: быстро и без загрузки многомегабайтного файла на сервер.
+  try {
+    const { extractPdfText } = await import('@/lib/pdfExtract');
+    const pages = await extractPdfText(file, (page, total) => onProgress?.(page, total, 'Читаю страницы'));
+    text = pages.filter(Boolean).join('\n\n');
+  } catch {
+    // На iOS pdf.js падает внутри себя — молчим и уходим на сервер.
+    text = '';
+  }
+
+  // Не вышло — разбираем на сервере. Там разбор не зависит от браузера вовсе.
+  if (!text.trim()) {
+    onProgress?.(0, 1, 'Разбираю PDF на сервере');
+    const { pdfTextOnServer } = await import('./api');
+    const pages = await pdfTextOnServer(file);
+    text = pages.filter(Boolean).join('\n\n');
+  }
+
   if (!text.trim()) {
     throw new Error('В PDF нет текстового слоя — похоже, это сканы. Такой файл читалка не разберёт.');
   }

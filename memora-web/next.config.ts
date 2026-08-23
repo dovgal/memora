@@ -114,6 +114,11 @@ const nextConfig: NextConfig = {
         source: "/api/books",
         destination: `${rustApiUrl}/api/books`,
       },
+      // Разбор PDF на сервере: браузерный pdf.js на iOS не справляется.
+      {
+        source: "/api/pdf/:path*",
+        destination: `${rustApiUrl}/api/pdf/:path*`,
+      },
       // Перевод (DeepL с кэшем) и словарная статья для читалки.
       {
         source: "/api/translate",

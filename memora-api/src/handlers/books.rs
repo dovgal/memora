@@ -543,6 +543,58 @@ pub async fn search_book(
     Ok((StatusCode::OK, Json(json!({ "hits": hits }))))
 }
 
+/// POST /api/pdf/text — вытащить текстовый слой PDF на сервере.
+///
+/// В браузере это делает pdf.js, но на iOS шестая версия падает внутри себя:
+/// один и тот же файл на компьютере разбирается, на телефоне нет. Клиент
+/// пробует локально и при неудаче отправляет файл сюда.
+pub async fn pdf_text(
+    AuthenticatedUser(_user): AuthenticatedUser,
+    body: axum::body::Bytes,
+) -> ApiResult<impl IntoResponse> {
+    let base = std::env::var("WHISPER_URL")
+        .ok()
+        .filter(|v| !v.trim().is_empty())
+        .ok_or_else(|| ApiError::response(
+            StatusCode::SERVICE_UNAVAILABLE,
+            "Разбор PDF на сервере не настроен",
+        ))?;
+
+    if body.is_empty() {
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "Empty file"));
+    }
+
+    let client = reqwest::Client::builder()
+        .timeout(std::time::Duration::from_secs(120))
+        .build()
+        .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("client: {e}")))?;
+
+    let mut req = client
+        .post(format!("{}/pdf-text", base.trim_end_matches('/')))
+        .header("Content-Type", "application/octet-stream")
+        .body(body.to_vec());
+    if let Ok(token) = std::env::var("WHISPER_TOKEN") {
+        if !token.trim().is_empty() {
+            req = req.header("Authorization", format!("Bearer {}", token.trim()));
+        }
+    }
+
+    let res = req.send().await.map_err(|e| {
+        ApiError::response(StatusCode::BAD_GATEWAY, format!("Сервис разбора недоступен: {e}"))
+    })?;
+    let status = res.status();
+    let text = res.text().await.unwrap_or_default();
+    if !status.is_success() {
+        return Err(ApiError::response(
+            StatusCode::BAD_GATEWAY,
+            format!("Разбор PDF не удался ({status}): {}", text.chars().take(200).collect::<String>()),
+        ));
+    }
+    let value: serde_json::Value = serde_json::from_str(&text)
+        .map_err(|e| ApiError::response(StatusCode::BAD_GATEWAY, format!("Неразборный ответ: {e}")))?;
+    Ok((StatusCode::OK, Json(value)))
+}
+
 // ---------- Словарь читателя ----------
 
 #[derive(Deserialize)]
