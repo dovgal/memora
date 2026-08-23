@@ -135,13 +135,36 @@ export const addCard = (id: string, card: { term: string; definition: string; ex
  */
 export async function pdfTextOnServer(file: File): Promise<string[]> {
   const h = await authHeaders();
-  const res = await fetch('/api/pdf/text', {
-    method: 'POST',
-    headers: { ...h, 'Content-Type': 'application/octet-stream' },
-    body: file,
-  });
-  const data = await ok<{ pages?: unknown }>(res);
-  return Array.isArray(data.pages) ? data.pages.filter((p): p is string => typeof p === 'string') : [];
+  const headers = { ...h, 'Content-Type': 'application/octet-stream' };
+
+  // Сначала напрямую в API, затем через прокси Next.
+  //
+  // Прямой путь короче на один узел, и многомегабайтная книга по нему
+  // проходит — проверено. Прокси остаётся запасным: он работает всегда, но
+  // именно на нём загрузка с телефона отвечала пятисоткой, причём запрос до
+  // сервиса разбора не доходил.
+  const direct = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '');
+  const targets = [...(direct ? [`${direct}/api/pdf/text`] : []), '/api/pdf/text'];
+
+  let reason = 'сервер не ответил';
+  for (const url of targets) {
+    try {
+      const res = await fetch(url, { method: 'POST', headers, body: file });
+      if (res.ok) {
+        const data = await res.json() as { pages?: unknown };
+        return Array.isArray(data.pages)
+          ? data.pages.filter((p): p is string => typeof p === 'string')
+          : [];
+      }
+      // Тело ответа несём в сообщение: голый код состояния ничего не объясняет,
+      // а ошибка от прокси и ошибка от API выглядят по-разному.
+      const body = (await res.text().catch(() => '')).replace(/\s+/g, ' ').slice(0, 140);
+      reason = `HTTP ${res.status}${body ? ` — ${body}` : ''}`;
+    } catch (e) {
+      reason = e instanceof Error ? e.message : String(e);
+    }
+  }
+  throw new Error(`разбор на сервере не удался · ${reason}`);
 }
 
 // ---------- Перевод ----------
