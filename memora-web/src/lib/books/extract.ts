@@ -277,14 +277,31 @@ async function extractTxt(file: File): Promise<ExtractResult> {
 
 // ---------- Точка входа ----------
 
+/** Метка сборки — чтобы отличать «не работает» от «открыта старая версия». */
+export const BUILD = process.env.NEXT_PUBLIC_BUILD || 'dev';
+
 export async function extractBook(file: File, onProgress?: Progress): Promise<ExtractResult> {
   const format = formatOf(file);
   onProgress?.(0, 1, 'Разбираю файл');
-  switch (format) {
-    case 'epub': return extractEpub(file, onProgress);
-    case 'fb2':  return extractFb2(file);
-    case 'pdf':  return extractPdf(file, onProgress);
-    case 'docx': return extractDocx(file);
-    default:     return extractTxt(file);
+  try {
+    switch (format) {
+      case 'epub': return await extractEpub(file, onProgress);
+      case 'fb2':  return await extractFb2(file);
+      case 'pdf':  return await extractPdf(file, onProgress);
+      case 'docx': return await extractDocx(file);
+      default:     return await extractTxt(file);
+    }
+  } catch (e) {
+    // Сообщение браузера само по себе бесполезно: «undefined is not a function»
+    // не говорит ни формата, ни шага. Дописываем то, по чему видно, куда смотреть.
+    const err = e as { name?: string; message?: string };
+    const detail = [
+      `формат ${format}`,
+      `${Math.round(file.size / 1024)} КБ`,
+      err.name && err.name !== 'Error' ? err.name : '',
+      err.message ?? String(e),
+      `сборка ${BUILD}`,
+    ].filter(Boolean).join(' · ');
+    throw new Error(detail);
   }
 }

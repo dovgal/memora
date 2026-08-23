@@ -161,9 +161,10 @@ export function UploadBook({ onDone }: { onDone?: () => void }) {
       )}
 
       {error && (
-        <p className="mt-3 text-sm text-amber-600 dark:text-amber-400 bg-amber-500/10 border border-amber-500/30 rounded-xl p-3">
-          {error}
-        </p>
+        <div className="mt-3 text-amber-600 dark:text-amber-400 bg-amber-500/10 border border-amber-500/30 rounded-xl p-3">
+          <p className="text-sm font-semibold mb-1">Не удалось разобрать файл</p>
+          <p className="text-[11px] font-mono break-words leading-relaxed">{error}</p>
+        </div>
       )}
     </div>
   );

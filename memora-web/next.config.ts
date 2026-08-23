@@ -9,6 +9,11 @@ const withSerwist = withSerwistInit({
 });
 
 const nextConfig: NextConfig = {
+  // Метка сборки в интерфейсе: без неё «не работает» и «открыта старая
+  // версия» выглядят одинаково, а на мобильных браузерах это частый случай.
+  env: {
+    NEXT_PUBLIC_BUILD: (process.env.RAILWAY_GIT_COMMIT_SHA || 'dev').slice(0, 7),
+  },
   async rewrites() {
     const rustApiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
     return [
