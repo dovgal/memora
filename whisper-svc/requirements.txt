@@ -1,3 +1,12 @@
 fastapi==0.115.6
 uvicorn[standard]==0.34.0
 faster-whisper==1.1.1
+
+# faster-whisper 1.1.1 внутри делает `import requests`, но в зависимостях его не
+# объявляет: рассчитывает, что библиотеку притянет huggingface-hub. В версии 1.x
+# тот перешёл на httpx и requests тянуть перестал — сборка падала на
+# ModuleNotFoundError, хотя ничего в нашем коде не менялось.
+# Держим huggingface-hub на ветке 0.x (её API faster-whisper и ожидает) и
+# ставим requests явно, чтобы не зависеть от чужих транзитивных решений.
+huggingface-hub>=0.27,<1.0
+requests>=2.31
