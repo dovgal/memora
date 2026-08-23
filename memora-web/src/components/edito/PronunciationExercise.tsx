@@ -73,12 +73,17 @@ export function PronunciationExercise({ exercise, onComplete, voice = 'Alain', s
   const startFor = useCallback(async (idx: number) => {
     speech.setError(null);
     setActiveIdx(idx);
-    await speech.start();
+    // Не получилось — снимаем отметку активной строки, иначе упражнение
+    // выглядит зависшим: строка ждёт остановки записи, которой нет.
+    const ok = await speech.start();
+    if (!ok) setActiveIdx(null);
   }, [speech]);
 
   const stopAndCheck = useCallback(async (idx: number) => {
-    const transcript = await speech.stop();
+    // Снимаем активную строку СРАЗУ: распознавание может занять секунды, и всё
+    // это время остальные строки не должны выглядеть заблокированными.
     setActiveIdx(null);
+    const transcript = await speech.stop();
     const target = items[idx]?.text;
     if (!target) return;
     if (!transcript) {

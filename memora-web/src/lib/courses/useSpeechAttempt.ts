@@ -14,6 +14,7 @@ import { useCallback, useRef, useState } from 'react';
 import { getSession } from 'next-auth/react';
 import {
   getSpeechRecognition, hasMediaDevices, chooseMic, listMicrophones, micLabelOf, looksExternal,
+  getPreferredMic,
   type SpeechRecognitionLike,
 } from '@/lib/speech';
 
@@ -24,6 +25,35 @@ import {
  */
 let serverStt: 'unknown' | 'ok' | 'off' = 'unknown';
 
+/** Устройство, на котором уже удалось записать: чтобы не повторять подбор. */
+let resolvedMicId: string | null = null;
+
+const MIC_TIMEOUT_MS = 7000;
+
+/**
+ * Открыть микрофон с ограничением по времени.
+ *
+ * Без него интерфейс намертво встаёт: при включённой «изоляции голоса» и на
+ * Bluetooth-устройствах запрос к микрофону, который ещё освобождается, может
+ * не вернуться вовсе. Тогда кнопка не реагирует, а перезагрузка страницы не
+ * помогает — устройство держит система, а не вкладка.
+ *
+ * Возвращает null по таймауту; исключения (отказ в доступе, нет устройства)
+ * пробрасываются вызывающему.
+ */
+async function openMic(constraints: MediaStreamConstraints): Promise<MediaStream | null> {
+  const pending = navigator.mediaDevices.getUserMedia(constraints);
+  const timeout = new Promise<null>(resolve => setTimeout(() => resolve(null), MIC_TIMEOUT_MS));
+  const winner = await Promise.race([pending, timeout]);
+  if (winner === null) {
+    // Поток может открыться уже после того, как мы сдались, — закрываем его,
+    // иначе микрофон останется включённым до перезагрузки браузера.
+    void pending.then(s => s.getTracks().forEach(t => t.stop())).catch(() => {});
+    return null;
+  }
+  return winner;
+}
+
 /**
  * Распознать запись на своём сервисе (faster-whisper). Возвращает пустую
  * строку, если не вышло, — вызывающий откатится на браузерное распознавание.
@@ -33,6 +63,11 @@ async function transcribeOnServer(blob: Blob, speechLang: string): Promise<strin
   try {
     const session = await getSession();
     const token = (session as { id_token?: string } | null)?.id_token;
+    // Прокси перед сервисом рвёт соединение на тридцати секундах, поэтому
+    // сдаёмся раньше и отдаём вердикт браузерного движка — тренажёр не должен
+    // замирать из-за медленного распознавания.
+    const abort = new AbortController();
+    const timer = setTimeout(() => abort.abort(), 25_000);
     const res = await fetch(`/api/audio/transcribe?language=${encodeURIComponent(speechLang.slice(0, 2))}`, {
       method: 'POST',
       headers: {
@@ -40,7 +75,8 @@ async function transcribeOnServer(blob: Blob, speechLang: string): Promise<strin
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
       body: blob,
-    });
+      signal: abort.signal,
+    }).finally(() => clearTimeout(timer));
     if (res.status === 503) { serverStt = 'off'; return ''; }
     if (!res.ok) return '';
     const data = await res.json();
@@ -61,8 +97,8 @@ export interface SpeechAttempt {
   setError: (e: string | null) => void;
   recorderSupported: boolean;
   speechSupported: boolean;
-  /** Начать запись. */
-  start: () => Promise<void>;
+  /** Начать запись. Возвращает false, если не получилось. */
+  start: () => Promise<boolean>;
   /** Остановить и получить распознанный текст (пустая строка — не распознано). */
   stop: () => Promise<string>;
   /** Альтернативные гипотезы движка по сегментам — для выбора лучшей по эталону. */
@@ -114,16 +150,32 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
     setError(null);
   }, []);
 
-  const start = useCallback(async () => {
+  const start = useCallback(async (): Promise<boolean> => {
     setError(null);
     setSelfUrl(prev => { if (prev) URL.revokeObjectURL(prev); return null; });
-    if (!recorderSupported) { setError('Этот браузер не поддерживает запись с микрофона.'); return; }
+    if (!recorderSupported) { setError('Этот браузер не поддерживает запись с микрофона.'); return false; }
 
-    let stream: MediaStream;
+    // Прошлый поток мог остаться от прерванной попытки: открывать поверх него
+    // ещё один — верный способ оставить микрофон включённым навсегда.
+    streamRef.current?.getTracks().forEach(t => t.stop());
+    streamRef.current = null;
+
+    let stream: MediaStream | null = null;
     try {
-      // Первый заход — с устройством по умолчанию: он же и выдаёт разрешение,
-      // без которого названия микрофонов недоступны.
-      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      // Устройство уже подобрано в прошлый раз — просим сразу его, одним
+      // запросом вместо двух.
+      const remembered = resolvedMicId ?? getPreferredMic();
+      if (remembered) {
+        stream = await openMic({ audio: { deviceId: { exact: remembered } } }).catch(() => null);
+      }
+      // Иначе (или если запомненное устройство пропало) — устройство по
+      // умолчанию: этот же запрос выдаёт разрешение, без которого не видно
+      // названий микрофонов.
+      if (!stream) stream = await openMic({ audio: true });
+      if (!stream) {
+        setError('Микрофон не ответил. Закройте другие вкладки и программы, которые могут его занимать, и попробуйте ещё раз.');
+        return false;
+      }
 
       const mics = await listMicrophones();
       const current = stream.getAudioTracks()[0]?.getSettings().deviceId;
@@ -131,21 +183,32 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
       setDefaultMicLabel(currentLabel || null);
       setDefaultIsExternal(!!currentLabel && looksExternal(currentLabel));
 
-      // Перецепляемся на встроенный микрофон, если по умолчанию стоит другой.
       const wanted = await chooseMic();
       if (wanted && current && wanted.deviceId !== current) {
-        stream.getTracks().forEach(t => t.stop());
-        stream = await navigator.mediaDevices.getUserMedia({
-          audio: { deviceId: { exact: wanted.deviceId } },
-        });
+        // Прежний поток держим до последнего: если встроенный микрофон не
+        // откроется, продолжим с тем, что уже работает, а не останемся ни с чем.
+        const swapped = await openMic({ audio: { deviceId: { exact: wanted.deviceId } } }).catch(() => null);
+        if (swapped) {
+          stream.getTracks().forEach(t => t.stop());
+          stream = swapped;
+          resolvedMicId = wanted.deviceId;
+          setMicLabel(wanted.label);
+        } else {
+          setMicLabel(currentLabel || null);
+        }
+      } else {
+        if (wanted) resolvedMicId = wanted.deviceId;
+        setMicLabel(wanted?.label ?? currentLabel ?? null);
       }
-      setMicLabel(wanted?.label ?? currentLabel ?? null);
     } catch (e) {
+      stream?.getTracks().forEach(t => t.stop());
+      // Запомненное устройство могло исчезнуть — в следующий раз подберём заново.
+      resolvedMicId = null;
       const name = (e as { name?: string })?.name ?? '';
       setError(name === 'NotFoundError' || name === 'DevicesNotFoundError'
         ? 'Микрофон не найден. Проверьте, что он подключён и выбран в системе.'
         : 'Доступ к микрофону не выдан. Нажмите «Разрешить» в запросе браузера, а если запроса нет — откройте настройки сайта (значок слева в адресной строке) и включите микрофон.');
-      return;
+      return false;
     }
     streamRef.current = stream;
 
@@ -166,8 +229,9 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
       mr.start();
     } catch {
       stream.getTracks().forEach(t => t.stop());
+      streamRef.current = null;
       setError('Не удалось начать запись. Попробуйте Chrome или Safari.');
-      return;
+      return false;
     }
 
     transcriptRef.current = '';
@@ -214,6 +278,7 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
 
     recordingRef.current = true;
     setRecording(true);
+    return true;
   }, [recorderSupported, speechLang]);
 
   const stop = useCallback(async (): Promise<string> => {
