@@ -132,6 +132,30 @@ export function PronunciationExercise({ exercise, onComplete, voice = 'Alain', s
         </p>
       )}
 
+      {speech.micLabel && (
+        <p className="mb-3 text-[11px] text-qz-text-muted">
+          Запись идёт со встроенного микрофона: <span className="text-foreground">{speech.micLabel}</span>
+        </p>
+      )}
+
+      {/* Распознавание берёт вход, назначенный в браузере по умолчанию, — выбрать
+          его страница не может, в Web Speech API такого метода нет. Если там
+          гарнитура, честнее предупредить, чем молча выдавать заниженные оценки. */}
+      {speech.defaultIsExternal && (
+        <div className="mb-3 text-xs text-amber-600 dark:text-amber-400 bg-amber-500/10 border border-amber-500/30 rounded-xl p-3">
+          <p className="font-bold mb-1">Оценка произношения идёт через наушники: {speech.defaultMicLabel}</p>
+          <p>
+            Запись мы уже перевели на встроенный микрофон, но само распознавание браузер берёт
+            с устройства по умолчанию, и повлиять на это страница не может. Bluetooth-гарнитура
+            передаёт голос в узкой полосе, и оценки выходят ниже реальных.
+          </p>
+          <p className="mt-1">
+            Чтобы оценивалось честно, сделайте встроенный микрофон входом по умолчанию:
+            на Mac — «Системные настройки» → «Звук» → «Вход», в Windows — «Параметры» → «Система» → «Звук» → «Ввод».
+          </p>
+        </div>
+      )}
+
       <ol className="space-y-2">
         {items.map((it, idx) => {
           const a = attempts[idx];

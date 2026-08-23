@@ -11,7 +11,10 @@
 //    текст фиксируется в базе и склеивается, иначе речь до паузы теряется.
 
 import { useCallback, useRef, useState } from 'react';
-import { getSpeechRecognition, hasMediaDevices, type SpeechRecognitionLike } from '@/lib/speech';
+import {
+  getSpeechRecognition, hasMediaDevices, chooseMic, listMicrophones, micLabelOf, looksExternal,
+  type SpeechRecognitionLike,
+} from '@/lib/speech';
 
 export interface SpeechAttempt {
   /** Идёт ли запись прямо сейчас. */
@@ -31,12 +34,24 @@ export interface SpeechAttempt {
   alternatives: () => string[][];
   /** Сбросить запись перед новой попыткой. */
   reset: () => void;
+  /** Микрофон, с которого ведётся ЗАПИСЬ (мы его выбираем сами). */
+  micLabel: string | null;
+  /**
+   * Устройство по умолчанию в браузере — именно с него идёт РАСПОЗНАВАНИЕ.
+   * Выбрать его страница не может: в Web Speech API такого метода нет.
+   */
+  defaultMicLabel: string | null;
+  /** Похоже ли устройство по умолчанию на наушники: повод предупредить. */
+  defaultIsExternal: boolean;
 }
 
 export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
   const [recording, setRecording] = useState(false);
   const [selfUrl, setSelfUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [micLabel, setMicLabel] = useState<string | null>(null);
+  const [defaultMicLabel, setDefaultMicLabel] = useState<string | null>(null);
+  const [defaultIsExternal, setDefaultIsExternal] = useState(false);
 
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
   const mediaRecRef = useRef<MediaRecorder | null>(null);
@@ -62,7 +77,25 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
 
     let stream: MediaStream;
     try {
+      // Первый заход — с устройством по умолчанию: он же и выдаёт разрешение,
+      // без которого названия микрофонов недоступны.
       stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+      const mics = await listMicrophones();
+      const current = stream.getAudioTracks()[0]?.getSettings().deviceId;
+      const currentLabel = micLabelOf(mics, current);
+      setDefaultMicLabel(currentLabel || null);
+      setDefaultIsExternal(!!currentLabel && looksExternal(currentLabel));
+
+      // Перецепляемся на встроенный микрофон, если по умолчанию стоит другой.
+      const wanted = await chooseMic();
+      if (wanted && current && wanted.deviceId !== current) {
+        stream.getTracks().forEach(t => t.stop());
+        stream = await navigator.mediaDevices.getUserMedia({
+          audio: { deviceId: { exact: wanted.deviceId } },
+        });
+      }
+      setMicLabel(wanted?.label ?? currentLabel ?? null);
     } catch (e) {
       const name = (e as { name?: string })?.name ?? '';
       setError(name === 'NotFoundError' || name === 'DevicesNotFoundError'
@@ -148,5 +181,9 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
 
   const alternatives = useCallback(() => altsRef.current, []);
 
-  return { recording, selfUrl, error, setError, recorderSupported, speechSupported, start, stop, alternatives, reset };
+  return {
+    recording, selfUrl, error, setError, recorderSupported, speechSupported,
+    start, stop, alternatives, reset,
+    micLabel, defaultMicLabel, defaultIsExternal,
+  };
 }
