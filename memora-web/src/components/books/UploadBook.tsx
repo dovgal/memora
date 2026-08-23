@@ -6,7 +6,7 @@
 import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Upload, Loader2, FileText, X } from 'lucide-react';
-import { ACCEPTED, extractBook, formatOf } from '@/lib/books/extract';
+import { ACCEPTED, ACCEPTED_HINT, extractBook, formatOf } from '@/lib/books/extract';
 import { uploadBook } from '@/lib/books/upload';
 import type { ChapterDraft } from '@/lib/books/draft';
 import { TARGET_LANGS } from '@/lib/books/langs';
@@ -97,7 +97,7 @@ export function UploadBook({ onDone }: { onDone?: () => void }) {
         >
           <Upload className="w-6 h-6" />
           <span className="text-sm font-semibold">Выберите файл книги</span>
-          <span className="text-xs">{ACCEPTED.replaceAll('.', '').replaceAll(',', ' · ')}</span>
+          <span className="text-xs">{ACCEPTED_HINT}</span>
         </button>
       ) : null}
 

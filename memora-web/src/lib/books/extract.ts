@@ -14,8 +14,25 @@ export interface ExtractResult {
 
 export type Progress = (done: number, total: number, stage: string) => void;
 
-/** Форматы, которые принимает загрузчик. */
-export const ACCEPTED = '.epub,.fb2,.txt,.pdf,.docx';
+/**
+ * Форматы, которые принимает загрузчик.
+ *
+ * Кроме расширений перечислены и MIME-типы: на iOS выбор файла по одним
+ * расширениям работает плохо — подходящие книги оказываются недоступны для
+ * нажатия.
+ */
+export const ACCEPTED = [
+  '.epub', '.fb2', '.txt', '.pdf', '.docx',
+  'application/epub+zip',
+  'application/x-fictionbook+xml',
+  'text/xml',
+  'text/plain',
+  'application/pdf',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+].join(',');
+
+/** То же для показа человеку. */
+export const ACCEPTED_HINT = 'epub · fb2 · txt · pdf · docx';
 
 export function formatOf(file: File): string {
   const ext = file.name.toLowerCase().split('.').pop() ?? '';
@@ -55,7 +72,7 @@ function textFromHtml(root: Element | Document): string {
   if (blocks.length === 0) {
     return (root.textContent ?? '').replace(/[ \t]+/g, ' ').trim();
   }
-  for (const el of blocks) {
+  for (const el of Array.from(blocks)) {
     // Берём только листовые блоки, иначе текст задваивается вложенными div.
     if (el.querySelector('p, div, li, blockquote')) continue;
     const t = (el.textContent ?? '').replace(/\s+/g, ' ').trim();
@@ -134,12 +151,12 @@ async function extractEpub(file: File, onProgress?: Progress): Promise<ExtractRe
 
   // manifest: id → href; spine задаёт порядок чтения.
   const hrefById = new Map<string, string>();
-  for (const item of opf.querySelectorAll('manifest > item')) {
+  for (const item of Array.from(opf.querySelectorAll('manifest > item'))) {
     const id = item.getAttribute('id');
     const href = item.getAttribute('href');
     if (id && href) hrefById.set(id, href);
   }
-  const spine = [...opf.querySelectorAll('spine > itemref')]
+  const spine = Array.from(opf.querySelectorAll('spine > itemref'))
     .map(r => r.getAttribute('idref'))
     .filter((v): v is string => !!v)
     .map(id => hrefById.get(id))
@@ -188,12 +205,14 @@ async function extractFb2(file: File): Promise<ExtractResult> {
   const body = doc.querySelector('body');
   if (!body) throw new Error('В FB2 нет тела книги');
 
-  const paragraphText = (el: Element) => [...el.querySelectorAll('p, subtitle, v')]
+  const paragraphText = (el: Element) => Array.from(el.querySelectorAll('p, subtitle, v'))
     .map(p => (p.textContent ?? '').replace(/\s+/g, ' ').trim())
     .filter(Boolean)
     .join('\n\n');
 
-  const sections = [...body.children].filter(el => el.tagName.toLowerCase() === 'section');
+  // Array.from, а не спред: HTMLCollection в Safari не итерируется, и на
+  // мобильном разбор падал с «undefined is not a function».
+  const sections = Array.from(body.children).filter(el => el.tagName.toLowerCase() === 'section');
   const chapters: ChapterDraft[] = [];
   for (const s of sections) {
     const title = s.querySelector(':scope > title')?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
@@ -235,7 +254,8 @@ async function extractDocx(file: File): Promise<ExtractResult> {
     if (content) chapters.push({ title: title || `Часть ${chapters.length + 1}`, content });
     buf = [];
   };
-  for (const el of doc.body.children) {
+  // Тот же случай: .children — HTMLCollection, в Safari его нельзя перебирать.
+  for (const el of Array.from(doc.body.children)) {
     const tag = el.tagName.toLowerCase();
     const t = (el.textContent ?? '').replace(/\s+/g, ' ').trim();
     if (!t) continue;
