@@ -95,3 +95,41 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.2);
 }
+
+/* ---------- Режим для экранов на электронных чернилах ---------- */
+/*
+ * Такие экраны перерисовываются сотни миллисекунд, и каждый плавный переход,
+ * размытие или тень оплачиваются полной перерисовкой. Отклик кажется вязким
+ * не из-за медленного кода, а из-за того, что экран физически не успевает.
+ *
+ * Атрибут ставит сценарий в <head> ещё до первой отрисовки: сам по признаку
+ * `update: slow`, которым медленные экраны о себе сообщают, либо по выбору
+ * человека. Здесь остаётся только выключить дорогое.
+ */
+html[data-eink="on"] *,
+html[data-eink="on"] *::before,
+html[data-eink="on"] *::after {
+  transition: none !important;
+  animation: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+html[data-eink="on"] {
+  scroll-behavior: auto !important;
+  /* Серый по белому на чернилах читается заметно хуже, чем на светящемся
+     экране: приглушённый текст и границы делаем контрастнее. */
+  --qz-text-muted: #3f3f46;
+  --muted-foreground: #3f3f46;
+  --border: #a1a1aa;
+  --input: #a1a1aa;
+}
+
+html[data-eink="on"].dark {
+  --qz-text-muted: #d4d4d8;
+  --muted-foreground: #d4d4d8;
+  --border: #71717a;
+  --input: #71717a;
+}

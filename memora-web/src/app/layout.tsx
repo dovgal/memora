@@ -45,6 +45,17 @@ export default async function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
+              // Режим для электронных чернил решается ДО первой отрисовки:
+              // иначе страница успевает мигнуть анимациями и размытием, а на
+              // медленном экране это лишняя полная перерисовка.
+              (function(){
+                try {
+                  var pref = localStorage.getItem('memora.eink');
+                  var slow = window.matchMedia && window.matchMedia('(update: slow)').matches;
+                  var on = pref ? pref === 'on' : !!slow;
+                  document.documentElement.setAttribute('data-eink', on ? 'on' : 'off');
+                } catch (e) {}
+              })();
               if(typeof navigator !== 'undefined' && 'serviceWorker' in navigator) { 
                 navigator.serviceWorker.getRegistrations().then(function(r) { 
                   r.forEach(function(reg) { reg.unregister(); }); 
