@@ -3,8 +3,11 @@
 // отсчёт и шаги простыми словами. Рассчитан на ребёнка: минимум текста на
 // экране во время выполнения, всё управление — двумя большими кнопками.
 
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { Play, Pause, RotateCcw, ChevronRight, TriangleAlert } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import {
+  armChime, buzz, playChime, setSound, soundServerSnapshot, soundSnapshot, subscribeSound,
+} from '@/lib/vision/chime';
+import { Play, Pause, RotateCcw, ChevronRight, TriangleAlert, Volume2, VolumeX } from 'lucide-react';
 import { EyeTarget } from './EyeTarget';
 import type { VisionExercise } from '@/data/vision/exercises';
 
@@ -42,6 +45,17 @@ export function ExercisePlayer({ ex, onDone, onNext }: {
     }, ex.kind === 'reps' ? 5000 : 1000);   // на повторы даём по 5 секунд
     return stop;
   }, [running, ex.kind, ex.id, onDone, stop]);
+
+  const soundOn = useSyncExternalStore(subscribeSound, soundSnapshot, soundServerSnapshot);
+
+  // Звук вынесен в эффект, а не в обновление счётчика: половина упражнений
+  // делается с закрытыми глазами, и сигнал должен прозвучать ровно один раз.
+  // Внутри обновления состояния React в режиме разработки вызвал бы его дважды.
+  useEffect(() => {
+    if (!finished) return;
+    playChime();
+    buzz();
+  }, [finished]);
 
   const pct = total > 0 ? ((total - left) / total) * 100 : 0;
   const unit = ex.kind === 'reps' ? 'раз' : 'сек';
@@ -88,7 +102,13 @@ export function ExercisePlayer({ ex, onDone, onNext }: {
 
       <div className="flex items-center gap-2 flex-wrap justify-center mb-5">
         <button
-          onClick={() => (finished ? (setLeft(total), setFinished(false), setRunning(true)) : setRunning(r => !r))}
+          onClick={() => {
+            // Разрешение на звук даётся только по действию человека, а сигнал
+            // нужен через несколько минут — готовим заранее, прямо здесь.
+            armChime();
+            if (finished) { setLeft(total); setFinished(false); setRunning(true); }
+            else setRunning(r => !r);
+          }}
           className="inline-flex items-center gap-2 bg-[#4255ff] hover:bg-[#3144e0] text-white font-bold px-6 py-3 rounded-2xl text-base transition-colors"
         >
           {finished ? <><RotateCcw className="w-5 h-5" /> Ещё раз</>
@@ -105,10 +125,24 @@ export function ExercisePlayer({ ex, onDone, onNext }: {
           className="inline-flex items-center gap-2 border border-border text-qz-text-muted hover:text-foreground font-semibold px-4 py-3 rounded-2xl">
           <RotateCcw className="w-4 h-4" /> Сброс
         </button>
+        <button
+          onClick={() => { setSound(!soundOn); if (!soundOn) { armChime(); playChime(); } }}
+          title={soundOn
+            ? 'Сигнал в конце упражнения включён. Нажмите, чтобы выключить.'
+            : 'Сигнал выключен. Нажмите, чтобы включить и услышать его.'}
+          aria-label="Звуковой сигнал в конце упражнения"
+          aria-pressed={soundOn}
+          className="inline-flex items-center gap-2 border border-border text-qz-text-muted hover:text-foreground font-semibold px-4 py-3 rounded-2xl"
+        >
+          {soundOn ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+        </button>
       </div>
 
       {finished && (
-        <p className="text-center text-emerald-500 font-bold mb-4">Отлично! Упражнение сделано ⭐</p>
+        <p className="text-center text-emerald-500 font-bold mb-4">
+          Отлично! Упражнение сделано ⭐
+          {soundOn && <span className="block text-xs font-normal text-qz-text-muted mt-1">Слышали сигнал — можно открывать глаза.</span>}
+        </p>
       )}
 
       <div className="grid sm:grid-cols-2 gap-4">
