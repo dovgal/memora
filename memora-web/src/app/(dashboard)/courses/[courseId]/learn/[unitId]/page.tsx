@@ -110,7 +110,9 @@ export default function CustomUnitPage({ params }: { params: Promise<{ courseId:
     );
   }
 
-  const completedCount = Object.keys(completed).length;
+  // Ключи с решёткой — отдельные строки упражнения на произношение, а не
+  // упражнения целиком: в счётчик юнита они попадать не должны.
+  const completedCount = Object.keys(completed).filter(k => !k.includes('#')).length;
   const totalInteractive = unit.exercises.filter(e => e.type !== 'theory').length;
   const pct = totalInteractive > 0 ? Math.round((completedCount / totalInteractive) * 100) : 100;
 
@@ -191,7 +193,14 @@ export default function CustomUnitPage({ params }: { params: Promise<{ courseId:
                   <CheckCircle2 className="w-3 h-3" /> Выполнено
                 </div>
               )}
-              <ExerciseRenderer exercise={ex} onComplete={handleExerciseComplete} voice={langMeta(language).voice} speechLang={langMeta(language).speechLang} />
+              <ExerciseRenderer
+                exercise={ex}
+                onComplete={handleExerciseComplete}
+                voice={langMeta(language).voice}
+                speechLang={langMeta(language).speechLang}
+                doneKeys={completed}
+                onItemDone={handleExerciseComplete}
+              />
             </div>
           ))}
         </div>

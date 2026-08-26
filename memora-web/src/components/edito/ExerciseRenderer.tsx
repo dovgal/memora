@@ -26,6 +26,10 @@ interface ExerciseRendererProps {
   voice?: string;
   /** Код распознавания речи курса (для упражнений на произношение). */
   speechLang?: string;
+  /** Сохранённый прогресс по отдельным строкам упражнения (ключ «упражнение#номер»). */
+  doneKeys?: Record<string, boolean>;
+  /** Засчитать одну строку, не дожидаясь конца упражнения. */
+  onItemDone?: (key: string) => void;
 }
 
 /**
@@ -48,7 +52,7 @@ const RENDERABLE_TYPES = new Set<string>([
   'numeric', 'ordering', 'symbolic', 'pronunciation',
 ]);
 
-export function ExerciseRenderer({ exercise, onComplete, voice, speechLang }: ExerciseRendererProps) {
+export function ExerciseRenderer({ exercise, onComplete, voice, speechLang, doneKeys, onItemDone }: ExerciseRendererProps) {
   const handleComplete = (result?: ExerciseResult) => onComplete?.(exercise.id, result);
 
   // Старый формат — по type; новый (Subject Packs) — по answer.kind,
@@ -87,7 +91,16 @@ export function ExerciseRenderer({ exercise, onComplete, voice, speechLang }: Ex
     case 'symbolic':
       return <SymbolicExercise exercise={exercise} onComplete={handleComplete} />;
     case 'pronunciation':
-      return <PronunciationExercise exercise={exercise} onComplete={() => handleComplete()} voice={voice} speechLang={speechLang} />;
+      return (
+        <PronunciationExercise
+          exercise={exercise}
+          onComplete={() => handleComplete()}
+          voice={voice}
+          speechLang={speechLang}
+          doneKeys={doneKeys}
+          onItemDone={onItemDone}
+        />
+      );
     default:
       return null;
   }

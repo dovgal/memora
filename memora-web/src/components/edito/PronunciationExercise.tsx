@@ -65,11 +65,17 @@ function issuesOf(check: DictationCheck) {
   return out;
 }
 
-export function PronunciationExercise({ exercise, onComplete, voice = 'Alain', speechLang = 'fr-FR' }: {
+export function PronunciationExercise({
+  exercise, onComplete, voice = 'Alain', speechLang = 'fr-FR', doneKeys, onItemDone,
+}: {
   exercise: EditoExercise;
   onComplete?: () => void;
   voice?: string;
   speechLang?: string;
+  /** Уже засчитанные строки, пришедшие с сервера: ключ — «упражнение#номер». */
+  doneKeys?: Record<string, boolean>;
+  /** Сообщить, что строка засчитана. Пишется сразу, а не по завершении всего. */
+  onItemDone?: (key: string) => void;
 }) {
   const items = useMemo(() => exercise.pronItems ?? [], [exercise.pronItems]);
   const [attempts, setAttempts] = useState<Record<number, Attempt>>({});
@@ -81,9 +87,28 @@ export function PronunciationExercise({ exercise, onComplete, voice = 'Alain', s
 
   const speech = useSpeechAttempt(speechLang);
   const total = items.length;
+
+  const itemKey = useCallback((idx: number) => `${exercise.id}#${idx}`, [exercise.id]);
+
+  /**
+   * Строки, засчитанные в прошлые заходы. Выводятся, а не хранятся состоянием:
+   * прогресс приходит с сервера уже после первой отрисовки, и снимок,
+   * сделанный один раз при создании компонента, его бы не увидел.
+   */
+  const passedBefore = useMemo(() => {
+    const set = new Set<number>();
+    if (doneKeys) items.forEach((_, i) => { if (doneKeys[`${exercise.id}#${i}`]) set.add(i); });
+    return set;
+  }, [doneKeys, items, exercise.id]);
+
+  const isPassed = useCallback(
+    (idx: number) => passedBefore.has(idx) || (attempts[idx]?.score ?? 0) >= PASS_SCORE,
+    [passedBefore, attempts],
+  );
+
   const passedCount = useMemo(
-    () => Object.values(attempts).filter(a => a.score >= PASS_SCORE).length,
-    [attempts],
+    () => items.reduce((n, _, i) => n + (isPassed(i) ? 1 : 0), 0),
+    [items, isPassed],
   );
 
   const play = async (text: string) => {
@@ -122,13 +147,19 @@ export function PronunciationExercise({ exercise, onComplete, voice = 'Alain', s
     const check = checkDictation(target, heard, { spoken: true });
     const score = check.total > 0 ? Math.round((check.correct / check.total) * 100) : 0;
     const scores = speech.wordScores();
-    setAttempts(prev => {
-      const next = { ...prev, [idx]: { score, check, heard, scores } };
-      const ok = Object.values(next).filter(a => a.score >= PASS_SCORE).length;
-      if (ok >= total) onComplete?.();
-      return next;
-    });
-  }, [speech, items, total, onComplete]);
+    setAttempts(prev => ({ ...prev, [idx]: { score, check, heard, scores } }));
+
+    // Строка засчитывается СРАЗУ, а не по завершении всего упражнения: иначе
+    // работа теряется, стоит закрыть страницу на середине — а строк тут больше
+    // десятка, и каждая требует чистой записи.
+    if (score >= PASS_SCORE) {
+      onItemDone?.(itemKey(idx));
+      const done = new Set(passedBefore);
+      Object.entries(attempts).forEach(([k, a]) => { if (a.score >= PASS_SCORE) done.add(Number(k)); });
+      done.add(idx);
+      if (done.size >= total) onComplete?.();
+    }
+  }, [speech, items, total, onComplete, onItemDone, itemKey, passedBefore, attempts]);
 
   if (total === 0) return null;
 
@@ -201,7 +232,7 @@ export function PronunciationExercise({ exercise, onComplete, voice = 'Alain', s
       <ol className="space-y-2">
         {items.map((it, idx) => {
           const a = attempts[idx];
-          const ok = !!a && a.score >= PASS_SCORE;
+          const ok = isPassed(idx);
           const recording = activeIdx === idx && speech.recording;
           const busy = speech.recording && activeIdx !== idx;
           const isWord = (it.kind ?? 'word') === 'word';
@@ -220,7 +251,12 @@ export function PronunciationExercise({ exercise, onComplete, voice = 'Alain', s
                     <span className="text-[10px] uppercase tracking-wider font-bold text-qz-text-muted">
                       {idx + 1}. {KIND_LABEL[it.kind ?? 'word']}
                     </span>
-                    {ok && <span className="text-[10px] text-emerald-500 inline-flex items-center gap-0.5"><Check className="w-3 h-3" /> засчитано</span>}
+                    {ok && (
+                      <span className="text-[10px] text-emerald-500 inline-flex items-center gap-0.5">
+                        <Check className="w-3 h-3" /> засчитано
+                        {!a && <span className="text-qz-text-muted"> · в прошлый раз</span>}
+                      </span>
+                    )}
                     {a && !ok && <span className="text-[10px] text-amber-500">{a.score}% — нужно чище</span>}
                   </div>
                   <p className={`${isWord ? 'text-lg' : 'text-base'} font-semibold text-foreground leading-snug break-words`}>
