@@ -186,6 +186,22 @@ export async function getCourseProgress(courseId: string, idToken?: string): Pro
   return data.exercises.map(e => ({ unitId: e.unit_id, exerciseId: e.exercise_id, completedAt: e.completed_at }));
 }
 
+/** Пакетная запись отметок — для сверки накопленного местного прогресса. */
+export async function recordProgressBulk(
+  courseId: string,
+  items: { unitId: string; exerciseId: string }[],
+  idToken?: string,
+): Promise<void> {
+  if (items.length === 0) return;
+  try {
+    await fetch(`/api/courses/${courseId}/progress/bulk`, {
+      method: 'POST',
+      headers: headers(idToken),
+      body: JSON.stringify({ items: items.slice(0, 2000) }),
+    });
+  } catch { /* офлайн — сверимся в следующий раз */ }
+}
+
 export async function recordExerciseProgress(courseId: string, unitId: string, exerciseId: string, idToken?: string): Promise<void> {
   try {
     await fetch(`/api/courses/${courseId}/progress`, {

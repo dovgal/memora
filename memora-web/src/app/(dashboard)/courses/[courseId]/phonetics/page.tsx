@@ -6,14 +6,14 @@ import { use, useCallback, useEffect, useState, useSyncExternalStore } from 'rea
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { ChevronLeft, Waves, Check, Dumbbell } from 'lucide-react';
-import { getCourse, getCourseProgress } from '@/lib/courses/customCoursesApi';
+import { getCourse, getCourseProgress, recordProgressBulk } from '@/lib/courses/customCoursesApi';
 import { langMeta } from '@/lib/courses/langMeta';
 import { PhoneticsCoach } from '@/components/courses/PhoneticsCoach';
 import {
   PHONETICS_LESSONS, drillItems, corpusStats, type SoundDrill,
 } from '@/lib/courses/phonetics';
 import {
-  drillMastery, subscribeProgress, getProgressSnapshot, getServerProgressSnapshot, hydrate,
+  drillMastery, subscribeProgress, getProgressSnapshot, getServerProgressSnapshot, hydrate, localOnly,
 } from '@/lib/courses/phonetics/mastery';
 
 export default function CoursePhoneticsPage({ params }: { params: Promise<{ courseId: string }> }) {
@@ -31,8 +31,16 @@ export default function CoursePhoneticsPage({ params }: { params: Promise<{ cour
     if (!idToken) return;
     getCourse(courseId, idToken).then(c => { if (c.language) setLanguage(c.language); }).catch(() => {});
     // Сданные единицы забираем с сервера: карта звуков должна показывать один
-    // и тот же уровень усвоения на ноутбуке, телефоне и планшете.
-    getCourseProgress(courseId, idToken).then(hydrate).catch(() => {});
+    // и тот же уровень усвоения на ноутбуке, телефоне и планшете. И тут же
+    // сверяем в обратную сторону — то, что накопилось в браузере до переезда
+    // на сервер или без сети, отправляем туда одним пакетом.
+    getCourseProgress(courseId, idToken)
+      .then(entries => {
+        const missing = localOnly(entries);
+        hydrate(entries);
+        return recordProgressBulk(courseId, missing, idToken);
+      })
+      .catch(() => {});
   }, [courseId, idToken]);
 
   const meta = langMeta(language);

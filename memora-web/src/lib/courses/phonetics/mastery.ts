@@ -86,7 +86,10 @@ export function hydrate(entries: { unitId: string; exerciseId: string; completed
   const all = { ...loadProgress() };
   for (const e of entries) {
     const cur: DrillProgress = all[e.unitId] ?? { passed: [], attempts: 0, best: 0 };
-    if (cur.passed.includes(e.exerciseId)) continue;
+    // Сравниваем по обрезанному ключу: в кэше могли остаться записи с полным
+    // текстом, сделанные до переезда на сервер. Иначе длинная скороговорка
+    // вернулась бы вторым экземпляром и завысила усвоение.
+    if (cur.passed.some(p => itemKey(p) === e.exerciseId)) continue;
     all[e.unitId] = { ...cur, passed: [...cur.passed, e.exerciseId], lastAt: e.completedAt ?? cur.lastAt };
   }
   saveProgress(all);
@@ -113,6 +116,29 @@ export function markAttempt(drillId: string, score: number): PhoneticsProgress {
   all[drillId] = { ...cur, attempts: cur.attempts + 1, best: Math.max(cur.best, score), lastAt: new Date().toISOString() };
   saveProgress(all);
   return all;
+}
+
+/**
+ * Что есть в местном кэше, но ещё не на сервере.
+ *
+ * Это не разовый перенос, а постоянная сверка: прогресс, набранный до переезда
+ * на сервер или без сети, отправится при следующем открытии карты. Повторная
+ * отправка безвредна — сервер игнорирует уже записанное.
+ */
+export function localOnly(
+  entries: { unitId: string; exerciseId: string }[],
+): { unitId: string; exerciseId: string }[] {
+  const onServer = new Set(entries.map(e => `${e.unitId}\u0000${e.exerciseId}`));
+  const out: { unitId: string; exerciseId: string }[] = [];
+  for (const [drillId, progress] of Object.entries(loadProgress())) {
+    for (const item of progress.passed) {
+      // Отправляем тем же ключом, каким сервер его и сохранит, иначе запись
+      // не узнается при следующей сверке и полетит снова.
+      const key = itemKey(item);
+      if (!onServer.has(`${drillId}\u0000${key}`)) out.push({ unitId: drillId, exerciseId: key });
+    }
+  }
+  return out;
 }
 
 /** Доля усвоенного материала блока, 0…1. */

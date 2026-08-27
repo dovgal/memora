@@ -161,6 +161,7 @@ async fn main() {
         .route("/api/a2/assignments", post(handlers::classes::create_assignment).get(handlers::classes::my_assignments))
         // Generic course-trainer progress (Edito A1 and others)
         .route("/api/courses/{course_id}/progress", get(handlers::course_progress::get_course_progress).post(handlers::course_progress::record_course_progress))
+        .route("/api/courses/{course_id}/progress/bulk", post(handlers::course_progress::record_course_progress_bulk))
         // Пользовательские курсы: создание и редактирование (любой пользователь)
         .route("/api/courses", get(handlers::courses::list_courses).post(handlers::courses::create_course))
         .route(
