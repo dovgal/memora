@@ -605,6 +605,34 @@ pub async fn pdf_text(
 
 // ---------- Адаптация под уровень ----------
 
+/// Предел длины предложения по уровню. Именно он отличает настоящую адаптацию
+/// от подмены пары слов: без него модель оставляет исходную конструкцию на
+/// сорок слов и меняет лишь «трудные» слова на синонимы.
+fn level_max_sentence(level: &str) -> Option<usize> {
+    Some(match level {
+        "A1.1" => 8,
+        "A1.2" => 12,
+        "A2" => 15,
+        "B1" => 22,
+        "B2" => 30,
+        _ => return None,
+    })
+}
+
+/// Доля предложений, вылезших за предел. Считаем грубо, по знакам конца фразы:
+/// точность тут не нужна, нужен признак «текст не упрощён».
+fn too_long_share(text: &str, cap: usize) -> f32 {
+    let sentences: Vec<&str> = text
+        .split(|c| c == '.' || c == '!' || c == '?')
+        .filter(|s| !s.trim().is_empty())
+        .collect();
+    if sentences.is_empty() {
+        return 0.0;
+    }
+    let over = sentences.iter().filter(|s| s.split_whitespace().count() > cap).count();
+    over as f32 / sentences.len() as f32
+}
+
 /// Уровни владения языком и что на каждом допустимо.
 /// Правила заданы явно: без них модель сползает к привычному B1 на любом уровне.
 fn level_rules(level: &str) -> Option<&'static str> {
@@ -661,17 +689,32 @@ fn slice_chapter(content: &str) -> Vec<String> {
     out
 }
 
-async fn adapt_slice(text: &str, level: &str, rules: &str, language: &str) -> Result<String, String> {
-    let lang = super::translate::lang_name(language);
+async fn ask_adapt(text: &str, level: &str, rules: &str, lang: &str, insist: bool) -> Result<String, String> {
+    let cap = level_max_sentence(level);
+    let length = match cap {
+        Some(n) => format!(
+            "Sentences of at most {n} words. Split every long sentence into several short ones."
+        ),
+        None => "Keep sentences natural for this level.".to_string(),
+    };
+    // Первая попытка бережная, вторая — настойчивая. Мягкая формулировка
+    // «не сокращай» перебивала требование упрощать, и модель ограничивалась
+    // подменой отдельных слов, оставляя конструкцию на сорок слов нетронутой.
+    let push = if insist {
+        "The previous attempt was NOT simplified: it kept long sentences. REWRITE FROM SCRATCH.          Break every long sentence apart. Drop rhetorical flourishes, metaphors and literary          idioms — keep only the facts and events. The result must be visibly shorter."
+    } else {
+        "Rewrite, do not paraphrase: the result must read as if written for this level from          scratch, not as the original with a few words swapped. Rhetorical flourishes and          literary idioms are dropped; facts, names and the order of events are kept."
+    };
+
     let content = crate::llm::chat_text(crate::llm::ChatRequest {
         task: crate::llm::Task::Generation,
         messages: vec![
             crate::llm::ChatMessage::system(format!(
                 "You rewrite {lang} texts for learners at CEFR level {level}.\n\
                  CONSTRAINTS: {rules}\n\
-                 Keep the meaning, the facts, the names and the order of events. Keep the same \
-                 language ({lang}). Keep paragraph breaks. Do not summarise, do not add \
-                 commentary, do not skip content: rewrite it simply.\n\
+                 LENGTH OF SENTENCES: {length}\n\
+                 {push}\n\
+                 Keep the same language ({lang}) and the paragraph breaks. Add no commentary.\n\
                  GRAMMAR OUTRANKS BREVITY: every noun keeps its article. Reply with the rewritten \
                  text only."
             )),
@@ -689,6 +732,25 @@ async fn adapt_slice(text: &str, level: &str, rules: &str, language: &str) -> Re
         return Err("модель вернула пустой ответ".to_string());
     }
     Ok(out)
+}
+
+async fn adapt_slice(text: &str, level: &str, rules: &str, language: &str) -> Result<String, String> {
+    let lang = super::translate::lang_name(language);
+    let first = ask_adapt(text, level, rules, lang, false).await?;
+
+    // Проверяем, упростился ли текст на самом деле. Если больше трети фраз всё
+    // ещё длиннее предела — одна настойчивая попытка. Больше не пробуем: это
+    // время читателя, а не бесконечный торг с моделью.
+    if let Some(cap) = level_max_sentence(level) {
+        if too_long_share(&first, cap) > 0.34 {
+            if let Ok(second) = ask_adapt(text, level, rules, lang, true).await {
+                if too_long_share(&second, cap) < too_long_share(&first, cap) {
+                    return Ok(second);
+                }
+            }
+        }
+    }
+    Ok(first)
 }
 
 #[derive(Deserialize)]
@@ -1039,6 +1101,20 @@ mod tests {
         // Ключ кэша — номер куска: поедут границы, и сохранённое не найдётся.
         let text = "Первый абзац.\n\nВторой абзац.\n\nТретий абзац.";
         assert_eq!(slice_chapter(text), slice_chapter(text));
+    }
+
+    #[test]
+    fn long_sentences_are_detected() {
+        // Ровно тот случай, что прошёл мимо первой версии: одна длинная фраза
+        // вместо нескольких коротких.
+        let bad = "Le drapeau tricolore, qui est à la fois un symbole qui apparaît rapidement et \
+                   une présence qui dure longtemps, surgit dans l'imaginaire collectif comme le \
+                   fil d'Ariane qui relie la Révolution de mille sept cent quatre-vingt-neuf.";
+        assert!(too_long_share(bad, 15) > 0.9, "длинная фраза должна отмечаться");
+
+        let good = "Le drapeau est bleu, blanc et rouge. Il vient de la Révolution. \
+                    Les Français le voient partout.";
+        assert!(too_long_share(good, 15) < 0.01, "короткие фразы отмечаться не должны");
     }
 
     #[test]
