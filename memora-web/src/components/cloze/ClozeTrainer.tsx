@@ -17,7 +17,8 @@ import { blankOut, distractors, fetchCloze, type ClozeItem } from '@/lib/sets/cl
 import { speakInworld } from '@/lib/courses/ttsInworld';
 import { voiceFor, speechTag } from '@/lib/books/langs';
 import { useSpeechAttempt } from '@/lib/courses/useSpeechAttempt';
-import { checkDictation, bestTranscript } from '@/lib/courses/dictation';
+import { checkDictation, bestTranscript, type DiffOp } from '@/lib/courses/dictation';
+import { DiffChips } from '@/components/edito/DiffChips';
 import { PASS_SCORE } from '@/lib/courses/phonetics/mastery';
 // Перевод общий для всей платформы: DeepL с кэшем в базе. Живёт в клиенте
 // читалки, но эндпоинт не её собственность — одно и то же предложение,
@@ -26,7 +27,10 @@ import { translate } from '@/lib/books/api';
 import { TARGET_LANGS } from '@/lib/books/langs';
 
 type Mode = 'vocabulary' | 'listening' | 'speaking';
-type Answering = 'choice' | 'input';
+type Answering = 'choice' | 'input' | 'transcribe';
+
+/** Порог для записи на слух: печать точнее речи, поэтому строже, чем в произношении. */
+const TRANSCRIBE_PASS = 90;
 
 const MODES: { id: Mode; icon: typeof Eye; title: string; hint: string }[] = [
   { id: 'vocabulary', icon: Eye, title: 'Словарь', hint: 'Читаете предложение и вставляете пропущенное слово' },
@@ -72,6 +76,8 @@ export function ClozeTrainer({ setId }: { setId: string }) {
   const [hint, setHint] = useState<string | null>(null);
   const [hintBusy, setHintBusy] = useState(false);
   const [reveal, setReveal] = useState<string | null>(null);
+  /** Расхождения записи на слух — показываем, чтобы было видно, что именно не расслышано. */
+  const [diff, setDiff] = useState<DiffOp[] | null>(null);
   const [revealBusy, setRevealBusy] = useState(false);
   const voice = useMemo(() => voiceFor(studyLang), [studyLang]);
   const speech = useSpeechAttempt(speechTag(studyLang));
@@ -232,6 +238,19 @@ export function ClozeTrainer({ setId }: { setId: string }) {
     settle(norm(typed) === norm(current.term));
   };
 
+  /**
+   * Запись на слух: сверяем ВСЮ фразу, а не одно слово. Разбор тот же, что у
+   * диктантов в курсах — по словам, прощая пунктуацию, — и он же показывает,
+   * где именно ухо подвело.
+   */
+  const answerTranscribe = () => {
+    if (verdict || !typed.trim()) return;
+    const check = checkDictation(current.sentence, typed);
+    const score = check.total > 0 ? Math.round((check.correct / check.total) * 100) : 0;
+    setDiff(check.ops);
+    settle(score >= TRANSCRIBE_PASS);
+  };
+
   const answerSpoken = async () => {
     const transcript = await speech.stop();
     if (!transcript) {
@@ -250,6 +269,7 @@ export function ClozeTrainer({ setId }: { setId: string }) {
     setPicked(null);
     setTyped('');
     setReveal(null);
+    setDiff(null);
     speech.setError(null);
     if (idx + 1 >= queue.length) setStage('done');
     else setIdx(i => i + 1);
@@ -281,7 +301,10 @@ export function ClozeTrainer({ setId }: { setId: string }) {
         <p className="text-xs font-bold uppercase tracking-wider text-qz-text-muted mb-2">Как тренируемся</p>
         <div className="space-y-2 mb-6">
           {MODES.map(m => (
-            <button key={m.id} onClick={() => setMode(m.id)}
+            <button key={m.id} onClick={() => {
+              setMode(m.id);
+              if (m.id !== 'listening' && answering === 'transcribe') setAnswering('choice');
+            }}
               className={`w-full text-left border rounded-2xl p-4 flex items-start gap-3 transition-colors ${
                 mode === m.id ? 'border-[#4255ff] bg-[#4255ff]/5' : 'border-border hover:border-[#4255ff]/40'}`}>
               <m.icon className={`w-5 h-5 mt-0.5 shrink-0 ${mode === m.id ? 'text-[#4255ff]' : 'text-qz-text-muted'}`} />
@@ -297,7 +320,7 @@ export function ClozeTrainer({ setId }: { setId: string }) {
         {mode !== 'speaking' && (
           <>
             <p className="text-xs font-bold uppercase tracking-wider text-qz-text-muted mb-2">Как отвечаем</p>
-            <div className="grid grid-cols-2 gap-2 mb-6">
+            <div className={`grid gap-2 mb-6 ${mode === 'listening' ? 'grid-cols-3' : 'grid-cols-2'}`}>
               <button onClick={() => setAnswering('choice')}
                 className={`border rounded-2xl p-3 text-center transition-colors ${
                   answering === 'choice' ? 'border-[#4255ff] bg-[#4255ff]/5' : 'border-border'}`}>
@@ -310,6 +333,16 @@ export function ClozeTrainer({ setId }: { setId: string }) {
                 <span className="block font-bold text-foreground">Ввод текстом</span>
                 <span className="text-xs text-qz-text-muted">крепче запоминается</span>
               </button>
+              {/* Запись всей фразы имеет смысл только на слух: с текстом перед
+                  глазами это переписывание, а не упражнение. */}
+              {mode === 'listening' && (
+                <button onClick={() => setAnswering('transcribe')}
+                  className={`border rounded-2xl p-3 text-center transition-colors ${
+                    answering === 'transcribe' ? 'border-[#4255ff] bg-[#4255ff]/5' : 'border-border'}`}>
+                  <span className="block font-bold text-foreground">Вся фраза на слух</span>
+                  <span className="text-xs text-qz-text-muted">самое трудное</span>
+                </button>
+              )}
             </div>
           </>
         )}
@@ -498,6 +531,27 @@ export function ClozeTrainer({ setId }: { setId: string }) {
             );
           })}
         </div>
+      ) : answering === 'transcribe' ? (
+        <div>
+          <textarea
+            value={typed}
+            onChange={e => setTyped(e.target.value)}
+            onKeyDown={e => {
+              // Enter отправляет, перенос строки внутри фразы не нужен.
+              if (e.key !== 'Enter' || e.shiftKey) return;
+              e.preventDefault();
+              if (verdict) next(); else answerTranscribe();
+            }}
+            disabled={!!verdict}
+            rows={3}
+            placeholder="запишите фразу целиком, как услышали"
+            className="w-full bg-transparent border border-border rounded-2xl px-4 py-3 text-lg text-foreground resize-none"
+          />
+          <button onClick={answerTranscribe} disabled={!!verdict || !typed.trim()}
+            className="mt-2 w-full bg-[#4255ff] hover:bg-[#3144e0] disabled:opacity-40 text-white font-bold px-5 py-3 rounded-2xl">
+            Проверить
+          </button>
+        </div>
       ) : (
         <div className="flex gap-2">
           <input
@@ -527,6 +581,17 @@ export function ClozeTrainer({ setId }: { setId: string }) {
               <Lightbulb className="w-3.5 h-3.5 shrink-0 mt-0.5" />
               Слово вернётся в повторение раньше остальных.
             </p>
+          )}
+
+          {/* Разбор по словам: без него «неверно» не говорит, что именно не
+              расслышано, а в этом вся польза записи на слух. */}
+          {diff && (
+            <div className="mt-3">
+              <p className="text-[10px] uppercase tracking-wider font-bold text-qz-text-muted mb-1.5">
+                Что услышалось
+              </p>
+              <DiffChips ops={diff} />
+            </div>
           )}
           <button onClick={next}
             className="mt-3 w-full inline-flex items-center justify-center gap-2 bg-[#4255ff] hover:bg-[#3144e0] text-white font-bold px-6 py-3 rounded-2xl">
