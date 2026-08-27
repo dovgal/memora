@@ -10,7 +10,18 @@ export type Block =
   | { kind: 'p'; text: string }
   | { kind: 'li'; text: string }
   | { kind: 'quote'; text: string }
-  | { kind: 'img'; src: string; alt: string };
+  | {
+      kind: 'img';
+      /** Адрес готовой картинки. Пусто, пока она не выложена на сервер. */
+      src: string;
+      alt: string;
+      /**
+       * Файл картинки из книги. Живёт только до отправки: адрес появляется
+       * лишь после того, как книга заведена, — раньше его просто некуда
+       * привязать.
+       */
+      data?: Blob;
+    };
 
 /** Есть ли в блоке текст, который читают и переводят. */
 export function isTextBlock(b: Block): b is Exclude<Block, { kind: 'img' }> {

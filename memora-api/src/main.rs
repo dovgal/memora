@@ -214,6 +214,10 @@ async fn main() {
         .route("/api/books/{id}/search", get(handlers::books::search_book))
         .route("/api/books/{id}/vocab", get(handlers::books::get_vocab).put(handlers::books::put_vocab))
         .route("/api/books/{id}/cards", post(handlers::books::add_card))
+        // Картинки из книги: кладём с проверкой входа, отдаём без неё —
+        // тег картинки не умеет передавать пропуск.
+        .route("/api/books/{id}/images", post(handlers::books::add_image))
+        .route("/api/books/{id}/images/{image_id}", get(handlers::books::get_image))
         // Перевод (DeepL с кэшем) и словарная статья (LLM) — для читалки.
         .route("/api/translate", post(handlers::translate::translate_handler))
         .route("/api/dictionary", post(handlers::translate::dictionary_handler))

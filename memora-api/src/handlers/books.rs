@@ -612,6 +612,86 @@ pub async fn pdf_text(
     Ok((StatusCode::OK, Json(value)))
 }
 
+// ---------- Картинки книги ----------
+
+/// Потолок на одну картинку. Иллюстрация столько не весит; всё, что больше, —
+/// либо скан во весь разворот, либо ошибка.
+const MAX_IMAGE_BYTES: usize = 3 * 1024 * 1024;
+
+#[derive(Deserialize)]
+pub struct ImageParams {
+    #[serde(default)]
+    pub mime: Option<String>,
+}
+
+/// POST /api/books/{id}/images — положить картинку из книги.
+/// Тело запроса — сами байты: перекладывать их в текст значит раздуть на треть.
+pub async fn add_image(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Path(id): Path<Uuid>,
+    axum::extract::Query(params): axum::extract::Query<ImageParams>,
+    body: axum::body::Bytes,
+) -> ApiResult<impl IntoResponse> {
+    let user_id = uid(&user.sub)?;
+    owned_book(&pool, id, user_id).await?;
+
+    if body.is_empty() {
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "Empty image"));
+    }
+    if body.len() > MAX_IMAGE_BYTES {
+        return Err(ApiError::response(StatusCode::PAYLOAD_TOO_LARGE, "Картинка слишком большая"));
+    }
+
+    let mime = params.mime.unwrap_or_default();
+    let mime = if mime.starts_with("image/") && mime.len() < 40 { mime } else { "image/jpeg".to_string() };
+
+    let row = sqlx::query("INSERT INTO book_images (book_id, mime, bytes) VALUES ($1, $2, $3) RETURNING id")
+        .bind(id)
+        .bind(&mime)
+        .bind(body.as_ref())
+        .fetch_one(&pool)
+        .await
+        .map_err(db_err)?;
+    let image_id: Uuid = row.get("id");
+
+    Ok((StatusCode::OK, Json(json!({
+        "id": image_id.to_string(),
+        "url": format!("/api/books/{id}/images/{image_id}"),
+    }))))
+}
+
+/// GET /api/books/{id}/images/{image_id} — отдать картинку.
+///
+/// БЕЗ проверки входа, и это осознанно: тег картинки в разметке не умеет
+/// передавать пропуск, а без него иллюстрация просто не покажется. Защита
+/// здесь — случайный опознаватель: угадать его нельзя, а ссылки никуда не
+/// публикуются. Для семейной библиотеки со своими же книгами этого довольно.
+pub async fn get_image(
+    State(pool): State<PgPool>,
+    Path((id, image_id)): Path<(Uuid, Uuid)>,
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
+    let row = sqlx::query("SELECT mime, bytes FROM book_images WHERE id = $1 AND book_id = $2")
+        .bind(image_id)
+        .bind(id)
+        .fetch_optional(&pool)
+        .await
+        .map_err(db_err)?
+        .ok_or_else(|| ApiError::response(StatusCode::NOT_FOUND, "Image not found"))?;
+
+    let mime: String = row.get("mime");
+    let bytes: Vec<u8> = row.get("bytes");
+    Ok((
+        StatusCode::OK,
+        [
+            (axum::http::header::CONTENT_TYPE, mime),
+            // Картинка книги не меняется никогда: пусть браузер держит её у себя.
+            (axum::http::header::CACHE_CONTROL, "public, max-age=31536000, immutable".to_string()),
+        ],
+        bytes,
+    ))
+}
+
 // ---------- Адаптация под уровень ----------
 
 /// Предел длины предложения по уровню. Именно он отличает настоящую адаптацию

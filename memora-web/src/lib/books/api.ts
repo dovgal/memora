@@ -90,6 +90,29 @@ export interface DictionaryEntry {
 
 // ---------- Книги ----------
 
+/**
+ * Кладёт картинку книги и возвращает её постоянный адрес.
+ *
+ * Отправляем сами байты, без обёртки в текст: в текстовом виде картинка
+ * толстеет на треть. Сначала пробуем API напрямую — тем же путём, что и разбор
+ * PDF: на многомегабайтных телах прокси уже подводил.
+ */
+export async function uploadBookImage(bookId: string, file: Blob): Promise<string> {
+  const headers = await authHeaders();
+  delete headers['Content-Type'];
+  const path = `/api/books/${bookId}/images?mime=${encodeURIComponent(file.type || 'image/jpeg')}`;
+
+  const direct = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '');
+  if (direct) {
+    try {
+      const r = await fetch(`${direct}${path}`, { method: 'POST', headers, body: file });
+      if (r.ok) return (await r.json()).url as string;
+    } catch { /* уходим на прокси */ }
+  }
+  const r = await fetch(path, { method: 'POST', headers, body: file });
+  return (await ok<{ url: string }>(r)).url;
+}
+
 export const listBooks = () => call<Book[]>('/api/books');
 export const getBook = (id: string) => call<BookDetail>(`/api/books/${id}`);
 export const getChapter = (id: string, position: number) =>

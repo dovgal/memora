@@ -6,6 +6,7 @@
 
 import { type ExtractResult } from './extract';
 import { isTextBlock, type Block, type ChapterDraft } from './draft';
+import { collectBlocks } from './blocks';
 
 /** Мусор, который есть почти на каждой странице и текстом не является. */
 const NOISE = 'script, style, noscript, iframe, svg, form, nav, header, footer, aside, ' +
@@ -52,7 +53,7 @@ export async function fetchWebPage(url: string, idToken?: string): Promise<WebPa
 }
 
 /** Разобрать разметку страницы в главы. */
-export function parsePage(html: string, source: string): WebPage {
+export async function parsePage(html: string, source: string): Promise<WebPage> {
   const doc = new DOMParser().parseFromString(html, 'text/html');
 
   const title = (doc.querySelector('h1')?.textContent
@@ -75,7 +76,17 @@ export function parsePage(html: string, source: string): WebPage {
     }
   }
 
-  const blocks = best ? collectBlocks(best, source) : [];
+  // Картинки страницы остаются по своим адресам в интернете: качать их к себе
+  // незачем, они и так лежат на чужом сервере.
+  const blocks = best
+    ? await collectBlocks(best, async el => {
+        const raw = el.getAttribute('src') ?? el.getAttribute('data-src') ?? '';
+        const src = absolute(raw, source);
+        // Пустышки-заглушки и следящие пиксели картинками не считаем.
+        if (!src || src.startsWith('data:')) return null;
+        return { src };
+      })
+    : [];
   const textLength = blocks.filter(isTextBlock).reduce((n, b) => n + b.text.length, 0);
   if (textLength < 200) {
     throw new Error('На странице не нашлось связного текста. Бывает у лент новостей и страниц, где текст рисуется скриптами.');
@@ -86,70 +97,6 @@ export function parsePage(html: string, source: string): WebPage {
     meta: { title, author: hostOf(source), language },
     source,
   };
-}
-
-/** Что забираем со страницы. Всё остальное — оформление, оно нам чужое. */
-const KEEP = 'h1, h2, h3, h4, p, li, blockquote, img, figcaption';
-
-/**
- * Обходим содержимое по порядку и собираем блоки.
- *
- * Берём только листовые узлы: у вложенных разметка задваивается, и один абзац
- * попал бы в книгу дважды — сначала как часть раздела, потом сам по себе.
- */
-function collectBlocks(root: Element, base: string): Block[] {
-  const out: Block[] = [];
-  const seen = new Set<string>();
-
-  for (const el of Array.from(root.querySelectorAll(KEEP))) {
-    const tag = el.tagName.toLowerCase();
-
-    if (tag === 'img') {
-      const src = absolute(el.getAttribute('src') ?? el.getAttribute('data-src') ?? '', base);
-      // Пустышки-заглушки и следящие пиксели картинками не считаем.
-      if (!src || src.startsWith('data:') || seen.has(src)) continue;
-      seen.add(src);
-      out.push({ kind: 'img', src, alt: (el.getAttribute('alt') ?? '').trim() });
-      continue;
-    }
-
-    if (el.querySelector('p, li, blockquote')) continue;
-
-    const text = (el.textContent ?? '').replace(/\s+/g, ' ').trim();
-    if (text.length < 2) continue;
-    const key = tag + '|' + text;
-    if (seen.has(key)) continue;
-    seen.add(key);
-
-    if (tag === 'li') out.push({ kind: 'li', text });
-    else if (tag === 'blockquote') out.push({ kind: 'quote', text });
-    else if (tag === 'figcaption') out.push({ kind: 'p', text });
-    else out.push({ kind: 'h', level: Number(tag.slice(1)) || 2, text });
-  }
-
-  // Абзацы добираем отдельно: в выборке выше они идут вперемешку с прочим,
-  // а порядок в документе важнее порядка селекторов.
-  return reorder(root, out);
-}
-
-/** Возвращает блокам порядок, в котором они стоят на странице. */
-function reorder(root: Element, blocks: Block[]): Block[] {
-  const order = new Map<string, number>();
-  let i = 0;
-  for (const el of Array.from(root.querySelectorAll(KEEP))) {
-    const tag = el.tagName.toLowerCase();
-    const key = tag === 'img'
-      ? 'img|' + (el.getAttribute('src') ?? el.getAttribute('data-src') ?? '')
-      : tag + '|' + (el.textContent ?? '').replace(/\s+/g, ' ').trim();
-    if (!order.has(key)) order.set(key, i++);
-  }
-  const keyOf = (b: Block) => b.kind === 'img' ? 'img|' + b.src : (b.kind === 'h' ? 'h' + b.level : b.kind === 'li' ? 'li' : b.kind === 'quote' ? 'blockquote' : 'p') + '|' + b.text;
-  return [...blocks].sort((a, b) => (order.get(keyOf(a)) ?? 0) - (order.get(keyOf(b)) ?? 0));
-}
-
-function absolute(src: string, base: string): string {
-  if (!src) return '';
-  try { return new URL(src, base).toString(); } catch { return ''; }
 }
 
 /** Режем на главы по объёму текста; картинки идут вместе со своим разделом. */
@@ -178,4 +125,9 @@ function chunkBlocks(blocks: Block[], targetChars = 12_000): ChapterDraft[] {
 
 function hostOf(url: string): string {
   try { return new URL(url).host.replace(/^www\./, ''); } catch { return ''; }
+}
+
+function absolute(src: string, base: string): string {
+  if (!src) return '';
+  try { return new URL(src, base).toString(); } catch { return ''; }
 }

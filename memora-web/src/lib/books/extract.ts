@@ -4,7 +4,8 @@
 // парсеры EPUB и PDF не за чем, а браузер это уже умеет. Сервер получает
 // готовые главы обычным JSON.
 
-import type { ChapterDraft } from './draft';
+import type { Block, ChapterDraft } from './draft';
+import { collectBlocks, textOfBlocks, blobFromDataUrl, mimeOfPath, MAX_IMAGE_BYTES } from './blocks';
 
 export interface ExtractResult {
   chapters: ChapterDraft[];
@@ -172,10 +173,31 @@ async function extractEpub(file: File, onProgress?: Progress): Promise<ExtractRe
     const doc = parser.parseFromString(raw, 'application/xhtml+xml');
     const body = doc.querySelector('body') ?? doc.documentElement;
     const title = body.querySelector('h1, h2, h3, title')?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
-    const content = textFromHtml(body);
+
+    // Картинки лежат файлами в том же архиве, адреса — относительно самой главы.
+    const dir = path.includes('/') ? path.slice(0, path.lastIndexOf('/') + 1) : '';
+    const blocks = await collectBlocks(body, async el => {
+      const href = el.getAttribute('src') ?? el.getAttribute('xlink:href') ?? el.getAttribute('href');
+      if (!href || href.startsWith('data:')) return null;
+      const target = decodeURIComponent(new URL(href, `file:///${dir}`).pathname.replace(/^\//, ''));
+      const entry = zip.file(target);
+      if (!entry) return null;
+      const data = await entry.async('blob');
+      if (data.size === 0 || data.size > MAX_IMAGE_BYTES) return null;
+      return { data: new Blob([data], { type: mimeOfPath(target) }) };
+    }, { dedupe: false });
+
+    // Строение главы держим только там, где есть картинки: в текстовой главе
+    // от него никакой пользы, а вес книги оно удваивает.
+    const withImages = blocks.some(b => b.kind === 'img');
+    const content = (withImages ? textOfBlocks(blocks) : '') || textFromHtml(body);
     // Обложки и пустые служебные файлы главами не считаем.
     if (content.length < 120) continue;
-    chapters.push({ title: title || `Глава ${chapters.length + 1}`, content });
+    chapters.push({
+      title: title || `Глава ${chapters.length + 1}`,
+      content,
+      ...(withImages ? { blocks } : {}),
+    });
   }
   if (chapters.length === 0) throw new Error('В EPUB не нашлось текста');
   return { chapters, meta };
@@ -210,6 +232,23 @@ async function extractFb2(file: File): Promise<ExtractResult> {
     .filter(Boolean)
     .join('\n\n');
 
+  // В FB2 картинки лежат в самом файле, закодированные в текст, и ссылаются
+  // на себя по опознавателю: <image l:href="#cover.jpg"/>.
+  const binaries = new Map<string, Blob>();
+  for (const b of Array.from(doc.querySelectorAll('binary'))) {
+    const id = b.getAttribute('id');
+    const payload = (b.textContent ?? '').replace(/\s+/g, '');
+    if (!id || !payload) continue;
+    const mime = b.getAttribute('content-type') || 'image/jpeg';
+    const blob = blobFromDataUrl(`data:${mime};base64,${payload}`);
+    if (blob && blob.size > 0 && blob.size <= MAX_IMAGE_BYTES) binaries.set(id, blob);
+  }
+  const fb2Image = async (el: Element) => {
+    const href = el.getAttribute('l:href') ?? el.getAttribute('xlink:href') ?? el.getAttribute('href');
+    const data = href ? binaries.get(href.replace(/^#/, '')) : undefined;
+    return data ? { data } : null;
+  };
+
   // Array.from, а не спред: HTMLCollection в Safari не итерируется, и на
   // мобильном разбор падал с «undefined is not a function».
   const sections = Array.from(body.children).filter(el => el.tagName.toLowerCase() === 'section');
@@ -218,7 +257,13 @@ async function extractFb2(file: File): Promise<ExtractResult> {
     const title = s.querySelector(':scope > title')?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
     const content = paragraphText(s);
     if (content.length < 40) continue;
-    chapters.push({ title: title || `Глава ${chapters.length + 1}`, content });
+    const blocks = binaries.size > 0 ? await collectBlocks(s, fb2Image, { dedupe: false }) : [];
+    const withImages = blocks.some(b => b.kind === 'img');
+    chapters.push({
+      title: title || `Глава ${chapters.length + 1}`,
+      content: withImages ? textOfBlocks(blocks) : content,
+      ...(withImages ? { blocks } : {}),
+    });
   }
   if (chapters.length === 0) {
     const all = paragraphText(body);
@@ -271,19 +316,41 @@ async function extractDocx(file: File): Promise<ExtractResult> {
     if (content) chapters.push({ title: title || `Часть ${chapters.length + 1}`, content });
     buf = [];
   };
-  // Тот же случай: .children — HTMLCollection, в Safari его нельзя перебирать.
-  for (const el of Array.from(doc.body.children)) {
-    const tag = el.tagName.toLowerCase();
-    const t = (el.textContent ?? '').replace(/\s+/g, ' ').trim();
-    if (!t) continue;
-    if (tag === 'h1' || tag === 'h2') { flush(); title = t; } else { buf.push(t); }
+  // Картинки mammoth отдаёт прямо в адресе тега — забираем их оттуда.
+  const all = await collectBlocks(doc.body, async el => {
+    const src = el.getAttribute('src') ?? '';
+    if (!src.startsWith('data:')) return null;
+    const data = blobFromDataUrl(src);
+    if (!data || data.size === 0 || data.size > MAX_IMAGE_BYTES) return null;
+    return { data };
+  }, { dedupe: false });
+
+  let blocks: Block[] = [];
+  const chapterBlocks: Block[][] = [];
+  const flushBlocks = () => { chapterBlocks.push(blocks); blocks = []; };
+
+  for (const b of all) {
+    if (b.kind === 'h' && b.level <= 2) {
+      if (buf.length) { flush(); flushBlocks(); }
+      title = b.text;
+      continue;
+    }
+    blocks.push(b);
+    if (b.kind !== 'img') buf.push(b.text);
   }
-  flush();
+  if (buf.length) { flush(); flushBlocks(); }
   if (chapters.length === 0) throw new Error('В файле .docx не нашлось текста');
-  return {
-    chapters: chapters.length > 1 ? chapters : chunkText(chapters[0].content),
-    meta: { title: '', author: '', language: '' },
-  };
+  chapters.forEach((c, i) => {
+    const b = chapterBlocks[i] ?? [];
+    if (b.some(x => x.kind === 'img')) c.blocks = b;
+  });
+
+  // Одна сплошная глава — режем по объёму, и тогда картинки не привязать:
+  // границы кусков текста уже не совпадают с местами картинок.
+  if (chapters.length === 1) {
+    return { chapters: chunkText(chapters[0].content), meta: { title: '', author: '', language: '' } };
+  }
+  return { chapters, meta: { title: '', author: '', language: '' } };
 }
 
 async function extractTxt(file: File): Promise<ExtractResult> {
