@@ -217,6 +217,7 @@ async fn main() {
         // Картинки из книги: кладём с проверкой входа, отдаём без неё —
         // тег картинки не умеет передавать пропуск.
         .route("/api/books/{id}/images", post(handlers::books::add_image))
+        .route("/api/books/{id}/images/fetch", post(handlers::books::fetch_images))
         .route("/api/books/{id}/images/{image_id}", get(handlers::books::get_image))
         // Перевод (DeepL с кэшем) и словарная статья (LLM) — для читалки.
         .route("/api/translate", post(handlers::translate::translate_handler))

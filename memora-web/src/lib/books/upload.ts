@@ -4,7 +4,7 @@
 // и «Война и мир» одним POST туда не проходит. Размер пачки ограничен и по
 // числу глав, и по объёму текста — упирается всегда что-то одно.
 
-import { addChapters, createBook, finalizeBook, updateBook, uploadBookImage, type Book } from './api';
+import { addChapters, createBook, fetchBookImages, finalizeBook, updateBook, uploadBookImage, type Book } from './api';
 import type { Block, ChapterDraft } from './draft';
 
 const MAX_BATCH_CHARS = 600_000;
@@ -70,6 +70,7 @@ export async function uploadBook(
   // Картинки — только теперь: адрес у картинки появляется лишь после того,
   // как книга заведена, раньше его не к чему привязать.
   await uploadImages(id, chapters, onProgress);
+  await pullRemoteImages(id, chapters, onProgress);
 
   let batch: { position: number; title: string; content: string; blocks?: Block[] }[] = [];
   let size = 0;
@@ -103,4 +104,50 @@ export async function uploadBook(
     try { return await updateBook(id, { level: meta.level }); } catch { /* прочтём в оригинале */ }
   }
   return book;
+}
+
+/** Столько адресов сервер берёт за один заход. */
+const FETCH_CHUNK = 20;
+
+/**
+ * Забирает к себе картинки, оставшиеся ссылками на чужой сайт.
+ *
+ * Ссылка живёт ровно столько, сколько её держит чужой сервер: страницу
+ * перестроят — и в книге останутся пустые места. К тому же на читалке без
+ * сети такая картинка не покажется вовсе. Не получилось забрать — оставляем
+ * прежний адрес: пусть лучше грузится со стороны, чем не будет совсем.
+ */
+async function pullRemoteImages(
+  bookId: string,
+  chapters: ChapterDraft[],
+  onProgress?: (done: number, total: number, stage?: string) => void,
+) {
+  const remote = new Map<string, Block[]>();
+  for (const c of chapters) {
+    for (const b of c.blocks ?? []) {
+      if (b.kind !== 'img' || !/^https?:\/\//i.test(b.src)) continue;
+      const same = remote.get(b.src);
+      if (same) same.push(b); else remote.set(b.src, [b]);
+    }
+  }
+  if (remote.size === 0) return;
+
+  const urls = [...remote.keys()];
+  let done = 0;
+  for (let i = 0; i < urls.length; i += FETCH_CHUNK) {
+    const slice = urls.slice(i, i + FETCH_CHUNK);
+    done += slice.length;
+    onProgress?.(done, urls.length, 'Сохраняю картинки');
+    try {
+      const r = await fetchBookImages(bookId, slice);
+      for (const got of r.images) {
+        if (!got.url) continue;
+        for (const b of remote.get(got.src) ?? []) {
+          if (b.kind === 'img') b.src = got.url;
+        }
+      }
+    } catch {
+      // Сервер не ответил — оставляем ссылки как есть.
+    }
+  }
 }

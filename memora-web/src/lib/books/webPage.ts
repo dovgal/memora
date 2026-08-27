@@ -80,10 +80,12 @@ export async function parsePage(html: string, source: string): Promise<WebPage> 
   // незачем, они и так лежат на чужом сервере.
   const blocks = best
     ? await collectBlocks(best, async el => {
-        const raw = el.getAttribute('src') ?? el.getAttribute('data-src') ?? '';
-        const src = absolute(raw, source);
-        // Пустышки-заглушки и следящие пиксели картинками не считаем.
-        if (!src || src.startsWith('data:')) return null;
+        const src = absolute(imageHref(el), source);
+        if (!src) return null;
+        // Значки и следящие точки картинками не считаем.
+        const w = Number(el.getAttribute('width'));
+        const h = Number(el.getAttribute('height'));
+        if ((w && w < 60) || (h && h < 60)) return null;
         return { src };
       })
     : [];
@@ -125,6 +127,31 @@ function chunkBlocks(blocks: Block[], targetChars = 12_000): ChapterDraft[] {
 
 function hostOf(url: string): string {
   try { return new URL(url).host.replace(/^www\./, ''); } catch { return ''; }
+}
+
+/** Откуда брать адреса картинки, по порядку. */
+const SRC_ATTRS = ['data-lazy-src', 'data-src', 'data-original', 'data-echo', 'src'];
+const SET_ATTRS = ['data-lazy-srcset', 'srcset', 'data-srcset'];
+
+/**
+ * Настоящий адрес картинки.
+ *
+ * Страницы сплошь и рядом подставляют картинку скриптом, а в самом теге
+ * держат прозрачную заглушку. Читать один только `src` значит выбросить
+ * ровно те картинки, ради которых всё и затевалось: на странице monday.com
+ * так спрятаны сорок одна из восьмидесяти пяти.
+ */
+function imageHref(el: Element): string {
+  for (const a of SRC_ATTRS) {
+    const v = (el.getAttribute(a) ?? '').trim();
+    if (v && !v.startsWith('data:')) return v;
+  }
+  for (const a of SET_ATTRS) {
+    // Список вида «адрес 1x, адрес 2x» — берём первый, он же самый лёгкий.
+    const first = (el.getAttribute(a) ?? '').split(',')[0]?.trim().split(/\s+/)[0] ?? '';
+    if (first && !first.startsWith('data:')) return first;
+  }
+  return '';
 }
 
 function absolute(src: string, base: string): string {

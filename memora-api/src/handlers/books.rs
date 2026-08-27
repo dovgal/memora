@@ -661,6 +661,106 @@ pub async fn add_image(
     }))))
 }
 
+#[derive(Deserialize)]
+pub struct FetchImagesRequest {
+    pub urls: Vec<String>,
+}
+
+/// Больше за один заход не берём: у прокси Railway тридцать секунд, а каждая
+/// картинка — это отдельный поход на чужой сервер.
+const MAX_FETCH_URLS: usize = 20;
+
+/// POST /api/books/{id}/images/fetch — забрать картинки страницы к себе.
+///
+/// Браузер этого сделать не может: чужой сервер не позволяет прочитать свои
+/// картинки со стороннего сайта. Да и незачем — оставшись ссылками, картинки
+/// пропадут, как только сайт их уберёт или закроет от постороннего показа, и
+/// уж точно не откроются на читалке без сети.
+pub async fn fetch_images(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Path(id): Path<Uuid>,
+    Json(payload): Json<FetchImagesRequest>,
+) -> ApiResult<impl IntoResponse> {
+    let user_id = uid(&user.sub)?;
+    owned_book(&pool, id, user_id).await?;
+
+    if payload.urls.len() > MAX_FETCH_URLS {
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, format!("urls: 1..{MAX_FETCH_URLS}")));
+    }
+
+    let client = reqwest::Client::builder()
+        .timeout(std::time::Duration::from_secs(12))
+        .redirect(reqwest::redirect::Policy::limited(3))
+        .build()
+        .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("client: {e}")))?;
+
+    let mut out = Vec::with_capacity(payload.urls.len());
+    for raw in &payload.urls {
+        out.push(match fetch_one_image(&pool, &client, id, raw).await {
+            Ok(url) => json!({ "src": raw, "url": url }),
+            // Одна не открылась — не повод терять страницу целиком: клиент
+            // оставит себе прежнюю ссылку.
+            Err(e) => json!({ "src": raw, "error": e }),
+        });
+    }
+    Ok((StatusCode::OK, Json(json!({ "images": out }))))
+}
+
+async fn fetch_one_image(
+    pool: &PgPool, client: &reqwest::Client, book_id: Uuid, raw: &str,
+) -> Result<String, String> {
+    // Тот же разбор адреса, что и для страницы: наша внутренняя сеть должна
+    // остаться недостижимой и здесь.
+    let parsed = super::webfetch::check_url(raw.trim()).map_err(|(_, e)| e.0.error.clone())?;
+
+    let res = client
+        .get(&parsed.full)
+        .header("User-Agent", "Mozilla/5.0 (compatible; MemoraReader/1.0)")
+        .header("Accept", "image/*")
+        .send()
+        .await
+        .map_err(|e| format!("не открылась: {e}"))?;
+
+    let final_url = res.url().to_string();
+    super::webfetch::check_url(&final_url).map_err(|(_, e)| e.0.error.clone())?;
+
+    if !res.status().is_success() {
+        return Err(format!("сайт ответил {}", res.status()));
+    }
+    let mime = res
+        .headers()
+        .get(reqwest::header::CONTENT_TYPE)
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("")
+        .split(';')
+        .next()
+        .unwrap_or("")
+        .trim()
+        .to_lowercase();
+    if !mime.starts_with("image/") {
+        return Err("по этому адресу не картинка".to_string());
+    }
+
+    let bytes = res.bytes().await.map_err(|e| format!("не прочиталась: {e}"))?;
+    if bytes.is_empty() {
+        return Err("пустой файл".to_string());
+    }
+    if bytes.len() > MAX_IMAGE_BYTES {
+        return Err("слишком большая".to_string());
+    }
+
+    let row = sqlx::query("INSERT INTO book_images (book_id, mime, bytes) VALUES ($1, $2, $3) RETURNING id")
+        .bind(book_id)
+        .bind(&mime)
+        .bind(bytes.as_ref())
+        .fetch_one(pool)
+        .await
+        .map_err(|e| format!("не сохранилась: {e}"))?;
+    let image_id: Uuid = row.get("id");
+    Ok(format!("/api/books/{book_id}/images/{image_id}"))
+}
+
 /// GET /api/books/{id}/images/{image_id} — отдать картинку.
 ///
 /// БЕЗ проверки входа, и это осознанно: тег картинки в разметке не умеет

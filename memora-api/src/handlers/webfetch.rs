@@ -58,7 +58,9 @@ fn is_private(ip: &IpAddr) -> bool {
     }
 }
 
-fn check_url(raw: &str) -> ApiResult<url_lite::Parsed> {
+/// Проверка адреса перед походом наружу. Общая: тем же путём забираются
+/// и картинки страницы.
+pub(crate) fn check_url(raw: &str) -> ApiResult<url_lite::Parsed> {
     let parsed = url_lite::parse(raw)
         .ok_or_else(|| ApiError::response(StatusCode::BAD_REQUEST, "Не похоже на адрес страницы"))?;
 

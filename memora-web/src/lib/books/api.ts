@@ -113,6 +113,15 @@ export async function uploadBookImage(bookId: string, file: Blob): Promise<strin
   return (await ok<{ url: string }>(r)).url;
 }
 
+/** Ответ на просьбу забрать картинки: у неудачных вместо адреса причина. */
+export interface FetchedImage { src: string; url?: string; error?: string }
+
+/** Просит сервер забрать картинки страницы к себе и вернуть их новые адреса. */
+export const fetchBookImages = (bookId: string, urls: string[]) =>
+  call<{ images: FetchedImage[] }>(`/api/books/${bookId}/images/fetch`, {
+    method: 'POST', body: JSON.stringify({ urls }),
+  });
+
 export const listBooks = () => call<Book[]>('/api/books');
 export const getBook = (id: string) => call<BookDetail>(`/api/books/${id}`);
 export const getChapter = (id: string, position: number) =>
