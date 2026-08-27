@@ -24,6 +24,7 @@ import { TARGET_LANGS, langName, voiceFor, speechTag } from '@/lib/books/langs';
 import { speakInworldAndWait, stopInworld } from '@/lib/courses/ttsInworld';
 import { ReaderText, sentenceTexts, pageUnitTexts } from './ReaderText';
 import { WordPanel, type Selection } from './WordPanel';
+import { useMediaQuery } from '@/lib/ui/mediaQuery';
 
 const FONT_KEY = 'memora.books.font';
 const PARALLEL_KEY = 'memora.books.parallel';
@@ -198,6 +199,21 @@ export function BookReader({ bookId }: { bookId: string }) {
   const blankTrans = useMemo(() => unitTexts.map(() => ''), [unitTexts]);
   /** Разворот бессмыслен, когда книга уже на языке перевода. */
   const canParallel = !!lang && !!targetLang && lang !== targetLang;
+
+  /**
+   * Две колонки или перевод под абзацем — решает CSS, а поведение зависит от
+   * того, что вышло на деле. Условие то же, что и в разметке разворота.
+   */
+  const twoColumns = useMediaQuery('(min-width: 40rem) and (orientation: landscape)');
+  const spread = parallel && canParallel;
+  /**
+   * В две колонки боковая панель — третья, и текст сжимается втрое. Поэтому в
+   * развороте её нет, пока не разбирают слово или фразу; а когда разбирают,
+   * место ей уступает перевод — вернётся он мгновенно, страница уже переведена.
+   */
+  const columns = spread && twoColumns;
+  const showAside = !!sel || !columns;
+  const showTranslation = spread && !(columns && sel);
 
   useEffect(() => {
     if (!parallel || !canParallel || unitTexts.length === 0) { setPageTrans(null); return; }
@@ -738,7 +754,7 @@ export function BookReader({ bookId }: { bookId: string }) {
               <p className="text-xs uppercase tracking-wider font-bold text-qz-text-muted mb-3">
                 {chapter.title || `Глава ${chapterPos + 1}`} · стр. {pageIdx + 1} из {pages.length}
                 {adapted && <span className="text-[#4255ff]"> · адаптировано под {level}</span>}
-                {parallel && canParallel && transProvider.startsWith('llm') && (
+                {spread && transProvider.startsWith('llm') && (
                   <span className="text-amber-500"> · перевод упрощённый: месячный запас DeepL исчерпан</span>
                 )}
               </p>
@@ -758,7 +774,7 @@ export function BookReader({ bookId }: { bookId: string }) {
                   activeSentence={aloudIdx}
                   fontSize={fontSize}
                   lineHeight={1.85}
-                  translations={parallel && canParallel ? (pageTrans ?? blankTrans) : null}
+                  translations={showTranslation ? (pageTrans ?? blankTrans) : null}
                   targetLang={targetLang}
                 />
               </div>
@@ -798,7 +814,7 @@ export function BookReader({ bookId }: { bookId: string }) {
         </div>
 
         {/* Панель разбора */}
-        <aside className="hidden lg:block w-[340px] shrink-0">
+        <aside className={`${showAside ? 'hidden lg:block' : 'hidden'} w-[340px] shrink-0`}>
           <div className="sticky top-20 bg-qz-card border border-border rounded-2xl p-4">
             {sel ? (
               <WordPanel
