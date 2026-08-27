@@ -108,6 +108,8 @@ async fn main() {
         .route("/api/auth/register", post(handlers::auth::register))
         .route("/api/auth/login", post(handlers::auth::login))
         .route("/api/auth/oauth/google", post(handlers::auth::oauth_google))
+        // Пароль для входа в приложении: Google в нём работать не может.
+        .route("/api/auth/password", post(handlers::auth::set_password))
         .route("/api/protected/me", get(handlers::protected::me_handler))
         .route("/api/users/onboarding", post(handlers::users::finish_onboarding))
         .route("/api/users/role", patch(handlers::users::update_role))

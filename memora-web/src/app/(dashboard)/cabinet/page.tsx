@@ -6,6 +6,7 @@ import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { AppPasswordCard } from '@/components/AppPasswordCard';
 import {
   User, GraduationCap, BookOpen, Users, Plus, LogIn, Loader2, Star, X, ArrowRight,
 } from 'lucide-react';
@@ -227,6 +228,8 @@ export default function CabinetPage() {
             </p>
           )}
         </section>
+
+        <AppPasswordCard />
       </div>
     </div>
   );

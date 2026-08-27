@@ -40,6 +40,18 @@ class MainActivity : AppCompatActivity() {
         const val APP_HOST = "memora-web-production.up.railway.app"
 
         /**
+         * Хосты входа через Google. Отправлять их в браузер бессмысленно: там
+         * человек войдёт, а сессия достанется браузеру, и приложение останется
+         * ни с чем. Открыть их здесь тоже нельзя — Google намеренно запрещает
+         * вход в аккаунт из встроенных браузеров. Поэтому объясняем прямо.
+         */
+        val AUTH_HOSTS = setOf(
+            "accounts.google.com",
+            "accounts.youtube.com",
+            "oauth2.googleapis.com",
+        )
+
+        /**
          * Включаем экономное оформление до того, как страница отрисуется.
          * Оно же само подхватится при следующих загрузках — значение сохраняется.
          */
@@ -152,6 +164,12 @@ class MainActivity : AppCompatActivity() {
             // Свои страницы открываем внутри, чужие ссылки отдаём системе:
             // иначе приложение превратится в браузер со всеми его бедами.
             if (uri.host == APP_HOST) return false
+
+            if (uri.host in AUTH_HOSTS) {
+                view?.loadDataWithBaseURL(null, googleAuthHtml(), "text/html", "utf-8", null)
+                return true
+            }
+
             return runCatching {
                 startActivity(Intent(Intent.ACTION_VIEW, uri))
                 true
@@ -217,6 +235,41 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    /**
+     * Объяснение вместо тупика.
+     *
+     * Молча выбрасывать в браузер было хуже всего: человек честно входил там,
+     * возвращался в приложение и видел, что он по-прежнему не вошёл, — без
+     * малейшего намёка на причину.
+     */
+    private fun googleAuthHtml(): String = """
+        <!doctype html><html lang="ru"><head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <style>
+          body{background:#fff;color:#000;font:18px/1.55 sans-serif;margin:0;
+               display:flex;min-height:100vh;align-items:center;justify-content:center}
+          div{padding:24px;max-width:30em}
+          h1{font-size:22px;margin:0 0 12px}
+          p{margin:0 0 12px}
+          ol{margin:0 0 12px 1.2em;padding:0}
+          li{margin-bottom:6px}
+          a{display:inline-block;margin-top:12px;padding:14px 28px;border:3px solid #000;
+            color:#000;text-decoration:none;font-weight:700}
+        </style></head><body><div>
+        <h1>Вход через Google здесь не работает</h1>
+        <p>Так решил сам Google: он не разрешает вход в аккаунт из приложений
+        со встроенным браузером. Обойти это нельзя, но и не нужно.</p>
+        <ol>
+          <li>Откройте Memora на компьютере или телефоне</li>
+          <li>Зайдите в «Мой кабинет» → «Пароль для приложения»</li>
+          <li>Задайте пароль и вернитесь сюда</li>
+        </ol>
+        <p>Здесь входите той же почтой и этим паролем. На сайте вход через
+        Google продолжит работать как прежде.</p>
+        <a href="$APP_URL">К входу по паролю</a>
+        </div></body></html>
+    """.trimIndent()
 
     /** Страница «нет связи» — своя, чтобы не показывать системную с мелким шрифтом. */
     private fun offlineHtml(): String = """

@@ -9,6 +9,7 @@ use sqlx::PgPool;
 use uuid::Uuid;
 
 use crate::domain::dtos::{AuthRequest, UserResponse};
+use crate::middleware::auth::AuthenticatedUser;
 use super::errors::ApiError;
 
 /// Проверка email по списку allowlist (чистая логика — для тестов).
@@ -30,6 +31,53 @@ fn email_in_allowlist(list: &str, email: &str) -> bool {
 fn registration_allowed(email: &str) -> bool {
     let list = std::env::var("REGISTRATION_ALLOWLIST").unwrap_or_default();
     email_in_allowlist(&list, email)
+}
+
+#[derive(serde::Deserialize)]
+pub struct SetPasswordRequest {
+    pub password: String,
+}
+
+/// POST /api/auth/password — задать пароль своему аккаунту.
+///
+/// Нужен приложению для Boox. Google намеренно запрещает вход в аккаунт из
+/// встроенных браузеров, поэтому в приложении остаётся вход по почте и паролю —
+/// а у аккаунта, созданного через Google, пароля нет вовсе.
+///
+/// Запрос идёт от уже вошедшего пользователя: меняем пароль только себе,
+/// чужой почты в теле нет и быть не может.
+pub async fn set_password(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Json(payload): Json<SetPasswordRequest>,
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
+    let user_id = Uuid::parse_str(&user.sub)
+        .map_err(|_| ApiError::response(StatusCode::UNAUTHORIZED, "Invalid user token"))?;
+
+    let password = payload.password;
+    if password.chars().count() < 8 {
+        return Err(ApiError::response(
+            StatusCode::BAD_REQUEST,
+            "Пароль должен быть не короче восьми символов",
+        ));
+    }
+
+    let hashed = hash(password, DEFAULT_COST)
+        .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, format!("hash: {e}")))?;
+
+    // Обычный query, а не макрос: макросы sqlx проверяются по кэшу .sqlx, и
+    // новый запрос в нём отсутствует — сборка упала бы на этом же месте.
+    let done = sqlx::query("UPDATE users SET password_hash = $1 WHERE id = $2")
+        .bind(&hashed)
+        .bind(user_id)
+        .execute(&pool)
+        .await
+        .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+
+    if done.rows_affected() == 0 {
+        return Err(ApiError::response(StatusCode::NOT_FOUND, "Пользователь не найден"));
+    }
+    Ok(StatusCode::NO_CONTENT)
 }
 
 pub async fn register(
