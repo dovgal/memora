@@ -50,6 +50,8 @@ export interface Book {
   isOwner: boolean;
   language: string;
   targetLanguage: string;
+  /** Уровень адаптации при чтении: пусто — оригинал. */
+  level: string;
   sourceFormat: string;
   chapterCount: number;
   wordCount: number;
@@ -98,7 +100,7 @@ export const finalizeBook = (id: string) =>
 
 export const updateBook = (id: string, patch: Partial<{
   title: string; author: string; topic: string; language: string;
-  targetLanguage: string; lastChapter: number; lastOffset: number;
+  targetLanguage: string; level: string; lastChapter: number; lastOffset: number;
 }>) => call<Book>(`/api/books/${id}`, { method: 'PATCH', body: JSON.stringify(patch) });
 
 export const deleteBook = (id: string) =>
@@ -124,6 +126,30 @@ export const addCard = (id: string, card: { term: string; definition: string; ex
   call<{ setId: string; cardId: string; cardCount: number }>(
     `/api/books/${id}/cards`, { method: 'POST', body: JSON.stringify(card) },
   );
+
+// ---------- Адаптация под уровень ----------
+
+/** Уровни владения языком, под которые умеем переписывать текст. */
+export const READING_LEVELS = ['A1.1', 'A1.2', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
+
+export interface AdaptResult {
+  level: string;
+  ready: number;
+  total: number;
+  done: boolean;
+  content: string;
+}
+
+/**
+ * Глава на выбранном уровне. За один заход сервер переписывает несколько
+ * кусков, поэтому зовём повторно, пока не придёт done — иначе длинная глава
+ * не уложится в таймаут прокси.
+ */
+export const adaptChapter = (id: string, position: number, level: string) =>
+  call<AdaptResult>(`/api/books/${id}/chapters/${position}/adapt`, {
+    method: 'POST',
+    body: JSON.stringify({ level }),
+  });
 
 // ---------- Разбор PDF на сервере ----------
 

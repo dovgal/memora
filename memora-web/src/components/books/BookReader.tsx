@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import {
   getBook, getChapter, getVocab, putVocab, updateBook, addCard, translate, searchBook,
+  adaptChapter, READING_LEVELS,
   type BookDetail, type ChapterContent, type VocabStatus, type SearchHit,
 } from '@/lib/books/api';
 import { splitParagraphs, paginate, uniqueWords } from '@/lib/books/tokenize';
@@ -55,6 +56,10 @@ export function BookReader({ bookId }: { bookId: string }) {
   const [aloudIdx, setAloudIdx] = useState<number | null>(null);
   const [cards, setCards] = useState<Set<string>>(new Set());
   const [targetLang, setTargetLang] = useState('ru');
+  /** Уровень адаптации: пусто — читаем оригинал. */
+  const [level, setLevel] = useState('');
+  const [adapted, setAdapted] = useState<string | null>(null);
+  const [adaptAt, setAdaptAt] = useState<{ ready: number; total: number } | null>(null);
   const [fontSize, setFontSize] = useState(19);
   const [toc, setToc] = useState(false);
   const [query, setQuery] = useState('');
@@ -85,6 +90,7 @@ export function BookReader({ bookId }: { bookId: string }) {
         setDetail(d);
         setChapterPos(d.book.lastChapter);
         setTargetLang(d.book.targetLanguage || 'ru');
+        setLevel(d.book.level || '');
         const v = await getVocab(bookId);
         if (!alive) return;
         setVocab(new Map(v.words.map(w => [w.word, w.status])));
@@ -114,10 +120,40 @@ export function BookReader({ bookId }: { bookId: string }) {
     return () => { alive = false; };
   }, [bookId, chapterPos, detail]);
 
-  const pages = useMemo(
-    () => (chapter ? paginate(splitParagraphs(chapter.content)) : []),
-    [chapter],
-  );
+  /**
+   * Переписывание главы под уровень. Сервер за один заход берёт несколько
+   * кусков, поэтому зовём его по кругу: длинная глава иначе не уложилась бы в
+   * таймаут прокси. Готовое сохраняется, и при следующем открытии придёт сразу.
+   */
+  useEffect(() => {
+    if (!chapter || !level) { setAdapted(null); setAdaptAt(null); return; }
+    let alive = true;
+    setAdapted(null);
+    setAdaptAt({ ready: 0, total: 0 });
+    (async () => {
+      for (let round = 0; round < 40; round++) {
+        try {
+          const r = await adaptChapter(bookId, chapter.position, level);
+          if (!alive) return;
+          setAdaptAt({ ready: r.ready, total: r.total });
+          if (r.done) { setAdapted(r.content); setAdaptAt(null); return; }
+          // Ни одного нового куска за заход — дальше топтаться незачем.
+          if (r.ready === 0 && round > 2) break;
+        } catch (e) {
+          if (!alive) return;
+          setError(e instanceof Error ? e.message : 'не удалось переписать главу');
+          break;
+        }
+      }
+      if (alive) { setAdaptAt(null); setAdapted(null); }
+    })();
+    return () => { alive = false; };
+  }, [chapter, level, bookId]);
+
+  const pages = useMemo(() => {
+    const text = adapted ?? chapter?.content ?? '';
+    return text ? paginate(splitParagraphs(text)) : [];
+  }, [chapter, adapted]);
   // useMemo: массив абзацев уходит в зависимости эффектов — новая ссылка на
   // каждый рендер заставляла бы их перезапускаться без причины.
   const pageParagraphs = useMemo(() => pages[pageIdx] ?? [], [pages, pageIdx]);
@@ -458,6 +494,21 @@ export function BookReader({ bookId }: { bookId: string }) {
             {TARGET_LANGS.map(l => <option key={l.code} value={l.code}>{l.name}</option>)}
           </select>
 
+          <select
+            value={level}
+            onChange={e => {
+              const v = e.target.value;
+              setLevel(v);
+              setPageIdx(0);
+              void updateBook(bookId, { level: v }).catch(() => {});
+            }}
+            className="bg-transparent border border-border rounded-lg text-xs px-2 py-1.5 text-foreground"
+            title="Уровень адаптации: текст перепишется проще, оригинал сохранится"
+          >
+            <option value="">оригинал</option>
+            {READING_LEVELS.map(l => <option key={l} value={l}>{l}</option>)}
+          </select>
+
           <button onClick={() => { setHits(h => (h === null ? [] : null)); setQuery(''); }} title="Поиск по книге"
             className="p-1.5 rounded-lg border border-border text-qz-text-muted hover:text-foreground">
             <Search className="w-4 h-4" />
@@ -572,10 +623,22 @@ export function BookReader({ bookId }: { bookId: string }) {
           )}
           {!chapter ? (
             <p className="text-qz-text-muted flex items-center gap-2"><Loader2 className="w-4 h-4 animate-spin" /> загружаю главу…</p>
+          ) : adaptAt ? (
+            <div className="text-qz-text-muted">
+              <p className="flex items-center gap-2">
+                <Loader2 className="w-4 h-4 animate-spin" />
+                переписываю главу под уровень {level}
+                {adaptAt.total > 0 && <> · {adaptAt.ready} из {adaptAt.total}</>}
+              </p>
+              <p className="text-xs mt-2">
+                Делается один раз: при следующем открытии эта глава откроется сразу.
+              </p>
+            </div>
           ) : (
             <>
               <p className="text-xs uppercase tracking-wider font-bold text-qz-text-muted mb-3">
                 {chapter.title || `Глава ${chapterPos + 1}`} · стр. {pageIdx + 1} из {pages.length}
+                {adapted && <span className="text-[#4255ff]"> · адаптировано под {level}</span>}
               </p>
               <div
                 ref={textRef}

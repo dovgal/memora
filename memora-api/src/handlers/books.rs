@@ -97,6 +97,8 @@ pub struct ChaptersRequest {
 #[serde(rename_all = "camelCase")]
 pub struct UpdateBookRequest {
     pub title: Option<String>,
+    /// Уровень адаптации при чтении: пусто — оригинал.
+    pub level: Option<String>,
     pub author: Option<String>,
     pub topic: Option<String>,
     pub language: Option<String>,
@@ -115,6 +117,8 @@ pub struct BookSummary {
     pub topic: String,
     pub language: String,
     pub target_language: String,
+    /// Уровень адаптации, выбранный этим читателем.
+    pub level: String,
     pub source_format: String,
     pub chapter_count: i32,
     pub word_count: i32,
@@ -140,6 +144,7 @@ fn book_from_row(r: &sqlx::postgres::PgRow, viewer: Uuid) -> BookSummary {
         is_owner: r.get::<Uuid, _>("owner_id") == viewer,
         language: r.get("language"),
         target_language: r.get("target_language"),
+        level: r.get("level"),
         source_format: r.get("source_format"),
         chapter_count: r.get("chapter_count"),
         word_count: r.get("word_count"),
@@ -158,6 +163,7 @@ fn book_from_row(r: &sqlx::postgres::PgRow, viewer: Uuid) -> BookSummary {
 const BOOK_SELECT: &str = "SELECT b.id, b.title, b.author, b.topic, b.language, b.source_format, \
      b.chapter_count, b.word_count, b.status, b.owner_id, b.created_at, \
      COALESCE(s.target_language, 'ru') AS target_language, \
+     COALESCE(s.level, '') AS level, \
      COALESCE(s.last_chapter, 0) AS last_chapter, \
      COALESCE(s.last_offset, 0::real) AS last_offset, \
      s.set_id AS set_id, \
@@ -463,18 +469,19 @@ pub async fn update_book(
         .map_err(db_err)?;
     }
 
-    let touches_state = payload.target_language.is_some()
+    let touches_state = payload.target_language.is_some() || payload.level.is_some()
         || payload.last_chapter.is_some() || payload.last_offset.is_some();
     if touches_state {
         // Приведение типов у COALESCE обязательно: параметр приходит пустым
         // (NULL), и без него Postgres не знает, какого типа значение.
         sqlx::query(
-            "INSERT INTO user_book_state (user_id, book_id, target_language, last_chapter, last_offset)
-             VALUES ($1, $2, COALESCE($3::text, 'ru'), COALESCE($4::int, 0), COALESCE($5::real, 0))
+            "INSERT INTO user_book_state (user_id, book_id, target_language, last_chapter, last_offset, level)
+             VALUES ($1, $2, COALESCE($3::text, 'ru'), COALESCE($4::int, 0), COALESCE($5::real, 0), COALESCE($6::text, ''))
              ON CONFLICT (user_id, book_id) DO UPDATE SET
                 target_language = COALESCE($3::text, user_book_state.target_language),
                 last_chapter    = COALESCE($4::int, user_book_state.last_chapter),
                 last_offset     = COALESCE($5::real, user_book_state.last_offset),
+                level           = COALESCE($6::text, user_book_state.level),
                 updated_at      = NOW()",
         )
         .bind(user_id)
@@ -482,6 +489,7 @@ pub async fn update_book(
         .bind(payload.target_language.as_ref().map(|s| s.trim().to_lowercase()))
         .bind(payload.last_chapter)
         .bind(payload.last_offset)
+        .bind(payload.level.as_ref().map(|s| s.trim().to_string()))
         .execute(&pool)
         .await
         .map_err(db_err)?;
@@ -593,6 +601,182 @@ pub async fn pdf_text(
     let value: serde_json::Value = serde_json::from_str(&text)
         .map_err(|e| ApiError::response(StatusCode::BAD_GATEWAY, format!("Неразборный ответ: {e}")))?;
     Ok((StatusCode::OK, Json(value)))
+}
+
+// ---------- Адаптация под уровень ----------
+
+/// Уровни владения языком и что на каждом допустимо.
+/// Правила заданы явно: без них модель сползает к привычному B1 на любом уровне.
+fn level_rules(level: &str) -> Option<&'static str> {
+    Some(match level {
+        "A1.1" => "Only the présent tense. Sentences of 4 to 8 words. No subordinate clauses. \
+                   Only the most frequent words. Repeat words instead of using synonyms.",
+        "A1.2" => "Présent and passé composé. Sentences up to 12 words. Simple connectors only. \
+                   Everyday vocabulary.",
+        "A2"   => "Présent, passé composé, imparfait, futur proche. Simple relative clauses with \
+                   qui and que. Concrete vocabulary.",
+        "B1"   => "All common past tenses, futur simple, conditionnel présent. Relative and \
+                   subordinate clauses. Some abstract vocabulary, explained in context.",
+        "B2"   => "Subjonctif présent, passive voice, contrast and concession. Abstract vocabulary.",
+        "C1"   => "Complex syntax, varied registers, idiomatic expressions, dense argumentation.",
+        "C2"   => "Full stylistic range, nuance and irony, rare and precise vocabulary.",
+        _ => return None,
+    })
+}
+
+/// Длина куска. Меньше — чаще обращения к модели, больше — риск обрезанного
+/// ответа и разрыва связи на прокси.
+const SLICE_CHARS: usize = 1400;
+/// Сколько кусков переписываем за один запрос: прокси рвёт связь на тридцати
+/// секундах, а каждый кусок — это секунды.
+const SLICES_PER_CALL: usize = 4;
+
+/// Режем главу на куски по границам абзацев.
+///
+/// Нарезка детерминированная: номер куска служит ключом кэша, и если границы
+/// поедут, сохранённая адаптация перестанет находиться.
+fn slice_chapter(content: &str) -> Vec<String> {
+    let mut out: Vec<String> = Vec::new();
+    let mut cur = String::new();
+    for para in content.split("\n\n") {
+        let para = para.trim();
+        if para.is_empty() {
+            continue;
+        }
+        if !cur.is_empty() && cur.chars().count() + para.chars().count() > SLICE_CHARS {
+            out.push(std::mem::take(&mut cur));
+        }
+        if !cur.is_empty() {
+            cur.push_str("\n\n");
+        }
+        cur.push_str(para);
+        // Абзац сам длиннее куска — отдаём как есть, рвать предложение хуже.
+        if cur.chars().count() >= SLICE_CHARS {
+            out.push(std::mem::take(&mut cur));
+        }
+    }
+    if !cur.is_empty() {
+        out.push(cur);
+    }
+    out
+}
+
+async fn adapt_slice(text: &str, level: &str, rules: &str, language: &str) -> Result<String, String> {
+    let lang = super::translate::lang_name(language);
+    let content = crate::llm::chat_text(crate::llm::ChatRequest {
+        task: crate::llm::Task::Generation,
+        messages: vec![
+            crate::llm::ChatMessage::system(format!(
+                "You rewrite {lang} texts for learners at CEFR level {level}.\n\
+                 CONSTRAINTS: {rules}\n\
+                 Keep the meaning, the facts, the names and the order of events. Keep the same \
+                 language ({lang}). Keep paragraph breaks. Do not summarise, do not add \
+                 commentary, do not skip content: rewrite it simply.\n\
+                 GRAMMAR OUTRANKS BREVITY: every noun keeps its article. Reply with the rewritten \
+                 text only."
+            )),
+            crate::llm::ChatMessage::user(text.to_string()),
+        ],
+        max_tokens: 2400,
+        format: crate::llm::ResponseFormat::Text,
+        think: Some("low".to_string()),
+    })
+    .await
+    .map_err(|e| e.to_string())?;
+
+    let out = content.trim().to_string();
+    if out.is_empty() {
+        return Err("модель вернула пустой ответ".to_string());
+    }
+    Ok(out)
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AdaptRequest {
+    pub level: String,
+}
+
+/// POST /api/books/{id}/chapters/{position}/adapt — глава на выбранном уровне.
+///
+/// За один заход переписывается несколько кусков, поэтому клиент зовёт метод
+/// повторно, пока не придёт `done`. Так адаптация длинной главы не упирается в
+/// таймаут прокси, а читатель видит, сколько осталось.
+pub async fn adapt_chapter(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Path((id, position)): Path<(Uuid, i32)>,
+    Json(payload): Json<AdaptRequest>,
+) -> ApiResult<impl IntoResponse> {
+    let user_id = uid(&user.sub)?;
+    let _ = user_id;
+    let (language, _) = readable_book(&pool, id).await?;
+
+    let level = payload.level.trim().to_string();
+    let rules = level_rules(&level)
+        .ok_or_else(|| ApiError::response(StatusCode::BAD_REQUEST, "Неизвестный уровень"))?;
+
+    let row = sqlx::query("SELECT content FROM book_chapters WHERE book_id = $1 AND position = $2")
+        .bind(id)
+        .bind(position)
+        .fetch_optional(&pool)
+        .await
+        .map_err(db_err)?
+        .ok_or_else(|| ApiError::response(StatusCode::NOT_FOUND, "Chapter not found"))?;
+    let original: String = row.get("content");
+
+    let slices = slice_chapter(&original);
+    let total = slices.len() as i32;
+
+    let saved = sqlx::query(
+        "SELECT slice, content FROM book_chapter_levels
+         WHERE book_id = $1 AND position = $2 AND level = $3 ORDER BY slice",
+    )
+    .bind(id).bind(position).bind(&level)
+    .fetch_all(&pool).await.map_err(db_err)?;
+    let mut done: std::collections::HashMap<i32, String> =
+        saved.into_iter().map(|r| (r.get::<i32, _>("slice"), r.get::<String, _>("content"))).collect();
+
+    let mut made = 0usize;
+    for (i, piece) in slices.iter().enumerate() {
+        let idx = i as i32;
+        if done.contains_key(&idx) {
+            continue;
+        }
+        if made >= SLICES_PER_CALL {
+            break;
+        }
+        made += 1;
+        match adapt_slice(piece, &level, rules, &language).await {
+            Ok(text) => {
+                let _ = sqlx::query(
+                    "INSERT INTO book_chapter_levels (book_id, position, level, slice, content)
+                     VALUES ($1, $2, $3, $4, $5)
+                     ON CONFLICT (book_id, position, level, slice) DO UPDATE SET content = EXCLUDED.content",
+                )
+                .bind(id).bind(position).bind(&level).bind(idx).bind(&text)
+                .execute(&pool).await;
+                done.insert(idx, text);
+            }
+            Err(e) => eprintln!("[adapt] {id} гл.{position} кусок {idx}: {e}"),
+        }
+    }
+
+    let ready = done.len() as i32;
+    let complete = ready >= total;
+    let content = if complete {
+        (0..total).filter_map(|i| done.get(&i).cloned()).collect::<Vec<_>>().join("\n\n")
+    } else {
+        String::new()
+    };
+
+    Ok((StatusCode::OK, Json(json!({
+        "level": level,
+        "ready": ready,
+        "total": total,
+        "done": complete,
+        "content": content,
+    }))))
 }
 
 // ---------- Словарь читателя ----------
@@ -828,4 +1012,38 @@ pub async fn add_card(
         "cardId": card_id.to_string(),
         "cardCount": total,
     }))))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn slicing_keeps_every_paragraph() {
+        // Абзацы намеренно длинные: короткие уложились бы в один кусок, и
+        // проверка деления ничего бы не проверяла.
+        let text = (1..=40)
+            .map(|i| format!("Абзац номер {i}. {}", "Текст для объёма. ".repeat(6)))
+            .collect::<Vec<_>>()
+            .join("\n\n");
+        let slices = slice_chapter(&text);
+        assert!(slices.len() > 1, "длинная глава должна делиться, а вышло кусков: {}", slices.len());
+        let joined = slices.join("\n\n");
+        for i in 1..=40 {
+            assert!(joined.contains(&format!("Абзац номер {i}.")), "потерян абзац {i}");
+        }
+    }
+
+    #[test]
+    fn slicing_is_stable() {
+        // Ключ кэша — номер куска: поедут границы, и сохранённое не найдётся.
+        let text = "Первый абзац.\n\nВторой абзац.\n\nТретий абзац.";
+        assert_eq!(slice_chapter(text), slice_chapter(text));
+    }
+
+    #[test]
+    fn unknown_level_is_rejected() {
+        assert!(level_rules("B1").is_some());
+        assert!(level_rules("Z9").is_none());
+    }
 }

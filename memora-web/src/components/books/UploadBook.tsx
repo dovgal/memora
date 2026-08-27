@@ -11,6 +11,7 @@ import { uploadBook } from '@/lib/books/upload';
 import type { ChapterDraft } from '@/lib/books/draft';
 import { TARGET_LANGS } from '@/lib/books/langs';
 import { BOOK_TOPICS } from '@/lib/books/topics';
+import { READING_LEVELS } from '@/lib/books/api';
 
 type Stage = 'idle' | 'parsing' | 'ready' | 'sending' | 'error';
 
@@ -26,6 +27,7 @@ export function UploadBook({ onDone }: { onDone?: () => void }) {
   const [topic, setTopic] = useState('');
   const [language, setLanguage] = useState('');
   const [targetLanguage, setTargetLanguage] = useState('ru');
+  const [level, setLevel] = useState('');
   const [format, setFormat] = useState('txt');
 
   const pick = async (file: File) => {
@@ -54,7 +56,7 @@ export function UploadBook({ onDone }: { onDone?: () => void }) {
     setError(null);
     try {
       const book = await uploadBook(
-        { title, author, topic, language, targetLanguage, sourceFormat: format },
+        { title, author, topic, language, targetLanguage, level, sourceFormat: format },
         chapters,
         (done, total) => setNote(`Отправляю главы: ${done} из ${total}`),
       );
@@ -138,6 +140,17 @@ export function UploadBook({ onDone }: { onDone?: () => void }) {
                 <option value="">Определить автоматически</option>
                 {TARGET_LANGS.map(l => <option key={l.code} value={l.code}>{l.name}</option>)}
               </select>
+            </label>
+            <label className="block">
+              <span className="text-xs font-bold uppercase tracking-wider text-qz-text-muted">Уровень чтения</span>
+              <select value={level} onChange={e => setLevel(e.target.value)}
+                className="w-full mt-1 bg-transparent border border-border rounded-lg px-3 py-2 text-sm text-foreground">
+                <option value="">Как в оригинале</option>
+                {READING_LEVELS.map(l => <option key={l} value={l}>{l}</option>)}
+              </select>
+              <span className="block text-[11px] text-qz-text-muted mt-1">
+                Текст перепишется под уровень при открытии главы. Оригинал сохранится.
+              </span>
             </label>
             <label className="block">
               <span className="text-xs font-bold uppercase tracking-wider text-qz-text-muted">Перевод на</span>

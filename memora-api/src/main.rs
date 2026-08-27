@@ -204,6 +204,8 @@ async fn main() {
         )
         .route("/api/books/{id}/chapters", post(handlers::books::add_chapters))
         .route("/api/books/{id}/chapters/{position}", get(handlers::books::get_chapter))
+        // Адаптация главы под уровень владения языком.
+        .route("/api/books/{id}/chapters/{position}/adapt", post(handlers::books::adapt_chapter))
         .route("/api/books/{id}/finalize", post(handlers::books::finalize_book))
         .route("/api/books/{id}/search", get(handlers::books::search_book))
         .route("/api/books/{id}/vocab", get(handlers::books::get_vocab).put(handlers::books::put_vocab))

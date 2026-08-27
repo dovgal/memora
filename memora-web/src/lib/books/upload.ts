@@ -4,14 +4,14 @@
 // и «Война и мир» одним POST туда не проходит. Размер пачки ограничен и по
 // числу глав, и по объёму текста — упирается всегда что-то одно.
 
-import { addChapters, createBook, finalizeBook, type Book } from './api';
+import { addChapters, createBook, finalizeBook, updateBook, type Book } from './api';
 import type { ChapterDraft } from './draft';
 
 const MAX_BATCH_CHARS = 600_000;
 const MAX_BATCH_ITEMS = 40;
 
 export async function uploadBook(
-  meta: { title: string; author?: string; topic?: string; language?: string; targetLanguage?: string; sourceFormat?: string },
+  meta: { title: string; author?: string; topic?: string; language?: string; targetLanguage?: string; sourceFormat?: string; level?: string },
   chapters: ChapterDraft[],
   onProgress?: (done: number, total: number) => void,
 ): Promise<Book> {
@@ -42,6 +42,12 @@ export async function uploadBook(
   }
   await flush();
 
-  // Финализация считает объём и, если язык не задан, определяет его моделью.
-  return finalizeBook(id);
+  const book = await finalizeBook(id);
+
+  // Уровень адаптации — личная настройка читателя, поэтому сохраняется
+  // отдельно от книги, уже после её создания.
+  if (meta.level) {
+    try { return await updateBook(id, { level: meta.level }); } catch { /* прочтём в оригинале */ }
+  }
+  return book;
 }
