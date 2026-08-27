@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Значок нарисован вектором, а не картинкой: так он чёткий на любом
+     разрешении и не тянет в проект двоичных файлов. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#000000"
+        android:pathData="M30,34 L30,74 L38,74 L38,49 L52,66 L66,49 L66,74 L74,74 L74,34 L66,34 L52,52 L38,34 Z" />
+</vector>

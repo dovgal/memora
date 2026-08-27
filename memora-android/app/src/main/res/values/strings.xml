@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Memora</string>
+    <string name="offline">Нет соединения. Проверьте сеть и потяните вниз для обновления.</string>
+    <string name="retry">Обновить</string>
+</resources>

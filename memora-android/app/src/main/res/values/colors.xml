@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Бумажный белый: на чернилах он и есть фон экрана. -->
+    <color name="paper">#FFFFFFFF</color>
+    <color name="ink">#FF000000</color>
+</resources>
