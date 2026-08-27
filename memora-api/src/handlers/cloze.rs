@@ -60,15 +60,15 @@ fn db_err(e: sqlx::Error) -> (StatusCode, Json<ApiError>) {
 
 /// Языки набора: на каком учим и на какой переводим. Берём из схемы полей —
 /// там у каждого поля прописан свой язык, и лицевая сторона задаёт изучаемый.
-fn set_languages(schema: &serde_json::Value) -> (String, String) {
-    let mut study = "fr".to_string();
+fn set_languages(schema: &serde_json::Value) -> (Option<String>, String) {
+    let mut study: Option<String> = None;
     let mut native = "ru".to_string();
     if let Some(fields) = schema.as_array() {
         for f in fields {
             let side = f.get("side").and_then(|v| v.as_str()).unwrap_or("");
             let lang = f.get("settings").and_then(|s| s.get("language")).and_then(|v| v.as_str());
             match (side, lang) {
-                ("front", Some(l)) if !l.is_empty() && l != "default" => study = l.to_string(),
+                ("front", Some(l)) if !l.is_empty() && l != "default" => study = Some(l.to_string()),
                 ("back", Some(l)) if !l.is_empty() && l != "default" => native = l.to_string(),
                 _ => {}
             }
@@ -96,19 +96,29 @@ fn contains_term(sentence: &str, term: &str) -> bool {
     })
 }
 
-async fn compose_sentence(term: &str, definition: &str, study: &str, native: &str) -> Result<(String, String), String> {
+async fn compose_sentence(
+    term: &str, definition: &str, study: Option<&str>, native: &str,
+) -> Result<(String, String, String), String> {
+    // Язык не объявлен в наборе — просим модель определить его по самому слову
+    // и назвать. Подставлять что-то наугад нельзя: получались бы французские
+    // фразы к английским словам.
+    let target = match study {
+        Some(code) => format!("in {}", lang_name(code)),
+        None => "in the SAME language as the given word".to_string(),
+    };
     let content = llm::chat_text(ChatRequest {
         task: Task::Generation,
         messages: vec![
             ChatMessage::system(format!(
-                "You write example sentences for a language learner studying {}. \
+                "You write example sentences for a language learner. \
                  Reply with ONE JSON object and nothing else, using exactly these keys:\n\
-                 {{\"sentence\": string, \"translation\": string}}\n\
-                 sentence — one natural, everyday sentence in {} of 6 to 12 words that contains \
+                 {{\"sentence\": string, \"translation\": string, \"language\": string}}\n\
+                 sentence — one natural, everyday sentence {target} of 6 to 12 words that contains \
                  the given word EXACTLY as spelled, unchanged; \
-                 translation — that sentence in {}. \
+                 translation — that sentence in {}; \
+                 language — the ISO 639-1 two-letter code of the sentence language. \
                  Keep it simple enough for a beginner. Never use null.",
-                lang_name(study), lang_name(study), lang_name(native),
+                lang_name(native),
             )),
             ChatMessage::user(format!("Word: \"{term}\"\nIts meaning: \"{definition}\"")),
         ],
@@ -118,8 +128,9 @@ async fn compose_sentence(term: &str, definition: &str, study: &str, native: &st
             "properties": {
                 "sentence": { "type": "string" },
                 "translation": { "type": "string" },
+                "language": { "type": "string" },
             },
-            "required": ["sentence", "translation"],
+            "required": ["sentence", "translation", "language"],
         })),
         think: Some("low".to_string()),
     })
@@ -131,10 +142,13 @@ async fn compose_sentence(term: &str, definition: &str, study: &str, native: &st
     let sentence = v.get("sentence").and_then(|s| s.as_str()).unwrap_or("").trim().to_string();
     let translation = v.get("translation").and_then(|s| s.as_str()).unwrap_or("").trim().to_string();
 
+    let language: String = v.get("language").and_then(|s| s.as_str()).unwrap_or("")
+        .to_lowercase().chars().take(2).filter(|c| c.is_ascii_alphabetic()).collect();
+
     if sentence.is_empty() || !contains_term(&sentence, term) {
         return Err("модель не вставила слово в предложение".to_string());
     }
-    Ok((sentence, translation))
+    Ok((sentence, translation, language))
 }
 
 /// POST /api/sets/{id}/cloze — предложения с пропуском для указанных карточек.
@@ -157,7 +171,7 @@ pub async fn build_cloze(
     if owner != user_id && !is_public {
         return Err(ApiError::response(StatusCode::FORBIDDEN, "Набор недоступен"));
     }
-    let (study, native) = set_languages(&set.get::<serde_json::Value, _>("fields_schema"));
+    let (mut study, native) = set_languages(&set.get::<serde_json::Value, _>("fields_schema"));
 
     let ids: Vec<Uuid> = payload.card_ids.iter().filter_map(|s| Uuid::parse_str(s).ok()).collect();
     if ids.is_empty() || ids.len() > 40 {
@@ -208,8 +222,11 @@ pub async fn build_cloze(
             continue;
         }
         generated += 1;
-        match compose_sentence(&term, &definition, &study, &native).await {
-            Ok((sentence, translation)) => {
+        match compose_sentence(&term, &definition, study.as_deref(), &native).await {
+            Ok((sentence, translation, detected)) => {
+                // Язык, определённый по слову, запоминаем: он нужен озвучке и
+                // распознаванию речи, а второй раз спрашивать незачем.
+                if study.is_none() && detected.len() == 2 { study = Some(detected); }
                 let patch = json!({ "clozeSentence": sentence, "clozeTranslation": translation });
                 let _ = sqlx::query("UPDATE flashcards SET fields_data = fields_data || $1 WHERE id = $2")
                     .bind(&patch)
@@ -227,7 +244,7 @@ pub async fn build_cloze(
 
     Ok((StatusCode::OK, Json(json!({
         "items": out,
-        "studyLanguage": study,
+        "studyLanguage": study.unwrap_or_default(),
         "nativeLanguage": native,
     }))))
 }
@@ -255,11 +272,13 @@ mod tests {
             { "id": "term", "side": "front", "settings": { "language": "fr" } },
             { "id": "definition", "side": "back", "settings": { "language": "ru" } }
         ]);
-        assert_eq!(set_languages(&schema), ("fr".to_string(), "ru".to_string()));
+        assert_eq!(set_languages(&schema), (Some("fr".to_string()), "ru".to_string()));
     }
 
     #[test]
-    fn languages_fall_back_when_schema_is_silent() {
-        assert_eq!(set_languages(&json!([])), ("fr".to_string(), "ru".to_string()));
+    fn silent_schema_means_unknown_not_guessed() {
+        // Важно именно None: подставленный наугад язык давал французские фразы
+        // к английским словам, и это заметили только на живой проверке.
+        assert_eq!(set_languages(&json!([])), (None, "ru".to_string()));
     }
 }
