@@ -12,6 +12,7 @@ import LogoutButton from "@/components/LogoutButton";
 import { DashboardSidebar } from "@/components/DashboardSidebar";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { EinkToggle } from "@/components/EinkToggle";
+import { SkinToggle } from "@/components/SkinToggle";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { FolderSummaryResponse } from "@/types/schema";
@@ -66,6 +67,7 @@ export default async function DashboardLayout({
                     <div className="flex items-center gap-4 pl-4">
                         <ThemeToggle />
                         <EinkToggle />
+                        <SkinToggle />
                         
                         {/* Restoring the global Create button */}
                         <Link href="/create" className="hidden sm:flex items-center justify-center w-8 h-8 rounded-full bg-[#4255ff] hover:bg-indigo-400 text-white transition-colors shadow-lg shadow-indigo-500/20">

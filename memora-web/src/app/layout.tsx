@@ -54,6 +54,8 @@ export default async function RootLayout({
                   var slow = window.matchMedia && window.matchMedia('(update: slow)').matches;
                   var on = pref ? pref === 'on' : !!slow;
                   document.documentElement.setAttribute('data-eink', on ? 'on' : 'off');
+                  var skin = localStorage.getItem('memora.skin');
+                  document.documentElement.setAttribute('data-skin', skin === 'pixel' ? 'pixel' : 'default');
                 } catch (e) {}
               })();
               if(typeof navigator !== 'undefined' && 'serviceWorker' in navigator) { 

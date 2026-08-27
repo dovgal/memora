@@ -96,6 +96,88 @@ body {
     background: rgba(255, 255, 255, 0.2);
 }
 
+/* ---------- Блочное оформление ---------- */
+/*
+ * Вид в духе кубических игр: рубленые углы, толстые рамки, жёсткие тени со
+ * сдвигом вместо мягкого размытия, землисто-зелёная палитра.
+ *
+ * Пиксельного шрифта здесь нет намеренно: ни у одного пиксельного шрифта
+ * Google Fonts нет кириллицы, и русские надписи выводились бы обычным шрифтом
+ * вперемешку с пиксельным. Блочность держится на геометрии и цвете.
+ *
+ * Блок стоит ДО режима электронных чернил: там тени и анимации выключаются
+ * начисто, и при обоих включённых режимах побеждать должен он.
+ */
+html[data-skin="pixel"] {
+  --background: #e9e2d2;
+  --foreground: #1d1b17;
+  --card: #f4efe3;
+  --popover: #f4efe3;
+  --secondary: #ded4bd;
+  --muted: #ded4bd;
+  --muted-foreground: #4a4336;
+  --border: #7a6844;
+  --input: #7a6844;
+  --primary: #4a7d2c;
+  --ring: #4a7d2c;
+
+  --qz-bg: #e9e2d2;
+  --qz-card: #f4efe3;
+  --qz-text: #1d1b17;
+  --qz-text-muted: #4a4336;
+  --qz-accent: #3f6d24;
+}
+
+html[data-skin="pixel"].dark {
+  --background: #1b1a17;
+  --foreground: #ece5d6;
+  --card: #2a2721;
+  --popover: #2a2721;
+  --secondary: #3a352c;
+  --muted: #3a352c;
+  --muted-foreground: #b8ae99;
+  --border: #6b5c3e;
+  --input: #6b5c3e;
+  --primary: #6aa84f;
+  --ring: #6aa84f;
+
+  --qz-bg: #1b1a17;
+  --qz-card: #2a2721;
+  --qz-text: #ece5d6;
+  --qz-text-muted: #b8ae99;
+  --qz-accent: #8bc34a;
+}
+
+/* Ни одного скругления: форма и делает вид блочным. */
+html[data-skin="pixel"] [class*="rounded"],
+html[data-skin="pixel"] button,
+html[data-skin="pixel"] input,
+html[data-skin="pixel"] select,
+html[data-skin="pixel"] textarea,
+html[data-skin="pixel"] img {
+  border-radius: 0 !important;
+}
+
+/* Толстая рамка и тень без размытия — как у нарисованного пикселями блока. */
+html[data-skin="pixel"] button,
+html[data-skin="pixel"] input,
+html[data-skin="pixel"] select,
+html[data-skin="pixel"] textarea {
+  border-width: 3px !important;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.28);
+}
+
+/* Нажатие вдавливает кнопку: тень укорачивается, а сама она сдвигается. */
+html[data-skin="pixel"] button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.28);
+}
+
+/* Картинки не сглаживаем: мелкая графика должна оставаться чёткой. */
+html[data-skin="pixel"] img {
+  image-rendering: pixelated;
+}
+
 /* ---------- Режим для экранов на электронных чернилах ---------- */
 /*
  * Такие экраны перерисовываются сотни миллисекунд, и каждый плавный переход,
