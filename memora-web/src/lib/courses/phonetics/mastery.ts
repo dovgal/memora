@@ -3,8 +3,15 @@
 // «До полного усвоения» = единица считается сданной, когда произнесена с
 // точностью не ниже порога. Несданные возвращаются в очередь через несколько
 // позиций — в пределах той же сессии, чтобы ученик не зубрил подряд, но и не
-// уходил с невыполненным. Прогресс хранится локально: он привязан к речевому
-// навыку конкретного человека, серверу его знать незачем.
+// уходил с невыполненным.
+//
+// Список сданных единиц живёт НА СЕРВЕРЕ, в общей таблице прогресса курсов:
+// блок играет роль юнита, текст единицы — упражнения. Раньше он лежал только в
+// браузере, и при чтении с ноутбука, телефона и планшета выходило три
+// независимых счёта, а очистка данных стирала всё начисто.
+//
+// Здесь этот список кэшируется, чтобы отрисовка не ждала сети. Число попыток и
+// лучшая точность остаются местными: это статистика занятия, а не прогресс.
 
 export const PASS_SCORE = 80;
 /** Через сколько позиций несданная единица вернётся в очередь. */
@@ -63,10 +70,33 @@ export function subscribeProgress(cb: () => void): () => void {
 export function getProgressSnapshot(): PhoneticsProgress { return loadProgress(); }
 export function getServerProgressSnapshot(): PhoneticsProgress { return EMPTY; }
 
+/**
+ * Ключ единицы для серверной записи. Обрезаем одинаково при записи и чтении:
+ * скороговорка длиннее иного абзаца, а сравнивать ключи надо посимвольно.
+ */
+export function itemKey(text: string): string {
+  return text.trim().slice(0, 200);
+}
+
+/**
+ * Влить прогресс, пришедший с сервера. Списки объединяются, а не заменяются:
+ * пока запрос летел, человек мог сдать ещё одну единицу, и терять её нельзя.
+ */
+export function hydrate(entries: { unitId: string; exerciseId: string; completedAt?: string }[]): void {
+  const all = { ...loadProgress() };
+  for (const e of entries) {
+    const cur: DrillProgress = all[e.unitId] ?? { passed: [], attempts: 0, best: 0 };
+    if (cur.passed.includes(e.exerciseId)) continue;
+    all[e.unitId] = { ...cur, passed: [...cur.passed, e.exerciseId], lastAt: e.completedAt ?? cur.lastAt };
+  }
+  saveProgress(all);
+}
+
 export function markPassed(drillId: string, itemText: string, score: number): PhoneticsProgress {
   const all = loadProgress();
   const cur: DrillProgress = all[drillId] ?? { passed: [], attempts: 0, best: 0 };
-  const passed = cur.passed.includes(itemText) ? cur.passed : [...cur.passed, itemText];
+  const key = itemKey(itemText);
+  const passed = cur.passed.includes(key) ? cur.passed : [...cur.passed, key];
   all[drillId] = {
     passed,
     attempts: cur.attempts + 1,

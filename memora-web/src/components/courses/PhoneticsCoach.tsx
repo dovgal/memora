@@ -17,7 +17,8 @@ import { DiffChips } from '@/components/edito/DiffChips';
 import { rulesForWord, type ReadingRule } from '@/lib/courses/frenchReadingRules';
 import { useSpeechAttempt } from '@/lib/courses/useSpeechAttempt';
 import { drillItems, type DrillItem, type SoundDrill, type ArticulationDrill } from '@/lib/courses/phonetics';
-import { PASS_SCORE, REQUEUE_GAP, markPassed, markAttempt } from '@/lib/courses/phonetics/mastery';
+import { PASS_SCORE, REQUEUE_GAP, markPassed, markAttempt, itemKey } from '@/lib/courses/phonetics/mastery';
+import { recordExerciseProgress } from '@/lib/courses/customCoursesApi';
 
 type Phase = 'theory' | 'warmup' | 'practice' | 'done';
 
@@ -29,13 +30,18 @@ const KIND_LABEL: Record<DrillItem['kind'], string> = {
   twister: 'Скороговорка',
 };
 
-export function PhoneticsCoach({ drill, articulation, voice = 'Alain', speechLang = 'fr-FR', onExit }: {
+export function PhoneticsCoach({
+  drill, articulation, voice = 'Alain', speechLang = 'fr-FR', onExit, courseId, idToken,
+}: {
   drill: SoundDrill;
   /** Разминка урока — показывается перед практикой. */
   articulation?: ArticulationDrill[];
   voice?: string;
   speechLang?: string;
   onExit?: () => void;
+  /** Курс, к которому привязан прогресс на сервере. */
+  courseId?: string;
+  idToken?: string;
 }) {
   const items = useMemo(() => drillItems(drill), [drill]);
   const [phase, setPhase] = useState<Phase>('theory');
@@ -96,9 +102,14 @@ export function PhoneticsCoach({ drill, articulation, voice = 'Alain', speechLan
     setScore(pct);
     setAttempts(a => a + 1);
     setScoreLog(l => [...l, pct]);
-    if (pct >= PASS_SCORE) markPassed(drill.id, current.text, pct);
+    if (pct >= PASS_SCORE) {
+      markPassed(drill.id, current.text, pct);
+      // Сданная единица уходит на сервер сразу: блок как юнит, текст как
+      // упражнение. Так прогресс живёт не в одном браузере, а у человека.
+      if (courseId) void recordExerciseProgress(courseId, drill.id, itemKey(current.text), idToken);
+    }
     else markAttempt(drill.id, pct);
-  }, [speech, targetText, drill.id, current]);
+  }, [speech, targetText, drill.id, current, courseId, idToken]);
 
   const nextItem = useCallback(() => {
     const passed = (score ?? 0) >= PASS_SCORE;
