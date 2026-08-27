@@ -4,6 +4,8 @@
 // языков, включая китайский и японский, где пробелов между словами нет.
 // Регулярка оставлена запасным путём для старых браузеров.
 
+import type { Block } from './draft';
+
 /** Кусочек абзаца: слово (кликабельное) либо разделитель. */
 export interface Token {
   text: string;
@@ -138,6 +140,33 @@ export function paginate(paragraphs: string[], targetChars = 1600): string[][] {
     }
     cur.push(p);
     size += p.length;
+  }
+  if (cur.length) pages.push(cur);
+  return pages.length ? pages : [[]];
+}
+
+/**
+ * Разбиение на страницы с учётом картинок.
+ *
+ * Картинке назначен вес: без него страница с тремя иллюстрациями и парой строк
+ * текста считалась бы «пустой» и слипалась бы со следующей, а картинки уехали
+ * бы от своего абзаца.
+ */
+export function paginateBlocks(blocks: Block[], targetChars = 1600): Block[][] {
+  const IMAGE_WEIGHT = 700;
+  const pages: Block[][] = [];
+  let cur: Block[] = [];
+  let size = 0;
+
+  for (const b of blocks) {
+    const weight = b.kind === 'img' ? IMAGE_WEIGHT : b.text.length;
+    if (size > 0 && size + weight > targetChars) {
+      pages.push(cur);
+      cur = [];
+      size = 0;
+    }
+    cur.push(b);
+    size += weight;
   }
   if (cur.length) pages.push(cur);
   return pages.length ? pages : [[]];

@@ -17,7 +17,8 @@ import {
   adaptChapter, READING_LEVELS,
   type BookDetail, type ChapterContent, type VocabStatus, type SearchHit,
 } from '@/lib/books/api';
-import { splitParagraphs, paginate, uniqueWords } from '@/lib/books/tokenize';
+import { splitParagraphs, paginate, paginateBlocks, uniqueWords } from '@/lib/books/tokenize';
+import { isTextBlock } from '@/lib/books/draft';
 import { isUnknown } from '@/lib/books/vocab';
 import { TARGET_LANGS, langName, voiceFor, speechTag } from '@/lib/books/langs';
 import { speakInworldAndWait, stopInworld } from '@/lib/courses/ttsInworld';
@@ -150,10 +151,28 @@ export function BookReader({ bookId }: { bookId: string }) {
     return () => { alive = false; };
   }, [chapter, level, bookId]);
 
+  /**
+   * Страницы с картинками — только у неадаптированной главы.
+   *
+   * Блоки описывают ИСХОДНЫЙ текст. У переписанной под уровень главы своя
+   * разбивка на предложения, и картинки встали бы не на свои места, а нумерация
+   * предложений разъехалась бы с озвучкой. Поэтому при адаптации возвращаемся к
+   * сплошному тексту.
+   */
+  const blockPages = useMemo(
+    () => (!adapted && chapter?.blocks && chapter.blocks.length > 0
+      ? paginateBlocks(chapter.blocks)
+      : null),
+    [chapter, adapted],
+  );
+
   const pages = useMemo(() => {
+    // Текст страницы выводим из тех же блоков и в том же порядке: по нему
+    // считаются слова, идёт озвучка и нумеруются предложения.
+    if (blockPages) return blockPages.map(page => page.filter(isTextBlock).map(b => b.text));
     const text = adapted ?? chapter?.content ?? '';
     return text ? paginate(splitParagraphs(text)) : [];
-  }, [chapter, adapted]);
+  }, [chapter, adapted, blockPages]);
   // useMemo: массив абзацев уходит в зависимости эффектов — новая ссылка на
   // каждый рендер заставляла бы их перезапускаться без причины.
   const pageParagraphs = useMemo(() => pages[pageIdx] ?? [], [pages, pageIdx]);
@@ -649,6 +668,7 @@ export function BookReader({ bookId }: { bookId: string }) {
               >
                 <ReaderText
                   paragraphs={pageParagraphs}
+                  blocks={blockPages?.[pageIdx]}
                   lang={lang}
                   vocab={vocab}
                   activeWord={sel?.kind === 'word' ? sel.key : null}

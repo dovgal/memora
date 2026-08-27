@@ -85,6 +85,9 @@ pub struct ChapterIn {
     #[serde(default)]
     pub title: String,
     pub content: String,
+    /// Заголовки, списки и картинки. Пусто — глава показывается сплошным текстом.
+    #[serde(default)]
+    pub blocks: Option<serde_json::Value>,
 }
 
 #[derive(Deserialize)]
@@ -251,6 +254,7 @@ pub async fn add_chapters(
     let mut titles: Vec<String> = Vec::with_capacity(payload.chapters.len());
     let mut contents: Vec<String> = Vec::with_capacity(payload.chapters.len());
     let mut counts: Vec<i32> = Vec::with_capacity(payload.chapters.len());
+    let mut blocks: Vec<serde_json::Value> = Vec::with_capacity(payload.chapters.len());
 
     for c in &payload.chapters {
         let content = c.content.trim();
@@ -267,19 +271,23 @@ pub async fn add_chapters(
         titles.push(c.title.trim().chars().take(250).collect());
         counts.push(content.split_whitespace().count() as i32);
         contents.push(content.to_string());
+        blocks.push(c.blocks.clone().unwrap_or_else(|| json!([])));
     }
 
     sqlx::query(
-        "INSERT INTO book_chapters (book_id, position, title, content, word_count)
-         SELECT $1, p, t, c, w FROM UNNEST($2::int[], $3::text[], $4::text[], $5::int[]) AS u(p, t, c, w)
+        "INSERT INTO book_chapters (book_id, position, title, content, word_count, blocks)
+         SELECT $1, p, t, c, w, b
+         FROM UNNEST($2::int[], $3::text[], $4::text[], $5::int[], $6::jsonb[]) AS u(p, t, c, w, b)
          ON CONFLICT (book_id, position) DO UPDATE
-            SET title = EXCLUDED.title, content = EXCLUDED.content, word_count = EXCLUDED.word_count",
+            SET title = EXCLUDED.title, content = EXCLUDED.content,
+                word_count = EXCLUDED.word_count, blocks = EXCLUDED.blocks",
     )
     .bind(id)
     .bind(&positions)
     .bind(&titles)
     .bind(&contents)
     .bind(&counts)
+    .bind(&blocks)
     .execute(&pool)
     .await
     .map_err(db_err)?;
@@ -415,7 +423,7 @@ pub async fn get_chapter(
     readable_book(&pool, id).await?;
 
     let row = sqlx::query(
-        "SELECT position, title, content, word_count FROM book_chapters WHERE book_id = $1 AND position = $2",
+        "SELECT position, title, content, word_count, blocks FROM book_chapters WHERE book_id = $1 AND position = $2",
     )
     .bind(id)
     .bind(position)
@@ -429,6 +437,7 @@ pub async fn get_chapter(
         "title": row.get::<String, _>("title"),
         "content": row.get::<String, _>("content"),
         "wordCount": row.get::<i32, _>("word_count"),
+        "blocks": row.get::<serde_json::Value, _>("blocks"),
     }))))
 }
 

@@ -2,6 +2,7 @@
 // Токен берём из next-auth так же, как озвучка: страницы читалки клиентские.
 
 import { getSession } from 'next-auth/react';
+import type { Block } from './draft';
 
 let cachedToken: string | null = null;
 let cachedAt = 0;
@@ -65,7 +66,14 @@ export interface Book {
 
 export interface ChapterSummary { position: number; title: string; wordCount: number }
 export interface BookDetail { book: Book; chapters: ChapterSummary[] }
-export interface ChapterContent { position: number; title: string; content: string; wordCount: number }
+export interface ChapterContent {
+  position: number;
+  title: string;
+  content: string;
+  wordCount: number;
+  /** Заголовки, списки и картинки. Пусто — глава показывается сплошным текстом. */
+  blocks?: Block[];
+}
 
 /** 0 — новое, 1 — учу, 2 — узнаю, 3 — знаю, 4 — игнорировать. */
 export type VocabStatus = 0 | 1 | 2 | 3 | 4;
@@ -92,7 +100,7 @@ export const createBook = (payload: {
   targetLanguage?: string; sourceFormat?: string;
 }) => call<{ id: string }>('/api/books', { method: 'POST', body: JSON.stringify(payload) });
 
-export const addChapters = (id: string, chapters: { position: number; title: string; content: string }[]) =>
+export const addChapters = (id: string, chapters: { position: number; title: string; content: string; blocks?: Block[] }[]) =>
   call<{ saved: number }>(`/api/books/${id}/chapters`, { method: 'POST', body: JSON.stringify({ chapters }) });
 
 export const finalizeBook = (id: string) =>

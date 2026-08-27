@@ -5,7 +5,7 @@
 // числу глав, и по объёму текста — упирается всегда что-то одно.
 
 import { addChapters, createBook, finalizeBook, updateBook, type Book } from './api';
-import type { ChapterDraft } from './draft';
+import type { Block, ChapterDraft } from './draft';
 
 const MAX_BATCH_CHARS = 600_000;
 const MAX_BATCH_ITEMS = 40;
@@ -19,7 +19,7 @@ export async function uploadBook(
 
   const { id } = await createBook(meta);
 
-  let batch: { position: number; title: string; content: string }[] = [];
+  let batch: { position: number; title: string; content: string; blocks?: Block[] }[] = [];
   let size = 0;
   let sent = 0;
 
@@ -37,7 +37,7 @@ export async function uploadBook(
     if (batch.length > 0 && (size + c.content.length > MAX_BATCH_CHARS || batch.length >= MAX_BATCH_ITEMS)) {
       await flush();
     }
-    batch.push({ position: i, title: c.title, content: c.content });
+    batch.push({ position: i, title: c.title, content: c.content, blocks: c.blocks });
     size += c.content.length;
   }
   await flush();
