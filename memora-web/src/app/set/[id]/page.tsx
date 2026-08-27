@@ -140,6 +140,9 @@ export default async function SetPage({ params }: { params: Promise<{ id: string
                     <Link href={`/set/${id}/blast`} className="bg-qz-card hover:bg-qz-card text-qz-text font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors border border-qz-border-light">
                         <span className="text-cyan-400 font-semibold">🚀</span> Blast
                     </Link>
+                    <Link href={`/set/${id}/cloze`} className="bg-qz-card hover:bg-qz-card text-qz-text font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors border border-qz-border-light">
+                        <span className="text-violet-400 font-semibold">✎</span> В контексте
+                    </Link>
                 </div>
 
                 {/* The Flashcard Player Inline */}
