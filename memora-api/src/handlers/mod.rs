@@ -21,3 +21,4 @@ pub mod push;
 pub mod books;
 pub mod translate;
 pub mod cloze;
+pub mod webfetch;

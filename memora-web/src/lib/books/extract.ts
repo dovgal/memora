@@ -66,7 +66,7 @@ function decode(buf: ArrayBuffer, declared?: string): string {
 }
 
 /** Текст из HTML/XHTML-узла: абзацы разделяются пустой строкой. */
-function textFromHtml(root: Element | Document): string {
+export function textFromHtml(root: Element | Document): string {
   const parts: string[] = [];
   const blocks = root.querySelectorAll('p, div, li, h1, h2, h3, h4, blockquote, br');
   if (blocks.length === 0) {
@@ -82,7 +82,7 @@ function textFromHtml(root: Element | Document): string {
 }
 
 /** Нарезка сплошного текста на главы, когда заголовков в файле нет. */
-function chunkText(text: string, targetChars = 12_000): ChapterDraft[] {
+export function chunkText(text: string, targetChars = 12_000): ChapterDraft[] {
   const paragraphs = text.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
   const out: ChapterDraft[] = [];
   let cur: string[] = [];

@@ -5,11 +5,12 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { BookOpen, Loader2, Trash2, Plus, Languages, ChevronLeft, User } from 'lucide-react';
+import { BookOpen, Loader2, Trash2, Plus, Languages, ChevronLeft, User, Globe } from 'lucide-react';
 import { listBooks, deleteBook, updateBook, type Book } from '@/lib/books/api';
 import { langName } from '@/lib/books/langs';
 import { BOOK_TOPICS, NO_TOPIC } from '@/lib/books/topics';
 import { UploadBook } from '@/components/books/UploadBook';
+import { AddWebPage } from '@/components/books/AddWebPage';
 
 type GroupBy = 'topic' | 'author' | 'language';
 
@@ -22,7 +23,7 @@ const GROUPS: { id: GroupBy; label: string }[] = [
 export default function BooksPage() {
   const [books, setBooks] = useState<Book[] | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [adding, setAdding] = useState(false);
+  const [adding, setAdding] = useState<'file' | 'web' | null>(null);
   const [groupBy, setGroupBy] = useState<GroupBy>('topic');
 
   const reload = useCallback(async () => {
@@ -112,15 +113,25 @@ export default function BooksPage() {
           вы не мешаете друг другу.
         </p>
 
-        {adding ? (
+        {adding === 'file' ? (
           <div className="mb-6">
-            <UploadBook onDone={() => { setAdding(false); void reload(); }} />
+            <UploadBook onDone={() => { setAdding(null); void reload(); }} />
+          </div>
+        ) : adding === 'web' ? (
+          <div className="mb-6">
+            <AddWebPage onDone={() => { setAdding(null); void reload(); }} />
           </div>
         ) : (
-          <button onClick={() => setAdding(true)}
-            className="inline-flex items-center gap-1.5 bg-[#4255ff] hover:bg-[#3144e0] text-white text-sm font-bold px-4 py-2.5 rounded-xl transition-colors mb-6">
-            <Plus className="w-4 h-4" /> Загрузить книгу
-          </button>
+          <div className="flex gap-2 flex-wrap mb-6">
+            <button onClick={() => setAdding('file')}
+              className="inline-flex items-center gap-1.5 bg-[#4255ff] hover:bg-[#3144e0] text-white text-sm font-bold px-4 py-2.5 rounded-xl transition-colors">
+              <Plus className="w-4 h-4" /> Загрузить книгу
+            </button>
+            <button onClick={() => setAdding('web')}
+              className="inline-flex items-center gap-1.5 border border-border text-qz-text-muted hover:text-foreground hover:border-[#4255ff]/50 text-sm font-bold px-4 py-2.5 rounded-xl transition-colors">
+              <Globe className="w-4 h-4" /> Страница из интернета
+            </button>
+          </div>
         )}
 
         {error && (
