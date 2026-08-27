@@ -92,18 +92,52 @@ export function tokenize(text: string, lang = ''): Token[] {
  * Текст → предложения БЕЗ обрезки пробелов. Пробел между предложениями —
  * часть текста: если его срезать, при выводе фразы склеятся в одну строку.
  */
+/**
+ * Новое предложение после точки, начинающееся с цифры или кавычки.
+ *
+ * Системный разделитель такую границу не видит: по его правилам точка перед
+ * цифрой продолжает предложение (это про «3. 14»). Из-за этого «…в 1789 году.
+ * 14 июля…» слипалось в одно.
+ */
+const AFTER_DOT = /(?<=[.!?…])(?=\s+[0-9«„“(\[])/u;
+
+/**
+ * Сокращение в конце куска — значит, точка не конец предложения.
+ *
+ * Тот же разделитель рвёт «M. Dupont» после инициала: список сокращений он не
+ * знает вовсе. Одиночная буква с точкой — это почти всегда инициал.
+ */
+const ABBR = /(?:^|[\s(«„"'])(?:[A-Za-zА-Яа-яЁё]|Mme|Mlle|Mr|Dr|Prof|St|Ste|vs|etc|см|рис|стр|табл|тыс|млн|млрд|напр|ср)\.$/iu;
+
+/** Склеивает куски, оторванные от своего предложения сокращением. */
+function mergeAbbrev(parts: string[]): string[] {
+  const out: string[] = [];
+  for (const part of parts) {
+    if (out.length > 0 && ABBR.test(out[out.length - 1].trimEnd())) {
+      out[out.length - 1] += part;
+    } else {
+      out.push(part);
+    }
+  }
+  return out;
+}
+
 export function splitSentencesRaw(text: string, lang = ''): string[] {
   const Seg = (Intl as unknown as { Segmenter?: typeof Intl.Segmenter }).Segmenter;
   if (Seg) {
     try {
       const seg = new Seg(lang || undefined, { granularity: 'sentence' });
-      const out = [...seg.segment(text)].map(s => s.segment).filter(s => s.trim().length > 0);
+      const out = mergeAbbrev(
+        [...seg.segment(text)]
+          .flatMap(s => s.segment.split(AFTER_DOT))
+          .filter(s => s.trim().length > 0),
+      );
       if (out.length) return out;
     } catch { /* язык не поддержан — падаем в регулярку */ }
   }
   // Граница перед пробелом, а не по пробелу: разделитель уезжает в следующее
   // предложение и не пропадает.
-  return text.split(/(?<=[.!?…])(?=\s)/).filter(s => s.trim().length > 0);
+  return mergeAbbrev(text.split(/(?<=[.!?…])(?=\s)/).filter(s => s.trim().length > 0));
 }
 
 /**

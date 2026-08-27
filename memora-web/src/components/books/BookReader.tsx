@@ -10,7 +10,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import {
   ChevronLeft, ChevronRight, Loader2, List, Play, Pause, Type, Layers,
-  BookOpen, CheckCheck, Languages, Search, X,
+  BookOpen, CheckCheck, Languages, Search, X, Columns2,
 } from 'lucide-react';
 import {
   getBook, getChapter, getVocab, putVocab, updateBook, addCard, translate, searchBook,
@@ -22,10 +22,14 @@ import { isTextBlock } from '@/lib/books/draft';
 import { isUnknown } from '@/lib/books/vocab';
 import { TARGET_LANGS, langName, voiceFor, speechTag } from '@/lib/books/langs';
 import { speakInworldAndWait, stopInworld } from '@/lib/courses/ttsInworld';
-import { ReaderText, sentenceTexts } from './ReaderText';
+import { ReaderText, sentenceTexts, pageUnitTexts } from './ReaderText';
 import { WordPanel, type Selection } from './WordPanel';
 
 const FONT_KEY = 'memora.books.font';
+const PARALLEL_KEY = 'memora.books.parallel';
+
+/** DeepL принимает 50 кусков за раз — столько же шлём и мы. */
+const TRANSLATE_CHUNK = 40;
 
 /**
  * Фрагмент из поиска: Postgres размечает совпадения тегами <b>. Собираем узлы
@@ -57,6 +61,12 @@ export function BookReader({ bookId }: { bookId: string }) {
   const [aloudIdx, setAloudIdx] = useState<number | null>(null);
   const [cards, setCards] = useState<Set<string>>(new Set());
   const [targetLang, setTargetLang] = useState('ru');
+  /** Разворот: слева оригинал, справа перевод. */
+  const [parallel, setParallel] = useState(false);
+  const [pageTrans, setPageTrans] = useState<string[] | null>(null);
+  const [transProvider, setTransProvider] = useState('');
+  /** Уже переведённые страницы — чтобы листание назад было мгновенным. */
+  const pageTransRef = useRef(new Map<string, string[]>());
   /** Уровень адаптации: пусто — читаем оригинал. */
   const [level, setLevel] = useState('');
   const [adapted, setAdapted] = useState<string | null>(null);
@@ -177,6 +187,53 @@ export function BookReader({ bookId }: { bookId: string }) {
   // каждый рендер заставляла бы их перезапускаться без причины.
   const pageParagraphs = useMemo(() => pages[pageIdx] ?? [], [pages, pageIdx]);
 
+  // ---------- Разворот: перевод страницы ----------
+
+  /** Единицы страницы в том же порядке, в каком их выводит ReaderText. */
+  const unitTexts = useMemo(
+    () => pageUnitTexts(pageParagraphs, blockPages?.[pageIdx]),
+    [pageParagraphs, blockPages, pageIdx],
+  );
+  /** Пока перевод считается, справа стоят пустые места — страница не прыгает. */
+  const blankTrans = useMemo(() => unitTexts.map(() => ''), [unitTexts]);
+  /** Разворот бессмыслен, когда книга уже на языке перевода. */
+  const canParallel = !!lang && !!targetLang && lang !== targetLang;
+
+  useEffect(() => {
+    if (!parallel || !canParallel || unitTexts.length === 0) { setPageTrans(null); return; }
+
+    const key = [bookId, chapterPos, pageIdx, targetLang, level || 'orig'].join('|');
+    const cached = pageTransRef.current.get(key);
+    if (cached) { setPageTrans(cached); return; }
+
+    let cancelled = false;
+    setPageTrans(null);
+    void (async () => {
+      try {
+        // Переводим абзацами, а не предложениями: у переводчика остаётся связь
+        // между фразами, а поделить перевод обратно можно и на нашей стороне.
+        const filled = unitTexts.map((t, i) => [t, i] as const).filter(([t]) => t.trim());
+        const out = unitTexts.map(() => '');
+        let provider = '';
+        for (let i = 0; i < filled.length; i += TRANSLATE_CHUNK) {
+          const slice = filled.slice(i, i + TRANSLATE_CHUNK);
+          const r = await translate({
+            texts: slice.map(([t]) => t), targetLang, sourceLang: lang,
+          });
+          if (cancelled) return;
+          slice.forEach(([, at], k) => { out[at] = r.translations[k] ?? ''; });
+          provider = r.provider;
+        }
+        pageTransRef.current.set(key, out);
+        setPageTrans(out);
+        setTransProvider(provider);
+      } catch {
+        if (!cancelled) setPageTrans(null);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [parallel, canParallel, unitTexts, bookId, chapterPos, pageIdx, targetLang, lang, level]);
+
   // Открыли книгу — возвращаемся на страницу, где остановились.
   const restoredRef = useRef(false);
   useEffect(() => {
@@ -255,7 +312,16 @@ export function BookReader({ bookId }: { bookId: string }) {
   useEffect(() => {
     const saved = Number(window.localStorage.getItem(FONT_KEY));
     if (saved >= 14 && saved <= 30) setFontSize(saved);
+    setParallel(window.localStorage.getItem(PARALLEL_KEY) === 'on');
   }, []);
+
+  const toggleParallel = () => {
+    setParallel(prev => {
+      const next = !prev;
+      try { window.localStorage.setItem(PARALLEL_KEY, next ? 'on' : 'off'); } catch { /* приватный режим */ }
+      return next;
+    });
+  };
   const changeFont = (d: number) => {
     setFontSize(prev => {
       const next = Math.min(30, Math.max(14, prev + d));
@@ -528,6 +594,20 @@ export function BookReader({ bookId }: { bookId: string }) {
             {READING_LEVELS.map(l => <option key={l} value={l}>{l}</option>)}
           </select>
 
+          <button
+            onClick={toggleParallel}
+            disabled={!canParallel}
+            title={canParallel
+              ? 'Разворот: оригинал и перевод рядом'
+              : 'Разворот доступен, когда язык книги и язык перевода разные'}
+            className={`p-1.5 rounded-lg border transition-colors disabled:opacity-40 ${
+              parallel
+                ? 'border-[#4255ff] text-[#4255ff]'
+                : 'border-border text-qz-text-muted hover:text-foreground'
+            }`}
+          >
+            <Columns2 className="w-4 h-4" />
+          </button>
           <button onClick={() => { setHits(h => (h === null ? [] : null)); setQuery(''); }} title="Поиск по книге"
             className="p-1.5 rounded-lg border border-border text-qz-text-muted hover:text-foreground">
             <Search className="w-4 h-4" />
@@ -658,6 +738,9 @@ export function BookReader({ bookId }: { bookId: string }) {
               <p className="text-xs uppercase tracking-wider font-bold text-qz-text-muted mb-3">
                 {chapter.title || `Глава ${chapterPos + 1}`} · стр. {pageIdx + 1} из {pages.length}
                 {adapted && <span className="text-[#4255ff]"> · адаптировано под {level}</span>}
+                {parallel && canParallel && transProvider.startsWith('llm') && (
+                  <span className="text-amber-500"> · перевод упрощённый: месячный запас DeepL исчерпан</span>
+                )}
               </p>
               <div
                 ref={textRef}
@@ -675,6 +758,8 @@ export function BookReader({ bookId }: { bookId: string }) {
                   activeSentence={aloudIdx}
                   fontSize={fontSize}
                   lineHeight={1.85}
+                  translations={parallel && canParallel ? (pageTrans ?? blankTrans) : null}
+                  targetLang={targetLang}
                 />
               </div>
 
