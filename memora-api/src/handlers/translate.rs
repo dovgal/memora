@@ -16,6 +16,8 @@ use serde::{Deserialize, Serialize};
 use serde_json::json;
 use sha2::{Digest, Sha256};
 use sqlx::{PgPool, Row};
+use std::sync::{Mutex, OnceLock};
+use std::time::Duration;
 
 use crate::llm::{self, ChatMessage, ChatRequest, ResponseFormat, Task};
 use crate::middleware::auth::AuthenticatedUser;
@@ -227,14 +229,200 @@ fn deepl_endpoint(key: &str) -> String {
     }
 }
 
-fn deepl_key() -> Option<String> {
-    std::env::var("DEEPL_API_KEY").ok().filter(|k| !k.trim().is_empty())
+/// Связка ключей DeepL.
+///
+/// Бесплатный ключ даёт 500 тысяч знаков в месяц, а книга их съедает за раз.
+/// Поэтому ключей может быть несколько, с разных учётных записей: когда на
+/// одном кончается месячный запас, перевод продолжается со следующего и дальше
+/// по кругу.
+struct KeyRing {
+    keys: Vec<String>,
+    /// До какого времени ключ не трогать. Пусто — ключ рабочий.
+    blocked: Vec<Option<std::time::Instant>>,
+    /// С какого ключа начинать: исчерпанный не проверяем заново каждый раз.
+    cur: usize,
 }
+
+/// Запас месяца кончился. Ждём до его обновления, но проверяем и раньше:
+/// точную дату сброса DeepL не сообщает.
+const QUOTA_COOLDOWN: Duration = Duration::from_secs(6 * 60 * 60);
+/// Ключ не принят — почти наверняка опечатка. Долбить им бессмысленно.
+const BAD_KEY_COOLDOWN: Duration = Duration::from_secs(24 * 60 * 60);
+/// Слишком частые запросы — это про минуту, а не про месяц.
+const RATE_COOLDOWN: Duration = Duration::from_secs(60);
+
+static RING: OnceLock<Mutex<KeyRing>> = OnceLock::new();
+
+/// Ключи из окружения: DEEPL_API_KEY, затем DEEPL_API_KEY_2… DEEPL_API_KEY_9.
+///
+/// Внутри каждой переменной можно перечислить несколько ключей через запятую —
+/// так добавить второй аккаунт можно и не заводя новую переменную.
+fn read_keys() -> Vec<String> {
+    let names = std::iter::once("DEEPL_API_KEY".to_string())
+        .chain((2..=9).map(|i| format!("DEEPL_API_KEY_{i}")));
+    let raw: Vec<String> = names.filter_map(|n| std::env::var(&n).ok()).collect();
+    parse_keys(&raw)
+}
+
+/// Разбор перечисления ключей. Отдельно от окружения — чтобы проверялось.
+fn parse_keys(values: &[String]) -> Vec<String> {
+    let mut out: Vec<String> = Vec::new();
+    for raw in values {
+        for part in raw.split([',', ';', '\n']) {
+            let k = part.trim().to_string();
+            // Один и тот же ключ дважды — это не запас, а лишний поход впустую.
+            if !k.is_empty() && !out.contains(&k) { out.push(k); }
+        }
+    }
+    out
+}
+
+impl KeyRing {
+    /// Следующий ключ, который сейчас можно пробовать.
+    fn pick(&mut self, now: std::time::Instant) -> Option<(usize, String)> {
+        let n = self.keys.len();
+        for step in 0..n {
+            let i = (self.cur + step) % n;
+            match self.blocked[i] {
+                Some(until) if until > now => continue,
+                _ => {
+                    // Срок вышел — ключ снова в строю.
+                    self.blocked[i] = None;
+                    self.cur = i;
+                    return Some((i, self.keys[i].clone()));
+                }
+            }
+        }
+        None
+    }
+
+    /// Отставляет ключ на время и переводит стрелку на следующий.
+    fn block(&mut self, idx: usize, how_long: Duration, now: std::time::Instant) {
+        let n = self.keys.len();
+        if idx < n {
+            self.blocked[idx] = Some(now + how_long);
+            self.cur = (idx + 1) % n;
+        }
+    }
+}
+
+fn ring() -> &'static Mutex<KeyRing> {
+    RING.get_or_init(|| {
+        let keys = read_keys();
+        let blocked = vec![None; keys.len()];
+        Mutex::new(KeyRing { keys, blocked, cur: 0 })
+    })
+}
+
+/// Есть ли вообще чем переводить через DeepL.
+fn deepl_key() -> Option<String> {
+    ring().lock().ok()?.keys.first().cloned()
+}
+
+/// Следующий рабочий ключ: его номер (для журнала) и сам ключ.
+fn next_key() -> Option<(usize, String)> {
+    ring().lock().ok()?.pick(std::time::Instant::now())
+}
+
+fn block_key(idx: usize, how_long: Duration, why: &str) {
+    if let Ok(mut r) = ring().lock() {
+        r.block(idx, how_long, std::time::Instant::now());
+    }
+    // В журнал — только номер: ключ в логах Railway не нужен никому.
+    eprintln!("[translate] ключ DeepL №{} отложен: {why}", idx + 1);
+}
+
+/// Ошибка DeepL вместе с кодом ответа: по коду решаем, менять ли ключ.
+struct DeeplError {
+    status: Option<u16>,
+    message: String,
+}
+
+impl std::fmt::Display for DeeplError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(&self.message)
+    }
+}
+
+/// GET /api/translate/quota — сколько знаков осталось на каждом ключе.
+///
+/// Сами ключи наружу не отдаём: только их номера, расход и состояние. Иначе
+/// узнать, что запас кончается, можно лишь по упавшему качеству перевода.
+pub async fn deepl_quota(
+    AuthenticatedUser(_user): AuthenticatedUser,
+) -> ApiResult<impl IntoResponse> {
+    let keys = ring().lock().map(|r| r.keys.clone()).unwrap_or_default();
+    let now = std::time::Instant::now();
+    let blocked: Vec<bool> = ring()
+        .lock()
+        .map(|r| r.blocked.iter().map(|b| matches!(b, Some(t) if *t > now)).collect())
+        .unwrap_or_default();
+
+    let client = reqwest::Client::new();
+    let mut out = Vec::new();
+    for (i, key) in keys.iter().enumerate() {
+        let url = deepl_endpoint(key).replace("/translate", "/usage");
+        let mut row = json!({
+            "n": i + 1,
+            "blocked": blocked.get(i).copied().unwrap_or(false),
+        });
+        match client
+            .get(url)
+            .header("Authorization", format!("DeepL-Auth-Key {}", key.trim()))
+            .timeout(Duration::from_secs(10))
+            .send()
+            .await
+        {
+            Ok(r) => {
+                let status = r.status();
+                let body: serde_json::Value = r.json().await.unwrap_or_else(|_| json!({}));
+                if status.is_success() {
+                    row["used"] = body.get("character_count").cloned().unwrap_or(json!(null));
+                    row["limit"] = body.get("character_limit").cloned().unwrap_or(json!(null));
+                } else {
+                    row["error"] = json!(status.as_u16());
+                }
+            }
+            Err(e) => { row["error"] = json!(e.to_string()); }
+        }
+        out.push(row);
+    }
+    Ok((StatusCode::OK, Json(json!({ "keys": out }))))
+}
+
+/// Перевод через связку ключей: исчерпанный ключ уступает место следующему.
+async fn deepl_translate_rotating(
+    texts: &[String], source: &str, target: &str, context: &str,
+) -> Result<(Vec<String>, String), String> {
+    let total = ring().lock().map(|r| r.keys.len()).unwrap_or(0);
+    let mut last = "нет ключей DeepL".to_string();
+
+    for _ in 0..total {
+        let Some((idx, key)) = next_key() else { break };
+        match deepl_translate(&key, texts, source, target, context).await {
+            Ok(v) => return Ok(v),
+            Err(e) => {
+                let cooldown = match e.status {
+                    Some(456) => QUOTA_COOLDOWN,
+                    Some(403) => BAD_KEY_COOLDOWN,
+                    // Частота — беда минутная, но на другом аккаунте её нет.
+                    Some(429) => RATE_COOLDOWN,
+                    // Сеть или невнятный ответ: ключ ни при чём, менять нечего.
+                    _ => return Err(e.message),
+                };
+                block_key(idx, cooldown, &e.message);
+                last = e.message;
+            }
+        }
+    }
+    Err(last)
+}
+
 
 /// Перевод пачки через DeepL. Возвращает переводы и определённый язык оригинала.
 async fn deepl_translate(
     key: &str, texts: &[String], source: &str, target: &str, context: &str,
-) -> Result<(Vec<String>, String), String> {
+) -> Result<(Vec<String>, String), DeeplError> {
     let mut body = json!({
         "text": texts,
         "target_lang": deepl_code(target, true),
@@ -253,7 +441,7 @@ async fn deepl_translate(
         .json(&body)
         .send()
         .await
-        .map_err(|e| format!("DeepL unreachable: {e}"))?;
+        .map_err(|e| DeeplError { status: None, message: format!("DeepL unreachable: {e}") })?;
 
     let status = res.status();
     let text = res.text().await.unwrap_or_default();
@@ -265,13 +453,13 @@ async fn deepl_translate(
             456 => "исчерпана месячная квота DeepL",
             _ => "DeepL вернул ошибку",
         };
-        return Err(format!("{hint} ({status})"));
+        return Err(DeeplError { status: Some(status.as_u16()), message: format!("{hint} ({status})") });
     }
 
     let parsed: serde_json::Value = serde_json::from_str(&text)
-        .map_err(|e| format!("DeepL: неразборный ответ ({e})"))?;
+        .map_err(|e| DeeplError { status: None, message: format!("DeepL: неразборный ответ ({e})") })?;
     let arr = parsed.get("translations").and_then(|v| v.as_array())
-        .ok_or_else(|| "DeepL: нет поля translations".to_string())?;
+        .ok_or_else(|| DeeplError { status: None, message: "DeepL: нет поля translations".to_string() })?;
 
     let mut out = Vec::with_capacity(arr.len());
     let mut detected = String::new();
@@ -348,8 +536,8 @@ pub async fn translate_batch(
     let mut detected = source.to_string();
 
     // 2. DeepL, если ключ есть.
-    if let Some(key) = deepl_key() {
-        match deepl_translate(&key, &batch, source, target, context).await {
+    if deepl_key().is_some() {
+        match deepl_translate_rotating(&batch, source, target, context).await {
             Ok((res, det)) => {
                 if !det.is_empty() { detected = det; }
                 for (k, &i) in missing.iter().enumerate() {
@@ -360,7 +548,7 @@ pub async fn translate_batch(
                 return Ok((out, detected, "deepl".to_string()));
             }
             Err(e) => {
-                // Квота/ключ отвалились — не роняем чтение, идём в LLM.
+                // Все ключи исчерпаны — не роняем чтение, идём в LLM.
                 eprintln!("[translate] DeepL failed, falling back to LLM: {e}");
             }
         }
@@ -612,6 +800,64 @@ mod tests {
         assert_eq!(deepl_code("en", false), "EN");
         assert_eq!(deepl_code("fr", true), "FR");
         assert_eq!(deepl_code("ru-RU", true), "RU");
+    }
+
+    fn ring_of(n: usize) -> KeyRing {
+        let keys: Vec<String> = (1..=n).map(|i| format!("key{i}")).collect();
+        let blocked = vec![None; keys.len()];
+        KeyRing { keys, blocked, cur: 0 }
+    }
+
+    #[test]
+    fn keys_are_split_and_deduped() {
+        let raw = vec![
+            "  a:fx , b:fx ".to_string(),
+            "b:fx".to_string(),   // тот же ключ второй раз — лишний
+            "c:fx;d:fx".to_string(),
+            "   ".to_string(),
+        ];
+        assert_eq!(parse_keys(&raw), vec!["a:fx", "b:fx", "c:fx", "d:fx"]);
+    }
+
+    #[test]
+    fn exhausted_key_gives_way_to_the_next() {
+        let now = std::time::Instant::now();
+        let mut r = ring_of(3);
+        assert_eq!(r.pick(now).unwrap().0, 0);
+
+        r.block(0, QUOTA_COOLDOWN, now);
+        assert_eq!(r.pick(now).unwrap().0, 1, "должен взяться следующий ключ");
+        // Пока запас не обновился, к первому не возвращаемся.
+        r.block(1, QUOTA_COOLDOWN, now);
+        assert_eq!(r.pick(now).unwrap().0, 2);
+    }
+
+    #[test]
+    fn all_exhausted_means_no_key() {
+        let now = std::time::Instant::now();
+        let mut r = ring_of(2);
+        r.block(0, QUOTA_COOLDOWN, now);
+        r.block(1, QUOTA_COOLDOWN, now);
+        assert!(r.pick(now).is_none(), "все ключи исчерпаны — переводит модель");
+    }
+
+    #[test]
+    fn key_returns_after_its_time() {
+        let now = std::time::Instant::now();
+        let mut r = ring_of(2);
+        r.block(0, Duration::from_secs(0), now);
+        r.block(1, QUOTA_COOLDOWN, now);
+        // Срок первого уже вышел — круг замкнулся, снова берём его.
+        assert_eq!(r.pick(now).unwrap().0, 0);
+    }
+
+    #[test]
+    fn single_key_still_works() {
+        let now = std::time::Instant::now();
+        let mut r = ring_of(1);
+        assert_eq!(r.pick(now).unwrap().0, 0);
+        r.block(0, QUOTA_COOLDOWN, now);
+        assert!(r.pick(now).is_none());
     }
 
     #[test]

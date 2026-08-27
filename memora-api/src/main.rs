@@ -220,6 +220,7 @@ async fn main() {
         .route("/api/books/{id}/images/{image_id}", get(handlers::books::get_image))
         // Перевод (DeepL с кэшем) и словарная статья (LLM) — для читалки.
         .route("/api/translate", post(handlers::translate::translate_handler))
+        .route("/api/translate/quota", get(handlers::translate::deepl_quota))
         .route("/api/dictionary", post(handlers::translate::dictionary_handler))
         .route("/api/check/symbolic", post(handlers::checks::check_symbolic))
         .route("/api/family/board", get(handlers::family::get_board))
