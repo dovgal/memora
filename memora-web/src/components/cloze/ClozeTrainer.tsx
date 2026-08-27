@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import {
   Eye, Headphones, Volume2, Loader2, Check, X, ChevronRight, ChevronLeft,
-  RotateCcw, Mic, MicOff, Lightbulb,
+  RotateCcw, Mic, MicOff, Lightbulb, Languages,
 } from 'lucide-react';
 import type { SetResponse } from '@/types/schema';
 import { blankOut, distractors, fetchCloze, type ClozeItem } from '@/lib/sets/clozeApi';
@@ -19,6 +19,11 @@ import { voiceFor, speechTag } from '@/lib/books/langs';
 import { useSpeechAttempt } from '@/lib/courses/useSpeechAttempt';
 import { checkDictation, bestTranscript } from '@/lib/courses/dictation';
 import { PASS_SCORE } from '@/lib/courses/phonetics/mastery';
+// Перевод общий для всей платформы: DeepL с кэшем в базе. Живёт в клиенте
+// читалки, но эндпоинт не её собственность — одно и то же предложение,
+// переведённое там, здесь достанется бесплатно.
+import { translate } from '@/lib/books/api';
+import { TARGET_LANGS } from '@/lib/books/langs';
 
 type Mode = 'vocabulary' | 'listening' | 'speaking';
 type Answering = 'choice' | 'input';
@@ -56,10 +61,18 @@ export function ClozeTrainer({ setId }: { setId: string }) {
   const [picked, setPicked] = useState<string | null>(null);
   const [verdict, setVerdict] = useState<'right' | 'wrong' | null>(null);
   const [right, setRight] = useState(0);
-  const [showTranslation, setShowTranslation] = useState(false);
   const [prepared, setPrepared] = useState(0);
 
   const [studyLang, setStudyLang] = useState('fr');
+  const [nativeLang, setNativeLang] = useState('ru');
+  /** Язык подсказки под предложением — виден всегда, по нему и разгадывается пропуск. */
+  const [hintLang, setHintLang] = useState('en');
+  /** Язык перевода по кнопке — родной, когда подсказки на английском мало. */
+  const [transLang, setTransLang] = useState('ru');
+  const [hint, setHint] = useState<string | null>(null);
+  const [hintBusy, setHintBusy] = useState(false);
+  const [reveal, setReveal] = useState<string | null>(null);
+  const [revealBusy, setRevealBusy] = useState(false);
   const voice = useMemo(() => voiceFor(studyLang), [studyLang]);
   const speech = useSpeechAttempt(speechTag(studyLang));
 
@@ -101,6 +114,7 @@ export function ClozeTrainer({ setId }: { setId: string }) {
         const chunk = shuffled.slice(i, i + CHUNK);
         const batch = await fetchCloze(setId, chunk.map(c => c.id), idToken);
         if (batch.studyLanguage) setStudyLang(batch.studyLanguage);
+        if (batch.nativeLanguage) setNativeLang(batch.nativeLanguage);
         for (const item of batch.items) {
           const cut = blankOut(item.sentence, item.term);
           // Без пропуска вопроса нет — такую карточку молча пропускаем.
@@ -144,6 +158,50 @@ export function ClozeTrainer({ setId }: { setId: string }) {
   useEffect(() => {
     if (stage === 'play' && answering === 'input' && mode !== 'speaking') inputRef.current?.focus();
   }, [stage, answering, mode, idx]);
+
+  /**
+   * Подсказка — перевод ВСЕЙ фразы на второй язык. По ней и вычисляется
+   * пропущенное слово, поэтому она видна сразу, а не по кнопке. Заодно это
+   * повторение второго языка: одна фраза работает на два сразу.
+   */
+  const hintTarget = hintLang === studyLang ? nativeLang : hintLang;
+
+  useEffect(() => {
+    if (stage !== 'play' || !current) return;
+    // Родной язык уже пришёл вместе с предложением — второй раз не спрашиваем.
+    if (hintTarget === nativeLang && current.translation) {
+      setHint(current.translation);
+      return;
+    }
+    let alive = true;
+    setHint(null);
+    setHintBusy(true);
+    (async () => {
+      try {
+        const r = await translate({ texts: [current.sentence], targetLang: hintTarget, sourceLang: studyLang });
+        if (alive) setHint(r.translations[0] ?? '');
+      } catch {
+        if (alive) setHint('');
+      } finally {
+        if (alive) setHintBusy(false);
+      }
+    })();
+    return () => { alive = false; };
+  }, [stage, current, hintTarget, nativeLang, studyLang]);
+
+  const revealTranslation = useCallback(async () => {
+    if (!current) return;
+    if (transLang === nativeLang && current.translation) { setReveal(current.translation); return; }
+    setRevealBusy(true);
+    try {
+      const r = await translate({ texts: [current.sentence], targetLang: transLang, sourceLang: studyLang });
+      setReveal(r.translations[0] ?? '');
+    } catch {
+      setReveal('перевод недоступен');
+    } finally {
+      setRevealBusy(false);
+    }
+  }, [current, transLang, nativeLang, studyLang]);
 
   // ---------- Ответ ----------
   const record = useCallback((ok: boolean, cardId: string) => {
@@ -191,7 +249,7 @@ export function ClozeTrainer({ setId }: { setId: string }) {
     setVerdict(null);
     setPicked(null);
     setTyped('');
-    setShowTranslation(false);
+    setReveal(null);
     speech.setError(null);
     if (idx + 1 >= queue.length) setStage('done');
     else setIdx(i => i + 1);
@@ -255,6 +313,29 @@ export function ClozeTrainer({ setId }: { setId: string }) {
             </div>
           </>
         )}
+
+        <div className="grid sm:grid-cols-2 gap-3 mb-4">
+          <label className="block">
+            <span className="text-xs font-bold uppercase tracking-wider text-qz-text-muted">Подсказка под фразой</span>
+            <select value={hintLang} onChange={e => setHintLang(e.target.value)}
+              className="w-full mt-1 bg-transparent border border-border rounded-xl px-3 py-2.5 text-foreground">
+              {TARGET_LANGS.map(l => <option key={l.code} value={l.code}>{l.name}</option>)}
+            </select>
+            <span className="block text-[11px] text-qz-text-muted mt-1">
+              Видна всегда — по ней и разгадывается пропуск
+            </span>
+          </label>
+          <label className="block">
+            <span className="text-xs font-bold uppercase tracking-wider text-qz-text-muted">Перевод по кнопке</span>
+            <select value={transLang} onChange={e => setTransLang(e.target.value)}
+              className="w-full mt-1 bg-transparent border border-border rounded-xl px-3 py-2.5 text-foreground">
+              {TARGET_LANGS.map(l => <option key={l.code} value={l.code}>{l.name}</option>)}
+            </select>
+            <span className="block text-[11px] text-qz-text-muted mt-1">
+              Открывается, когда подсказки не хватило
+            </span>
+          </label>
+        </div>
 
         <label className="block mb-6">
           <span className="text-xs font-bold uppercase tracking-wider text-qz-text-muted">Предложений в раунде</span>
@@ -355,13 +436,31 @@ export function ClozeTrainer({ setId }: { setId: string }) {
           </button>
         )}
 
-        {current.translation && (
-          showTranslation || verdict
-            ? <p className="text-qz-text-muted text-sm mt-2">{current.translation}</p>
-            : <button onClick={() => setShowTranslation(true)}
-                className="mt-2 block text-xs text-qz-text-muted/70 hover:text-[#4255ff] underline decoration-dotted">
-                показать перевод
-              </button>
+      </div>
+
+      {/* Подсказка: вся фраза на втором языке. Видна всегда — по ней и
+          вычисляется пропущенное слово, а заодно повторяется второй язык. */}
+      <div className="border-l-4 border-[#4255ff]/40 bg-[#4255ff]/5 rounded-r-xl px-4 py-3 mb-4">
+        <p className="text-[10px] uppercase tracking-wider font-bold text-qz-text-muted mb-1">
+          {langTitle(hintTarget)}
+        </p>
+        {hintBusy
+          ? <p className="text-qz-text-muted text-sm flex items-center gap-1.5"><Loader2 className="w-3.5 h-3.5 animate-spin" /> перевожу…</p>
+          : <p className="text-foreground text-base leading-relaxed">{hint || '—'}</p>}
+
+        {reveal ? (
+          <p className="text-qz-text-muted text-sm mt-2 pt-2 border-t border-[#4255ff]/20">
+            <span className="text-[10px] uppercase tracking-wider font-bold">{langTitle(transLang)}: </span>
+            {reveal}
+          </p>
+        ) : (
+          transLang !== hintTarget && (
+            <button onClick={() => void revealTranslation()} disabled={revealBusy}
+              className="mt-2 inline-flex items-center gap-1.5 text-xs text-[#4255ff] hover:underline disabled:opacity-50">
+              {revealBusy ? <Loader2 className="w-3 h-3 animate-spin" /> : <Languages className="w-3 h-3" />}
+              Перевод на {langTitle(transLang).toLowerCase()}
+            </button>
+          )
         )}
       </div>
 
@@ -437,6 +536,10 @@ export function ClozeTrainer({ setId }: { setId: string }) {
       )}
     </Shell>
   );
+}
+
+function langTitle(code: string): string {
+  return TARGET_LANGS.find(l => l.code === code)?.name ?? code.toUpperCase();
 }
 
 function Shell({ children }: { children: React.ReactNode }) {
