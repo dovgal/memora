@@ -1,0 +1,524 @@
+{
+ "id": "t1a",
+ "title": "Тема 1 · Ступень A1 — Первые слова",
+ "description": "Поздороваться, назвать себя, попросить повторить помедленнее. Всё, чем можно продержаться в первый же день.",
+ "vocabulary": [
+  {
+   "fr": "Bonjour",
+   "ru": "Здравствуйте",
+   "ipa": "bɔ̃ʒuʁ",
+   "type": "phrase"
+  },
+  {
+   "fr": "Bonsoir",
+   "ru": "Добрый вечер (после ~18 ч.)",
+   "ipa": "bɔ̃swaʁ",
+   "type": "phrase"
+  },
+  {
+   "fr": "Salut",
+   "ru": "Привет (только своим)",
+   "ipa": "saly",
+   "type": "phrase"
+  },
+  {
+   "fr": "Au revoir",
+   "ru": "До свидания",
+   "ipa": "o ʁəvwaʁ",
+   "type": "phrase"
+  },
+  {
+   "fr": "Bonne journée",
+   "ru": "Хорошего дня",
+   "ipa": "bɔn ʒuʁne",
+   "type": "phrase"
+  },
+  {
+   "fr": "Merci beaucoup",
+   "ru": "Большое спасибо",
+   "ipa": "mɛʁsi boku",
+   "type": "phrase"
+  },
+  {
+   "fr": "S'il vous plaît",
+   "ru": "Пожалуйста (просьба)",
+   "ipa": "sil vu plɛ",
+   "type": "phrase"
+  },
+  {
+   "fr": "Excusez-moi",
+   "ru": "Извините (обратиться)",
+   "ipa": "ɛkskyze mwa",
+   "type": "phrase"
+  },
+  {
+   "fr": "Pardon",
+   "ru": "Простите (задели, не расслышали)",
+   "ipa": "paʁdɔ̃",
+   "type": "phrase"
+  },
+  {
+   "fr": "Je m'appelle…",
+   "ru": "Меня зовут…",
+   "ipa": "ʒə mapɛl",
+   "type": "phrase"
+  },
+  {
+   "fr": "Enchanté / Enchantée",
+   "ru": "Очень приятно",
+   "ipa": "ɑ̃ʃɑ̃te",
+   "type": "phrase"
+  },
+  {
+   "fr": "Je viens d'Ukraine",
+   "ru": "Я из Украины",
+   "ipa": "ʒə vjɛ̃ dykʁɛn",
+   "type": "phrase"
+  },
+  {
+   "fr": "J'habite ici",
+   "ru": "Я живу здесь",
+   "ipa": "ʒabit isi",
+   "type": "phrase"
+  },
+  {
+   "fr": "Je ne comprends pas",
+   "ru": "Я не понимаю",
+   "ipa": "ʒə nə kɔ̃pʁɑ̃ pa",
+   "type": "phrase"
+  },
+  {
+   "fr": "Pouvez-vous répéter ?",
+   "ru": "Можете повторить?",
+   "ipa": "puve vu ʁepete",
+   "type": "phrase"
+  },
+  {
+   "fr": "Plus lentement, s'il vous plaît",
+   "ru": "Помедленнее, пожалуйста",
+   "ipa": "ply lɑ̃tmɑ̃ sil vu plɛ",
+   "type": "phrase"
+  },
+  {
+   "fr": "Comment ça s'écrit ?",
+   "ru": "Как это пишется?",
+   "ipa": "kɔmɑ̃ sa sekʁi",
+   "type": "phrase"
+  },
+  {
+   "fr": "Je débute en français",
+   "ru": "Я только начинаю говорить по-французски",
+   "ipa": "ʒə debyt ɑ̃ fʁɑ̃sɛ",
+   "type": "phrase"
+  },
+  {
+   "fr": "le voisin / la voisine",
+   "ru": "сосед / соседка",
+   "ipa": "vwazɛ̃ / vwazin",
+   "type": "word"
+  },
+  {
+   "fr": "la boîte aux lettres",
+   "ru": "почтовый ящик",
+   "ipa": "bwat o lɛtʁ",
+   "type": "word"
+  },
+  {
+   "fr": "l'immeuble",
+   "ru": "жилой дом",
+   "ipa": "limœbl",
+   "type": "word"
+  },
+  {
+   "fr": "l'interphone",
+   "ru": "домофон",
+   "ipa": "ɛ̃tɛʁfɔn",
+   "type": "word"
+  }
+ ],
+ "exercises": [
+  {
+   "id": "t1a-th1",
+   "type": "theory",
+   "title": "Конец слова французы не договаривают",
+   "content": "<p style='margin:0.5rem 0'>Главная причина, по которой французское слово на бумаге и на слух — это два разных слова: <b>конец почти всегда обрезается</b>. Выучите четыре правила — и половина непонимания исчезнет.</p><table style='width:100%;border-collapse:collapse;margin:0.75rem 0'><tr><th style='text-align:left;padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.4);font-weight:700'>Правило</th><th style='text-align:left;padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.4);font-weight:700'>Написано</th><th style='text-align:left;padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.4);font-weight:700'>Слышно</th></tr><tr><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>Конечное <b>-e</b> молчит</td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>madame</td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>мадам</td></tr><tr><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>Конечные <b>-s, -t, -d, -x</b> молчат</td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>petit · vous · grand</td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>пёти · ву · гран</td></tr><tr><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'><b>-er</b> на конце = [e]</td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>parler</td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>парле</td></tr><tr><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'><b>h</b> не читается никогда</td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>l'heure · habiter</td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>лёр · абите</td></tr></table><p style='margin:0.75rem 0'><b>Но</b> согласная оживает, если следующее слово начинается с гласной. Это <b>liaison</b>, связывание:</p><p style='margin:0.5rem 0;font-size:1.05em'>vous‿avez → «вузаве» · nous‿allons → «нузалон» · les‿amis → «лезами»</p><p style='margin:0.75rem 0;padding:0.6rem;border-left:3px solid #4255ff;background:rgba(66,85,255,0.07)'><b>Зачем это в первый же день.</b> «Vous êtes ukrainien ?» звучит как одно слово «вузэт-юкрэньен». Если ждать четыре отдельных слова — не услышите ни одного.</p>"
+  },
+  {
+   "id": "t1a-th2",
+   "type": "theory",
+   "title": "Tu или vous — ошибиться неприятнее, чем в грамматике",
+   "content": "<p style='margin:0.5rem 0'>Грамматическую ошибку простят и не заметят. Обращение на «ты» к незнакомому взрослому заметят все.</p><table style='width:100%;border-collapse:collapse;margin:0.75rem 0'><tr><th style='text-align:left;padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.4);font-weight:700'>Кому</th><th style='text-align:left;padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.4);font-weight:700'>Как</th></tr><tr><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>Продавец, врач, чиновник, сосед, любой незнакомый взрослый</td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'><b>vous</b> — всегда</td></tr><tr><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>Ребёнок, подросток</td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'><b>tu</b></td></tr><tr><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>Друг, коллега — <i>после того как он сам предложил</i></td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'><b>tu</b></td></tr></table><p style='margin:0.75rem 0'>Переход на «ты» предлагают вслух: <b>« On peut se tutoyer ? »</b> Пока не предложили — <b>vous</b>. Ждать этого предложения — нормально и не невежливо.</p><p style='margin:0.75rem 0;padding:0.6rem;border-left:3px solid #f59e0b;background:rgba(245,158,11,0.08)'><b>И ещё одно.</b> Во Франции <b>Bonjour</b> — не приветствие, а входной билет. Входя в магазин, аптеку, лифт, кабинет — сначала «Bonjour», потом дело. Без него вопрос звучит грубо, даже безупречно построенный.</p>"
+  },
+  {
+   "id": "t1a-pr1",
+   "type": "pronunciation",
+   "title": "Приветствие по кирпичикам",
+   "instruction": "Скажите вслух каждую строку. Лесенка растёт: сначала два слога, потом целая фраза — так носовые звуки не разваливаются.",
+   "pronItems": [
+    {
+     "text": "Bonjour",
+     "ipa": "bɔ̃ʒuʁ",
+     "ru": "Здравствуйте",
+     "kind": "word",
+     "hint": "«он» — не «он», а один носовой звук: рот как для «о», воздух в нос, языком «н» не касаться нёба."
+    },
+    {
+     "text": "Madame",
+     "ipa": "madam",
+     "ru": "Мадам",
+     "kind": "word",
+     "hint": "Последнее -e молчит: «мадам», не «мадамё»."
+    },
+    {
+     "text": "Bonjour, madame",
+     "ipa": "bɔ̃ʒuʁ madam",
+     "ru": "Здравствуйте, мадам",
+     "kind": "ladder"
+    },
+    {
+     "text": "Je m'appelle",
+     "ipa": "ʒə mapɛl",
+     "ru": "Меня зовут",
+     "kind": "ladder",
+     "hint": "«ж» мягкое, как в «жюри». Двойное -ll- читается как одно [l]."
+    },
+    {
+     "text": "Bonjour, je m'appelle Olga",
+     "ipa": "bɔ̃ʒuʁ ʒə mapɛl ɔlga",
+     "ru": "Здравствуйте, меня зовут Ольга",
+     "kind": "ladder"
+    },
+    {
+     "text": "Excusez-moi",
+     "ipa": "ɛkskyze mwa",
+     "ru": "Извините",
+     "kind": "phrase",
+     "hint": "u в «excusez» — это [y]: губы трубочкой, а язык на месте «и»."
+    },
+    {
+     "text": "Je ne comprends pas",
+     "ipa": "ʒə nə kɔ̃pʁɑ̃ pa",
+     "ru": "Я не понимаю",
+     "kind": "phrase",
+     "hint": "Два носовых подряд: «ком-пран». Конечное -s в «pas» молчит."
+    },
+    {
+     "text": "Pouvez-vous répéter plus lentement ?",
+     "ipa": "puve vu ʁepete ply lɑ̃tmɑ̃",
+     "ru": "Можете повторить помедленнее?",
+     "kind": "phrase",
+     "hint": "Вопрос без вопросительного слова — голос вверх в конце."
+    },
+    {
+     "text": "Un bon vin blanc",
+     "ipa": "œ̃ bɔ̃ vɛ̃ blɑ̃",
+     "ru": "Хорошее белое вино",
+     "kind": "twister",
+     "hint": "Четыре разных носовых подряд — классическая проверка. Медленно и по одному."
+    }
+   ]
+  },
+  {
+   "id": "t1a-si1",
+   "type": "situation",
+   "title": "У почтовых ящиков",
+   "instruction": "Нажмите на предмет — услышите слово. Потом закройте подписи и назовите всё сами.",
+   "scene": "porch",
+   "spots": [
+    {
+     "fr": "l'immeuble",
+     "ru": "дом",
+     "ipa": "limœbl",
+     "x": 12,
+     "y": 16
+    },
+    {
+     "fr": "la porte d'entrée",
+     "ru": "входная дверь",
+     "ipa": "pɔʁt dɑ̃tʁe",
+     "x": 30,
+     "y": 62
+    },
+    {
+     "fr": "l'interphone",
+     "ru": "домофон",
+     "ipa": "ɛ̃tɛʁfɔn",
+     "x": 47,
+     "y": 45
+    },
+    {
+     "fr": "la boîte aux lettres",
+     "ru": "почтовый ящик",
+     "ipa": "bwat o lɛtʁ",
+     "x": 72,
+     "y": 55
+    },
+    {
+     "fr": "le courrier",
+     "ru": "почта, письма",
+     "ipa": "kuʁje",
+     "x": 86,
+     "y": 40
+    },
+    {
+     "fr": "la voisine",
+     "ru": "соседка",
+     "ipa": "vwazin",
+     "x": 55,
+     "y": 74
+    },
+    {
+     "fr": "le code",
+     "ru": "код от двери",
+     "ipa": "kɔd",
+     "x": 22,
+     "y": 40
+    }
+   ],
+   "phrases": [
+    {
+     "fr": "Bonjour, madame. J'habite au deuxième.",
+     "ru": "Здравствуйте. Я живу на третьем этаже."
+    },
+    {
+     "fr": "Excusez-moi, quel est le code de la porte ?",
+     "ru": "Извините, какой код от двери?"
+    },
+    {
+     "fr": "Ma boîte aux lettres est la numéro sept.",
+     "ru": "Мой почтовый ящик — седьмой."
+    }
+   ]
+  },
+  {
+   "id": "t1a-dg1",
+   "type": "dialogue",
+   "title": "Соседка на лестнице",
+   "context": "Вы въехали вчера. У почтовых ящиков стоит соседка.",
+   "exchanges": [
+    {
+     "speaker": "La voisine",
+     "side": "left",
+     "text": "Bonjour ! Vous êtes nouveau dans l'immeuble ?"
+    },
+    {
+     "speaker": "Vous",
+     "side": "right",
+     "isBlank": true,
+     "options": [
+      "Bonjour, oui, j'habite ici depuis hier.",
+      "Salut, quoi ?",
+      "Oui."
+     ],
+     "correctAnswer": "Bonjour, oui, j'habite ici depuis hier.",
+     "explanation": "Сначала «Bonjour» — без него ответ звучит резко. «Salut» — только для своих."
+    },
+    {
+     "speaker": "La voisine",
+     "side": "left",
+     "text": "Ah, bienvenue ! Moi, c'est Sylvie, j'habite au premier."
+    },
+    {
+     "speaker": "Vous",
+     "side": "right",
+     "isBlank": true,
+     "options": [
+      "Enchantée, je m'appelle Olga.",
+      "Je ne comprends pas.",
+      "Merci, au revoir."
+     ],
+     "correctAnswer": "Enchantée, je m'appelle Olga.",
+     "explanation": "Вам назвали имя — назовите своё. «Enchanté(e)» — стандартный ответ при знакомстве."
+    },
+    {
+     "speaker": "La voisine",
+     "side": "left",
+     "text": "Vous venez d'où ?"
+    },
+    {
+     "speaker": "Vous",
+     "side": "right",
+     "isBlank": true,
+     "options": [
+      "Je viens d'Ukraine.",
+      "Je vais en Ukraine.",
+      "J'habite d'Ukraine."
+     ],
+     "correctAnswer": "Je viens d'Ukraine.",
+     "explanation": "venir de — «быть родом из». J'habite требует «à/en»: j'habite en France."
+    },
+    {
+     "speaker": "La voisine",
+     "side": "left",
+     "text": "Si vous avez besoin de quelque chose, n'hésitez pas !"
+    },
+    {
+     "speaker": "Vous",
+     "side": "right",
+     "isBlank": true,
+     "options": [
+      "Merci beaucoup, bonne journée !",
+      "Pardon ?",
+      "Non."
+     ],
+     "correctAnswer": "Merci beaucoup, bonne journée !",
+     "explanation": "«Bonne journée» на прощание днём — то же, что «хорошего дня»."
+    }
+   ]
+  },
+  {
+   "id": "t1a-qz1",
+   "type": "grammar-quiz",
+   "title": "Первые дни: что сказать",
+   "questions": [
+    {
+     "question": "Вы заходите в аптеку. Что сказать первым?",
+     "options": [
+      "Bonjour",
+      "S'il vous plaît",
+      "Excusez-moi",
+      "Ничего, сразу вопрос"
+     ],
+     "correctAnswer": "Bonjour",
+     "explanation": "Во Франции «Bonjour» при входе обязателен. Вопрос без него звучит грубо."
+    },
+    {
+     "question": "Соседу лет пятьдесят, вы видите его второй раз. Как обращаться?",
+     "options": [
+      "vous",
+      "tu",
+      "как угодно",
+      "по имени без местоимения"
+     ],
+     "correctAnswer": "vous",
+     "explanation": "Пока не предложили «se tutoyer» — только vous. Ждать предложения нормально."
+    },
+    {
+     "question": "Половина восьмого вечера. Здороваетесь:",
+     "options": [
+      "Bonsoir",
+      "Bonjour",
+      "Bonne nuit",
+      "Salut"
+     ],
+     "correctAnswer": "Bonsoir",
+     "explanation": "Примерно с 18 часов — bonsoir. «Bonne nuit» говорят, уходя спать, а не здороваясь."
+    },
+    {
+     "question": "Вы не расслышали. Что вежливее всего?",
+     "options": [
+      "Pardon ?",
+      "Quoi ?",
+      "Hein ?",
+      "Comment tu dis ?"
+     ],
+     "correctAnswer": "Pardon ?",
+     "explanation": "«Quoi ?» и «Hein ?» — свои и грубоватые. «Pardon ?» подходит всегда."
+    },
+    {
+     "question": "Что означает «Je viens d'Ukraine» ?",
+     "options": [
+      "Я из Украины",
+      "Я еду в Украину",
+      "Я живу в Украине",
+      "Я скучаю по Украине"
+     ],
+     "correctAnswer": "Я из Украины",
+     "explanation": "venir de = быть родом откуда-то. «Я еду в Украину» — je vais en Ukraine."
+    }
+   ]
+  },
+  {
+   "id": "t1a-fb1",
+   "type": "fill-blank",
+   "title": "Вежливые слова по местам",
+   "instruction": "Вставьте недостающее.",
+   "text": "— ___ , madame. Je cherche la boîte aux lettres numéro sept.\n— C'est celle-ci.\n— ___ beaucoup ! Pouvez-vous ___ , s'il vous plaît ? Je ___ pas bien.\n— Bien sûr. Numéro sept, ici.\n— Parfait. ___ journée !",
+   "blanks": [
+    {
+     "correctAnswer": "Bonjour",
+     "options": [
+      "Bonjour",
+      "Salut",
+      "Bonne nuit"
+     ],
+     "explanation": "Обращение к незнакомой женщине начинается с Bonjour."
+    },
+    {
+     "correctAnswer": "Merci",
+     "options": [
+      "Merci",
+      "Pardon",
+      "Voilà"
+     ],
+     "explanation": "Merci beaucoup — большое спасибо."
+    },
+    {
+     "correctAnswer": "répéter",
+     "options": [
+      "répéter",
+      "parler",
+      "écouter"
+     ],
+     "explanation": "Pouvez-vous répéter ? — можете повторить?"
+    },
+    {
+     "correctAnswer": "ne comprends",
+     "options": [
+      "ne comprends",
+      "ne comprend",
+      "comprends"
+     ],
+     "explanation": "je ne comprends pas — отрицание из двух частей, ne … pas."
+    },
+    {
+     "correctAnswer": "Bonne",
+     "options": [
+      "Bonne",
+      "Bon",
+      "Bien"
+     ],
+     "explanation": "journée — женского рода, поэтому bonne journée."
+    }
+   ]
+  },
+  {
+   "id": "t1a-dc1",
+   "type": "dictation",
+   "title": "На слух: знакомство",
+   "sentence": "Bonjour, je m'appelle Olga et je viens d'Ukraine.",
+   "translation": "Здравствуйте, меня зовут Ольга, я из Украины.",
+   "explanation": "«je m'appelle» пишется с двумя l, но звучит один звук [l]."
+  },
+  {
+   "id": "t1a-dc2",
+   "type": "dictation",
+   "title": "На слух: просьба",
+   "sentence": "Pouvez-vous parler plus lentement, s'il vous plaît ?",
+   "translation": "Можете говорить помедленнее, пожалуйста?",
+   "explanation": "lentement — конечное -t в lent молчит, но в наречии слышно «лян-тё-ман»."
+  },
+  {
+   "id": "t1a-ai1",
+   "type": "ai-talk",
+   "title": "Разговор: знакомство у подъезда",
+   "role": "Sylvie, соседка-француженка лет пятидесяти. Доброжелательная, немного любопытная. Говорит короткими простыми фразами уровня A1, по одной мысли за реплику.",
+   "situation": "Вы вчера въехали в дом. У почтовых ящиков встретили соседку. Она первой говорит «Bonjour».",
+   "level": "A1",
+   "goals": [
+    "поздороваться так, как принято",
+    "назвать своё имя",
+    "сказать, откуда вы",
+    "попросить повторить или говорить помедленнее",
+    "попрощаться"
+   ],
+   "hints": [
+    "Bonjour, madame !",
+    "Je m'appelle…",
+    "Je viens d'Ukraine.",
+    "Pardon, pouvez-vous répéter plus lentement ?",
+    "Merci beaucoup, bonne journée !"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Окно приёма в мэрии: служащая за стеклом, бланк и документ на стойке, автомат талонов, часы работы">
+  <style>
+    .o{fill:none;stroke:#1f2937;stroke-width:4;stroke-linejoin:round;stroke-linecap:round}
+    .t{fill:none;stroke:#1f2937;stroke-width:2.5;stroke-linecap:round}
+    .wall{fill:#eef1f5}.desk{fill:#c8a06a}.deskTop{fill:#dcbb8a}
+    .glass{fill:#d7e8f5}.metal{fill:#d8dde5}.skin{fill:#f3d3b5}
+    .shirt{fill:#3f6fa8}.coat{fill:#4a7c59}.paper{fill:#fdfcf8}.dark{fill:#1f2937}
+  </style>
+  <rect width="800" height="500" fill="#f7f8fa"/>
+  <rect class="wall" x="0" y="0" width="800" height="418"/>
+  <path class="t" d="M0 96 H800"/>
+
+  <rect class="paper" x="606" y="34" width="164" height="112" rx="6"/>
+  <rect class="o" x="606" y="34" width="164" height="112" rx="6"/>
+  <g fill="#1f2937" font-family="Helvetica, Arial, sans-serif">
+    <text x="688" y="62" text-anchor="middle" font-size="17" font-weight="700">HORAIRES</text>
+    <text x="622" y="90" font-size="14">lun-ven</text><text x="754" y="90" text-anchor="end" font-size="14">9h-17h</text>
+    <text x="622" y="114" font-size="14">samedi</text><text x="754" y="114" text-anchor="end" font-size="14">9h-12h</text>
+    <text x="622" y="138" font-size="14">dimanche</text><text x="754" y="138" text-anchor="end" font-size="14">ferme</text>
+  </g>
+
+  <rect class="glass" x="330" y="120" width="330" height="180" rx="4"/>
+  <rect class="o" x="330" y="120" width="330" height="180" rx="4"/>
+  <path class="t" d="M330 210 H660"/>
+  <g fill="#1f2937"><circle cx="470" cy="268" r="4"/><circle cx="486" cy="268" r="4"/><circle cx="502" cy="268" r="4"/>
+    <circle cx="470" cy="282" r="4"/><circle cx="486" cy="282" r="4"/><circle cx="502" cy="282" r="4"/></g>
+
+  <g transform="translate(492 138)">
+    <path class="shirt" d="M4 84 q44 -14 88 0 l8 76 h-104 z"/>
+    <path class="o" d="M4 84 q44 -14 88 0 l8 76 h-104 z"/>
+    <circle class="skin" cx="48" cy="48" r="32"/><circle class="o" cx="48" cy="48" r="32"/>
+    <path fill="#3b2f26" d="M16 42 q32 -38 64 0 q-6 -26 -32 -26 t-32 26z"/>
+    <path class="o" d="M16 42 q32 -38 64 0 q-6 -26 -32 -26 t-32 26z"/>
+    <circle fill="#1f2937" cx="37" cy="50" r="3.5"/><circle fill="#1f2937" cx="59" cy="50" r="3.5"/>
+    <path class="t" d="M39 66 q9 7 18 0"/>
+  </g>
+
+  <rect class="deskTop" x="150" y="300" width="600" height="26"/>
+  <rect class="o" x="150" y="300" width="600" height="26"/>
+  <rect class="desk" x="170" y="326" width="560" height="94"/>
+  <rect class="o" x="170" y="326" width="560" height="94"/>
+  <path class="t" d="M300 326 V420 M470 326 V420 M600 326 V420"/>
+
+  <g transform="rotate(-4 300 280)">
+    <rect class="paper" x="256" y="238" width="120" height="62" rx="3"/>
+    <rect class="o" x="256" y="238" width="120" height="62" rx="3"/>
+    <g class="t"><path d="M270 256 H360"/><path d="M270 270 H360"/><path d="M270 284 H330"/></g>
+  </g>
+
+  <g transform="rotate(7 170 276)">
+    <rect fill="#f7e2c0" x="126" y="248" width="96" height="60" rx="6"/>
+    <rect class="o" x="126" y="248" width="96" height="60" rx="6"/>
+    <circle class="skin" cx="150" cy="276" r="14"/><circle class="o" cx="150" cy="276" r="14"/>
+    <g class="t"><path d="M174 266 H210"/><path d="M174 280 H210"/><path d="M174 294 H198"/></g>
+  </g>
+
+  <g transform="translate(40 120)">
+    <rect class="metal" x="0" y="0" width="96" height="180" rx="10"/>
+    <rect class="o" x="0" y="0" width="96" height="180" rx="10"/>
+    <rect class="dark" x="14" y="18" width="68" height="42" rx="4"/>
+    <text x="48" y="46" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="20" fill="#fdfcf8">B 42</text>
+    <rect class="o" x="20" y="86" width="56" height="10" rx="3"/>
+    <rect class="paper" x="26" y="96" width="44" height="34" rx="2"/><rect class="o" x="26" y="96" width="44" height="34" rx="2"/>
+    <g class="t"><path d="M34 108 H62"/><path d="M34 118 H54"/></g>
+  </g>
+
+  <g transform="translate(150 330)">
+    <path class="coat" d="M10 56 q30 -10 60 0 l6 90 h-72 z"/>
+    <path class="o" d="M10 56 q30 -10 60 0 l6 90 h-72 z"/>
+    <circle class="skin" cx="40" cy="32" r="24"/><circle class="o" cx="40" cy="32" r="24"/>
+    <path fill="#3b2f26" d="M16 28 q24 -30 48 0 q-4 -20 -24 -20 t-24 20z"/>
+    <path class="o" d="M16 28 q24 -30 48 0 q-4 -20 -24 -20 t-24 20z"/>
+  </g>
+  <g transform="translate(232 348)" opacity="0.85">
+    <path fill="#7a6ea8" d="M10 50 q28 -10 56 0 l6 82 h-68 z"/>
+    <path class="o" d="M10 50 q28 -10 56 0 l6 82 h-68 z"/>
+    <circle class="skin" cx="38" cy="28" r="22"/><circle class="o" cx="38" cy="28" r="22"/>
+    <path fill="#5b4636" d="M16 24 q22 -28 44 0 q-4 -18 -22 -18 t-22 18z"/>
+    <path class="o" d="M16 24 q22 -28 44 0 q-4 -18 -22 -18 t-22 18z"/>
+  </g>
+
+  <path class="o" d="M0 418 H800"/>
+  <rect x="0" y="418" width="800" height="82" fill="#e4e7ec"/>
+  <path class="t" d="M0 452 H800"/>
+</svg>

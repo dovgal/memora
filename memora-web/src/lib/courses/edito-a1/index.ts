@@ -65,7 +65,7 @@ export function ruleLevel(ex: EditoExercise): string | undefined {
 
 export interface EditoExercise {
   id: string;
-  type: 'theory' | 'grammar-quiz' | 'sentence-builder' | 'gender-quiz' | 'dialogue' | 'fill-blank' | 'number-quiz' | 'listening' | 'video' | 'error-hunt' | 'dictation' | 'numeric' | 'ordering' | 'symbolic' | 'pronunciation';
+  type: 'theory' | 'grammar-quiz' | 'sentence-builder' | 'gender-quiz' | 'dialogue' | 'fill-blank' | 'number-quiz' | 'listening' | 'video' | 'error-hunt' | 'dictation' | 'numeric' | 'ordering' | 'symbolic' | 'pronunciation' | 'situation' | 'ai-talk';
   title: string;
   // symbolic (математика): ответ — выражение; эквивалентность проверяет CAS-сервис
   // (POST /api/check/symbolic): «2(x+1)» засчитывается как «2x+2».
@@ -114,12 +114,40 @@ export interface EditoExercise {
   audioFile?: string;
   source?: string;
   transcript?: string;
+  /** Пояснение к заданию: что именно делать. */
+  instruction?: string;
+  // situation: рисованная сценка. scene — имя файла в /public/scenes,
+  // spots — предметы с их местом на картинке в процентах от её размера.
+  scene?: string;
+  spots?: SituationSpot[];
+  phrases?: ScenePhrase[];
+  // ai-talk: свободный разговор с собеседником-моделью.
+  // role — кого она играет, situation — обстановка, goals — что нужно успеть
+  // сказать, hints — готовые реплики на случай ступора.
+  role?: string;
+  situation?: string;
+  goals?: string[];
+  hints?: string[];
+  talkLevel?: string;
   // pronunciation: каждая единица произносится в микрофон и сверяется с эталоном.
   pronItems?: PronunciationItem[];
   // video
   videoFile?: string;
   description?: string;
 }
+
+/** Предмет на сценке: где он нарисован и как называется. */
+export interface SituationSpot {
+  fr: string;
+  ru: string;
+  ipa?: string;
+  /** Место подписи в процентах от ширины и высоты картинки. */
+  x: number;
+  y: number;
+}
+
+/** Фраза к сценке — то, что в этой обстановке говорят. */
+export interface ScenePhrase { fr: string; ru: string }
 
 /** Единица отработки произношения: слово, фраза, ступень лесенки или скороговорка. */
 export interface PronunciationItem {

@@ -1,0 +1,515 @@
+{
+ "id": "t1b",
+ "title": "Тема 1 · Ступень A2–B1 — Первые дни во Франции",
+ "description": "Объяснить, кто вы и зачем пришли, вежливо попросить, договориться о встрече. Разговор, в котором вас перебивают и переспрашивают.",
+ "vocabulary": [
+  {
+   "fr": "Je viens d'arriver en France",
+   "ru": "Я только что приехал(а) во Францию",
+   "ipa": "ʒə vjɛ̃ daʁive ɑ̃ fʁɑ̃s",
+   "type": "phrase"
+  },
+  {
+   "fr": "Je voudrais…",
+   "ru": "Я хотел(а) бы…",
+   "ipa": "ʒə vudʁɛ",
+   "type": "phrase"
+  },
+  {
+   "fr": "Pourriez-vous m'aider ?",
+   "ru": "Не могли бы вы мне помочь?",
+   "ipa": "puʁje vu mede",
+   "type": "phrase"
+  },
+  {
+   "fr": "prendre rendez-vous",
+   "ru": "записаться на приём",
+   "ipa": "pʁɑ̃dʁ ʁɑ̃devu",
+   "type": "phrase"
+  },
+  {
+   "fr": "un justificatif de domicile",
+   "ru": "подтверждение адреса проживания",
+   "ipa": "ʒystifikatif də dɔmisil",
+   "type": "word"
+  },
+  {
+   "fr": "une pièce d'identité",
+   "ru": "документ, удостоверяющий личность",
+   "ipa": "pjɛs didɑ̃tite",
+   "type": "word"
+  },
+  {
+   "fr": "un dossier",
+   "ru": "досье, пакет документов",
+   "ipa": "dosje",
+   "type": "word"
+  },
+  {
+   "fr": "un formulaire",
+   "ru": "бланк, анкета",
+   "ipa": "fɔʁmylɛʁ",
+   "type": "word"
+  },
+  {
+   "fr": "le guichet",
+   "ru": "окно (в учреждении)",
+   "ipa": "ɡiʃɛ",
+   "type": "word"
+  },
+  {
+   "fr": "la mairie",
+   "ru": "мэрия",
+   "ipa": "mɛʁi",
+   "type": "word"
+  },
+  {
+   "fr": "les horaires d'ouverture",
+   "ru": "часы работы",
+   "ipa": "ɔʁɛʁ duvɛʁtyʁ",
+   "type": "word"
+  },
+  {
+   "fr": "Il me manque un document",
+   "ru": "У меня не хватает одного документа",
+   "ipa": "il mə mɑ̃k œ̃ dɔkymɑ̃",
+   "type": "phrase"
+  },
+  {
+   "fr": "Je ne suis pas sûr d'avoir compris",
+   "ru": "Я не уверен(а), что понял(а)",
+   "ipa": "ʒə nə sɥi pa syʁ davwaʁ kɔ̃pʁi",
+   "type": "phrase"
+  },
+  {
+   "fr": "Vous voulez dire que… ?",
+   "ru": "Вы хотите сказать, что…?",
+   "ipa": "vu vule diʁ kə",
+   "type": "phrase"
+  },
+  {
+   "fr": "Je repasserai demain",
+   "ru": "Я зайду ещё раз завтра",
+   "ipa": "ʒə ʁəpasʁe dəmɛ̃",
+   "type": "phrase"
+  },
+  {
+   "fr": "Ça vous convient ?",
+   "ru": "Вам это подходит?",
+   "ipa": "sa vu kɔ̃vjɛ̃",
+   "type": "phrase"
+  },
+  {
+   "fr": "s'installer",
+   "ru": "обустраиваться, обживаться",
+   "ipa": "sɛ̃stale",
+   "type": "word"
+  },
+  {
+   "fr": "les démarches",
+   "ru": "хлопоты, оформление бумаг",
+   "ipa": "demaʁʃ",
+   "type": "word"
+  },
+  {
+   "fr": "en attendant",
+   "ru": "тем временем, пока что",
+   "ipa": "ɑ̃n‿atɑ̃dɑ̃",
+   "type": "phrase"
+  },
+  {
+   "fr": "du coup",
+   "ru": "и поэтому, в итоге (разг.)",
+   "ipa": "dy ku",
+   "type": "phrase"
+  }
+ ],
+ "exercises": [
+  {
+   "id": "t1b-th1",
+   "type": "theory",
+   "title": "Просьба: чем длиннее, тем вежливее",
+   "content": "<p style='margin:0.5rem 0'>По-русски вежливость держится на интонации. По-французски — на <b>длине конструкции</b>. Одна и та же просьба звучит от грубой до безупречной в зависимости от того, сколько слов вы готовы потратить.</p><table style='width:100%;border-collapse:collapse;margin:0.75rem 0'><tr><th style='text-align:left;padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.4);font-weight:700'>Фраза</th><th style='text-align:left;padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.4);font-weight:700'>Как звучит</th></tr><tr><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>Je veux un rendez-vous.</td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>«Я хочу приём» — почти требование. Так не говорят.</td></tr><tr><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>Je voudrais un rendez-vous.</td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>Нейтрально и правильно. Рабочий вариант на каждый день.</td></tr><tr><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>Je voudrais prendre rendez-vous, s'il vous plaît.</td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>Вежливо. Так говорит местный.</td></tr><tr><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>Est-ce que je pourrais prendre rendez-vous ?</td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>Очень вежливо — когда просите об одолжении.</td></tr><tr><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>Pourriez-vous m'aider, s'il vous plaît ?</td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>Просьба о помощи. Открывает почти любую дверь.</td></tr></table><p style='margin:0.75rem 0'><b>Правило простое:</b> <b>vouloir</b> в настоящем — требование, <b>je voudrais</b> и <b>pourriez-vous</b> (условное наклонение) — просьба. Разница между «хочу» и «хотел бы».</p><p style='margin:0.75rem 0;padding:0.6rem;border-left:3px solid #4255ff;background:rgba(66,85,255,0.07)'><b>Приём, который спасает.</b> Не поняли ответ — не кивайте. Переспросите своими словами: <b>« Vous voulez dire que je dois revenir avec un justificatif ? »</b> Это не выдаёт слабость, а показывает, что вы слушали. Французы делают так же между собой.</p>"
+  },
+  {
+   "id": "t1b-th2",
+   "type": "theory",
+   "title": "Liaison: где связывать обязательно, а где нельзя",
+   "content": "<p style='margin:0.5rem 0'>Связывание — не украшение. Есть места, где его отсутствие режет ухо, и места, где его наличие выдаёт заучившего правила.</p><table style='width:100%;border-collapse:collapse;margin:0.75rem 0'><tr><th style='text-align:left;padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.4);font-weight:700'>Обязательно</th><th style='text-align:left;padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.4);font-weight:700'>Пример</th></tr><tr><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>Артикль/прилагательное + существительное</td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>les‿amis · un grand‿homme · mes‿enfants</td></tr><tr><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>Местоимение + глагол</td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>nous‿avons · vous‿êtes · ils‿ont</td></tr><tr><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>После односложных предлогов</td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>en‿France · dans‿un mois · chez‿elle</td></tr></table><table style='width:100%;border-collapse:collapse;margin:0.75rem 0'><tr><th style='text-align:left;padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.4);font-weight:700'>Запрещено</th><th style='text-align:left;padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.4);font-weight:700'>Пример</th></tr><tr><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>После <b>et</b></td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>un homme et // une femme — никогда не «э-тюн»</td></tr><tr><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>Перед <b>h aspiré</b></td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>les // haricots · en // haut</td></tr><tr><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>Между подлежащим-существительным и глаголом</td><td style='padding:0.4rem 0.5rem;border-bottom:1px solid rgba(128,128,128,0.25)'>Mon frère // arrive</td></tr></table><p style='margin:0.75rem 0'>Звук при связывании меняется: <b>s</b> и <b>x</b> звучат как [z] (les‿amis → «лезами»), <b>d</b> — как [t] (un grand‿homme → «гран-том»), <b>f</b> в neuf — как [v] (neuf‿ans → «нёван»).</p>"
+  },
+  {
+   "id": "t1b-pr1",
+   "type": "pronunciation",
+   "title": "Фразы первых дней — с ритмом",
+   "instruction": "Не разбивайте на слова. Французская фраза — одна волна, ударение только на последнем слоге группы.",
+   "pronItems": [
+    {
+     "text": "Je viens d'arriver",
+     "ipa": "ʒə vjɛ̃ daʁive",
+     "ru": "Я только что приехал(а)",
+     "kind": "ladder",
+     "hint": "Три слова слипаются в «жё-вьен-даривэ». Ударение — на последнем слоге."
+    },
+    {
+     "text": "Je viens d'arriver en France",
+     "ipa": "ʒə vjɛ̃ daʁive ɑ̃ fʁɑ̃s",
+     "ru": "Я только что приехал(а) во Францию",
+     "kind": "ladder"
+    },
+    {
+     "text": "Je voudrais prendre rendez-vous",
+     "ipa": "ʒə vudʁɛ pʁɑ̃dʁ ʁɑ̃devu",
+     "ru": "Я хотел(а) бы записаться на приём",
+     "kind": "phrase",
+     "hint": "Два «r» подряд в prendre rendez-vous. Звук горловой, язык внизу и не двигается."
+    },
+    {
+     "text": "Pourriez-vous m'aider, s'il vous plaît ?",
+     "ipa": "puʁje vu mede sil vu plɛ",
+     "ru": "Не могли бы вы мне помочь?",
+     "kind": "phrase",
+     "hint": "Голос идёт вверх на «aider» и мягко опускается на «plaît»."
+    },
+    {
+     "text": "Il me manque un justificatif de domicile",
+     "ipa": "il mə mɑ̃k œ̃ ʒystifikatif də dɔmisil",
+     "ru": "Мне не хватает подтверждения адреса",
+     "kind": "phrase",
+     "hint": "Длинное слово произносится ровно, без ударений внутри: жюс-ти-фи-ка-ТИФ."
+    },
+    {
+     "text": "Je ne suis pas sûr d'avoir bien compris",
+     "ipa": "ʒə nə sɥi pa syʁ davwaʁ bjɛ̃ kɔ̃pʁi",
+     "ru": "Я не уверен(а), что правильно понял(а)",
+     "kind": "phrase",
+     "hint": "«suis» — это [sɥi], один слог: губы для «ю», сразу «и»."
+    },
+    {
+     "text": "Vous voulez dire que je dois revenir demain ?",
+     "ipa": "vu vule diʁ kə ʒə dwa ʁəvəniʁ dəmɛ̃",
+     "ru": "Вы хотите сказать, что мне нужно вернуться завтра?",
+     "kind": "phrase",
+     "hint": "Переспрос своими словами. Интонация вверх в самом конце."
+    },
+    {
+     "text": "Les agents administratifs attendent en haut",
+     "ipa": "lez‿aʒɑ̃ administʁatif atɑ̃d ɑ̃ o",
+     "ru": "Служащие ждут наверху",
+     "kind": "twister",
+     "hint": "Проверка на связывание: les‿agents связывается, а «en // haut» — нет, там h придыхательное."
+    }
+   ]
+  },
+  {
+   "id": "t1b-si1",
+   "type": "situation",
+   "title": "В окне мэрии",
+   "instruction": "Нажмите на предмет — услышите слово. Потом попробуйте назвать всё, что видите, не подглядывая.",
+   "scene": "mairie",
+   "spots": [
+    {
+     "fr": "le guichet",
+     "ru": "окно приёма",
+     "ipa": "ɡiʃɛ",
+     "x": 50,
+     "y": 46
+    },
+    {
+     "fr": "l'agent",
+     "ru": "служащий",
+     "ipa": "laʒɑ̃",
+     "x": 68,
+     "y": 38
+    },
+    {
+     "fr": "le formulaire",
+     "ru": "бланк",
+     "ipa": "fɔʁmylɛʁ",
+     "x": 40,
+     "y": 56
+    },
+    {
+     "fr": "la pièce d'identité",
+     "ru": "документ",
+     "ipa": "pjɛs didɑ̃tite",
+     "x": 22,
+     "y": 62
+    },
+    {
+     "fr": "le ticket d'attente",
+     "ru": "талон очереди",
+     "ipa": "tikɛ datɑ̃t",
+     "x": 14,
+     "y": 34
+    },
+    {
+     "fr": "les horaires",
+     "ru": "часы работы",
+     "ipa": "ɔʁɛʁ",
+     "x": 84,
+     "y": 10
+    },
+    {
+     "fr": "la file d'attente",
+     "ru": "очередь",
+     "ipa": "fil datɑ̃t",
+     "x": 30,
+     "y": 84
+    }
+   ],
+   "phrases": [
+    {
+     "fr": "Bonjour, je viens pour un justificatif de domicile.",
+     "ru": "Здравствуйте, я по поводу подтверждения адреса."
+    },
+    {
+     "fr": "Est-ce qu'il faut prendre un ticket ?",
+     "ru": "Нужно взять талон?"
+    },
+    {
+     "fr": "Quels sont vos horaires demain ?",
+     "ru": "Какие у вас часы работы завтра?"
+    }
+   ]
+  },
+  {
+   "id": "t1b-dg1",
+   "type": "dialogue",
+   "title": "В мэрии: записаться на приём",
+   "context": "Вы у окна. Служащая занята и говорит быстро.",
+   "exchanges": [
+    {
+     "speaker": "L'agent",
+     "side": "left",
+     "text": "Bonjour, c'est à quel sujet ?"
+    },
+    {
+     "speaker": "Vous",
+     "side": "right",
+     "isBlank": true,
+     "options": [
+      "Bonjour, je voudrais prendre rendez-vous, s'il vous plaît.",
+      "Je veux un rendez-vous.",
+      "Rendez-vous."
+     ],
+     "correctAnswer": "Bonjour, je voudrais prendre rendez-vous, s'il vous plaît.",
+     "explanation": "«Je veux» звучит как требование. Условное «je voudrais» — обычная вежливая форма."
+    },
+    {
+     "speaker": "L'agent",
+     "side": "left",
+     "text": "D'accord. Vous avez une pièce d'identité et un justificatif de domicile ?"
+    },
+    {
+     "speaker": "Vous",
+     "side": "right",
+     "isBlank": true,
+     "options": [
+      "J'ai ma pièce d'identité, mais il me manque le justificatif.",
+      "Oui, oui.",
+      "Je ne sais pas ce que c'est."
+     ],
+     "correctAnswer": "J'ai ma pièce d'identité, mais il me manque le justificatif.",
+     "explanation": "Сказать точно, чего не хватает, — быстрее, чем согласиться и вернуться ни с чем."
+    },
+    {
+     "speaker": "L'agent",
+     "side": "left",
+     "text": "Une facture d'électricité récente fera l'affaire."
+    },
+    {
+     "speaker": "Vous",
+     "side": "right",
+     "isBlank": true,
+     "options": [
+      "Vous voulez dire une facture de moins de trois mois ?",
+      "Oui, merci.",
+      "Je ne comprends pas du tout."
+     ],
+     "correctAnswer": "Vous voulez dire une facture de moins de trois mois ?",
+     "explanation": "Переспрос своими словами уточняет дело и показывает, что вы слушали."
+    },
+    {
+     "speaker": "L'agent",
+     "side": "left",
+     "text": "Voilà. Je vous propose jeudi à quatorze heures."
+    },
+    {
+     "speaker": "Vous",
+     "side": "right",
+     "isBlank": true,
+     "options": [
+      "Jeudi à quatorze heures, c'est parfait. Merci beaucoup.",
+      "Jeudi à quatre heures, d'accord.",
+      "Non."
+     ],
+     "correctAnswer": "Jeudi à quatorze heures, c'est parfait. Merci beaucoup.",
+     "explanation": "Повторить время вслух — привычка, которая спасает от ошибки. Quatorze heures — 14:00, а не 4."
+    }
+   ]
+  },
+  {
+   "id": "t1b-qz1",
+   "type": "grammar-quiz",
+   "title": "Вежливость и точность",
+   "questions": [
+    {
+     "question": "Какая просьба уместна у окна мэрии?",
+     "options": [
+      "Je voudrais prendre rendez-vous, s'il vous plaît.",
+      "Je veux un rendez-vous.",
+      "Donnez-moi un rendez-vous.",
+      "Il me faut un rendez-vous maintenant."
+     ],
+     "correctAnswer": "Je voudrais prendre rendez-vous, s'il vous plaît.",
+     "explanation": "Условное наклонение превращает требование в просьбу."
+    },
+    {
+     "question": "«Rendez-vous jeudi à quatorze heures» — это…",
+     "options": [
+      "в четверг в 14:00",
+      "в четверг в 4 утра",
+      "в четверг в 4 дня",
+      "в четверг в полдень"
+     ],
+     "correctAnswer": "в четверг в 14:00",
+     "explanation": "Во французских учреждениях время всегда 24-часовое."
+    },
+    {
+     "question": "Где связывание обязательно?",
+     "options": [
+      "nous‿avons",
+      "et // une femme",
+      "les // haricots",
+      "mon frère // arrive"
+     ],
+     "correctAnswer": "nous‿avons",
+     "explanation": "Местоимение + глагол связываются всегда. После et — никогда, перед h aspiré — нельзя."
+    },
+    {
+     "question": "Вы не уверены, что поняли. Лучший ход:",
+     "options": [
+      "Vous voulez dire que… ?",
+      "Кивнуть и уйти",
+      "Oui, oui, d'accord",
+      "Répétez !"
+     ],
+     "correctAnswer": "Vous voulez dire que… ?",
+     "explanation": "Переспрос своими словами проверяет понимание. «Répétez !» без «pouvez-vous» звучит как приказ."
+    },
+    {
+     "question": "«Il me manque un document» значит:",
+     "options": [
+      "У меня не хватает документа",
+      "Я потерял документ",
+      "Мне не нужен документ",
+      "Документ мне мешает"
+     ],
+     "correctAnswer": "У меня не хватает документа",
+     "explanation": "Manquer в такой конструкции — «недоставать»: дословно «мне недостаёт документа»."
+    }
+   ]
+  },
+  {
+   "id": "t1b-fb1",
+   "type": "fill-blank",
+   "title": "Разговор у окна — соберите",
+   "instruction": "Вставьте недостающее.",
+   "text": "— Bonjour. Je ___ prendre rendez-vous pour un titre de séjour.\n— Vous avez un ___ de domicile ?\n— Non, il me ___ ce document. ___ -vous me dire ce qui convient ?\n— Une facture récente. Je vous propose jeudi ___ quatorze heures.\n— Parfait, merci. ___ journée !",
+   "blanks": [
+    {
+     "correctAnswer": "voudrais",
+     "options": [
+      "voudrais",
+      "veux",
+      "voulais"
+     ],
+     "explanation": "Je voudrais — вежливая просьба; je veux звучит как требование."
+    },
+    {
+     "correctAnswer": "justificatif",
+     "options": [
+      "justificatif",
+      "formulaire",
+      "guichet"
+     ],
+     "explanation": "Justificatif de domicile — подтверждение адреса."
+    },
+    {
+     "correctAnswer": "manque",
+     "options": [
+      "manque",
+      "manques",
+      "manquer"
+     ],
+     "explanation": "Il me manque — безличная конструкция, глагол в 3-м лице."
+    },
+    {
+     "correctAnswer": "Pourriez",
+     "options": [
+      "Pourriez",
+      "Pouvez",
+      "Voulez"
+     ],
+     "explanation": "Pourriez-vous — самая вежливая форма просьбы."
+    },
+    {
+     "correctAnswer": "à",
+     "options": [
+      "à",
+      "en",
+      "de"
+     ],
+     "explanation": "Время указывается с предлогом à: à quatorze heures."
+    },
+    {
+     "correctAnswer": "Bonne",
+     "options": [
+      "Bonne",
+      "Bon",
+      "Belle"
+     ],
+     "explanation": "journée — женского рода."
+    }
+   ]
+  },
+  {
+   "id": "t1b-dc1",
+   "type": "dictation",
+   "title": "На слух: у окна",
+   "sentence": "Il me manque un justificatif de domicile récent.",
+   "translation": "Мне не хватает свежего подтверждения адреса.",
+   "explanation": "récent — конечное -t молчит: «ресан»."
+  },
+  {
+   "id": "t1b-dc2",
+   "type": "dictation",
+   "title": "На слух: переспрос",
+   "sentence": "Vous voulez dire que je dois revenir avec une facture ?",
+   "translation": "Вы хотите сказать, что мне нужно вернуться со счётом?",
+   "explanation": "Вопрос без вопросительного слова — только интонацией вверх."
+  },
+  {
+   "id": "t1b-ai1",
+   "type": "ai-talk",
+   "title": "Разговор: записаться на приём в мэрии",
+   "role": "Служащая мэрии, вежливая, но занятая. Говорит нормальным темпом уровня A2–B1, задаёт уточняющие вопросы, иногда сообщает, что документа не хватает, и предлагает день и час.",
+   "situation": "Вы приехали месяц назад и пришли в мэрию записаться на приём. У вас есть паспорт, но нет подтверждения адреса.",
+   "level": "A2",
+   "goals": [
+    "поздороваться и объяснить, зачем пришли",
+    "попросить вежливо — через je voudrais или pourriez-vous",
+    "сказать, какого документа не хватает",
+    "переспросить своими словами, если не поняли",
+    "договориться о дне и часе и повторить их вслух"
+   ],
+   "hints": [
+    "Bonjour, je voudrais prendre rendez-vous, s'il vous plaît.",
+    "Je viens d'arriver en France.",
+    "Il me manque un justificatif de domicile.",
+    "Vous voulez dire que… ?",
+    "Jeudi à quatorze heures, c'est parfait."
+   ]
+  }
+ ]
+}

@@ -15,6 +15,8 @@ import { NumericExercise } from './NumericExercise';
 import { OrderingExercise } from './OrderingExercise';
 import { SymbolicExercise } from './SymbolicExercise';
 import { PronunciationExercise } from './PronunciationExercise';
+import { SituationScene } from './SituationScene';
+import { AiTalk } from './AiTalk';
 
 export type { ExerciseResult };
 
@@ -49,7 +51,7 @@ const KIND_TO_TYPE: Record<string, EditoExercise['type']> = {
 const RENDERABLE_TYPES = new Set<string>([
   'theory', 'grammar-quiz', 'gender-quiz', 'number-quiz', 'fill-blank',
   'dialogue', 'sentence-builder', 'listening', 'video', 'error-hunt', 'dictation',
-  'numeric', 'ordering', 'symbolic', 'pronunciation',
+  'numeric', 'ordering', 'symbolic', 'pronunciation', 'situation', 'ai-talk',
 ]);
 
 export function ExerciseRenderer({ exercise, onComplete, voice, speechLang, doneKeys, onItemDone }: ExerciseRendererProps) {
@@ -90,6 +92,10 @@ export function ExerciseRenderer({ exercise, onComplete, voice, speechLang, done
       return <OrderingExercise exercise={exercise} onComplete={handleComplete} />;
     case 'symbolic':
       return <SymbolicExercise exercise={exercise} onComplete={handleComplete} />;
+    case 'situation':
+      return <SituationScene exercise={exercise} onComplete={() => handleComplete()} />;
+    case 'ai-talk':
+      return <AiTalk exercise={exercise} voice={voice} speechLang={speechLang} onComplete={() => handleComplete()} />;
     case 'pronunciation':
       return (
         <PronunciationExercise

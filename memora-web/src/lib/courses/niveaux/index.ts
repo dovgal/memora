@@ -39,6 +39,7 @@ import hp1 from './homophones/unite1.json'; import hp2 from './homophones/unite2
 import hp3 from './homophones/unite3.json'; import hp4 from './homophones/unite4.json';
 import or1 from './orthographe/unite1.json'; import or2 from './orthographe/unite2.json';
 import ot1 from './orthotypo/unite1.json'; import ot2 from './orthotypo/unite2.json';
+import vv1a from '../vivre/t01-a1.json'; import vv1b from '../vivre/t01-b1.json';
 import pro1 from './pro/unite1.json'; import pro2 from './pro/unite2.json';
 import pro3 from './pro/unite3.json'; import pro4 from './pro/unite4.json';
 import pro5 from './pro/unite5.json'; import pro6 from './pro/unite6.json';
@@ -57,6 +58,15 @@ export interface LevelCourse {
 }
 
 export const LEVELS: Record<string, LevelCourse> = {
+  // Жизнь во Франции: не грамматика по темам, а темы по жизни. Каждая тема —
+  // две ступени: сначала выжить (назвать, показать, попросить), потом говорить.
+  vivre: {
+    id: 'vivre', courseId: 'vivre-france', title: 'Жизнь во Франции', level: 'A1–B1',
+    description: 'Двенадцать тем повседневной жизни: подъезд, мэрия, аптека, транспорт. Слова с местом на картинке, произношение вслух и разговор с собеседником, у которого к вам вопросы.',
+    accent: 'emerald',
+    units: { '1a': U(vv1a), '1b': U(vv1b) },
+    order: ['1a', '1b'],
+  },
   b1: {
     id: 'b1', courseId: 'niveau-b1', title: 'Французский B1', level: 'B1',
     description: 'Пороговый уровень: рассказ о прошлом, мнение и субжонктив, гипотезы, местоимения, пассив, косвенная речь.',

@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Вход в жилой дом: дверь с кодовым замком, домофон, почтовые ящики, соседка">
+  <style>
+    .o{fill:none;stroke:#1f2937;stroke-width:4;stroke-linejoin:round;stroke-linecap:round}
+    .t{fill:none;stroke:#1f2937;stroke-width:2.5;stroke-linecap:round}
+    .wall{fill:#efe4d3}.stone{fill:#e2d4bd}.door{fill:#3f5c8a}.glass{fill:#cfe0f0}
+    .metal{fill:#d8dde5}.warm{fill:#f6c26b}.skin{fill:#f3d3b5}.coat{fill:#c9553f}
+    .paper{fill:#fdfcf8}.dark{fill:#1f2937}
+  </style>
+  <rect width="800" height="500" fill="#faf7f1"/>
+
+  <!-- фасад дома -->
+  <rect class="wall" x="40" y="30" width="620" height="440"/>
+  <rect class="o" x="40" y="30" width="620" height="440"/>
+  <path class="t" d="M40 120 H660 M40 210 H660"/>
+  <rect class="stone" x="40" y="30" width="620" height="34"/>
+  <rect class="o" x="40" y="30" width="620" height="34"/>
+  <!-- окна верхнего этажа -->
+  <g>
+    <rect class="glass" x="90" y="86" width="86" height="66"/><rect class="o" x="90" y="86" width="86" height="66"/>
+    <path class="t" d="M133 86 V152 M90 119 H176"/>
+    <rect class="glass" x="330" y="86" width="86" height="66"/><rect class="o" x="330" y="86" width="86" height="66"/>
+    <path class="t" d="M373 86 V152 M330 119 H416"/>
+    <rect class="glass" x="540" y="86" width="86" height="66"/><rect class="o" x="540" y="86" width="86" height="66"/>
+    <path class="t" d="M583 86 V152 M540 119 H626"/>
+  </g>
+
+  <!-- козырёк над входом -->
+  <path class="stone" d="M150 214 H430 L446 246 H134 Z"/>
+  <path class="o" d="M150 214 H430 L446 246 H134 Z"/>
+
+  <!-- входная дверь -->
+  <rect class="door" x="180" y="250" width="180" height="220" rx="4"/>
+  <rect class="o" x="180" y="250" width="180" height="220" rx="4"/>
+  <rect class="glass" x="200" y="270" width="140" height="96"/><rect class="o" x="200" y="270" width="140" height="96"/>
+  <path class="t" d="M270 270 V366 M200 318 H340"/>
+  <circle class="metal" cx="336" cy="392" r="9"/><circle class="o" cx="336" cy="392" r="9"/>
+  <path class="t" d="M180 470 H360"/>
+
+  <!-- кодовый замок слева от двери -->
+  <rect class="metal" x="132" y="176" width="58" height="72" rx="6"/>
+  <rect class="o" x="132" y="176" width="58" height="72" rx="6"/>
+  <rect class="dark" x="141" y="184" width="40" height="14" rx="2"/>
+  <g fill="#1f2937">
+    <circle cx="148" cy="212" r="4"/><circle cx="161" cy="212" r="4"/><circle cx="174" cy="212" r="4"/>
+    <circle cx="148" cy="226" r="4"/><circle cx="161" cy="226" r="4"/><circle cx="174" cy="226" r="4"/>
+    <circle cx="148" cy="240" r="4"/><circle cx="161" cy="240" r="4"/><circle cx="174" cy="240" r="4"/>
+  </g>
+
+  <!-- домофон справа от двери -->
+  <rect class="metal" x="372" y="196" width="70" height="96" rx="8"/>
+  <rect class="o" x="372" y="196" width="70" height="96" rx="8"/>
+  <rect class="glass" x="382" y="206" width="50" height="30"/><rect class="o" x="382" y="206" width="50" height="30"/>
+  <g fill="#1f2937"><circle cx="394" cy="256" r="5"/><circle cx="407" cy="256" r="5"/><circle cx="420" cy="256" r="5"/>
+  <circle cx="394" cy="274" r="5"/><circle cx="407" cy="274" r="5"/><circle cx="420" cy="274" r="5"/></g>
+
+  <!-- блок почтовых ящиков -->
+  <rect class="metal" x="486" y="188" width="152" height="196" rx="6"/>
+  <rect class="o" x="486" y="188" width="152" height="196" rx="6"/>
+  <g>
+    <rect class="o" x="500" y="202" width="58" height="52"/><rect class="o" x="566" y="202" width="58" height="52"/>
+    <rect class="o" x="500" y="262" width="58" height="52"/><rect class="o" x="566" y="262" width="58" height="52"/>
+    <rect class="o" x="500" y="322" width="58" height="52"/><rect class="o" x="566" y="322" width="58" height="52"/>
+  </g>
+  <g class="t"><path d="M512 246 H546"/><path d="M578 246 H612"/><path d="M512 306 H546"/><path d="M578 306 H612"/><path d="M512 366 H546"/><path d="M578 366 H612"/></g>
+  <g fill="#1f2937" font-family="Georgia, serif" font-size="15">
+    <text x="529" y="232" text-anchor="middle">5</text><text x="595" y="232" text-anchor="middle">6</text>
+    <text x="529" y="292" text-anchor="middle">7</text><text x="595" y="292" text-anchor="middle">8</text>
+  </g>
+
+  <!-- письма, торчащие из ящика -->
+  <g transform="rotate(-12 660 190)">
+    <rect class="paper" x="640" y="160" width="86" height="58" rx="3"/><rect class="o" x="640" y="160" width="86" height="58" rx="3"/>
+    <path class="t" d="M640 160 L683 192 L726 160"/>
+  </g>
+  <g transform="rotate(6 668 214)">
+    <rect class="paper" x="648" y="196" width="86" height="58" rx="3"/><rect class="o" x="648" y="196" width="86" height="58" rx="3"/>
+    <path class="t" d="M648 196 L691 228 L734 196"/>
+  </g>
+
+  <!-- соседка -->
+  <g transform="translate(392 258) scale(0.84)">
+    <path class="coat" d="M14 90 q46 -14 92 0 l10 128 h-112 z"/>
+    <path class="o" d="M14 90 q46 -14 92 0 l10 128 h-112 z"/>
+    <circle class="skin" cx="60" cy="52" r="34"/><circle class="o" cx="60" cy="52" r="34"/>
+    <path fill="#5b4636" d="M26 46 q34 -40 68 0 q-8 -26 -34 -26 t-34 26z"/>
+    <path class="o" d="M26 46 q34 -40 68 0 q-8 -26 -34 -26 t-34 26z"/>
+    <circle fill="#1f2937" cx="48" cy="54" r="3.5"/><circle fill="#1f2937" cx="72" cy="54" r="3.5"/>
+    <path class="t" d="M50 70 q10 8 20 0"/>
+    <path class="t" d="M18 108 q-16 44 4 76"/>
+    <path class="t" d="M102 108 q18 44 -2 76"/>
+    <rect class="paper" x="-6" y="176" width="48" height="34" rx="2"/><rect class="o" x="-6" y="176" width="48" height="34" rx="2"/>
+  </g>
+
+  <!-- земля -->
+  <path class="o" d="M0 470 H800"/>
+  <rect x="0" y="470" width="800" height="30" fill="#e6e0d4"/>
+</svg>

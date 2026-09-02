@@ -44,6 +44,12 @@ export const BUILTIN_COURSES: CatalogCourse[] = [
     subject: 'Французский язык', topic: 'Французский', level: 'A2–B1', emoji: '🗝️',
   },
   {
+    id: 'vivre-france', href: '/dashboard/student/courses/niveau/vivre',
+    title: 'Жизнь во Франции',
+    description: 'Подъезд, мэрия, аптека, транспорт: слова на картинке, произношение вслух и разговор с собеседником, у которого к вам вопросы.',
+    subject: 'Французский язык', topic: 'Французский', level: 'A1–B1', emoji: '🇫🇷',
+  },
+  {
     id: 'niveau-b1', href: '/dashboard/student/courses/niveau/b1',
     title: 'Французский B1',
     description: 'Рассказ о прошлом, субжонктив, гипотезы, местоимения, пассив, косвенная речь.',
