@@ -275,30 +275,47 @@ async function extractFb2(file: File): Promise<ExtractResult> {
 
 // ---------- PDF / DOCX / TXT ----------
 
+/** Столько принимает разбор на сервере. Больше отправлять бессмысленно. */
+const MAX_SERVER_PDF = 48 * 1024 * 1024;
+
+const SCAN_MESSAGE =
+  'в PDF нет текстового слоя — это сканы страниц, картинка вместо букв. '
+  + 'Читалка работает с текстом: подчёркивать слова и переводить их по наведению в картинке не в чем.';
+
 async function extractPdf(file: File, onProgress?: Progress): Promise<ExtractResult> {
   let text = '';
+  // Разобрался ли файл в браузере — это не то же самое, что «нашёлся текст».
+  // Разобрался и текста нет — значит, сканы, и на сервер идти незачем: он
+  // прочитает ровно то же ничто, только сперва примет десятки мегабайт.
+  let parsedHere = false;
 
-  // Сначала в браузере: быстро и без загрузки многомегабайтного файла на сервер.
   try {
     const { extractPdfText } = await import('@/lib/pdfExtract');
     const pages = await extractPdfText(file, (page, total) => onProgress?.(page, total, 'Читаю страницы'));
+    parsedHere = true;
     text = pages.filter(Boolean).join('\n\n');
   } catch {
     // На iOS pdf.js падает внутри себя — молчим и уходим на сервер.
     text = '';
   }
 
-  // Не вышло — разбираем на сервере. Там разбор не зависит от браузера вовсе.
+  if (!text.trim() && parsedHere) throw new Error(SCAN_MESSAGE);
+
   if (!text.trim()) {
+    if (file.size > MAX_SERVER_PDF) {
+      throw new Error(
+        `файл ${Math.round(file.size / 1024 / 1024)} МБ, а разбор на сервере принимает до `
+        + `${Math.round(MAX_SERVER_PDF / 1024 / 1024)} МБ. Такой вес почти всегда означает сканы страниц, `
+        + 'а в них текста нет.',
+      );
+    }
     onProgress?.(0, 1, 'Разбираю PDF на сервере');
     const { pdfTextOnServer } = await import('./api');
     const pages = await pdfTextOnServer(file);
     text = pages.filter(Boolean).join('\n\n');
   }
 
-  if (!text.trim()) {
-    throw new Error('В PDF нет текстового слоя — похоже, это сканы. Такой файл читалка не разберёт.');
-  }
+  if (!text.trim()) throw new Error(SCAN_MESSAGE);
   return { chapters: chunkText(text), meta: { title: '', author: '', language: '' } };
 }
 

@@ -150,7 +150,16 @@ async fn main() {
         // Серверное распознавание речи (faster-whisper): микрофон выбираем мы.
         .route("/api/audio/transcribe", post(handlers::audio::transcribe_audio))
         // Разбор PDF на сервере: браузерный pdf.js на iOS не справляется.
-        .route("/api/pdf/text", post(handlers::books::pdf_text))
+        // Скан книги весит куда больше обычного запроса, поэтому здесь потолок
+        // свой. Общий двадцатимегабайтный оставляем всем остальным: он защищает
+        // от случайного мусора, а этой дороге просто мешает.
+        .route(
+            "/api/pdf/text",
+            post(handlers::books::pdf_text).layer((
+                DefaultBodyLimit::disable(),
+                tower_http::limit::RequestBodyLimitLayer::new(handlers::books::MAX_PDF_UPLOAD),
+            )),
+        )
         // Страница из интернета для читалки: забирает сервер, разбирает клиент.
         .route("/api/web/fetch", post(handlers::webfetch::fetch_page))
         // A2 classes / leaderboard / diagnostics / teacher / analytics

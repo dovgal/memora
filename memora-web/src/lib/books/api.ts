@@ -212,8 +212,12 @@ export async function pdfTextOnServer(file: File): Promise<string[]> {
   const direct = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '');
   const targets = [...(direct ? [`${direct}/api/pdf/text`] : []), '/api/pdf/text'];
 
-  let reason = 'сервер не ответил';
+  // Причины копим по обеим дорогам. Раньше оставалась только последняя, и
+  // внятное «превышен предел» от API затиралось невнятной пятисоткой прокси —
+  // как раз то, что сбивало с толку при разборе.
+  const reasons: string[] = [];
   for (const url of targets) {
+    const via = url.startsWith('/') ? 'через прокси' : 'напрямую';
     try {
       const res = await fetch(url, { method: 'POST', headers, body: file });
       if (res.ok) {
@@ -225,11 +229,12 @@ export async function pdfTextOnServer(file: File): Promise<string[]> {
       // Тело ответа несём в сообщение: голый код состояния ничего не объясняет,
       // а ошибка от прокси и ошибка от API выглядят по-разному.
       const body = (await res.text().catch(() => '')).replace(/\s+/g, ' ').slice(0, 140);
-      reason = `HTTP ${res.status}${body ? ` — ${body}` : ''}`;
+      reasons.push(`${via}: HTTP ${res.status}${body ? ` — ${body}` : ''}`);
     } catch (e) {
-      reason = e instanceof Error ? e.message : String(e);
+      reasons.push(`${via}: ${e instanceof Error ? e.message : String(e)}`);
     }
   }
+  const reason = reasons.join(' · ');
   throw new Error(`разбор на сервере не удался · ${reason}`);
 }
 

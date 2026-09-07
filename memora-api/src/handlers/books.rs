@@ -565,6 +565,11 @@ pub async fn search_book(
 /// В браузере это делает pdf.js, но на iOS шестая версия падает внутри себя:
 /// один и тот же файл на компьютере разбирается, на телефоне нет. Клиент
 /// пробует локально и при неудаче отправляет файл сюда.
+/// Потолок на PDF для разбора. Согласован с сервисом разбора: у него свой
+/// предел, и расходиться им нельзя — иначе файл проходит сюда, чтобы упереться
+/// на следующем шаге.
+pub const MAX_PDF_UPLOAD: usize = 48 * 1024 * 1024;
+
 pub async fn pdf_text(
     AuthenticatedUser(_user): AuthenticatedUser,
     body: axum::body::Bytes,
@@ -589,7 +594,9 @@ pub async fn pdf_text(
     let mut req = client
         .post(format!("{}/pdf-text", base.trim_end_matches('/')))
         .header("Content-Type", "application/octet-stream")
-        .body(body.to_vec());
+        // Без копии: тело уже лежит в памяти целиком, и второй такой же
+        // кусок на сорок мегабайт контейнеру ни к чему.
+        .body(reqwest::Body::from(body));
     if let Ok(token) = std::env::var("WHISPER_TOKEN") {
         if !token.trim().is_empty() {
             req = req.header("Authorization", format!("Bearer {}", token.trim()));
