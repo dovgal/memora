@@ -942,7 +942,11 @@ async fn ask_clean(blocks: &[String], lang: &str) -> Result<Vec<String>, String>
                    output exactly {DROP_MARK} for it.\n\
                  \n\
                  Never translate, never summarise, never reorder, never invent. Real sentences must come \
-                 back word for word, with only the repairs above. Output nothing but the blocks."
+                 back word for word, with only the repairs above. Output nothing but the blocks.\n\
+                 \n\
+                 Leave punctuation, quotation marks and spacing exactly as they are. Do not add \
+                 typographic spaces, do not swap a hyphen for any other dash, do not change quotes. \
+                 Never drop a word from a real sentence, not even one."
             )),
             crate::llm::ChatMessage::user(joined),
         ],
@@ -968,13 +972,67 @@ async fn ask_clean(blocks: &[String], lang: &str) -> Result<Vec<String>, String>
             if got == DROP_MARK {
                 return String::new();
             }
-            // Слишком много выкинуто — значит, модель увлеклась. Настоящий текст
-            // дороже чистоты, поэтому такой кусок оставляем как был.
-            let before = original.split_whitespace().count();
-            let after = got.split_whitespace().count();
-            if before >= 8 && after * 10 < before * 6 { original.clone() } else { got }
+            let got = normalize_chars(&got);
+            // Настоящий текст дороже чистоты: увидели пропажу слов — берём
+            // исходное. Модель охотно правит и то, о чём её не просили.
+            if lost_words(original, &got) { original.clone() } else { got }
         })
         .collect())
+}
+
+/// Возвращает символы, которые модель подставляет от себя, к обычным.
+///
+/// Неразрывный дефис вместо простого рушит работу со словом: «est‑ce» с ним
+/// перестаёт находиться и в словаре, и в карточках, и в переводе по наведению.
+/// Узкие неразрывные пробелы модель расставляет по правилам французской
+/// типографики — красиво, но нас об этом не просили, а разбор на слова они
+/// путают.
+fn normalize_chars(s: &str) -> String {
+    let mut out = String::with_capacity(s.len());
+    for ch in s.chars() {
+        match ch {
+            '\u{2011}' => out.push('-'),
+            '\u{202f}' | '\u{00a0}' | '\u{2009}' => out.push(' '),
+            _ => out.push(ch),
+        }
+    }
+    let mut cleaned = String::with_capacity(out.len());
+    let mut prev_space = false;
+    for ch in out.chars() {
+        let is_space = ch == ' ';
+        if is_space && prev_space { continue; }
+        prev_space = is_space;
+        cleaned.push(ch);
+    }
+    cleaned.trim().to_string()
+}
+
+/// Слова длиной от четырёх букв: короткие встречаются повсюду и о пропаже
+/// ничего не говорят.
+fn long_words(s: &str) -> Vec<String> {
+    s.split(|c: char| !c.is_alphanumeric() && c != '\'' && c != '\u{2019}')
+        .filter(|w| w.chars().filter(|c| c.is_alphabetic()).count() >= 4)
+        .map(|w| w.to_lowercase())
+        .collect()
+}
+
+/// Пропали ли из куска слова, которых в ответе нет и следа.
+///
+/// Половинка склеенного слова считается уцелевшей: «struc» и «turées» исчезают,
+/// но живут началом и концом слова «structurées». А выброшенное «souvient» не
+/// найдётся нигде — и тогда куску возвращается исходный вид.
+fn lost_words(original: &str, got: &str) -> bool {
+    let after = long_words(got);
+    let before = long_words(original);
+    let mut lost = 0;
+    for w in &before {
+        if after.iter().any(|a| a == w || a.starts_with(w.as_str()) || a.ends_with(w.as_str())) {
+            continue;
+        }
+        lost += 1;
+    }
+    // Одно слово спишем на склейку, дальше — уже потеря смысла.
+    lost > 1 || (lost == 1 && before.len() < 12)
 }
 
 // ---------- Адаптация под уровень ----------
@@ -1453,6 +1511,37 @@ pub async fn add_card(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn joined_halves_do_not_count_as_lost() {
+        // Половинки склеенного слова исчезают из текста, но живут внутри целого.
+        let before = "des sociétés struc- turées autour du secret";
+        let after = "des sociétés structurées autour du secret";
+        assert!(!lost_words(before, after), "склейка переносом — это не потеря");
+    }
+
+    #[test]
+    fn a_dropped_clause_is_caught() {
+        // Настоящий случай: модель молча выбросила кусок фразы.
+        let before = "Elle raconte cette nuit, se souvient-elle. On entendait les sirènes partout";
+        let after = "Elle raconte cette nuit. On entendait les sirènes partout";
+        assert!(lost_words(before, after), "пропажу слов надо замечать");
+    }
+
+    #[test]
+    fn untouched_text_passes() {
+        let t = "La déposition précise de Buscetta assombrit leur avenir judiciaire";
+        assert!(!lost_words(t, t));
+    }
+
+    #[test]
+    fn model_characters_come_back_to_normal() {
+        // Модель подставляет неразрывный дефис и узкие пробелы; со своим
+        // дефисом «est-ce» перестало бы находиться в словаре и карточках.
+        assert_eq!(normalize_chars("Qu\u{2019}est\u{2011}ce"), "Qu\u{2019}est-ce");
+        assert_eq!(normalize_chars("\u{ab}\u{202f}mafia\u{202f}\u{bb}"), "\u{ab} mafia \u{bb}");
+        assert_eq!(normalize_chars("deux  espaces"), "deux espaces");
+    }
 
     #[test]
     fn slicing_keeps_every_paragraph() {
