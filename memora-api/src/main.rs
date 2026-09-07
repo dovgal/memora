@@ -153,15 +153,11 @@ async fn main() {
         // Скан книги весит куда больше обычного запроса, поэтому здесь потолок
         // свой. Общий двадцатимегабайтный оставляем всем остальным: он защищает
         // от случайного мусора, а этой дороге просто мешает.
-        .route(
-            "/api/pdf/text",
-            post(handlers::books::pdf_text).layer((
-                DefaultBodyLimit::disable(),
-                // С запасом над проверкой в самом обработчике: перевес должен
-                // дойти до него и получить внятный ответ, а не отлуп слоя.
-                tower_http::limit::RequestBodyLimitLayer::new(handlers::books::MAX_PDF_UPLOAD + 8 * 1024 * 1024),
-            )),
-        )
+        // Предел здесь свой, и держит его сам обработчик: он смотрит на
+        // заявленный вес до чтения тела и отвечает словами, а не сухим
+        // «length limit exceeded». Общий двадцатимегабайтный потолок остаётся
+        // всем прочим запросам.
+        .route("/api/pdf/text", post(handlers::books::pdf_text).layer(DefaultBodyLimit::disable()))
         // Страница из интернета для читалки: забирает сервер, разбирает клиент.
         .route("/api/web/fetch", post(handlers::webfetch::fetch_page))
         // A2 classes / leaderboard / diagnostics / teacher / analytics

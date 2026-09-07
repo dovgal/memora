@@ -570,10 +570,47 @@ pub async fn search_book(
 /// на следующем шаге.
 pub const MAX_PDF_UPLOAD: usize = 48 * 1024 * 1024;
 
+/// Один и тот же ответ на перевес, откуда бы он ни пришёл: по заявленному весу
+/// или по тому, сколько удалось прочитать.
+fn too_heavy(size: usize) -> (StatusCode, Json<ApiError>) {
+    let mb = size / 1024 / 1024;
+    ApiError::response(
+        StatusCode::PAYLOAD_TOO_LARGE,
+        if mb > 0 {
+            format!(
+                "Файл {mb} МБ, а разбор принимает до {} МБ. Такой вес почти всегда означает сканы \
+                 страниц, а в них текста нет — их нужно сперва распознать.",
+                MAX_PDF_UPLOAD / 1024 / 1024,
+            )
+        } else {
+            format!(
+                "Файл больше {} МБ — столько разбор не принимает. Такой вес почти всегда означает \
+                 сканы страниц, а в них текста нет — их нужно сперва распознать.",
+                MAX_PDF_UPLOAD / 1024 / 1024,
+            )
+        },
+    )
+}
+
 pub async fn pdf_text(
     AuthenticatedUser(_user): AuthenticatedUser,
-    body: axum::body::Bytes,
+    headers: axum::http::HeaderMap,
+    body: axum::body::Body,
 ) -> ApiResult<impl IntoResponse> {
+    // Сначала — заявленный вес, до чтения тела: сорок мегабайт сканов незачем
+    // тянуть в память ради того, чтобы затем их отвергнуть.
+    let claimed = headers
+        .get(axum::http::header::CONTENT_LENGTH)
+        .and_then(|v| v.to_str().ok())
+        .and_then(|v| v.parse::<usize>().ok())
+        .unwrap_or(0);
+    if claimed > MAX_PDF_UPLOAD {
+        return Err(too_heavy(claimed));
+    }
+
+    let body = axum::body::to_bytes(body, MAX_PDF_UPLOAD)
+        .await
+        .map_err(|_| too_heavy(claimed))?;
     let base = std::env::var("WHISPER_URL")
         .ok()
         .filter(|v| !v.trim().is_empty())
@@ -584,20 +621,6 @@ pub async fn pdf_text(
 
     if body.is_empty() {
         return Err(ApiError::response(StatusCode::BAD_REQUEST, "Empty file"));
-    }
-    // Свой ответ на перевес: слой выше пропускает с запасом, чтобы сюда дошло
-    // и было сказано по-человечески, с цифрами, а не «не удалось прочитать
-    // тело запроса».
-    if body.len() > MAX_PDF_UPLOAD {
-        return Err(ApiError::response(
-            StatusCode::PAYLOAD_TOO_LARGE,
-            format!(
-                "Файл {} МБ, а разбор принимает до {} МБ. Такой вес почти всегда означает сканы \
-                 страниц, а в них текста нет.",
-                body.len() / 1024 / 1024,
-                MAX_PDF_UPLOAD / 1024 / 1024,
-            ),
-        ));
     }
 
     let client = reqwest::Client::builder()
