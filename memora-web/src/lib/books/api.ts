@@ -122,6 +122,12 @@ export const fetchBookImages = (bookId: string, urls: string[]) =>
     method: 'POST', body: JSON.stringify({ urls }),
   });
 
+/** Чистка распознанного текста: те же абзацы, в том же порядке. */
+export const cleanOcrBlocks = (blocks: string[], language: string) =>
+  call<{ blocks: string[]; skipped?: boolean }>('/api/books/clean', {
+    method: 'POST', body: JSON.stringify({ blocks, language }),
+  });
+
 export const listBooks = () => call<Book[]>('/api/books');
 export const getBook = (id: string) => call<BookDetail>(`/api/books/${id}`);
 export const getChapter = (id: string, position: number) =>

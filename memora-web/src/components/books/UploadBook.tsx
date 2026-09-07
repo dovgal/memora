@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { Upload, Loader2, FileText, X } from 'lucide-react';
 import { ACCEPTED, ACCEPTED_HINT, extractBook, formatOf } from '@/lib/books/extract';
 import { uploadBook } from '@/lib/books/upload';
+import { cleanChapters, inspectOcr, looksScanned, type OcrReport } from '@/lib/books/ocrClean';
 import type { ChapterDraft } from '@/lib/books/draft';
 import { TARGET_LANGS } from '@/lib/books/langs';
 import { BOOK_TOPICS } from '@/lib/books/topics';
@@ -29,6 +30,9 @@ export function UploadBook({ onDone }: { onDone?: () => void }) {
   const [targetLanguage, setTargetLanguage] = useState('ru');
   const [level, setLevel] = useState('');
   const [format, setFormat] = useState('txt');
+  /** Следы распознавания в файле: по ним и предлагаем чистку. */
+  const [ocr, setOcr] = useState<OcrReport | null>(null);
+  const [cleanOcr, setCleanOcr] = useState(false);
 
   const pick = async (file: File) => {
     setStage('parsing');
@@ -43,6 +47,9 @@ export function UploadBook({ onDone }: { onDone?: () => void }) {
       setTitle(meta.title || file.name.replace(/\.[^.]+$/, ''));
       setAuthor(meta.author);
       setLanguage(meta.language);
+      const report = inspectOcr(ch);
+      setOcr(report);
+      setCleanOcr(looksScanned(report));
       setStage('ready');
       setNote(`${ch.length} глав, ${ch.reduce((s, c) => s + c.content.length, 0).toLocaleString('ru')} символов`);
     } catch (e) {
@@ -55,9 +62,16 @@ export function UploadBook({ onDone }: { onDone?: () => void }) {
     setStage('sending');
     setError(null);
     try {
+      let ready = chapters;
+      if (cleanOcr) {
+        setNote('Чищу распознанный текст…');
+        ready = await cleanChapters(chapters, language, (done, total) =>
+          setNote(`Чищу распознанный текст: ${done} из ${total}`));
+        setChapters(ready);
+      }
       const book = await uploadBook(
         { title, author, topic, language, targetLanguage, level, sourceFormat: format },
-        chapters,
+        ready,
         (done, total) => setNote(`Отправляю главы: ${done} из ${total}`),
       );
       setNote('Готово');
@@ -152,6 +166,27 @@ export function UploadBook({ onDone }: { onDone?: () => void }) {
                 Текст перепишется под уровень при открытии главы. Оригинал сохранится.
               </span>
             </label>
+            {ocr && looksScanned(ocr) && (
+              <label className="block sm:col-span-2 border border-amber-500/40 bg-amber-500/5 rounded-lg px-3 py-2.5">
+                <span className="flex items-start gap-2.5">
+                  <input
+                    type="checkbox"
+                    checked={cleanOcr}
+                    onChange={e => setCleanOcr(e.target.checked)}
+                    className="mt-0.5 accent-[#4255ff]"
+                  />
+                  <span>
+                    <span className="text-sm font-semibold text-foreground">Почистить распознанный текст</span>
+                    <span className="block text-[11px] text-qz-text-muted mt-0.5">
+                      Похоже на скан, пропущенный через распознавание:{' '}
+                      {ocr.noise > 0 && <>обрывков без слов — {Math.round(ocr.noise * 100)}%{ocr.hyphens > 0 ? ', ' : ''}</>}
+                      {ocr.hyphens > 0 && <>слов, разорванных переносом, — {ocr.hyphens}</>}.
+                      Склеим переносы и уберём мусор вёрстки. Займёт минуту-другую, картинки останутся на местах.
+                    </span>
+                  </span>
+                </span>
+              </label>
+            )}
             <label className="block">
               <span className="text-xs font-bold uppercase tracking-wider text-qz-text-muted">Перевод на</span>
               <select value={targetLanguage} onChange={e => setTargetLanguage(e.target.value)}

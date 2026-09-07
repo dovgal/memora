@@ -223,6 +223,8 @@ async fn main() {
         .route("/api/books/{id}/cards", post(handlers::books::add_card))
         // Картинки из книги: кладём с проверкой входа, отдаём без неё —
         // тег картинки не умеет передавать пропуск.
+        // Чистка распознанного текста: до загрузки, книги ещё нет.
+        .route("/api/books/clean", post(handlers::books::clean_ocr))
         .route("/api/books/{id}/images", post(handlers::books::add_image))
         .route("/api/books/{id}/images/fetch", post(handlers::books::fetch_images))
         .route("/api/books/{id}/images/{image_id}", get(handlers::books::get_image))

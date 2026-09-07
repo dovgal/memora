@@ -866,6 +866,117 @@ pub async fn get_image(
     ))
 }
 
+// ---------- Чистка распознанного текста ----------
+
+/// Разделитель между кусками в разговоре с моделью. Строка, которая не
+/// встречается в книгах, — иначе её же и придётся отличать от текста.
+const CHUNK_SEP: &str = "<<<>>>";
+/// Ответ модели о куске, в котором ничего нет, кроме следов распознавания.
+const DROP_MARK: &str = "DROP";
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CleanRequest {
+    /// Абзацы как есть. Порядок сохраняется, ответ приходит той же длины.
+    pub blocks: Vec<String>,
+    #[serde(default)]
+    pub language: String,
+}
+
+/// Больше за раз не берём: у прокси тридцать секунд, а модель думает секундами.
+const CLEAN_MAX_BLOCKS: usize = 40;
+const CLEAN_MAX_CHARS: usize = 6000;
+
+/// POST /api/books/clean — почистить текст после распознавания.
+///
+/// Книге ещё не заведён номер: чистка идёт до загрузки, поэтому метод ничего не
+/// знает о книге и просто возвращает исправленные абзацы.
+///
+/// Отвечаем ровно тем же числом абзацев, что пришло. Это и защита: сбилось
+/// число — значит, модель перестроила текст по-своему, и тогда мы оставляем
+/// исходное. Пустой абзац на выходе означает «здесь был только мусор».
+pub async fn clean_ocr(
+    AuthenticatedUser(_user): AuthenticatedUser,
+    Json(payload): Json<CleanRequest>,
+) -> ApiResult<impl IntoResponse> {
+    let blocks = payload.blocks;
+    if blocks.is_empty() || blocks.len() > CLEAN_MAX_BLOCKS {
+        return Err(ApiError::response(
+            StatusCode::BAD_REQUEST,
+            format!("blocks: 1..{CLEAN_MAX_BLOCKS}"),
+        ));
+    }
+    let total: usize = blocks.iter().map(|b| b.chars().count()).sum();
+    if total > CLEAN_MAX_CHARS {
+        return Err(ApiError::response(StatusCode::BAD_REQUEST, "Слишком много текста за раз"));
+    }
+
+    match ask_clean(&blocks, &payload.language).await {
+        Ok(cleaned) => Ok((StatusCode::OK, Json(json!({ "blocks": cleaned })))),
+        // Не вышло — отдаём исходное. Испорченная чистка хуже нечищеного текста.
+        Err(e) => {
+            eprintln!("[clean] {e}");
+            Ok((StatusCode::OK, Json(json!({ "blocks": blocks, "skipped": true }))))
+        }
+    }
+}
+
+async fn ask_clean(blocks: &[String], lang: &str) -> Result<Vec<String>, String> {
+    let joined = blocks.join(&format!("\n{CHUNK_SEP}\n"));
+    let language = if lang.is_empty() { "the source language".to_string() } else { translate::lang_name(lang).to_string() };
+
+    let content = crate::llm::chat_text(crate::llm::ChatRequest {
+        task: crate::llm::Task::Grading,
+        messages: vec![
+            crate::llm::ChatMessage::system(format!(
+                "You clean up text produced by OCR of a scanned magazine in {language}.\n\
+                 The text is split into blocks separated by a line containing exactly {CHUNK_SEP}.\n\
+                 Return the SAME number of blocks in the SAME order, separated by the same line.\n\
+                 \n\
+                 For each block:\n\
+                 - Join words that OCR broke across lines: \"struc- turées\" becomes \"structurées\". \
+                   But a word that is genuinely hyphenated keeps its hyphen: \"elle- même\" becomes \"elle-même\".\n\
+                 - Remove stray characters left by OCR: isolated letters, digits and symbols that are not words.\n\
+                 - Fix capitals OCR invented inside a sentence: \"de La publication\" becomes \"de la publication\".\n\
+                 - If the whole block is nothing but OCR debris, page furniture or an advertising scrap, \
+                   output exactly {DROP_MARK} for it.\n\
+                 \n\
+                 Never translate, never summarise, never reorder, never invent. Real sentences must come \
+                 back word for word, with only the repairs above. Output nothing but the blocks."
+            )),
+            crate::llm::ChatMessage::user(joined),
+        ],
+        max_tokens: 4000,
+        format: crate::llm::ResponseFormat::Text,
+        think: Some("low".to_string()),
+    })
+    .await
+    .map_err(|e| e.to_string())?;
+
+    let parts: Vec<String> = content
+        .split(CHUNK_SEP)
+        .map(|p| p.trim().to_string())
+        .collect();
+    if parts.len() != blocks.len() {
+        return Err(format!("модель вернула {} кусков вместо {}", parts.len(), blocks.len()));
+    }
+
+    Ok(parts
+        .into_iter()
+        .zip(blocks.iter())
+        .map(|(got, original)| {
+            if got == DROP_MARK {
+                return String::new();
+            }
+            // Слишком много выкинуто — значит, модель увлеклась. Настоящий текст
+            // дороже чистоты, поэтому такой кусок оставляем как был.
+            let before = original.split_whitespace().count();
+            let after = got.split_whitespace().count();
+            if before >= 8 && after * 10 < before * 6 { original.clone() } else { got }
+        })
+        .collect())
+}
+
 // ---------- Адаптация под уровень ----------
 
 /// Предел длины предложения по уровню. Именно он отличает настоящую адаптацию
