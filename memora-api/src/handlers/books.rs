@@ -970,7 +970,15 @@ async fn ask_clean(blocks: &[String], lang: &str) -> Result<Vec<String>, String>
 
     let answered = parse_marked(&content);
     if answered.is_empty() {
-        return Err("модель ответила без меток".to_string());
+        // Показываем начало ответа: без него «модель ответила не так» ничего не
+        // объясняет, а угадывать по второму разу выходит дороже.
+        let head: String = content.chars().take(200).collect();
+        return Err(format!("модель ответила без меток: {head:?}"));
+    }
+    // Сколько кусков пришло — тоже в журнал: по этой цифре видно, теряет ли
+    // модель куски и насколько.
+    if answered.len() < blocks.len() {
+        eprintln!("[clean] пришло {} кусков из {}", answered.len(), blocks.len());
     }
 
     Ok(blocks
