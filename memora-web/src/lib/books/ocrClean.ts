@@ -44,6 +44,41 @@ export function isHopeless(text: string): boolean {
   return !/[A-Za-zÀ-ÿ]{3,}/.test(text);
 }
 
+/**
+ * Сшивает половинки слова, разорванного переносом.
+ *
+ * Распознавание кладёт их в разные абзацы: один кончается на «struc-», другой
+ * начинается с «turées». Модель тут бессильна — она обязана вернуть столько же
+ * кусков, сколько получила, и склеить два в один не может. Поэтому сводим их
+ * вместе здесь, а дефис оставляем: решать, убрать его («structurées») или
+ * сохранить («elle-même»), будет уже она, увидев слово целиком.
+ *
+ * Сшиваем только соседние куски. Если между половинками стоит картинка, текст
+ * перепрыгнул бы через неё и встал не на своё место.
+ */
+export function joinHyphenBreaks<T>(
+  items: T[],
+  text: (item: T) => string | null,
+  setText: (item: T, value: string) => void,
+): T[] {
+  const out: T[] = [];
+  for (const item of items) {
+    const cur = text(item);
+    const prev = out.length > 0 ? out[out.length - 1] : null;
+    const prevText = prev ? text(prev) : null;
+    if (
+      cur !== null && prevText !== null
+      && /[A-Za-zÀ-ÿ]-$/.test(prevText.trim())
+      && /^[a-zà-ÿ]/.test(cur.trim())
+    ) {
+      setText(prev as T, `${prevText.trim()} ${cur.trim()}`);
+      continue;
+    }
+    out.push(item);
+  }
+  return out;
+}
+
 export interface OcrReport {
   /** Доля обрывков среди абзацев — по ней и предлагаем чистку. */
   noise: number;
@@ -94,13 +129,23 @@ export async function cleanChapters(
 
   for (const c of chapters) {
     if (c.blocks?.length) {
+      // Половинки разорванного слова сводим вместе до всего прочего.
+      c.blocks = joinHyphenBreaks(
+        c.blocks,
+        b => (isTextBlock(b) ? b.text : null),
+        (b, v) => { if (isTextBlock(b)) b.text = v; },
+      );
       for (const b of c.blocks) {
         if (!isTextBlock(b)) continue;
         slots.push({ get: () => b.text, set: v => { b.text = v; } });
       }
       perChapter.push({ chapter: c, blocks: c.blocks });
     } else {
-      const paras = c.content.split(/\n\n+/);
+      const paras = joinHyphenBreaks(
+        c.content.split(/\n\n+/).map(text => ({ text })),
+        p => p.text,
+        (p, v) => { p.text = v; },
+      ).map(p => p.text);
       for (let i = 0; i < paras.length; i++) {
         slots.push({ get: () => paras[i], set: v => { paras[i] = v; } });
       }
