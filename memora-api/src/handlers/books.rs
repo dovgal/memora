@@ -585,6 +585,20 @@ pub async fn pdf_text(
     if body.is_empty() {
         return Err(ApiError::response(StatusCode::BAD_REQUEST, "Empty file"));
     }
+    // Свой ответ на перевес: слой выше пропускает с запасом, чтобы сюда дошло
+    // и было сказано по-человечески, с цифрами, а не «не удалось прочитать
+    // тело запроса».
+    if body.len() > MAX_PDF_UPLOAD {
+        return Err(ApiError::response(
+            StatusCode::PAYLOAD_TOO_LARGE,
+            format!(
+                "Файл {} МБ, а разбор принимает до {} МБ. Такой вес почти всегда означает сканы \
+                 страниц, а в них текста нет.",
+                body.len() / 1024 / 1024,
+                MAX_PDF_UPLOAD / 1024 / 1024,
+            ),
+        ));
+    }
 
     let client = reqwest::Client::builder()
         .timeout(std::time::Duration::from_secs(120))
@@ -616,6 +630,21 @@ pub async fn pdf_text(
     }
     let value: serde_json::Value = serde_json::from_str(&text)
         .map_err(|e| ApiError::response(StatusCode::BAD_GATEWAY, format!("Неразборный ответ: {e}")))?;
+
+    // Проверяем и здесь, своими силами. Сервис разбора отвечает то же самое,
+    // но полагаться на его версию не стоит: ответ «книга без единой буквы»
+    // должен быть внятным всегда, а не только после его обновления.
+    let pages = value.get("pages").and_then(|p| p.as_array());
+    let empty = pages.map(|p| p.iter().all(|s| s.as_str().unwrap_or("").trim().is_empty()));
+    if empty == Some(true) {
+        let count = pages.map(|p| p.len()).unwrap_or(0);
+        return Err(ApiError::response(
+            StatusCode::UNPROCESSABLE_ENTITY,
+            format!(
+                "В PDF нет текстового слоя: {count} страниц лежат картинками. Такой файл нужно                  сперва распознать — иначе в нём нет букв, которые читалка могла бы подчёркивать                  и переводить."
+            ),
+        ));
+    }
     Ok((StatusCode::OK, Json(value)))
 }
 

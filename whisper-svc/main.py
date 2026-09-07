@@ -68,6 +68,19 @@ async def pdf_text(request: Request) -> dict:
     except Exception as exc:  # noqa: BLE001 — причину показываем читателю как есть
         raise HTTPException(status_code=422, detail=f"pdf parse failed: {exc}") from exc
 
+    # Файл разобрался, а текста нет — значит, страницы лежат картинками.
+    # Отвечаем об этом прямо: иначе читатель видит пустую книгу и гадает, что
+    # сломалось, хотя ломаться нечему — извлекать в таком файле нечего.
+    if not any(pages):
+        raise HTTPException(
+            status_code=422,
+            detail=(
+                f"В PDF нет текстового слоя: {len(pages)} страниц лежат картинками. "
+                "Такой файл нужно сперва распознать — иначе в нём нет букв, "
+                "которые читалка могла бы подчёркивать и переводить."
+            ),
+        )
+
     return {"pages": pages, "pageCount": len(pages)}
 
 

@@ -157,7 +157,9 @@ async fn main() {
             "/api/pdf/text",
             post(handlers::books::pdf_text).layer((
                 DefaultBodyLimit::disable(),
-                tower_http::limit::RequestBodyLimitLayer::new(handlers::books::MAX_PDF_UPLOAD),
+                // С запасом над проверкой в самом обработчике: перевес должен
+                // дойти до него и получить внятный ответ, а не отлуп слоя.
+                tower_http::limit::RequestBodyLimitLayer::new(handlers::books::MAX_PDF_UPLOAD + 8 * 1024 * 1024),
             )),
         )
         // Страница из интернета для читалки: забирает сервер, разбирает клиент.
