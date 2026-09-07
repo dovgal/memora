@@ -868,9 +868,15 @@ pub async fn get_image(
 
 // ---------- Чистка распознанного текста ----------
 
-/// Разделитель между кусками в разговоре с моделью. Строка, которая не
-/// встречается в книгах, — иначе её же и придётся отличать от текста.
-const CHUNK_SEP: &str = "<<<>>>";
+/// Метка куска в разговоре с моделью: [[1]], [[2]]…
+///
+/// Раньше куски разделяла строка-разделитель, и стоило модели потерять её
+/// один раз, как рассыпалась вся пачка: числа не сходились, и чистка молча
+/// возвращала всё как было. С номерами осечка на одном куске стоит одного
+/// куска — остальные приходят по своим местам.
+fn mark(n: usize) -> String {
+    format!("[[{n}]]")
+}
 /// Ответ модели о куске, в котором ничего нет, кроме следов распознавания.
 const DROP_MARK: &str = "DROP";
 
@@ -884,8 +890,8 @@ pub struct CleanRequest {
 }
 
 /// Больше за раз не берём: у прокси тридцать секунд, а модель думает секундами.
-const CLEAN_MAX_BLOCKS: usize = 40;
-const CLEAN_MAX_CHARS: usize = 6000;
+const CLEAN_MAX_BLOCKS: usize = 20;
+const CLEAN_MAX_CHARS: usize = 4000;
 
 /// POST /api/books/clean — почистить текст после распознавания.
 ///
@@ -922,7 +928,12 @@ pub async fn clean_ocr(
 }
 
 async fn ask_clean(blocks: &[String], lang: &str) -> Result<Vec<String>, String> {
-    let joined = blocks.join(&format!("\n{CHUNK_SEP}\n"));
+    let joined = blocks
+        .iter()
+        .enumerate()
+        .map(|(i, b)| format!("{}\n{b}", mark(i + 1)))
+        .collect::<Vec<_>>()
+        .join("\n\n");
     let language = if lang.is_empty() { "the source language".to_string() } else { translate::lang_name(lang).to_string() };
 
     let content = crate::llm::chat_text(crate::llm::ChatRequest {
@@ -930,8 +941,8 @@ async fn ask_clean(blocks: &[String], lang: &str) -> Result<Vec<String>, String>
         messages: vec![
             crate::llm::ChatMessage::system(format!(
                 "You clean up text produced by OCR of a scanned magazine in {language}.\n\
-                 The text is split into blocks separated by a line containing exactly {CHUNK_SEP}.\n\
-                 Return the SAME number of blocks in the SAME order, separated by the same line.\n\
+                 Every block starts with its own marker on a line of its own: [[1]], [[2]] and so on.\n\
+                 Return every block, each under its own marker, keeping the markers exactly as given.\n\
                  \n\
                  For each block:\n\
                  - Join words that OCR broke across lines: \"struc- turées\" becomes \"structurées\". \
@@ -957,27 +968,55 @@ async fn ask_clean(blocks: &[String], lang: &str) -> Result<Vec<String>, String>
     .await
     .map_err(|e| e.to_string())?;
 
-    let parts: Vec<String> = content
-        .split(CHUNK_SEP)
-        .map(|p| p.trim().to_string())
-        .collect();
-    if parts.len() != blocks.len() {
-        return Err(format!("модель вернула {} кусков вместо {}", parts.len(), blocks.len()));
+    let answered = parse_marked(&content);
+    if answered.is_empty() {
+        return Err("модель ответила без меток".to_string());
     }
 
-    Ok(parts
-        .into_iter()
-        .zip(blocks.iter())
-        .map(|(got, original)| {
+    Ok(blocks
+        .iter()
+        .enumerate()
+        .map(|(i, original)| {
+            // Куска нет в ответе — оставляем свой. Пропажа одного больше не
+            // стоит целой пачки.
+            let Some(got) = answered.get(&(i + 1)) else { return original.clone() };
             if got == DROP_MARK {
                 return String::new();
             }
-            let got = normalize_chars(&got);
+            let got = normalize_chars(got);
             // Настоящий текст дороже чистоты: увидели пропажу слов — берём
             // исходное. Модель охотно правит и то, о чём её не просили.
             if lost_words(original, &got) { original.clone() } else { got }
         })
         .collect())
+}
+
+/// Разбирает ответ вида «[[3]] текст» в соответствие «номер → текст».
+fn parse_marked(content: &str) -> std::collections::HashMap<usize, String> {
+    let mut out = std::collections::HashMap::new();
+    let mut current: Option<usize> = None;
+    let mut buf = String::new();
+    for line in content.lines() {
+        let t = line.trim();
+        let num = t
+            .strip_prefix("[[")
+            .and_then(|r| r.split_once("]]"))
+            .and_then(|(n, rest)| n.trim().parse::<usize>().ok().map(|n| (n, rest.trim().to_string())));
+        if let Some((n, rest)) = num {
+            if let Some(prev) = current.take() {
+                out.insert(prev, buf.trim().to_string());
+            }
+            buf = rest;
+            current = Some(n);
+        } else if current.is_some() {
+            if !buf.is_empty() { buf.push('\n'); }
+            buf.push_str(t);
+        }
+    }
+    if let Some(prev) = current {
+        out.insert(prev, buf.trim().to_string());
+    }
+    out
 }
 
 /// Возвращает символы, которые модель подставляет от себя, к обычным.
@@ -1511,6 +1550,30 @@ pub async fn add_card(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn marked_answer_is_read_by_number() {
+        let got = parse_marked("[[1]]\nPremier texte\n\n[[2]]\nDeuxième texte");
+        assert_eq!(got.get(&1).map(String::as_str), Some("Premier texte"));
+        assert_eq!(got.get(&2).map(String::as_str), Some("Deuxième texte"));
+    }
+
+    #[test]
+    fn a_missing_block_costs_only_itself() {
+        // Ровно та осечка, что рушила прежний уговор: модель пропустила кусок.
+        // Теперь остальные приходят по своим местам, а пропавший берётся свой.
+        let got = parse_marked("[[1]]\nPremier\n\n[[3]]\nTroisième");
+        assert_eq!(got.len(), 2);
+        assert!(got.get(&2).is_none(), "второй не пришёл — и это не беда");
+        assert_eq!(got.get(&3).map(String::as_str), Some("Troisième"));
+    }
+
+    #[test]
+    fn a_block_of_several_lines_stays_whole() {
+        let got = parse_marked("[[1]]\nПервая строка\nвторая строка\n\n[[2]]\nDROP");
+        assert_eq!(got.get(&1).map(String::as_str), Some("Первая строка\nвторая строка"));
+        assert_eq!(got.get(&2).map(String::as_str), Some("DROP"));
+    }
 
     #[test]
     fn joined_halves_do_not_count_as_lost() {

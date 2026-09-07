@@ -13,8 +13,13 @@ import { cleanOcrBlocks } from './api';
 import { isTextBlock, type Block, type ChapterDraft } from './draft';
 
 /** Столько блоков и знаков сервер берёт за один заход. */
-const MAX_BLOCKS = 40;
-const MAX_CHARS = 6000;
+const MAX_BLOCKS = 20;
+const MAX_CHARS = 4000;
+/**
+ * Столько заходов держим разом. Пачки небольшие, и по одной книга чистилась бы
+ * минут пять; втроём — около двух, а нагрузка на модель остаётся скромной.
+ */
+const IN_FLIGHT = 3;
 
 /** Мягкий перенос и метка порядка байтов: следы разбора, а не текст. */
 const INVISIBLE = /[­﻿​]/g;
@@ -161,7 +166,10 @@ export async function cleanChapters(
   }
 
   const pending = slots.filter(s => s.get().length > 0);
-  let done = 0;
+
+  // Сначала раскладываем по пачкам, потом отправляем — так проще держать
+  // несколько заходов разом.
+  const batches: Slot[][] = [];
   for (let i = 0; i < pending.length; ) {
     const batch: Slot[] = [];
     let chars = 0;
@@ -172,18 +180,28 @@ export async function cleanChapters(
     }
     // Один абзац длиннее всей порции — отправляем его в одиночку.
     if (batch.length === 0) { batch.push(pending[i]); i += 1; }
-
-    try {
-      const r = await cleanOcrBlocks(batch.map(s => s.get()), language);
-      if (r.blocks.length === batch.length) {
-        batch.forEach((s, k) => s.set(r.blocks[k].trim()));
-      }
-    } catch {
-      // Не почистилось — оставляем как есть. Книга важнее чистоты.
-    }
-    done += batch.length;
-    onProgress?.(done, pending.length);
+    batches.push(batch);
   }
+
+  let done = 0;
+  let next = 0;
+  const worker = async () => {
+    while (next < batches.length) {
+      const batch = batches[next];
+      next += 1;
+      try {
+        const r = await cleanOcrBlocks(batch.map(s => s.get()), language);
+        if (r.blocks.length === batch.length) {
+          batch.forEach((s, k) => s.set(r.blocks[k].trim()));
+        }
+      } catch {
+        // Не почистилось — оставляем как есть. Книга важнее чистоты.
+      }
+      done += batch.length;
+      onProgress?.(done, pending.length);
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(IN_FLIGHT, batches.length) }, worker));
 
   // Опустевшие куски убираем, текст главы пересобираем из того, что осталось.
   for (const entry of perChapter) {
