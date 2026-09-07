@@ -243,8 +243,8 @@ function BookCard({ book: b, onRemove, onTopic }: {
           </Link>
         )}
         <div className="flex-1" />
-        {/* Удалять может только загрузивший: полка общая. */}
-        {b.isOwner && (
+        {/* Полка общая: удалять может тот, кто загрузил, и администратор. */}
+        {b.canDelete && (
           <button onClick={() => onRemove(b)} title="Удалить книгу с полки"
             className="text-qz-text-muted hover:text-red-500 transition-colors">
             <Trash2 className="w-4 h-4" />

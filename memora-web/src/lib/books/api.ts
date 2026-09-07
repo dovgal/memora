@@ -49,6 +49,8 @@ export interface Book {
   topic: string;
   /** Загрузил ли книгу тот, кто её смотрит: править и удалять может только он. */
   isOwner: boolean;
+  /** Право удалить: у загрузившего и у администратора. */
+  canDelete: boolean;
   language: string;
   targetLanguage: string;
   /** Уровень адаптации при чтении: пусто — оригинал. */

@@ -47,6 +47,46 @@ async fn readable_book(pool: &PgPool, book_id: Uuid) -> ApiResult<(String, Uuid)
 }
 
 /// Для изменения самой книги: название, автора, тему правит только загрузивший.
+/// Кто может удалять чужие книги.
+///
+/// Список опознавателей задаётся в настройках сервера (ADMIN_USER_IDS), а не
+/// ролью в базе: роль едет в пропуске и обновляется только при следующем входе,
+/// а через Google вход может не повторяться неделями. Здесь же право
+/// проверяется при каждом запросе.
+///
+/// Назначить себя администратором из приложения нельзя ни при каком раскладе:
+/// список читается только из окружения.
+fn is_admin(sub: &str) -> bool {
+    match std::env::var("ADMIN_USER_IDS") {
+        Ok(raw) => admin_list_contains(&raw, sub),
+        Err(_) => false,
+    }
+}
+
+/// Разбор списка — отдельно от окружения, чтобы его можно было испытать.
+fn admin_list_contains(raw: &str, sub: &str) -> bool {
+    let sub = sub.trim();
+    if sub.is_empty() {
+        return false;
+    }
+    raw.split([',', ';', ' ', '\n'])
+        .map(str::trim)
+        .any(|id| !id.is_empty() && id.eq_ignore_ascii_case(sub))
+}
+
+/// Право удалить книгу: у того, кто её загрузил, и у администратора.
+async fn deletable_book(pool: &PgPool, book_id: Uuid, user: &crate::middleware::auth::Claims) -> ApiResult<()> {
+    let user_id = uid(&user.sub)?;
+    let (_, owner) = readable_book(pool, book_id).await?;
+    if owner == user_id || is_admin(&user.sub) {
+        return Ok(());
+    }
+    Err(ApiError::response(
+        StatusCode::FORBIDDEN,
+        "Удалить книгу может только тот, кто её загрузил",
+    ))
+}
+
 async fn owned_book(pool: &PgPool, book_id: Uuid, user_id: Uuid) -> ApiResult<String> {
     let (language, owner) = readable_book(pool, book_id).await?;
     if owner != user_id {
@@ -130,13 +170,16 @@ pub struct BookSummary {
     pub last_offset: f32,
     pub status: String,
     /// Загрузил ли книгу тот, кто её сейчас смотрит: от этого зависит право
-    /// править описание и удалять.
+    /// править описание.
     pub is_owner: bool,
+    /// Право удалить: у загрузившего и у администратора. Отдельно от is_owner,
+    /// иначе на полке пришлось бы гадать, покажется кнопка или откажет сервер.
+    pub can_delete: bool,
     pub created_at: String,
     pub updated_at: String,
 }
 
-fn book_from_row(r: &sqlx::postgres::PgRow, viewer: Uuid) -> BookSummary {
+fn book_from_row(r: &sqlx::postgres::PgRow, viewer: Uuid, admin: bool) -> BookSummary {
     let created: chrono::DateTime<chrono::Utc> = r.get("created_at");
     let updated: chrono::DateTime<chrono::Utc> = r.get("updated_at");
     BookSummary {
@@ -145,6 +188,7 @@ fn book_from_row(r: &sqlx::postgres::PgRow, viewer: Uuid) -> BookSummary {
         author: r.get("author"),
         topic: r.get("topic"),
         is_owner: r.get::<Uuid, _>("owner_id") == viewer,
+        can_delete: r.get::<Uuid, _>("owner_id") == viewer || admin,
         language: r.get("language"),
         target_language: r.get("target_language"),
         level: r.get("level"),
@@ -355,7 +399,7 @@ pub async fn finalize_book(
 
     let row = sqlx::query(&format!("{BOOK_SELECT} WHERE b.id = $2"))
         .bind(user_id).bind(id).fetch_one(&pool).await.map_err(db_err)?;
-    Ok((StatusCode::OK, Json(book_from_row(&row, user_id))))
+    Ok((StatusCode::OK, Json(book_from_row(&row, user_id, is_admin(&user.sub)))))
 }
 
 /// GET /api/books — общая полка: книги всех читателей.
@@ -374,7 +418,8 @@ pub async fn list_books(
     .fetch_all(&pool)
     .await
     .map_err(db_err)?;
-    let books: Vec<BookSummary> = rows.iter().map(|r| book_from_row(r, user_id)).collect();
+    let admin = is_admin(&user.sub);
+    let books: Vec<BookSummary> = rows.iter().map(|r| book_from_row(r, user_id, admin)).collect();
     Ok((StatusCode::OK, Json(books)))
 }
 
@@ -409,7 +454,7 @@ pub async fn get_book(
     })
     .collect();
 
-    Ok((StatusCode::OK, Json(BookDetail { book: book_from_row(&row, user_id), chapters })))
+    Ok((StatusCode::OK, Json(BookDetail { book: book_from_row(&row, user_id, is_admin(&user.sub)), chapters })))
 }
 
 /// GET /api/books/{id}/chapters/{position} — текст главы.
@@ -506,7 +551,7 @@ pub async fn update_book(
 
     let row = sqlx::query(&format!("{BOOK_SELECT} WHERE b.id = $2"))
         .bind(user_id).bind(id).fetch_one(&pool).await.map_err(db_err)?;
-    Ok((StatusCode::OK, Json(book_from_row(&row, user_id))))
+    Ok((StatusCode::OK, Json(book_from_row(&row, user_id, is_admin(&user.sub)))))
 }
 
 /// DELETE /api/books/{id} — книга и её главы; набор карточек остаётся.
@@ -515,8 +560,7 @@ pub async fn delete_book(
     AuthenticatedUser(user): AuthenticatedUser,
     Path(id): Path<Uuid>,
 ) -> ApiResult<impl IntoResponse> {
-    let user_id = uid(&user.sub)?;
-    owned_book(&pool, id, user_id).await?;
+    deletable_book(&pool, id, &user).await?;
     sqlx::query("DELETE FROM books WHERE id = $1").bind(id).execute(&pool).await.map_err(db_err)?;
     Ok(StatusCode::NO_CONTENT)
 }
@@ -1558,6 +1602,25 @@ pub async fn add_card(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn admin_list_is_read_forgivingly() {
+        let list = "61600d9b-ac3d-45dc-a91d-d91d8f201aad, 11111111-1111-1111-1111-111111111111";
+        assert!(admin_list_contains(list, "61600d9b-ac3d-45dc-a91d-d91d8f201aad"));
+        assert!(admin_list_contains(list, "11111111-1111-1111-1111-111111111111"));
+        // Регистр в опознавателе значения не имеет.
+        assert!(admin_list_contains(list, "61600D9B-AC3D-45DC-A91D-D91D8F201AAD"));
+    }
+
+    #[test]
+    fn everyone_else_is_not_admin() {
+        let list = "61600d9b-ac3d-45dc-a91d-d91d8f201aad";
+        assert!(!admin_list_contains(list, "22222222-2222-2222-2222-222222222222"));
+        // Пустой список — администраторов нет вовсе.
+        assert!(!admin_list_contains("", "61600d9b-ac3d-45dc-a91d-d91d8f201aad"));
+        // Пустой опознаватель не должен совпасть с пустым местом в списке.
+        assert!(!admin_list_contains("a, , b", ""));
+    }
 
     #[test]
     fn marked_answer_is_read_by_number() {
