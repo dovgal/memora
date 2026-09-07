@@ -646,9 +646,24 @@ pub async fn pdf_text(
     let status = res.status();
     let text = res.text().await.unwrap_or_default();
     if !status.is_success() {
+        // Сервис разбора отвечает 422, когда файл разобрался, но текста в нём
+        // нет. Это не поломка, а разбор по существу: передаём его слова как
+        // есть. Заворачивать их в «разбор не удался» значит показать читателю
+        // фигурные скобки вместо объяснения.
+        let detail = serde_json::from_str::<serde_json::Value>(&text)
+            .ok()
+            .and_then(|v| v.get("detail").and_then(|d| d.as_str()).map(str::to_string));
+        if status == reqwest::StatusCode::UNPROCESSABLE_ENTITY {
+            if let Some(detail) = detail {
+                return Err(ApiError::response(StatusCode::UNPROCESSABLE_ENTITY, detail));
+            }
+        }
         return Err(ApiError::response(
             StatusCode::BAD_GATEWAY,
-            format!("Разбор PDF не удался ({status}): {}", text.chars().take(200).collect::<String>()),
+            format!(
+                "Разбор PDF не удался ({status}): {}",
+                detail.unwrap_or_else(|| text.chars().take(200).collect::<String>()),
+            ),
         ));
     }
     let value: serde_json::Value = serde_json::from_str(&text)
