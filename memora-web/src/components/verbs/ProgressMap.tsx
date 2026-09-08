@@ -5,6 +5,7 @@
 // текущая партия обведена рамкой отдельно от цвета.
 
 import { SOLID_STEP, type IrregularVerb, type VerbState } from '@/lib/courses/verbs/types';
+import { useT } from '@/components/I18nProvider';
 
 export type Strength = 'new' | 'learning' | 'know' | 'solid';
 
@@ -37,6 +38,7 @@ export function ProgressMap({
   /** Текущая партия — подсвечивается рамкой, чтобы её было видно поверх цвета. */
   assignment: { from: number; to: number } | null;
 }) {
+  const t = useT();
   const byPage = new Map<number, IrregularVerb[]>();
   for (const v of verbs) {
     if (!byPage.has(v.page)) byPage.set(v.page, []);
@@ -55,9 +57,7 @@ export function ProgressMap({
         ))}
         {assignment && (
           <span className="inline-flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-sm border-2 border-[#4255ff]" />
-            текущая партия
-          </span>
+            <span className="w-3 h-3 rounded-sm border-2 border-[#4255ff]" />{t('текущая партия')}</span>
         )}
       </div>
 

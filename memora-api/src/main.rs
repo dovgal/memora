@@ -113,6 +113,8 @@ async fn main() {
         .route("/api/protected/me", get(handlers::protected::me_handler))
         .route("/api/users/onboarding", post(handlers::users::finish_onboarding))
         .route("/api/users/role", patch(handlers::users::update_role))
+        // Настройки человека: язык приложения и то, что позже переедет из браузера.
+        .route("/api/settings", get(handlers::settings::get_settings).put(handlers::settings::put_settings))
         .route("/api/sets", get(handlers::sets::get_user_sets).post(handlers::sets::create_set))
         .route(
             "/api/sets/{id}",

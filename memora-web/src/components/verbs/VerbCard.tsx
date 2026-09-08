@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { CheckCircle2, XCircle, ArrowRight } from 'lucide-react';
 import { FAMILY_META, familyOf, type IrregularVerb } from '@/lib/courses/verbs/types';
 import { isFormCorrect } from '@/lib/courses/verbs/match';
+import { useT } from '@/components/I18nProvider';
 
 type Stage = 'forms' | 'formsResult' | 'translate' | 'translateResult';
 
@@ -23,6 +24,7 @@ export function VerbCard({
   /** Карточка закрыта, можно показывать следующую. */
   onDone: () => void;
 }) {
+  const t = useT();
   const [stage, setStage] = useState<Stage>('forms');
   const [pret, setPret] = useState('');
   const [pp, setPp] = useState('');
@@ -73,7 +75,7 @@ export function VerbCard({
         <div className="space-y-3">
           <div className="grid grid-cols-2 gap-3">
             <label className="block">
-              <span className="text-xs text-qz-text-muted font-semibold">Prétérit (2 форма)</span>
+              <span className="text-xs text-qz-text-muted font-semibold">{t('Prétérit (2 форма)')}</span>
               <input
                 value={pret}
                 onChange={e => setPret(e.target.value)}
@@ -89,7 +91,7 @@ export function VerbCard({
               )}
             </label>
             <label className="block">
-              <span className="text-xs text-qz-text-muted font-semibold">Participe passé (3 форма)</span>
+              <span className="text-xs text-qz-text-muted font-semibold">{t('Participe passé (3 форма)')}</span>
               <input
                 value={pp}
                 onChange={e => setPp(e.target.value)}
@@ -110,9 +112,7 @@ export function VerbCard({
               onClick={checkForms}
               disabled={!pret.trim() || !pp.trim()}
               className="inline-flex items-center gap-2 bg-[#4255ff] hover:bg-[#3344ee] disabled:opacity-40 text-white font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
-            >
-              Проверить
-            </button>
+            >{t('Проверить')}</button>
           )}
 
           {stage === 'formsResult' && (
@@ -128,8 +128,7 @@ export function VerbCard({
                 <button
                   onClick={() => setStage('translate')}
                   className="inline-flex items-center gap-2 bg-[#4255ff] hover:bg-[#3344ee] text-white font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
-                >
-                  Дальше — перевод <ArrowRight className="w-4 h-4" />
+                >{t('Дальше — перевод')}<ArrowRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
@@ -158,9 +157,7 @@ export function VerbCard({
               onClick={checkTranslation}
               disabled={!translation.trim()}
               className="inline-flex items-center gap-2 bg-[#4255ff] hover:bg-[#3344ee] disabled:opacity-40 text-white font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
-            >
-              Проверить перевод
-            </button>
+            >{t('Проверить перевод')}</button>
           )}
 
           {stage === 'translateResult' && (
@@ -172,8 +169,7 @@ export function VerbCard({
               <button
                 onClick={onDone}
                 className="inline-flex items-center gap-2 bg-[#4255ff] hover:bg-[#3344ee] text-white font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
-              >
-                Следующий глагол <ArrowRight className="w-4 h-4" />
+              >{t('Следующий глагол')}<ArrowRight className="w-4 h-4" />
               </button>
             </div>
           )}

@@ -13,6 +13,7 @@ import { buildSessionPlan } from '@/lib/courses/verbs/sessionPlan';
 import { getVerbsState, putVerbsAssignment, postVerbReview } from '@/lib/courses/verbs/api';
 import { ProgressMap } from '@/components/verbs/ProgressMap';
 import { VerbCard } from '@/components/verbs/VerbCard';
+import { useT } from '@/components/I18nProvider';
 
 const MAX_N = VERBS.reduce((m, v) => Math.max(m, v.n), 0);
 
@@ -35,6 +36,7 @@ function cardWord(n: number): string {
 type View = 'overview' | 'session' | 'summary';
 
 export default function VerbsPage() {
+  const t = useT();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [assignment, setAssignment] = useState<{ from: number; to: number } | null>(null);
@@ -129,8 +131,7 @@ export default function VerbsPage() {
               onClick={() => setView('overview')}
               className="inline-flex items-center gap-1.5 text-qz-text-muted hover:text-foreground text-sm"
             >
-              <ChevronLeft className="w-4 h-4" /> Прервать занятие
-            </button>
+              <ChevronLeft className="w-4 h-4" />{t('Прервать занятие')}</button>
             <p className="text-sm text-qz-text-muted font-semibold">{cardIdx + 1} из {session.length}</p>
           </div>
           <VerbCard
@@ -151,7 +152,7 @@ export default function VerbsPage() {
         <div className="max-w-4xl mx-auto px-4 py-6 md:py-8 space-y-6">
           <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-2xl p-6 text-center space-y-2">
             <p className="text-2xl">🎉</p>
-            <p className="text-xl font-bold text-foreground">Занятие пройдено!</p>
+            <p className="text-xl font-bold text-foreground">{t('Занятие пройдено!')}</p>
             <p className="text-qz-text-muted">
               Верно с первого раза: {correctCount} из {session.length}
             </p>
@@ -159,11 +160,10 @@ export default function VerbsPage() {
               onClick={() => setView('overview')}
               className="mt-2 inline-flex items-center gap-2 bg-[#4255ff] hover:bg-[#3344ee] text-white font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
             >
-              <RotateCcw className="w-4 h-4" /> К обзору
-            </button>
+              <RotateCcw className="w-4 h-4" />{t('К обзору')}</button>
           </div>
           <div>
-            <h2 className="text-lg font-bold text-foreground mb-3">Карта прогресса</h2>
+            <h2 className="text-lg font-bold text-foreground mb-3">{t('Карта прогресса')}</h2>
             <ProgressMap verbs={VERBS} states={statesByN} assignment={assignment} />
           </div>
         </div>
@@ -176,11 +176,10 @@ export default function VerbsPage() {
     <div className="min-h-screen bg-qz-card text-qz-text">
       <div className="max-w-4xl mx-auto px-4 py-6 md:py-8 space-y-6">
         <Link href="/courses" className="inline-flex items-center gap-1.5 text-qz-text-muted hover:text-foreground text-sm">
-          <ChevronLeft className="w-4 h-4" /> К каталогу
-        </Link>
+          <ChevronLeft className="w-4 h-4" />{t('К каталогу')}</Link>
 
         <div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">Неправильные глаголы</h1>
+          <h1 className="text-3xl font-bold text-foreground mb-2">{t('Неправильные глаголы')}</h1>
           <p className="text-qz-text-muted max-w-2xl">
             Школьная таблица неправильных глаголов: формы по инфинитиву, семейство и перевод.
             Слабые глаголы возвращаются чаще, прочные не мешаются, пока не подошёл их срок.
@@ -193,19 +192,18 @@ export default function VerbsPage() {
 
         {loading ? (
           <div className="flex items-center gap-2 text-qz-text-muted">
-            <Loader2 className="w-4 h-4 animate-spin" /> Загрузка…
-          </div>
+            <Loader2 className="w-4 h-4 animate-spin" />{t('Загрузка…')}</div>
         ) : (
           <>
             {/* ---------- Партия ---------- */}
             <div className="bg-qz-card border border-border rounded-2xl p-5 space-y-3">
               <div className="flex items-center justify-between flex-wrap gap-3">
                 <div>
-                  <p className="text-xs text-qz-text-muted font-semibold uppercase tracking-wider">Партия</p>
+                  <p className="text-xs text-qz-text-muted font-semibold uppercase tracking-wider">{t('Партия')}</p>
                   {assignment ? (
                     <p className="text-lg font-bold text-foreground">С {assignment.from} по {assignment.to}</p>
                   ) : (
-                    <p className="text-lg font-bold text-foreground">Партия ещё не задана</p>
+                    <p className="text-lg font-bold text-foreground">{t('Партия ещё не задана')}</p>
                   )}
                 </div>
                 {!editingAssignment && (
@@ -221,7 +219,7 @@ export default function VerbsPage() {
               {editingAssignment && (
                 <div className="flex items-end gap-3 flex-wrap">
                   <label className="block">
-                    <span className="text-xs text-qz-text-muted font-semibold">С</span>
+                    <span className="text-xs text-qz-text-muted font-semibold">{t('С')}</span>
                     <input
                       type="number" min={1} max={MAX_N} value={fromInput}
                       onChange={e => setFromInput(Number(e.target.value))}
@@ -229,7 +227,7 @@ export default function VerbsPage() {
                     />
                   </label>
                   <label className="block">
-                    <span className="text-xs text-qz-text-muted font-semibold">По</span>
+                    <span className="text-xs text-qz-text-muted font-semibold">{t('По')}</span>
                     <input
                       type="number" min={1} max={MAX_N} value={toInput}
                       onChange={e => setToInput(Number(e.target.value))}
@@ -249,9 +247,7 @@ export default function VerbsPage() {
                       if (assignment) { setFromInput(assignment.from); setToInput(assignment.to); }
                     }}
                     className="text-sm text-qz-text-muted hover:text-foreground px-3 py-2.5"
-                  >
-                    Отмена
-                  </button>
+                  >{t('Отмена')}</button>
                 </div>
               )}
             </div>
@@ -276,10 +272,8 @@ export default function VerbsPage() {
 
             {/* ---------- Карта прогресса ---------- */}
             <div>
-              <h2 className="text-lg font-bold text-foreground mb-3">Карта прогресса</h2>
-              <p className="text-sm text-qz-text-muted mb-3">
-                125 глаголов, пять страниц — как в таблице. Синяя рамка — текущая партия.
-              </p>
+              <h2 className="text-lg font-bold text-foreground mb-3">{t('Карта прогресса')}</h2>
+              <p className="text-sm text-qz-text-muted mb-3">{t('125 глаголов, пять страниц — как в таблице. Синяя рамка — текущая партия.')}</p>
               <ProgressMap verbs={VERBS} states={statesByN} assignment={assignment} />
             </div>
           </>
