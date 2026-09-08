@@ -173,6 +173,11 @@ async fn main() {
         // Generic course-trainer progress (Edito A1 and others)
         .route("/api/courses/{course_id}/progress", get(handlers::course_progress::get_course_progress).post(handlers::course_progress::record_course_progress))
         .route("/api/courses/{course_id}/progress/bulk", post(handlers::course_progress::record_course_progress_bulk))
+        // Неправильные глаголы: партия учителя и лесенка повторений по каждому
+        // глаголу. Хранилище то же самое (course_progress), маршруты свои.
+        .route("/api/verbs/state", get(handlers::verbs::get_verbs_state))
+        .route("/api/verbs/assignment", axum::routing::put(handlers::verbs::put_verbs_assignment))
+        .route("/api/verbs/review", post(handlers::verbs::post_verbs_review))
         // Пользовательские курсы: создание и редактирование (любой пользователь)
         .route("/api/courses", get(handlers::courses::list_courses).post(handlers::courses::create_course))
         .route(

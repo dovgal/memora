@@ -1,0 +1,24 @@
+// Сравнение ответа подростка с формой из таблицы.
+//
+// Двойные формы в таблице бывают двух видов, и путать их нельзя:
+//  - через запятую — это разные слова для разных лиц («WAS, WERE»: was для
+//    единственного числа, were — для множественного и you). Оба верны,
+//    потому что мы не спрашиваем форму при конкретном подлежащем.
+//  - через слэш — это вариант написания, британское/американское
+//    («BURNT/-ED», «-ED» значит «замени T на ED»: burnt/burned). Таблица
+//    учит британскому, поэтому принимаем только первую часть.
+
+const normalize = (s: string) => s.trim().toUpperCase().replace(/\s+/g, ' ');
+
+/** Какие написания считаются верным ответом для одной формы из таблицы. */
+export function acceptedForms(raw: string): string[] {
+  if (raw.includes(',')) return raw.split(',').map(normalize);
+  if (raw.includes('/')) return [normalize(raw.split('/')[0])];
+  return [normalize(raw)];
+}
+
+/** Ответ верен, если совпал (без учёта регистра и пробелов) с любым из
+ * принятых написаний — из принятых, а не любой частью исходной строки. */
+export function isFormCorrect(answer: string, raw: string): boolean {
+  return acceptedForms(raw).includes(normalize(answer));
+}
