@@ -106,6 +106,11 @@ const nextConfig: NextConfig = {
         destination: `${rustApiUrl}/api/family/:path*`,
       },
       // Читалка книг: полка, главы, словарь читателя, карточки из книги.
+      // Неправильные глаголы: партия, состояние и ответы.
+      {
+        source: "/api/verbs/:path*",
+        destination: `${rustApiUrl}/api/verbs/:path*`,
+      },
       {
         source: "/api/books/:path*",
         destination: `${rustApiUrl}/api/books/:path*`,
