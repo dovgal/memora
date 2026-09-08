@@ -197,8 +197,12 @@ export function BookReader({ bookId }: { bookId: string }) {
   );
   /** Пока перевод считается, справа стоят пустые места — страница не прыгает. */
   const blankTrans = useMemo(() => unitTexts.map(() => ''), [unitTexts]);
-  /** Разворот бессмыслен, когда книга уже на языке перевода. */
-  const canParallel = !!lang && !!targetLang && lang !== targetLang;
+  /**
+   * Разворот бессмыслен только тогда, когда книга заведомо на языке перевода.
+   * Неизвестный язык таким основанием не является: раньше кнопка гасла на
+   * любой книге из docx, хотя переводить её было и можно, и нужно.
+   */
+  const canParallel = !!targetLang && lang !== targetLang;
 
   /**
    * Две колонки или перевод под абзацем — решает CSS, а поведение зависит от
@@ -263,7 +267,10 @@ export function BookReader({ bookId }: { bookId: string }) {
   // Слова переводятся пачкой заранее, чтобы подсказка появлялась мгновенно.
   // Сервер кэширует переводы навсегда, поэтому повторные страницы бесплатны.
   useEffect(() => {
-    if (!lang || pageParagraphs.length === 0) return;
+    if (pageParagraphs.length === 0) return;
+    // Язык книги может быть неизвестен — у docx его неоткуда взять, а
+    // определение при загрузке иногда молчит. Это не повод оставлять читателя
+    // без перевода: DeepL распознаёт язык оригинала сам.
     const words = uniqueWords(pageParagraphs, lang).filter(w => !transRef.current.has(w));
     if (words.length === 0) return;
     let alive = true;
@@ -275,6 +282,13 @@ export function BookReader({ bookId }: { bookId: string }) {
           if (!alive) return;
           batch.forEach((w, j) => transRef.current.set(w, r.translations[j] ?? ''));
           setTransTick(t => t + 1);
+          // Язык книги был неизвестен, а переводчик его распознал — запомним.
+          // Иначе каждая следующая книга из docx так и останется «не
+          // определён», хотя ответ с языком приходит на первой же странице.
+          if (!lang && r.sourceLang) {
+            setDetail(d => (d ? { ...d, book: { ...d.book, language: r.sourceLang } } : d));
+            void updateBook(bookId, { language: r.sourceLang }).catch(() => {});
+          }
         } catch {
           return;   // квота или сеть — подсказки просто появятся по клику
         }
@@ -353,7 +367,6 @@ export function BookReader({ bookId }: { bookId: string }) {
     setSentTranslation(null);
     const cached = next.kind === 'word' ? transRef.current.get(next.key) : undefined;
     setSelTranslation(cached ?? null);
-    if (!lang) return;
     // Перевод с контекстом: без него слово переводится наугад.
     setSelTranslating(true);
     try {

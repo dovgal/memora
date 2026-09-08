@@ -4,7 +4,7 @@
 // разная, а строение одинаковое. Отличается только то, откуда берётся сама
 // картинка, — это и передаётся отдельно.
 
-import type { Block } from './draft';
+import { isTextBlock, type Block, type ChapterDraft } from './draft';
 
 /** Что забираем. Всё остальное — оформление, оно нам чужое. */
 const KEEP = 'h1, h2, h3, h4, p, li, blockquote, img, image, figcaption';
@@ -112,4 +112,35 @@ export function mimeOfPath(path: string): string {
   if (ext === 'svg') return 'image/svg+xml';
   if (ext === 'webp') return 'image/webp';
   return 'image/jpeg';
+}
+
+/**
+ * Режет на главы по объёму, не разлучая картинки с их абзацами.
+ *
+ * Границу стараемся вести по заголовку — рвать раздел посреди мысли некрасиво.
+ * Но в тексте из Word заголовков может не быть вовсе, и тогда без второй,
+ * жёсткой границы вся книга стала бы одной главой на десять страниц.
+ */
+export function chunkBlocks(blocks: Block[], targetChars = 12_000): ChapterDraft[] {
+  const chapters: ChapterDraft[] = [];
+  let cur: Block[] = [];
+  let size = 0;
+
+  const flush = () => {
+    if (cur.length === 0) return;
+    const text = cur.filter(isTextBlock).map(b => b.text).join('\n\n');
+    chapters.push({ title: `Часть ${chapters.length + 1}`, content: text, blocks: cur });
+    cur = [];
+    size = 0;
+  };
+
+  for (const b of blocks) {
+    if (size >= targetChars && b.kind === 'h') flush();
+    // Заголовок так и не встретился — режем по абзацу, но вдвое позже.
+    else if (size >= targetChars * 2 && b.kind === 'p') flush();
+    cur.push(b);
+    if (isTextBlock(b)) size += b.text.length;
+  }
+  flush();
+  return chapters;
 }

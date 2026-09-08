@@ -5,8 +5,8 @@
 // Rust-образ ещё один разборщик HTML ради этого незачем.
 
 import { type ExtractResult } from './extract';
-import { isTextBlock, type Block, type ChapterDraft } from './draft';
-import { collectBlocks } from './blocks';
+import { isTextBlock } from './draft';
+import { chunkBlocks, collectBlocks } from './blocks';
 
 /** Мусор, который есть почти на каждой странице и текстом не является. */
 const NOISE = 'script, style, noscript, iframe, svg, form, nav, header, footer, aside, ' +
@@ -101,29 +101,6 @@ export async function parsePage(html: string, source: string): Promise<WebPage> 
   };
 }
 
-/** Режем на главы по объёму текста; картинки идут вместе со своим разделом. */
-function chunkBlocks(blocks: Block[], targetChars = 12_000): ChapterDraft[] {
-  const chapters: ChapterDraft[] = [];
-  let cur: Block[] = [];
-  let size = 0;
-
-  const flush = () => {
-    if (cur.length === 0) return;
-    const text = cur.filter(isTextBlock).map(b => b.text).join('\n\n');
-    chapters.push({ title: `Часть ${chapters.length + 1}`, content: text, blocks: cur });
-    cur = [];
-    size = 0;
-  };
-
-  for (const b of blocks) {
-    // Заголовок — естественная граница: рвать раздел по счётчику некрасиво.
-    if (size >= targetChars && b.kind === 'h') flush();
-    cur.push(b);
-    if (isTextBlock(b)) size += b.text.length;
-  }
-  flush();
-  return chapters.length > 0 ? chapters : [];
-}
 
 function hostOf(url: string): string {
   try { return new URL(url).host.replace(/^www\./, ''); } catch { return ''; }

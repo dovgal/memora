@@ -5,7 +5,7 @@
 // готовые главы обычным JSON.
 
 import type { Block, ChapterDraft } from './draft';
-import { collectBlocks, textOfBlocks, blobFromDataUrl, mimeOfPath, MAX_IMAGE_BYTES } from './blocks';
+import { chunkBlocks, collectBlocks, textOfBlocks, blobFromDataUrl, mimeOfPath, MAX_IMAGE_BYTES } from './blocks';
 
 export interface ExtractResult {
   chapters: ChapterDraft[];
@@ -362,10 +362,12 @@ async function extractDocx(file: File): Promise<ExtractResult> {
     if (b.some(x => x.kind === 'img')) c.blocks = b;
   });
 
-  // Одна сплошная глава — режем по объёму, и тогда картинки не привязать:
-  // границы кусков текста уже не совпадают с местами картинок.
+  // Заголовков в документе не нашлось — вся книга сложилась в одну главу.
+  // Режем её по объёму, но блоками: у текста границы кусков не совпадают с
+  // местами картинок, и все иллюстрации попросту пропадали.
   if (chapters.length === 1) {
-    return { chapters: chunkText(chapters[0].content), meta: { title: '', author: '', language: '' } };
+    const whole = all.filter(b => b.kind !== 'h' || b.level > 2);
+    return { chapters: chunkBlocks(whole), meta: { title: '', author: '', language: '' } };
   }
   return { chapters, meta: { title: '', author: '', language: '' } };
 }
