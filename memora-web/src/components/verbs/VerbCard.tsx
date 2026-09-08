@@ -51,14 +51,19 @@ export function VerbCard({
 
   return (
     <div className="bg-qz-card border border-border rounded-2xl p-6 space-y-5">
-      <div className="flex items-center gap-4">
+      {/*
+        Значок стоит отдельной строкой и во всю ширину: в таблице это широкая
+        полоса с одной-двумя картинками (в среднем 2,4 к 1), и в квадратной
+        рамке от неё оставалось бы 64 точки на 27 — узнать сценку нельзя.
+      */}
+      <div className="space-y-3">
         {/* eslint-disable-next-line @next/next/no-img-element -- значков всего 125, статическая раздача из /public */}
         <img
           src={verbIconSrc(verb.n)}
           alt={verb.inf}
-          className="w-16 h-16 object-contain rounded-lg border border-border bg-white shrink-0"
+          className="h-28 sm:h-32 w-auto max-w-full mx-auto object-contain rounded-xl border border-border bg-white"
         />
-        <div>
+        <div className="text-center">
           <p className="text-xs text-qz-text-muted font-semibold uppercase tracking-wider">№{verb.n}</p>
           <h2 className="text-2xl font-bold text-foreground">{verb.inf}</h2>
         </div>
