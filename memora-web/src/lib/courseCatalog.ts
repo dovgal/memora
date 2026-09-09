@@ -122,6 +122,13 @@ export const BUILTIN_COURSES: CatalogCourse[] = [
     subject: 'Французский язык', topic: 'Французский', level: 'Pro · B1–B2', emoji: '💼',
   },
 
+  {
+    id: 'niveau-pro-ecrsud', href: '/dashboard/student/courses/niveau/ecrsud',
+    title: 'Français professionnel — ECR Sud',
+    description: 'Работа техником SAV по промышленным воротам: оборудование, поломки и ремонт, монтаж на объекте, безопасность и нормы CARSAT. Короткие фразы уровня A1–A2, произношение и разговор с собеседником.',
+    subject: 'Французский язык', topic: 'Французский', level: 'Pro · A1–A2', emoji: '🚪',
+  },
+
   // ---------- Английский язык ----------
   {
     id: 'irregular-verbs', href: '/verbs',

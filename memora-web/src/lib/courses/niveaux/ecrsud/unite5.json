@@ -1,0 +1,305 @@
+{
+  "id": "unite5",
+  "title": "Module 5 : Le chantier — pose, montage, mise en service",
+  "description": "Направление монтажа: приезд на объект, разгрузка, установка, пуск и сдача заказчику. Слова бригады и слова заказчика.",
+  "vocabulary": [
+    {
+      "fr": "un chantier",
+      "ru": "объект, стройплощадка",
+      "ipa": "œ̃ ʃɑ̃tje",
+      "type": "word"
+    },
+    {
+      "fr": "la pose",
+      "ru": "установка, монтаж",
+      "ipa": "la poz",
+      "type": "word"
+    },
+    {
+      "fr": "le montage",
+      "ru": "сборка",
+      "ipa": "lə mɔ̃taʒ",
+      "type": "word"
+    },
+    {
+      "fr": "la mise en service",
+      "ru": "пуск, ввод в эксплуатацию",
+      "ipa": "la miz ɑ̃ sɛʁvis",
+      "type": "word"
+    },
+    {
+      "fr": "la réception",
+      "ru": "приёмка работ",
+      "ipa": "la ʁesɛpsjɔ̃",
+      "type": "word"
+    },
+    {
+      "fr": "le chef de chantier",
+      "ru": "прораб",
+      "ipa": "lə ʃɛf də ʃɑ̃tje",
+      "type": "word"
+    },
+    {
+      "fr": "le maçon",
+      "ru": "каменщик",
+      "ipa": "lə masɔ̃",
+      "type": "word"
+    },
+    {
+      "fr": "l'électricien",
+      "ru": "электрик",
+      "ipa": "lelɛktʁisjɛ̃",
+      "type": "word"
+    },
+    {
+      "fr": "un outil",
+      "ru": "инструмент",
+      "ipa": "œ̃n uti",
+      "type": "word"
+    },
+    {
+      "fr": "une perceuse",
+      "ru": "дрель",
+      "ipa": "yn pɛʁsøz",
+      "type": "word"
+    },
+    {
+      "fr": "une visseuse",
+      "ru": "шуруповёрт",
+      "ipa": "yn visøz",
+      "type": "word"
+    },
+    {
+      "fr": "un niveau",
+      "ru": "уровень (инструмент)",
+      "ipa": "œ̃ nivo",
+      "type": "word"
+    },
+    {
+      "fr": "un mètre",
+      "ru": "рулетка",
+      "ipa": "œ̃ mɛtʁ",
+      "type": "word"
+    },
+    {
+      "fr": "une cheville",
+      "ru": "дюбель",
+      "ipa": "yn ʃəvij",
+      "type": "word"
+    },
+    {
+      "fr": "une vis",
+      "ru": "шуруп",
+      "ipa": "yn vis",
+      "type": "word"
+    },
+    {
+      "fr": "un boulon",
+      "ru": "болт",
+      "ipa": "œ̃ bulɔ̃",
+      "type": "word"
+    },
+    {
+      "fr": "le linteau",
+      "ru": "перемычка над проёмом",
+      "ipa": "lə lɛ̃to",
+      "type": "word"
+    },
+    {
+      "fr": "l'aplomb",
+      "ru": "вертикальность, отвес",
+      "ipa": "laplɔ̃",
+      "type": "word"
+    },
+    {
+      "fr": "le niveau à bulle",
+      "ru": "пузырьковый уровень",
+      "ipa": "lə nivo a byl",
+      "type": "word"
+    },
+    {
+      "fr": "la livraison",
+      "ru": "поставка, доставка",
+      "ipa": "la livʁɛzɔ̃",
+      "type": "word"
+    },
+    {
+      "fr": "Je suis sur le chantier.",
+      "ru": "Я на объекте.",
+      "ipa": "ʒə sɥi syʁ lə ʃɑ̃tje",
+      "type": "phrase"
+    },
+    {
+      "fr": "Où est le chef de chantier ?",
+      "ru": "Где прораб?",
+      "ipa": "u ɛ lə ʃɛf də ʃɑ̃tje",
+      "type": "phrase"
+    },
+    {
+      "fr": "Je commence la pose.",
+      "ru": "Начинаю монтаж.",
+      "ipa": "ʒə kɔmɑ̃s la poz",
+      "type": "phrase"
+    },
+    {
+      "fr": "Je prends les mesures.",
+      "ru": "Снимаю размеры.",
+      "ipa": "ʒə pʁɑ̃ le məzyʁ",
+      "type": "phrase"
+    },
+    {
+      "fr": "Le linteau est trop bas.",
+      "ru": "Перемычка слишком низкая.",
+      "ipa": "lə lɛ̃to ɛ tʁo bɑ",
+      "type": "phrase"
+    },
+    {
+      "fr": "Il manque une pièce.",
+      "ru": "Не хватает детали.",
+      "ipa": "il mɑ̃k yn pjɛs",
+      "type": "phrase"
+    },
+    {
+      "fr": "La livraison est arrivée ?",
+      "ru": "Поставка пришла?",
+      "ipa": "la livʁɛzɔ̃ ɛ taʁive",
+      "type": "phrase"
+    },
+    {
+      "fr": "J'ai besoin d'aide.",
+      "ru": "Мне нужна помощь.",
+      "ipa": "ʒe bəzwɛ̃ dɛd",
+      "type": "phrase"
+    },
+    {
+      "fr": "Vous avez une échelle ?",
+      "ru": "У вас есть лестница?",
+      "ipa": "vu zave yn eʃɛl",
+      "type": "phrase"
+    },
+    {
+      "fr": "Il faut du courant ici.",
+      "ru": "Сюда нужно электричество.",
+      "ipa": "il fo dy kuʁɑ̃ isi",
+      "type": "phrase"
+    },
+    {
+      "fr": "Je fais la mise en service.",
+      "ru": "Делаю пуск.",
+      "ipa": "ʒə fɛ la miz ɑ̃ sɛʁvis",
+      "type": "phrase"
+    },
+    {
+      "fr": "Je vous montre comment ça marche.",
+      "ru": "Покажу, как это работает.",
+      "ipa": "ʒə vu mɔ̃tʁ kɔmɑ̃ sa maʁʃ",
+      "type": "phrase"
+    },
+    {
+      "fr": "C'est terminé.",
+      "ru": "Готово, закончено.",
+      "ipa": "sɛ tɛʁmine",
+      "type": "phrase"
+    },
+    {
+      "fr": "On finit demain.",
+      "ru": "Закончим завтра.",
+      "ipa": "ɔ̃ fini dəmɛ̃",
+      "type": "phrase"
+    },
+    {
+      "fr": "Combien de temps ?",
+      "ru": "Сколько времени?",
+      "ipa": "kɔ̃bjɛ̃ də tɑ̃",
+      "type": "phrase"
+    },
+    {
+      "fr": "Ça prend deux heures.",
+      "ru": "Это займёт два часа.",
+      "ipa": "sa pʁɑ̃ dø zœʁ",
+      "type": "phrase"
+    },
+    {
+      "fr": "Je travaille seul ou en binôme ?",
+      "ru": "Я работаю один или в паре?",
+      "ipa": "ʒə tʁavaj sœl u ɑ̃ binom",
+      "type": "phrase"
+    },
+    {
+      "fr": "Je nettoie le chantier.",
+      "ru": "Убираю за собой на объекте.",
+      "ipa": "ʒə nɛtwa lə ʃɑ̃tje",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u5-theorie",
+      "type": "theory",
+      "title": "На объекте важнее спросить, чем промолчать",
+      "content": "На чужом объекте вы не знаете ни людей, ни порядков. Молчание там дороже ошибки в артикле.\n\nЧетыре вопроса закрывают почти всё:\n\n«Où est le chef de chantier ?» — кто здесь решает.\n«Il manque une pièce.» — чего не хватает.\n«Vous avez une échelle ?» — что нужно.\n«Combien de temps ?» — сколько у вас времени.\n\nОбратите внимание на «il faut» — «нужно». Безличная форма, за ней сразу существительное или инфинитив: «Il faut du courant.» «Il faut commander la pièce.» Одна конструкция закрывает десятки ситуаций, и её стоит выучить первой.\n\nИ последнее: «Je nettoie le chantier.» Во Франции убранный после себя объект замечают и ценят."
+    },
+    {
+      "id": "u5-pron",
+      "type": "pronunciation",
+      "title": "Произношение: на объекте",
+      "pronItems": [
+        {
+          "text": "Je suis sur le chantier.",
+          "ipa": "ʒə sɥi syʁ lə ʃɑ̃tje",
+          "ru": "Я на объекте.",
+          "kind": "phrase"
+        },
+        {
+          "text": "Où est le chef de chantier ?",
+          "ipa": "u ɛ lə ʃɛf də ʃɑ̃tje",
+          "ru": "Где прораб?",
+          "kind": "phrase"
+        },
+        {
+          "text": "Il manque une pièce.",
+          "ipa": "il mɑ̃k yn pjɛs",
+          "ru": "Не хватает детали.",
+          "kind": "phrase"
+        },
+        {
+          "text": "Je fais la mise en service.",
+          "ipa": "ʒə fɛ la miz ɑ̃ sɛʁvis",
+          "ru": "Делаю пуск.",
+          "kind": "phrase"
+        },
+        {
+          "text": "Ça prend deux heures.",
+          "ipa": "sa pʁɑ̃ dø zœʁ",
+          "ru": "Это займёт два часа.",
+          "kind": "phrase"
+        },
+        {
+          "text": "la mise en service",
+          "ipa": "la miz ɑ̃ sɛʁvis",
+          "ru": "пуск, ввод в эксплуатацию",
+          "kind": "word"
+        }
+      ]
+    },
+    {
+      "id": "u5-talk",
+      "type": "ai-talk",
+      "title": "Разговор: первый день на объекте",
+      "role": "Прораб на объекте Bouygues. Занят, говорит коротко, но помогает, если спросить прямо.",
+      "situation": "Вы приехали ставить секционные ворота на складе. Прораба видите впервые.",
+      "goals": [
+        "Представиться и сказать, зачем приехали",
+        "Спросить, где прораб и есть ли электричество",
+        "Сказать, сколько времени займёт работа"
+      ],
+      "hints": [
+        "Bonjour, je viens pour la pose de la porte.",
+        "Il faut du courant ici.",
+        "Ça prend deux heures.",
+        "Vous avez une échelle ?"
+      ],
+      "talkLevel": "A1"
+    }
+  ]
+}

@@ -1,0 +1,281 @@
+{
+  "id": "unite6",
+  "title": "Module 6 : Sécurité — EPI, consignation, normes",
+  "description": "Безопасность на объекте: средства защиты, обесточивание, работа на высоте, нормы CARSAT. Тема, на которой во Франции не экономят и о которой спросят на собеседовании.",
+  "vocabulary": [
+    {
+      "fr": "la sécurité",
+      "ru": "безопасность",
+      "ipa": "la sekyʁite",
+      "type": "word"
+    },
+    {
+      "fr": "les EPI",
+      "ru": "средства индивидуальной защиты",
+      "ipa": "le ø pe i",
+      "type": "word"
+    },
+    {
+      "fr": "un casque",
+      "ru": "каска",
+      "ipa": "œ̃ kask",
+      "type": "word"
+    },
+    {
+      "fr": "des gants",
+      "ru": "перчатки",
+      "ipa": "de ɡɑ̃",
+      "type": "word"
+    },
+    {
+      "fr": "des chaussures de sécurité",
+      "ru": "защитная обувь",
+      "ipa": "de ʃosyʁ də sekyʁite",
+      "type": "word"
+    },
+    {
+      "fr": "des lunettes de protection",
+      "ru": "защитные очки",
+      "ipa": "de lynɛt də pʁɔtɛksjɔ̃",
+      "type": "word"
+    },
+    {
+      "fr": "un harnais",
+      "ru": "страховочная привязь",
+      "ipa": "œ̃ aʁnɛ",
+      "type": "word"
+    },
+    {
+      "fr": "le travail en hauteur",
+      "ru": "работа на высоте",
+      "ipa": "lə tʁavaj ɑ̃ otœʁ",
+      "type": "word"
+    },
+    {
+      "fr": "une nacelle",
+      "ru": "подъёмная люлька",
+      "ipa": "yn nasɛl",
+      "type": "word"
+    },
+    {
+      "fr": "un échafaudage",
+      "ru": "леса",
+      "ipa": "œ̃n eʃafodaʒ",
+      "type": "word"
+    },
+    {
+      "fr": "la consignation",
+      "ru": "обесточивание с блокировкой",
+      "ipa": "la kɔ̃siɲasjɔ̃",
+      "type": "word"
+    },
+    {
+      "fr": "couper le courant",
+      "ru": "обесточить",
+      "ipa": "kupe lə kuʁɑ̃",
+      "type": "phrase"
+    },
+    {
+      "fr": "un accident",
+      "ru": "несчастный случай",
+      "ipa": "œ̃n aksidɑ̃",
+      "type": "word"
+    },
+    {
+      "fr": "un risque",
+      "ru": "риск",
+      "ipa": "œ̃ ʁisk",
+      "type": "word"
+    },
+    {
+      "fr": "une consigne",
+      "ru": "инструкция, указание",
+      "ipa": "yn kɔ̃siɲ",
+      "type": "word"
+    },
+    {
+      "fr": "une habilitation électrique",
+      "ru": "допуск по электробезопасности",
+      "ipa": "yn abilitasjɔ̃ elɛktʁik",
+      "type": "word"
+    },
+    {
+      "fr": "la norme",
+      "ru": "норма, стандарт",
+      "ipa": "la nɔʁm",
+      "type": "word"
+    },
+    {
+      "fr": "la maintenance préventive",
+      "ru": "плановое обслуживание",
+      "ipa": "la mɛ̃tənɑ̃s pʁevɑ̃tiv",
+      "type": "word"
+    },
+    {
+      "fr": "le contrôle périodique",
+      "ru": "периодическая проверка",
+      "ipa": "lə kɔ̃tʁol peʁjɔdik",
+      "type": "word"
+    },
+    {
+      "fr": "un ressort sous tension",
+      "ru": "пружина под натяжением",
+      "ipa": "œ̃ ʁəsɔʁ su tɑ̃sjɔ̃",
+      "type": "word"
+    },
+    {
+      "fr": "Je porte toujours les EPI.",
+      "ru": "Я всегда работаю в средствах защиты.",
+      "ipa": "ʒə pɔʁt tuʒuʁ le ø pe i",
+      "type": "phrase"
+    },
+    {
+      "fr": "Je coupe le courant avant.",
+      "ru": "Сначала обесточиваю.",
+      "ipa": "ʒə kup lə kuʁɑ̃ avɑ̃",
+      "type": "phrase"
+    },
+    {
+      "fr": "C'est dangereux.",
+      "ru": "Это опасно.",
+      "ipa": "sɛ dɑ̃ʒʁø",
+      "type": "phrase"
+    },
+    {
+      "fr": "Attention, ressort sous tension !",
+      "ru": "Осторожно, пружина под натяжением!",
+      "ipa": "atɑ̃sjɔ̃ ʁəsɔʁ su tɑ̃sjɔ̃",
+      "type": "phrase"
+    },
+    {
+      "fr": "Je travaille en hauteur avec un harnais.",
+      "ru": "На высоте работаю в привязи.",
+      "ipa": "ʒə tʁavaj ɑ̃ otœʁ avɛk œ̃n aʁnɛ",
+      "type": "phrase"
+    },
+    {
+      "fr": "J'ai l'habilitation électrique.",
+      "ru": "У меня есть допуск по электробезопасности.",
+      "ipa": "ʒe labilitasjɔ̃ elɛktʁik",
+      "type": "phrase"
+    },
+    {
+      "fr": "Je respecte les consignes.",
+      "ru": "Я соблюдаю инструкции.",
+      "ipa": "ʒə ʁɛspɛkt le kɔ̃siɲ",
+      "type": "phrase"
+    },
+    {
+      "fr": "Je vérifie avant de commencer.",
+      "ru": "Проверяю перед началом.",
+      "ipa": "ʒə veʁifi avɑ̃ də kɔmɑ̃se",
+      "type": "phrase"
+    },
+    {
+      "fr": "Il faut deux personnes.",
+      "ru": "Нужны два человека.",
+      "ipa": "il fo dø pɛʁsɔn",
+      "type": "phrase"
+    },
+    {
+      "fr": "Je ne travaille pas seul en hauteur.",
+      "ru": "На высоте один не работаю.",
+      "ipa": "ʒə nə tʁavaj pa sœl ɑ̃ otœʁ",
+      "type": "phrase"
+    },
+    {
+      "fr": "Le contrôle est à jour ?",
+      "ru": "Проверка пройдена вовремя?",
+      "ipa": "lə kɔ̃tʁol ɛ ta ʒuʁ",
+      "type": "phrase"
+    },
+    {
+      "fr": "Je fais la maintenance préventive.",
+      "ru": "Делаю плановое обслуживание.",
+      "ipa": "ʒə fɛ la mɛ̃tənɑ̃s pʁevɑ̃tiv",
+      "type": "phrase"
+    },
+    {
+      "fr": "La sécurité d'abord.",
+      "ru": "Безопасность прежде всего.",
+      "ipa": "la sekyʁite dabɔʁ",
+      "type": "phrase"
+    },
+    {
+      "fr": "Où est l'arrêt d'urgence ?",
+      "ru": "Где аварийный останов?",
+      "ipa": "u ɛ laʁɛ dyʁʒɑ̃s",
+      "type": "phrase"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u6-theorie",
+      "type": "theory",
+      "title": "Почему о безопасности спросят обязательно",
+      "content": "Во Франции безопасность на объекте — не формальность. За несчастный случай отвечает работодатель, и ECR Sud прямо пишет, что оборудование ставится по нормам CARSAT.\n\nПоэтому на собеседовании прозвучит вопрос о безопасности почти наверняка. Ответ должен быть коротким и уверенным:\n\n«Je porte toujours les EPI.» — всегда в средствах защиты.\n«Je coupe le courant avant.» — обесточиваю до начала.\n«Je ne travaille pas seul en hauteur.» — на высоте один не работаю.\n\nЕсли у вас есть habilitation électrique — скажите обязательно, это ценится. Если нет — так и скажите: «Je n'ai pas encore l'habilitation, mais je peux la passer.» Врать здесь нельзя: проверят.\n\nОтдельно запомните «Attention, ressort sous tension !» Торсионная пружина калечит, и это та фраза, которой останавливают чужую руку."
+    },
+    {
+      "id": "u6-pron",
+      "type": "pronunciation",
+      "title": "Произношение: безопасность",
+      "pronItems": [
+        {
+          "text": "Je porte toujours les EPI.",
+          "ipa": "ʒə pɔʁt tuʒuʁ le ø pe i",
+          "ru": "Я всегда работаю в средствах защиты.",
+          "kind": "phrase"
+        },
+        {
+          "text": "Je coupe le courant avant.",
+          "ipa": "ʒə kup lə kuʁɑ̃ avɑ̃",
+          "ru": "Сначала обесточиваю.",
+          "kind": "phrase"
+        },
+        {
+          "text": "Attention, ressort sous tension !",
+          "ipa": "atɑ̃sjɔ̃ ʁəsɔʁ su tɑ̃sjɔ̃",
+          "ru": "Осторожно, пружина под натяжением!",
+          "kind": "phrase"
+        },
+        {
+          "text": "Je respecte les consignes.",
+          "ipa": "ʒə ʁɛspɛkt le kɔ̃siɲ",
+          "ru": "Я соблюдаю инструкции.",
+          "kind": "phrase"
+        },
+        {
+          "text": "le travail en hauteur",
+          "ipa": "lə tʁavaj ɑ̃ otœʁ",
+          "ru": "работа на высоте",
+          "kind": "word"
+        },
+        {
+          "text": "la consignation",
+          "ipa": "la kɔ̃siɲasjɔ̃",
+          "ru": "обесточивание с блокировкой",
+          "kind": "word"
+        }
+      ]
+    },
+    {
+      "id": "u6-talk",
+      "type": "ai-talk",
+      "title": "Разговор: вопросы о безопасности",
+      "role": "Jonathan Denorme, директор ECR Sud. Спрашивает о безопасности спокойно, но внимательно слушает ответ.",
+      "situation": "Собеседование. Речь зашла о том, как вы работаете на высоте и с электрикой.",
+      "goals": [
+        "Сказать, что всегда работаете в средствах защиты",
+        "Сказать, что обесточиваете перед работой",
+        "Честно ответить про допуск по электробезопасности"
+      ],
+      "hints": [
+        "Je porte toujours les EPI.",
+        "Je coupe le courant avant.",
+        "Je ne travaille pas seul en hauteur.",
+        "Je n'ai pas encore l'habilitation, mais je peux la passer."
+      ],
+      "talkLevel": "A1"
+    }
+  ]
+}
