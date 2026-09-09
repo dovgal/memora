@@ -5,6 +5,7 @@ use axum::{
     Json,
 };
 use sqlx::PgPool;
+use sqlx::Row;
 use uuid::Uuid;
 
 use crate::domain::dtos::{SetProgressResponse, StudySessionRequest};
@@ -245,6 +246,55 @@ pub async fn fsrs_review(
     };
 
     Ok((StatusCode::OK, Json(response)))
+}
+
+/// GET /api/sets/{id}/fsrs/state — состояние всех карточек набора.
+///
+/// Сводка по набору отдаёт только состояние, а «подошедшие по сроку» приходят
+/// отдельным списком, урезанным полусотней и без пометки, что в нём новое.
+/// Для занятия, где новых должно быть не больше горстки, а слабые идут вперёд,
+/// этого мало: нужен срок и число промахов по каждой карточке разом.
+pub async fn get_fsrs_state(
+    State(pool): State<PgPool>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Path(set_id_str): Path<String>,
+) -> Result<impl IntoResponse, (StatusCode, Json<ApiError>)> {
+    let user_id = Uuid::parse_str(&user.sub)
+        .map_err(|_| ApiError::response(StatusCode::UNAUTHORIZED, "Invalid user token"))?;
+    let set_id = Uuid::parse_str(&set_id_str)
+        .map_err(|_| ApiError::response(StatusCode::BAD_REQUEST, "Invalid set ID"))?;
+
+    let rows = sqlx::query(
+        "SELECT f.id, COALESCE(fr.state, 0) AS state, fr.due, \
+                COALESCE(fr.reps, 0) AS reps, COALESCE(fr.lapses, 0) AS lapses, \
+                COALESCE(fr.stability, 0) AS stability \
+         FROM flashcards f \
+         LEFT JOIN fsrs_records fr ON f.id = fr.flashcard_id AND fr.user_id = $1 \
+         WHERE f.set_id = $2 \
+         ORDER BY f.order_index",
+    )
+    .bind(user_id)
+    .bind(set_id)
+    .fetch_all(&pool)
+    .await
+    .map_err(|e| ApiError::response(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+
+    let cards: Vec<serde_json::Value> = rows
+        .iter()
+        .map(|r| {
+            let due: Option<chrono::DateTime<chrono::Utc>> = r.get("due");
+            serde_json::json!({
+                "id": r.get::<Uuid, _>("id").to_string(),
+                "state": r.get::<i16, _>("state"),
+                "due": due.map(|d| d.to_rfc3339()),
+                "reps": r.get::<i32, _>("reps"),
+                "lapses": r.get::<i32, _>("lapses"),
+                "stability": r.get::<f32, _>("stability"),
+            })
+        })
+        .collect();
+
+    Ok((StatusCode::OK, Json(serde_json::json!({ "cards": cards }))))
 }
 
 pub async fn get_fsrs_due(

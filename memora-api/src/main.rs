@@ -126,6 +126,7 @@ async fn main() {
         .route("/api/study/fsrs/review", post(handlers::study::fsrs_review))
         .route("/api/sets/{id}/progress", get(handlers::study::get_set_progress))
         .route("/api/sets/{id}/fsrs/due", get(handlers::study::get_fsrs_due))
+        .route("/api/sets/{id}/fsrs/state", get(handlers::study::get_fsrs_state))
         .route("/api/sets/{id}/fsrs/reset", delete(handlers::study::reset_fsrs_progress))
         // Тренажёр «слово в контексте»: предложения с пропуском.
         .route("/api/sets/{id}/cloze", post(handlers::cloze::build_cloze))

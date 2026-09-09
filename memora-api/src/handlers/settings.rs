@@ -22,7 +22,10 @@ fn db_err(e: sqlx::Error) -> (StatusCode, Json<ApiError>) {
 
 /// Ключи, которые разрешено хранить. Список закрытый: иначе таблица настроек
 /// со временем превращается в свалку, куда пишет кто угодно и что угодно.
-const ALLOWED: [&str; 1] = ["language"];
+///
+/// verbsSetId — набор карточек с неправильными глаголами. У каждого он свой:
+/// карточки общие по смыслу, а расписание повторений личное.
+const ALLOWED: [&str; 2] = ["language", "verbsSetId"];
 
 /// Языки приложения. Незнакомый код молча не принимаем: пустой перевод
 /// показал бы человеку наполовину русское меню.
@@ -97,6 +100,7 @@ mod tests {
     #[test]
     fn only_known_settings_are_accepted() {
         assert!(ALLOWED.contains(&"language"));
+        assert!(ALLOWED.contains(&"verbsSetId"));
         assert!(!ALLOWED.contains(&"whatever"));
     }
 
