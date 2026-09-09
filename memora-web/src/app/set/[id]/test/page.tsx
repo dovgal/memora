@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react"
 import { SetResponse } from "@/types/schema"
 import { generateTest, TestQuestion, TestConfig } from "@/lib/studyUtils"
 import { X, CheckCircle, RotateCcw, Loader2, FileText, Settings, Layers, ListTodo } from "lucide-react"
+import { parseRange, selectCards } from "@/lib/studySelection"
 
 function MatchingQuestionView({ question, currentAnswer, onChange }: { question: TestQuestion, currentAnswer: string, onChange: (val: string) => void }) {
     const data = question.matchingData!;
@@ -105,6 +106,12 @@ export default function TestModePage({ params }: { params: Promise<{ id: string 
 
                 if (resSet.ok) {
                     const setData: SetResponse = await resSet.json()
+                    // Курс открывает карточки на своей партии: отбор приходит
+                    // в адресе, и сам режим ничего не знает про глаголы.
+                    setData.flashcards = selectCards(
+                        setData.flashcards,
+                        parseRange(new URLSearchParams(window.location.search).get("range")),
+                    );
                     setSet(setData)
                     setQuestionCount(Math.min(20, setData.flashcards.length))
                 } else {

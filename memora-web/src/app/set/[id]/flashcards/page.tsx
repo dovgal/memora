@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react"
 import { SetResponse } from "@/types/schema"
 import { X, Loader2 } from "lucide-react"
 import FlashcardPlayer from "../FlashcardPlayer"
+import { parseRange, selectCards } from "@/lib/studySelection"
 
 export default function FlashcardsStudyPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = React.use(params);
@@ -21,6 +22,12 @@ export default function FlashcardsStudyPage({ params }: { params: Promise<{ id: 
                 const res = await fetch(`/api/sets/${id}`)
                 if (res.ok) {
                     const data = await res.json()
+                    // Курс открывает карточки на своей партии: отбор приходит
+                    // в адресе, и сам режим ничего не знает про глаголы.
+                    data.flashcards = selectCards(
+                        data.flashcards,
+                        parseRange(new URLSearchParams(window.location.search).get("range")),
+                    );
                     setSet(data)
                 } else {
                     router.push('/404')

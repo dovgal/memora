@@ -7,6 +7,7 @@ import { SetResponse } from '@/types/schema';
 import { X, Trophy, RotateCcw, Play } from 'lucide-react';
 import Link from 'next/link';
 import { getCardText } from '@/lib/studyUtils';
+import { parseRange, selectCards } from "@/lib/studySelection"
 
 type CardItem = {
     id: string; // Internal unique ID for the game piece
@@ -43,6 +44,12 @@ export default function MatchModePage({ params }: { params: Promise<{ id: string
                 const resSet = await fetch(`/api/sets/${id}`);
                 if (resSet.ok) {
                     const setData: SetResponse = await resSet.json();
+                    // Курс открывает карточки на своей партии: отбор приходит
+                    // в адресе, и сам режим ничего не знает про глаголы.
+                    setData.flashcards = selectCards(
+                        setData.flashcards,
+                        parseRange(new URLSearchParams(window.location.search).get("range")),
+                    );
                     setSet(setData);
                 } else {
                     router.push('/404');

@@ -11,6 +11,7 @@ import { fetchAuthedAudioUrl } from "@/lib/authedAudio"
 import { X, CheckCircle, XCircle, Loader2, ChevronRight, GraduationCap, Settings, Edit2, Volume2, Shuffle, Star, ChevronDown, ChevronUp, Mic } from "lucide-react"
 import { QChatProvider, WhyWrongButton } from "@/components/QChat"
 import Image from "next/image"
+import { parseRange, selectCards } from "@/lib/studySelection"
 
 export default function LearnModePage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = React.use(params);
@@ -236,6 +237,12 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
 
                 if (resSet[0].ok) {
                     const setData: SetResponse = await resSet[0].json()
+                    // Курс открывает карточки на своей партии: отбор приходит
+                    // в адресе, и сам режим ничего не знает про глаголы.
+                    setData.flashcards = selectCards(
+                        setData.flashcards,
+                        parseRange(new URLSearchParams(window.location.search).get("range")),
+                    );
                     setSet(setData)
 
                     const rawQueue = generateLearnQueue(setData.flashcards, new Set())

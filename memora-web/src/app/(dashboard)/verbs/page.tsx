@@ -45,6 +45,8 @@ export default function VerbsPage() {
   const [states, setStates] = useState<VerbState[]>([]);
   /** Номер глагола → карточка в наборе: ответы уходят по опознавателю карточки. */
   const [cardByVerb, setCardByVerb] = useState<Map<number, string>>(new Map());
+  /** Набор карточек курса: из него открываются режимы занятий на текущей партии. */
+  const [setId, setSetId] = useState<string | null>(null);
 
   const [editingAssignment, setEditingAssignment] = useState(false);
   const [fromInput, setFromInput] = useState(1);
@@ -69,6 +71,7 @@ export default function VerbsPage() {
       // там настоящий алгоритм, и тот же набор открывается всеми режимами
       // занятий — карточками, изучением, тестом.
       const set = await ensureVerbSet();
+      setSetId(set.id);
       setCardByVerb(new Map(set.flashcards.map(c => [verbNumberOf(c), c.id])));
       const cardStates = await fetchCardStates(set.id);
       setStates(toVerbStates(set.flashcards, cardStates));
@@ -315,6 +318,34 @@ export default function VerbsPage() {
                 </p>
               )}
             </div>
+
+            {/* ---------- Карточки этой партии ---------- */}
+            {setId && assignment && (
+              <div className="bg-qz-card border border-border rounded-2xl p-5 mb-6">
+                <h2 className="text-lg font-bold text-foreground">{t('Заучивание карточками')}</h2>
+                <p className="text-sm text-qz-text-muted mt-1 mb-3">
+                  {t('Занятие в курсе — это проверка. Здесь те же глаголы партии заучиваются другими способами.')}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    { href: 'flashcards', label: t('Карточки'), hint: t('Посмотреть и перевернуть') },
+                    { href: 'learn', label: t('Заучивание'), hint: t('Выбор и ввод по очереди') },
+                    { href: 'test', label: t('Тест'), hint: t('Проверка без подсказок') },
+                    { href: 'match', label: t('Подбор'), hint: t('Составить пары на время') },
+                  ].map(m => (
+                    <Link
+                      key={m.href}
+                      href={`/set/${setId}/${m.href}?range=${assignment.from}-${assignment.to}`}
+                      title={m.hint}
+                      className="border border-border rounded-xl px-4 py-2.5 text-sm font-semibold text-foreground hover:border-[#4255ff]/60 transition-colors"
+                    >{m.label}</Link>
+                  ))}
+                </div>
+                <p className="text-[11px] text-qz-text-muted mt-3">
+                  {t('Откроются глаголы')} {assignment.from}–{assignment.to}, {t('а не вся таблица.')}
+                </p>
+              </div>
+            )}
 
             {/* ---------- Карта прогресса ---------- */}
             <div>
