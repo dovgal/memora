@@ -28,9 +28,9 @@ export function verbFieldsSchema(): FieldSchema[] {
     // труднее, чем глазами, и слушать их нужнее всего. Перевод оставлен
     // молчащим — читать его по-французски Дамир и так умеет, а каждое поле
     // с озвучкой это ещё сто двадцать пять синтезов.
-    { id: 'term', name: 'INFINITIF', type: 'text', side: 'front', order: 2, settings: { language: 'en', ttsEnabled: true } },
-    { id: 'pret', name: 'PRÉTÉRIT', type: 'text', side: 'back', order: 1, settings: { language: 'en', ttsEnabled: true } },
-    { id: 'definition', name: 'PARTICIPE PASSÉ', type: 'text', side: 'back', order: 2, settings: { language: 'en', ttsEnabled: true } },
+    { id: 'term', name: 'INFINITIF', type: 'text', side: 'front', order: 2, settings: { language: 'en', ttsEnabled: true, ttsLowercase: true } },
+    { id: 'pret', name: 'PRÉTÉRIT', type: 'text', side: 'back', order: 1, settings: { language: 'en', ttsEnabled: true, ttsLowercase: true } },
+    { id: 'definition', name: 'PARTICIPE PASSÉ', type: 'text', side: 'back', order: 2, settings: { language: 'en', ttsEnabled: true, ttsLowercase: true } },
     { id: 'fr', name: 'TRADUCTION', type: 'text', side: 'back', order: 3, settings: { language: 'fr' } },
   ];
 }
@@ -96,16 +96,42 @@ export async function ensureVerbSet(): Promise<SetResponse> {
 }
 
 /**
- * Дописывает озвучку набору, заведённому до того, как её включили.
+ * Приводит схему набора к нынешней, если она отстала.
  *
- * Обновление набора сохраняет карточки, чьи опознаватели переданы, — поэтому
+ * Сравниваем схему целиком, а не наличие озвучки: правки в её настройках —
+ * например, читать ли слово строчными — иначе не дошли бы до набора, который
+ * завели раньше.
+ *
+ * Обновление набора сохраняет карточки, чьи опознаватели переданы, поэтому
  * расписание повторений не теряется. А сервер, приняв новую схему, сам
- * ставит в очередь синтез недостающих записей.
+ * ставит в очередь синтез записей.
  */
+/**
+ * Сравнение схем, не зависящее от порядка ключей.
+ *
+ * Сервер возвращает JSON со своим порядком полей, и прямое сравнение строк
+ * всегда показывало бы расхождение. Набор пересобирался бы при каждом
+ * открытии, а с ним заново запускался бы синтез трёх с половиной сотен
+ * записей.
+ */
+function sameSchema(a: unknown, b: unknown): boolean {
+  const stable = (v: unknown): unknown => {
+    if (Array.isArray(v)) return v.map(stable);
+    if (v && typeof v === 'object') {
+      return Object.fromEntries(
+        Object.entries(v as Record<string, unknown>)
+          .sort(([x], [y]) => x.localeCompare(y))
+          .map(([k, val]) => [k, stable(val)]),
+      );
+    }
+    return v;
+  };
+  return JSON.stringify(stable(a)) === JSON.stringify(stable(b));
+}
+
 async function withAudio(set: SetResponse): Promise<SetResponse> {
   const wanted = verbFieldsSchema();
-  const hasTts = set.fieldsSchema?.some(f => (f.settings as { ttsEnabled?: boolean } | undefined)?.ttsEnabled);
-  if (hasTts) return set;
+  if (sameSchema(set.fieldsSchema, wanted)) return set;
 
   const r = await fetch(`/api/sets/${set.id}`, {
     method: 'PUT',

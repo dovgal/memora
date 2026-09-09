@@ -453,15 +453,16 @@ pub async fn pregenerate_set_tts(pool: PgPool, set_id: Uuid) {
         None => return,
     };
 
-    // Текстовые поля с озвучкой: (field_id, voice_id).
-    let mut tts_fields: Vec<(String, String)> = Vec::new();
+    // Текстовые поля с озвучкой: (field_id, voice_id, читать строчными).
+    let mut tts_fields: Vec<(String, String, bool)> = Vec::new();
     for f in schema {
         let is_text = f.get("type").and_then(|v| v.as_str()) == Some("text");
         let settings = f.get("settings").and_then(|v| v.as_object());
         let enabled = settings.and_then(|s| s.get("ttsEnabled")).and_then(|v| v.as_bool()) == Some(true);
+        let lower = settings.and_then(|s| s.get("ttsLowercase")).and_then(|v| v.as_bool()) == Some(true);
         if is_text && enabled
             && let (Some(id), Some(s)) = (f.get("id").and_then(|v| v.as_str()), settings) {
-                tts_fields.push((id.to_string(), resolve_tts_voice(s)));
+                tts_fields.push((id.to_string(), resolve_tts_voice(s), lower));
             }
     }
     if tts_fields.is_empty() {
@@ -485,7 +486,7 @@ pub async fn pregenerate_set_tts(pool: PgPool, set_id: Uuid) {
         let definition: String = card.get("definition");
         let fields_data: Value = card.get("fields_data");
 
-        for (fid, voice) in &tts_fields {
+        for (fid, voice, lower) in &tts_fields {
             let text = if fid == "term" {
                 term.clone()
             } else if fid == "definition" {
@@ -496,6 +497,11 @@ pub async fn pregenerate_set_tts(pool: PgPool, set_id: Uuid) {
             if text.trim().is_empty() {
                 continue;
             }
+            // Набор может хранить слова заглавными — так они напечатаны в
+            // школьной таблице. Синтезатор принимает это за сокращение и читает
+            // по буквам: WAS выходит «дабль-ю-эй-эс». Поле само говорит, что
+            // регистр у него оформительский, а не смысловой.
+            let text = if *lower { text.to_lowercase() } else { text };
             let audio_field = format!("{fid}_audio");
             match get_or_synthesize_tts(&pool, voice, &text).await {
                 Ok(bytes) => {
