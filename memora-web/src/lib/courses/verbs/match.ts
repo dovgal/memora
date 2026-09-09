@@ -8,11 +8,17 @@
 //    («BURNT/-ED», «-ED» значит «замени T на ED»: burnt/burned). Таблица
 //    учит британскому, поэтому принимаем только первую часть.
 
-const normalize = (s: string) => s.trim().toUpperCase().replace(/\s+/g, ' ');
+const normalize = (s: string) =>
+  s.trim().toUpperCase().replace(/\s+/g, ' ').replace(/\s*,\s*/g, ', ');
 
 /** Какие написания считаются верным ответом для одной формы из таблицы. */
 export function acceptedForms(raw: string): string[] {
-  if (raw.includes(',')) return raw.split(',').map(normalize);
+  if (raw.includes(',')) {
+    // Обе части по отдельности — и обе вместе. Написать «was, were», как
+    // напечатано в таблице, — самый честный ответ, и отвергать его нелепо:
+    // именно так подросток и спишет с листа.
+    return [normalize(raw), ...raw.split(',').map(normalize)];
+  }
   if (raw.includes('/')) return [normalize(raw.split('/')[0])];
   return [normalize(raw)];
 }

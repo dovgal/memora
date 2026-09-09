@@ -11,7 +11,8 @@ test('обычная форма — регистр и пробелы по кра
 });
 
 test('запятая — верны обе формы', () => {
-  assert.deepEqual(acceptedForms('WAS, WERE'), ['WAS', 'WERE']);
+  // Принимаем и обе части по отдельности, и полную запись из таблицы.
+  assert.deepEqual(acceptedForms('WAS, WERE'), ['WAS, WERE', 'WAS', 'WERE']);
   assert.ok(isFormCorrect('was', 'WAS, WERE'));
   assert.ok(isFormCorrect('were', 'WAS, WERE'));
   assert.ok(!isFormCorrect('is', 'WAS, WERE'));
@@ -26,4 +27,16 @@ test('слэш — требуется только британский вари
 
 test('внутренние пробелы схлопываются, но не пропадают целиком', () => {
   assert.ok(isFormCorrect('WAS  WERE'.replace('  ', ' '), 'WAS WERE'));
+});
+
+test('обе формы вместе — тоже верный ответ, так напечатано в таблице', () => {
+  assert.ok(isFormCorrect('was, were', 'WAS, WERE'));
+  assert.ok(isFormCorrect('WAS, WERE', 'WAS, WERE'));
+  // Пробел после запятой ставят не все.
+  assert.ok(isFormCorrect('was,were', 'WAS, WERE'));
+  // И каждая по отдельности остаётся верной.
+  assert.ok(isFormCorrect('was', 'WAS, WERE'));
+  assert.ok(isFormCorrect('were', 'WAS, WERE'));
+  // А посторонняя форма — нет.
+  assert.ok(!isFormCorrect('been', 'WAS, WERE'));
 });
