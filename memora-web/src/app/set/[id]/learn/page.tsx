@@ -156,8 +156,11 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                 // For WRITTEN: pick a single target field on the answer side
                 const answerSide: 'front' | 'back' = aType === 'term' ? 'front' : 'back';
                 const promptSide: 'front' | 'back' = aType === 'term' ? 'back' : 'front';
-                const { name: fieldName, value: fieldValue, isMultiField } = getCardSingleField(c, answerSide, schema);
-                const promptText = getCardText(c, promptSide, schema, false);
+                const { name: fieldName, value: fieldValue } = getCardSingleField(c, answerSide, schema);
+                // С подписями: у карточки с тремя полями вопрос иначе
+                // слипается в «BORE BORNE PORTER, SUPPORTER», и понять, о чём
+                // спрашивают, нельзя.
+                const promptText = getCardText(c, promptSide, schema, true);
 
                 return {
                     flashcard: c,
@@ -166,7 +169,9 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
                         prompt: promptText,
                         correctAnswer: fieldValue,
                         answerType: aType,
-                        targetFieldName: isMultiField ? fieldName : undefined
+                        // Имя поля показываем всегда: «Введите правильный термин»
+                        // не говорит ничего, а «Введите INFINITIF» — говорит.
+                        targetFieldName: fieldName || undefined
                     }
                 }
             }
@@ -407,7 +412,12 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
         }
     }
 
-    const closeSession = () => router.push(`/set/${id}`)
+    // Возврат туда, откуда пришли: из курса — в курс. Иначе человек
+    // оказывается в чужом наборе и не понимает, как вернуться к занятию.
+    const closeSession = () => {
+        const back = new URLSearchParams(window.location.search).get('back')
+        router.push(back && back.startsWith('/') ? back : `/set/${id}`)
+    }
 
     if (isLoading) {
         return (

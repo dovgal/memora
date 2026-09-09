@@ -335,7 +335,7 @@ export default function VerbsPage() {
                   ].map(m => (
                     <Link
                       key={m.href}
-                      href={`/set/${setId}/${m.href}?range=${assignment.from}-${assignment.to}`}
+                      href={`/set/${setId}/${m.href}?range=${assignment.from}-${assignment.to}&back=/verbs`}
                       title={m.hint}
                       className="border border-border rounded-xl px-4 py-2.5 text-sm font-semibold text-foreground hover:border-[#4255ff]/60 transition-colors"
                     >{m.label}</Link>

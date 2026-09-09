@@ -8,6 +8,12 @@ import { X, Loader2 } from "lucide-react"
 import FlashcardPlayer from "../FlashcardPlayer"
 import { parseRange, selectCards } from "@/lib/studySelection"
 
+/** Возврат туда, откуда пришли: из курса — в курс, иначе к набору. */
+function backTarget(id: string): string {
+    const back = new URLSearchParams(window.location.search).get('back')
+    return back && back.startsWith('/') ? back : `/set/${id}`
+}
+
 export default function FlashcardsStudyPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = React.use(params);
     const router = useRouter()
@@ -42,9 +48,7 @@ export default function FlashcardsStudyPage({ params }: { params: Promise<{ id: 
         fetchSet()
     }, [id, router])
 
-    const closeSession = () => {
-        router.push(`/set/${id}`)
-    }
+    const closeSession = () => router.push(backTarget(id))
 
     if (isLoading) {
         return (
