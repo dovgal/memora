@@ -128,8 +128,18 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
 
     const regenerateQueue = (currentCards: FlashcardResponse[], qTypes: { mcq: boolean; written: boolean; flashcards: boolean }, aWith: { term: boolean; definition: boolean }, allCards: FlashcardResponse[], schema?: FieldSchema[]): TestQuestion[] => {
         return currentCards.map(c => {
+            // Курс может закрепить направление вопроса: «ask=back» значит
+            // спрашивать только оборот — формы по инфинитиву, как в школе.
+            // Обратный вопрос («дай инфинитив по трём формам») в таблице
+            // глаголов бесполезен: так не спрашивают ни на уроке, ни в жизни.
+            const fixed = typeof window !== 'undefined'
+                ? new URLSearchParams(window.location.search).get('ask')
+                : null;
+
             let aType: 'term' | 'definition' = 'definition';
-            if (aWith.term && !aWith.definition) aType = 'term';
+            if (fixed === 'back') aType = 'definition';
+            else if (fixed === 'front') aType = 'term';
+            else if (aWith.term && !aWith.definition) aType = 'term';
             else if (!aWith.term && aWith.definition) aType = 'definition';
             else aType = Math.random() > 0.5 ? 'term' : 'definition';
 

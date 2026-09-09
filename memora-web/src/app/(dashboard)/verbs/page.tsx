@@ -12,7 +12,6 @@ import type { IrregularVerb, VerbState } from '@/lib/courses/verbs/types';
 import { buildSessionPlan } from '@/lib/courses/verbs/sessionPlan';
 import { getVerbsState, putVerbsAssignment } from '@/lib/courses/verbs/api';
 import { ensureVerbSet, fetchCardStates, reviewVerbCard, toVerbStates, verbNumberOf } from '@/lib/courses/verbs/cards';
-import { stepFor } from '@/lib/courses/verbs/steps';
 import { ProgressMap } from '@/components/verbs/ProgressMap';
 import { VerbCard } from '@/components/verbs/VerbCard';
 import { useT } from '@/components/I18nProvider';
@@ -153,16 +152,6 @@ export default function VerbsPage() {
     });
   }, [session, cardIdx, cardByVerb]);
 
-  /**
-   * Ступень для показываемой карточки. Незнакомое слово даём списать, после
-   * первых ответов — выбор из близких форм, дальше — с чистого листа.
-   */
-  const currentStep = useMemo(() => {
-    const verb = session[cardIdx];
-    if (!verb) return 'copy' as const;
-    const st = states.find(s => s.n === verb.n);
-    return stepFor(st?.streak ?? 0, st?.misses ?? 0);
-  }, [session, cardIdx, states]);
 
   const handleCardDone = () => {
     if (cardIdx + 1 < session.length) setCardIdx(i => i + 1);
@@ -184,7 +173,6 @@ export default function VerbsPage() {
           </div>
           <VerbCard
             key={session[cardIdx].n}
-            step={currentStep}
             verb={session[cardIdx]}
             onFormsChecked={handleFormsChecked}
             onDone={handleCardDone}
@@ -335,7 +323,7 @@ export default function VerbsPage() {
                   ].map(m => (
                     <Link
                       key={m.href}
-                      href={`/set/${setId}/${m.href}?range=${assignment.from}-${assignment.to}&back=/verbs`}
+                      href={`/set/${setId}/${m.href}?range=${assignment.from}-${assignment.to}&back=/verbs&ask=back`}
                       title={m.hint}
                       className="border border-border rounded-xl px-4 py-2.5 text-sm font-semibold text-foreground hover:border-[#4255ff]/60 transition-colors"
                     >{m.label}</Link>

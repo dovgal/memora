@@ -13,8 +13,6 @@
   "include": [
     "src/lib/studyUtils.ts",
     "src/lib/studyUtils.test.ts",
-    "src/lib/courses/verbs/steps.ts",
-    "src/lib/courses/verbs/steps.test.ts",
     "src/lib/courses/verbs/types.ts",
     "src/lib/studySelection.ts",
     "src/lib/studySelection.test.ts"
