@@ -10,7 +10,8 @@ import { ChevronLeft, Loader2, Pencil, Play, RotateCcw } from 'lucide-react';
 import { VERBS } from '@/lib/courses/verbs/list';
 import type { IrregularVerb, VerbState } from '@/lib/courses/verbs/types';
 import { buildSessionPlan } from '@/lib/courses/verbs/sessionPlan';
-import { getVerbsState, putVerbsAssignment, postVerbReview } from '@/lib/courses/verbs/api';
+import { getVerbsState, putVerbsAssignment } from '@/lib/courses/verbs/api';
+import { ensureVerbSet, fetchCardStates, reviewVerbCard, toVerbStates, verbNumberOf } from '@/lib/courses/verbs/cards';
 import { ProgressMap } from '@/components/verbs/ProgressMap';
 import { VerbCard } from '@/components/verbs/VerbCard';
 import { useT } from '@/components/I18nProvider';
@@ -41,6 +42,8 @@ export default function VerbsPage() {
   const [error, setError] = useState<string | null>(null);
   const [assignment, setAssignment] = useState<{ from: number; to: number } | null>(null);
   const [states, setStates] = useState<VerbState[]>([]);
+  /** Номер глагола → карточка в наборе: ответы уходят по опознавателю карточки. */
+  const [cardByVerb, setCardByVerb] = useState<Map<number, string>>(new Map());
 
   const [editingAssignment, setEditingAssignment] = useState(false);
   const [fromInput, setFromInput] = useState(1);
@@ -56,11 +59,18 @@ export default function VerbsPage() {
     try {
       const data = await getVerbsState();
       setAssignment(data.assignment);
-      setStates(data.states);
       if (data.assignment) {
         setFromInput(data.assignment.from);
         setToInput(data.assignment.to);
       }
+
+      // Расписание повторений ведёт общий сервис карточек, а не наша лесенка:
+      // там настоящий алгоритм, и тот же набор открывается всеми режимами
+      // занятий — карточками, изучением, тестом.
+      const set = await ensureVerbSet();
+      setCardByVerb(new Map(set.flashcards.map(c => [verbNumberOf(c), c.id])));
+      const cardStates = await fetchCardStates(set.id);
+      setStates(toVerbStates(set.flashcards, cardStates));
     } catch (e) {
       setError(e instanceof Error ? e.message : 'не удалось загрузить состояние');
     } finally {
@@ -108,13 +118,25 @@ export default function VerbsPage() {
     if (!verb) return;
     if (correct) setCorrectCount(c => c + 1);
     // Карточка уже показана ученику независимо от ответа сервера — отправка
-    // в фоне лишь обновляет карту прогресса и лесенку повторения.
-    postVerbReview(verb.n, correct)
-      .then(updated => {
-        setStates(prev => [...prev.filter(s => s.n !== updated.n), updated]);
-      })
-      .catch(() => { /* сеть подвела — карта прогресса просто не обновится в этот раз */ });
-  }, [session, cardIdx]);
+    // в фоне лишь двигает расписание повторений.
+    const cardId = cardByVerb.get(verb.n);
+    if (cardId) void reviewVerbCard(cardId, correct).catch(() => { /* сеть подвела */ });
+
+    // На карте отмечаем сразу, не дожидаясь ответа: точные срок и прочность
+    // придут при следующей загрузке, а «уже спрашивали» видно должно быть
+    // немедленно — иначе глагол так и останется белым до конца занятия.
+    setStates(prev => {
+      const was = prev.find(s => s.n === verb.n);
+      const next: VerbState = {
+        n: verb.n,
+        step: was?.step ?? 0,
+        due: new Date().toISOString().slice(0, 10),
+        streak: correct ? (was?.streak ?? 0) + 1 : 0,
+        misses: (was?.misses ?? 0) + (correct ? 0 : 1),
+      };
+      return [...prev.filter(s => s.n !== verb.n), next];
+    });
+  }, [session, cardIdx, cardByVerb]);
 
   const handleCardDone = () => {
     if (cardIdx + 1 < session.length) setCardIdx(i => i + 1);
