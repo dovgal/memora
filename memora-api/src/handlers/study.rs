@@ -265,9 +265,12 @@ pub async fn get_fsrs_state(
         .map_err(|_| ApiError::response(StatusCode::BAD_REQUEST, "Invalid set ID"))?;
 
     let rows = sqlx::query(
-        "SELECT f.id, COALESCE(fr.state, 0) AS state, fr.due, \
-                COALESCE(fr.reps, 0) AS reps, COALESCE(fr.lapses, 0) AS lapses, \
-                COALESCE(fr.stability, 0) AS stability \
+        // Приведение типов обязательно: ноль в COALESCE — четырёхбайтовое
+        // целое, а state в таблице двухбайтовый, и расшифровка ответа падает
+        // с несовпадением типов. Со stability то же самое: там вещественное.
+        "SELECT f.id, COALESCE(fr.state, 0)::smallint AS state, fr.due, \
+                COALESCE(fr.reps, 0)::int AS reps, COALESCE(fr.lapses, 0)::int AS lapses, \
+                COALESCE(fr.stability, 0)::real AS stability \
          FROM flashcards f \
          LEFT JOIN fsrs_records fr ON f.id = fr.flashcard_id AND fr.user_id = $1 \
          WHERE f.set_id = $2 \
