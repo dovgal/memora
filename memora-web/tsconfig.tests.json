@@ -10,5 +10,11 @@
     "jsx": "react-jsx",
     "outDir": "/tmp/study-test"
   },
-  "include": ["src/lib/studyUtils.ts", "src/lib/studyUtils.test.ts"]
+  "include": [
+    "src/lib/studyUtils.ts",
+    "src/lib/studyUtils.test.ts",
+    "src/lib/courses/verbs/steps.ts",
+    "src/lib/courses/verbs/steps.test.ts",
+    "src/lib/courses/verbs/types.ts"
+  ]
 }

@@ -5,10 +5,11 @@
 // главная мысль пособия, и закреплять её нужно на каждой карточке, а не
 // только по хотению.
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { CheckCircle2, XCircle, ArrowRight } from 'lucide-react';
 import { FAMILY_META, familyOf, type IrregularVerb } from '@/lib/courses/verbs/types';
 import { isFormCorrect } from '@/lib/courses/verbs/match';
+import { canOfferChoice, choiceOptions, type LearnStep } from '@/lib/courses/verbs/steps';
 import { useT } from '@/components/I18nProvider';
 
 type Stage = 'forms' | 'formsResult' | 'translate' | 'translateResult';
@@ -16,16 +17,25 @@ type Stage = 'forms' | 'formsResult' | 'translate' | 'translateResult';
 const verbIconSrc = (n: number) => `/verbs/${String(n).padStart(3, '0')}.webp`;
 
 export function VerbCard({
-  verb, onFormsChecked, onDone,
+  verb, onFormsChecked, onDone, step,
 }: {
   verb: IrregularVerb;
   /** Зовём сразу после проверки форм — родитель шлёт результат на сервер. */
   onFormsChecked: (correct: boolean) => void;
   /** Карточка закрыта, можно показывать следующую. */
   onDone: () => void;
+  /**
+   * Насколько трудно спрашивать. Незнакомое слово сперва дают списать: просить
+   * вписать три формы того, чего человек не видел, — экзамен, а не заучивание.
+   */
+  step: LearnStep;
 }) {
   const t = useT();
   const [stage, setStage] = useState<Stage>('forms');
+  // Порядок вариантов закрепляем за карточкой: иначе они пересдавались бы
+  // при каждой перерисовке, и нажать на нужный было бы невозможно.
+  const pretOptions = useMemo(() => choiceOptions(verb, 'pret'), [verb]);
+  const ppOptions = useMemo(() => choiceOptions(verb, 'pp'), [verb]);
   const [pret, setPret] = useState('');
   const [pp, setPp] = useState('');
   const [pretOk, setPretOk] = useState(false);
@@ -51,6 +61,64 @@ export function VerbCard({
     setStage('translateResult');
   };
 
+  /**
+   * Поле формы на нужной ступени.
+   *
+   * На списывании ответ показан над полем: списывание закрепляет написание, а
+   * вспоминать пока нечего. На выборе вместо ввода — близкие формы того же
+   * глагола; но если их не набралось, спрашиваем вводом: выбор из двух —
+   * подбрасывание монеты.
+   */
+  const renderField = (
+    target: 'pret' | 'pp',
+    label: string,
+    value: string,
+    setValue: (v: string) => void,
+    ok: boolean,
+    correct: string,
+    focus: boolean,
+  ) => {
+    const done = stage === 'formsResult';
+    const asChoice = step === 'choice' && canOfferChoice(verb, target);
+
+    return (
+      <div className="block">
+        <span className="text-xs text-qz-text-muted font-semibold">{label}</span>
+
+        {step === 'copy' && !done && (
+          <span className="block text-lg font-bold text-[#4255ff] mt-1">{correct}</span>
+        )}
+
+        {asChoice && !done ? (
+          <div className="mt-1 grid gap-1.5">
+            {(target === 'pret' ? pretOptions : ppOptions).map(o => (
+              <button
+                key={o}
+                onClick={() => setValue(o)}
+                className={`text-left border rounded-xl px-3 py-2 text-sm font-semibold transition-colors ${
+                  value === o ? 'border-[#4255ff] text-[#4255ff]' : 'border-border text-foreground hover:border-[#4255ff]/50'
+                }`}
+              >{o}</button>
+            ))}
+          </div>
+        ) : (
+          <input
+            value={value}
+            onChange={e => setValue(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && checkForms()}
+            disabled={done}
+            autoFocus={focus}
+            className={`mt-1 w-full bg-qz-bg border rounded-xl px-3 py-2.5 text-foreground outline-none ${
+              done ? (ok ? 'border-emerald-500' : 'border-red-500') : 'border-border focus:border-[#4255ff]/60'
+            }`}
+          />
+        )}
+
+        {done && !ok && <span className="text-xs text-red-500 mt-1 block">верно: {correct}</span>}
+      </div>
+    );
+  };
+
   return (
     <div className="bg-qz-card border border-border rounded-2xl p-6 space-y-5">
       {/*
@@ -74,37 +142,8 @@ export function VerbCard({
       {(stage === 'forms' || stage === 'formsResult') && (
         <div className="space-y-3">
           <div className="grid grid-cols-2 gap-3">
-            <label className="block">
-              <span className="text-xs text-qz-text-muted font-semibold">{t('Prétérit (2 форма)')}</span>
-              <input
-                value={pret}
-                onChange={e => setPret(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && checkForms()}
-                disabled={stage === 'formsResult'}
-                autoFocus
-                className={`mt-1 w-full bg-qz-bg border rounded-xl px-3 py-2.5 text-foreground outline-none ${
-                  stage === 'formsResult' ? (pretOk ? 'border-emerald-500' : 'border-red-500') : 'border-border focus:border-[#4255ff]/60'
-                }`}
-              />
-              {stage === 'formsResult' && !pretOk && (
-                <span className="text-xs text-red-500 mt-1 block">верно: {verb.pret}</span>
-              )}
-            </label>
-            <label className="block">
-              <span className="text-xs text-qz-text-muted font-semibold">{t('Participe passé (3 форма)')}</span>
-              <input
-                value={pp}
-                onChange={e => setPp(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && checkForms()}
-                disabled={stage === 'formsResult'}
-                className={`mt-1 w-full bg-qz-bg border rounded-xl px-3 py-2.5 text-foreground outline-none ${
-                  stage === 'formsResult' ? (ppOk ? 'border-emerald-500' : 'border-red-500') : 'border-border focus:border-[#4255ff]/60'
-                }`}
-              />
-              {stage === 'formsResult' && !ppOk && (
-                <span className="text-xs text-red-500 mt-1 block">верно: {verb.pp}</span>
-              )}
-            </label>
+            {renderField('pret', t('Prétérit (2 форма)'), pret, setPret, pretOk, verb.pret, true)}
+            {renderField('pp', t('Participe passé (3 форма)'), pp, setPp, ppOk, verb.pp, false)}
           </div>
 
           {stage === 'forms' && (

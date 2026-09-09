@@ -12,6 +12,7 @@ import type { IrregularVerb, VerbState } from '@/lib/courses/verbs/types';
 import { buildSessionPlan } from '@/lib/courses/verbs/sessionPlan';
 import { getVerbsState, putVerbsAssignment } from '@/lib/courses/verbs/api';
 import { ensureVerbSet, fetchCardStates, reviewVerbCard, toVerbStates, verbNumberOf } from '@/lib/courses/verbs/cards';
+import { stepFor } from '@/lib/courses/verbs/steps';
 import { ProgressMap } from '@/components/verbs/ProgressMap';
 import { VerbCard } from '@/components/verbs/VerbCard';
 import { useT } from '@/components/I18nProvider';
@@ -122,6 +123,17 @@ export default function VerbsPage() {
     const cardId = cardByVerb.get(verb.n);
     if (cardId) void reviewVerbCard(cardId, correct).catch(() => { /* сеть подвела */ });
 
+    // Ошибка возвращается в этом же занятии, а не завтра: между промахом и
+    // повтором должно пройти несколько карточек — достаточно, чтобы ответ не
+    // остался просто в памяти последней минуты, но не настолько долго, чтобы
+    // забыть разбор.
+    if (!correct) {
+      setSession(prev => {
+        const at = Math.min(cardIdx + 4, prev.length);
+        return [...prev.slice(0, at), verb, ...prev.slice(at)];
+      });
+    }
+
     // На карте отмечаем сразу, не дожидаясь ответа: точные срок и прочность
     // придут при следующей загрузке, а «уже спрашивали» видно должно быть
     // немедленно — иначе глагол так и останется белым до конца занятия.
@@ -137,6 +149,17 @@ export default function VerbsPage() {
       return [...prev.filter(s => s.n !== verb.n), next];
     });
   }, [session, cardIdx, cardByVerb]);
+
+  /**
+   * Ступень для показываемой карточки. Незнакомое слово даём списать, после
+   * первых ответов — выбор из близких форм, дальше — с чистого листа.
+   */
+  const currentStep = useMemo(() => {
+    const verb = session[cardIdx];
+    if (!verb) return 'copy' as const;
+    const st = states.find(s => s.n === verb.n);
+    return stepFor(st?.streak ?? 0, st?.misses ?? 0);
+  }, [session, cardIdx, states]);
 
   const handleCardDone = () => {
     if (cardIdx + 1 < session.length) setCardIdx(i => i + 1);
@@ -158,6 +181,7 @@ export default function VerbsPage() {
           </div>
           <VerbCard
             key={session[cardIdx].n}
+            step={currentStep}
             verb={session[cardIdx]}
             onFormsChecked={handleFormsChecked}
             onDone={handleCardDone}
