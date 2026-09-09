@@ -85,16 +85,32 @@ export function generateDistractors(
     answerType: 'term' | 'definition' = 'definition',
     schema?: FieldSchema[]
 ): string[] {
-    // Filter out the correct card
-    const availableDistractors = allCards.filter((c) => c.id !== correctCard.id)
+    const textOf = (c: FlashcardResponse) =>
+        answerType === 'term' ? getCardText(c, 'front', schema) : getCardText(c, 'back', schema)
 
-    // Shuffle the remaining cards
-    const shuffled = [...availableDistractors].sort(() => 0.5 - Math.random())
+    // Приманка, совпадающая с верным ответом, — худший вид вопроса: человек
+    // прав, а засчитывается ошибка, потому что верным считается только первый
+    // из двух одинаковых вариантов. Совпадения бывают не в теории: в наборе
+    // неправильных глаголов FRAPPER стоит и у HIT, и у STRIKE, а причастие
+    // LAIN — и у LAY, и у LIE.
+    const seen = new Set<string>([textOf(correctCard).trim().toLowerCase()])
 
-    // Select the required number of distractors (or as many as available)
-    const selectedCards = shuffled.slice(0, numDistractors)
+    const shuffled = [...allCards.filter((c) => c.id !== correctCard.id)]
+        .sort(() => 0.5 - Math.random())
 
-    return selectedCards.map((c) => answerType === 'term' ? getCardText(c, 'front', schema) : getCardText(c, 'back', schema))
+    const out: string[] = []
+    for (const c of shuffled) {
+        if (out.length >= numDistractors) break
+        const text = textOf(c)
+        const key = text.trim().toLowerCase()
+        // Пустую подпись показывать нельзя, повтор — тем более.
+        if (!key || seen.has(key)) continue
+        seen.add(key)
+        out.push(text)
+    }
+    // Приманок может выйти меньше запрошенного: в наборе просто не нашлось
+    // столько разных ответов. Добирать повторами хуже, чем показать меньше.
+    return out
 }
 
 /**

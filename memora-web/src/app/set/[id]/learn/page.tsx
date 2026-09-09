@@ -138,11 +138,18 @@ export default function LearnModePage({ params }: { params: Promise<{ id: string
 
             const selectedType = available.length > 0 ? available[Math.floor(Math.random() * available.length)] : 'MULTIPLE_CHOICE';
 
-            if (selectedType === 'MULTIPLE_CHOICE') {
+            // Вариантов может выйти меньше двух: в наборе не нашлось столько
+            // разных ответов. Выбор из одного — не вопрос, а формальность,
+            // поэтому спрашиваем ввод.
+            const mcq = selectedType === 'MULTIPLE_CHOICE'
+                ? createMultipleChoiceQuestion(c, allCards, aType, schema)
+                : null;
+
+            if (mcq && mcq.options.length >= 2) {
                 return {
                     flashcard: c,
                     type: 'MULTIPLE_CHOICE',
-                    mcqData: createMultipleChoiceQuestion(c, allCards, aType, schema)
+                    mcqData: mcq
                 }
             } else {
                 // For WRITTEN: pick a single target field on the answer side

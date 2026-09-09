@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2020",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noEmit": false,
+    "jsx": "react-jsx",
+    "outDir": "/tmp/study-test"
+  },
+  "include": ["src/lib/studyUtils.ts", "src/lib/studyUtils.test.ts"]
+}
