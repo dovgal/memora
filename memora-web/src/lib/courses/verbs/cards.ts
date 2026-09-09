@@ -24,9 +24,13 @@ export const verbIconSrc = (n: number) => `/verbs/${String(n).padStart(3, '0')}.
 export function verbFieldsSchema(): FieldSchema[] {
   return [
     { id: 'icon', name: 'ЗНАЧОК', type: 'image', side: 'front', order: 1, settings: {} },
-    { id: 'term', name: 'INFINITIF', type: 'text', side: 'front', order: 2, settings: { language: 'en' } },
-    { id: 'pret', name: 'PRÉTÉRIT', type: 'text', side: 'back', order: 1, settings: { language: 'en' } },
-    { id: 'definition', name: 'PARTICIPE PASSÉ', type: 'text', side: 'back', order: 2, settings: { language: 'en' } },
+    // Озвучка включена у английских форм: WOKE и WOKEN на слух различить
+    // труднее, чем глазами, и слушать их нужнее всего. Перевод оставлен
+    // молчащим — читать его по-французски Дамир и так умеет, а каждое поле
+    // с озвучкой это ещё сто двадцать пять синтезов.
+    { id: 'term', name: 'INFINITIF', type: 'text', side: 'front', order: 2, settings: { language: 'en', ttsEnabled: true } },
+    { id: 'pret', name: 'PRÉTÉRIT', type: 'text', side: 'back', order: 1, settings: { language: 'en', ttsEnabled: true } },
+    { id: 'definition', name: 'PARTICIPE PASSÉ', type: 'text', side: 'back', order: 2, settings: { language: 'en', ttsEnabled: true } },
     { id: 'fr', name: 'TRADUCTION', type: 'text', side: 'back', order: 3, settings: { language: 'fr' } },
   ];
 }
@@ -61,7 +65,7 @@ export async function ensureVerbSet(): Promise<SetResponse> {
 
   if (known) {
     const r = await fetch(`/api/sets/${known}`, { headers: await headers() });
-    if (r.ok) return r.json();
+    if (r.ok) return await withAudio(await r.json());
     // Набор удалили — заведём заново, прогресс по нему всё равно потерян.
   }
 
@@ -89,6 +93,37 @@ export async function ensureVerbSet(): Promise<SetResponse> {
   const created: SetResponse = await r.json();
   await putSetting(SETTING_KEY, created.id);
   return created;
+}
+
+/**
+ * Дописывает озвучку набору, заведённому до того, как её включили.
+ *
+ * Обновление набора сохраняет карточки, чьи опознаватели переданы, — поэтому
+ * расписание повторений не теряется. А сервер, приняв новую схему, сам
+ * ставит в очередь синтез недостающих записей.
+ */
+async function withAudio(set: SetResponse): Promise<SetResponse> {
+  const wanted = verbFieldsSchema();
+  const hasTts = set.fieldsSchema?.some(f => (f.settings as { ttsEnabled?: boolean } | undefined)?.ttsEnabled);
+  if (hasTts) return set;
+
+  const r = await fetch(`/api/sets/${set.id}`, {
+    method: 'PUT',
+    headers: await headers(),
+    body: JSON.stringify({
+      title: set.title,
+      description: set.description,
+      isPublic: false,
+      fieldsSchema: wanted,
+      flashcards: set.flashcards.map(c => ({
+        id: c.id,
+        term: c.term,
+        definition: c.definition,
+        fieldsData: c.fieldsData,
+      })),
+    }),
+  });
+  return r.ok ? await r.json() : set;
 }
 
 export interface CardState {
