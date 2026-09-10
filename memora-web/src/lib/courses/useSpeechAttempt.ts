@@ -41,6 +41,29 @@ const MIC_TIMEOUT_MS = 7000;
  * Возвращает null по таймауту; исключения (отказ в доступе, нет устройства)
  * пробрасываются вызывающему.
  */
+/**
+ * Обработка звука, которую просим у браузера.
+ *
+ * Раньше не просили ничего, и это была ошибка: браузер применяет свою очистку
+ * по умолчанию далеко не всегда — в частности, когда микрофон выбран по
+ * опознавателю устройства, а мы выбираем его именно так, чтобы говорить в
+ * встроенный. В итоге в модель уходил сырой звук вместе с комнатой.
+ *
+ * Один канал вместо двух: распознаванию стерео не нужно, а лишний канал — это
+ * лишний вес и лишний источник расхождений.
+ */
+const AUDIO_CLEANUP = {
+  echoCancellation: true,
+  noiseSuppression: true,
+  autoGainControl: true,
+  channelCount: 1,
+} as const;
+
+/** Условия записи для выбранного устройства или для устройства по умолчанию. */
+function micConstraints(deviceId?: string): MediaStreamConstraints {
+  return { audio: deviceId ? { deviceId: { exact: deviceId }, ...AUDIO_CLEANUP } : { ...AUDIO_CLEANUP } };
+}
+
 async function openMic(constraints: MediaStreamConstraints): Promise<MediaStream | null> {
   const pending = navigator.mediaDevices.getUserMedia(constraints);
   const timeout = new Promise<null>(resolve => setTimeout(() => resolve(null), MIC_TIMEOUT_MS));
@@ -122,6 +145,14 @@ export interface SpeechAttempt {
    * вердикт дал браузерный движок: он таких данных не сообщает.
    */
   wordScores: () => WordScore[];
+  /**
+   * Насколько уверенно распознаны слова, 0…1. Ноль — не расслышали вовсе.
+   *
+   * Без этого признака человек не может отличить свою ошибку от чужой: он
+   * видит набор непохожих слов и решает, что произнёс неправильно, хотя
+   * распознавание просто не справилось с шумом.
+   */
+  confidence: () => number;
   /** Сбросить запись перед новой попыткой. */
   reset: () => void;
   /** Микрофон, с которого ведётся ЗАПИСЬ (мы его выбираем сами). */
@@ -186,12 +217,12 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
       // запросом вместо двух.
       const remembered = resolvedMicId ?? getPreferredMic();
       if (remembered) {
-        stream = await openMic({ audio: { deviceId: { exact: remembered } } }).catch(() => null);
+        stream = await openMic(micConstraints(remembered)).catch(() => null);
       }
       // Иначе (или если запомненное устройство пропало) — устройство по
       // умолчанию: этот же запрос выдаёт разрешение, без которого не видно
       // названий микрофонов.
-      if (!stream) stream = await openMic({ audio: true });
+      if (!stream) stream = await openMic(micConstraints());
       if (!stream) {
         setError('Микрофон не ответил. Закройте другие вкладки и программы, которые могут его занимать, и попробуйте ещё раз.');
         return false;
@@ -207,7 +238,7 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
       if (wanted && current && wanted.deviceId !== current) {
         // Прежний поток держим до последнего: если встроенный микрофон не
         // откроется, продолжим с тем, что уже работает, а не останемся ни с чем.
-        const swapped = await openMic({ audio: { deviceId: { exact: wanted.deviceId } } }).catch(() => null);
+        const swapped = await openMic(micConstraints(wanted.deviceId)).catch(() => null);
         if (swapped) {
           stream.getTracks().forEach(t => t.stop());
           stream = swapped;
@@ -335,9 +366,15 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
   const alternatives = useCallback(() => altsRef.current, []);
   const wordScores = useCallback(() => wordScoresRef.current, []);
 
+  const confidence = useCallback(() => {
+    const words = wordScoresRef.current;
+    if (words.length === 0) return 0;
+    return words.reduce((sum, w) => sum + w.probability, 0) / words.length;
+  }, []);
+
   return {
     recording, selfUrl, error, setError, recorderSupported, speechSupported,
-    start, stop, alternatives, wordScores, reset,
+    start, stop, alternatives, wordScores, confidence, reset,
     micLabel, defaultMicLabel, defaultIsExternal, transcribing, lastEngine,
   };
 }

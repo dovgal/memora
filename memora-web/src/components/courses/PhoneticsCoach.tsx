@@ -20,6 +20,14 @@ import { drillItems, type DrillItem, type SoundDrill, type ArticulationDrill } f
 import { PASS_SCORE, REQUEUE_GAP, markPassed, markAttempt, itemKey } from '@/lib/courses/phonetics/mastery';
 import { recordExerciseProgress } from '@/lib/courses/customCoursesApi';
 
+/**
+ * Ниже этой уверенности распознавания попытка не оценивается.
+ *
+ * Порог намеренно мягкий: лучше изредка пропустить настоящую ошибку, чем
+ * записать в ошибки верно сказанное слово — второе отбивает охоту заниматься.
+ */
+const LOW_CONFIDENCE = 0.55;
+
 type Phase = 'theory' | 'warmup' | 'practice' | 'done';
 
 const KIND_LABEL: Record<DrillItem['kind'], string> = {
@@ -92,6 +100,22 @@ export function PhoneticsCoach({
       speech.setError('Речь не распознана. Прослушайте свою запись и сравните с образцом — либо откройте курс в Chrome или Safari для автооценки.');
       return;
     }
+    // Распознавание бывает не уверено само — в шуме оно выдаёт слова, ничем
+    // не похожие на сказанное. Засчитывать это как ошибку произношения
+    // нечестно: человек не может отличить свой промах от чужого и начинает
+    // переучивать то, что и так говорил верно.
+    //
+    // Ноль означает, что своё распознавание не отвечало и текст пришёл от
+    // браузера — там уверенности по словам нет, и придираться не к чему.
+    const conf = speech.confidence();
+    if (conf > 0 && conf < LOW_CONFIDENCE) {
+      speech.setError(
+        'Не расслышал — похоже, шумно или слишком тихо. Попытка не засчитана: '
+        + 'прослушайте свою запись, подойдите ближе к микрофону и повторите.',
+      );
+      return;
+    }
+
     // Из нескольких гипотез движка берём фонетически ближайшую к эталону,
     // затем сравниваем по звучанию (spoken), а не по написанию.
     const heardBest = bestTranscript(targetText, transcript, speech.alternatives());
