@@ -87,8 +87,22 @@ export interface WordScore {
  * Распознать запись на своём сервисе (faster-whisper). Пустой текст означает,
  * что не вышло, — вызывающий откатится на браузерное распознавание.
  */
-async function transcribeOnServer(blob: Blob, speechLang: string): Promise<{ text: string; words: WordScore[] }> {
-  const nothing = { text: '', words: [] as WordScore[] };
+/**
+ * Признаки того, что распознавание не услышало речь и досочинило.
+ *
+ * noSpeechProb — вероятность «речи здесь нет» по мнению самой модели;
+ * avgLogprob — насколько правдоподобным вышел кусок. На выдумке уверенность
+ * по отдельным словам остаётся высокой, а эти два числа проваливаются.
+ */
+export interface HeardQuality {
+  noSpeechProb: number;
+  avgLogprob: number;
+}
+
+async function transcribeOnServer(
+  blob: Blob, speechLang: string,
+): Promise<{ text: string; words: WordScore[]; quality: HeardQuality }> {
+  const nothing = { text: '', words: [] as WordScore[], quality: { noSpeechProb: 0, avgLogprob: 0 } };
   if (serverStt === 'off') return nothing;
   try {
     const session = await getSession();
@@ -118,7 +132,14 @@ async function transcribeOnServer(blob: Blob, speechLang: string): Promise<{ tex
             && typeof (w as { probability?: unknown }).probability === 'number')
           .map((w: { word: string; probability: number }) => ({ word: w.word, probability: w.probability }))
       : [];
-    return { text: typeof data?.text === 'string' ? data.text.trim() : '', words };
+    return {
+      text: typeof data?.text === 'string' ? data.text.trim() : '',
+      words,
+      quality: {
+        noSpeechProb: typeof data?.noSpeechProb === 'number' ? data.noSpeechProb : 0,
+        avgLogprob: typeof data?.avgLogprob === 'number' ? data.avgLogprob : 0,
+      },
+    };
   } catch {
     return nothing;
   }
@@ -153,6 +174,8 @@ export interface SpeechAttempt {
    * распознавание просто не справилось с шумом.
    */
   confidence: () => number;
+  /** Признаки выдумки от самой модели. */
+  quality: () => HeardQuality;
   /** Сбросить запись перед новой попыткой. */
   reset: () => void;
   /** Микрофон, с которого ведётся ЗАПИСЬ (мы его выбираем сами). */
@@ -187,6 +210,7 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
   const transcriptRef = useRef('');
   const altsRef = useRef<string[][]>([]);
   const wordScoresRef = useRef<WordScore[]>([]);
+  const qualityRef = useRef<HeardQuality>({ noSpeechProb: 0, avgLogprob: 0 });
   const sessionBaseRef = useRef('');
   const recordingRef = useRef(false);
   /** Готовая запись: MediaRecorder отдаёт её только в onstop, поэтому ждём обещание. */
@@ -289,6 +313,7 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
     sessionBaseRef.current = '';
     altsRef.current = [];
     wordScoresRef.current = [];
+    qualityRef.current = { noSpeechProb: 0, avgLogprob: 0 };
     const SR = getSpeechRecognition();
     if (SR) {
       try {
@@ -355,6 +380,7 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
       setTranscribing(false);
       if (server.text) {
         wordScoresRef.current = server.words;
+        qualityRef.current = server.quality;
         setLastEngine('server');
         return server.text;
       }
@@ -366,6 +392,8 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
   const alternatives = useCallback(() => altsRef.current, []);
   const wordScores = useCallback(() => wordScoresRef.current, []);
 
+  const quality = useCallback(() => qualityRef.current, []);
+
   const confidence = useCallback(() => {
     const words = wordScoresRef.current;
     if (words.length === 0) return 0;
@@ -374,7 +402,7 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
 
   return {
     recording, selfUrl, error, setError, recorderSupported, speechSupported,
-    start, stop, alternatives, wordScores, confidence, reset,
+    start, stop, alternatives, wordScores, confidence, quality, reset,
     micLabel, defaultMicLabel, defaultIsExternal, transcribing, lastEngine,
   };
 }

@@ -17,16 +17,11 @@ import { DiffChips } from '@/components/edito/DiffChips';
 import { rulesForWord, type ReadingRule } from '@/lib/courses/frenchReadingRules';
 import { useSpeechAttempt } from '@/lib/courses/useSpeechAttempt';
 import { drillItems, type DrillItem, type SoundDrill, type ArticulationDrill } from '@/lib/courses/phonetics';
+import { heardSomething } from '@/lib/courses/heardCheck';
 import { PASS_SCORE, REQUEUE_GAP, markPassed, markAttempt, itemKey } from '@/lib/courses/phonetics/mastery';
 import { recordExerciseProgress } from '@/lib/courses/customCoursesApi';
 
-/**
- * Ниже этой уверенности распознавания попытка не оценивается.
- *
- * Порог намеренно мягкий: лучше изредка пропустить настоящую ошибку, чем
- * записать в ошибки верно сказанное слово — второе отбивает охоту заниматься.
- */
-const LOW_CONFIDENCE = 0.55;
+
 
 type Phase = 'theory' | 'warmup' | 'practice' | 'done';
 
@@ -107,8 +102,7 @@ export function PhoneticsCoach({
     //
     // Ноль означает, что своё распознавание не отвечало и текст пришёл от
     // браузера — там уверенности по словам нет, и придираться не к чему.
-    const conf = speech.confidence();
-    if (conf > 0 && conf < LOW_CONFIDENCE) {
+    if (!heardSomething(targetText, transcript, speech.confidence(), speech.quality())) {
       speech.setError(
         'Не расслышал — похоже, шумно или слишком тихо. Попытка не засчитана: '
         + 'прослушайте свою запись, подойдите ближе к микрофону и повторите.',

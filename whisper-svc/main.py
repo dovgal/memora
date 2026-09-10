@@ -119,8 +119,19 @@ async def transcribe(request: Request) -> dict:
 
         words: list[dict] = []
         parts: list[str] = []
+        # Признаки того, что модель не услышала речь и досочиняет.
+        #
+        # Уверенности по словам тут мало: на тишине и шуме whisper выдаёт
+        # ходовую французскую фразу — и уверен в каждом её слове. Зато сама
+        # модель по каждому куску сообщает вероятность «речи здесь нет»
+        # (no_speech_prob) и среднюю правдоподобность (avg_logprob); по ним
+        # выдумка видна, а по словам — нет.
+        no_speech = 0.0
+        logprobs: list[float] = []
         for segment in segments:
             parts.append(segment.text)
+            no_speech = max(no_speech, float(getattr(segment, "no_speech_prob", 0.0) or 0.0))
+            logprobs.append(float(getattr(segment, "avg_logprob", 0.0) or 0.0))
             for word in segment.words or []:
                 words.append({
                     "word": word.word.strip(),
@@ -135,4 +146,6 @@ async def transcribe(request: Request) -> dict:
         "text": " ".join(p.strip() for p in parts).strip(),
         "language": info.language,
         "words": words,
+        "noSpeechProb": round(no_speech, 3),
+        "avgLogprob": round(sum(logprobs) / len(logprobs), 3) if logprobs else 0.0,
     }
