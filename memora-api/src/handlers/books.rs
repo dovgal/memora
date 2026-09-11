@@ -1146,7 +1146,7 @@ fn level_max_sentence(level: &str) -> Option<usize> {
 /// точность тут не нужна, нужен признак «текст не упрощён».
 fn too_long_share(text: &str, cap: usize) -> f32 {
     let sentences: Vec<&str> = text
-        .split(|c| c == '.' || c == '!' || c == '?')
+        .split(['.', '!', '?'])
         .filter(|s| !s.trim().is_empty())
         .collect();
     if sentences.is_empty() {
@@ -1635,7 +1635,7 @@ mod tests {
         // Теперь остальные приходят по своим местам, а пропавший берётся свой.
         let got = parse_marked("[[1]]\nPremier\n\n[[3]]\nTroisième");
         assert_eq!(got.len(), 2);
-        assert!(got.get(&2).is_none(), "второй не пришёл — и это не беда");
+        assert!(!got.contains_key(&2), "второй не пришёл — и это не беда");
         assert_eq!(got.get(&3).map(String::as_str), Some("Troisième"));
     }
 

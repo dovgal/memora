@@ -28,10 +28,6 @@ use super::errors::ApiError;
 
 type ApiResult<T> = Result<T, (StatusCode, Json<ApiError>)>;
 
-const COURSE_ID: &str = "verbs-irregular";
-const UNIT_ASSIGNMENT: &str = "assignment";
-const UNIT_VERB: &str = "verb";
-
 /// Последний номер в школьной таблице — верхняя граница партии.
 const MAX_VERB_N: i32 = 125;
 
