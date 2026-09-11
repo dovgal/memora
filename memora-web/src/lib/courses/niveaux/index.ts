@@ -43,8 +43,6 @@ import vv1a from '../vivre/t01-a1.json'; import vv1b from '../vivre/t01-b1.json'
 import pro1 from './pro/unite1.json'; import pro2 from './pro/unite2.json';
 import pro3 from './pro/unite3.json'; import pro4 from './pro/unite4.json';
 import pro5 from './pro/unite5.json'; import pro6 from './pro/unite6.json';
-import ecr3 from './ecrsud/unite3.json'; import ecr4 from './ecrsud/unite4.json';
-import ecr5 from './ecrsud/unite5.json'; import ecr6 from './ecrsud/unite6.json';
 
 const U = (m: unknown) => m as EditoUnit;
 
@@ -152,16 +150,5 @@ export const LEVELS: Record<string, LevelCourse> = {
     accent: 'pink',
     units: { '1': U(pro1), '2': U(pro2), '3': U(pro3), '4': U(pro4), '5': U(pro5), '6': U(pro6) },
     order: ['1','2','3','4','5','6'],
-  },
-  // Курс под конкретную вакансию: техник SAV промышленных ворот в ECR Sud.
-  // Отдельный от Intersport — там другая работа и другая лексика, и общего
-  // между ними почти нет.
-  ecrsud: {
-    id: 'ecrsud', courseId: 'niveau-pro-ecrsud',
-    title: 'Français professionnel — ECR Sud (portes industrielles)', level: 'Pro · A1–A2',
-    description: 'Французский для работы техником SAV по промышленным воротам: оборудование, диагностика и ремонт, монтаж на объекте, безопасность и нормы. Фразы короткие — их нужно выговорить под волнение, а не прочитать с листа. С озвучкой, проверкой произношения и разговором с собеседником.',
-    accent: 'amber',
-    units: { '3': U(ecr3), '4': U(ecr4), '5': U(ecr5), '6': U(ecr6) },
-    order: ['3','4','5','6'],
   },
 };
