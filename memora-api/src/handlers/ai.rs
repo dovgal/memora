@@ -486,7 +486,9 @@ pub async fn check_production(
     let content = llm_text(
         Task::Grading,
         vec![ChatMessage::system(system_prompt), ChatMessage::user(user_prompt)],
-        400,
+        // Объяснение ошибки по-русски длинное, а gpt-oss тратит часть лимита на
+        // рассуждение: при 400 ответ обрывался как раз на неправильных фразах.
+        1200,
         ResponseFormat::Text,
     ).await?;
     let verdict: ProductionCheckResponse = serde_json::from_str(extract_json_object(&content))
