@@ -493,7 +493,15 @@ pub async fn check_production(
     ).await?;
     let verdict: ProductionCheckResponse = serde_json::from_str(extract_json_object(&content))
         .map_err(|e| (StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: format!("Не разобрал ответ проверки: {e}") })))?;
-    Ok(Json(verdict))
+    Ok(Json(settle_verdict(verdict)))
+}
+
+/// Фраза засчитывается, только когда верны и смысл, и грамматика. Модель ставит
+/// isCorrect, едва смысл понятен, — даже если нарушено ровно то, что тренирует
+/// задание: «Je travaille pas samedi» при ne … pas проходило как верное.
+fn settle_verdict(mut v: ProductionCheckResponse) -> ProductionCheckResponse {
+    v.is_correct = v.meaning_ok && v.grammar_ok;
+    v
 }
 
 pub async fn analyze_content(
@@ -1956,5 +1964,18 @@ mod production_tests {
         assert_eq!(v.score, 0.0);
         assert_eq!(v.corrected, "");
         assert_eq!(v.explanation, "Отлично.");
+    }
+}
+
+#[cfg(test)]
+mod verdict_tests {
+    #[test]
+    fn broken_focus_grammar_is_not_a_pass() {
+        let raw = r#"{"isCorrect":true,"meaningOk":true,"grammarOk":false,"score":0.5,"corrected":"Je ne travaille pas samedi","explanation":"Пропущено ne."}"#;
+        let v = super::settle_verdict(serde_json::from_str(raw).unwrap());
+        assert!(!v.is_correct);
+
+        let raw = r#"{"isCorrect":true,"meaningOk":true,"grammarOk":true,"score":1.0,"corrected":"Le samedi, je ne travaille pas.","explanation":"Верно."}"#;
+        assert!(super::settle_verdict(serde_json::from_str(raw).unwrap()).is_correct);
     }
 }
