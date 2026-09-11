@@ -65,7 +65,7 @@ export function ruleLevel(ex: EditoExercise): string | undefined {
 
 export interface EditoExercise {
   id: string;
-  type: 'theory' | 'grammar-quiz' | 'sentence-builder' | 'gender-quiz' | 'dialogue' | 'fill-blank' | 'number-quiz' | 'listening' | 'video' | 'error-hunt' | 'dictation' | 'numeric' | 'ordering' | 'symbolic' | 'pronunciation' | 'situation' | 'ai-talk';
+  type: 'theory' | 'grammar-quiz' | 'sentence-builder' | 'gender-quiz' | 'dialogue' | 'fill-blank' | 'number-quiz' | 'listening' | 'video' | 'error-hunt' | 'dictation' | 'numeric' | 'ordering' | 'symbolic' | 'pronunciation' | 'situation' | 'ai-talk' | 'substitution' | 'transformation' | 'meaning-to-form';
   title: string;
   // symbolic (математика): ответ — выражение; эквивалентность проверяет CAS-сервис
   // (POST /api/check/symbolic): «2(x+1)» засчитывается как «2x+2».
@@ -129,6 +129,22 @@ export interface EditoExercise {
   goals?: string[];
   hints?: string[];
   talkLevel?: string;
+  // ---- Построение фраз: лесенка от готовой фразы к своей ----
+  //
+  // Понимать и строить фразу — разные навыки, и первое во второе само не
+  // перетекает. Эти три упражнения тренируют именно построение: ученик
+  // произносит или пишет фразу целиком, а не выбирает из готового.
+  //
+  // substitution: в базовой фразе frame меняется одно слово на cue. Отвечать
+  // нужно всей фразой, а не одним словом — так в памяти оседает сам шаблон.
+  frame?: string;
+  substitutions?: SubstitutionItem[];
+  // transformation: та же фраза в другой форме — отрицание, вопрос, прошедшее.
+  transformations?: TransformationItem[];
+  // meaning-to-form: мысль по-русски → фраза по-французски. Проверяет модель,
+  // по смыслу, а не по буквам. focus — тренируемая грамматика.
+  productions?: ProductionItem[];
+  focus?: string;
   // pronunciation: каждая единица произносится в микрофон и сверяется с эталоном.
   pronItems?: PronunciationItem[];
   // video
@@ -150,6 +166,32 @@ export interface SituationSpot {
 export interface ScenePhrase { fr: string; ru: string }
 
 /** Единица отработки произношения: слово, фраза, ступень лесенки или скороговорка. */
+export interface SubstitutionItem {
+  /** Слово, которое встаёт в шаблон: «ponctuel». */
+  cue: string;
+  /** Его перевод — на случай, если слово ещё незнакомо. */
+  cueRu?: string;
+  /** Верные фразы целиком. */
+  answers: string[];
+}
+
+export interface TransformationItem {
+  /** Исходная фраза: «Il a un casque.» */
+  source: string;
+  /** Что сделать, по-русски: «отрицание», «вопрос», «прошедшее время». */
+  task: string;
+  answers: string[];
+}
+
+export interface ProductionItem {
+  /** Мысль по-русски: «Я не работаю в субботу.» */
+  ru: string;
+  /** Верные варианты по-французски — модель примет и другие, если смысл тот же. */
+  answers: string[];
+  /** Подсказка-опора, скрытая по умолчанию: «ne … pas». */
+  hint?: string;
+}
+
 export interface PronunciationItem {
   text: string;
   ipa?: string;

@@ -387,6 +387,113 @@ pub async fn grade_answer(
     Ok(Json(grade))
 }
 
+// ---------- Проверка построенной фразы ----------
+
+/// Поля ответа модели: null превращаем в пустое значение.
+/// Модель на наших запросах иногда отвечает null вместо пустых полей, и без
+/// этого вся проверка падала бы на одной пустой подписи.
+fn de_str<'de, D: serde::Deserializer<'de>>(d: D) -> Result<String, D::Error> {
+    use serde::Deserialize;
+    Ok(Option::<String>::deserialize(d)?.unwrap_or_default())
+}
+fn de_bool<'de, D: serde::Deserializer<'de>>(d: D) -> Result<bool, D::Error> {
+    use serde::Deserialize;
+    Ok(Option::<bool>::deserialize(d)?.unwrap_or(false))
+}
+fn de_f32<'de, D: serde::Deserializer<'de>>(d: D) -> Result<f32, D::Error> {
+    use serde::Deserialize;
+    Ok(Option::<f32>::deserialize(d)?.unwrap_or(0.0))
+}
+
+#[derive(serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ProductionCheckRequest {
+    /// Что просили сказать: мысль по-русски или задание («поставьте в отрицание»).
+    pub prompt: String,
+    /// Верные ответы из курса. Их может быть несколько.
+    pub expected: Vec<String>,
+    pub user_answer: String,
+    /// Грамматика, которую тренирует упражнение: «présent + négation».
+    #[serde(default)]
+    pub focus: String,
+}
+
+#[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct ProductionCheckResponse {
+    #[serde(default, deserialize_with = "de_bool")]
+    pub is_correct: bool,
+    /// Мысль передана — даже если сказано не так, как в учебнике.
+    #[serde(default, deserialize_with = "de_bool")]
+    pub meaning_ok: bool,
+    /// Тренируемая грамматика соблюдена.
+    #[serde(default, deserialize_with = "de_bool")]
+    pub grammar_ok: bool,
+    #[serde(default, deserialize_with = "de_f32")]
+    pub score: f32,
+    /// Фраза ученика с минимальными исправлениями — не эталон из учебника.
+    #[serde(default, deserialize_with = "de_str")]
+    pub corrected: String,
+    /// Одна главная ошибка, по-русски, в одну-две фразы.
+    #[serde(default, deserialize_with = "de_str")]
+    pub explanation: String,
+}
+
+/// POST /api/ai/course/check-production — проверка фразы, построенной самим учеником.
+///
+/// Эталон приходит из курса, а не из карточки: у упражнения «из смысла в
+/// форму» карточки нет. От обычной проверки отличается двумя вещами, и обе
+/// ради того, кому язык даётся тяжело. Судим прежде всего смысл: другая, но
+/// верная французская фраза засчитывается. А исправленным показываем не
+/// образец из учебника, а его же фразу с минимальной правкой — так видно, где
+/// именно споткнулся, вместо «правильно было иначе».
+pub async fn check_production(
+    State(rate_limiter): State<AppRateLimiter>,
+    AuthenticatedUser(user): AuthenticatedUser,
+    Json(payload): Json<ProductionCheckRequest>,
+) -> Result<Json<ProductionCheckResponse>, (StatusCode, Json<AiGatewayError>)> {
+    check_rate_limit(&rate_limiter, &user.sub)?;
+
+    let answer = payload.user_answer.trim();
+    if answer.is_empty() || payload.expected.is_empty() {
+        return Err((StatusCode::BAD_REQUEST, Json(AiGatewayError { error: "Пустой ответ или нет эталона".into() })));
+    }
+    let expected: Vec<String> = payload.expected.iter().take(6).map(|e| e.chars().take(300).collect()).collect();
+
+    // Имена ключей диктуем прямо в тексте: схему ответа эта модель не
+    // соблюдает и придумывает свои названия полей.
+    let system_prompt = "You check a short French sentence written or spoken by a BEGINNER (A1-A2) \
+        who struggles with languages. Reply with ONLY a JSON object with exactly these keys: \
+        \"isCorrect\" (bool), \"meaningOk\" (bool), \"grammarOk\" (bool), \"score\" (number 0-1), \
+        \"corrected\" (string), \"explanation\" (string).\n\
+        Rules:\n\
+        - Judge MEANING first. A different but correct French sentence expressing the same idea is CORRECT.\n\
+        - Then check the GRAMMAR FOCUS of the exercise.\n\
+        - Ignore capital letters, final punctuation and typographic vs straight apostrophes.\n\
+        - One missing accent alone does not make the answer wrong; mention it in the explanation.\n\
+        - \"corrected\" is the LEARNER'S OWN sentence with the smallest fix that makes it correct. \
+          Do NOT replace it with the reference. If it is already correct, repeat it unchanged.\n\
+        - \"explanation\" is in Russian, one or two short sentences, about the ONE most important error only. \
+          If correct, a short encouragement.";
+    let user_prompt = format!(
+        "Task given to the learner: {}\nGrammar focus: {}\nAccepted answers: {}\nLearner's answer: {}",
+        payload.prompt.chars().take(300).collect::<String>(),
+        if payload.focus.is_empty() { "—" } else { payload.focus.as_str() },
+        expected.join(" | "),
+        answer.chars().take(300).collect::<String>(),
+    );
+
+    let content = llm_text(
+        Task::Grading,
+        vec![ChatMessage::system(system_prompt), ChatMessage::user(user_prompt)],
+        400,
+        ResponseFormat::Text,
+    ).await?;
+    let verdict: ProductionCheckResponse = serde_json::from_str(extract_json_object(&content))
+        .map_err(|e| (StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: format!("Не разобрал ответ проверки: {e}") })))?;
+    Ok(Json(verdict))
+}
+
 pub async fn analyze_content(
     State(rate_limiter): State<AppRateLimiter>,
     AuthenticatedUser(user): AuthenticatedUser,
@@ -1832,5 +1939,20 @@ mod variant_tests {
         assert_eq!(variant["title"], "Спряжение être");
         assert_eq!(variant["questions"][0]["correctAnswer"], "es");
         assert!(!sig.is_empty());
+    }
+}
+
+#[cfg(test)]
+mod production_tests {
+    #[test]
+    fn production_verdict_survives_nulls() {
+        // Модель иногда отдаёт null вместо пустых полей — разбор не должен падать.
+        let raw = r#"{"isCorrect": true, "meaningOk": null, "grammarOk": true, "score": null, "corrected": null, "explanation": "Отлично."}"#;
+        let v: super::ProductionCheckResponse = serde_json::from_str(raw).unwrap();
+        assert!(v.is_correct);
+        assert!(!v.meaning_ok);
+        assert_eq!(v.score, 0.0);
+        assert_eq!(v.corrected, "");
+        assert_eq!(v.explanation, "Отлично.");
     }
 }

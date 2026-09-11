@@ -17,6 +17,8 @@
     "src/lib/studySelection.ts",
     "src/lib/studySelection.test.ts",
     "src/lib/courses/heardCheck.ts",
-    "src/lib/courses/heardCheck.test.ts"
+    "src/lib/courses/heardCheck.test.ts",
+    "src/lib/courses/production.ts",
+    "src/lib/courses/production.test.ts"
   ]
 }

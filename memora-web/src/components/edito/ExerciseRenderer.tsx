@@ -17,6 +17,7 @@ import { SymbolicExercise } from './SymbolicExercise';
 import { PronunciationExercise } from './PronunciationExercise';
 import { SituationScene } from './SituationScene';
 import { AiTalk } from './AiTalk';
+import { ProductionDrill } from './ProductionDrill';
 
 export type { ExerciseResult };
 
@@ -52,6 +53,7 @@ const RENDERABLE_TYPES = new Set<string>([
   'theory', 'grammar-quiz', 'gender-quiz', 'number-quiz', 'fill-blank',
   'dialogue', 'sentence-builder', 'listening', 'video', 'error-hunt', 'dictation',
   'numeric', 'ordering', 'symbolic', 'pronunciation', 'situation', 'ai-talk',
+  'substitution', 'transformation', 'meaning-to-form',
 ]);
 
 export function ExerciseRenderer({ exercise, onComplete, voice, speechLang, doneKeys, onItemDone }: ExerciseRendererProps) {
@@ -105,6 +107,50 @@ export function ExerciseRenderer({ exercise, onComplete, voice, speechLang, done
           speechLang={speechLang}
           doneKeys={doneKeys}
           onItemDone={onItemDone}
+        />
+      );
+    // Построение фраз: одно упражнение, три вида заданий.
+    case 'substitution':
+      return (
+        <ProductionDrill
+          speechLang={speechLang}
+          focus={exercise.focus}
+          onComplete={handleComplete}
+          items={(exercise.substitutions ?? []).map(it => ({
+            prompt: exercise.frame ?? '',
+            task: `Замените на: ${it.cue}${it.cueRu ? ` (${it.cueRu})` : ''}`,
+            answers: it.answers,
+            judge: 'exact' as const,
+          }))}
+        />
+      );
+    case 'transformation':
+      return (
+        <ProductionDrill
+          speechLang={speechLang}
+          focus={exercise.focus}
+          onComplete={handleComplete}
+          items={(exercise.transformations ?? []).map(it => ({
+            prompt: it.source,
+            task: it.task,
+            answers: it.answers,
+            judge: 'exact' as const,
+          }))}
+        />
+      );
+    case 'meaning-to-form':
+      return (
+        <ProductionDrill
+          speechLang={speechLang}
+          focus={exercise.focus}
+          onComplete={handleComplete}
+          items={(exercise.productions ?? []).map(it => ({
+            prompt: it.ru,
+            task: 'Скажите по-французски',
+            answers: it.answers,
+            hint: it.hint,
+            judge: 'meaning' as const,
+          }))}
         />
       );
     default:
