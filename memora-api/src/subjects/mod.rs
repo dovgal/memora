@@ -63,6 +63,9 @@ const LANGUAGE_EXERCISE_TYPES: &[&str] = &[
     "theory", "grammar-quiz", "sentence-builder", "gender-quiz",
     "dialogue", "fill-blank", "number-quiz", "listening", "video",
     "dictation", "error-hunt", "pronunciation",
+    // Разговор с моделью и лесенка построения фраз: без них курс только проверяет
+    // понимание, а говорить самому не учит.
+    "ai-talk", "substitution", "transformation", "meaning-to-form",
 ];
 
 /// `language-fr` — эталон обратной совместимости. ДОЛЖЕН повторять текущее поведение
