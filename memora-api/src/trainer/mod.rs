@@ -136,8 +136,14 @@ pub struct SiblingCard {
 /// Хэш содержимого карточки. `serde_json::Value` в этом проекте без фичи
 /// `preserve_order` сериализует объекты как `BTreeMap` — ключи всегда в одном
 /// порядке, так что `to_string()` детерминирован и не зависит от порядка правки полей.
+/// Версия правил построения упражнений входит в хэш: когда правила меняются,
+/// сохранённые по старым правилам упражнения перестают совпадать и строятся заново.
+const RULES_VERSION: &str = "v2";
+
 pub fn card_hash(card: &RawCard) -> String {
     let mut hasher = Sha256::new();
+    hasher.update(RULES_VERSION.as_bytes());
+    hasher.update([0u8]);
     hasher.update(card.term.as_bytes());
     hasher.update([0u8]);
     hasher.update(card.definition.as_bytes());
@@ -448,6 +454,24 @@ pub async fn build_profile(card: &RawCard) -> CardProfile {
         example: None,
         mnemonic: None,
     }
+}
+
+/// Перевод без ведущей транскрипции: «[œ̃n‿ami] друг» → «друг».
+///
+/// В наборах вроде Edito транскрипция французского слова стоит в начале
+/// перевода. В вариантах ответа она выдаёт верный: достаточно сравнить её
+/// с самим словом, не зная перевода. Ученику её покажет озвучка, не варианты.
+pub fn strip_ipa(definition: &str) -> String {
+    let t = definition.trim();
+    if let Some(rest) = t.strip_prefix('[') {
+        if let Some(end) = rest.find(']') {
+            let tail = rest[end + 1..].trim();
+            if !tail.is_empty() {
+                return tail.to_string();
+            }
+        }
+    }
+    t.to_string()
 }
 
 // ---------- Детерминированные упражнения ----------
@@ -890,6 +914,16 @@ pub async fn generate_llm_exercises(card: &RawCard, profile: &CardProfile, kinds
 
 #[cfg(test)]
 mod tests {
+
+    #[test]
+    fn transcription_is_cut_from_the_translation_only_when_something_remains() {
+        assert_eq!(super::strip_ipa("[œ̃n‿ami] друг"), "друг");
+        assert_eq!(super::strip_ipa("  [yn ami]   подруга "), "подруга");
+        assert_eq!(super::strip_ipa("друг"), "друг");
+        // Одна транскрипция без перевода — оставляем как есть, иначе ответ опустеет.
+        assert_eq!(super::strip_ipa("[ami]"), "[ami]");
+    }
+
     use super::*;
 
     fn card(term: &str, definition: &str) -> RawCard {

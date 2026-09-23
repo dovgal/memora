@@ -260,7 +260,7 @@ async fn load_sibling_profiles(pool: &PgPool, set_id: Uuid) -> Vec<trainer::Sibl
         .filter_map(|row| {
             let id: Uuid = row.get("id");
             let term: String = row.get("term");
-            let definition: String = row.get("definition");
+            let definition: String = trainer::strip_ipa(&row.get::<String, _>("definition"));
             let fields_data: serde_json::Value = row.get("fields_data");
             let stored_hash: String = row.get("card_hash");
             let current = trainer::RawCard { id, term, definition: definition.clone(), fields_data };
@@ -325,7 +325,7 @@ async fn load_cards(pool: &PgPool, set_id: Uuid, card_ids: Option<&[String]>) ->
 
     Ok(rows
         .into_iter()
-        .map(|row| trainer::RawCard { id: row.get("id"), term: row.get("term"), definition: row.get("definition"), fields_data: row.get("fields_data") })
+        .map(|row| trainer::RawCard { id: row.get("id"), term: row.get("term"), definition: trainer::strip_ipa(&row.get::<String, _>("definition")), fields_data: row.get("fields_data") })
         .collect())
 }
 
@@ -346,7 +346,7 @@ async fn load_card_with_access(pool: &PgPool, card_id: Uuid, user_uuid: Uuid) ->
         return Err(err(StatusCode::FORBIDDEN, "You do not have access to this card"));
     }
 
-    Ok(trainer::RawCard { id: row.get("id"), term: row.get("term"), definition: row.get("definition"), fields_data: row.get("fields_data") })
+    Ok(trainer::RawCard { id: row.get("id"), term: row.get("term"), definition: trainer::strip_ipa(&row.get::<String, _>("definition")), fields_data: row.get("fields_data") })
 }
 
 // ---------- Обработчики ----------
@@ -364,6 +364,13 @@ pub async fn prepare_set(
     ensure_set_access(&pool, set_id, user_uuid).await?;
 
     let limit = payload.limit.unwrap_or(8).clamp(1, 30) as usize;
+    // Прокси сайта обрывает запрос на 30-й секунде, а одна карточка через LLM —
+    // это несколько вызовов подряд. Укладываемся в запас: что не успели,
+    // уходит в pending и достраивается следующим вызовом.
+    let started = std::time::Instant::now();
+    let llm_time_budget = std::time::Duration::from_secs(
+        std::env::var("TRAINER_LLM_BUDGET_SECS").ok().and_then(|v| v.parse().ok()).unwrap_or(18),
+    );
 
     let cards = load_cards(&pool, set_id, payload.card_ids.as_deref()).await?;
     if cards.is_empty() {
@@ -418,7 +425,7 @@ pub async fn prepare_set(
             continue;
         }
 
-        if llm_budget == 0 {
+        if llm_budget == 0 || started.elapsed() >= llm_time_budget {
             pending += 1;
             exercises.extend(stored_llm);
             continue;

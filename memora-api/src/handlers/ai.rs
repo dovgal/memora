@@ -416,6 +416,10 @@ pub struct ProductionCheckRequest {
     /// Грамматика, которую тренирует упражнение: «présent + négation».
     #[serde(default)]
     pub focus: String,
+    /// «Составьте свою фразу со словом»: смысл свободный, образцы — лишь примеры.
+    /// Сверять с ними по смыслу нельзя — засчитывается любая верная фраза с этим словом.
+    #[serde(default)]
+    pub free_form: bool,
 }
 
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
@@ -467,14 +471,22 @@ pub async fn check_production(
         \"isCorrect\" (bool), \"meaningOk\" (bool), \"grammarOk\" (bool), \"score\" (number 0-1), \
         \"corrected\" (string), \"explanation\" (string).\n\
         Rules:\n\
-        - Judge MEANING first. A different but correct French sentence expressing the same idea is CORRECT.\n\
-        - Then check the GRAMMAR FOCUS of the exercise.\n\
+        {MEANING_RULES}\
         - Ignore capital letters, final punctuation and typographic vs straight apostrophes.\n\
         - One missing accent alone does not make the answer wrong; mention it in the explanation.\n\
         - \"corrected\" is the LEARNER'S OWN sentence with the smallest fix that makes it correct. \
           Do NOT replace it with the reference. If it is already correct, repeat it unchanged.\n\
         - \"explanation\" is in Russian, one or two short sentences, about the ONE most important error only. \
-          If correct, a short encouragement.";
+          If correct, a short encouragement."
+        .replace("{MEANING_RULES}", if payload.free_form {
+            "- This is a FREE sentence: the learner may say ANYTHING, the accepted answers are only examples. \
+               \"meaningOk\" is true when the sentence makes sense and really uses the word or phrase from the task \
+               (any grammatical form). Never compare its meaning with the examples.\n\
+             - Then check that the sentence is grammatically correct French; the grammar focus, if given, matters most.\n"
+        } else {
+            "- Judge MEANING first. A different but correct French sentence expressing the same idea is CORRECT.\n\
+             - Then check the GRAMMAR FOCUS of the exercise.\n"
+        });
     let user_prompt = format!(
         "Task given to the learner: {}\nGrammar focus: {}\nAccepted answers: {}\nLearner's answer: {}",
         payload.prompt.chars().take(300).collect::<String>(),
@@ -485,7 +497,7 @@ pub async fn check_production(
 
     let content = llm_text(
         Task::Grading,
-        vec![ChatMessage::system(system_prompt), ChatMessage::user(user_prompt)],
+        vec![ChatMessage::system(system_prompt.as_str()), ChatMessage::user(user_prompt)],
         // Объяснение ошибки по-русски длинное, а gpt-oss тратит часть лимита на
         // рассуждение: при 400 ответ обрывался как раз на неправильных фразах.
         1200,
