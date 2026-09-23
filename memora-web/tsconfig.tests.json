@@ -19,6 +19,8 @@
     "src/lib/courses/heardCheck.ts",
     "src/lib/courses/heardCheck.test.ts",
     "src/lib/courses/production.ts",
-    "src/lib/courses/production.test.ts"
+    "src/lib/courses/production.test.ts",
+    "src/lib/fox/brain.ts",
+    "src/lib/fox/brain.test.ts"
   ]
 }

@@ -17,6 +17,7 @@ import {
   getPreferredMic,
   type SpeechRecognitionLike,
 } from '@/lib/speech';
+import { emitFox } from '@/lib/fox/bus';
 
 /**
  * Состояние серверного распознавания на всё приложение: 'off' ставится только
@@ -355,6 +356,8 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
 
     recordingRef.current = true;
     setRecording(true);
+    // Лисёнок навостряет уши, пока идёт запись, — где бы она ни шла.
+    emitFox({ type: 'listen_start' });
     return true;
   }, [recorderSupported, speechLang]);
 
@@ -363,6 +366,7 @@ export function useSpeechAttempt(speechLang = 'fr-FR'): SpeechAttempt {
     try { recognitionRef.current?.stop(); } catch { /* noop */ }
     try { mediaRecRef.current?.stop(); } catch { /* noop */ }
     setRecording(false);
+    emitFox({ type: 'listen_end' });
     // Даём движку время отдать финальные сегменты.
     await new Promise(r => setTimeout(r, 1200));
     const browserText = transcriptRef.current.trim();

@@ -9,7 +9,7 @@
 // Выбор тренирует узнавание, а проблема как раз в том, что узнавать человек
 // умеет, а собирать фразу сам — нет.
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { ArrowRight, CheckCircle2, Lightbulb, Loader2, Mic, MicOff, RotateCcw, XCircle } from 'lucide-react';
 import type { ExerciseResult } from '@/lib/courses/edito-a1';
@@ -19,6 +19,7 @@ import { heardSomething } from '@/lib/courses/heardCheck';
 import { useSpeechAttempt } from '@/lib/courses/useSpeechAttempt';
 import type { DiffOp } from '@/lib/courses/dictation';
 import { DiffChips } from './DiffChips';
+import { emitFox } from '@/lib/fox/bus';
 
 export interface DrillItem {
   /** Что видно на карточке: исходная фраза или мысль по-русски. */
@@ -65,6 +66,8 @@ export function ProductionDrill({
   const [showHint, setShowHint] = useState(false);
   const [checking, setChecking] = useState(false);
   const [verdict, setVerdict] = useState<Verdict | null>(null);
+  // Первый вопрос показан — пусть лисёнок знает, что пошёл отсчёт.
+  useEffect(() => { emitFox({ type: 'question' }); }, []);
   // Счёт ведём по первой попытке: повтор после разбора — это тренировка,
   // и засчитывать его как успех значило бы приукрашивать результат.
   const [firstTry, setFirstTry] = useState(true);
@@ -123,6 +126,7 @@ export function ProductionDrill({
     }
     setVerdict(v);
     setChecking(false);
+    emitFox({ type: v.ok ? 'correct' : 'wrong' });
   };
 
   const retry = () => {
@@ -135,6 +139,7 @@ export function ProductionDrill({
   const next = () => {
     if (idx + 1 >= items.length) {
       setFinished(true);
+      emitFox({ type: 'session_end', correct, total: items.length });
       onComplete?.({ correct, total: items.length, wrongAnswers: wrong.length ? wrong : undefined });
       return;
     }
@@ -145,6 +150,7 @@ export function ProductionDrill({
     setVerdict(null);
     setFirstTry(true);
     speech.reset();
+    emitFox({ type: 'question' });
   };
 
   if (finished) {

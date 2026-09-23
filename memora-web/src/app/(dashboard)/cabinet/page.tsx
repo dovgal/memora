@@ -15,6 +15,7 @@ import {
   type MyClasses, type Subscription,
 } from '@/lib/classroomApi';
 import { getAdminMe } from '@/lib/adminApi';
+import FoxToggle from '@/components/fox/FoxToggle';
 
 export default function CabinetPage() {
   const { data: session, update } = useSession();
@@ -234,6 +235,11 @@ export default function CabinetPage() {
         </section>
 
         <AppPasswordCard />
+
+        <section>
+          <h2 className="text-sm font-bold uppercase tracking-wider text-qz-text-muted mb-4">Помощник</h2>
+          <FoxToggle />
+        </section>
 
         {isAdmin && (
           <section>

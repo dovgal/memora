@@ -215,3 +215,53 @@ html[data-eink="on"].dark {
   --border: #71717a;
   --input: #71717a;
 }
+
+/* ---------- Лисёнок-помощник (components/fox) ----------
+   Контейнер щелчки не ловит — только сам рисунок, чтобы лисёнок не заслонял
+   кнопки. Что видно и что движется, задают классы на svg.mfx. */
+.mfx-root{position:fixed;bottom:6px;z-index:40;width:120px;pointer-events:none;transition:opacity .45s,transform .45s;transform-origin:50% 90%}
+@media (max-width:640px){.mfx-root{width:88px}}
+.mfx-root svg{width:100%;height:auto;display:block;pointer-events:auto;cursor:pointer}
+.mfx-jumper{transform-origin:50% 70%}
+.mfx-bubble{position:absolute;bottom:100%;left:10px;margin-bottom:2px;max-width:min(260px,70vw);width:max-content;background:var(--qz-card,#fff);color:var(--qz-text,#1f2430);border:1px solid rgba(127,127,127,.3);font-size:13px;line-height:1.35;padding:6px 11px;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.mfx-bubble-left{left:auto;right:10px}
+.mfx-confetti{position:fixed;z-index:41;width:7px;height:10px;border-radius:2px;pointer-events:none}
+.mfx .p-sit,.mfx .p-ball{display:none}
+.mfx.pose-sit .p-stand,.mfx.pose-ball .p-stand{display:none}
+.mfx.pose-sit .p-sit,.mfx.pose-ball .p-ball{display:inline}
+.mfx .l1,.mfx .l2,.mfx .l3,.mfx .l4,.mfx .sl1{transform-box:fill-box;transform-origin:50% 0}
+.mfx.walking .l1,.mfx.walking .l4{animation:mfx-sa .42s ease-in-out infinite alternate}
+.mfx.walking .l2,.mfx.walking .l3{animation:mfx-sb .42s ease-in-out infinite alternate}
+.mfx .tail{transform-box:fill-box;transform-origin:92% 90%;animation:mfx-wag 1.6s ease-in-out infinite alternate}
+.mfx.wag .tail{animation-duration:.28s}
+.mfx.wave .l3{animation:mfx-wave .38s ease-in-out 6 alternate}
+.mfx.wash .sl1{animation:mfx-wash .4s ease-in-out 6 alternate}
+.mfx .headg,.mfx .headS{transform-box:fill-box;transform-origin:30% 90%;transition:transform .35s}
+.mfx.mood-sad .headg{transform:rotate(14deg)}
+.mfx.mood-think .headS{transform:rotate(-9deg)}
+.mfx .ears{transform-box:fill-box;transform-origin:50% 100%}
+.mfx.mood-listen .ears{animation:mfx-perk .45s ease-in-out infinite alternate}
+.mfx .eh,.mfx .ec,.mfx .et,.mfx .mh,.mfx .ms,.mfx .spark,.mfx .zz,.mfx .sw{display:none}
+.mfx.mood-happy .eo,.mfx.mood-sleep .eo,.mfx.mood-think .eo{display:none}
+.mfx.mood-happy .eh,.mfx.mood-sleep .ec,.mfx.mood-think .et{display:inline}
+.mfx.mood-happy .mo,.mfx.mood-sad .mo{display:none}
+.mfx.mood-happy .mh,.mfx.mood-sad .ms{display:inline}
+.mfx.mood-happy .spark{display:inline;animation:mfx-pop .6s ease-out infinite alternate}
+.mfx.mood-sleep .zz{display:inline;fill:currentColor;color:var(--qz-text-muted,#8a8fa3)}
+.mfx .zz text{animation:mfx-zz 2s linear infinite}
+.mfx.mood-listen .sw{display:inline;animation:mfx-pop .5s infinite alternate}
+.mfx.calm *{animation:none!important}
+.mfx-jump{animation:mfx-jump .55s ease-out 2}
+.mfx-spin{animation:mfx-spin .9s ease-in-out}
+@keyframes mfx-sa{from{transform:rotate(20deg)}to{transform:rotate(-20deg)}}
+@keyframes mfx-sb{from{transform:rotate(-20deg)}to{transform:rotate(20deg)}}
+@keyframes mfx-wag{from{transform:rotate(-8deg)}to{transform:rotate(10deg)}}
+@keyframes mfx-wave{to{transform:rotate(-115deg)}}
+@keyframes mfx-wash{to{transform:rotate(-100deg)}}
+@keyframes mfx-perk{to{transform:scaleY(1.18)}}
+@keyframes mfx-pop{from{opacity:.2}to{opacity:1}}
+@keyframes mfx-zz{0%{opacity:0;transform:translate(0,0)}30%{opacity:1}100%{opacity:0;transform:translate(8px,-18px)}}
+@keyframes mfx-jump{50%{transform:translateY(-34px)}}
+@keyframes mfx-spin{50%{transform:translateY(-42px) rotate(180deg)}100%{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.mfx *,.mfx-jump,.mfx-spin{animation:none!important}}
+@media print{.mfx-root{display:none}}
