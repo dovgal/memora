@@ -7,14 +7,12 @@
 
 import { useCallback, useState } from 'react';
 import {
-  X, Volume2, Turtle, Plus, Check, BookOpen, Loader2, Mic, MicOff, Lightbulb,
+  X, Volume2, Turtle, Plus, Check, BookOpen, Loader2,
 } from 'lucide-react';
 import { dictionary as fetchDictionary, type DictionaryEntry, type VocabStatus } from '@/lib/books/api';
 import { STATUS_HINT, STATUS_LABEL } from '@/lib/books/vocab';
 import { speakInworld, speakInworldAndWait } from '@/lib/courses/ttsInworld';
-import { useSpeechAttempt } from '@/lib/courses/useSpeechAttempt';
-import { checkDictation, bestTranscript } from '@/lib/courses/dictation';
-import { DiffChips } from '@/components/edito/DiffChips';
+import { usePronounceCheck, PronounceButton, PronounceFeedback } from '@/components/books/PronounceCheck';
 
 export interface Selection {
   /** Слово из текста или произвольно выделенная фраза. */
@@ -82,6 +80,11 @@ export function WordPanel({
     }
   };
 
+  // Хук хранит запись и результат по selection.text; WordPanel целиком
+  // перемонтируется при смене выделения (родитель ключует по тексту и
+  // предложению), так что оценка произношения сама обнуляется вместе с ним.
+  const pronounce = usePronounceCheck(selection.text, speechLang);
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-start justify-between gap-2">
@@ -105,6 +108,11 @@ export function WordPanel({
             <X className="w-4 h-4" />
           </button>
         </div>
+      </div>
+
+      <div>
+        <PronounceButton pronounce={pronounce} />
+        <PronounceFeedback pronounce={pronounce} />
       </div>
 
       {selection.kind === 'word' && (
@@ -207,23 +215,7 @@ function SentenceBlock({ sentence, voice, speechLang, translation, onTranslate }
   translation: string | null;
   onTranslate: () => void;
 }) {
-  const speech = useSpeechAttempt(speechLang);
-  const [result, setResult] = useState<{ score: number; heard: string; ops: ReturnType<typeof checkDictation>['ops'] } | null>(null);
-
-  const stopAndCheck = async () => {
-    const transcript = await speech.stop();
-    if (!transcript) {
-      speech.setError('Речь не распознана. В Chrome или Safari оценка работает надёжнее.');
-      return;
-    }
-    const heard = bestTranscript(sentence, transcript, speech.alternatives());
-    const check = checkDictation(sentence, heard, { spoken: true });
-    setResult({
-      score: check.total > 0 ? Math.round((check.correct / check.total) * 100) : 0,
-      heard,
-      ops: check.ops,
-    });
-  };
+  const pronounce = usePronounceCheck(sentence, speechLang);
 
   if (!sentence) return null;
 
@@ -243,27 +235,9 @@ function SentenceBlock({ sentence, voice, speechLang, translation, onTranslate }
             Перевести
           </button>
         )}
-        <button
-          onClick={() => (speech.recording ? void stopAndCheck() : void speech.start())}
-          className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1.5 rounded-lg transition-colors ${
-            speech.recording ? 'bg-red-500 text-white animate-pulse' : 'border border-border text-qz-text-muted hover:text-[#4255ff] hover:border-[#4255ff]/50'
-          }`}
-        >
-          {speech.recording ? <MicOff className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5" />}
-          {speech.recording ? 'Стоп' : 'Произнести'}
-        </button>
+        <PronounceButton pronounce={pronounce} />
       </div>
-      {speech.error && <p className="text-amber-500 text-[11px] mt-1.5">{speech.error}</p>}
-      {result && (
-        <div className="mt-2">
-          <p className="text-xs font-bold flex items-center gap-1.5 mb-1">
-            <Lightbulb className={`w-3.5 h-3.5 ${result.score >= 80 ? 'text-emerald-500' : 'text-amber-500'}`} />
-            <span className={result.score >= 80 ? 'text-emerald-500' : 'text-amber-500'}>{result.score}%</span>
-            <span className="text-qz-text-muted font-normal">распознано: «{result.heard}»</span>
-          </p>
-          <DiffChips ops={result.ops} />
-        </div>
-      )}
+      <PronounceFeedback pronounce={pronounce} />
     </div>
   );
 }
