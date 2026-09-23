@@ -40,10 +40,50 @@ export interface AIExercise {
     context?: string;
 }
 
-export interface AIAnalyzeResponse {
-    proposedTitle: string;
-    proposedDescription: string;
-    cards: CreateFlashcardRequest[];
+// ---------- AI Content Creator ----------
+// Ручные типы: бэкенд (handlers::creator) намеренно не типшарит их — модель
+// не соблюдает JSON Schema, ключи диктуются прямо в промпте и разбираются
+// null-толерантно на сервере, а на фронт уже приходит провалидированный ответ.
+
+export type CreatorLevel = 'A1' | 'A2' | 'B1' | 'B2' | 'C1';
+export type CreatorExtractMode = 'words' | 'phrases' | 'both';
+
+/** Общие языковые/уровневые настройки — без `count`: он осмыслен только при
+ * первом анализе, регенерация одной карточки его не принимает. */
+export interface CreatorSettings {
+	sourceLanguage: string; // '' или 'auto' — определить самим
+	translationLanguage: string; // по умолчанию 'ru'
+	level: CreatorLevel;
+	extract: CreatorExtractMode;
+	learningGoal: string;
+}
+
+export interface CreatorAnalyzeRequest extends CreatorSettings {
+	content: string;
+	count: number; // 10..40
+}
+
+export interface CreatorCard {
+	term: string;
+	definition: string;
+	partOfSpeech: string;
+	example: string;
+	exampleTranslation: string;
+	ipa: string;
+}
+
+export interface CreatorAnalyzeResponse {
+	proposedTitle: string;
+	proposedDescription: string;
+	cards: CreatorCard[];
+	skippedDuplicates: number;
+	skippedInvalid: number;
+}
+
+export interface CreatorRegenerateCardRequest extends CreatorSettings {
+	content: string;
+	term: string;
+	avoidTerms: string[];
 }
 
 // ---------- Оверрайды сгенерированных типов ----------

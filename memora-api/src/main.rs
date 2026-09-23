@@ -136,7 +136,8 @@ async fn main() {
         // Проверка фразы, построенной самим учеником: эталон из курса, судим смысл.
         .route("/api/ai/course/check-production", post(handlers::ai::check_production))
         .route("/api/ai/a2/generate-questions", post(handlers::ai::generate_a2_questions))
-        .route("/api/ai/creator/analyze", post(handlers::ai::analyze_content))
+        .route("/api/ai/creator/analyze", post(handlers::creator::analyze_content))
+        .route("/api/ai/creator/regenerate-card", post(handlers::creator::regenerate_card))
         .route("/api/images/generate", post(handlers::ai::generate_image))
         .route("/api/ai/qchat/{set_id}", post(handlers::ai::qchat_stream))
         // Folders routes
