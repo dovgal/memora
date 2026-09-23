@@ -1,11 +1,13 @@
 mod domain;
 mod handlers;
+mod judge;
 mod live_ws;
 mod llm;
 mod mathsvc;
 mod middleware;
 mod pushsvc;
 mod subjects;
+mod trainer;
 mod workers;
 
 use axum::{
@@ -273,6 +275,10 @@ async fn main() {
         .route("/api/ai/course/converse", post(handlers::ai::converse))
         .route("/api/ai/course/story", post(handlers::ai::generate_story))
         .route("/api/ai/course/regenerate-variant", post(handlers::ai::regenerate_variant))
+        // Серверный движок тренажёра: профиль карточки + провалидированные упражнения
+        // (см. memora-web/src/lib/contracts/trainer.ts).
+        .route("/api/sets/{id}/trainer/prepare", post(handlers::trainer::prepare_set))
+        .route("/api/cards/{id}/mnemonic", post(handlers::trainer::generate_mnemonic))
         .layer(cors)
 
         .layer(DefaultBodyLimit::max(20 * 1024 * 1024))

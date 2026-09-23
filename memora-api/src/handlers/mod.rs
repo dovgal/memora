@@ -24,3 +24,4 @@ pub mod translate;
 pub mod cloze;
 pub mod webfetch;
 pub mod verbs;
+pub mod trainer;
