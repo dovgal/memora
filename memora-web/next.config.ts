@@ -65,6 +65,12 @@ const nextConfig: NextConfig = {
         source: "/api/sets/:path*",
         destination: `${rustApiUrl}/api/sets/:path*`,
       },
+      // Мнемоника тренажёра карточек (POST /api/cards/{id}/mnemonic): без этой
+      // записи запрос оседал бы 404 в самом Next и до API не доходил.
+      {
+        source: "/api/cards/:path*",
+        destination: `${rustApiUrl}/api/cards/:path*`,
+      },
       {
         source: "/api/study/:path*",
         destination: `${rustApiUrl}/api/study/:path*`,
@@ -147,11 +153,6 @@ const nextConfig: NextConfig = {
       {
         source: "/api/admin/:path*",
         destination: `${rustApiUrl}/api/admin/:path*`,
-      },
-      // Тренажёр: подсказка-ассоциация к трудной карточке.
-      {
-        source: "/api/cards/:path*",
-        destination: `${rustApiUrl}/api/cards/:path*`,
       },
       // Игровой слой: XP, уровни, серия, достижения, семейное табло.
       {

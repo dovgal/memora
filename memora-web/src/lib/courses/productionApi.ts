@@ -14,7 +14,17 @@ export interface ProductionVerdictDto {
 }
 
 export async function checkProduction(
-  payload: { prompt: string; expected: string[]; userAnswer: string; focus?: string },
+  payload: {
+    prompt: string;
+    expected: string[];
+    userAnswer: string;
+    focus?: string;
+    /**
+     * Свободная фраза («составьте предложение со словом X»): expected — лишь
+     * примеры, судят грамматику и то, что слово употреблено, а не близость к ним.
+     */
+    freeForm?: boolean;
+  },
   idToken?: string,
 ): Promise<ProductionVerdictDto> {
   const r = await fetch('/api/ai/course/check-production', {

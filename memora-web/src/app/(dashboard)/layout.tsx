@@ -11,7 +11,6 @@ import {
 import LogoutButton from "@/components/LogoutButton";
 import { DashboardSidebar } from "@/components/DashboardSidebar";
 import { GameHud } from "@/components/game/GameHud";
-import { CelebrationOverlay } from "@/components/game/CelebrationOverlay";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { EinkToggle } from "@/components/EinkToggle";
 import { SkinToggle } from "@/components/SkinToggle";
@@ -51,7 +50,6 @@ export default async function DashboardLayout({
 
     return (
         <I18nProvider>
-            <CelebrationOverlay />
             <div className="flex h-screen bg-background text-foreground font-sans overflow-hidden">
                 <DashboardSidebar role={role} folders={folders.map(f => ({ id: f.id, name: f.name }))} />
 

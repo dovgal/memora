@@ -24,6 +24,19 @@
     "src/lib/fox/brain.test.ts",
     "src/lib/game/client.ts",
     "src/lib/game/celebrationBus.ts",
-    "src/lib/game/celebrationBus.test.ts"
+    "src/lib/game/celebrationBus.test.ts",
+    "src/lib/trainer/types.ts",
+    "src/lib/trainer/ladder.ts",
+    "src/lib/trainer/ladder.test.ts",
+    "src/lib/trainer/planner.ts",
+    "src/lib/trainer/planner.test.ts",
+    "src/lib/trainer/rating.ts",
+    "src/lib/trainer/rating.test.ts",
+    "src/lib/trainer/relearn.ts",
+    "src/lib/trainer/relearn.test.ts",
+    "src/lib/trainer/queue.ts",
+    "src/lib/trainer/queue.test.ts",
+    "src/lib/trainer/coaching.ts",
+    "src/lib/trainer/coaching.test.ts"
   ]
 }

@@ -89,7 +89,8 @@ export async function reportStudyEvent(event: StudyEvent): Promise<GameUpdate | 
 function foxReactsTo(event: StudyEvent): void {
   if (event.type === 'answer') emitFox(event.correct ? { type: 'correct', combo: event.combo } : { type: 'wrong' });
   else if (event.type === 'pronunciation' && event.score >= 0.8) emitFox({ type: 'correct' });
-  else if (event.type === 'session_complete') emitFox({ type: 'session_end', correct: event.correct, total: event.cards });
+  // Итог занятия лисёнку сообщает сам тренажёр: здесь есть только число
+  // карточек, а верных ответов за занятие бывает больше, чем карточек.
 }
 
 export interface AchievementCatalogEntry extends Achievement {

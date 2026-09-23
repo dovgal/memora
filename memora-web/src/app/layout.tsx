@@ -5,6 +5,7 @@ import AppProvider from "@/components/AppProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import OfflineBanner from "@/components/OfflineBanner";
 import Fox from "@/components/fox/Fox";
+import { CelebrationOverlay } from "@/components/game/CelebrationOverlay";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 
@@ -113,6 +114,8 @@ export default async function RootLayout({
             <OfflineBanner />
             {children}
             <Fox />
+            {/* Праздник за уровень и достижение — на любой странице, в том числе в тренажёре карточек. */}
+            <CelebrationOverlay />
           </ThemeProvider>
         </AppProvider>
       </body>
