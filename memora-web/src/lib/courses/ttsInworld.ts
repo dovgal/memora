@@ -30,9 +30,13 @@ async function getAuthHeaders(): Promise<Record<string, string>> {
 /** Результат озвучки: ok=false + причина, чтобы UI мог показать её вместо тишины. */
 export interface SpeakResult { ok: boolean; error?: string }
 
-async function playInworld(text: string, voice: string, waitEnd: boolean, language?: string): Promise<SpeakResult> {
+async function playInworld(text: string, voice: string, waitEnd: boolean, language?: string, rate = 1): Promise<SpeakResult> {
   const clean = (text || "").trim();
   if (!clean) return { ok: true };
+  // Номер озвучки на момент запроса: если, пока шёл ответ сервера, началась
+  // другая (или её остановили), эту уже не играем — иначе медленный ответ на
+  // прошлый вопрос зазвучит поверх нового.
+  const mySeq = speakSeq;
   try {
     // остановим предыдущее воспроизведение
     if (currentAudio) { currentAudio.pause(); currentAudio = null; }
@@ -65,7 +69,11 @@ async function playInworld(text: string, voice: string, waitEnd: boolean, langua
       blob = await res.blob();
       if (blob.size === 0) return { ok: false, error: "пустой аудиоответ" };
     }
+    if (mySeq !== speakSeq) return { ok: true };
     const audio = new Audio(URL.createObjectURL(blob));
+    // Медленный повтор — тренажёру карточек нужно проговорить слово по слогам,
+    // не заказывая у Inworld вторую запись: playbackRate дешевле и мгновенно.
+    if (rate !== 1) audio.playbackRate = rate;
     currentAudio = audio;
     if (waitEnd) {
       // Резолвимся по КОНЦУ воспроизведения (или прерыванию) — нужно голосовому
@@ -164,10 +172,12 @@ export async function speakInworldLong(text: string, voice = "Alain"): Promise<v
 
 /**
  * Озвучить текст голосом изучаемого языка курса ('fr'/'en'/'de'/'es'…) —
- * конкретный голос выбирает предметный пак на бэкенде.
+ * конкретный голос выбирает предметный пак на бэкенде. rate < 1 — медленнее
+ * обычного (карточкам это нужно, когда с первого раза не расслышали слово).
  */
-export async function speakInworldLanguage(text: string, language: string): Promise<SpeakResult> {
-  return playInworld(text, "", false, language || undefined);
+export async function speakInworldLanguage(text: string, language: string, rate = 1): Promise<SpeakResult> {
+  speakSeq++;
+  return playInworld(text, "", false, language || undefined, rate);
 }
 
 /** Озвучить карточку лексики из сид-набора (Inworld по UUID карты), с fallback на /api/tts. */

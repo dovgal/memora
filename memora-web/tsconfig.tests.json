@@ -19,6 +19,19 @@
     "src/lib/courses/heardCheck.ts",
     "src/lib/courses/heardCheck.test.ts",
     "src/lib/courses/production.ts",
-    "src/lib/courses/production.test.ts"
+    "src/lib/courses/production.test.ts",
+    "src/lib/trainer/types.ts",
+    "src/lib/trainer/ladder.ts",
+    "src/lib/trainer/ladder.test.ts",
+    "src/lib/trainer/planner.ts",
+    "src/lib/trainer/planner.test.ts",
+    "src/lib/trainer/rating.ts",
+    "src/lib/trainer/rating.test.ts",
+    "src/lib/trainer/relearn.ts",
+    "src/lib/trainer/relearn.test.ts",
+    "src/lib/trainer/queue.ts",
+    "src/lib/trainer/queue.test.ts",
+    "src/lib/trainer/coaching.ts",
+    "src/lib/trainer/coaching.test.ts"
   ]
 }
