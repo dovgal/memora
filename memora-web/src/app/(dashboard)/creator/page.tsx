@@ -391,8 +391,7 @@ export default function CreatorPage() {
                 body: JSON.stringify({
                     title: existingSet.title,
                     description: existingSet.description ?? '',
-                    // Дописываем карточки, а не меняем доступ: общий модуль должен остаться общим.
-                    isPublic: existingSet.isPublic,
+                    isPublic: false,
                     fieldsSchema: mergedSchema,
                     flashcards: processed.map((c, i) => ({ id: allFlashcards[i].id, ...c })),
                 }),
