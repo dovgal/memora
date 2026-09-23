@@ -148,6 +148,11 @@ const nextConfig: NextConfig = {
         source: "/api/admin/:path*",
         destination: `${rustApiUrl}/api/admin/:path*`,
       },
+      // Тренажёр: подсказка-ассоциация к трудной карточке.
+      {
+        source: "/api/cards/:path*",
+        destination: `${rustApiUrl}/api/cards/:path*`,
+      },
     ];
   },
 };
