@@ -10,7 +10,7 @@ import { usePathname } from 'next/navigation';
 import { useSyncExternalStore } from 'react';
 import {
   Home, Library, Users, Bell, Plus, Folder, Sparkles,
-  GraduationCap, UserRound, Trophy, BookOpen, PanelLeftClose, PanelLeftOpen,
+  GraduationCap, UserRound, Trophy, Award, BookOpen, PanelLeftClose, PanelLeftOpen,
 } from 'lucide-react';
 import {
   isImmersive, setSidebarCollapsed, sidebarServerSnapshot, sidebarSnapshot, subscribeSidebar,
@@ -30,6 +30,7 @@ export function DashboardSidebar({ role, folders }: { role: string; folders: Sid
     { href: '/courses', icon: GraduationCap, label: 'Каталог курсов' },
     { href: '/cabinet', icon: UserRound, label: 'Мой кабинет' },
     { href: '/family', icon: Trophy, label: 'Семейное табло' },
+    { href: '/achievements', icon: Award, label: 'Достижения' },
     { href: '/library', icon: Library, label: 'Your Library' },
     { href: '/books', icon: BookOpen, label: 'Чтение книг' },
     { href: '/groups', icon: Users, label: 'Study Groups' },

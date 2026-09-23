@@ -245,6 +245,10 @@ async fn main() {
         .route("/api/check/symbolic", post(handlers::checks::check_symbolic))
         .route("/api/family/board", get(handlers::family::get_board))
         .route("/api/family/member/{user_id}/courses", get(handlers::family::get_member_courses))
+        // Игровой слой: XP, уровни, серия дней, достижения, семейное табло.
+        .route("/api/game/event", post(handlers::game::report_event))
+        .route("/api/game/me", get(handlers::game::get_me))
+        .route("/api/game/family", get(handlers::game::get_family))
         .route("/api/push/public-key", get(handlers::push::get_public_key))
         .route("/api/push/subscribe", post(handlers::push::subscribe))
         .route("/api/push/unsubscribe", post(handlers::push::unsubscribe))

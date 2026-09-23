@@ -17,6 +17,7 @@ pub mod classroom;
 pub mod sources;
 pub mod checks;
 pub mod family;
+pub mod game;
 pub mod push;
 
 pub mod books;

@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 import LogoutButton from "@/components/LogoutButton";
 import { DashboardSidebar } from "@/components/DashboardSidebar";
+import { GameHud } from "@/components/game/GameHud";
+import { CelebrationOverlay } from "@/components/game/CelebrationOverlay";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { EinkToggle } from "@/components/EinkToggle";
 import { SkinToggle } from "@/components/SkinToggle";
@@ -49,6 +51,7 @@ export default async function DashboardLayout({
 
     return (
         <I18nProvider>
+            <CelebrationOverlay />
             <div className="flex h-screen bg-background text-foreground font-sans overflow-hidden">
                 <DashboardSidebar role={role} folders={folders.map(f => ({ id: f.id, name: f.name }))} />
 
@@ -56,7 +59,7 @@ export default async function DashboardLayout({
                 <main className="flex-1 flex flex-col h-screen overflow-hidden relative min-w-0">
                     {/* Header */}
                     <header className="h-16 border-b border-border bg-background flex items-center justify-between px-6 shrink-0 z-10 sticky top-0">
-                        <div className="flex-1 max-w-2xl px-4 md:px-0">
+                        <div className="flex-1 min-w-0 max-w-2xl px-4 md:px-0">
                             <div className="relative group">
                                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
                                 <input
@@ -67,7 +70,8 @@ export default async function DashboardLayout({
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-4 pl-4">
+                        <div className="flex items-center gap-2 sm:gap-4 pl-2 sm:pl-4">
+                            <GameHud />
                             <ThemeToggle />
                             <EinkToggle />
                             <SkinToggle />

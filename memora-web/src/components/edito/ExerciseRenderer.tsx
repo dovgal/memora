@@ -18,6 +18,8 @@ import { PronunciationExercise } from './PronunciationExercise';
 import { SituationScene } from './SituationScene';
 import { AiTalk } from './AiTalk';
 import { ProductionDrill } from './ProductionDrill';
+import { reportStudyEvent } from '@/lib/game/client';
+import { celebrate } from '@/lib/game/celebrationBus';
 
 export type { ExerciseResult };
 
@@ -57,7 +59,13 @@ const RENDERABLE_TYPES = new Set<string>([
 ]);
 
 export function ExerciseRenderer({ exercise, onComplete, voice, speechLang, doneKeys, onItemDone }: ExerciseRendererProps) {
-  const handleComplete = (result?: ExerciseResult) => onComplete?.(exercise.id, result);
+  const handleComplete = (result?: ExerciseResult) => {
+    onComplete?.(exercise.id, result);
+    // Игровой слой: упражнение целиком — событие для XP/серии/достижений.
+    // Не ждём ответа и не роняем урок, если сервер недоступен: reportStudyEvent
+    // сам вернёт null, а celebrate(null) — пустая операция.
+    void reportStudyEvent({ type: 'exercise_complete', source: 'course' }).then(celebrate);
+  };
 
   // Старый формат — по type; новый (Subject Packs) — по answer.kind,
   // если type отсутствует или рендереру неизвестен.
