@@ -403,8 +403,12 @@ export function BookReader({ bookId }: { bookId: string }) {
     const definition = selTranslation ?? transRef.current.get(sel.key) ?? '';
     if (!definition) return;
     try {
-      await addCard(bookId, { term: sel.text, definition, example: sel.sentence });
+      const saved = await addCard(bookId, { term: sel.text, definition, example: sel.sentence });
       setCards(prev => new Set(prev).add(sel.text));
+      // Опознаватель набора могли завести только что (старый удалили или его не
+      // было) — без этого ссылка «В карточки книги» осталась бы скрытой до
+      // следующей перезагрузки страницы.
+      setDetail(d => (d && d.book.setId !== saved.setId ? { ...d, book: { ...d.book, setId: saved.setId } } : d));
       // Сохранённое слово автоматически переходит в «учу»: оно теперь в работе.
       if (sel.kind === 'word' && isUnknown(vocab.get(sel.key))) setStatus(sel.key, 1);
     } catch (e) {

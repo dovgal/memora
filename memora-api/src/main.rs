@@ -273,6 +273,10 @@ async fn main() {
         .route("/api/ai/course/converse", post(handlers::ai::converse))
         .route("/api/ai/course/story", post(handlers::ai::generate_story))
         .route("/api/ai/course/regenerate-variant", post(handlers::ai::regenerate_variant))
+        // Кабинет администратора: полный сброс карточек семьи перед новым стартом.
+        .route("/api/admin/me", get(handlers::admin::me))
+        .route("/api/admin/sets/summary", get(handlers::admin::sets_summary))
+        .route("/api/admin/sets", delete(handlers::admin::delete_all_sets))
         .layer(cors)
 
         .layer(DefaultBodyLimit::max(20 * 1024 * 1024))

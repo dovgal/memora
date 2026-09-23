@@ -20,6 +20,7 @@ pub mod family;
 pub mod push;
 
 pub mod books;
+pub mod admin;
 pub mod translate;
 pub mod cloze;
 pub mod webfetch;

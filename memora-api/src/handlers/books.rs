@@ -17,6 +17,7 @@ use sqlx::{PgPool, Row};
 use uuid::Uuid;
 
 use crate::middleware::auth::AuthenticatedUser;
+use super::admin::is_admin;
 use super::errors::ApiError;
 use super::translate;
 
@@ -49,31 +50,10 @@ async fn readable_book(pool: &PgPool, book_id: Uuid) -> ApiResult<(String, Uuid)
 /// Для изменения самой книги: название, автора, тему правит только загрузивший.
 /// Кто может удалять чужие книги.
 ///
-/// Список опознавателей задаётся в настройках сервера (ADMIN_USER_IDS), а не
-/// ролью в базе: роль едет в пропуске и обновляется только при следующем входе,
-/// а через Google вход может не повторяться неделями. Здесь же право
-/// проверяется при каждом запросе.
+/// Проверка права администратора — общая для всех хендлеров (см. admin::is_admin):
+/// список опознавателей задаётся в настройках сервера (ADMIN_USER_IDS), а не
+/// ролью в базе, и назначить себя администратором из приложения нельзя.
 ///
-/// Назначить себя администратором из приложения нельзя ни при каком раскладе:
-/// список читается только из окружения.
-fn is_admin(sub: &str) -> bool {
-    match std::env::var("ADMIN_USER_IDS") {
-        Ok(raw) => admin_list_contains(&raw, sub),
-        Err(_) => false,
-    }
-}
-
-/// Разбор списка — отдельно от окружения, чтобы его можно было испытать.
-fn admin_list_contains(raw: &str, sub: &str) -> bool {
-    let sub = sub.trim();
-    if sub.is_empty() {
-        return false;
-    }
-    raw.split([',', ';', ' ', '\n'])
-        .map(str::trim)
-        .any(|id| !id.is_empty() && id.eq_ignore_ascii_case(sub))
-}
-
 /// Право удалить книгу: у того, кто её загрузил, и у администратора.
 async fn deletable_book(pool: &PgPool, book_id: Uuid, user: &crate::middleware::auth::Claims) -> ApiResult<()> {
     let user_id = uid(&user.sub)?;
@@ -1603,24 +1583,8 @@ pub async fn add_card(
 mod tests {
     use super::*;
 
-    #[test]
-    fn admin_list_is_read_forgivingly() {
-        let list = "61600d9b-ac3d-45dc-a91d-d91d8f201aad, 11111111-1111-1111-1111-111111111111";
-        assert!(admin_list_contains(list, "61600d9b-ac3d-45dc-a91d-d91d8f201aad"));
-        assert!(admin_list_contains(list, "11111111-1111-1111-1111-111111111111"));
-        // Регистр в опознавателе значения не имеет.
-        assert!(admin_list_contains(list, "61600D9B-AC3D-45DC-A91D-D91D8F201AAD"));
-    }
-
-    #[test]
-    fn everyone_else_is_not_admin() {
-        let list = "61600d9b-ac3d-45dc-a91d-d91d8f201aad";
-        assert!(!admin_list_contains(list, "22222222-2222-2222-2222-222222222222"));
-        // Пустой список — администраторов нет вовсе.
-        assert!(!admin_list_contains("", "61600d9b-ac3d-45dc-a91d-d91d8f201aad"));
-        // Пустой опознаватель не должен совпасть с пустым местом в списке.
-        assert!(!admin_list_contains("a, , b", ""));
-    }
+    // Проверка права администратора переехала в admin.rs вместе с is_admin —
+    // см. admin::tests::admin_list_is_read_forgivingly / everyone_else_is_not_admin.
 
     #[test]
     fn marked_answer_is_read_by_number() {

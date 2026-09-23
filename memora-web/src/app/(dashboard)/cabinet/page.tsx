@@ -8,12 +8,13 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { AppPasswordCard } from '@/components/AppPasswordCard';
 import {
-  User, GraduationCap, BookOpen, Users, Plus, LogIn, Loader2, Star, X, ArrowRight,
+  User, GraduationCap, BookOpen, Users, Plus, LogIn, Loader2, Star, X, ArrowRight, ShieldAlert,
 } from 'lucide-react';
 import {
   getMyClasses, createClass, joinClass, getSubscriptions, unsubscribeCourse, setRole,
   type MyClasses, type Subscription,
 } from '@/lib/classroomApi';
+import { getAdminMe } from '@/lib/adminApi';
 
 export default function CabinetPage() {
   const { data: session, update } = useSession();
@@ -25,6 +26,7 @@ export default function CabinetPage() {
   const [subs, setSubs] = useState<Subscription[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const [newClassName, setNewClassName] = useState('');
   const [joinCode, setJoinCode] = useState('');
@@ -33,6 +35,8 @@ export default function CabinetPage() {
     if (!idToken) return;
     getMyClasses(idToken).then(setClasses).catch(() => setClasses({ teaching: [], enrolled: [] }));
     getSubscriptions(idToken).then(setSubs).catch(() => {});
+    // Ссылка на сброс карточек — только тем, кого сервер сам считает администратором.
+    getAdminMe(idToken).then(me => setIsAdmin(me.isAdmin)).catch(() => setIsAdmin(false));
   }, [idToken]);
 
   useEffect(() => { reload(); }, [reload]);
@@ -230,6 +234,22 @@ export default function CabinetPage() {
         </section>
 
         <AppPasswordCard />
+
+        {isAdmin && (
+          <section>
+            <h2 className="text-sm font-bold uppercase tracking-wider text-qz-text-muted mb-4">Администрирование</h2>
+            <Link href="/admin/cards">
+              <div className="bg-qz-card border border-red-500/30 rounded-xl px-4 py-3 hover:border-red-500/60 transition-colors flex items-center gap-3 group max-w-md">
+                <ShieldAlert className="w-4 h-4 text-red-400 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-foreground text-sm font-semibold">Сброс карточек семьи</p>
+                  <p className="text-qz-text-muted text-xs">Удалить все наборы и карточки — начать с чистого листа</p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-qz-text-muted group-hover:text-red-400 group-hover:translate-x-0.5 transition-all" />
+              </div>
+            </Link>
+          </section>
+        )}
       </div>
     </div>
   );
