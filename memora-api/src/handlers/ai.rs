@@ -15,7 +15,7 @@ use crate::llm::{self, ChatMessage, ChatRequest, ResponseFormat, Task};
 use crate::middleware::{auth::AuthenticatedUser, rate_limiter::AppRateLimiter};
 use crate::domain::dtos::{
     QChatRequest,
-    AIGenerateRequest, AIGradeRequest, AIGradeResponse, AIAnalyzeRequest
+    AIGenerateRequest, AIGradeRequest, AIGradeResponse
 };
 use sqlx::{PgPool, Row};
 
@@ -504,45 +504,9 @@ fn settle_verdict(mut v: ProductionCheckResponse) -> ProductionCheckResponse {
     v
 }
 
-pub async fn analyze_content(
-    State(rate_limiter): State<AppRateLimiter>,
-    AuthenticatedUser(user): AuthenticatedUser,
-    Json(payload): Json<AIAnalyzeRequest>,
-) -> Sse<BoxStream<'static, Result<Event, Infallible>>> {
-    if let Err((_, Json(e))) = check_rate_limit(&rate_limiter, &user.sub) {
-        return Sse::new(stream::once(async move { Ok(Event::default().data(format!("Error: {}", e.error))) }).boxed());
-    }
-
-    let system_prompt = "You are an AI Content Analyst for Memora.
-        Analyze the provided text (books, subtitles, podcasts) and extract structured flashcards.
-        User Objective: {}.
-        Output ONLY raw JSON object: { proposedTitle: string, proposedDescription: string, cards: Vec<{ term: string, definition: string, fieldsData: Value }> }.
-        Extract at least 10-15 high-quality cards.
-        Do not use markdown blocks.";
-
-    let llm_stream = match llm::chat_stream(ChatRequest {
-        task: Task::Generation,
-        messages: vec![
-            ChatMessage::system(system_prompt.replace("{}", &payload.user_objective)),
-            ChatMessage::user(payload.content),
-        ],
-        max_tokens: 8192,
-        format: ResponseFormat::Text,
-        think: None,
-    }).await {
-        Ok(s) => s,
-        Err(e) => return Sse::new(stream::once(async move { Ok(Event::default().data(format!("Error: {e}"))) }).boxed()),
-    };
-
-    let event_stream = llm_stream.map(|item| {
-        match item {
-            Ok(content) => Ok::<Event, Infallible>(Event::default().data(content)),
-            Err(e) => Ok::<Event, Infallible>(Event::default().data(format!("Error: {e}"))),
-        }
-    });
-
-    Sse::new(event_stream.boxed())
-}
+// analyze_content (AI Content Creator) переехал в handlers::creator — см. main.rs,
+// маршрут /api/ai/creator/analyze. Его DTO AIAnalyzeRequest убрана из domain::dtos
+// как более не используемая (creator.rs определяет свои собственные запросы).
 
 #[derive(Deserialize)]
 pub struct GenerateA2Request {

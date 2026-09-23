@@ -1,5 +1,6 @@
 pub mod ai;
 pub mod auth;
+pub mod creator;
 pub mod live;
 pub mod protected;
 pub mod settings;

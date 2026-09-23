@@ -265,10 +265,6 @@ pub struct AIGradeResponse {
     pub correct_answer: String,
 }
 
-#[typeshare]
-#[derive(Serialize, Deserialize, Debug)]
-#[serde(rename_all = "camelCase")]
-pub struct AIAnalyzeRequest {
-    pub content: String,
-    pub user_objective: String, // translation, terms, summary, etc.
-}
+// AIAnalyzeRequest (AI Content Creator) удалена: handlers::creator определяет
+// собственный, более богатый запрос (CreatorAnalyzeRequest) — язык источника,
+// язык перевода, уровень, что извлекать, количество, цель обучения.
