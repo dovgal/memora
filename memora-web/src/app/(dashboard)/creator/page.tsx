@@ -391,7 +391,9 @@ export default function CreatorPage() {
                 body: JSON.stringify({
                     title: existingSet.title,
                     description: existingSet.description ?? '',
-                    isPublic: false,
+                    // Дописывание карточек не должно менять видимость набора:
+                    // сохраняем флаг, который пришёл с сервера.
+                    isPublic: existingSet.isPublic,
                     fieldsSchema: mergedSchema,
                     flashcards: processed.map((c, i) => ({ id: allFlashcards[i].id, ...c })),
                 }),

@@ -609,7 +609,14 @@ pub async fn build_recognize(card: &RawCard, profile: &CardProfile, siblings: &[
         // Судья целиком недоступен — доверяем ранжированию как есть (best-effort),
         // не отбрасываем упражнение только из-за недоступности judge.
         if let Ok(result) = judge::ask(state, questions).await {
-            let threshold = judge::noul_threshold(result.provider);
+            // Строже, чем для упражнений: вариант, который на деле тоже верен,
+            // засчитает ученику ошибку за правильный ответ — хуже этого вопроса
+            // не бывает. Поэтому сомнение (около половины) уже выбрасывает вариант.
+            let threshold = std::env::var("JUDGE_DISTRACTOR_MAX")
+                .ok()
+                .and_then(|v| v.parse::<f32>().ok())
+                .unwrap_or(0.5)
+                .min(judge::noul_threshold(result.provider));
             picked = picked
                 .into_iter()
                 .enumerate()

@@ -128,6 +128,7 @@ export interface SetResponse {
 	title: string;
 	description?: string;
 	creatorId: string;
+	isPublic: boolean;
 	fieldsSchema: FieldSchema[];
 	flashcards: FlashcardResponse[];
 }

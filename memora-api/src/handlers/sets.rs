@@ -172,6 +172,7 @@ pub async fn get_public_set(
         title: set_record.get("title").and_then(|v| v.as_str()).unwrap_or_default().to_string(),
         description: set_record.get("description").and_then(|v| v.as_str()).map(|s| s.to_string()),
         creator_id: set_record.get("creator_id").and_then(|v| v.as_str()).unwrap_or_default().to_string(),
+        is_public: set_record.get("is_public").and_then(|v| v.as_bool()).unwrap_or(false),
         fields_schema: set_record.get("fields_schema").cloned().unwrap_or(serde_json::Value::Null),
         flashcards,
     };
@@ -295,6 +296,7 @@ pub async fn create_set(
         title: payload.title,
         description: payload.description,
         creator_id: creator_id.to_string(),
+        is_public: payload.is_public,
         fields_schema: payload.fields_schema,
         flashcards: response_flashcards,
     };
@@ -529,6 +531,7 @@ pub async fn update_set(
         title: payload.title,
         description: payload.description,
         creator_id: creator_id.to_string(),
+        is_public: payload.is_public,
         fields_schema: payload.fields_schema,
         flashcards: response_flashcards,
     };

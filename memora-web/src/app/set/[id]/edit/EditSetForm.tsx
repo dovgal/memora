@@ -72,7 +72,9 @@ export default function EditSetForm({ initialSet, setId, token }: { initialSet: 
         defaultValues: {
             title: initialSet.title,
             description: initialSet.description || "",
-            isPublic: false,
+            // Берём реальный флаг набора: жёсткий false делал набор приватным
+            // при каждом сохранении, даже если его ничего не меняло.
+            isPublic: initialSet.isPublic,
             fieldsSchema: initialSet.fieldsSchema?.length ? initialSet.fieldsSchema : DEFAULT_SCHEMA,
             flashcards: mappedFlashcards,
         },

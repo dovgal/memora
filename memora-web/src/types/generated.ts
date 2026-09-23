@@ -144,6 +144,7 @@ export interface SetResponse {
 	title: string;
 	description?: string;
 	creatorId: string;
+	isPublic: boolean;
 	fieldsSchema: Record<string, unknown>;
 	flashcards: FlashcardResponse[];
 }

@@ -47,6 +47,10 @@ pub struct SetResponse {
     pub title: String,
     pub description: Option<String>,
     pub creator_id: String,
+    // Отдаём флаг публичности, чтобы редактор и «дописать в набор» в креаторе
+    // сохраняли его как есть: без него фронт подставлял false и каждое
+    // сохранение молча делало набор приватным.
+    pub is_public: bool,
     pub fields_schema: Value,
     pub flashcards: Vec<FlashcardResponse>,
 }
