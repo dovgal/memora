@@ -153,6 +153,11 @@ const nextConfig: NextConfig = {
         source: "/api/cards/:path*",
         destination: `${rustApiUrl}/api/cards/:path*`,
       },
+      // Игровой слой: XP, уровни, серия, достижения, семейное табло.
+      {
+        source: "/api/game/:path*",
+        destination: `${rustApiUrl}/api/game/:path*`,
+      },
     ];
   },
 };

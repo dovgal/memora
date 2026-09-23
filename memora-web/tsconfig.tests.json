@@ -21,6 +21,9 @@
     "src/lib/courses/production.ts",
     "src/lib/courses/production.test.ts",
     "src/lib/fox/brain.ts",
-    "src/lib/fox/brain.test.ts"
+    "src/lib/fox/brain.test.ts",
+    "src/lib/game/client.ts",
+    "src/lib/game/celebrationBus.ts",
+    "src/lib/game/celebrationBus.test.ts"
   ]
 }

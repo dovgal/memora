@@ -100,9 +100,10 @@ export function react(e: FoxEvent, rnd: () => number = Math.random): Reaction | 
     case 'listen_start':
       return { pose: 'sit', mood: 'listen', say: 'Слушаю…', ms: 60_000 };
     case 'levelup':
-      return { pose: 'stand', mood: 'happy', jump: 'spin', wag: true, confetti: 2, say: `Уровень ${e.level}!`, ms: 2400 };
+      // Салют за уровень и достижение рисует окно празднования игры — второй не нужен.
+      return { pose: 'stand', mood: 'happy', jump: 'spin', wag: true, say: `Уровень ${e.level}!`, ms: 2400 };
     case 'achievement':
-      return { pose: 'stand', mood: 'happy', jump: 'jump', wag: true, confetti: 1, say: `Достижение: ${e.title}`, ms: 2600 };
+      return { pose: 'stand', mood: 'happy', jump: 'jump', wag: true, say: `Достижение: ${e.title}`, ms: 2600 };
     case 'session_end':
       return { pose: 'stand', mood: 'happy', wave: true, wag: true, say: sessionSummary(e.correct, e.total), ms: 3200 };
     case 'say':
