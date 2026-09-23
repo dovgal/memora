@@ -14,6 +14,7 @@ import { Mic, MicOff, Lightbulb } from 'lucide-react';
 import { useSpeechAttempt } from '@/lib/courses/useSpeechAttempt';
 import { checkDictation, bestTranscript, type DiffOp } from '@/lib/courses/dictation';
 import { DiffChips } from '@/components/edito/DiffChips';
+import { heardSomething } from '@/lib/courses/heardCheck';
 
 interface Result {
   score: number;
@@ -38,6 +39,12 @@ export function usePronounceCheck(target: string, speechLang: string): Pronounce
     const transcript = await speech.stop();
     if (!transcript) {
       speech.setError('Речь не распознана. В Chrome или Safari оценка работает надёжнее.');
+      return;
+    }
+    // В шуме распознаватель досочиняет слова, которых не было. Такую запись
+    // честнее не оценивать, чем снизить балл за чужие выдумки.
+    if (!heardSomething(target, transcript, speech.confidence(), speech.quality())) {
+      speech.setError('Не расслышал — повторите ближе к микрофону, в тишине.');
       return;
     }
     const heard = bestTranscript(target, transcript, speech.alternatives());
