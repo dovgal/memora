@@ -143,6 +143,11 @@ const nextConfig: NextConfig = {
         source: "/api/push/:path*",
         destination: `${rustApiUrl}/api/push/:path*`,
       },
+      // Кабинет администратора: сводка и полный сброс карточек семьи.
+      {
+        source: "/api/admin/:path*",
+        destination: `${rustApiUrl}/api/admin/:path*`,
+      },
     ];
   },
 };
