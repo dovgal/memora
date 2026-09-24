@@ -18,6 +18,7 @@ import { PronunciationExercise } from './PronunciationExercise';
 import { SituationScene } from './SituationScene';
 import { AiTalk } from './AiTalk';
 import { ProductionDrill } from './ProductionDrill';
+import { MonologueExercise } from './MonologueExercise';
 import { reportStudyEvent } from '@/lib/game/client';
 import { celebrate } from '@/lib/game/celebrationBus';
 
@@ -55,7 +56,7 @@ const RENDERABLE_TYPES = new Set<string>([
   'theory', 'grammar-quiz', 'gender-quiz', 'number-quiz', 'fill-blank',
   'dialogue', 'sentence-builder', 'listening', 'video', 'error-hunt', 'dictation',
   'numeric', 'ordering', 'symbolic', 'pronunciation', 'situation', 'ai-talk',
-  'substitution', 'transformation', 'meaning-to-form',
+  'substitution', 'transformation', 'meaning-to-form', 'monologue',
 ]);
 
 export function ExerciseRenderer({ exercise, onComplete, voice, speechLang, doneKeys, onItemDone }: ExerciseRendererProps) {
@@ -161,6 +162,9 @@ export function ExerciseRenderer({ exercise, onComplete, voice, speechLang, done
           }))}
         />
       );
+    // Рассказ о себе целиком: запись на минуту-две и подробный разбор.
+    case 'monologue':
+      return <MonologueExercise exercise={exercise} voice={voice} speechLang={speechLang} onComplete={handleComplete} />;
     default:
       return null;
   }

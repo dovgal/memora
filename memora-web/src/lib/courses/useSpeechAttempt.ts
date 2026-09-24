@@ -61,11 +61,11 @@ const AUDIO_CLEANUP = {
 } as const;
 
 /** Условия записи для выбранного устройства или для устройства по умолчанию. */
-function micConstraints(deviceId?: string): MediaStreamConstraints {
+export function micConstraints(deviceId?: string): MediaStreamConstraints {
   return { audio: deviceId ? { deviceId: { exact: deviceId }, ...AUDIO_CLEANUP } : { ...AUDIO_CLEANUP } };
 }
 
-async function openMic(constraints: MediaStreamConstraints): Promise<MediaStream | null> {
+export async function openMic(constraints: MediaStreamConstraints): Promise<MediaStream | null> {
   const pending = navigator.mediaDevices.getUserMedia(constraints);
   const timeout = new Promise<null>(resolve => setTimeout(() => resolve(null), MIC_TIMEOUT_MS));
   const winner = await Promise.race([pending, timeout]);

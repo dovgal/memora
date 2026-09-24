@@ -137,6 +137,8 @@ async fn main() {
         .route("/api/ai/learn/grade", post(handlers::ai::grade_answer))
         // Проверка фразы, построенной самим учеником: эталон из курса, судим смысл.
         .route("/api/ai/course/check-production", post(handlers::ai::check_production))
+        // Разбор устного рассказа целиком («Présentez-vous»): цели, ошибки, беглость.
+        .route("/api/ai/course/review-monologue", post(handlers::speech_review::review_monologue))
         .route("/api/ai/a2/generate-questions", post(handlers::ai::generate_a2_questions))
         .route("/api/ai/creator/analyze", post(handlers::creator::analyze_content))
         .route("/api/ai/creator/regenerate-card", post(handlers::creator::regenerate_card))
