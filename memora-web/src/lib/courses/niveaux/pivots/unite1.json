@@ -1,0 +1,374 @@
+{
+ "id": "pivots-1",
+ "title": "1 · être и avoir — основа всего",
+ "description": "Два главных глагола: на них держатся «я техник», «у меня есть опыт» и всё прошедшее время.",
+ "vocabulary": [
+  {
+   "fr": "être",
+   "ru": "быть, находиться",
+   "type": "word"
+  },
+  {
+   "fr": "avoir",
+   "ru": "иметь",
+   "type": "word"
+  },
+  {
+   "fr": "j'ai été",
+   "ru": "être в прошедшем: я …",
+   "type": "phrase"
+  },
+  {
+   "fr": "j'ai eu",
+   "ru": "avoir в прошедшем: я …",
+   "type": "phrase"
+  }
+ ],
+ "exercises": [
+  {
+   "id": "piv1-theorie",
+   "type": "theory",
+   "title": "Формы: сейчас, уже было, скоро",
+   "content": "<p style='margin:0.6rem 0'>На <b>être</b> и <b>avoir</b> держится почти всё: «Je <b>suis</b> technicien», «J'<b>ai</b> vingt-cinq ans d'expérience». Кроме того, это вспомогательные глаголы прошедшего времени: «j'<b>ai</b> fait», «je <b>suis</b> venu». Выучите их до автоматизма — остальные глаголы опираются на них.</p><h3 style='margin:1rem 0 0.3rem'>être — быть, находиться</h3><table><tr><th>сейчас (présent)</th><th>уже было (passé composé)</th><th>скоро (futur proche)</th></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je suis\">je suis</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"j'ai été\">j'ai été</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je vais être\">je vais être</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu es\">tu es</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu as été\">tu as été</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu vas être\">tu vas être</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il est\">il est</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il a été\">il a été</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il va être\">il va être</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous sommes\">nous sommes</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous avons été\">nous avons été</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous allons être\">nous allons être</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous êtes\">vous êtes</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous avez été\">vous avez été</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous allez être\">vous allez être</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils sont\">ils sont</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils ont été\">ils ont été</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils vont être\">ils vont être</span></td></tr></table><p style='margin:0.3rem 0 0.8rem;font-size:0.9em'>passé composé с <b>avoir</b>: причастие <b>été</b> не меняется. Пример: <span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"Je suis au dépôt.\">Je suis au dépôt.</span></p><h3 style='margin:1rem 0 0.3rem'>avoir — иметь</h3><table><tr><th>сейчас (présent)</th><th>уже было (passé composé)</th><th>скоро (futur proche)</th></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"j'ai\">j'ai</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"j'ai eu\">j'ai eu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je vais avoir\">je vais avoir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu as\">tu as</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu as eu\">tu as eu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu vas avoir\">tu vas avoir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il a\">il a</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il a eu\">il a eu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il va avoir\">il va avoir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous avons\">nous avons</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous avons eu\">nous avons eu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous allons avoir\">nous allons avoir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous avez\">vous avez</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous avez eu\">vous avez eu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous allez avoir\">vous allez avoir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils ont\">ils ont</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils ont eu\">ils ont eu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils vont avoir\">ils vont avoir</span></td></tr></table><p style='margin:0.3rem 0 0.8rem;font-size:0.9em'>passé composé с <b>avoir</b>: причастие <b>eu</b> не меняется. Пример: <span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"J'ai une réunion à neuf heures.\">J'ai une réunion à neuf heures.</span></p><p style='margin:0.6rem 0'>Нажмите на любую форму, чтобы услышать её.</p>"
+  },
+  {
+   "id": "piv1-pron",
+   "type": "pronunciation",
+   "title": "Формы вслух",
+   "pronItems": [
+    {
+     "text": "je suis",
+     "ru": "être — я (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "tu es",
+     "ru": "être — ты (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "il est",
+     "ru": "être — он (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "nous sommes",
+     "ru": "être — мы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "vous êtes",
+     "ru": "être — вы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "ils sont",
+     "ru": "être — они (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "j'ai été",
+     "ru": "être — я (уже было)",
+     "kind": "word"
+    },
+    {
+     "text": "j'ai",
+     "ru": "avoir — я (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "tu as",
+     "ru": "avoir — ты (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "il a",
+     "ru": "avoir — он (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "nous avons",
+     "ru": "avoir — мы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "vous avez",
+     "ru": "avoir — вы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "ils ont",
+     "ru": "avoir — они (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "j'ai eu",
+     "ru": "avoir — я (уже было)",
+     "kind": "word"
+    }
+   ]
+  },
+  {
+   "id": "piv1-personnes",
+   "type": "transformation",
+   "title": "Смена лица: кто делает?",
+   "transformations": [
+    {
+     "source": "Je suis au dépôt.",
+     "task": "начните с «tu»",
+     "answers": [
+      "Tu es au dépôt."
+     ]
+    },
+    {
+     "source": "Je suis au dépôt.",
+     "task": "начните с «il»",
+     "answers": [
+      "Il est au dépôt."
+     ]
+    },
+    {
+     "source": "J'ai une réunion à neuf heures.",
+     "task": "начните с «tu»",
+     "answers": [
+      "Tu as une réunion à neuf heures."
+     ]
+    },
+    {
+     "source": "J'ai une réunion à neuf heures.",
+     "task": "начните с «ils»",
+     "answers": [
+      "Ils ont une réunion à neuf heures."
+     ]
+    },
+    {
+     "source": "J'ai une réunion à neuf heures.",
+     "task": "начните с «il»",
+     "answers": [
+      "Il a une réunion à neuf heures."
+     ]
+    },
+    {
+     "source": "Je suis au dépôt.",
+     "task": "начните с «nous»",
+     "answers": [
+      "Nous sommes au dépôt."
+     ]
+    }
+   ],
+   "focus": "présent",
+   "instruction": "Скажите ту же фразу о другом человеке. Глагол меняется вместе с лицом."
+  },
+  {
+   "id": "piv1-passe",
+   "type": "transformation",
+   "title": "Сейчас → уже было",
+   "transformations": [
+    {
+     "source": "J'ai une réunion à neuf heures.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "J'ai eu une réunion à neuf heures."
+     ]
+    },
+    {
+     "source": "Il a une réunion à neuf heures.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Il a eu une réunion à neuf heures."
+     ]
+    },
+    {
+     "source": "Ils ont une réunion à neuf heures.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Ils ont eu une réunion à neuf heures."
+     ]
+    },
+    {
+     "source": "Il est au dépôt.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Il a été au dépôt."
+     ]
+    },
+    {
+     "source": "Tu es au dépôt.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Tu as été au dépôt."
+     ]
+    },
+    {
+     "source": "Nous sommes au dépôt.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Nous avons été au dépôt."
+     ]
+    }
+   ],
+   "focus": "passé composé",
+   "instruction": "Скажите, что это уже случилось: avoir или être + причастие."
+  },
+  {
+   "id": "piv1-futur",
+   "type": "transformation",
+   "title": "Сейчас → скоро",
+   "transformations": [
+    {
+     "source": "J'ai une réunion à neuf heures.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Je vais avoir une réunion à neuf heures."
+     ]
+    },
+    {
+     "source": "Il est au dépôt.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Il va être au dépôt."
+     ]
+    },
+    {
+     "source": "Nous sommes au dépôt.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Nous allons être au dépôt."
+     ]
+    },
+    {
+     "source": "Il a une réunion à neuf heures.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Il va avoir une réunion à neuf heures."
+     ]
+    }
+   ],
+   "focus": "futur proche",
+   "instruction": "Скажите, что это будет скоро: aller в нужном лице + начальная форма глагола."
+  },
+  {
+   "id": "piv1-negation",
+   "type": "transformation",
+   "title": "Отрицание",
+   "transformations": [
+    {
+     "source": "Je suis au dépôt.",
+     "task": "отрицание",
+     "answers": [
+      "Je ne suis pas au dépôt."
+     ]
+    },
+    {
+     "source": "Nous avons une réunion à neuf heures.",
+     "task": "отрицание",
+     "answers": [
+      "Nous n'avons pas de réunion à neuf heures."
+     ]
+    },
+    {
+     "source": "J'ai le permis B.",
+     "task": "отрицание",
+     "answers": [
+      "Je n'ai pas le permis B."
+     ]
+    },
+    {
+     "source": "Il est disponible.",
+     "task": "отрицание",
+     "answers": [
+      "Il n'est pas disponible."
+     ]
+    },
+    {
+     "source": "J'ai été chez le client.",
+     "task": "отрицание",
+     "answers": [
+      "Je n'ai pas été chez le client."
+     ]
+    },
+    {
+     "source": "Ils ont une échelle.",
+     "task": "отрицание",
+     "answers": [
+      "Ils n'ont pas d'échelle."
+     ]
+    }
+   ],
+   "focus": "ne … pas",
+   "instruction": "Поставьте в отрицание. В passé composé ne … pas обнимает avoir или être, в futur proche — aller."
+  },
+  {
+   "id": "piv1-sens",
+   "type": "meaning-to-form",
+   "title": "Из смысла в форму: на работе",
+   "productions": [
+    {
+     "ru": "Я на складе.",
+     "hint": "Je suis …",
+     "answers": [
+      "Je suis au dépôt."
+     ]
+    },
+    {
+     "ru": "Мы на объекте.",
+     "hint": "Nous sommes …",
+     "answers": [
+      "Nous sommes sur le chantier.",
+      "On est sur le chantier."
+     ]
+    },
+    {
+     "ru": "У меня есть права категории B.",
+     "hint": "J'ai …",
+     "answers": [
+      "J'ai le permis B."
+     ]
+    },
+    {
+     "ru": "У них нет лестницы.",
+     "hint": "Ils n'ont pas …",
+     "answers": [
+      "Ils n'ont pas d'échelle."
+     ]
+    },
+    {
+     "ru": "Вчера я был у клиента.",
+     "hint": "Hier, j'ai …",
+     "answers": [
+      "Hier, j'ai été chez le client.",
+      "Hier, j'étais chez le client."
+     ]
+    },
+    {
+     "ru": "У нас было совещание в девять.",
+     "hint": "Nous avons eu …",
+     "answers": [
+      "Nous avons eu une réunion à neuf heures.",
+      "On a eu une réunion à neuf heures."
+     ]
+    },
+    {
+     "ru": "Завтра у меня будет выходной.",
+     "hint": "Demain, je vais …",
+     "answers": [
+      "Demain, je vais avoir un jour de congé.",
+      "Demain, j'ai un jour de congé.",
+      "Demain, j'aurai un jour de congé."
+     ]
+    },
+    {
+     "ru": "Вы техник?",
+     "hint": "Vous êtes …",
+     "answers": [
+      "Vous êtes technicien ?",
+      "Est-ce que vous êtes technicien ?",
+      "Êtes-vous technicien ?"
+     ]
+    }
+   ],
+   "focus": "être, avoir",
+   "instruction": "Скажите это по-французски. Проверяется смысл: другая правильная фраза тоже засчитывается."
+  }
+ ]
+}

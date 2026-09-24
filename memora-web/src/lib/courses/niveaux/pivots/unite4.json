@@ -1,0 +1,373 @@
+{
+ "id": "pivots-4",
+ "title": "4 · prendre и mettre — беру, кладу, надеваю",
+ "description": "Инструмент, фургон, каска, время работы — всё это prendre и mettre.",
+ "vocabulary": [
+  {
+   "fr": "prendre",
+   "ru": "брать",
+   "type": "word"
+  },
+  {
+   "fr": "mettre",
+   "ru": "класть, надевать",
+   "type": "word"
+  },
+  {
+   "fr": "j'ai pris",
+   "ru": "prendre в прошедшем: я …",
+   "type": "phrase"
+  },
+  {
+   "fr": "j'ai mis",
+   "ru": "mettre в прошедшем: я …",
+   "type": "phrase"
+  }
+ ],
+ "exercises": [
+  {
+   "id": "piv4-theorie",
+   "type": "theory",
+   "title": "Формы: сейчас, уже было, скоро",
+   "content": "<p style='margin:0.6rem 0'><b>prendre</b> — брать: «Je <b>prends</b> la camionnette». И о времени: «Ça <b>prend</b> deux heures» — это займёт два часа. Внимание: nous pren<b>ons</b>, ils pre<b>nnent</b> — с двумя n. <b>mettre</b> — класть, надевать: «Je <b>mets</b> le casque». Прошедшее: j'ai <b>pris</b>, j'ai <b>mis</b>.</p><h3 style='margin:1rem 0 0.3rem'>prendre — брать</h3><table><tr><th>сейчас (présent)</th><th>уже было (passé composé)</th><th>скоро (futur proche)</th></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je prends\">je prends</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"j'ai pris\">j'ai pris</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je vais prendre\">je vais prendre</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu prends\">tu prends</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu as pris\">tu as pris</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu vas prendre\">tu vas prendre</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il prend\">il prend</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il a pris\">il a pris</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il va prendre\">il va prendre</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous prenons\">nous prenons</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous avons pris\">nous avons pris</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous allons prendre\">nous allons prendre</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous prenez\">vous prenez</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous avez pris\">vous avez pris</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous allez prendre\">vous allez prendre</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils prennent\">ils prennent</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils ont pris\">ils ont pris</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils vont prendre\">ils vont prendre</span></td></tr></table><p style='margin:0.3rem 0 0.8rem;font-size:0.9em'>passé composé с <b>avoir</b>: причастие <b>pris</b> не меняется. Пример: <span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"Je prends la camionnette.\">Je prends la camionnette.</span></p><h3 style='margin:1rem 0 0.3rem'>mettre — класть, надевать</h3><table><tr><th>сейчас (présent)</th><th>уже было (passé composé)</th><th>скоро (futur proche)</th></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je mets\">je mets</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"j'ai mis\">j'ai mis</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je vais mettre\">je vais mettre</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu mets\">tu mets</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu as mis\">tu as mis</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu vas mettre\">tu vas mettre</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il met\">il met</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il a mis\">il a mis</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il va mettre\">il va mettre</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous mettons\">nous mettons</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous avons mis\">nous avons mis</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous allons mettre\">nous allons mettre</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous mettez\">vous mettez</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous avez mis\">vous avez mis</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous allez mettre\">vous allez mettre</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils mettent\">ils mettent</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils ont mis\">ils ont mis</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils vont mettre\">ils vont mettre</span></td></tr></table><p style='margin:0.3rem 0 0.8rem;font-size:0.9em'>passé composé с <b>avoir</b>: причастие <b>mis</b> не меняется. Пример: <span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"Je mets les gants.\">Je mets les gants.</span></p><p style='margin:0.6rem 0'>Нажмите на любую форму, чтобы услышать её.</p>"
+  },
+  {
+   "id": "piv4-pron",
+   "type": "pronunciation",
+   "title": "Формы вслух",
+   "pronItems": [
+    {
+     "text": "je prends",
+     "ru": "prendre — я (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "tu prends",
+     "ru": "prendre — ты (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "il prend",
+     "ru": "prendre — он (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "nous prenons",
+     "ru": "prendre — мы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "vous prenez",
+     "ru": "prendre — вы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "ils prennent",
+     "ru": "prendre — они (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "j'ai pris",
+     "ru": "prendre — я (уже было)",
+     "kind": "word"
+    },
+    {
+     "text": "je mets",
+     "ru": "mettre — я (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "tu mets",
+     "ru": "mettre — ты (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "il met",
+     "ru": "mettre — он (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "nous mettons",
+     "ru": "mettre — мы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "vous mettez",
+     "ru": "mettre — вы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "ils mettent",
+     "ru": "mettre — они (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "j'ai mis",
+     "ru": "mettre — я (уже было)",
+     "kind": "word"
+    }
+   ]
+  },
+  {
+   "id": "piv4-personnes",
+   "type": "transformation",
+   "title": "Смена лица: кто делает?",
+   "transformations": [
+    {
+     "source": "Je prends la camionnette.",
+     "task": "начните с «il»",
+     "answers": [
+      "Il prend la camionnette."
+     ]
+    },
+    {
+     "source": "Je mets les gants.",
+     "task": "начните с «ils»",
+     "answers": [
+      "Ils mettent les gants."
+     ]
+    },
+    {
+     "source": "Je mets les gants.",
+     "task": "начните с «tu»",
+     "answers": [
+      "Tu mets les gants."
+     ]
+    },
+    {
+     "source": "Je prends la camionnette.",
+     "task": "начните с «tu»",
+     "answers": [
+      "Tu prends la camionnette."
+     ]
+    },
+    {
+     "source": "Je prends la camionnette.",
+     "task": "начните с «ils»",
+     "answers": [
+      "Ils prennent la camionnette."
+     ]
+    },
+    {
+     "source": "Je mets les gants.",
+     "task": "начните с «il»",
+     "answers": [
+      "Il met les gants."
+     ]
+    }
+   ],
+   "focus": "présent",
+   "instruction": "Скажите ту же фразу о другом человеке. Глагол меняется вместе с лицом."
+  },
+  {
+   "id": "piv4-passe",
+   "type": "transformation",
+   "title": "Сейчас → уже было",
+   "transformations": [
+    {
+     "source": "Vous mettez les gants.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Vous avez mis les gants."
+     ]
+    },
+    {
+     "source": "Je prends la camionnette.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "J'ai pris la camionnette."
+     ]
+    },
+    {
+     "source": "Tu prends la camionnette.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Tu as pris la camionnette."
+     ]
+    },
+    {
+     "source": "Il met les gants.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Il a mis les gants."
+     ]
+    },
+    {
+     "source": "Tu mets les gants.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Tu as mis les gants."
+     ]
+    },
+    {
+     "source": "Vous prenez la camionnette.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Vous avez pris la camionnette."
+     ]
+    }
+   ],
+   "focus": "passé composé",
+   "instruction": "Скажите, что это уже случилось: avoir или être + причастие."
+  },
+  {
+   "id": "piv4-futur",
+   "type": "transformation",
+   "title": "Сейчас → скоро",
+   "transformations": [
+    {
+     "source": "Ils mettent les gants.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Ils vont mettre les gants."
+     ]
+    },
+    {
+     "source": "Nous mettons les gants.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Nous allons mettre les gants."
+     ]
+    },
+    {
+     "source": "Il prend la camionnette.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Il va prendre la camionnette."
+     ]
+    },
+    {
+     "source": "Je prends la camionnette.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Je vais prendre la camionnette."
+     ]
+    }
+   ],
+   "focus": "futur proche",
+   "instruction": "Скажите, что это будет скоро: aller в нужном лице + начальная форма глагола."
+  },
+  {
+   "id": "piv4-negation",
+   "type": "transformation",
+   "title": "Отрицание",
+   "transformations": [
+    {
+     "source": "Je prends la camionnette.",
+     "task": "отрицание",
+     "answers": [
+      "Je ne prends pas la camionnette."
+     ]
+    },
+    {
+     "source": "Il met les gants.",
+     "task": "отрицание",
+     "answers": [
+      "Il ne met pas les gants."
+     ]
+    },
+    {
+     "source": "J'ai pris l'échelle.",
+     "task": "отрицание",
+     "answers": [
+      "Je n'ai pas pris l'échelle."
+     ]
+    },
+    {
+     "source": "Ils ont mis les gants.",
+     "task": "отрицание",
+     "answers": [
+      "Ils n'ont pas mis les gants."
+     ]
+    },
+    {
+     "source": "Ça prend deux heures.",
+     "task": "отрицание",
+     "answers": [
+      "Ça ne prend pas deux heures."
+     ]
+    },
+    {
+     "source": "Nous allons prendre le métro.",
+     "task": "отрицание",
+     "answers": [
+      "Nous n'allons pas prendre le métro."
+     ]
+    }
+   ],
+   "focus": "ne … pas",
+   "instruction": "Поставьте в отрицание. В passé composé ne … pas обнимает avoir или être, в futur proche — aller."
+  },
+  {
+   "id": "piv4-sens",
+   "type": "meaning-to-form",
+   "title": "Из смысла в форму: на работе",
+   "productions": [
+    {
+     "ru": "Я беру фургон.",
+     "hint": "Je prends …",
+     "answers": [
+      "Je prends la camionnette."
+     ]
+    },
+    {
+     "ru": "Мы берём инструменты.",
+     "hint": "Nous prenons …",
+     "answers": [
+      "Nous prenons les outils.",
+      "On prend les outils."
+     ]
+    },
+    {
+     "ru": "Я надеваю каску.",
+     "hint": "Je mets …",
+     "answers": [
+      "Je mets le casque.",
+      "Je mets mon casque."
+     ]
+    },
+    {
+     "ru": "Вчера он взял не ту деталь.",
+     "hint": "Hier, il a pris …",
+     "answers": [
+      "Hier, il a pris la mauvaise pièce."
+     ]
+    },
+    {
+     "ru": "Я положил пульт на стол.",
+     "hint": "J'ai mis …",
+     "answers": [
+      "J'ai mis la télécommande sur la table."
+     ]
+    },
+    {
+     "ru": "Это займёт два часа.",
+     "hint": "Ça prend …",
+     "answers": [
+      "Ça prend deux heures.",
+      "Ça va prendre deux heures."
+     ]
+    },
+    {
+     "ru": "Сколько времени это займёт?",
+     "hint": "Ça prend …",
+     "answers": [
+      "Ça prend combien de temps ?",
+      "Combien de temps ça prend ?",
+      "Ça va prendre combien de temps ?"
+     ]
+    },
+    {
+     "ru": "Они не надели перчатки.",
+     "hint": "Ils n'ont pas mis …",
+     "answers": [
+      "Ils n'ont pas mis leurs gants.",
+      "Ils n'ont pas mis les gants."
+     ]
+    }
+   ],
+   "focus": "prendre, mettre",
+   "instruction": "Скажите это по-французски. Проверяется смысл: другая правильная фраза тоже засчитывается."
+  }
+ ]
+}

@@ -1,0 +1,501 @@
+{
+ "id": "pivots-3",
+ "title": "3 · pouvoir, devoir, vouloir, savoir — могу, должен, хочу, умею",
+ "description": "Четыре глагола, после которых идёт второй глагол в начальной форме: «Je peux commencer», «Je dois commander».",
+ "vocabulary": [
+  {
+   "fr": "pouvoir",
+   "ru": "мочь",
+   "type": "word"
+  },
+  {
+   "fr": "devoir",
+   "ru": "быть должным",
+   "type": "word"
+  },
+  {
+   "fr": "vouloir",
+   "ru": "хотеть",
+   "type": "word"
+  },
+  {
+   "fr": "savoir",
+   "ru": "уметь, знать",
+   "type": "word"
+  },
+  {
+   "fr": "j'ai pu",
+   "ru": "pouvoir в прошедшем: я …",
+   "type": "phrase"
+  },
+  {
+   "fr": "j'ai dû",
+   "ru": "devoir в прошедшем: я …",
+   "type": "phrase"
+  },
+  {
+   "fr": "j'ai voulu",
+   "ru": "vouloir в прошедшем: я …",
+   "type": "phrase"
+  },
+  {
+   "fr": "j'ai su",
+   "ru": "savoir в прошедшем: я …",
+   "type": "phrase"
+  }
+ ],
+ "exercises": [
+  {
+   "id": "piv3-theorie",
+   "type": "theory",
+   "title": "Формы: сейчас, уже было, скоро",
+   "content": "<p style='margin:0.6rem 0'>После этих глаголов второй глагол стоит в начальной форме: «Je <b>peux</b> commencer lundi», «Je <b>dois</b> commander la pièce», «Je <b>veux</b> voir le moteur», «Je <b>sais</b> réparer ce moteur». <b>savoir</b> — уметь (навык), <b>pouvoir</b> — мочь (есть возможность). С начальником вместо «je veux» говорите вежливое «<b>je voudrais</b>».</p><h3 style='margin:1rem 0 0.3rem'>pouvoir — мочь</h3><table><tr><th>сейчас (présent)</th><th>уже было (passé composé)</th><th>скоро (futur proche)</th></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je peux\">je peux</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"j'ai pu\">j'ai pu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je vais pouvoir\">je vais pouvoir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu peux\">tu peux</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu as pu\">tu as pu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu vas pouvoir\">tu vas pouvoir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il peut\">il peut</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il a pu\">il a pu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il va pouvoir\">il va pouvoir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous pouvons\">nous pouvons</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous avons pu\">nous avons pu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous allons pouvoir\">nous allons pouvoir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous pouvez\">vous pouvez</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous avez pu\">vous avez pu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous allez pouvoir\">vous allez pouvoir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils peuvent\">ils peuvent</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils ont pu\">ils ont pu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils vont pouvoir\">ils vont pouvoir</span></td></tr></table><p style='margin:0.3rem 0 0.8rem;font-size:0.9em'>passé composé с <b>avoir</b>: причастие <b>pu</b> не меняется. Пример: <span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"Je peux venir à huit heures.\">Je peux venir à huit heures.</span></p><h3 style='margin:1rem 0 0.3rem'>devoir — быть должным</h3><table><tr><th>сейчас (présent)</th><th>уже было (passé composé)</th><th>скоро (futur proche)</th></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je dois\">je dois</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"j'ai dû\">j'ai dû</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je vais devoir\">je vais devoir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu dois\">tu dois</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu as dû\">tu as dû</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu vas devoir\">tu vas devoir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il doit\">il doit</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il a dû\">il a dû</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il va devoir\">il va devoir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous devons\">nous devons</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous avons dû\">nous avons dû</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous allons devoir\">nous allons devoir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous devez\">vous devez</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous avez dû\">vous avez dû</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous allez devoir\">vous allez devoir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils doivent\">ils doivent</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils ont dû\">ils ont dû</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils vont devoir\">ils vont devoir</span></td></tr></table><p style='margin:0.3rem 0 0.8rem;font-size:0.9em'>passé composé с <b>avoir</b>: причастие <b>dû</b> не меняется. Пример: <span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"Je dois commander la pièce.\">Je dois commander la pièce.</span></p><h3 style='margin:1rem 0 0.3rem'>vouloir — хотеть</h3><table><tr><th>сейчас (présent)</th><th>уже было (passé composé)</th><th>скоро (futur proche)</th></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je veux\">je veux</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"j'ai voulu\">j'ai voulu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je vais vouloir\">je vais vouloir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu veux\">tu veux</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu as voulu\">tu as voulu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu vas vouloir\">tu vas vouloir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il veut\">il veut</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il a voulu\">il a voulu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il va vouloir\">il va vouloir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous voulons\">nous voulons</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous avons voulu\">nous avons voulu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous allons vouloir\">nous allons vouloir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous voulez\">vous voulez</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous avez voulu\">vous avez voulu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous allez vouloir\">vous allez vouloir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils veulent\">ils veulent</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils ont voulu\">ils ont voulu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils vont vouloir\">ils vont vouloir</span></td></tr></table><p style='margin:0.3rem 0 0.8rem;font-size:0.9em'>passé composé с <b>avoir</b>: причастие <b>voulu</b> не меняется. Пример: <span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"Je veux voir le moteur.\">Je veux voir le moteur.</span></p><h3 style='margin:1rem 0 0.3rem'>savoir — уметь, знать</h3><table><tr><th>сейчас (présent)</th><th>уже было (passé composé)</th><th>скоро (futur proche)</th></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je sais\">je sais</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"j'ai su\">j'ai su</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je vais savoir\">je vais savoir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu sais\">tu sais</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu as su\">tu as su</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu vas savoir\">tu vas savoir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il sait\">il sait</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il a su\">il a su</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il va savoir\">il va savoir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous savons\">nous savons</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous avons su\">nous avons su</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous allons savoir\">nous allons savoir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous savez\">vous savez</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous avez su\">vous avez su</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous allez savoir\">vous allez savoir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils savent\">ils savent</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils ont su\">ils ont su</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils vont savoir\">ils vont savoir</span></td></tr></table><p style='margin:0.3rem 0 0.8rem;font-size:0.9em'>passé composé с <b>avoir</b>: причастие <b>su</b> не меняется. Пример: <span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"Je sais réparer ce moteur.\">Je sais réparer ce moteur.</span></p><p style='margin:0.6rem 0'>Нажмите на любую форму, чтобы услышать её.</p>"
+  },
+  {
+   "id": "piv3-pron",
+   "type": "pronunciation",
+   "title": "Формы вслух",
+   "pronItems": [
+    {
+     "text": "je peux",
+     "ru": "pouvoir — я (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "tu peux",
+     "ru": "pouvoir — ты (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "il peut",
+     "ru": "pouvoir — он (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "nous pouvons",
+     "ru": "pouvoir — мы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "vous pouvez",
+     "ru": "pouvoir — вы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "ils peuvent",
+     "ru": "pouvoir — они (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "j'ai pu",
+     "ru": "pouvoir — я (уже было)",
+     "kind": "word"
+    },
+    {
+     "text": "je dois",
+     "ru": "devoir — я (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "tu dois",
+     "ru": "devoir — ты (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "il doit",
+     "ru": "devoir — он (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "nous devons",
+     "ru": "devoir — мы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "vous devez",
+     "ru": "devoir — вы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "ils doivent",
+     "ru": "devoir — они (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "j'ai dû",
+     "ru": "devoir — я (уже было)",
+     "kind": "word"
+    },
+    {
+     "text": "je veux",
+     "ru": "vouloir — я (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "tu veux",
+     "ru": "vouloir — ты (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "il veut",
+     "ru": "vouloir — он (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "nous voulons",
+     "ru": "vouloir — мы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "vous voulez",
+     "ru": "vouloir — вы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "ils veulent",
+     "ru": "vouloir — они (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "j'ai voulu",
+     "ru": "vouloir — я (уже было)",
+     "kind": "word"
+    },
+    {
+     "text": "je sais",
+     "ru": "savoir — я (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "tu sais",
+     "ru": "savoir — ты (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "il sait",
+     "ru": "savoir — он (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "nous savons",
+     "ru": "savoir — мы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "vous savez",
+     "ru": "savoir — вы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "ils savent",
+     "ru": "savoir — они (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "j'ai su",
+     "ru": "savoir — я (уже было)",
+     "kind": "word"
+    }
+   ]
+  },
+  {
+   "id": "piv3-personnes",
+   "type": "transformation",
+   "title": "Смена лица: кто делает?",
+   "transformations": [
+    {
+     "source": "Je dois commander la pièce.",
+     "task": "начните с «tu»",
+     "answers": [
+      "Tu dois commander la pièce."
+     ]
+    },
+    {
+     "source": "Je sais réparer ce moteur.",
+     "task": "начните с «il»",
+     "answers": [
+      "Il sait réparer ce moteur."
+     ]
+    },
+    {
+     "source": "Je peux venir à huit heures.",
+     "task": "начните с «vous»",
+     "answers": [
+      "Vous pouvez venir à huit heures."
+     ]
+    },
+    {
+     "source": "Je sais réparer ce moteur.",
+     "task": "начните с «vous»",
+     "answers": [
+      "Vous savez réparer ce moteur."
+     ]
+    },
+    {
+     "source": "Je peux venir à huit heures.",
+     "task": "начните с «il»",
+     "answers": [
+      "Il peut venir à huit heures."
+     ]
+    },
+    {
+     "source": "Je dois commander la pièce.",
+     "task": "начните с «ils»",
+     "answers": [
+      "Ils doivent commander la pièce."
+     ]
+    },
+    {
+     "source": "Je veux voir le moteur.",
+     "task": "начните с «nous»",
+     "answers": [
+      "Nous voulons voir le moteur."
+     ]
+    },
+    {
+     "source": "Je veux voir le moteur.",
+     "task": "начните с «vous»",
+     "answers": [
+      "Vous voulez voir le moteur."
+     ]
+    }
+   ],
+   "focus": "présent",
+   "instruction": "Скажите ту же фразу о другом человеке. Глагол меняется вместе с лицом."
+  },
+  {
+   "id": "piv3-passe",
+   "type": "transformation",
+   "title": "Сейчас → уже было",
+   "transformations": [
+    {
+     "source": "Vous pouvez venir à huit heures.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Vous avez pu venir à huit heures."
+     ]
+    },
+    {
+     "source": "Je peux venir à huit heures.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "J'ai pu venir à huit heures."
+     ]
+    },
+    {
+     "source": "Vous voulez voir le moteur.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Vous avez voulu voir le moteur."
+     ]
+    },
+    {
+     "source": "Je veux voir le moteur.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "J'ai voulu voir le moteur."
+     ]
+    },
+    {
+     "source": "Je sais réparer ce moteur.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "J'ai su réparer ce moteur."
+     ]
+    },
+    {
+     "source": "Il doit commander la pièce.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Il a dû commander la pièce."
+     ]
+    },
+    {
+     "source": "Vous savez réparer ce moteur.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Vous avez su réparer ce moteur."
+     ]
+    },
+    {
+     "source": "Nous devons commander la pièce.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Nous avons dû commander la pièce."
+     ]
+    }
+   ],
+   "focus": "passé composé",
+   "instruction": "Скажите, что это уже случилось: avoir или être + причастие."
+  },
+  {
+   "id": "piv3-futur",
+   "type": "transformation",
+   "title": "Сейчас → скоро",
+   "transformations": [
+    {
+     "source": "Il peut venir à huit heures.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Il va pouvoir venir à huit heures."
+     ]
+    },
+    {
+     "source": "Tu peux venir à huit heures.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Tu vas pouvoir venir à huit heures."
+     ]
+    },
+    {
+     "source": "Ils doivent commander la pièce.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Ils vont devoir commander la pièce."
+     ]
+    },
+    {
+     "source": "Je dois commander la pièce.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Je vais devoir commander la pièce."
+     ]
+    }
+   ],
+   "focus": "futur proche",
+   "instruction": "Скажите, что это будет скоро: aller в нужном лице + начальная форма глагола."
+  },
+  {
+   "id": "piv3-negation",
+   "type": "transformation",
+   "title": "Отрицание",
+   "transformations": [
+    {
+     "source": "Je peux venir à huit heures.",
+     "task": "отрицание",
+     "answers": [
+      "Je ne peux pas venir à huit heures."
+     ]
+    },
+    {
+     "source": "Vous devez travailler seul.",
+     "task": "отрицание",
+     "answers": [
+      "Vous ne devez pas travailler seul."
+     ]
+    },
+    {
+     "source": "Il sait lire un plan.",
+     "task": "отрицание",
+     "answers": [
+      "Il ne sait pas lire un plan."
+     ]
+    },
+    {
+     "source": "J'ai pu finir le chantier.",
+     "task": "отрицание",
+     "answers": [
+      "Je n'ai pas pu finir le chantier."
+     ]
+    },
+    {
+     "source": "Nous voulons attendre.",
+     "task": "отрицание",
+     "answers": [
+      "Nous ne voulons pas attendre."
+     ]
+    },
+    {
+     "source": "Ils ont dû changer le câble.",
+     "task": "отрицание",
+     "answers": [
+      "Ils n'ont pas dû changer le câble."
+     ]
+    }
+   ],
+   "focus": "ne … pas",
+   "instruction": "Поставьте в отрицание. В passé composé ne … pas обнимает avoir или être, в futur proche — aller."
+  },
+  {
+   "id": "piv3-sens",
+   "type": "meaning-to-form",
+   "title": "Из смысла в форму: на работе",
+   "productions": [
+    {
+     "ru": "Я могу начать в понедельник.",
+     "hint": "Je peux …",
+     "answers": [
+      "Je peux commencer lundi."
+     ]
+    },
+    {
+     "ru": "Вы можете мне помочь?",
+     "hint": "Vous pouvez …",
+     "answers": [
+      "Vous pouvez m'aider ?",
+      "Pouvez-vous m'aider ?",
+      "Est-ce que vous pouvez m'aider ?"
+     ]
+    },
+    {
+     "ru": "Мне нужно заказать деталь.",
+     "hint": "Je dois …",
+     "answers": [
+      "Je dois commander la pièce.",
+      "Il faut commander la pièce."
+     ]
+    },
+    {
+     "ru": "Мы должны отключить ток.",
+     "hint": "Nous devons …",
+     "answers": [
+      "Nous devons couper le courant.",
+      "On doit couper le courant."
+     ]
+    },
+    {
+     "ru": "Я хочу посмотреть мотор.",
+     "hint": "Je veux …",
+     "answers": [
+      "Je veux voir le moteur.",
+      "Je voudrais voir le moteur."
+     ]
+    },
+    {
+     "ru": "Он умеет читать чертёж.",
+     "hint": "Il sait …",
+     "answers": [
+      "Il sait lire un plan."
+     ]
+    },
+    {
+     "ru": "Я не смог прийти вчера.",
+     "hint": "Je n'ai pas pu …",
+     "answers": [
+      "Je n'ai pas pu venir hier.",
+      "Hier, je n'ai pas pu venir."
+     ]
+    },
+    {
+     "ru": "Им пришлось заменить трос.",
+     "hint": "Ils ont dû …",
+     "answers": [
+      "Ils ont dû changer le câble.",
+      "Ils ont dû remplacer le câble."
+     ]
+    },
+    {
+     "ru": "Вы знаете, где прораб?",
+     "hint": "Vous savez …",
+     "answers": [
+      "Vous savez où est le chef de chantier ?",
+      "Savez-vous où est le chef de chantier ?",
+      "Est-ce que vous savez où est le chef de chantier ?"
+     ]
+    }
+   ],
+   "focus": "pouvoir, devoir, vouloir, savoir + infinitif",
+   "instruction": "Скажите это по-французски. Проверяется смысл: другая правильная фраза тоже засчитывается."
+  }
+ ]
+}

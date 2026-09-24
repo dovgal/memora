@@ -1,0 +1,333 @@
+{
+ "id": "pivots-6",
+ "title": "6 · Повторение: вчера, сегодня, завтра",
+ "description": "Все двенадцать глаголов вместе — рассказ о рабочем дне в трёх временах.",
+ "vocabulary": [
+  {
+   "fr": "être",
+   "ru": "быть, находиться",
+   "type": "word"
+  },
+  {
+   "fr": "avoir",
+   "ru": "иметь",
+   "type": "word"
+  },
+  {
+   "fr": "aller",
+   "ru": "идти, ехать",
+   "type": "word"
+  },
+  {
+   "fr": "faire",
+   "ru": "делать",
+   "type": "word"
+  },
+  {
+   "fr": "pouvoir",
+   "ru": "мочь",
+   "type": "word"
+  },
+  {
+   "fr": "devoir",
+   "ru": "быть должным",
+   "type": "word"
+  },
+  {
+   "fr": "vouloir",
+   "ru": "хотеть",
+   "type": "word"
+  },
+  {
+   "fr": "savoir",
+   "ru": "уметь, знать",
+   "type": "word"
+  },
+  {
+   "fr": "prendre",
+   "ru": "брать",
+   "type": "word"
+  },
+  {
+   "fr": "mettre",
+   "ru": "класть, надевать",
+   "type": "word"
+  },
+  {
+   "fr": "venir",
+   "ru": "приходить, приезжать",
+   "type": "word"
+  },
+  {
+   "fr": "partir",
+   "ru": "уходить, уезжать",
+   "type": "word"
+  }
+ ],
+ "exercises": [
+  {
+   "id": "piv6-theorie",
+   "type": "theory",
+   "title": "Как рассказать о рабочем дне",
+   "content": "<p style='margin:0.6rem 0'>Бригадир, клиент или рекрутер почти всегда спрашивают одно из трёх: что вы <b>сделали</b>, что вы <b>делаете</b> и что <b>будете делать</b>. Двенадцати глаголов этого курса хватает, чтобы ответить.</p><table><tr><th>вчера — passé composé</th><th>сегодня — présent</th><th>завтра — futur proche</th></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"Je suis venu à huit heures.\">Je suis venu à huit heures.</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"Je fais le diagnostic.\">Je fais le diagnostic.</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"Je vais commander la pièce.\">Je vais commander la pièce.</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"J'ai pris la camionnette.\">J'ai pris la camionnette.</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"Je dois couper le courant.\">Je dois couper le courant.</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"Nous allons finir le chantier.\">Nous allons finir le chantier.</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"J'ai mis les gants.\">J'ai mis les gants.</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"Je peux commencer.\">Je peux commencer.</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"Je vais partir à seize heures.\">Je vais partir à seize heures.</span></td></tr></table><p style='margin:0.6rem 0'>Проверьте себя: в прошедшем глаголы движения (aller, venir, partir) — с <b>être</b>, все остальные — с <b>avoir</b>.</p>"
+  },
+  {
+   "id": "piv6-passe",
+   "type": "transformation",
+   "title": "Все глаголы: сейчас → уже было",
+   "transformations": [
+    {
+     "source": "Vous allez sur le chantier.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Vous êtes allé sur le chantier.",
+      "Vous êtes allée sur le chantier.",
+      "Vous êtes allés sur le chantier.",
+      "Vous êtes allées sur le chantier."
+     ]
+    },
+    {
+     "source": "Il est au dépôt.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Il a été au dépôt."
+     ]
+    },
+    {
+     "source": "Nous venons à huit heures.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Nous sommes venus à huit heures.",
+      "Nous sommes venues à huit heures."
+     ]
+    },
+    {
+     "source": "Nous mettons les gants.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Nous avons mis les gants."
+     ]
+    },
+    {
+     "source": "Ils partent à seize heures.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Ils sont partis à seize heures."
+     ]
+    },
+    {
+     "source": "Il doit commander la pièce.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Il a dû commander la pièce."
+     ]
+    },
+    {
+     "source": "Nous pouvons venir à huit heures.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Nous avons pu venir à huit heures."
+     ]
+    },
+    {
+     "source": "Je veux voir le moteur.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "J'ai voulu voir le moteur."
+     ]
+    },
+    {
+     "source": "Tu as une réunion à neuf heures.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Tu as eu une réunion à neuf heures."
+     ]
+    },
+    {
+     "source": "Tu prends la camionnette.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Tu as pris la camionnette."
+     ]
+    }
+   ],
+   "focus": "passé composé : avoir ou être",
+   "instruction": "Скажите в прошедшем. Движение — с être, остальное — с avoir."
+  },
+  {
+   "id": "piv6-futur",
+   "type": "transformation",
+   "title": "Все глаголы: уже было → скоро",
+   "transformations": [
+    {
+     "source": "Nous avons fait le diagnostic.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Nous allons faire le diagnostic."
+     ]
+    },
+    {
+     "source": "Tu as dû commander la pièce.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Tu vas devoir commander la pièce."
+     ]
+    },
+    {
+     "source": "Je suis parti à seize heures.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Je vais partir à seize heures."
+     ]
+    },
+    {
+     "source": "Il a mis les gants.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Il va mettre les gants."
+     ]
+    },
+    {
+     "source": "Ils ont pris la camionnette.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Ils vont prendre la camionnette."
+     ]
+    },
+    {
+     "source": "Il a pu venir à huit heures.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Il va pouvoir venir à huit heures."
+     ]
+    },
+    {
+     "source": "Tu as eu une réunion à neuf heures.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Tu vas avoir une réunion à neuf heures."
+     ]
+    },
+    {
+     "source": "Ils ont été au dépôt.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Ils vont être au dépôt."
+     ]
+    }
+   ],
+   "focus": "futur proche",
+   "instruction": "Скажите, что это будет скоро: aller + начальная форма."
+  },
+  {
+   "id": "piv6-sens",
+   "type": "meaning-to-form",
+   "title": "Из смысла в форму: на работе",
+   "productions": [
+    {
+     "ru": "Вчера я приехал к клиенту в восемь.",
+     "hint": "Hier, je suis …",
+     "answers": [
+      "Hier, je suis venu chez le client à huit heures.",
+      "Hier, je suis arrivé chez le client à huit heures."
+     ]
+    },
+    {
+     "ru": "Сначала я сделал диагностику.",
+     "hint": "D'abord, j'ai …",
+     "answers": [
+      "D'abord, j'ai fait le diagnostic."
+     ]
+    },
+    {
+     "ru": "Мне пришлось заказать деталь.",
+     "hint": "J'ai dû …",
+     "answers": [
+      "J'ai dû commander la pièce.",
+      "Je devais commander la pièce."
+     ]
+    },
+    {
+     "ru": "Я взял с собой инструменты.",
+     "hint": "J'ai pris …",
+     "answers": [
+      "J'ai pris les outils.",
+      "J'ai pris mes outils avec moi.",
+      "J'ai pris les outils avec moi."
+     ]
+    },
+    {
+     "ru": "Я надел каску перед работой.",
+     "hint": "J'ai mis …",
+     "answers": [
+      "J'ai mis le casque avant de travailler.",
+      "J'ai mis mon casque avant le travail.",
+      "J'ai mis mon casque avant de travailler."
+     ]
+    },
+    {
+     "ru": "Сегодня я могу закончить работу.",
+     "hint": "Aujourd'hui, je peux …",
+     "answers": [
+      "Aujourd'hui, je peux finir le travail.",
+      "Aujourd'hui, je peux terminer le travail."
+     ]
+    },
+    {
+     "ru": "Завтра мы поедем на объект.",
+     "hint": "Demain, nous allons …",
+     "answers": [
+      "Demain, nous allons aller sur le chantier.",
+      "Demain, on va aller sur le chantier.",
+      "Demain, nous irons sur le chantier."
+     ]
+    },
+    {
+     "ru": "Я умею устанавливать ворота Hörmann.",
+     "hint": "Je sais …",
+     "answers": [
+      "Je sais installer les portes Hörmann."
+     ]
+    },
+    {
+     "ru": "Я хочу работать в вашей компании.",
+     "hint": "Je veux …",
+     "answers": [
+      "Je veux travailler dans votre entreprise.",
+      "Je voudrais travailler dans votre entreprise."
+     ]
+    },
+    {
+     "ru": "Мы ушли в пять.",
+     "hint": "Nous sommes …",
+     "answers": [
+      "Nous sommes partis à dix-sept heures.",
+      "Nous sommes partis à cinq heures.",
+      "On est partis à dix-sept heures."
+     ]
+    }
+   ],
+   "focus": "tous les verbes, trois temps",
+   "instruction": "Скажите это по-французски. Проверяется смысл: другая правильная фраза тоже засчитывается."
+  },
+  {
+   "id": "piv6-talk",
+   "type": "ai-talk",
+   "title": "Разговор: вчера, сегодня, завтра",
+   "role": "Chef d’équipe. Говорит на «вы», коротко и доброжелательно, спрашивает о работе и ждёт ответов полными фразами.",
+   "situation": "Утро. Бригадир спрашивает, что вы делали вчера на выезде, что делаете сегодня и что запланировано на завтра.",
+   "goals": [
+    "Рассказать о вчерашнем дне двумя глаголами в прошедшем",
+    "Сказать, что делаете сегодня",
+    "Сказать, что будете делать завтра (aller + инфинитив)"
+   ],
+   "hints": [
+    "Hier, je suis venu chez le client à huit heures.",
+    "J'ai fait le diagnostic.",
+    "Aujourd'hui, je dois commander la pièce.",
+    "Demain, je vais finir le chantier."
+   ],
+   "talkLevel": "A1"
+  }
+ ]
+}

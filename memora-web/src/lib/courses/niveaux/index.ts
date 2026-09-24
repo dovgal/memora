@@ -43,6 +43,9 @@ import vv1a from '../vivre/t01-a1.json'; import vv1b from '../vivre/t01-b1.json'
 import pro1 from './pro/unite1.json'; import pro2 from './pro/unite2.json';
 import pro3 from './pro/unite3.json'; import pro4 from './pro/unite4.json';
 import pro5 from './pro/unite5.json'; import pro6 from './pro/unite6.json';
+import pv1 from './pivots/unite1.json'; import pv2 from './pivots/unite2.json';
+import pv3 from './pivots/unite3.json'; import pv4 from './pivots/unite4.json';
+import pv5 from './pivots/unite5.json'; import pv6 from './pivots/unite6.json';
 
 const U = (m: unknown) => m as EditoUnit;
 
@@ -143,6 +146,16 @@ export const LEVELS: Record<string, LevelCourse> = {
     accent: 'slate',
     units: { '1': U(ot1), '2': U(ot2) },
     order: ['1','2'],
+  },
+  // Двенадцать глаголов, на которых держится речь о работе, в трёх временах.
+  // Упражнения только на производство формы: человек говорит или пишет её сам,
+  // а не выбирает из вариантов. Формы собраны скриптом из явных таблиц.
+  pivots: {
+    id: 'pivots', courseId: 'niveau-pivots', title: 'Глаголы-опоры', level: 'A1–A2',
+    description: 'être, avoir, aller, faire, pouvoir, devoir, vouloir, savoir, prendre, mettre, venir, partir — в настоящем, прошедшем (passé composé) и ближайшем будущем. Смена лица, перевод во время, отрицание, русская мысль → французская фраза, формы вслух.',
+    accent: 'orange',
+    units: { '1': U(pv1), '2': U(pv2), '3': U(pv3), '4': U(pv4), '5': U(pv5), '6': U(pv6) },
+    order: ['1','2','3','4','5','6'],
   },
   pro: {
     id: 'pro', courseId: 'niveau-pro-intersport', title: 'Français professionnel — Entretien (Intersport)', level: 'B1–B2',

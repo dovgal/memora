@@ -1,0 +1,380 @@
+{
+ "id": "pivots-2",
+ "title": "2 · aller и faire — куда и что делаю",
+ "description": "Куда едете и что делаете: самые частые вопросы на работе. aller — ещё и ключ к ближайшему будущему.",
+ "vocabulary": [
+  {
+   "fr": "aller",
+   "ru": "идти, ехать",
+   "type": "word"
+  },
+  {
+   "fr": "faire",
+   "ru": "делать",
+   "type": "word"
+  },
+  {
+   "fr": "je suis allé",
+   "ru": "aller в прошедшем: я …",
+   "type": "phrase"
+  },
+  {
+   "fr": "j'ai fait",
+   "ru": "faire в прошедшем: я …",
+   "type": "phrase"
+  }
+ ],
+ "exercises": [
+  {
+   "id": "piv2-theorie",
+   "type": "theory",
+   "title": "Формы: сейчас, уже было, скоро",
+   "content": "<p style='margin:0.6rem 0'><b>aller</b> — идти, ехать: «Je <b>vais</b> sur le chantier». Он же строит ближайшее будущее: «Je <b>vais faire</b> le diagnostic». <b>faire</b> — делать: «Qu'est-ce que vous <b>faites</b> ?» Обратите внимание: vous <b>faites</b>, а не «faisez», и ils <b>font</b>.</p><h3 style='margin:1rem 0 0.3rem'>aller — идти, ехать</h3><table><tr><th>сейчас (présent)</th><th>уже было (passé composé)</th><th>скоро (futur proche)</th></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je vais\">je vais</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je suis allé\">je suis allé</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je vais aller\">je vais aller</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu vas\">tu vas</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu es allé\">tu es allé</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu vas aller\">tu vas aller</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il va\">il va</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il est allé\">il est allé</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il va aller\">il va aller</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous allons\">nous allons</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous sommes allés\">nous sommes allés</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous allons aller\">nous allons aller</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous allez\">vous allez</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous êtes allé\">vous êtes allé</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous allez aller\">vous allez aller</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils vont\">ils vont</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils sont allés\">ils sont allés</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils vont aller\">ils vont aller</span></td></tr></table><p style='margin:0.3rem 0 0.8rem;font-size:0.9em'>passé composé с <b>être</b>: причастие согласуется — elle est allée, nous sommes allés. Пример: <span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"Je vais sur le chantier.\">Je vais sur le chantier.</span></p><h3 style='margin:1rem 0 0.3rem'>faire — делать</h3><table><tr><th>сейчас (présent)</th><th>уже было (passé composé)</th><th>скоро (futur proche)</th></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je fais\">je fais</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"j'ai fait\">j'ai fait</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je vais faire\">je vais faire</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu fais\">tu fais</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu as fait\">tu as fait</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu vas faire\">tu vas faire</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il fait\">il fait</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il a fait\">il a fait</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il va faire\">il va faire</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous faisons\">nous faisons</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous avons fait\">nous avons fait</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous allons faire\">nous allons faire</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous faites\">vous faites</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous avez fait\">vous avez fait</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous allez faire\">vous allez faire</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils font\">ils font</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils ont fait\">ils ont fait</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils vont faire\">ils vont faire</span></td></tr></table><p style='margin:0.3rem 0 0.8rem;font-size:0.9em'>passé composé с <b>avoir</b>: причастие <b>fait</b> не меняется. Пример: <span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"Je fais le diagnostic.\">Je fais le diagnostic.</span></p><p style='margin:0.6rem 0'>Нажмите на любую форму, чтобы услышать её.</p>"
+  },
+  {
+   "id": "piv2-pron",
+   "type": "pronunciation",
+   "title": "Формы вслух",
+   "pronItems": [
+    {
+     "text": "je vais",
+     "ru": "aller — я (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "tu vas",
+     "ru": "aller — ты (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "il va",
+     "ru": "aller — он (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "nous allons",
+     "ru": "aller — мы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "vous allez",
+     "ru": "aller — вы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "ils vont",
+     "ru": "aller — они (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "je suis allé",
+     "ru": "aller — я (уже было)",
+     "kind": "word"
+    },
+    {
+     "text": "je fais",
+     "ru": "faire — я (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "tu fais",
+     "ru": "faire — ты (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "il fait",
+     "ru": "faire — он (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "nous faisons",
+     "ru": "faire — мы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "vous faites",
+     "ru": "faire — вы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "ils font",
+     "ru": "faire — они (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "j'ai fait",
+     "ru": "faire — я (уже было)",
+     "kind": "word"
+    }
+   ]
+  },
+  {
+   "id": "piv2-personnes",
+   "type": "transformation",
+   "title": "Смена лица: кто делает?",
+   "transformations": [
+    {
+     "source": "Je vais sur le chantier.",
+     "task": "начните с «vous»",
+     "answers": [
+      "Vous allez sur le chantier."
+     ]
+    },
+    {
+     "source": "Je fais le diagnostic.",
+     "task": "начните с «tu»",
+     "answers": [
+      "Tu fais le diagnostic."
+     ]
+    },
+    {
+     "source": "Je vais sur le chantier.",
+     "task": "начните с «il»",
+     "answers": [
+      "Il va sur le chantier."
+     ]
+    },
+    {
+     "source": "Je fais le diagnostic.",
+     "task": "начните с «vous»",
+     "answers": [
+      "Vous faites le diagnostic."
+     ]
+    },
+    {
+     "source": "Je vais sur le chantier.",
+     "task": "начните с «ils»",
+     "answers": [
+      "Ils vont sur le chantier."
+     ]
+    },
+    {
+     "source": "Je fais le diagnostic.",
+     "task": "начните с «nous»",
+     "answers": [
+      "Nous faisons le diagnostic."
+     ]
+    }
+   ],
+   "focus": "présent",
+   "instruction": "Скажите ту же фразу о другом человеке. Глагол меняется вместе с лицом."
+  },
+  {
+   "id": "piv2-passe",
+   "type": "transformation",
+   "title": "Сейчас → уже было",
+   "transformations": [
+    {
+     "source": "Vous faites le diagnostic.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Vous avez fait le diagnostic."
+     ]
+    },
+    {
+     "source": "Tu fais le diagnostic.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Tu as fait le diagnostic."
+     ]
+    },
+    {
+     "source": "Il va sur le chantier.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Il est allé sur le chantier."
+     ]
+    },
+    {
+     "source": "Je vais sur le chantier.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Je suis allé sur le chantier.",
+      "Je suis allée sur le chantier."
+     ]
+    },
+    {
+     "source": "Vous allez sur le chantier.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Vous êtes allé sur le chantier.",
+      "Vous êtes allée sur le chantier.",
+      "Vous êtes allés sur le chantier.",
+      "Vous êtes allées sur le chantier."
+     ]
+    },
+    {
+     "source": "Nous faisons le diagnostic.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Nous avons fait le diagnostic."
+     ]
+    }
+   ],
+   "focus": "passé composé",
+   "instruction": "Скажите, что это уже случилось: avoir или être + причастие."
+  },
+  {
+   "id": "piv2-futur",
+   "type": "transformation",
+   "title": "Сейчас → скоро",
+   "transformations": [
+    {
+     "source": "Tu vas sur le chantier.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Tu vas aller sur le chantier."
+     ]
+    },
+    {
+     "source": "Vous faites le diagnostic.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Vous allez faire le diagnostic."
+     ]
+    },
+    {
+     "source": "Nous allons sur le chantier.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Nous allons aller sur le chantier."
+     ]
+    },
+    {
+     "source": "Il fait le diagnostic.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Il va faire le diagnostic."
+     ]
+    }
+   ],
+   "focus": "futur proche",
+   "instruction": "Скажите, что это будет скоро: aller в нужном лице + начальная форма глагола."
+  },
+  {
+   "id": "piv2-negation",
+   "type": "transformation",
+   "title": "Отрицание",
+   "transformations": [
+    {
+     "source": "Je vais sur le chantier.",
+     "task": "отрицание",
+     "answers": [
+      "Je ne vais pas sur le chantier."
+     ]
+    },
+    {
+     "source": "Il fait le diagnostic.",
+     "task": "отрицание",
+     "answers": [
+      "Il ne fait pas le diagnostic."
+     ]
+    },
+    {
+     "source": "Nous avons fait la maintenance.",
+     "task": "отрицание",
+     "answers": [
+      "Nous n'avons pas fait la maintenance."
+     ]
+    },
+    {
+     "source": "Je suis allé chez le fournisseur.",
+     "task": "отрицание",
+     "answers": [
+      "Je ne suis pas allé chez le fournisseur.",
+      "Je ne suis pas allée chez le fournisseur."
+     ]
+    },
+    {
+     "source": "Ils vont faire le devis.",
+     "task": "отрицание",
+     "answers": [
+      "Ils ne vont pas faire le devis."
+     ]
+    },
+    {
+     "source": "Vous faites le réglage.",
+     "task": "отрицание",
+     "answers": [
+      "Vous ne faites pas le réglage."
+     ]
+    }
+   ],
+   "focus": "ne … pas",
+   "instruction": "Поставьте в отрицание. В passé composé ne … pas обнимает avoir или être, в futur proche — aller."
+  },
+  {
+   "id": "piv2-sens",
+   "type": "meaning-to-form",
+   "title": "Из смысла в форму: на работе",
+   "productions": [
+    {
+     "ru": "Я еду на объект.",
+     "hint": "Je vais …",
+     "answers": [
+      "Je vais sur le chantier."
+     ]
+    },
+    {
+     "ru": "Что вы делаете?",
+     "hint": "Qu'est-ce que …",
+     "answers": [
+      "Qu'est-ce que vous faites ?",
+      "Que faites-vous ?",
+      "Vous faites quoi ?"
+     ]
+    },
+    {
+     "ru": "Вчера мы ездили к поставщику.",
+     "hint": "Hier, nous sommes …",
+     "answers": [
+      "Hier, nous sommes allés chez le fournisseur.",
+      "Hier, on est allés chez le fournisseur."
+     ]
+    },
+    {
+     "ru": "Я сделал диагностику.",
+     "hint": "J'ai …",
+     "answers": [
+      "J'ai fait le diagnostic."
+     ]
+    },
+    {
+     "ru": "Он сделает смету завтра.",
+     "hint": "Il va …",
+     "answers": [
+      "Il va faire le devis demain.",
+      "Il fera le devis demain.",
+      "Demain, il va faire le devis."
+     ]
+    },
+    {
+     "ru": "Они едут в Марсель.",
+     "hint": "Ils vont …",
+     "answers": [
+      "Ils vont à Marseille."
+     ]
+    },
+    {
+     "ru": "Мы не сделали обслуживание.",
+     "hint": "Nous n'avons pas …",
+     "answers": [
+      "Nous n'avons pas fait la maintenance.",
+      "On n'a pas fait la maintenance."
+     ]
+    },
+    {
+     "ru": "Куда вы едете?",
+     "hint": "Où …",
+     "answers": [
+      "Où est-ce que vous allez ?",
+      "Où allez-vous ?",
+      "Vous allez où ?"
+     ]
+    }
+   ],
+   "focus": "aller, faire",
+   "instruction": "Скажите это по-французски. Проверяется смысл: другая правильная фраза тоже засчитывается."
+  }
+ ]
+}

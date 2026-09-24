@@ -116,6 +116,12 @@ export const BUILTIN_COURSES: CatalogCourse[] = [
     subject: 'Французский язык', topic: 'Французский', level: 'B2–C1', emoji: '📐',
   },
   {
+    id: 'niveau-pivots', href: '/dashboard/student/courses/niveau/pivots',
+    title: 'Глаголы-опоры',
+    description: '12 главных глаголов в трёх временах: сами говорите форму, а не выбираете. Для рассказа о работе и опыте.',
+    subject: 'Французский язык', topic: 'Французский', level: 'A1–A2', emoji: '🧱',
+  },
+  {
     id: 'niveau-pro-intersport', href: '/dashboard/student/courses/niveau/pro',
     title: 'Français professionnel — Entretien',
     description: 'Лексика собеседования (Responsable Adjointe, Intersport): договоры, зарплата, управление командой, KPI, клиенты. Карточки FR↔RU с озвучкой.',

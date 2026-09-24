@@ -1,0 +1,383 @@
+{
+ "id": "pivots-5",
+ "title": "5 · venir и partir — пришёл, уехал",
+ "description": "Когда приехал, когда уехал, откуда вы — и прошедшее время с être.",
+ "vocabulary": [
+  {
+   "fr": "venir",
+   "ru": "приходить, приезжать",
+   "type": "word"
+  },
+  {
+   "fr": "partir",
+   "ru": "уходить, уезжать",
+   "type": "word"
+  },
+  {
+   "fr": "je suis venu",
+   "ru": "venir в прошедшем: я …",
+   "type": "phrase"
+  },
+  {
+   "fr": "je suis parti",
+   "ru": "partir в прошедшем: я …",
+   "type": "phrase"
+  }
+ ],
+ "exercises": [
+  {
+   "id": "piv5-theorie",
+   "type": "theory",
+   "title": "Формы: сейчас, уже было, скоро",
+   "content": "<p style='margin:0.6rem 0'><b>venir</b> — приходить, приезжать: «Je <b>viens</b> à huit heures», «Je <b>viens</b> d'Ukraine». <b>partir</b> — уходить, уезжать: «Je <b>pars</b> à seize heures». Оба — глаголы движения, поэтому прошедшее с <b>être</b>: «Je <b>suis venu</b>», «Elle <b>est partie</b>», «Nous <b>sommes partis</b>». Ловушка: ils vie<b>nn</b>ent — с двумя n.</p><h3 style='margin:1rem 0 0.3rem'>venir — приходить, приезжать</h3><table><tr><th>сейчас (présent)</th><th>уже было (passé composé)</th><th>скоро (futur proche)</th></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je viens\">je viens</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je suis venu\">je suis venu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je vais venir\">je vais venir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu viens\">tu viens</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu es venu\">tu es venu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu vas venir\">tu vas venir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il vient\">il vient</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il est venu\">il est venu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il va venir\">il va venir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous venons\">nous venons</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous sommes venus\">nous sommes venus</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous allons venir\">nous allons venir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous venez\">vous venez</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous êtes venu\">vous êtes venu</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous allez venir\">vous allez venir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils viennent\">ils viennent</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils sont venus\">ils sont venus</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils vont venir\">ils vont venir</span></td></tr></table><p style='margin:0.3rem 0 0.8rem;font-size:0.9em'>passé composé с <b>être</b>: причастие согласуется — elle est venue, nous sommes venus. Пример: <span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"Je viens à huit heures.\">Je viens à huit heures.</span></p><h3 style='margin:1rem 0 0.3rem'>partir — уходить, уезжать</h3><table><tr><th>сейчас (présent)</th><th>уже было (passé composé)</th><th>скоро (futur proche)</th></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je pars\">je pars</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je suis parti\">je suis parti</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"je vais partir\">je vais partir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu pars\">tu pars</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu es parti\">tu es parti</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"tu vas partir\">tu vas partir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il part\">il part</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il est parti\">il est parti</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"il va partir\">il va partir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous partons\">nous partons</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous sommes partis\">nous sommes partis</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"nous allons partir\">nous allons partir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous partez\">vous partez</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous êtes parti\">vous êtes parti</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"vous allez partir\">vous allez partir</span></td></tr><tr><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils partent\">ils partent</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils sont partis\">ils sont partis</span></td><td><span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"ils vont partir\">ils vont partir</span></td></tr></table><p style='margin:0.3rem 0 0.8rem;font-size:0.9em'>passé composé с <b>être</b>: причастие согласуется — elle est partie, nous sommes partis. Пример: <span class=\"say\" role=\"button\" tabindex=\"0\" data-say=\"Je pars à seize heures.\">Je pars à seize heures.</span></p><p style='margin:0.6rem 0'>Нажмите на любую форму, чтобы услышать её.</p>"
+  },
+  {
+   "id": "piv5-pron",
+   "type": "pronunciation",
+   "title": "Формы вслух",
+   "pronItems": [
+    {
+     "text": "je viens",
+     "ru": "venir — я (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "tu viens",
+     "ru": "venir — ты (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "il vient",
+     "ru": "venir — он (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "nous venons",
+     "ru": "venir — мы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "vous venez",
+     "ru": "venir — вы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "ils viennent",
+     "ru": "venir — они (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "je suis venu",
+     "ru": "venir — я (уже было)",
+     "kind": "word"
+    },
+    {
+     "text": "je pars",
+     "ru": "partir — я (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "tu pars",
+     "ru": "partir — ты (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "il part",
+     "ru": "partir — он (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "nous partons",
+     "ru": "partir — мы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "vous partez",
+     "ru": "partir — вы (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "ils partent",
+     "ru": "partir — они (сейчас)",
+     "kind": "word"
+    },
+    {
+     "text": "je suis parti",
+     "ru": "partir — я (уже было)",
+     "kind": "word"
+    }
+   ]
+  },
+  {
+   "id": "piv5-personnes",
+   "type": "transformation",
+   "title": "Смена лица: кто делает?",
+   "transformations": [
+    {
+     "source": "Je viens à huit heures.",
+     "task": "начните с «il»",
+     "answers": [
+      "Il vient à huit heures."
+     ]
+    },
+    {
+     "source": "Je pars à seize heures.",
+     "task": "начните с «il»",
+     "answers": [
+      "Il part à seize heures."
+     ]
+    },
+    {
+     "source": "Je viens à huit heures.",
+     "task": "начните с «ils»",
+     "answers": [
+      "Ils viennent à huit heures."
+     ]
+    },
+    {
+     "source": "Je pars à seize heures.",
+     "task": "начните с «nous»",
+     "answers": [
+      "Nous partons à seize heures."
+     ]
+    },
+    {
+     "source": "Je viens à huit heures.",
+     "task": "начните с «vous»",
+     "answers": [
+      "Vous venez à huit heures."
+     ]
+    },
+    {
+     "source": "Je pars à seize heures.",
+     "task": "начните с «vous»",
+     "answers": [
+      "Vous partez à seize heures."
+     ]
+    }
+   ],
+   "focus": "présent",
+   "instruction": "Скажите ту же фразу о другом человеке. Глагол меняется вместе с лицом."
+  },
+  {
+   "id": "piv5-passe",
+   "type": "transformation",
+   "title": "Сейчас → уже было",
+   "transformations": [
+    {
+     "source": "Nous partons à seize heures.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Nous sommes partis à seize heures.",
+      "Nous sommes parties à seize heures."
+     ]
+    },
+    {
+     "source": "Tu pars à seize heures.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Tu es parti à seize heures.",
+      "Tu es partie à seize heures."
+     ]
+    },
+    {
+     "source": "Je viens à huit heures.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Je suis venu à huit heures.",
+      "Je suis venue à huit heures."
+     ]
+    },
+    {
+     "source": "Ils partent à seize heures.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Ils sont partis à seize heures."
+     ]
+    },
+    {
+     "source": "Ils viennent à huit heures.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Ils sont venus à huit heures."
+     ]
+    },
+    {
+     "source": "Il vient à huit heures.",
+     "task": "уже было (passé composé)",
+     "answers": [
+      "Il est venu à huit heures."
+     ]
+    }
+   ],
+   "focus": "passé composé",
+   "instruction": "Скажите, что это уже случилось: avoir или être + причастие."
+  },
+  {
+   "id": "piv5-futur",
+   "type": "transformation",
+   "title": "Сейчас → скоро",
+   "transformations": [
+    {
+     "source": "Il vient à huit heures.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Il va venir à huit heures."
+     ]
+    },
+    {
+     "source": "Il part à seize heures.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Il va partir à seize heures."
+     ]
+    },
+    {
+     "source": "Nous venons à huit heures.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Nous allons venir à huit heures."
+     ]
+    },
+    {
+     "source": "Vous partez à seize heures.",
+     "task": "скоро (aller + инфинитив)",
+     "answers": [
+      "Vous allez partir à seize heures."
+     ]
+    }
+   ],
+   "focus": "futur proche",
+   "instruction": "Скажите, что это будет скоро: aller в нужном лице + начальная форма глагола."
+  },
+  {
+   "id": "piv5-negation",
+   "type": "transformation",
+   "title": "Отрицание",
+   "transformations": [
+    {
+     "source": "Je viens à huit heures.",
+     "task": "отрицание",
+     "answers": [
+      "Je ne viens pas à huit heures."
+     ]
+    },
+    {
+     "source": "Il part à seize heures.",
+     "task": "отрицание",
+     "answers": [
+      "Il ne part pas à seize heures."
+     ]
+    },
+    {
+     "source": "Je suis venu hier.",
+     "task": "отрицание",
+     "answers": [
+      "Je ne suis pas venu hier.",
+      "Je ne suis pas venue hier."
+     ]
+    },
+    {
+     "source": "Nous sommes partis tôt.",
+     "task": "отрицание",
+     "answers": [
+      "Nous ne sommes pas partis tôt.",
+      "Nous ne sommes pas parties tôt."
+     ]
+    },
+    {
+     "source": "Ils vont venir demain.",
+     "task": "отрицание",
+     "answers": [
+      "Ils ne vont pas venir demain."
+     ]
+    },
+    {
+     "source": "Vous partez maintenant.",
+     "task": "отрицание",
+     "answers": [
+      "Vous ne partez pas maintenant."
+     ]
+    }
+   ],
+   "focus": "ne … pas",
+   "instruction": "Поставьте в отрицание. В passé composé ne … pas обнимает avoir или être, в futur proche — aller."
+  },
+  {
+   "id": "piv5-sens",
+   "type": "meaning-to-form",
+   "title": "Из смысла в форму: на работе",
+   "productions": [
+    {
+     "ru": "Я приезжаю в восемь.",
+     "hint": "Je viens …",
+     "answers": [
+      "Je viens à huit heures.",
+      "J'arrive à huit heures."
+     ]
+    },
+    {
+     "ru": "Я пришёл на монтаж ворот.",
+     "hint": "Je suis venu …",
+     "answers": [
+      "Je suis venu pour la pose de la porte.",
+      "Je viens pour la pose de la porte."
+     ]
+    },
+    {
+     "ru": "Откуда вы?",
+     "hint": "D'où …",
+     "answers": [
+      "D'où venez-vous ?",
+      "Vous venez d'où ?",
+      "D'où est-ce que vous venez ?"
+     ]
+    },
+    {
+     "ru": "Я из Украины.",
+     "hint": "Je viens …",
+     "answers": [
+      "Je viens d'Ukraine."
+     ]
+    },
+    {
+     "ru": "Мы уезжаем в четыре часа.",
+     "hint": "Nous partons …",
+     "answers": [
+      "Nous partons à seize heures.",
+      "On part à seize heures.",
+      "Nous partons à quatre heures."
+     ]
+    },
+    {
+     "ru": "Она уехала в девять.",
+     "hint": "Elle est …",
+     "answers": [
+      "Elle est partie à neuf heures."
+     ]
+    },
+    {
+     "ru": "Завтра я уеду рано.",
+     "hint": "Demain, je vais …",
+     "answers": [
+      "Demain, je vais partir tôt.",
+      "Demain, je pars tôt.",
+      "Demain, je partirai tôt."
+     ]
+    },
+    {
+     "ru": "Когда вы приедете?",
+     "hint": "Quand …",
+     "answers": [
+      "Quand est-ce que vous venez ?",
+      "Quand venez-vous ?",
+      "Vous venez quand ?",
+      "Quand est-ce que vous allez venir ?"
+     ]
+    }
+   ],
+   "focus": "venir, partir",
+   "instruction": "Скажите это по-французски. Проверяется смысл: другая правильная фраза тоже засчитывается."
+  }
+ ]
+}
