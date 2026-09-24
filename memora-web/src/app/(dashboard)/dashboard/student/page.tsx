@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Sparkles, Layers } from 'lucide-react';
 import { CoursesStrip } from '@/components/courses/CoursesStrip';
+import { DailyChallengeCard } from '@/components/challenge/DailyChallengeCard';
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { SetSummaryResponse } from "@/types/schema";
@@ -37,6 +38,9 @@ export default async function StudentDashboard() {
     return (
         <div className="min-h-screen bg-qz-card text-qz-text selection:bg-[#4255ff]/30">
             <div className="p-8 max-w-7xl mx-auto space-y-16">
+
+                {/* Разговор дня — первым: пять минут речи каждый день важнее выбора курса */}
+                <DailyChallengeCard />
 
                 {/* Динамическая лента всех курсов */}
                 <CoursesStrip />

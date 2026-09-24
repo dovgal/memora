@@ -353,10 +353,16 @@ export async function generatePractice(
 }
 
 export interface ConverseTurn { role: 'user' | 'assistant'; content: string }
-export interface ConverseReply { reply: string; translation: string; correction: string | null }
+export interface ConverseReply {
+  reply: string;
+  translation: string;
+  correction: string | null;
+  /** По одной отметке на каждую цель из goals — выполнена ли за весь разговор. Нет целей или судья недоступен — undefined. */
+  goalsCovered?: boolean[];
+}
 
 export async function converse(
-  messages: ConverseTurn[], opts: { language?: string; level?: string; scenario?: string }, idToken?: string,
+  messages: ConverseTurn[], opts: { language?: string; level?: string; scenario?: string; goals?: string[] }, idToken?: string,
 ): Promise<ConverseReply> {
   return ok(await fetch('/api/ai/course/converse', {
     method: 'POST',

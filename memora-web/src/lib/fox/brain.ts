@@ -15,7 +15,9 @@ export type FoxEvent =
   | { type: 'listen_end' }
   | { type: 'levelup'; level: number }
   | { type: 'achievement'; title: string }
-  | { type: 'session_end'; correct: number; total: number }
+  // say — своя фраза вместо «N из M»: у разговора нет верных и неверных
+  // ответов, а радость и помахать лапой уместны так же.
+  | { type: 'session_end'; correct: number; total: number; say?: string }
   | { type: 'say'; text: string };
 
 export type FoxPose = 'stand' | 'sit' | 'ball';
@@ -105,7 +107,7 @@ export function react(e: FoxEvent, rnd: () => number = Math.random): Reaction | 
     case 'achievement':
       return { pose: 'stand', mood: 'happy', jump: 'jump', wag: true, say: `Достижение: ${e.title}`, ms: 2600 };
     case 'session_end':
-      return { pose: 'stand', mood: 'happy', wave: true, wag: true, say: sessionSummary(e.correct, e.total), ms: 3200 };
+      return { pose: 'stand', mood: 'happy', wave: true, wag: true, say: e.say ?? sessionSummary(e.correct, e.total), ms: 3200 };
     case 'say':
       return { pose: 'sit', mood: '', say: e.text, ms: 2600 };
     default:

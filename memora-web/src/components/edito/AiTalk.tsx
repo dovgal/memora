@@ -10,7 +10,7 @@
 // в отличие от переписки, видно не только «что сказано», но и «что прозвучало
 // неразборчиво».
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { Mic, Square, Send, Volume2, Loader2, Lightbulb, RotateCcw, Check } from 'lucide-react';
 import { converse, type ConverseTurn } from '@/lib/courses/customCoursesApi';
@@ -30,6 +30,8 @@ interface Props {
   voice?: string;
   speechLang?: string;
   onComplete?: () => void;
+  /** Каждая своя реплика ученика (голосом или текстом) — «Разговор дня» считает их. */
+  onTurn?: (text: string) => void;
 }
 
 /** Ниже этого порога слово считается неразборчивым. Подобрано на фонетике. */
@@ -44,12 +46,14 @@ function keyWords(hint: string): string[] {
     .filter(w => w.length > 3);
 }
 
-export function AiTalk({ exercise, voice, speechLang = 'fr-FR', onComplete }: Props) {
+export function AiTalk({ exercise, voice, speechLang = 'fr-FR', onComplete, onTurn }: Props) {
   const { data: session } = useSession();
   const idToken = (session as { id_token?: string } | null)?.id_token;
 
-  const goals = exercise.goals ?? [];
-  const hints = exercise.hints ?? [];
+  // useMemo, а не просто `?? []": без него зависимость от goals/hints в
+  // useCallback ниже видела бы «новый» массив на каждый рендер.
+  const goals = useMemo(() => exercise.goals ?? [], [exercise.goals]);
+  const hints = useMemo(() => exercise.hints ?? [], [exercise.hints]);
 
   const [lines, setLines] = useState<Line[]>([]);
   const [draft, setDraft] = useState('');
@@ -69,7 +73,8 @@ export function AiTalk({ exercise, voice, speechLang = 'fr-FR', onComplete }: Pr
     endRef.current?.scrollIntoView({ block: 'nearest' });
   }, [lines]);
 
-  /** Отмечает выполненные задачи по тому, что прозвучало. */
+  /** Отмечает выполненные задачи по тому, что прозвучало. Мгновенно, пока
+   *  ответ судьи ещё не пришёл — но только добавляет, не снимает. */
   const markGoals = useCallback((said: string) => {
     const text = said.toLowerCase();
     setDone(prev => {
@@ -88,6 +93,17 @@ export function AiTalk({ exercise, voice, speechLang = 'fr-FR', onComplete }: Pr
     });
   }, [hints, goals.length, onComplete]);
 
+  /** Отметка от судьи (goalsCovered из /converse) — авторитетнее эвристики
+   *  по ключевым словам, тоже только добавляет отметки, никогда не снимает. */
+  const markCovered = useCallback((covered: boolean[]) => {
+    setDone(prev => {
+      const next = new Set(prev);
+      covered.forEach((ok, i) => { if (ok) next.add(i); });
+      if (next.size >= goals.length && goals.length > 0) onComplete?.();
+      return next;
+    });
+  }, [goals.length, onComplete]);
+
   const say = useCallback(async (text: string, weak?: string[]) => {
     const clean = text.trim();
     if (!clean || busy) return;
@@ -97,21 +113,23 @@ export function AiTalk({ exercise, voice, speechLang = 'fr-FR', onComplete }: Pr
     const history = [...lines, mine];
     setLines(history);
     markGoals(clean);
+    onTurn?.(clean);
     setBusy(true);
     try {
       const r = await converse(
         history.map(l => ({ role: l.role, content: l.content })),
-        { language: 'французский', level: exercise.talkLevel || 'A2', scenario },
+        { language: 'французский', level: exercise.talkLevel || 'A2', scenario, goals },
         idToken,
       );
       setLines(prev => [...prev, { role: 'assistant', content: r.reply, translation: r.translation, correction: r.correction }]);
+      if (r.goalsCovered) markCovered(r.goalsCovered);
       void speakInworldAndWait(r.reply, voice);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Собеседник не ответил');
     } finally {
       setBusy(false);
     }
-  }, [busy, lines, markGoals, exercise.talkLevel, scenario, idToken, voice]);
+  }, [busy, lines, markGoals, markCovered, onTurn, goals, exercise.talkLevel, scenario, idToken, voice]);
 
   /** Первую реплику подаёт собеседник — иначе непонятно, с чего начинать. */
   const begin = useCallback(async () => {

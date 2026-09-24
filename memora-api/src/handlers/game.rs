@@ -17,6 +17,10 @@
 //   sentence_built:     верно построенная фраза — 15.
 //   exercise_complete:  5 (упражнение целиком, а не отдельный ответ).
 //   session_complete:   20 + 15 за безошибочную сессию (cards>0 && correct>=cards).
+//   challenge_complete: 25 за «Разговор дня». Приходит НЕ с клиента напрямую,
+//                       а из handlers::challenge после проверки, что это
+//                       сегодняшний разговор и человек действительно говорил;
+//                       поэтому минутный лимит его не режет (раз в день и так).
 // Плюс общий потолок на одно событие (MAX_XP_PER_EVENT) и на минуту
 // (MINUTE_XP_CAP) — защита от скриптованного спама одним и тем же событием.
 
@@ -55,6 +59,7 @@ pub enum StudySource {
     Course,
     Reader,
     Verbs,
+    Challenge,
 }
 
 impl StudySource {
@@ -64,6 +69,7 @@ impl StudySource {
             StudySource::Course => "course",
             StudySource::Reader => "reader",
             StudySource::Verbs => "verbs",
+            StudySource::Challenge => "challenge",
         }
     }
 }
@@ -76,6 +82,9 @@ pub enum StudyEvent {
     SentenceBuilt { source: StudySource, correct: bool },
     ExerciseComplete { source: StudySource },
     SessionComplete { source: StudySource, cards: i32, correct: i32, minutes: f64 },
+    /// «Разговор дня» завершён. Своего `source` нет — источник один.
+    /// Поля описательные (сервер их уже проверил в handlers::challenge).
+    ChallengeComplete { challenge_id: String, turns: i32, minutes: f64 },
 }
 
 impl StudyEvent {
@@ -86,6 +95,7 @@ impl StudyEvent {
             | StudyEvent::SentenceBuilt { source, .. }
             | StudyEvent::ExerciseComplete { source, .. }
             | StudyEvent::SessionComplete { source, .. } => *source,
+            StudyEvent::ChallengeComplete { .. } => StudySource::Challenge,
         }
     }
 }
@@ -149,6 +159,8 @@ pub const ACHIEVEMENTS: &[AchievementDef] = &[
     AchievementDef { id: "daily_goal_5", title: "Пять дней по плану", description: "Выполняйте дневную цель 5 дней подряд.", emoji: "🎯" },
     AchievementDef { id: "level_10", title: "Десятый уровень", description: "Достигните 10-го уровня.", emoji: "🚀" },
     AchievementDef { id: "xp_1000", title: "Тысяча опыта", description: "Наберите 1000 очков опыта за всё время.", emoji: "💎" },
+    AchievementDef { id: "talkative", title: "Разговорчивый", description: "Проведите 7 «Разговоров дня».", emoji: "💬" },
+    AchievementDef { id: "talk_week", title: "Неделя разговоров", description: "Проводите «Разговор дня» 7 дней подряд.", emoji: "🗓️" },
 ];
 
 /// Снимок состояния ПОСЛЕ обработки события — из него решаем, что разблокировалось.
@@ -167,6 +179,8 @@ struct AchievementContext {
     daily_goal_streak: i64,
     level: i64,
     xp: i64,
+    challenges_completed: i64,
+    challenge_streak: i64,
 }
 
 fn qualifies(id: &str, ctx: &AchievementContext) -> bool {
@@ -186,6 +200,8 @@ fn qualifies(id: &str, ctx: &AchievementContext) -> bool {
         "daily_goal_5" => ctx.daily_goal_streak >= 5,
         "level_10" => ctx.level >= 10,
         "xp_1000" => ctx.xp >= 1000,
+        "talkative" => ctx.challenges_completed >= 7,
+        "talk_week" => ctx.challenge_streak >= 7,
         _ => false,
     }
 }
@@ -215,7 +231,7 @@ fn paris_offset_minutes(dt: DateTime<Utc>) -> i64 {
     if dt >= spring && dt < autumn { 120 } else { 60 }
 }
 
-fn paris_date(dt: DateTime<Utc>) -> NaiveDate {
+pub(crate) fn paris_date(dt: DateTime<Utc>) -> NaiveDate {
     (dt + ChronoDuration::minutes(paris_offset_minutes(dt))).date_naive()
 }
 
@@ -312,6 +328,40 @@ fn compute_event_xp(event: &StudyEvent, counters: &mut CountersCore) -> i64 {
             }
             20 + if perfect { 15 } else { 0 }
         }
+        StudyEvent::ChallengeComplete { challenge_id: _id, turns: _turns, minutes: _minutes } => {
+            // Порог «4 реплики или 3 минуты» уже проверил handlers::challenge;
+            // здесь поля описательные — начисление за разговор фиксированное.
+            counters.challenges_completed += 1;
+            CHALLENGE_XP
+        }
+    }
+}
+
+pub(crate) const CHALLENGE_XP: i64 = 25;
+
+/// Серия «Разговоров дня» — отдельная от общей серии: общую держит любое
+/// занятие, а эта про привычку говорить. Заморозок здесь нет — ачивка
+/// «Неделя разговоров» должна значить ровно семь разговоров подряд.
+fn apply_challenge_streak(counters: &mut CountersCore, today: NaiveDate) {
+    match counters.last_challenge_date {
+        Some(d) if d >= today => {}
+        Some(d) if d == today - ChronoDuration::days(1) => {
+            counters.challenge_streak += 1;
+            counters.last_challenge_date = Some(today);
+        }
+        _ => {
+            counters.challenge_streak = 1;
+            counters.last_challenge_date = Some(today);
+        }
+    }
+}
+
+/// Серия разговоров «как её видит человек сейчас»: живая, если последний
+/// разговор был сегодня или вчера (сегодня ещё можно продолжить).
+pub(crate) fn visible_challenge_streak(streak: i64, last: Option<NaiveDate>, today: NaiveDate) -> i64 {
+    match last {
+        Some(d) if (today - d).num_days() <= 1 => streak,
+        _ => 0,
     }
 }
 
@@ -464,13 +514,16 @@ impl Default for StatsCore {
 }
 
 #[derive(Debug, Clone, Default)]
-struct CountersCore {
+pub(crate) struct CountersCore {
     total_correct: i64,
     total_sessions: i64,
     perfect_sessions: i64,
     good_pronunciations: i64,
     sentences_built: i64,
     daily_goal_streak: i64,
+    pub(crate) challenges_completed: i64,
+    pub(crate) challenge_streak: i64,
+    pub(crate) last_challenge_date: Option<NaiveDate>,
 }
 
 struct EventOutcome {
@@ -493,7 +546,15 @@ fn apply_event(
     let old_level = level_for_xp(stats.xp);
 
     let raw_xp = compute_event_xp(event, counters).min(MAX_XP_PER_EVENT);
-    let xp_gained = apply_minute_cap(stats, now, raw_xp);
+    let is_challenge = matches!(event, StudyEvent::ChallengeComplete { .. });
+    // Разговор дня ограничен «раз в день» первичным ключом в БД, а минутный
+    // лимит — защита от скриптованного спама с клиента. Если человек только
+    // что пролистал колоду и упёрся в лимит, честные 25 XP за разговор не
+    // должны сгореть.
+    let xp_gained = if is_challenge { raw_xp } else { apply_minute_cap(stats, now, raw_xp) };
+    if is_challenge {
+        apply_challenge_streak(counters, today);
+    }
 
     let comeback = apply_streak(stats, today);
     apply_daily_goal(stats, counters, today, xp_gained);
@@ -516,6 +577,8 @@ fn apply_event(
         daily_goal_streak: counters.daily_goal_streak,
         level: stats.level,
         xp: stats.xp,
+        challenges_completed: counters.challenges_completed,
+        challenge_streak: counters.challenge_streak,
     };
     let new_achievements = newly_unlocked(&ctx, already_unlocked);
 
@@ -524,7 +587,7 @@ fn apply_event(
 
 // ───────────────────────── DB ↔ StatsCore/CountersCore ─────────────────────────
 
-async fn ensure_rows(pool: &PgPool, user_id: Uuid) -> Result<(), sqlx::Error> {
+pub(crate) async fn ensure_rows(pool: &PgPool, user_id: Uuid) -> Result<(), sqlx::Error> {
     sqlx::query("INSERT INTO user_game_stats (user_id) VALUES ($1) ON CONFLICT DO NOTHING")
         .bind(user_id)
         .execute(pool)
@@ -568,17 +631,19 @@ where
     })
 }
 
-async fn load_counters<'c, E>(exec: E, user_id: Uuid, lock: bool) -> Result<CountersCore, sqlx::Error>
+pub(crate) async fn load_counters<'c, E>(exec: E, user_id: Uuid, lock: bool) -> Result<CountersCore, sqlx::Error>
 where
     E: sqlx::PgExecutor<'c>,
 {
     let sql = if lock {
         "SELECT total_correct, total_sessions, perfect_sessions, good_pronunciations,
-                sentences_built, daily_goal_streak
+                sentences_built, daily_goal_streak,
+                challenges_completed, challenge_streak, last_challenge_date
          FROM user_game_counters WHERE user_id = $1 FOR UPDATE"
     } else {
         "SELECT total_correct, total_sessions, perfect_sessions, good_pronunciations,
-                sentences_built, daily_goal_streak
+                sentences_built, daily_goal_streak,
+                challenges_completed, challenge_streak, last_challenge_date
          FROM user_game_counters WHERE user_id = $1"
     };
     let row = sqlx::query(sql).bind(user_id).fetch_one(exec).await?;
@@ -589,6 +654,9 @@ where
         good_pronunciations: row.get::<i32, _>("good_pronunciations") as i64,
         sentences_built: row.get::<i32, _>("sentences_built") as i64,
         daily_goal_streak: row.get::<i32, _>("daily_goal_streak") as i64,
+        challenges_completed: row.get::<i32, _>("challenges_completed") as i64,
+        challenge_streak: row.get::<i32, _>("challenge_streak") as i64,
+        last_challenge_date: row.get::<Option<NaiveDate>, _>("last_challenge_date"),
     })
 }
 
@@ -601,30 +669,50 @@ pub async fn report_event(
     Json(event): Json<StudyEvent>,
 ) -> ApiResult<impl IntoResponse> {
     let user_id = uid(&user.sub)?;
-    let now = Utc::now();
-    let source = event.source().as_str();
-
+    // Разговор дня засчитывает только handlers::challenge — после проверки,
+    // что разговор сегодняшний и был настоящим. Иначе его можно было бы
+    // присылать сюда сколько угодно раз по 25 XP.
+    if matches!(event, StudyEvent::ChallengeComplete { .. }) {
+        return Err(ApiError::response(
+            StatusCode::BAD_REQUEST,
+            "Разговор дня засчитывается через /api/challenge/complete",
+        ));
+    }
     ensure_rows(&pool, user_id).await.map_err(db_err)?;
-
     let mut tx = pool.begin().await.map_err(db_err)?;
+    let update = award_event_in_tx(&mut tx, user_id, &event, Utc::now()).await.map_err(db_err)?;
+    tx.commit().await.map_err(db_err)?;
+    Ok(Json(update))
+}
+
+/// Правила + запись результата в рамках чужой транзакции. Вынесено из
+/// report_event, чтобы разговор дня записывал факт выполнения и начисление
+/// одним коммитом: не бывает «разговор засчитан, а XP нет» и наоборот.
+/// Строки user_game_stats/counters должны уже существовать (ensure_rows).
+pub(crate) async fn award_event_in_tx(
+    tx: &mut sqlx::Transaction<'_, sqlx::Postgres>,
+    user_id: Uuid,
+    event: &StudyEvent,
+    now: DateTime<Utc>,
+) -> Result<GameUpdateDto, sqlx::Error> {
+    let source = event.source().as_str();
 
     // FOR UPDATE держит строку до commit — второе одновременное событие того
     // же человека (двойной тап, два устройства) дождётся этой транзакции
     // вместо того, чтобы прочитать те же «старые» цифры и затереть начисление.
-    let mut stats = load_stats(&mut *tx, user_id, true).await.map_err(db_err)?;
-    let mut counters = load_counters(&mut *tx, user_id, true).await.map_err(db_err)?;
+    let mut stats = load_stats(&mut **tx, user_id, true).await?;
+    let mut counters = load_counters(&mut **tx, user_id, true).await?;
     let already_unlocked: HashSet<String> = sqlx::query(
         "SELECT achievement_id FROM user_achievements WHERE user_id = $1",
     )
     .bind(user_id)
-    .fetch_all(&mut *tx)
-    .await
-    .map_err(db_err)?
+    .fetch_all(&mut **tx)
+    .await?
     .into_iter()
     .map(|r| r.get::<String, _>("achievement_id"))
     .collect();
 
-    let outcome = apply_event(&mut stats, &mut counters, &already_unlocked, &event, now);
+    let outcome = apply_event(&mut stats, &mut counters, &already_unlocked, event, now);
 
     sqlx::query(
         "UPDATE user_game_stats SET xp=$2, level=$3, streak_days=$4, longest_streak=$5, freezes=$6,
@@ -644,13 +732,13 @@ pub async fn report_event(
     .bind(stats.daily_date)
     .bind(stats.minute_bucket)
     .bind(stats.minute_xp as i32)
-    .execute(&mut *tx)
-    .await
-    .map_err(db_err)?;
+    .execute(&mut **tx)
+    .await?;
 
     sqlx::query(
         "UPDATE user_game_counters SET total_correct=$2, total_sessions=$3, perfect_sessions=$4,
-                good_pronunciations=$5, sentences_built=$6, daily_goal_streak=$7, updated_at=NOW()
+                good_pronunciations=$5, sentences_built=$6, daily_goal_streak=$7,
+                challenges_completed=$8, challenge_streak=$9, last_challenge_date=$10, updated_at=NOW()
          WHERE user_id=$1",
     )
     .bind(user_id)
@@ -660,18 +748,19 @@ pub async fn report_event(
     .bind(counters.good_pronunciations as i32)
     .bind(counters.sentences_built as i32)
     .bind(counters.daily_goal_streak as i32)
-    .execute(&mut *tx)
-    .await
-    .map_err(db_err)?;
+    .bind(counters.challenges_completed as i32)
+    .bind(counters.challenge_streak as i32)
+    .bind(counters.last_challenge_date)
+    .execute(&mut **tx)
+    .await?;
 
     if outcome.xp_gained > 0 {
         sqlx::query("INSERT INTO user_game_xp_log (user_id, xp_delta, source) VALUES ($1, $2, $3)")
             .bind(user_id)
             .bind(outcome.xp_gained as i32)
             .bind(source)
-            .execute(&mut *tx)
-            .await
-            .map_err(db_err)?;
+            .execute(&mut **tx)
+            .await?;
     }
 
     for a in &outcome.new_achievements {
@@ -681,14 +770,11 @@ pub async fn report_event(
         )
         .bind(user_id)
         .bind(a.id)
-        .execute(&mut *tx)
-        .await
-        .map_err(db_err)?;
+        .execute(&mut **tx)
+        .await?;
     }
 
-    tx.commit().await.map_err(db_err)?;
-
-    Ok(Json(GameUpdateDto {
+    Ok(GameUpdateDto {
         xp: stats.xp,
         xp_gained: outcome.xp_gained,
         level: stats.level,
@@ -697,7 +783,7 @@ pub async fn report_event(
         daily_goal: stats.daily_goal,
         daily_progress: stats.daily_xp,
         new_achievements: outcome.new_achievements.iter().map(|a| AchievementDto::from(*a)).collect(),
-    }))
+    })
 }
 
 #[derive(Serialize)]
@@ -1379,6 +1465,7 @@ mod tests {
             total_sessions: 1000, streak_days: 1000, total_correct: 1000, perfect_sessions: 1000,
             good_pronunciations: 1000, sentences_built: 1000, is_early_bird: true, is_night_owl: true,
             comeback: true, daily_goal_streak: 1000, level: 1000, xp: 1_000_000,
+            challenges_completed: 1000, challenge_streak: 1000,
         };
         assert_eq!(newly_unlocked(&all, &HashSet::new()).len(), ACHIEVEMENTS.len());
         assert!(ACHIEVEMENTS.len() >= 15);
@@ -1406,5 +1493,119 @@ mod tests {
         for key in ["xp", "xpGained", "level", "leveledUp", "streakDays", "dailyGoal", "dailyProgress", "newAchievements"] {
             assert!(v.get(key).is_some(), "в GameUpdate нет поля {key}");
         }
+    }
+
+    // ---------- Разговор дня ----------
+
+    fn challenge() -> StudyEvent {
+        StudyEvent::ChallengeComplete { challenge_id: "w01".into(), turns: 5, minutes: 4.0 }
+    }
+
+    #[test]
+    fn challenge_gives_25_xp_and_counts() {
+        let mut c = CountersCore::default();
+        assert_eq!(compute_event_xp(&challenge(), &mut c), 25);
+        assert_eq!(c.challenges_completed, 1);
+    }
+
+    #[test]
+    fn challenge_counts_for_streak_and_daily_goal() {
+        let mut stats = StatsCore { daily_goal: 20, ..Default::default() };
+        let mut counters = CountersCore::default();
+        let out = apply_event(&mut stats, &mut counters, &HashSet::new(), &challenge(), utc(2026, 6, 1, 10, 0));
+        assert_eq!(out.xp_gained, 25);
+        assert_eq!(stats.streak_days, 1, "разговор держит общую серию");
+        assert_eq!(stats.daily_xp, 25, "и идёт в дневную цель");
+        assert_eq!(counters.daily_goal_streak, 1, "цель 20 перекрыта одним разговором");
+        assert_eq!(counters.challenge_streak, 1);
+        assert_eq!(counters.last_challenge_date, Some(ymd(2026, 6, 1)));
+    }
+
+    #[test]
+    fn challenge_is_not_eaten_by_minute_cap() {
+        let t = utc(2026, 6, 1, 10, 0);
+        let mut stats = StatsCore { minute_bucket: Some(t), minute_xp: MINUTE_XP_CAP, ..Default::default() };
+        let mut counters = CountersCore::default();
+        let out = apply_event(&mut stats, &mut counters, &HashSet::new(), &challenge(), t + ChronoDuration::seconds(5));
+        assert_eq!(out.xp_gained, 25);
+        assert_eq!(stats.minute_xp, MINUTE_XP_CAP, "корзина минутного лимита не тронута");
+    }
+
+    #[test]
+    fn talkative_unlocks_on_seventh_challenge_not_before() {
+        let mut stats = StatsCore::default();
+        let mut counters = CountersCore::default();
+        let mut already = HashSet::new();
+        // Семь разговоров через день — серия не набирается, а «Разговорчивый»
+        // открывается ровно на седьмом.
+        let mut day = ymd(2026, 6, 1);
+        for i in 1..=7 {
+            let out = apply_event(&mut stats, &mut counters, &already, &challenge(), day.and_hms_opt(10, 0, 0).unwrap().and_utc());
+            let got = out.new_achievements.iter().any(|a| a.id == "talkative");
+            assert_eq!(got, i == 7, "разговор {i}");
+            for a in out.new_achievements { already.insert(a.id.to_string()); }
+            day += ChronoDuration::days(2);
+        }
+        assert!(!already.contains("talk_week"), "через день — это не неделя подряд");
+    }
+
+    #[test]
+    fn talk_week_needs_seven_days_in_a_row() {
+        let mut stats = StatsCore::default();
+        let mut counters = CountersCore::default();
+        let mut already = HashSet::new();
+        let mut day = ymd(2026, 6, 1);
+        for i in 1..=7 {
+            let out = apply_event(&mut stats, &mut counters, &already, &challenge(), day.and_hms_opt(10, 0, 0).unwrap().and_utc());
+            let got = out.new_achievements.iter().any(|a| a.id == "talk_week");
+            assert_eq!(got, i == 7, "день {i}");
+            for a in out.new_achievements { already.insert(a.id.to_string()); }
+            day += ChronoDuration::days(1);
+        }
+        assert_eq!(counters.challenge_streak, 7);
+    }
+
+    #[test]
+    fn challenge_streak_breaks_on_a_missed_day_and_ignores_other_study() {
+        let mut stats = StatsCore::default();
+        let mut counters = CountersCore::default();
+        let already = HashSet::new();
+        apply_event(&mut stats, &mut counters, &already, &challenge(), utc(2026, 6, 1, 10, 0));
+        apply_event(&mut stats, &mut counters, &already, &challenge(), utc(2026, 6, 2, 10, 0));
+        // 3 июня только упражнения — общая серия растёт, серия разговоров нет.
+        apply_event(&mut stats, &mut counters, &already, &exercise(), utc(2026, 6, 3, 10, 0));
+        assert_eq!(counters.challenge_streak, 2);
+        apply_event(&mut stats, &mut counters, &already, &challenge(), utc(2026, 6, 4, 10, 0));
+        assert_eq!(counters.challenge_streak, 1, "пропуск разговора рвёт серию разговоров");
+        assert_eq!(stats.streak_days, 4, "а общую серию держат и упражнения");
+    }
+
+    #[test]
+    fn challenge_streak_uses_paris_days() {
+        // 23:50 и 00:10 по Парижу (лето) — два дня подряд, хотя по UTC одни сутки.
+        let mut counters = CountersCore::default();
+        let mut stats = StatsCore::default();
+        let already = HashSet::new();
+        apply_event(&mut stats, &mut counters, &already, &challenge(), utc(2026, 7, 10, 21, 50));
+        apply_event(&mut stats, &mut counters, &already, &challenge(), utc(2026, 7, 10, 22, 10));
+        assert_eq!(counters.challenge_streak, 2);
+    }
+
+    #[test]
+    fn visible_challenge_streak_hides_burned_streak() {
+        let today = ymd(2026, 6, 10);
+        assert_eq!(visible_challenge_streak(4, Some(ymd(2026, 6, 10)), today), 4);
+        assert_eq!(visible_challenge_streak(4, Some(ymd(2026, 6, 9)), today), 4);
+        assert_eq!(visible_challenge_streak(4, Some(ymd(2026, 6, 8)), today), 0);
+        assert_eq!(visible_challenge_streak(0, None, today), 0);
+    }
+
+    #[test]
+    fn challenge_event_json_shape() {
+        let e: StudyEvent = serde_json::from_str(
+            r#"{"type":"challenge_complete","challengeId":"w12","turns":6,"minutes":4.5}"#,
+        ).unwrap();
+        assert!(matches!(e, StudyEvent::ChallengeComplete { ref challenge_id, turns: 6, .. } if challenge_id == "w12"));
+        assert_eq!(e.source().as_str(), "challenge");
     }
 }

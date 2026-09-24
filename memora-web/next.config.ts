@@ -159,6 +159,11 @@ const nextConfig: NextConfig = {
         source: "/api/game/:path*",
         destination: `${rustApiUrl}/api/game/:path*`,
       },
+      // «Разговор дня»: разговор на сегодня и его засчёт.
+      {
+        source: "/api/challenge/:path*",
+        destination: `${rustApiUrl}/api/challenge/:path*`,
+      },
     ];
   },
 };

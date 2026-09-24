@@ -19,6 +19,8 @@ pub mod sources;
 pub mod checks;
 pub mod family;
 pub mod game;
+pub mod challenge;
+pub mod challenge_catalog;
 pub mod push;
 
 pub mod books;
