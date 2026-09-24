@@ -29,3 +29,4 @@ pub mod webfetch;
 pub mod verbs;
 pub mod trainer;
 pub mod unit_validate;
+pub mod speech_review;

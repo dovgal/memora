@@ -65,7 +65,7 @@ export function ruleLevel(ex: EditoExercise): string | undefined {
 
 export interface EditoExercise {
   id: string;
-  type: 'theory' | 'grammar-quiz' | 'sentence-builder' | 'gender-quiz' | 'dialogue' | 'fill-blank' | 'number-quiz' | 'listening' | 'video' | 'error-hunt' | 'dictation' | 'numeric' | 'ordering' | 'symbolic' | 'pronunciation' | 'situation' | 'ai-talk' | 'substitution' | 'transformation' | 'meaning-to-form';
+  type: 'theory' | 'grammar-quiz' | 'sentence-builder' | 'gender-quiz' | 'dialogue' | 'fill-blank' | 'number-quiz' | 'listening' | 'video' | 'error-hunt' | 'dictation' | 'numeric' | 'ordering' | 'symbolic' | 'pronunciation' | 'situation' | 'ai-talk' | 'substitution' | 'transformation' | 'meaning-to-form' | 'monologue';
   title: string;
   // symbolic (математика): ответ — выражение; эквивалентность проверяет CAS-сервис
   // (POST /api/check/symbolic): «2(x+1)» засчитывается как «2x+2».
@@ -147,6 +147,19 @@ export interface EditoExercise {
   focus?: string;
   // pronunciation: каждая единица произносится в микрофон и сверяется с эталоном.
   pronItems?: PronunciationItem[];
+  // monologue: рассказ на минуту-две в ответ на вопрос собеседования
+  // («Présentez-vous»). Судим всю историю целиком, а не фразу: что покрыто
+  // из goals (общее поле с ai-talk), какие ошибки мешают, как беглость.
+  // question — как спросит собеседник, по-французски; modelAnswer — образец,
+  // показывается только после попытки, чтобы не пересказывали его.
+  question?: string;
+  questionRu?: string;
+  modelAnswer?: string;
+  /** Пределы записи в секундах; по умолчанию 30 и 150. */
+  minSeconds?: number;
+  maxSeconds?: number;
+  /** Уровень ученика для разбора: 'A1' | 'A2'. */
+  level?: string;
   // video
   videoFile?: string;
   description?: string;
