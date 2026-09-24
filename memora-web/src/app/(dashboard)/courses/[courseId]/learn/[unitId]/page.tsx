@@ -4,8 +4,9 @@
 
 import { use, useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { ChevronLeft, CheckCircle2, Loader2, SkipForward, Volume2 } from 'lucide-react';
+import { ChevronLeft, CheckCircle2, Loader2, SkipForward, Volume2, MessageSquareQuote } from 'lucide-react';
 import { ExerciseRenderer } from '@/components/edito/ExerciseRenderer';
 import { speakInworldLanguage } from '@/lib/courses/ttsInworld';
 import { langMeta } from '@/lib/courses/langMeta';
@@ -14,11 +15,13 @@ import {
   getTranslatedUnit, type UnitDetail,
 } from '@/lib/courses/customCoursesApi';
 import { UnitLangToggle } from '@/components/courses/UnitLangToggle';
+import { syncCourseChunksToSet, trainerHref } from '@/lib/courses/courseChunksSync';
 
 export default function CustomUnitPage({ params }: { params: Promise<{ courseId: string; unitId: string }> }) {
   const { courseId, unitId } = use(params);
   const { data: session } = useSession();
   const idToken = session?.id_token as string | undefined;
+  const router = useRouter();
 
   const [baseUnit, setBaseUnit] = useState<UnitDetail | null>(null);
   const [unit, setUnit] = useState<UnitDetail | null>(null);
@@ -92,6 +95,28 @@ export default function CustomUnitPage({ params }: { params: Promise<{ courseId:
     setMarkingKnown(false);
   }, [unit, idToken, courseId, unitId, markingKnown]);
 
+  // Готовые фразы этого юнита → личный набор «Фразы · {курс}», открываем тренажёр на его партии.
+  const [exportingChunks, setExportingChunks] = useState(false);
+  const handleLearnChunks = useCallback(async () => {
+    if (exportingChunks) return;
+    setExportingChunks(true);
+    try {
+      const r = await syncCourseChunksToSet(courseId, idToken);
+      const range = r.unitRanges[unitId] ?? null;
+      if (!range) {
+        alert('В этом юните нет готовых фраз для карточек.');
+      } else {
+        alert(r.added > 0
+          ? `Добавлено ${r.added} новых фраз (всего в наборе: ${r.total}). Открываю карточки.`
+          : `Фразы юнита уже в наборе. Открываю карточки.`);
+        router.push(trainerHref(r.setId, range, `/courses/${courseId}/learn/${unitId}`));
+      }
+    } catch (e) {
+      alert(`Не удалось собрать фразы: ${e instanceof Error ? e.message : e}`);
+    }
+    setExportingChunks(false);
+  }, [courseId, unitId, idToken, exportingChunks, router]);
+
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-qz-card text-foreground">
@@ -132,6 +157,15 @@ export default function CustomUnitPage({ params }: { params: Promise<{ courseId:
             </div>
             <div className="flex items-center gap-2 flex-wrap">
               <UnitLangToggle uiLang={uiLang} target={language} onSwitch={switchLang} loading={translating} />
+              <button
+                onClick={handleLearnChunks}
+                disabled={exportingChunks}
+                className="inline-flex items-center gap-1.5 border border-border hover:border-[#ffcd1f]/50 text-qz-text-muted hover:text-foreground text-xs font-semibold px-3 py-2 rounded-xl transition-colors disabled:opacity-60"
+                title="Собрать фразы этого юнита в карточки и открыть заучивание"
+              >
+                {exportingChunks ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <MessageSquareQuote className="w-3.5 h-3.5" />}
+                Фразы этого юнита → карточки
+              </button>
               <button
                 onClick={handleMarkKnown}
                 disabled={markingKnown}

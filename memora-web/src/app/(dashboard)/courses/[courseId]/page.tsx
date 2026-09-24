@@ -5,11 +5,12 @@ import { use, useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { ChevronLeft, Pencil, Loader2, Brain, CheckCircle2, MessagesSquare, BookOpenText, BarChart3, GraduationCap, AudioLines, Layers, BookOpenCheck, Waves } from 'lucide-react';
+import { ChevronLeft, Pencil, Loader2, Brain, CheckCircle2, MessagesSquare, BookOpenText, BarChart3, GraduationCap, AudioLines, Layers, BookOpenCheck, Waves, MessageSquareQuote } from 'lucide-react';
 import {
   getCourse, getCourseProgress, exportVocabularySet,
   type CourseDetail, type ProgressEntry,
 } from '@/lib/courses/customCoursesApi';
+import { syncCourseChunksToSet, trainerHref } from '@/lib/courses/courseChunksSync';
 
 export default function CustomCoursePage({ params }: { params: Promise<{ courseId: string }> }) {
   const { courseId } = use(params);
@@ -21,6 +22,7 @@ export default function CustomCoursePage({ params }: { params: Promise<{ courseI
   const [progress, setProgress] = useState<ProgressEntry[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [exporting, setExporting] = useState(false);
+  const [exportingChunks, setExportingChunks] = useState(false);
 
   useEffect(() => {
     if (!idToken) return;
@@ -43,6 +45,22 @@ export default function CustomCoursePage({ params }: { params: Promise<{ courseI
     }
     setExporting(false);
   }, [courseId, idToken, exporting, router]);
+
+  // Готовые фразы всех юнитов → личный набор «Фразы · {курс}», открываем тренажёр на весь набор.
+  const handleLearnChunks = useCallback(async () => {
+    if (exportingChunks) return;
+    setExportingChunks(true);
+    try {
+      const r = await syncCourseChunksToSet(courseId, idToken);
+      alert(r.added > 0
+        ? `Добавлено ${r.added} новых фраз (всего в наборе: ${r.total}). Открываю карточки.`
+        : `Все фразы курса уже в наборе (${r.total}). Открываю карточки.`);
+      router.push(trainerHref(r.setId, null, `/courses/${courseId}`));
+    } catch (e) {
+      alert(`Не удалось собрать фразы: ${e instanceof Error ? e.message : e}`);
+    }
+    setExportingChunks(false);
+  }, [courseId, idToken, exportingChunks, router]);
 
   if (error) {
     return (
@@ -138,6 +156,14 @@ export default function CustomCoursePage({ params }: { params: Promise<{ courseI
                 className="inline-flex items-center gap-2 border border-border hover:border-[#ffcd1f]/50 text-foreground font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors disabled:opacity-60"
               >
                 {exporting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Layers className="w-4 h-4" />} Слова на повторение
+              </button>
+              <button
+                onClick={handleLearnChunks}
+                disabled={exportingChunks}
+                title="Собрать готовые фразы всех юнитов в карточки и открыть заучивание"
+                className="inline-flex items-center gap-2 border border-border hover:border-[#ffcd1f]/50 text-foreground font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors disabled:opacity-60"
+              >
+                {exportingChunks ? <Loader2 className="w-4 h-4 animate-spin" /> : <MessageSquareQuote className="w-4 h-4" />} Учить фразы курса карточками
               </button>
               {course.isOwner && (
                 <Link
