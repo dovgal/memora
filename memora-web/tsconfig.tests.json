@@ -11,6 +11,8 @@
     "outDir": "/tmp/study-test"
   },
   "include": [
+    "src/lib/courses/theoryMarkdown.ts",
+    "src/lib/courses/theoryMarkdown.test.ts",
     "src/lib/studyUtils.ts",
     "src/lib/studyUtils.test.ts",
     "src/lib/courses/verbs/types.ts",

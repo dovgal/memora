@@ -2,6 +2,7 @@
 import { useMemo, useState } from 'react';
 import { EditoExercise } from '@/lib/courses/edito-a1';
 import { speakInworld } from '@/lib/courses/ttsInworld';
+import { theoryToHtml } from '@/lib/courses/theoryMarkdown';
 
 // Делает кликабельными примеры вида «слово [ipa]»: озвучиваем «слово» через TTS.
 // Работает поверх статичного HTML теории — оживляет все таблицы-примеры.
@@ -21,7 +22,7 @@ function linkify(html: string): string {
 interface Tip { ru: string; x: number; y: number }
 
 export function Theory({ exercise, voice = 'Alain' }: { exercise: EditoExercise; voice?: string }) {
-  const html = useMemo(() => linkify(exercise.content || ''), [exercise.content]);
+  const html = useMemo(() => linkify(theoryToHtml(exercise.content || '')), [exercise.content]);
   // Подсказка с переводом: показывается по наведению на любой элемент,
   // у которого в разметке есть data-ru. Позиция берётся от самого элемента,
   // а не от курсора — иначе плашка дёргалась бы при движении мыши.
