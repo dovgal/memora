@@ -464,6 +464,10 @@ pub async fn check_production(
     }
     let expected: Vec<String> = payload.expected.iter().take(6).map(|e| e.chars().take(300).collect()).collect();
 
+    if let Some(verdict) = fast_production_pass(&payload, answer, &expected).await {
+        return Ok(Json(verdict));
+    }
+
     // Имена ключей диктуем прямо в тексте: схему ответа эта модель не
     // соблюдает и придумывает свои названия полей.
     let system_prompt = "You check a short French sentence written or spoken by a BEGINNER (A1-A2) \
@@ -506,6 +510,53 @@ pub async fn check_production(
     let verdict: ProductionCheckResponse = serde_json::from_str(extract_json_object(&content))
         .map_err(|e| (StatusCode::BAD_GATEWAY, Json(AiGatewayError { error: format!("Не разобрал ответ проверки: {e}") })))?;
     Ok(Json(settle_verdict(verdict)))
+}
+
+/// Сколько должен быть уверен Jev и в смысле, и в грамматике, чтобы засчитать
+/// фразу сразу. На проверочном наборе из 22 фраз (12 с тонкими ошибками:
+/// согласование, вспомогательный глагол, артикль после отрицания) при 0.8
+/// ни одна ошибка не прошла; берём 0.9 с запасом.
+const FAST_PASS_MIN: f32 = 0.9;
+
+/// Быстрый путь: верную фразу засчитывает Jev за доли секунды, большая модель
+/// нужна только там, где есть что исправлять и объяснять. None — Jev не
+/// подключён, не ответил или не уверен: тогда проверяет большая модель, как раньше.
+async fn fast_production_pass(payload: &ProductionCheckRequest, answer: &str, expected: &[String]) -> Option<ProductionCheckResponse> {
+    use crate::judge::{ask_calibrated, Answer, Question};
+    let threshold = std::env::var("JUDGE_FAST_PASS_MIN").ok().and_then(|v| v.parse::<f32>().ok()).unwrap_or(FAST_PASS_MIN);
+    let meaning = if payload.free_form {
+        "Does the learner's French sentence make sense and really use the word or phrase named in the task (any grammatical form)? The examples are only examples."
+    } else {
+        "Does the learner's French sentence express the same meaning as the task (a different but correct wording also counts)?"
+    };
+    let mut questions = std::collections::BTreeMap::new();
+    questions.insert("meaning".to_string(), Question::Noul { instructions: meaning.to_string(), criteria: None });
+    questions.insert("grammar".to_string(), Question::Noul {
+        instructions: "Is the learner's French sentence grammatically correct, including articles, agreement, auxiliary verb and negation? \
+            Ignore capital letters, final punctuation and a single missing accent.".to_string(),
+        criteria: None,
+    });
+    let state = format!(
+        "Task: {}\nGrammar focus: {}\nReference answer(s): {}\nLearner answer: {}",
+        payload.prompt.chars().take(300).collect::<String>(),
+        if payload.focus.is_empty() { "—" } else { payload.focus.as_str() },
+        expected.join(" | "),
+        answer.chars().take(300).collect::<String>(),
+    );
+    let answers = ask_calibrated(state, questions).await?;
+    let m = answers.get("meaning").and_then(Answer::as_noul)?;
+    let g = answers.get("grammar").and_then(Answer::as_noul)?;
+    if m < threshold || g < threshold {
+        return None;
+    }
+    Some(ProductionCheckResponse {
+        is_correct: true,
+        meaning_ok: true,
+        grammar_ok: true,
+        score: m.min(g),
+        corrected: answer.to_string(),
+        explanation: "Верно!".to_string(),
+    })
 }
 
 /// Фраза засчитывается, только когда верны и смысл, и грамматика. Модель ставит
@@ -846,6 +897,10 @@ pub struct ConverseRequest {
     pub level: Option<String>,
     /// Сценарий разговора, например «в кафе»
     pub scenario: Option<String>,
+    /// Что ученик должен успеть сказать (цели упражнения, по-русски). Если
+    /// переданы, в ответе приходит, какие из них уже выполнены.
+    #[serde(default)]
+    pub goals: Vec<String>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -857,6 +912,10 @@ pub struct ConverseResponse {
     pub translation: String,
     /// Разбор ошибок в последнем сообщении учащегося (по-русски), если есть
     pub correction: Option<String>,
+    /// По одной отметке на каждую цель запроса: выполнена ли она за весь разговор.
+    /// Нет — если целей не было или судья недоступен.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub goals_covered: Option<Vec<bool>>,
 }
 
 /// POST /api/ai/course/converse — разговорная практика с ИИ-собеседником.
@@ -899,11 +958,49 @@ pub async fn converse(
         "required": ["reply", "translation", "correction"]
     });
 
-    let content = llm_text(Task::Chat, messages, 700, ResponseFormat::JsonSchema(schema)).await?;
-    let parsed: ConverseResponse = serde_json::from_str(extract_json_object(&content))
+    // Цели проверяем одновременно с ответом собеседника — ученик не ждёт дольше.
+    let learner_said: Vec<String> = payload.messages.iter()
+        .filter(|m| m.role != "assistant")
+        .map(|m| m.content.chars().take(500).collect())
+        .collect();
+    let (content, goals_covered) = tokio::join!(
+        llm_text(Task::Chat, messages, 700, ResponseFormat::JsonSchema(schema)),
+        goals_covered(&payload.goals, &learner_said),
+    );
+    let content = content?;
+    let mut parsed: ConverseResponse = serde_json::from_str(extract_json_object(&content))
         .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Parse Error: {e} - Content: {content}") })))?;
+    parsed.goals_covered = goals_covered;
 
     Ok(Json(parsed))
+}
+
+/// Какие цели разговора ученик уже выполнил — по всем его репликам сразу.
+/// Решает Jev: цель засчитывается при уверенности от 0.7; без Jev — None,
+/// и интерфейс просто не ставит галочек.
+async fn goals_covered(goals: &[String], learner_said: &[String]) -> Option<Vec<bool>> {
+    use crate::judge::{ask_calibrated, Answer, Question};
+    if goals.is_empty() || learner_said.is_empty() {
+        return None;
+    }
+    let goals: Vec<&String> = goals.iter().take(8).collect();
+    let mut questions = std::collections::BTreeMap::new();
+    for (i, goal) in goals.iter().enumerate() {
+        questions.insert(format!("g{i}"), Question::Noul {
+            instructions: format!(
+                "The learner is practising a conversation in French. Goal (in Russian): «{}». \
+                 Judging only by what the learner wrote, has the learner already accomplished this goal? \
+                 Imperfect grammar is fine as long as the goal is clearly done.",
+                goal.chars().take(200).collect::<String>()
+            ),
+            criteria: None,
+        });
+    }
+    let state = format!("Learner's messages so far:\n{}", learner_said.join("\n"));
+    let answers = ask_calibrated(state, questions).await?;
+    Some((0..goals.len())
+        .map(|i| answers.get(&format!("g{i}")).and_then(Answer::as_noul).map(|p| p >= 0.7).unwrap_or(false))
+        .collect())
 }
 
 #[derive(Deserialize)]

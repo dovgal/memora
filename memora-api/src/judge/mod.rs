@@ -214,6 +214,20 @@ pub async fn ask_sensible(instructions: impl Into<String>, state: impl Into<Judg
 
 // ---------- Jev ----------
 
+/// Только Jev, без резервной модели.
+///
+/// Для решений, которые принимаются по уверенности без дальнейшей проверки
+/// («засчитать сразу», «цель разговора выполнена»): у резервной LLM
+/// самооценка почти всегда 1.0, и опираться на неё там нельзя. Нет ключа,
+/// ошибка или таймаут — None, и вызывающий идёт обычным, медленным путём.
+pub async fn ask_calibrated(state: impl Into<JudgeState>, questions: BTreeMap<String, Question>) -> Option<BTreeMap<String, Answer>> {
+    env_nonempty("JEV_API_KEY")?;
+    if questions.is_empty() {
+        return None;
+    }
+    ask_jev(&state.into(), &questions).await.ok()
+}
+
 async fn ask_jev(state: &JudgeState, questions: &BTreeMap<String, Question>) -> Result<BTreeMap<String, Answer>, String> {
     let api_key = env_nonempty("JEV_API_KEY").ok_or_else(|| "JEV_API_KEY not set".to_string())?;
     let url = env_nonempty("JEV_URL").unwrap_or_else(|| "https://api.typesafe.ai/v1/systemone".to_string());
@@ -229,7 +243,12 @@ async fn ask_jev(state: &JudgeState, questions: &BTreeMap<String, Question>) -> 
         "questions": Value::Object(q_json),
     });
 
-    let client = reqwest::Client::new();
+    // Jev отвечает за доли секунды; зависший запрос не должен держать ученика
+    // перед пустым экраном — через 8 секунд уходим на резерв или обычный путь.
+    let client = reqwest::Client::builder()
+        .timeout(Duration::from_secs(8))
+        .build()
+        .map_err(|e| format!("client build failed: {e}"))?;
     let mut backed_off = false;
     loop {
         let response = client

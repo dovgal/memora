@@ -569,6 +569,8 @@ async fn finalize_analysis(
         settings.count as usize,
     );
 
+    let (cards, mistranslated) = drop_wrong_translations(cards, &settings.translation_language).await;
+
     if cards.is_empty() {
         return Err("Не удалось извлечь ни одной подходящей карточки из текста".to_string());
     }
@@ -584,8 +586,43 @@ async fn finalize_analysis(
         proposed_description: parsed.proposed_description.trim().to_string(),
         cards,
         skipped_duplicates: stats.duplicates,
-        skipped_invalid: stats.invalid,
+        skipped_invalid: stats.invalid + mistranslated,
     })
+}
+
+/// Карточка с неверным переводом хуже, чем её отсутствие: ученик выучит ошибку.
+/// Модель, извлекающая слова, иногда переводит по созвучию или путает значение,
+/// поэтому каждый перевод отдельно проверяет Jev — одним запросом на весь набор.
+/// Выбрасываем только явный брак (вероятность верного перевода ниже 0.2): у
+/// многозначных слов перевод по контексту бывает спорным, а не ошибочным —
+/// «la marche — ступенька» Jev оценил в 0.31, а грубые ошибки получают 0.02–0.08.
+/// «Ложных друзей» (sensible — «разумный») этот фильтр не ловит.
+/// Без Jev карточки проходят как есть.
+async fn drop_wrong_translations(cards: Vec<CreatorCard>, translation_language: &str) -> (Vec<CreatorCard>, usize) {
+    use crate::judge::{ask_calibrated, Answer, Question};
+    let mut questions = std::collections::BTreeMap::new();
+    for (i, c) in cards.iter().enumerate() {
+        questions.insert(format!("c{i}"), Question::Noul {
+            instructions: format!(
+                "Flashcard front: «{}». Back (translation into language code «{}»): «{}». \
+                 Is the back a correct translation of the front, in at least one usual meaning?",
+                c.term, translation_language, c.definition
+            ),
+            criteria: None,
+        });
+    }
+    let Some(answers) = ask_calibrated("Checking vocabulary flashcards extracted from a text.", questions).await else {
+        return (cards, 0);
+    };
+    let before = cards.len();
+    let kept: Vec<CreatorCard> = cards
+        .into_iter()
+        .enumerate()
+        .filter(|(i, _)| answers.get(&format!("c{i}")).and_then(Answer::as_noul).map(|p| p >= 0.2).unwrap_or(true))
+        .map(|(_, c)| c)
+        .collect();
+    let dropped = before - kept.len();
+    (kept, dropped)
 }
 
 // ---------- Хендлеры ----------
