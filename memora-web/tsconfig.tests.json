@@ -37,6 +37,9 @@
     "src/lib/trainer/queue.ts",
     "src/lib/trainer/queue.test.ts",
     "src/lib/trainer/coaching.ts",
-    "src/lib/trainer/coaching.test.ts"
+    "src/lib/trainer/coaching.test.ts",
+    "src/lib/courses/edito-a1/index.ts",
+    "src/lib/courses/unitChunks.ts",
+    "src/lib/courses/unitChunks.test.ts"
   ]
 }
