@@ -28,3 +28,4 @@ pub mod cloze;
 pub mod webfetch;
 pub mod verbs;
 pub mod trainer;
+pub mod unit_validate;

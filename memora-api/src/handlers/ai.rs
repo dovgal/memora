@@ -1102,11 +1102,61 @@ pub async fn generate_course_unit(
         return Ok(Json(unit));
     }
 
-    let interactive_types: Vec<&str> = ["grammar-quiz", "fill-blank", "sentence-builder", "dialogue", "dictation"]
+    // Классические типы (как раньше) + лесенка построения фраз (pronunciation →
+    // substitution → transformation → meaning-to-form → ai-talk). Каждый тип
+    // добавляется в промпт (и получает пример), только когда его разрешает пак —
+    // иначе модель пытается сохранить тип, которого редактор не знает.
+    let mut interactive_types: Vec<&str> = ["grammar-quiz", "fill-blank", "sentence-builder", "dialogue", "dictation"]
         .into_iter()
         .filter(|t| pack.allowed_types.contains(t))
         .collect();
+    let ladder_types: Vec<&str> = ["pronunciation", "substitution", "transformation", "meaning-to-form", "ai-talk"]
+        .into_iter()
+        .filter(|t| pack.allowed_types.contains(t))
+        .collect();
+    interactive_types.extend(ladder_types.iter().copied());
     let interactive_types = interactive_types.join(", ");
+
+    // JSON-примеры лесенки построения фраз. Модель (gpt-oss:120b) схему JSON в
+    // ResponseFormat игнорирует — без буквального примера она либо не генерирует
+    // эти типы вовсе, либо путает ключи (как и для классических типов выше).
+    let mut ladder_examples = String::new();
+    if pack.allowed_types.contains(&"pronunciation") {
+        ladder_examples.push_str(
+            ",\n             {\"id\": \"ex-p\", \"type\": \"pronunciation\", \"title\": \"Произношение\", \"pronItems\": [{\"text\": \"Je suis ponctuel.\", \"ru\": \"Я пунктуальный.\", \"kind\": \"phrase\"}]}"
+        );
+    }
+    if pack.allowed_types.contains(&"substitution") {
+        ladder_examples.push_str(
+            ",\n             {\"id\": \"ex-s\", \"type\": \"substitution\", \"title\": \"...\", \"instruction\": \"Замените выделенное слово и скажите фразу целиком\", \"focus\": \"être + прилагательное\", \"frame\": \"Je suis motivé.\", \"substitutions\": [{\"cue\": \"ponctuel\", \"cueRu\": \"пунктуальный\", \"answers\": [\"Je suis ponctuel.\"]}]}"
+        );
+    }
+    if pack.allowed_types.contains(&"transformation") {
+        ladder_examples.push_str(
+            ",\n             {\"id\": \"ex-t\", \"type\": \"transformation\", \"title\": \"...\", \"instruction\": \"Преобразуйте фразу по заданию\", \"focus\": \"отрицание, présent\", \"transformations\": [{\"source\": \"Je parle bien français.\", \"task\": \"отрицание\", \"answers\": [\"Je ne parle pas bien français.\"]}]}"
+        );
+    }
+    if pack.allowed_types.contains(&"meaning-to-form") {
+        ladder_examples.push_str(
+            ",\n             {\"id\": \"ex-m\", \"type\": \"meaning-to-form\", \"title\": \"...\", \"instruction\": \"Скажите по-французски\", \"focus\": \"être + прилагательные\", \"productions\": [{\"ru\": \"Я серьёзный и пунктуальный.\", \"hint\": \"Je suis … et …\", \"answers\": [\"Je suis sérieux et ponctuel.\"]}]}"
+        );
+    }
+    if pack.allowed_types.contains(&"ai-talk") {
+        ladder_examples.push_str(
+            ",\n             {\"id\": \"ex-a\", \"type\": \"ai-talk\", \"title\": \"...\", \"role\": \"коллега на собеседовании\", \"situation\": \"Вы знакомитесь на новой работе\", \"goals\": [\"Представиться\", \"Сказать, кем вы работаете\"], \"hints\": [\"Je m'appelle...\", \"Je suis...\"], \"talkLevel\": \"A1\"}"
+        );
+    }
+    let ladder_rules = if ladder_examples.is_empty() {
+        String::new()
+    } else {
+        " Лесенка построения фраз (используй разрешённые типы в этом порядке, ближе к концу юнита): \
+          pronunciation — 5-8 готовых фраз для проговаривания вслух; substitution — 5-8 подстановок cue во frame, \
+          каждый answers — ПОЛНАЯ фраза, а не одно слово; transformation — 5-8 преобразований source по task, \
+          answers ОБЯЗАТЕЛЬНО отличаются от source; meaning-to-form — 5-8 мыслей по-русски (ru) с французским \
+          ответом (answers), hint — опорная структура фразы; ai-talk — role и situation по-русски, минимум 2 \
+          goals и 2 hints (готовые французские реплики на случай ступора). Каждый элемент answers — законченное \
+          предложение на изучаемом языке, оканчивается на . ? или !.".to_string()
+    };
 
     let system_prompt = format!(
         "Ты — {persona}. Создай учебный юнит по теме «{topic}» \
@@ -1120,11 +1170,11 @@ pub async fn generate_course_unit(
              {{\"id\": \"ex-3\", \"type\": \"fill-blank\", \"title\": \"...\", \"text\": \"Je ___ Paul.\", \"blanks\": [{{\"correctAnswer\": \"suis\", \"options\": [\"suis\",\"es\",\"est\"], \"explanation\": \"...\"}}]}},\n\
              {{\"id\": \"ex-4\", \"type\": \"sentence-builder\", \"title\": \"...\", \"sentences\": [{{\"words\": [\"Je\",\"suis\",\"Paul\"], \"ru\": \"Я — Поль\"}}]}},\n\
              {{\"id\": \"ex-5\", \"type\": \"dialogue\", \"title\": \"...\", \"context\": \"...\", \"exchanges\": [{{\"speaker\": \"A\", \"side\": \"left\", \"text\": \"Bonjour !\"}}, {{\"speaker\": \"B\", \"side\": \"right\", \"isBlank\": true, \"options\": [\"Salut !\",\"Au revoir !\"], \"correctAnswer\": \"Salut !\", \"explanation\": \"...\"}}]}},\n\
-             {{\"id\": \"ex-6\", \"type\": \"dictation\", \"title\": \"Dictée\", \"sentence\": \"фраза на изучаемом языке для диктанта\", \"translation\": \"перевод фразы на русский\", \"explanation\": \"на что обратить внимание (по-русски)\"}}\n\
+             {{\"id\": \"ex-6\", \"type\": \"dictation\", \"title\": \"Dictée\", \"sentence\": \"фраза на изучаемом языке для диктанта\", \"translation\": \"перевод фразы на русский\", \"explanation\": \"на что обратить внимание (по-русски)\"}}{ladder_examples}\n\
            ]\n\
          }}\n\
          Сгенерируй 10-20 словарных единиц и ровно {count} упражнений: первое — theory с понятным объяснением темы, \
-         остальные — разнообразные интерактивные ({interactive_types}). \
+         остальные — разнообразные интерактивные ({interactive_types}).{ladder_rules} \
          Все объяснения и заголовки — по-русски, учебный контент — на изучаемом языке. \
          id упражнений уникальны (ex-1, ex-2, ...). Никакого текста вне JSON."
     );
@@ -1146,8 +1196,12 @@ pub async fn generate_course_unit(
         ResponseFormat::JsonSchema(schema),
     ).await?;
 
-    let unit: serde_json::Value = serde_json::from_str(extract_json_object(&content))
+    let mut unit: serde_json::Value = serde_json::from_str(extract_json_object(&content))
         .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(AiGatewayError { error: format!("Parse Error: {e} - Content: {content}") })))?;
+    // Модель не всегда соблюдает форму лесенки построения фраз (пустые ответы,
+    // cue без связи с ответом, typographic-апостроф) — чиним/вычищаем брак точечно,
+    // не роняя весь юнит из-за одного плохого пункта.
+    crate::handlers::unit_validate::validate_and_repair_unit(&mut unit).await;
 
     Ok(Json(unit))
 }
