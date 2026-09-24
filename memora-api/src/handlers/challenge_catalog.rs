@@ -1,0 +1,435 @@
+// Каталог «Разговора дня»: короткие разговорные ситуации A1–A2.
+//
+// Живёт в коде, а не в БД, по той же причине, что и каталог достижений:
+// семье его не редактировать, а выбор «разговора на сегодня» детерминирован
+// по id — удалённая из базы строка тихо сломала бы вчерашнюю историю.
+//
+// Порядок подсказок не случаен: AiTalk отмечает задачу №i, когда в речи
+// прозвучала половина значимых слов подсказки №i. Поэтому первые подсказки
+// идут строго в порядке задач, лишние (сверх числа задач) — просто вежливые
+// связки на случай ступора.
+//
+// Рабочие ситуации — стройка, мастерская, офис подрядчика: семья ищет работу
+// именно там (см. курс «Французский для работы»). Общие — для тех, кто сейчас
+// не ищет работу, в том числе для детей (школа, секция, одноклассник).
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ChallengeKind {
+    Work,
+    General,
+}
+
+impl ChallengeKind {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            ChallengeKind::Work => "work",
+            ChallengeKind::General => "general",
+        }
+    }
+}
+
+#[derive(Debug)]
+pub struct Challenge {
+    pub id: &'static str,
+    pub kind: ChallengeKind,
+    pub level: &'static str,
+    pub title: &'static str,
+    pub role: &'static str,
+    pub situation: &'static str,
+    pub goals: &'static [&'static str],
+    pub hints: &'static [&'static str],
+}
+
+macro_rules! ch {
+    ($id:literal, $kind:ident, $level:literal, $title:literal, $role:literal, $situation:literal,
+     [$($goal:literal),+ $(,)?], [$($hint:literal),+ $(,)?]) => {
+        Challenge {
+            id: $id,
+            kind: ChallengeKind::$kind,
+            level: $level,
+            title: $title,
+            role: $role,
+            situation: $situation,
+            goals: &[$($goal),+],
+            hints: &[$($hint),+],
+        }
+    };
+}
+
+pub static CATALOG: &[Challenge] = &[
+    // ───────────── Коллеги ─────────────
+    ch!("w01", Work, "A1", "Первый день на объекте", "Марк, бригадир, встречает новичка",
+        "Вы пришли на стройку в первый рабочий день. Марк ждёт вас у входа.",
+        ["Поздороваться и представиться", "Сказать, кем вы будете работать", "Спросить, где раздевалка"],
+        ["Bonjour, je m'appelle …", "Je suis le nouveau technicien.", "Où est le vestiaire, s'il vous plaît ?", "Enchanté, merci !"]),
+    ch!("w02", Work, "A1", "Пауза у кофемашины", "Софи, коллега из соседней бригады",
+        "Утренний перерыв. Вы оказались у кофемашины вместе с Софи.",
+        ["Предложить кофе", "Спросить, давно ли она здесь работает", "Сказать, откуда вы"],
+        ["Tu veux un café ?", "Tu travailles ici depuis longtemps ?", "Je viens d'Ukraine.", "C'est sympa ici."]),
+    ch!("w03", Work, "A1", "Одолжить инструмент", "Жюльен, коллега в мастерской",
+        "Вам нужна дрель, а ваша осталась в фургоне.",
+        ["Попросить дрель", "Сказать, для чего она нужна", "Пообещать вернуть сегодня"],
+        ["Tu peux me prêter la perceuse ?", "C'est pour fixer une étagère.", "Je te la rends ce soir.", "Merci beaucoup !"]),
+    ch!("w04", Work, "A1", "Обед с коллегами", "Карим, коллега",
+        "Скоро полдень. Карим спрашивает, какие у вас планы на обед.",
+        ["Спросить, где все обедают", "Предложить пойти вместе", "Сказать, что вы любите есть"],
+        ["On mange où à midi ?", "On y va ensemble ?", "J'aime bien la cuisine italienne.", "Il y a une cantine ?"]),
+    ch!("w05", Work, "A2", "Помочь новичку", "Люка, стажёр, первый день",
+        "Люка растерян: не знает, где склад и когда обед.",
+        ["Объяснить, где склад", "Сказать, во сколько обед", "Предложить помощь"],
+        ["Le magasin est au fond, à gauche.", "On mange à midi et demi.", "Si tu as besoin d'aide, tu me demandes.", "Pas de problème."]),
+    ch!("w06", Work, "A1", "Коллега опаздывает", "Нора, коллега, отвечает по телефону",
+        "Начало смены, а Норы нет. Вы звоните ей.",
+        ["Спросить, где она", "Сказать, что её ищет начальник", "Спросить, во сколько она будет"],
+        ["Tu es où ?", "Le chef te cherche.", "Tu arrives à quelle heure ?", "D'accord, à tout de suite."]),
+    ch!("w07", Work, "A2", "Поменяться сменой", "Тома, коллега",
+        "В четверг у вас приём у врача, а по графику смена.",
+        ["Попросить поменяться сменой", "Объяснить причину", "Предложить свою смену взамен"],
+        ["Tu peux échanger ton poste avec moi jeudi ?", "J'ai un rendez-vous chez le médecin.", "Je peux faire ton samedi.", "Merci, c'est gentil."]),
+    ch!("w08", Work, "A1", "День рождения коллеги", "Эмма, коллега-именинница",
+        "Бригада купила Эмме подарок, вручать выпало вам.",
+        ["Поздравить с днём рождения", "Сказать, что это подарок от команды", "Спросить, празднует ли она вечером"],
+        ["Joyeux anniversaire !", "C'est un petit cadeau de l'équipe.", "Tu fais une fête ce soir ?", "Bonne journée à toi !"]),
+    ch!("w09", Work, "A2", "Недоразумение с ящиком", "Давид, коллега, недоволен",
+        "Вы по ошибке взяли ящик с инструментами Давида.",
+        ["Извиниться", "Объяснить, как вышла ошибка", "Пообещать вернуть сейчас же"],
+        ["Excuse-moi, je suis désolé.", "Je pensais que c'était ma caisse.", "Je te la ramène tout de suite.", "Ça ne va pas se reproduire."]),
+    ch!("w10", Work, "A1", "Говорите медленнее", "Пьер, коллега, говорит очень быстро",
+        "Пьер объясняет задание скороговоркой, вы половину не поняли.",
+        ["Попросить говорить медленнее", "Попросить повторить", "Спросить значение слова"],
+        ["Tu peux parler plus lentement ?", "Tu peux répéter, s'il te plaît ?", "Qu'est-ce que ça veut dire, « chantier » ?", "Je comprends mieux, merci."]),
+    // ───────────── Начальство ─────────────
+    ch!("w11", Work, "A2", "Утренняя планёрка", "Месье Бернар, начальник участка",
+        "Короткая планёрка: каждый говорит, что сделал и что будет делать.",
+        ["Сказать, что вы сделали вчера", "Сказать, что планируете сегодня", "Сообщить о проблеме"],
+        ["Hier, j'ai fini le montage.", "Aujourd'hui, je vais poser les portes.", "Il manque des vis.", "C'est bon pour moi."]),
+    ch!("w12", Work, "A2", "Попросить выходной", "Мадам Леруа, начальница",
+        "Вам нужен свободный день, чтобы сходить в префектуру.",
+        ["Попросить выходной", "Назвать дату", "Объяснить причину"],
+        ["Je voudrais prendre un jour de congé.", "Le vendredi 12, si c'est possible.", "J'ai un rendez-vous à la préfecture.", "Je peux rattraper samedi."]),
+    ch!("w13", Work, "A1", "Я заболел", "Начальник, отвечает по телефону",
+        "Утром поднялась температура. Нужно предупредить начальника.",
+        ["Сказать, что вы заболели", "Сказать, что сегодня не придёте", "Пообещать прислать больничный"],
+        ["Je suis malade.", "Je ne peux pas venir aujourd'hui.", "Je vous envoie l'arrêt de travail.", "Je suis désolé."]),
+    ch!("w14", Work, "A1", "Не понял задание", "Мадам Леруа, начальница",
+        "Вам дали задание, но вы не уверены, что поняли его правильно.",
+        ["Сказать, что не всё поняли", "Попросить показать", "Уточнить срок"],
+        ["Je n'ai pas bien compris.", "Vous pouvez me montrer ?", "C'est pour quand ?", "D'accord, je commence."]),
+    ch!("w15", Work, "A2", "Работа закончена", "Месье Бернар, начальник участка",
+        "Вы закончили ванную на объекте и докладываете начальнику.",
+        ["Сказать, что работа закончена", "Сказать, что осталось сделать", "Спросить, что делать дальше"],
+        ["J'ai terminé la salle de bains.", "Il reste la peinture.", "Qu'est-ce que je fais maintenant ?", "Tout est propre."]),
+    ch!("w16", Work, "A1", "Опоздание", "Начальник, недоволен",
+        "Вы опоздали на двадцать минут. Начальник ждёт объяснений.",
+        ["Извиниться за опоздание", "Объяснить причину", "Предложить задержаться вечером"],
+        ["Pardon pour le retard.", "Le bus était en retard.", "Je peux rester plus tard ce soir.", "Ça ne va pas se reproduire."]),
+    ch!("w17", Work, "A2", "График на неделю", "Менеджер по графику",
+        "Составляют график на следующую неделю. Вас спрашивают о пожеланиях.",
+        ["Спросить про график", "Сказать, когда вы свободны", "Попросить утренние смены"],
+        ["Quel est le planning de la semaine prochaine ?", "Je suis disponible lundi et mardi.", "Je préfère travailler le matin.", "Ça me va."]),
+    ch!("w18", Work, "A2", "Хочу учиться", "Мадам Леруа, начальница",
+        "Вы хотите пройти обучение, чтобы брать больше видов работ.",
+        ["Сказать, чему хотите научиться", "Назвать нужное удостоверение", "Спросить про обучение"],
+        ["Je voudrais apprendre à souder.", "Je veux passer le permis cariste.", "Il y a une formation ?", "Ce serait utile pour l'équipe."]),
+    // ───────────── Клиенты ─────────────
+    ch!("w19", Work, "A2", "Назначить визит клиенту", "Мадам Дюпон, клиентка",
+        "Вы звоните клиентке, чтобы договориться о замерах у неё дома.",
+        ["Представиться от компании", "Предложить день визита", "Подтвердить адрес"],
+        ["Bonjour, je vous appelle de la société …", "Je peux passer mardi matin ?", "Vous habitez bien rue … ?", "À mardi, bonne journée."]),
+    ch!("w20", Work, "A2", "Клиент недоволен", "Месье Мартен, клиент",
+        "После ремонта у клиента подтекает кран. Он звонит с претензией.",
+        ["Извиниться", "Спросить, где именно течёт", "Предложить приехать"],
+        ["Je suis vraiment désolé.", "Où est la fuite exactement ?", "Je peux venir demain à 9 heures.", "On va régler ça."]),
+    ch!("w21", Work, "A2", "Перенести встречу", "Клиентка, у которой завтра замеры",
+        "Бригада не успевает, завтрашний визит придётся перенести.",
+        ["Сказать, что визит нужно перенести", "Предложить другое время", "Извиниться за неудобство"],
+        ["Je dois reporter le rendez-vous.", "Est-ce que jeudi à 14 heures vous convient ?", "Excusez-moi pour le changement.", "Merci de votre compréhension."]),
+    ch!("w22", Work, "A1", "Уточнить заказ", "Клиент заказывает панели",
+        "Клиент хочет заказать стеновые панели. Нужно всё уточнить.",
+        ["Спросить цвет", "Спросить количество", "Повторить заказ целиком"],
+        ["Quelle couleur voulez-vous ?", "Il vous en faut combien ?", "Donc, dix panneaux blancs, c'est ça ?", "Je note."]),
+    ch!("w23", Work, "A2", "Материал задерживается", "Клиент ждёт начала работ",
+        "Поставщик задержал плитку, работы у клиента сдвигаются.",
+        ["Объяснить, что материал задерживается", "Назвать новую дату", "Извиниться за ожидание"],
+        ["Le matériel est en retard.", "Il arrive lundi prochain.", "Nous sommes désolés pour l'attente.", "Je vous rappelle dès qu'il arrive."]),
+    ch!("w24", Work, "A2", "Сколько это стоит", "Клиентка спрашивает цену",
+        "Клиентка хочет перекрасить кухню и спрашивает, во сколько это обойдётся.",
+        ["Назвать примерную цену", "Объяснить, что входит в цену", "Предложить прислать смету"],
+        ["Ça coûte environ mille euros.", "Le prix comprend le matériel et la main-d'œuvre.", "Je vous envoie le devis par e-mail.", "Vous avez des questions ?"]),
+    ch!("w25", Work, "A1", "Оставить сообщение", "Секретарь в офисе клиента",
+        "Вы звоните месье Пети, но его нет на месте.",
+        ["Попросить месье Пети", "Попросить передать сообщение", "Продиктовать номер телефона"],
+        ["Je voudrais parler à monsieur Petit.", "Vous pouvez lui laisser un message ?", "Mon numéro, c'est le 06 12 34 56 78.", "Merci, au revoir."]),
+    ch!("w26", Work, "A1", "Клиент на объекте", "Клиент пришёл посмотреть работу",
+        "Клиент заехал посмотреть, как идёт ремонт его кухни.",
+        ["Поздороваться и пригласить войти", "Показать, что сделано", "Спросить его мнение"],
+        ["Bonjour, entrez, je vous en prie.", "Voilà, nous avons fini la cuisine.", "Qu'est-ce que vous en pensez ?", "Attention à la marche."]),
+    // ───────────── Мастерская и склад ─────────────
+    ch!("w27", Work, "A1", "На складе", "Жерар, кладовщик",
+        "Вам нужно получить гипсокартон на складе.",
+        ["Спросить, есть ли гипсокартон", "Назвать количество", "Спросить, где расписаться"],
+        ["Vous avez des plaques de plâtre ?", "Il m'en faut vingt.", "Je signe où ?", "Merci, à plus tard."]),
+    ch!("w28", Work, "A1", "Сломался инструмент", "Ален, мастер мастерской",
+        "Пила начала странно шуметь и остановилась.",
+        ["Сказать, что пила сломалась", "Описать, что с ней", "Попросить другую"],
+        ["La scie ne marche plus.", "Elle fait un bruit bizarre.", "Est-ce que je peux en avoir une autre ?", "Je l'ai posée sur l'établi."]),
+    ch!("w29", Work, "A2", "Объяснить стажёру", "Стажёр, внимательно слушает",
+        "Вы показываете стажёру, как закрепить полку.",
+        ["Сказать, что делать сначала", "Показать, как держать шуруповёрт", "Попросить быть осторожным"],
+        ["D'abord, tu mesures.", "Tu tiens la visseuse comme ça.", "Fais attention à tes doigts.", "Ensuite, tu perces."]),
+    ch!("w30", Work, "A2", "Заказать материал", "Поставщик, отвечает по телефону",
+        "На объекте кончается цемент, нужно срочно заказать.",
+        ["Заказать цемент", "Спросить срок доставки", "Назвать адрес объекта"],
+        ["Je voudrais commander trois sacs de ciment.", "Vous livrez quand ?", "L'adresse du chantier, c'est …", "Je paie à la livraison."]),
+    ch!("w31", Work, "A1", "Замеры вдвоём", "Коллега держит второй конец рулетки",
+        "Вы вдвоём меряете стену под шкаф.",
+        ["Попросить подержать рулетку", "Назвать размер", "Попросить проверить уровень"],
+        ["Tu peux tenir le mètre ?", "Ça fait deux mètres dix.", "Tu peux vérifier le niveau ?", "C'est droit."]),
+    ch!("w32", Work, "A1", "Уборка в конце дня", "Бригадир",
+        "Смена заканчивается, объект нужно оставить в порядке.",
+        ["Спросить, что убрать", "Сказать, что вы уже сделали", "Спросить, где контейнер для мусора"],
+        ["Qu'est-ce que je range ?", "J'ai déjà balayé.", "Où est la benne ?", "À demain !"]),
+    ch!("w33", Work, "A2", "Нашли ошибку", "Бригадир нашёл кривой шов",
+        "Бригадир показывает шов, который вы сделали неровно.",
+        ["Признать ошибку", "Сказать, как исправите", "Назвать, когда будет готово"],
+        ["Oui, c'est une erreur, je suis désolé.", "Je vais refaire le joint.", "Ce sera fini dans une heure.", "Merci de me l'avoir dit."]),
+    ch!("w34", Work, "A1", "Взять фургон", "Диспетчер компании",
+        "Вам нужно съездить на другой объект на служебном фургоне.",
+        ["Попросить ключи от фургона", "Сказать, куда едете", "Сказать, когда вернётесь"],
+        ["Je peux avoir les clés du camion ?", "Je vais au chantier de Nîmes.", "Je reviens vers 16 heures.", "Le plein est fait."]),
+    // ───────────── Безопасность ─────────────
+    ch!("w35", Work, "A1", "Инструктаж по безопасности", "Ответственный за технику безопасности",
+        "Перед допуском на объект — короткий инструктаж.",
+        ["Сказать, что каска у вас есть", "Спросить про перчатки", "Спросить, где аптечка"],
+        ["J'ai mon casque.", "Où sont les gants ?", "Où est la trousse de secours ?", "Je comprends les consignes."]),
+    ch!("w36", Work, "A2", "Несчастный случай", "Диспетчер скорой помощи (15)",
+        "Коллега сильно порезал руку. Вы звоните в скорую.",
+        ["Сказать, что случилось", "Назвать адрес", "Описать состояние коллеги"],
+        ["Mon collègue s'est coupé la main.", "Nous sommes au 12 rue de la Gare.", "Il saigne beaucoup, mais il parle.", "Nous attendons."]),
+    ch!("w37", Work, "A1", "Опасное место", "Бригадир",
+        "Вы заметили открытый проём в полу рядом с лестницей.",
+        ["Предупредить об опасности", "Сказать, где она", "Предложить поставить ограждение"],
+        ["Attention, il y a un danger !", "Il y a un trou près de l'escalier.", "On peut mettre une barrière ?", "Je préviens les autres."]),
+    ch!("w38", Work, "A2", "Без страховки не полезу", "Начальник торопит",
+        "Начальник просит подняться на крышу, но страховочной системы нет.",
+        ["Сказать, что без страховки опасно", "Попросить страховочную систему", "Предложить подождать"],
+        ["C'est dangereux sans harnais.", "Il me faut un harnais.", "On peut attendre le matériel ?", "La sécurité d'abord."]),
+    ch!("w39", Work, "A1", "Пожарная тревога", "Коллега, растерялся",
+        "Звучит пожарная тревога. Новый коллега не знает, куда идти.",
+        ["Сказать, что это пожарная тревога", "Показать выход", "Сказать про место сбора"],
+        ["C'est l'alarme incendie !", "La sortie est par là.", "On se retrouve au point de rassemblement.", "Vite, on y va."]),
+    ch!("w40", Work, "A2", "Незнакомое средство", "Коллега с канистрой",
+        "Коллега открыл канистру с сильным запахом.",
+        ["Спросить, что это за средство", "Спросить, нужна ли маска", "Сказать, что нужно проветрить"],
+        ["C'est quoi, ce produit ?", "Il faut mettre un masque ?", "Il faut aérer la pièce.", "Je lis l'étiquette."]),
+    ch!("w41", Work, "A1", "Сломанная лестница", "Бригадир",
+        "У стремянки треснула ступенька.",
+        ["Сказать, что лестница сломана", "Сказать, что уберёте её", "Спросить другую"],
+        ["L'échelle est cassée.", "Je la mets de côté.", "Il y a une autre échelle ?", "Personne ne doit l'utiliser."]),
+    ch!("w42", Work, "A1", "Средства защиты", "Кладовщик",
+        "Вам нужны очки, перчатки и беруши для работы с болгаркой.",
+        ["Попросить защитные очки", "Назвать размер перчаток", "Попросить беруши"],
+        ["Je voudrais des lunettes de protection.", "Des gants taille 9, s'il vous plaît.", "Vous avez des bouchons d'oreilles ?", "Merci beaucoup."]),
+    // ───────────── Планирование ─────────────
+    ch!("w43", Work, "A2", "Планы на неделю", "Бригадир",
+        "Понедельник. Бригадир распределяет объекты на неделю.",
+        ["Спросить, какие объекты на неделе", "Сказать, что вы свободны в среду", "Предложить, с чего начать"],
+        ["Quels chantiers cette semaine ?", "Je suis libre mercredi.", "On commence par la cuisine ?", "D'accord pour moi."]),
+    ch!("w44", Work, "A1", "Во сколько завтра", "Коллега",
+        "Завтра выезд на новый объект. Нужно договориться.",
+        ["Спросить, во сколько начинаем", "Предложить место встречи", "Попросить подвезти"],
+        ["On commence à quelle heure demain ?", "On se retrouve devant le dépôt ?", "Tu peux me prendre en voiture ?", "Parfait, à demain."]),
+    ch!("w45", Work, "A2", "Сроки сдачи", "Заказчик",
+        "Заказчик хочет получить готовую квартиру через две недели.",
+        ["Спросить точную дату", "Сказать, что это реально, но впритык", "Предложить сдать в два этапа"],
+        ["C'est pour quelle date ?", "C'est possible, mais c'est serré.", "On peut faire en deux étapes.", "Je vous confirme demain."]),
+    ch!("w46", Work, "A2", "Не хватает людей", "Начальник",
+        "Двое заболели, а объект нужно сдать в пятницу.",
+        ["Сказать, что не хватает людей", "Предложить попросить другую бригаду", "Спросить про сверхурочные"],
+        ["Il manque deux personnes.", "On peut demander de l'aide à l'autre équipe ?", "On fait des heures supplémentaires ?", "Je peux rester samedi."]),
+    ch!("w47", Work, "A2", "Летний отпуск", "Сотрудница отдела кадров",
+        "Вы хотите заранее поставить отпуск на август.",
+        ["Сказать, что хотите взять отпуск", "Назвать даты", "Спросить, сколько дней осталось"],
+        ["Je voudrais poser mes congés d'été.", "Du 1er au 15 août.", "Il me reste combien de jours ?", "Je remplis le formulaire."]),
+    ch!("w48", Work, "A1", "Совещание", "Коллега, организует встречу",
+        "Нужно собраться всей бригадой и обсудить новый объект.",
+        ["Предложить время", "Спросить, в каком помещении", "Спросить, что подготовить"],
+        ["On fait la réunion à 10 heures ?", "Dans quelle salle ?", "Qu'est-ce que je dois préparer ?", "Je note dans mon agenda."]),
+    // ───────────── Разговоры ни о чём ─────────────
+    ch!("w49", Work, "A1", "Как прошли выходные", "Коллега в понедельник утром",
+        "Понедельник, раздевалка. Коллега спрашивает про выходные.",
+        ["Рассказать про свои выходные", "Спросить про его выходные", "Сказать про погоду"],
+        ["Ce week-end, je suis allé au marché.", "Et toi, tu as fait quoi ?", "Il a fait beau.", "C'était sympa."]),
+    ch!("w50", Work, "A1", "Про семью", "Коллега за обедом",
+        "За обедом коллега показывает фото детей и спрашивает о ваших.",
+        ["Сказать, есть ли у вас дети", "Сказать, сколько им лет", "Спросить коллегу в ответ"],
+        ["J'ai deux enfants.", "Ils ont huit et douze ans.", "Et toi, tu as des enfants ?", "Ils vont à l'école ici."]),
+    ch!("w51", Work, "A1", "Дорога на работу", "Коллега",
+        "На улице ливень, все пришли мокрые.",
+        ["Сказать, как вы добрались", "Сказать про погоду", "Спросить, как добирается коллега"],
+        ["Je suis venu en bus.", "Il pleut beaucoup aujourd'hui.", "Et toi, tu viens comment ?", "Il y a des bouchons."]),
+    ch!("w52", Work, "A1", "Увлечения", "Коллега",
+        "Коллега рассказывает, что по выходным ездит на велосипеде.",
+        ["Рассказать о своём увлечении", "Спросить, что он делает в выходные", "Предложить что-то вместе"],
+        ["J'aime faire du vélo.", "Qu'est-ce que tu fais le week-end ?", "On peut faire du vélo ensemble.", "C'est une bonne idée."]),
+    ch!("w53", Work, "A1", "Перед праздниками", "Коллега",
+        "Последний рабочий день перед Рождеством.",
+        ["Спросить о планах на праздники", "Рассказать свои", "Пожелать хороших праздников"],
+        ["Tu fais quoi pour Noël ?", "Je reste ici avec ma famille.", "Joyeuses fêtes !", "Bonnes vacances !"]),
+    ch!("w54", Work, "A1", "Откуда вы", "Коллега, недавно в бригаде",
+        "Новый коллега слышит акцент и спрашивает, откуда вы.",
+        ["Сказать, откуда вы", "Сказать, сколько вы во Франции", "Сказать, что вам здесь нравится"],
+        ["Je viens d'Ukraine.", "Je suis en France depuis trois ans.", "J'aime bien la région.", "Et toi, tu es d'où ?"]),
+    // ───────────── Собеседование ─────────────
+    ch!("w55", Work, "A2", "Собеседование: о себе", "Рекрутер строительной компании",
+        "Первый вопрос собеседования: «Présentez-vous».",
+        ["Представиться", "Рассказать об опыте", "Сказать, какие языки знаете"],
+        ["Je m'appelle … et j'ai … ans.", "J'ai dix ans d'expérience dans le bâtiment.", "Je parle ukrainien, russe et un peu français.", "Je suis motivé."]),
+    ch!("w56", Work, "A2", "Собеседование: почему мы", "Рекрутер",
+        "Рекрутер спрашивает, почему вы хотите работать именно у них.",
+        ["Объяснить, почему эта компания", "Назвать свою сильную сторону", "Сказать, что готовы учиться"],
+        ["Votre entreprise a une bonne réputation.", "Je suis sérieux et ponctuel.", "Je veux apprendre et progresser.", "J'aime le travail en équipe."]),
+    ch!("w57", Work, "A2", "Собеседование: условия", "Рекрутер",
+        "Конец собеседования: можно спросить об условиях.",
+        ["Спросить про график", "Спросить про зарплату", "Спросить, когда можно начать"],
+        ["Quels sont les horaires ?", "Quel est le salaire ?", "Je peux commencer quand ?", "C'est un CDI ?"]),
+    ch!("w58", Work, "A2", "Собеседование: трудный случай", "Рекрутер",
+        "Рекрутер просит рассказать о трудной ситуации на прошлой работе.",
+        ["Описать проблему", "Сказать, что вы сделали", "Сказать, чем закончилось"],
+        ["Une fois, il y a eu un problème avec un client.", "J'ai écouté et j'ai trouvé une solution.", "Finalement, le client était content.", "J'ai appris beaucoup."]),
+    ch!("w59", Work, "A2", "Собеседование: ваши вопросы", "Рекрутер",
+        "«Avez-vous des questions ?» — ваша очередь спрашивать.",
+        ["Спросить про команду", "Спросить про обучение", "Поблагодарить за встречу"],
+        ["Comment est l'équipe ?", "Il y a une formation au début ?", "Merci pour cet entretien.", "J'attends votre réponse."]),
+    ch!("w60", Work, "A1", "Звонок в France Travail", "Сотрудник France Travail",
+        "Вы звоните в службу занятости, чтобы записаться к консультанту.",
+        ["Сказать, что ищете работу", "Назвать профессию", "Попросить встречу с консультантом"],
+        ["Je cherche un emploi.", "Je suis électricien.", "Je voudrais un rendez-vous avec un conseiller.", "Merci pour votre aide."]),
+    // ───────────── Общие, бытовые ─────────────
+    ch!("g01", General, "A1", "В булочной", "Продавщица в булочной",
+        "Утро, очередь в булочной. Подошла ваша очередь.",
+        ["Поздороваться", "Заказать хлеб и круассаны", "Спросить, сколько с вас"],
+        ["Bonjour madame !", "Une baguette et deux croissants, s'il vous plaît.", "C'est combien ?", "Bonne journée !"]),
+    ch!("g02", General, "A1", "У врача", "Семейный врач",
+        "Вы пришли к врачу: третий день болит горло.",
+        ["Сказать, что болит", "Сказать, как давно", "Спросить, что делать"],
+        ["J'ai mal à la gorge.", "Depuis trois jours.", "Qu'est-ce que je dois faire ?", "Merci, docteur."]),
+    ch!("g03", General, "A1", "В аптеке", "Фармацевт",
+        "Ребёнок кашляет, вы зашли в аптеку.",
+        ["Попросить сироп от кашля", "Спросить, сколько раз в день", "Сказать, что это для ребёнка"],
+        ["Je voudrais un sirop contre la toux.", "Combien de fois par jour ?", "C'est pour un enfant de dix ans.", "Merci beaucoup."]),
+    ch!("g04", General, "A2", "Встреча с учительницей", "Мадам Роше, учительница",
+        "Родительская встреча в школе.",
+        ["Представиться как родитель", "Спросить, как ребёнок учится", "Спросить про домашние задания"],
+        ["Bonjour, je suis la mère de Sofia.", "Comment ça va en classe ?", "Il y a beaucoup de devoirs ?", "Merci pour votre travail."]),
+    ch!("g05", General, "A1", "Спросить дорогу", "Прохожий на улице",
+        "Вы ищете вокзал в незнакомом районе.",
+        ["Спросить, где вокзал", "Уточнить, далеко ли", "Поблагодарить"],
+        ["Excusez-moi, où est la gare ?", "C'est loin ?", "Merci beaucoup, bonne journée.", "Je vais à pied."]),
+    ch!("g06", General, "A1", "В ресторане", "Официант",
+        "Семейный ужин в ресторане. Официант подошёл принять заказ.",
+        ["Заказать блюдо дня", "Попросить воды", "Попросить счёт"],
+        ["Je voudrais le plat du jour.", "Une carafe d'eau, s'il vous plaît.", "L'addition, s'il vous plaît.", "C'était délicieux."]),
+    ch!("g07", General, "A1", "На рынке", "Продавец фруктов",
+        "Субботний рынок, прилавок с фруктами.",
+        ["Попросить килограмм яблок", "Спросить, откуда клубника", "Спросить, можно ли картой"],
+        ["Un kilo de pommes, s'il vous plaît.", "Les fraises viennent d'où ?", "Je peux payer par carte ?", "Merci, au revoir."]),
+    ch!("g08", General, "A1", "Новый сосед", "Месье Гарнье, сосед",
+        "Вы встретили соседа на лестнице и хотите познакомиться.",
+        ["Представиться как новый сосед", "Сказать, на каком этаже живёте", "Предложить помощь, если нужно"],
+        ["Bonjour, je suis votre nouveau voisin.", "J'habite au troisième étage.", "Si vous avez besoin, n'hésitez pas.", "Bonne soirée."]),
+    ch!("g09", General, "A2", "Вызвать сантехника", "Сантехник, отвечает по телефону",
+        "Под раковиной течёт. Вы звоните сантехнику.",
+        ["Описать проблему", "Назвать адрес", "Договориться о времени"],
+        ["J'ai une fuite sous l'évier.", "J'habite 8 avenue Victor Hugo.", "Vous pouvez venir demain matin ?", "Merci, à demain."]),
+    ch!("g10", General, "A1", "На почте", "Сотрудник почты",
+        "Вы отправляете посылку родным.",
+        ["Сказать, что хотите отправить посылку", "Назвать страну", "Спросить, когда дойдёт"],
+        ["Je voudrais envoyer ce colis.", "C'est pour l'Ukraine.", "Ça arrive quand ?", "Je prends le tarif normal."]),
+    ch!("g11", General, "A2", "В банке", "Сотрудник банка",
+        "Вы хотите открыть счёт в банке.",
+        ["Сказать, что хотите открыть счёт", "Спросить, какие нужны документы", "Попросить записать на встречу"],
+        ["Je voudrais ouvrir un compte.", "Quels documents faut-il ?", "On peut prendre rendez-vous ?", "Merci pour les informations."]),
+    ch!("g12", General, "A1", "Запись в секцию", "Тренер футбольного клуба",
+        "Вы хотите записать сына на футбол.",
+        ["Спросить про занятия для детей", "Спросить, во сколько тренировки", "Спросить, сколько стоит запись"],
+        ["Vous avez des cours de foot pour enfants ?", "C'est à quelle heure ?", "Combien coûte l'inscription ?", "Mon fils a onze ans."]),
+    ch!("g13", General, "A1", "В магазине одежды", "Продавщица",
+        "Вам понравился свитер, но нужен другой размер.",
+        ["Спросить свой размер", "Попросить примерить", "Сказать, что берёте"],
+        ["Vous avez ce pull en taille M ?", "Je peux l'essayer ?", "Je le prends.", "Où sont les cabines ?"]),
+    ch!("g14", General, "A1", "В автобусе", "Водитель автобуса",
+        "Вы садитесь в автобус и не уверены, что он идёт в центр.",
+        ["Спросить, идёт ли автобус в центр", "Купить билет", "Попросить подсказать остановку"],
+        ["Ce bus va au centre-ville ?", "Un ticket, s'il vous plaît.", "Vous pouvez me dire quand descendre ?", "Merci, monsieur."]),
+    ch!("g15", General, "A1", "Пригласить в гости", "Клер, подруга",
+        "Вы хотите позвать Клер на ужин.",
+        ["Пригласить на ужин", "Назвать день", "Спросить, чего она не ест"],
+        ["Tu veux venir dîner chez nous ?", "Samedi soir, ça te va ?", "Il y a quelque chose que tu ne manges pas ?", "À samedi !"]),
+    ch!("g16", General, "A1", "В библиотеке", "Библиотекарь",
+        "Вы пришли записаться в городскую библиотеку.",
+        ["Сказать, что хотите записаться", "Спросить лёгкие книги на французском", "Спросить, на сколько дают книги"],
+        ["Je voudrais m'inscrire à la bibliothèque.", "Vous avez des livres faciles en français ?", "Je peux les garder combien de temps ?", "C'est gratuit ?"]),
+    ch!("g17", General, "A1", "Новый одноклассник", "Лео, одноклассник",
+        "Перемена. Лео подходит познакомиться.",
+        ["Поздороваться и представиться", "Спросить любимый предмет", "Предложить поиграть на перемене"],
+        ["Salut, je m'appelle …", "Tu aimes quelle matière ?", "Tu veux jouer au foot à la récré ?", "Cool !"]),
+    ch!("g18", General, "A1", "Забыл тетрадь", "Учительница",
+        "Урок начался, а тетради в рюкзаке нет.",
+        ["Извиниться", "Сказать, что забыли тетрадь", "Пообещать принести завтра"],
+        ["Pardon, madame.", "J'ai oublié mon cahier.", "Je l'apporte demain.", "Je peux écrire sur une feuille ?"]),
+    ch!("g19", General, "A1", "В гостинице", "Администратор гостиницы",
+        "Вы приехали в гостиницу на выходные.",
+        ["Сказать про бронь", "Спросить, во сколько завтрак", "Спросить пароль от wifi"],
+        ["J'ai une réservation au nom de …", "Le petit-déjeuner est à quelle heure ?", "Quel est le code wifi ?", "Merci, bonne soirée."]),
+    ch!("g20", General, "A2", "Потерянная сумка", "Сотрудник бюро находок",
+        "Вы забыли сумку в поезде и пришли в бюро находок.",
+        ["Сказать, что потеряли сумку", "Описать её", "Оставить номер телефона"],
+        ["J'ai perdu mon sac.", "C'est un sac noir avec une fermeture rouge.", "Mon numéro, c'est le …", "Merci de m'appeler."]),
+    ch!("g21", General, "A1", "В салоне связи", "Консультант оператора связи",
+        "Вам нужна французская SIM-карта.",
+        ["Попросить SIM-карту", "Спросить самый дешёвый тариф", "Спросить, сколько интернета"],
+        ["Je voudrais une carte SIM.", "Quel est le forfait le moins cher ?", "Il y a combien de gigas d'internet ?", "Je prends ce forfait."]),
+    ch!("g22", General, "A1", "Соседка с собакой", "Соседка на прогулке с собакой",
+        "Вы встретили соседку в сквере у дома.",
+        ["Поздороваться и похвалить собаку", "Поговорить о погоде", "Спросить, где рядом большой парк"],
+        ["Bonjour ! Il est mignon, votre chien.", "Il fait beau aujourd'hui.", "Il y a un grand parc près d'ici ?", "Bonne promenade !"]),
+];
+
+pub fn find(id: &str) -> Option<&'static Challenge> {
+    CATALOG.iter().find(|c| c.id == id)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::collections::HashSet;
+
+    #[test]
+    fn ids_are_unique() {
+        let mut seen = HashSet::new();
+        for c in CATALOG {
+            assert!(seen.insert(c.id), "дубликат id {}", c.id);
+        }
+    }
+
+    #[test]
+    fn catalog_sizes_match_the_plan() {
+        let work = CATALOG.iter().filter(|c| c.kind == ChallengeKind::Work).count();
+        let general = CATALOG.iter().filter(|c| c.kind == ChallengeKind::General).count();
+        assert!(work >= 60, "рабочих ситуаций {work}");
+        assert!(general >= 20, "общих ситуаций {general}");
+    }
+
+    #[test]
+    fn every_entry_is_well_formed() {
+        for c in CATALOG {
+            assert!((2..=3).contains(&c.goals.len()), "{}: задач должно быть 2–3", c.id);
+            assert!((3..=4).contains(&c.hints.len()), "{}: подсказок должно быть 3–4", c.id);
+            // Подсказок не меньше задач: AiTalk отмечает задачу №i по подсказке №i.
+            assert!(c.hints.len() >= c.goals.len(), "{}: на каждую задачу нужна подсказка", c.id);
+            assert!(c.level == "A1" || c.level == "A2", "{}: уровень {}", c.id, c.level);
+            assert!(!c.title.is_empty() && !c.role.is_empty() && !c.situation.is_empty(), "{}", c.id);
+        }
+    }
+}

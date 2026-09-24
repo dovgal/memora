@@ -11,14 +11,19 @@
 import { getSession } from 'next-auth/react';
 import { emitFox } from '@/lib/fox/bus';
 
-export type StudySource = 'flashcards' | 'course' | 'reader' | 'verbs';
+export type StudySource = 'flashcards' | 'course' | 'reader' | 'verbs' | 'challenge';
 
 export type StudyEvent =
   | { type: 'answer'; source: StudySource; correct: boolean; firstTry: boolean; combo: number }
   | { type: 'pronunciation'; source: StudySource; score: number }
   | { type: 'sentence_built'; source: StudySource; correct: boolean }
   | { type: 'exercise_complete'; source: StudySource }
-  | { type: 'session_complete'; source: StudySource; cards: number; correct: number; minutes: number };
+  | { type: 'session_complete'; source: StudySource; cards: number; correct: number; minutes: number }
+  // «Разговор дня» (+25 XP). Зеркало варианта на сервере, но через
+  // reportStudyEvent его не отправляют: /api/game/event такой тип отклоняет,
+  // засчитывает только /api/challenge/complete (см. lib/challenge/client.ts) —
+  // после проверки, что разговор сегодняшний и настоящий.
+  | { type: 'challenge_complete'; challengeId: string; turns: number; minutes: number };
 
 export interface Achievement {
   id: string;
@@ -41,7 +46,8 @@ export interface GameUpdate {
 let cachedToken: string | null = null;
 let cachedAt = 0;
 
-async function authHeaders(): Promise<Record<string, string>> {
+/** Заголовок с токеном; общий с lib/challenge/client.ts, чтобы кэш был один. */
+export async function authHeaders(): Promise<Record<string, string>> {
   const now = Date.now();
   if (!cachedToken || now - cachedAt > 60_000) {
     try {

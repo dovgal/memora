@@ -43,6 +43,14 @@ test('итог занятия хвалит и за скромный резуль
   assert.equal(sessionSummary(0, 0), 'Занятие окончено');
 });
 
+test('итог занятия может нести свою фразу — для разговора дня', () => {
+  const r = react({ type: 'session_end', correct: 6, total: 6, say: 'Отличный разговор!' }, first)!;
+  assert.equal(r.say, 'Отличный разговор!');
+  assert.equal(r.wave, true);
+  const plain = react({ type: 'session_end', correct: 10, total: 10 }, first)!;
+  assert.match(plain.say ?? '', /Блестяще/);
+});
+
 test('pick не выходит за границы списка даже при rnd = 1', () => {
   assert.equal(pick(['a', 'b'], () => 1), 'b');
 });

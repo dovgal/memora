@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Sparkles, UploadCloud, Layers } from 'lucide-react';
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
+import { DailyChallengeCard } from '@/components/challenge/DailyChallengeCard';
 import { SetSummaryResponse } from "@/types/schema";
 
 async function getUserSets(token: string): Promise<SetSummaryResponse[]> {
@@ -29,6 +30,11 @@ export default async function TeacherDashboard() {
     return (
         <div className="p-8 max-w-7xl mx-auto">
             <h1 className="text-3xl font-bold mb-8">Teacher Dashboard</h1>
+
+            {/* Взрослые в семье бывают и «учителями» — разговор дня нужен и им. */}
+            <section className="mb-12">
+                <DailyChallengeCard />
+            </section>
 
             <section className="mb-12">
                 <h2 className="text-xl font-semibold mb-4 text-qz-text-muted">Quick Actions</h2>

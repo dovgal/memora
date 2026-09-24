@@ -29,6 +29,8 @@
     "src/lib/game/client.ts",
     "src/lib/game/celebrationBus.ts",
     "src/lib/game/celebrationBus.test.ts",
+    "src/lib/challenge/rules.ts",
+    "src/lib/challenge/rules.test.ts",
     "src/lib/trainer/types.ts",
     "src/lib/trainer/ladder.ts",
     "src/lib/trainer/ladder.test.ts",

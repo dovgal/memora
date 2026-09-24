@@ -254,6 +254,9 @@ async fn main() {
         .route("/api/game/event", post(handlers::game::report_event))
         .route("/api/game/me", get(handlers::game::get_me))
         .route("/api/game/family", get(handlers::game::get_family))
+        // «Разговор дня»: разговор на сегодня и его засчёт (XP через игровой слой).
+        .route("/api/challenge/today", get(handlers::challenge::get_today))
+        .route("/api/challenge/complete", post(handlers::challenge::complete))
         .route("/api/push/public-key", get(handlers::push::get_public_key))
         .route("/api/push/subscribe", post(handlers::push::subscribe))
         .route("/api/push/unsubscribe", post(handlers::push::unsubscribe))
